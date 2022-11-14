@@ -10,7 +10,15 @@ import { homeServicesConstantListItems } from "src/constant/homeServicesConstant
 
 export const Services: FC = () => {
   return (
-    <Box sx={{ width: "100%", overflow: "overlay", mb: 3 }}>
+    <Box
+      sx={{
+        width: "100%",
+        overflow: "overlay",
+        overflowX: "scroll",
+        mb: 3,
+        scrollbarWidth: "none",
+      }}
+    >
       <Stack
         direction="row"
         alignItems="center"

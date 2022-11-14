@@ -1,0 +1,14 @@
+export enum PRODUCT_CATEGORY_ENUM {
+  DNS = 1,
+  VM = 3,
+  SMS = 6,
+  SMS_NUMBER = 7,
+  RABBIT_MQ = 8,
+  PAYMENT = 9,
+  DOMAIN = 10,
+  SEO = 11,
+  VULNERABILITY = 12,
+  WEB = 13,
+  FIREWALL = 14,
+  MONITOR = 15,
+}

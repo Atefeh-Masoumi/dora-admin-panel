@@ -179,6 +179,7 @@ export const {
   useLazyGetApiV2CdnLoadBalanceGetByIdQuery,
   useLazyGetApiV2CdnDnsRecordGetByIdQuery,
   useLazyGetApiV2PortalOrderGetByIdQuery,
+  useLazyGetApiV2PortalSupportItemDownloadByIdQuery,
   useLazyGetApiV2PortalWalletPaymentGetByIdQuery,
   useLazyGetApiV2PortalUserBillDownloadByIdQuery,
   useLazyGetApiV2VmVmPayByIdQuery,

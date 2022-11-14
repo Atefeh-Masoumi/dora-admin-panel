@@ -13,10 +13,11 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useGetApiV2PortalDashboardUserBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
+import moment from "jalali-moment";
 
 export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
-  
+
   const { data: reports, isLoading } =
     useGetApiV2PortalDashboardUserBillShortListQuery();
 
@@ -80,43 +81,50 @@ export const ShortUserBill: FC = () => {
                 </Stack>
               ) : (
                 <Fragment>
-                  {reports?.map(({ id, billDate, totalPrice }) => (
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                      width="100%"
-                      key={id}
-                      sx={{
-                        p: { xs: 1, md: 1 },
-                        borderRadius: {
-                          xs: BORDER_RADIUS_1,
-                          md: BORDER_RADIUS_2,
-                        },
-                        bgcolor: "rgba(246, 247, 251, 1)",
-                      }}
-                    >
-                      <Typography
-                        variant="text3"
-                        color="rgba(19, 25, 32, 1)"
-                        fontWeight={500}
+                  {reports?.map(({ id, billDate, totalPrice }) => {
+                    const date = moment
+                      .from(billDate || "", "fa", "YYYY/MM/DD HH:mm:ss")
+                      .locale("fa")
+                      .format("YYYY/MM/DD");
+
+                    return (
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        width="100%"
+                        key={id}
+                        sx={{
+                          p: { xs: 1, md: 1 },
+                          borderRadius: {
+                            xs: BORDER_RADIUS_1,
+                            md: BORDER_RADIUS_2,
+                          },
+                          bgcolor: "rgba(246, 247, 251, 1)",
+                        }}
                       >
-                        {billDate}
-                      </Typography>
-                      <Typography
-                        variant="text3"
-                        color="rgba(19, 25, 32, 1)"
-                        fontWeight={500}
-                      >
-                        {totalPrice}
-                      </Typography>
-                      <IconButton
-                        onClick={() => navigate(`/wallet/bills/${id}`)}
-                      >
-                        <KeyboardArrowLeftIcon color="secondary" />
-                      </IconButton>
-                    </Stack>
-                  ))}
+                        <Typography
+                          variant="text3"
+                          color="rgba(19, 25, 32, 1)"
+                          fontWeight={500}
+                        >
+                          {date}
+                        </Typography>
+                        <Typography
+                          variant="text3"
+                          color="rgba(19, 25, 32, 1)"
+                          fontWeight={500}
+                        >
+                          {totalPrice}
+                        </Typography>
+                        <IconButton
+                          onClick={() => navigate(`/wallet/bills/${id}`)}
+                        >
+                          <KeyboardArrowLeftIcon color="secondary" />
+                        </IconButton>
+                      </Stack>
+                    );
+                  })}
                 </Fragment>
               )}
             </Fragment>

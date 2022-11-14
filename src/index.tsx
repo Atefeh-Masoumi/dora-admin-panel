@@ -5,7 +5,7 @@ import { App } from "src/App";
 
 import { store } from "./app/store";
 
-console.log("APP VERSION => 0.1.2");
+console.log("APP VERSION => 0.1.3");
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

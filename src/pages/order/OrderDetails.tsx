@@ -188,10 +188,9 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const submitHandler = () => {
     if (!orderInfo) return;
-    if (orderInfo.orderPaymentTypeId === 2) {
+    if (paymentMethod === "2") {
       navigate("/");
       toast.success("پرداخت با موفقیت انجام شد");
-      return;
     } else {
       goToBankPortal({
         orderPayModel: {
@@ -204,7 +203,6 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
         .then((res) => {
           if (!res || !res.location || !res.status) return;
           let a = document.createElement("a");
-          a.target = "_blank";
           a.href = res.location;
           a.click();
           toast.success("در حال انتقال به صفحه پرداخت");

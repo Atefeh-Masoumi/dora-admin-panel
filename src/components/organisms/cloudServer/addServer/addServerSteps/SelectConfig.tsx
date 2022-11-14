@@ -1,20 +1,17 @@
-import { useContext, FC, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useGetApiV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
-import { AddServerContext } from "src/context/AddServerContext";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AddCloudServerTableRow } from "src/components/organisms/tables/addCloudServer/AddCloudServerTableRow";
 import { addCloudServerTableStruct } from "src/components/organisms/tables/addCloudServer/struct";
-// import { serverConfigArrayNormalizerUtils } from "src/utils/serverConfigArrayNormalizerUtils";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { osVersion } = useContext(AddServerContext);
-
   const { data: configsList, isLoading } =
     useGetApiV2PortalProductBundleListByProductCategoryIdQuery({
-      productCategoryId: osVersion?.id || 0,
+      productCategoryId: PRODUCT_CATEGORY_ENUM.VM,
     });
 
   const table = useMemo(

@@ -32,10 +32,13 @@ const AddTicket: FC = () => {
   const [unit, setUnit] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetApiV2PortalBusinessUnitListQuery();
+
   const [category, setCategory] = useState<number>();
   const { data: categories, isLoading: loadingCategories } =
     useGetApiV2PortalProductCategoryListQuery();
+
   const [title, setTitle] = useState<number>();
+
   const [content, setContent] = useState("");
 
   const [uploadProcessEvent, setUploadProcessEvent] = useState<
@@ -156,7 +159,7 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="واحد *"
-                value={unit}
+                value={unit || ""}
                 onChange={(e) => setUnit(+e.target.value)}
               >
                 {businessUnits.map((option) => (
@@ -197,7 +200,7 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="محصول *"
-                value={category}
+                value={category || ""}
                 onChange={(e) => setCategory(+e.target.value)}
               >
                 {categories.map((category) => (
@@ -228,7 +231,7 @@ const AddTicket: FC = () => {
             select
             fullWidth
             label="عنوان *"
-            value={title}
+            value={title || ""}
             onChange={(e) => setTitle(+e.target.value)}
           >
             {list.length === 0 && (

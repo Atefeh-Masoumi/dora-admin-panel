@@ -118,6 +118,9 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
             sx={{
               height: "100%",
               overflow: "overlay",
+              overflowY: "scroll",
+              overflowX: "hidden",
+              msOverflowStyle: "none",
               mt: 4,
               py: 8,
               px: "0 !important",

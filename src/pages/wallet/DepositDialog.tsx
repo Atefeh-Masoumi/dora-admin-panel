@@ -71,7 +71,6 @@ export const DepositDialog: FC<HeaderPropsType> = ({
       .then((res) => {
         if (!res || !res.location || !res.status) return;
         let a = document.createElement("a");
-        a.target = "_blank";
         a.href = res.location;
         a.click();
         toast.success("در حال انتقال به صفحه پرداخت");

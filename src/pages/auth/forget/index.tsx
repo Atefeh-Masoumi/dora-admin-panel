@@ -6,7 +6,6 @@ import { ForgetPasswordSetPass } from "../ForgetPassSetPass";
 const Forget: FC = () => {
   const [level, setLevel] = useState(0);
   const [confirmCode, setConfirmCode] = useState<string>();
-  console.log(confirmCode);
 
   if (level === 0) return <ForgetPass goNext={() => setLevel(1)} />;
   if (level === 1)

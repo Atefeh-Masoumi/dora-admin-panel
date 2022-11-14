@@ -14,6 +14,7 @@ import { useGetApiV2PortalDashboardSupportShortListQuery } from "src/app/service
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import { CustomTooltip } from "../tables/notification/NotificationTableRow";
+import moment from "jalali-moment";
 
 export const Tickets: FC = () => {
   const { data: tickets, isLoading } =
@@ -72,49 +73,55 @@ export const Tickets: FC = () => {
               </Stack>
             ) : (
               <Fragment>
-                {tickets?.map(({ id, supportDate, supportSubject }) => (
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    key={id}
-                    sx={{
-                      p: { xs: 1, md: 1.5 },
-                      borderRadius: {
-                        xs: BORDER_RADIUS_1,
-                        md: BORDER_RADIUS_2,
-                      },
-                      bgcolor: "rgba(246, 247, 251, 1)",
-                    }}
-                  >
-                    <Typography
-                      variant="text3"
-                      color="rgba(19, 25, 32, 1)"
-                      fontWeight={500}
-                      whiteSpace="nowrap"
+                {tickets?.map(({ id, supportDate, supportSubject }) => {
+                  const date = moment
+                    .from(supportDate || "", "fa", "YYYY/MM/DD HH:mm:ss")
+                    .locale("fa")
+                    .format("YYYY/MM/DD");
+                  return (
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      key={id}
+                      sx={{
+                        p: { xs: 1, md: 1.5 },
+                        borderRadius: {
+                          xs: BORDER_RADIUS_1,
+                          md: BORDER_RADIUS_2,
+                        },
+                        bgcolor: "rgba(246, 247, 251, 1)",
+                      }}
                     >
-                      {supportDate}
-                    </Typography>
-                    <CustomTooltip title={supportSubject as any} arrow>
                       <Typography
                         variant="text3"
                         color="rgba(19, 25, 32, 1)"
                         fontWeight={500}
-                        sx={{
-                          maxWidth: { xs: 150, md: 200 },
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
                         whiteSpace="nowrap"
                       >
-                        {supportSubject}
+                        {date}
                       </Typography>
-                    </CustomTooltip>
-                    <IconButton onClick={() => navigate(`support/${id}`)}>
-                      <KeyboardArrowLeftIcon color="secondary" />
-                    </IconButton>
-                  </Stack>
-                ))}
+                      <CustomTooltip title={supportSubject as any} arrow>
+                        <Typography
+                          variant="text3"
+                          color="rgba(19, 25, 32, 1)"
+                          fontWeight={500}
+                          sx={{
+                            maxWidth: { xs: 150, md: 200 },
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                          whiteSpace="nowrap"
+                        >
+                          {supportSubject}
+                        </Typography>
+                      </CustomTooltip>
+                      <IconButton onClick={() => navigate(`support/${id}`)}>
+                        <KeyboardArrowLeftIcon color="secondary" />
+                      </IconButton>
+                    </Stack>
+                  );
+                })}
               </Fragment>
             )}
           </Fragment>

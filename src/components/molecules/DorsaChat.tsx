@@ -1,36 +1,45 @@
-import { FC, useEffect, useState } from "react";
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 import { SupportItemTransactionModel } from "src/app/services/api.generated";
 import { Document } from "src/components/atoms/svg/DocumentSvg";
+import { LoadingButton } from "@mui/lab";
+import { baseUrl } from "src/app/services/baseQuery";
+import { useAppSelector } from "src/app/hooks";
+
+const downloadFileUrl = baseUrl + "/api/v2/portal/support-item/download/";
 
 export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
   message,
 }) => {
-  const getBase64FileExtension = (base64String: string) => {
-    switch (base64String.charAt(0)) {
-      case "/":
-        return "jpeg";
-      case "i":
-        return "png";
-      case "R":
-        return "gif";
-      case "U":
-        return "webp";
-      case "J":
-        return "pdf";
-      default:
-        return "unknown";
-    }
+  const [isLoading, setIsLoading] = useState(false);
+  const token = useAppSelector((state) => state.auth?.accessToken);
+
+  const downloadFile = () => {
+    if (!message || !message.id) return;
+
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+    setIsLoading(true);
+    fetch(downloadFileUrl + message.id, {
+      headers,
+    })
+      .then((response) => (response as any).blob())
+      .then((blobby) => {
+        let anchor = document.createElement("a");
+        document.body.appendChild(anchor);
+
+        let objectUrl = window.URL.createObjectURL(blobby);
+
+        anchor.href = objectUrl;
+        anchor.download = message.fileName || "";
+        anchor.click();
+
+        window.URL.revokeObjectURL(objectUrl);
+      })
+      .finally(() => setIsLoading(false));
   };
 
-  const [fileType, setFileType] = useState("");
-  useEffect(() => {
-    if (!message.fileName) return;
-    setFileType(getBase64FileExtension(message.fileName as string));
-  }, [message]);
-  const fileHref = `data:image/${fileType};base64,${message.fileName}`;
-
-  if (message.user === "پشتیبانی درسا") {
+  if (message.roleId === 1) {
     return (
       <Stack spacing={1}>
         <Stack direction="row" spacing={1.5}>
@@ -51,12 +60,11 @@ export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
               py={1.5}
               spacing={1.5}
             >
-              <Stack direction="row" spacing={0.5}>
+              <Stack direction="row" spacing={0.5} alignItems="center">
                 <Typography variant="text9" fontWeight="bold">
                   {message.user}
                 </Typography>
                 <Typography>|</Typography>
-                {/* <Typography variant="text9">{message.person.role}</Typography> */}
                 <Typography variant="text9">ادمین</Typography>
               </Stack>
               <Typography variant="text4">{message.content}</Typography>
@@ -71,6 +79,7 @@ export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
       </Stack>
     );
   }
+
   return (
     <Stack alignItems="end" spacing={1}>
       <Stack direction="row" spacing={1.5}>
@@ -83,25 +92,23 @@ export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
             py={1.5}
             spacing={1.5}
           >
-            <Stack direction="row" justifyContent="end" spacing={0.5}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="end"
+              spacing={0.5}
+            >
               <Typography variant="text9" fontWeight="bold">
                 {message.user}
               </Typography>
               <Typography>|</Typography>
-              {/* <Typography variant="text9">{message.person.role}</Typography> */}
               <Typography variant="text9">کاربر</Typography>
             </Stack>
-            <Stack>
-              <Typography component="pre" variant="text4">
-                {message.content}
-              </Typography>
-              {message.fileSize && (
-                <Button
-                  href={fileHref}
-                  target="_blank"
-                  component="a"
-                  download={fileHref}
-                  variant="text"
+            {message.fileName && (
+              <Tooltip title={message.fileName}>
+                <LoadingButton
+                  loading={isLoading}
+                  onClick={downloadFile}
                   startIcon={
                     <Document
                       sx={{
@@ -111,13 +118,11 @@ export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
                       }}
                     />
                   }
-                  sx={{ width: "fit-content", py: 0, lineHeight: "" }}
                 >
-                  {/* دانلود پیوست {message.attachment} */}
-                  دانلود پیوست screenshot.png
-                </Button>
-              )}
-            </Stack>
+                  دانلود پیوست
+                </LoadingButton>
+              </Tooltip>
+            )}
           </Stack>
           <Stack direction="row" justifyContent="end" px={1}>
             <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">

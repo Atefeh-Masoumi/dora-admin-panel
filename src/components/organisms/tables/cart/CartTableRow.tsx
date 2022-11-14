@@ -1,41 +1,33 @@
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler, useState } from "react";
 import { IconButton, Stack } from "@mui/material";
 import { cartTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
 import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
-import { usePutApiV2PortalOrderCancelByIdMutation } from "src/app/services/api.generated";
-import PageLoading from "src/components/atoms/PageLoading";
-import { toast } from "react-toastify";
+import { DeleteCartDialog } from "../../cart/DeleteCartDialog";
 
 export const CartTableRow: FC<{ row: any }> = ({ row }) => {
+  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
-  const [deleteOrder, { isLoading: deleteOrderLoading }] =
-    usePutApiV2PortalOrderCancelByIdMutation();
-
-  const deleteOrderHandler = () => {
+  const openDialogHandler = () => {
     if (!row.id || isNaN(Number(row.id))) return;
-    deleteOrder({ id: Number(row.id) })
-      .unwrap()
-      .then(() =>
-        toast.success("محصول مورد نظر با موفقیت از سبد خرید شما حذف شد")
-      );
+    setOpenDialog(true);
   };
+  const closeDialogHandler = () => setOpenDialog(false);
 
   const deleteButtonClickHandler: MouseEventHandler<HTMLButtonElement> = (
     e
   ) => {
     e.stopPropagation();
     e.preventDefault();
-    deleteOrderHandler();
+    openDialogHandler();
   };
 
   const goToOrderDetails = () => navigate(`/cart/${row.id}`);
 
   return (
     <>
-      {deleteOrderLoading && <PageLoading />}
       <DorsaTableRow
         hover
         role="checkbox"
@@ -78,6 +70,12 @@ export const CartTableRow: FC<{ row: any }> = ({ row }) => {
           </IconButton>
         </DorsaTableCell>
       </DorsaTableRow>
+      {openDialog && (
+        <DeleteCartDialog
+          id={Number(row.id)}
+          handleClose={closeDialogHandler}
+        />
+      )}
     </>
   );
 };

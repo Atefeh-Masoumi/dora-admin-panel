@@ -1,7 +1,6 @@
-import React, { Fragment, FC, useState, useEffect } from "react";
-import { Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import { Fragment, FC, useState, useEffect } from "react";
+import { Button, Chip, Divider, Input, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { UploadDialog } from "./UploadDialog";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
 import {
   useGetApiV2PortalSupportItemListBySupportIdQuery,
@@ -10,21 +9,33 @@ import {
 import { useParams } from "react-router-dom";
 import { LoadingChat } from "src/components/organisms/support/LoadingChat";
 import moment from "jalali-moment";
+import { DorsaTooltip } from "src/components/organisms/referral/WelcomeTooltip";
 
 const Detail: FC = () => {
-  const handleOpen = () => setOpen(true);
+  /* const handleOpen = () => setOpen(true);
   const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(false); */
+
+  const [file, setFile] = useState<string | Blob>();
+  const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    setFile(file);
+  };
+  const [isDisableButton, setIsDisableButton] = useState<boolean>();
 
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (file && content === "") setIsDisableButton(true);
+    else setIsDisableButton(false);
+  }, [content, file]);
 
   const { id } = useParams();
   const { data: supportItems, isLoading } =
     useGetApiV2PortalSupportItemListBySupportIdQuery({
       supportId: parseInt(id as string),
     });
-
-  console.log(supportItems);
 
   const [date, setDate] = useState("");
   useEffect(() => {
@@ -43,21 +54,19 @@ const Detail: FC = () => {
     let formData = new FormData();
     formData.append("SupportId", id as string);
     formData.append("Content", content);
-    // formData.append("Attachment", content);
+    formData.append("Attachment", file as Blob);
     itemCreate({ body: formData as any })
       .unwrap()
-      .then(() => setContent(""));
+      .then(() => {
+        setContent("");
+        setFile(undefined);
+      });
   };
 
   useEffect(() => {
     const el = document.getElementById("chat");
     if (el) el.scrollTop = el.scrollHeight;
   }, [supportItems]);
-
-  const keyPress = (e: any) => {
-    if (e.key !== "Enter") return;
-    submit();
-  };
 
   return (
     <Fragment>
@@ -121,34 +130,54 @@ const Detail: FC = () => {
           <DorsaTextField
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            onKeyDown={(e) => keyPress(e)}
             placeholder="متن پیام را بنویسید ..."
             fullWidth
+            autoFocus
             autoComplete="off"
+            multiline
+            rows={3}
           />
           <Stack direction="row" spacing={1} alignItems="center">
-            <Button
-              onClick={handleOpen}
-              variant="outlined"
-              size="large"
-              fullWidth
-              sx={{ px: 5.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
+            <DorsaTooltip
+              title={
+                <Stack>
+                  <Typography>فرمت های مجاز jpg, png, jpeg, pdf</Typography>
+                  <Typography>حداکثر حجم فایل: ۲۵ مگابایت</Typography>
+                </Stack>
+              }
+              arrow
             >
-              بارگذاری پیوست
-            </Button>
+              <Button
+                // onClick={handleOpen}
+                component="label"
+                variant="outlined"
+                size="large"
+                fullWidth
+                sx={{ px: 5.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
+              >
+                <Typography>بارگذاری پیوست</Typography>
+                <Input
+                  inputProps={{ ...dropzoneOptions }}
+                  onChange={handleFileChange}
+                  sx={{ display: "none" }}
+                  type="file"
+                />
+              </Button>
+            </DorsaTooltip>
             <Button
               fullWidth
               variant="contained"
               size="large"
               sx={{ px: 3.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
               onClick={submit}
+              disabled={isDisableButton}
             >
               ارسال پیام
             </Button>
           </Stack>
         </Stack>
       </Stack>
-      <UploadDialog openDialog={open} handleClose={handleClose} />
+      {/* <UploadDialog openDialog={open} handleClose={handleClose} /> */}
     </Fragment>
   );
 };

@@ -1,29 +1,28 @@
 import { FC, useEffect, useState } from "react";
-import {
-  Button,
-  Divider,
-  LinearProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiV2PortalUserBillGetByIdQuery } from "src/app/services/api.generated";
-import { useLazyGetApiV2PortalUserBillDownloadByIdQuery } from "src/app/services/api";
 import { useParams } from "react-router-dom";
 import moment from "jalali-moment";
 import { billTableStruct } from "src/components/organisms/tables/wallet/bill/struct";
 import { BillTableRow } from "src/components/organisms/tables/wallet/bill/BillTableRow";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { LoadingButton } from "@mui/lab";
+import { baseUrl } from "src/app/services/baseQuery";
+import { useAppSelector } from "src/app/hooks";
+
+const downloadFileUrl = baseUrl + "/api/v2/portal/user-bill/download/";
 
 const Bill: FC = () => {
+  const [downloadFileLoading, setDownloadFileLoading] = useState(false);
+
   const { id } = useParams();
+
   const { data: bill, isLoading } = useGetApiV2PortalUserBillGetByIdQuery({
     id: parseInt(id as string),
   });
 
-  const [downloadFile, { isLoading: downloadFileLoading }] =
-    useLazyGetApiV2PortalUserBillDownloadByIdQuery();
+  const token = useAppSelector((state) => state.auth?.accessToken);
 
   const payBill = [
     { label: "جمع کل", value: bill?.netPrice },
@@ -42,7 +41,26 @@ const Bill: FC = () => {
 
   const downloadHandler = () => {
     if (!id || isNaN(Number(id))) return;
-    downloadFile({ id: Number(id) });
+    let headers = new Headers();
+    headers.append("Authorization", `Bearer ${token}`);
+    setDownloadFileLoading(true);
+    fetch(downloadFileUrl + Number(id), {
+      headers,
+    })
+      .then((response) => (response as any).blob())
+      .then((blobby) => {
+        let anchor = document.createElement("a");
+        document.body.appendChild(anchor);
+
+        let objectUrl = window.URL.createObjectURL(blobby);
+
+        anchor.href = objectUrl;
+        anchor.download = "report bill " + id;
+        anchor.click();
+
+        window.URL.revokeObjectURL(objectUrl);
+      })
+      .finally(() => setDownloadFileLoading(false));
   };
 
   return (

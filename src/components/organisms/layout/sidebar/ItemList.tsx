@@ -37,7 +37,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
 
   const goToCalculator = () => {
     let a = document.createElement("a");
-    a.target = "_blank";
     a.href = "https://dorsacloud.com/calculator";
     a.click();
   };

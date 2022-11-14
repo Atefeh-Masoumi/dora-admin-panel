@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { styled, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
-const ReferralTooltip = styled(({ className, ...props }: TooltipProps) => (
+export const DorsaTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -25,8 +25,8 @@ export const WelcomeTooltip: FC = () => {
   برای اطلاعات بیشتر لطفا ایمیل خود را چک کنید`;
 
   return (
-    <ReferralTooltip title={tooltipTitle} arrow>
+    <DorsaTooltip title={tooltipTitle} arrow>
       <ErrorOutlineOutlinedIcon sx={{ color: "primary.light" }} />
-    </ReferralTooltip>
+    </DorsaTooltip>
   );
 };

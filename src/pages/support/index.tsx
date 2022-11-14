@@ -1,5 +1,4 @@
-import { ChangeEvent, useState } from "react";
-import type { FC } from "react";
+import { FC, useState } from "react";
 import {
   Box,
   Button,
@@ -30,10 +29,6 @@ const Support: FC = () => {
         supportItem.supportStatus ===
           tickets.find((t) => t.value === ticket)?.label)
   );
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTicket(event.target.value);
-  };
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 2.2 }}>
@@ -76,7 +71,7 @@ const Support: FC = () => {
               select
               fullWidth
               value={ticket}
-              onChange={handleChange}
+              onChange={(e) => setTicket(e.target.value)}
             >
               {tickets.map((option) => (
                 <MenuItem
