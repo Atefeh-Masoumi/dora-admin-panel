@@ -1,0 +1,95 @@
+@font-face {
+  font-family: "dana VF";
+  src: url("src/assets/fonts/dana2webGX.woff") format("woff-variations"),
+    /* will be the standard and works in Safari now */
+      url("src/assets/fonts/dana2webGX.woff") format("woff");
+  /* for the other supporting browsers */
+  font-display: fallback;
+}
+/* dana version ? */
+
+@font-face {
+  font-family: dana;
+  src: url("src/assets/fonts/staticfonts/dana-regular.woff") format("woff");
+}
+@font-face {
+  font-family: dana;
+  src: url("src/assets/fonts/staticfonts/dana-bold.woff") format("woff");
+  font-weight: 700;
+}
+
+* {
+  font-family: "dana VF";
+  -moz-font-feature-settings: "ss02";
+  -webkit-font-feature-settings: "ss02";
+  font-feature-settings: "ss02";
+  font-variation-settings: "wght" 500, "FANU" 1;
+  text-decoration: none;
+}
+
+/* .vf-FANU {
+  font-variation-settings: 'wght' 300, 'FANU' 1;
+} */
+
+body {
+  font-family: dana, tahoma;
+  overflow: overlay;
+}
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "dana VF", tahoma;
+  }
+}
+
+*::-webkit-scrollbar-track {
+  display: none;
+}
+
+*::-webkit-scrollbar-track-piece:start,
+*::-webkit-scrollbar-track-piece:end,
+*::-webkit-scrollbar {
+  background: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+  z-index: 1000000;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  transition: 300ms;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgb(153, 151, 151);
+  z-index: 10;
+  visibility: hidden;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  visibility: visible;
+}
+
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
+.MuiPopover-paper {
+  border-radius: 10px !important;
+  background-color: #f3f4f6 !important;
+}
+
+.MuiList-root {
+  padding: 0 !important;
+}
