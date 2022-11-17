@@ -83,7 +83,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = ({
               {...getFieldProps("nationalId")}
               label="کد ملی"
               fullWidth
-              dir="ltr"
+              inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
               error={Boolean(errors.birthDate && touched.birthDate)}
@@ -109,7 +109,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = ({
                 type="submit"
                 loading={loadingEdit}
                 variant="contained"
-                sx={{ px: 7, py: 2, fontSize: 16 }}
+                sx={{ px: 8, py: 2, fontSize: 16 }}
               >
                 ذخیره اطلاعات
               </LoadingButton>

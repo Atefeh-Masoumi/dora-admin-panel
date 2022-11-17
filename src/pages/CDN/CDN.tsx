@@ -32,7 +32,7 @@ const CDN: FC = () => {
   }, [pathname]);
 
   const handleChange = (_: SyntheticEvent, newValue: string) =>
-    navigate("/cdn/" + newValue);
+    navigate("/dash/cdn" + newValue);
 
   const renderHandler = () => {
     let result = <></>;
@@ -57,7 +57,7 @@ const CDN: FC = () => {
     return result;
   };
 
-  if (!selectedDomain) return <Navigate to="/cdn" />;
+  if (!selectedDomain) return <Navigate to="/dash/cdn" />;
 
   return (
     <Stack spacing={5} alignItems="center">

@@ -24,7 +24,7 @@ export const CartTableRow: FC<{ row: any }> = ({ row }) => {
     openDialogHandler();
   };
 
-  const goToOrderDetails = () => navigate(`/cart/${row.id}`);
+  const goToOrderDetails = () => navigate(`/dash/portal/order/${row.id}`);
 
   return (
     <>

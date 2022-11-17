@@ -71,7 +71,7 @@ const Signup: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("شما با موفقیت ثبت نام شدید");
-        navigate("/");
+        navigate("/dash");
       })
       .catch(
         ({ status }: { status: number }) =>
@@ -118,7 +118,7 @@ const Signup: FC = () => {
                 {...getFieldProps("phoneNumber")}
                 label="موبایل"
                 fullWidth
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <DorsaTextField
                 error={Boolean(errors.email && touched.email)}
@@ -126,7 +126,7 @@ const Signup: FC = () => {
                 {...getFieldProps("email")}
                 label="ایمیل"
                 fullWidth
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <DorsaTextField
                 error={Boolean(errors.password && touched.password)}
@@ -146,7 +146,7 @@ const Signup: FC = () => {
                     </InputAdornment>
                   ),
                 }}
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <Stack
                 direction="column"
@@ -172,7 +172,7 @@ const Signup: FC = () => {
                 {...getFieldProps("referralCode")}
                 label="کد معرف (اختیاری)"
                 fullWidth
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton

@@ -1,3 +1,4 @@
+import { priceToPersian } from "./../../../../utils/priceToPersian";
 import { columnType } from "../table.types";
 
 export const loadBalanceTableStruct: columnType[] = [
@@ -12,6 +13,7 @@ export const loadBalanceTableStruct: columnType[] = [
   {
     id: "maxConnectionsPerServer",
     label: "تعداد کانکشن",
+    format: priceToPersian,
   },
   { id: "control", label: "", disableSort: true },
 ];

@@ -30,27 +30,27 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "CDN / DNS",
       text: "شبکه مدیریت و توزیع محتوا",
       Icon: CloudConnectionSvg,
-      link: "/cdn",
+      link: "/dash/cdn",
       subList: [
         {
           title: "مدیریت دامنه‌ها",
-          link: "/cdn",
+          link: "/dash/cdn",
         },
         {
           title: "تنظیمات DNS Record",
-          link: "/cdn/dnsRecordSettings",
+          link: "/dash/cdn/dnsRecordSettings",
         },
         {
           title: "تنظیمات SSL/TLS",
-          link: "/cdn/sslTslSettings",
+          link: "/dash/cdn/sslTslSettings",
         },
         {
           title: "تنظیمات Load Balance",
-          link: "/cdn/loadBalanceSettings",
+          link: "/dash/cdn/loadBalanceSettings",
         },
         {
           title: "تنظیمات API Gateway",
-          link: "/cdn/apiGatewaySettings",
+          link: "/dash/cdn/apiGatewaySettings",
         },
       ],
     },
@@ -58,56 +58,57 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "Cloud",
       text: "سرویس سرور های ابری",
       Icon: DriverSvg,
-      link: "/cloud",
-      subList: [{ title: "سرویس سرور‌های ابری", link: "/cloud" }],
+      link: "/dash/cloud",
+      subList: [{ title: "سرویس سرور‌های ابری", link: "/dash/cloud" }],
     },
     {
       title: "RabbitMQ",
       text: "سرویس RabbitMQ ابری",
       Icon: DeviceMessageSvg,
-      link: "/rabbit",
-      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
+      link: "/dash/rabbit",
+      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/dash/rabbit" }],
     },
     {
       title: "Payment",
       text: "سرویس پرداخت ابری",
       Icon: CoinSvg,
-      link: "/payment",
+      link: "/dash/payment",
     },
     {
       title: "SMS",
       text: "سرویس پیامک ابری",
       Icon: SmsSvg,
-      link: "/sms",
+      link: "/dash/sms",
       subList: [
-        { title: "خرید بسته پیامکی", link: "/sms" },
-        { title: "سرشماره های من", link: "/sms/" },
-        { title: "پیام های دریافتی", link: "/sms/" },
-        { title: "پیام های ارسالی", link: "/sms/" },
-        { title: "ارسال پیامک تکی", link: "/sms/" },
-        { title: "ارسال پیامک یک به چند", link: "/sms/" },
-        { title: "ارسال پیامک چند به چند", link: "/sms/" },
+        { title: "خرید بسته پیامکی", link: "/dash/sms" },
+        { title: "سرشماره های من", link: "/dash/sms/" },
+        { title: "پیام های دریافتی", link: "/dash/sms/" },
+        { title: "پیام های ارسالی", link: "/dash/sms/" },
+        { title: "ارسال پیامک تکی", link: "/dash/sms/" },
+        { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
+        { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
       ],
     },
     {
       title: "API",
       text: "کلیدهای دسترسی برنامه نویسی",
       Icon: CodeCircleSvg,
-      link: "/apis",
+      link: "/dash/apis",
     },
     {
       Icon: EmptyWalletSvg,
-      link: "/wallet",
+      link: "/dash/portal/billing/wallet",
       subList: [
-        { title: "گزارش کیف پول", link: "/wallet" },
-        { title: "گزارش مصرف", link: "/wallet/bills" },
-        { title: "گزارش پرداخت ها", link: "/wallet/report" },
-        { title: "فاکتور های فروش", link: "/wallet/salesInvoice" },
+        { title: "گزارش کیف پول", link: "/dash/portal/billing/wallet" },
+        { title: "گزارش مصرف", link: "/dash/portal/billing/user-bill" },
+        { title: "گزارش پرداخت ها", link: "/dash/portal/billing/payment" },
+        { title: "فاکتور های فروش", link: "/dash/portal/billing/invoice" },
       ],
     },
     {
       Icon: HeadphoneSvg,
-      link: "/support",
+      link: "/dash/portal/support",
+      subList: [{ title: "مرکز پشتیبانی", link: "/dash/portal/support" }],
     },
     {
       Icon: CalculatorSvg,
@@ -127,22 +128,18 @@ export const Sidebar: FC<SidebarPropsType> = () => {
   }, []);
 
   useEffect(() => {
-    if (windowHeight > 920) {
-      setShowSpecialOffer(true);
-    } else {
-      setShowSpecialOffer(false);
-    }
+    setShowSpecialOffer(windowHeight > 920);
   }, [windowHeight]);
 
   const hideSubLists = useMemo(
     () =>
-      pathname === "/" ||
-      pathname === "/api" ||
-      pathname === "/profile" ||
-      pathname === "/setting" ||
-      pathname === "/services" ||
-      pathname === "/cart" ||
-      pathname === "/referral",
+      pathname === "/dash" ||
+      pathname === "/dash/api" ||
+      pathname === "/dash/portal/profile" ||
+      pathname === "/dash/portal/setting" ||
+      pathname === "/dash/portal/user-service" ||
+      pathname === "/dash/portal/order" ||
+      pathname === "/dash/portal/referral",
     [pathname]
   );
 

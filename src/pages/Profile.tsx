@@ -9,6 +9,7 @@ import { LegalPersonality } from "src/components/organisms/profile/Legal";
 const Profile: FC = () => {
   const { data: userInformation, isLoading } =
     useGetApiV2PortalProfileGetQuery();
+
   return (
     <Stack spacing={2}>
       <Stack
@@ -22,12 +23,7 @@ const Profile: FC = () => {
         </Stack>
         <Stack width="100%">
           {!userInformation || isLoading ? (
-            <Stack
-              spacing={3}
-              height="100%"
-              justifyContent="space-between"
-              py={4}
-            >
+            <Stack spacing={3} height="100%" justifyContent="space-between">
               <Stack
                 bgcolor="white"
                 p={4}

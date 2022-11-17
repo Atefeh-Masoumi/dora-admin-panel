@@ -31,7 +31,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
     }
   }, [id, navigate, sendReferralCode]);
 
-  const closeHandler = () => navigate("/referral");
+  const closeHandler = () => navigate("/dash/portal/referral");
 
   if (!id) return <></>;
 

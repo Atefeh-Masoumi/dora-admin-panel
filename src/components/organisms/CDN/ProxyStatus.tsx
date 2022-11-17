@@ -12,6 +12,8 @@ import { CloudTrue } from "src/components/atoms/svg/CloudTrueSvg";
 import { CloudFalse } from "src/components/atoms/svg/CloudFalseSvg";
 import { usePutApiV2CdnDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import { LoadingButton } from "@mui/lab";
+import PageLoading from "src/components/atoms/PageLoading";
 
 type ProxyStatusProps = { status: boolean; id: number };
 
@@ -22,7 +24,7 @@ export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
 
   const handleTooltipOpen = () => setOpen(!open);
 
-  const [changeProxyStatus] =
+  const [changeProxyStatus, { isLoading }] =
     usePutApiV2CdnDnsRecordChangeProxyStatusByIdMutation();
   const changeProxy = () => {
     if (status === undefined) return;
@@ -37,65 +39,69 @@ export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
   };
 
   return (
-    <ClickAwayListener onClickAway={handleTooltipClose}>
-      <Tooltip
-        PopperProps={{ disablePortal: true }}
-        onClose={handleTooltipClose}
-        open={open}
-        disableFocusListener
-        disableHoverListener
-        disableTouchListener
-        componentsProps={{
-          popper: {
-            sx: {
-              "& .MuiTooltip-tooltip": {
-                background: "rgba(32, 32, 32, 1)",
-                borderRadius: 2,
+    <>
+      {isLoading && <PageLoading />}
+      <ClickAwayListener onClickAway={handleTooltipClose}>
+        <Tooltip
+          PopperProps={{ disablePortal: true }}
+          onClose={handleTooltipClose}
+          open={open}
+          disableFocusListener
+          disableHoverListener
+          disableTouchListener
+          componentsProps={{
+            popper: {
+              sx: {
+                "& .MuiTooltip-tooltip": {
+                  background: "rgba(32, 32, 32, 1)",
+                  borderRadius: 2,
+                },
+                "& .MuiTooltip-arrow::before": { color: "rgba(32, 32, 32, 1)" },
               },
-              "& .MuiTooltip-arrow::before": { color: "rgba(32, 32, 32, 1)" },
             },
-          },
-        }}
-        title={
-          <Stack spacing={1.5} p={1}>
-            <Stack textAlign="justify" spacing={0.5}>
-              <Typography fontSize={16}>استفاده از CDN ابر درسا</Typography>
-              <Typography
-                whiteSpace="initial"
-                fontSize={14}
-                color="rgba(255, 255, 255, 0.8)"
-              >
-                مشتری گرامی با فعال‌سازی این سرویس، هر ساعت و بر پایه‌ی متغییر
-                های ترافیک ورودی، ترافیک خروجی و تعداد درخواست های HTTP/HTTPS از
-                حساب شما کسر می گردد.
-              </Typography>
+          }}
+          title={
+            <Stack spacing={1.5} p={1}>
+              <Stack textAlign="justify" spacing={0.5}>
+                <Typography fontSize={16}>استفاده از CDN ابر درسا</Typography>
+                <Typography
+                  whiteSpace="initial"
+                  fontSize={14}
+                  color="rgba(255, 255, 255, 0.8)"
+                >
+                  مشتری گرامی با فعال‌سازی این سرویس، هر ساعت و بر پایه‌ی متغییر
+                  های ترافیک ورودی، ترافیک خروجی و تعداد درخواست های HTTP/HTTPS
+                  از حساب شما کسر می گردد.
+                </Typography>
+              </Stack>
+              <Divider sx={{ borderColor: "secondary.light" }} />
+              <Stack direction="row" justifyContent="end" spacing={1}>
+                <Button sx={{ color: "white" }}>انصراف</Button>
+                <LoadingButton
+                  loading={isLoading}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "black",
+                    "&:hover": { backgroundColor: "#ddd" },
+                  }}
+                  onClick={changeProxy}
+                >
+                  تغییر وضعیت
+                </LoadingButton>
+              </Stack>
             </Stack>
-            <Divider sx={{ borderColor: "secondary.light" }} />
-            <Stack direction="row" justifyContent="end" spacing={1}>
-              <Button sx={{ color: "white" }}>انصراف</Button>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "white",
-                  color: "black",
-                  "&:hover": { backgroundColor: "#ddd" },
-                }}
-                onClick={changeProxy}
-              >
-                تغییر وضعیت
-              </Button>
-            </Stack>
-          </Stack>
-        }
-        arrow
-      >
-        <IconButton
-          onClick={handleTooltipOpen}
-          color={status === true ? "success" : "error"}
+          }
+          arrow
         >
-          {status === true ? <CloudTrue /> : <CloudFalse />}
-        </IconButton>
-      </Tooltip>
-    </ClickAwayListener>
+          <IconButton
+            onClick={handleTooltipOpen}
+            color={status === true ? "success" : "error"}
+          >
+            {status === true ? <CloudTrue /> : <CloudFalse />}
+          </IconButton>
+        </Tooltip>
+      </ClickAwayListener>
+    </>
   );
 };

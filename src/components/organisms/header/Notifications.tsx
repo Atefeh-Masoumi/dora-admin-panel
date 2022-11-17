@@ -127,7 +127,7 @@ export const Notifications: FC = () => {
                     <Button
                       fullWidth
                       sx={{ color: "white" }}
-                      href="/notification"
+                      href="/dash/portal/notification"
                     >
                       نمایش تمام پیام ها
                     </Button>

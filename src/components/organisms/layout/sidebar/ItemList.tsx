@@ -25,13 +25,13 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
 
   const isCollapsed = useMemo(
     () =>
-      pathname !== "/" &&
-      pathname !== "/api" &&
-      pathname !== "/profile" &&
-      pathname !== "/setting" &&
-      pathname !== "/services" &&
-      pathname !== "/cart" &&
-      pathname !== "/referral",
+      pathname !== "/dash" &&
+      pathname !== "/dash/api" &&
+      pathname !== "/dash/portal/profile" &&
+      pathname !== "/dash/portal/setting" &&
+      pathname !== "/dash/portal/user-service" &&
+      pathname !== "/dash/portal/order" &&
+      pathname !== "/dash/portal/referral",
     [pathname]
   );
 
@@ -83,7 +83,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       <List sx={{ p: 0 }}>
         <ListItem disablePadding sx={{ mb: 3 }}>
           <CustomListItemButton
-            to="/"
+            to="/dash"
             sx={{ px: 0, "&:hover": { bgcolor: "transparent" } }}
           >
             <ListItemIcon>
@@ -93,11 +93,13 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                 sx={{
                   width: 40,
                   height: 40,
-                  bgcolor: pathname === "/" ? "#0560FD14" : "#6E768A14",
+                  bgcolor: pathname === "/dash" ? "#0560FD14" : "#6E768A14",
                   borderRadius: BORDER_RADIUS_1,
                 }}
               >
-                <CategorySvg mode={pathname === "/" ? "selected" : "default"} />
+                <CategorySvg
+                  mode={pathname === "/dash" ? "selected" : "default"}
+                />
               </Stack>
             </ListItemIcon>
             <ListItemText
@@ -108,7 +110,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                   : "opacity 0.5s ease-in",
               }}
               primaryTypographyProps={{
-                color: pathname === "/" ? "primary" : "#6E768A",
+                color: pathname === "/dash" ? "primary" : "#6E768A",
                 fontSize: "16px",
                 fontWeight: 400,
               }}

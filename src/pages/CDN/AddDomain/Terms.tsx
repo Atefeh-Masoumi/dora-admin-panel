@@ -86,7 +86,7 @@ export const Terms: FC<CreateZonePropsType> = ({ goNext }) => {
           </Typography>
         </Stack>
         <Stack direction="row" spacing={1} alignItems="center">
-          <Button fullWidth variant="outlined" sx={{ py: 1.4 }} href="/cdn">
+          <Button fullWidth variant="outlined" sx={{ py: 1.4 }} href="/dash/cdn">
             انصراف
           </Button>
           <Button

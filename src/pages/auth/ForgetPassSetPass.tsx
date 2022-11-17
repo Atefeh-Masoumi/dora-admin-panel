@@ -51,7 +51,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
 
   useEffect(() => {
     if (!email || !code) {
-      navigate("/login");
+      navigate("/dash/account/login");
     }
   }, [email, code, navigate]);
 
@@ -73,7 +73,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
       .then(() => {
         toast.success("گذرواژه با موفقیت آپدیت شد");
         dispatch(resetForgetPasswordStateAction());
-        navigate("/login");
+        navigate("/dash/account/login");
       });
   };
 
@@ -115,7 +115,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
                       </InputAdornment>
                     ),
                   }}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
                 <DorsaTextField
                   type={showPasswordConfirm ? "text" : "password"}
@@ -149,7 +149,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
                   }}
                   {...getFieldProps("passwordConfirm")}
                   fullWidth
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
                 <Stack
                   direction="column"

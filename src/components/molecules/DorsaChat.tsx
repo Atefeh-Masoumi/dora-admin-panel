@@ -104,6 +104,7 @@ export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
               <Typography>|</Typography>
               <Typography variant="text9">کاربر</Typography>
             </Stack>
+            <Typography variant="text4">{message.content}</Typography>
             {message.fileName && (
               <Tooltip title={message.fileName}>
                 <LoadingButton

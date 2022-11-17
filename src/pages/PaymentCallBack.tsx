@@ -41,7 +41,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
     return result;
   }, [paymentInfo.paymentStatusId]);
 
-  const closeHandler = () => navigate("/wallet/report");
+  const closeHandler = () => navigate("/dash/portal/billing/payment");
 
   if (!id) return <></>;
 
@@ -69,9 +69,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
           {isSuccess ? "پرداخت موفق" : "پرداخت ناموفق"}
         </Typography>
         <Typography color="secondary.main" variant="text14" align="justify">
-          {isSuccess
-            ? "پرداخت هزینه سفر ۱۵۰۰۲۳۴ با موفقیت انجام شد!"
-            : "متاسفانه مشکلی در پرداخت پیش آمده است. در صورتی که وجهی از حساب شما کم شده است، تا ۷۲ ساعت دیگر به حساب شما بر خواهد گشت."}
+          {isSuccess ? "پرداخت با موفقیت انجام شد" : "پرداخت با شکست انجام شد"}
         </Typography>
         <Stack spacing={2} color="secondary.main" width="100%">
           <Stack direction="row" justifyContent="space-between">

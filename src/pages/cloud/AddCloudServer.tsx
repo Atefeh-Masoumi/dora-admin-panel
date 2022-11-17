@@ -30,7 +30,7 @@ const AddCloudServer: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/cloud");
+      navigate("/dash/cloud");
       return;
     }
     setStep((step - 1) as addServerStepsType);
@@ -63,7 +63,7 @@ const AddCloudServer: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("سرور ابری  با موفقیت ایجاد شد");
-        navigate("/cloud");
+        navigate("/dash/portal/order");
       });
   };
 

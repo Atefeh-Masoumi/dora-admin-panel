@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { cloudTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Chip, IconButton, Stack } from "@mui/material";
+import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
@@ -11,6 +11,7 @@ import { usePostApiV2VmVmKmsGetMutation } from "src/app/services/api.generated";
 // import CreditCardIcon from "@mui/icons-material/CreditCard";
 // import { useLazyGetApiV2VmVmPayByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
+import { toast } from "react-toastify";
 
 export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -24,14 +25,14 @@ export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/cloud/" + row["id"]);
+  const settingOnClick = () => navigate("/dash/cloud/" + row["id"]);
   // const goToOrderDetails = () => {
   //   if (!row["id"] || isNaN(Number(row["id"]))) return;
   //   getOrderId({ id: Number(row["id"]) })
   //     .unwrap()
   //     .then((res) => {
   //       if (!res) return;
-  //       navigate("/cart/" + res);
+  //       navigate("/dash/order/" + res);
   //     });
   // };
   const monitorOnClick = () =>
@@ -57,7 +58,7 @@ export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
         {cloudTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
-          const isActive = row["statusId"] === 2;
+          const id = row["statusId"];
           return (
             <DorsaTableCell
               key={column.id}
@@ -97,18 +98,52 @@ export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
                   {column.id === "statusId" ? (
                     <Chip
                       clickable={false}
-                      label={isActive ? "فعال" : "غیرفعال"}
+                      label={
+                        id === 1
+                          ? "پرداخت نشده"
+                          : id === 2
+                          ? "فعال"
+                          : id === 3
+                          ? "غیرفعال"
+                          : id === 4
+                          ? "منقضی شده"
+                          : id === 5
+                          ? "حذف شده"
+                          : id === 6
+                          ? "انتظار"
+                          : id === 7
+                          ? "بازسازی"
+                          : "ناموفق"
+                      }
                       sx={{
                         cursor: "pointer",
-                        backgroundColor: isActive
-                          ? "success.light"
-                          : "error.light",
-                        color: isActive ? "success.main" : "error.main",
+                        backgroundColor:
+                          id === 6 || id === 7
+                            ? "warning.light"
+                            : id === 2
+                            ? "success.light"
+                            : "error.light",
+                        color:
+                          id === 6 || id === 7
+                            ? "warning.main"
+                            : id === 2
+                            ? "success.main"
+                            : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "ipv4" ? (
+                    <Button
+                      sx={{ cursor: "pointer", py: 0, px: 0.5 }}
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success("IP کپی شد", { position: "bottom-left" });
+                      }}
+                    >
+                      {text}
+                    </Button>
                   ) : (
                     text
                   )}

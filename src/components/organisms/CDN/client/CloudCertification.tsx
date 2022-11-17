@@ -1,26 +1,20 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import {
-  usePostApiV2CdnEdgeCertCreateMutation,
-  useGetApiV2CdnEdgeCertGetByZoneNameQuery,
-} from "src/app/services/api.generated";
+import { useGetApiV2CdnEdgeCertGetByZoneNameQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
 export const CloudCertification: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const [createLicense, { isLoading: loadingCreate }] =
-    usePostApiV2CdnEdgeCertCreateMutation();
 
   const { data: edgeCert, isLoading } =
     useGetApiV2CdnEdgeCertGetByZoneNameQuery({
       zoneName: selectedDomain?.zoneName || "",
     });
 
-  const submit = () => {
+  /* const submit = () => {
     createLicense({
       createZoneEdgeCertificateModel: {
         zoneName: selectedDomain?.zoneName || "",
@@ -32,21 +26,21 @@ export const CloudCertification: FC = () => {
         if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
         else toast.error(res.data[""][0]);
       });
-  };
+  }; */
 
   return (
     <Stack bgcolor="white" borderRadius={2} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography>گواهی ابر درسا</Typography>
         <LoadingButton
-          loading={loadingCreate}
+          // loading={loadingCreate}
           variant="outlined"
           size="large"
           sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: 1.5, border: 1 }}
           startIcon={
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
-          onClick={submit}
+          // onClick={submit}
         >
           صدور گواهی
         </LoadingButton>

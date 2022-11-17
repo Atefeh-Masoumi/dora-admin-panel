@@ -4,6 +4,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { DomainCard } from "src/components/organisms/CDN/DomainCard";
 import { useGetApiV2CdnZoneListQuery } from "src/app/services/api.generated";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
 
 const DomainManagement: FC = () => {
   const { data: zoneList, isLoading } = useGetApiV2CdnZoneListQuery();
@@ -65,7 +66,7 @@ const DomainManagement: FC = () => {
           </Stack>
           <Button
             variant="outlined"
-            href="/cdn/addDomain"
+            href="/dash/cdn/addDomain"
             size="large"
             sx={{ whiteSpace: "nowrap", px: 1.2 }}
             startIcon={
@@ -81,6 +82,13 @@ const DomainManagement: FC = () => {
           <></>
         )}
       </Stack>
+      {filteredList && filteredList?.length <= 0 && (
+        <Stack py={3}>
+          <Stack bgcolor="white" borderRadius={3}>
+            <EmptyTable text="دامنه ای وجود ندارد" />
+          </Stack>
+        </Stack>
+      )}
       <Grid container justifyContent="end" spacing={3} py={3}>
         {isLoading ? (
           <Fragment>

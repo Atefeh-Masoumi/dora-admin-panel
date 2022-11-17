@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import {
   MainTemplate,
   MainTemplatePropsType,
@@ -19,7 +19,6 @@ const Profile = lazy(() => import("src/pages/Profile"));
 const Setting = lazy(() => import("src/pages/Setting"));
 const Referral = lazy(() => import("src/pages/Referral"));
 const Services = lazy(() => import("src/pages/Services"));
-const OrderDetails = lazy(() => import("src/pages/order/OrderDetails"));
 const Sales = lazy(() => import("src/pages/Sales"));
 const Notification = lazy(() => import("src/pages/Notification"));
 const Support = lazy(() => import("src/pages/support"));
@@ -43,7 +42,8 @@ const AddCloudServer = lazy(() => import("src/pages/cloud/AddCloudServer"));
 const EditCloudServer = lazy(() => import("src/pages/cloud/EditCloudServer"));
 const PaymentCallBack = lazy(() => import("src/pages/PaymentCallBack"));
 const ReferralCallBack = lazy(() => import("src/pages/ReferralCallBack"));
-const Cart = lazy(() => import("src/pages/Cart"));
+const PaymentDetails = lazy(() => import("src/pages/cart/PaymentDetails"));
+const Cart = lazy(() => import("src/pages/cart/Cart"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -78,188 +78,189 @@ const Router: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forget" element={<Forget />} />
+        <Route path="/dash/account/login" element={<Login />} />
+        <Route path="/dash/account/signup" element={<Signup />} />
+        <Route path="/dash/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<Navigate to="/dash" />} />
           <Route
-            path="/"
+            path="/dash"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
-            path="/profile"
+            path="/dash/portal/profile"
             element={mainTemplate(Profile, {
               pageTitle: "حساب کاربری",
             })}
           />
           <Route
-            path="/setting"
+            path="/dash/portal/setting"
             element={mainTemplate(Setting, {
               pageTitle: "تنظیمات",
             })}
           />
           <Route
-            path="/referral"
+            path="/dash/portal/referral"
             element={mainTemplate(Referral, {
               pageTitle: "کد معرف",
             })}
           />
           <Route
-            path="/referral/:id"
+            path="/dash/portal/referral/:id"
             element={callbackTemplate(ReferralCallBack)}
           />
           <Route
-            path="/services"
+            path="/dash/portal/user-service"
             element={mainTemplate(Services, {
               pageTitle: "سرویس های من",
             })}
           />
           <Route
-            path="/sales"
+            path="/dash/portal/sales"
             element={mainTemplate(Sales, {
               link: {
                 text: "بازگشت به داشبورد",
-                url: "/",
+                url: "/dash",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/notification"
+            path="/dash/portal/notification"
             element={mainTemplate(Notification, {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
           {/* ======================================= CART ======================================= */}
           <Route
-            path="/cart"
+            path="/dash/portal/order"
             element={mainTemplate(Cart, {
               pageTitle: "سبد خرید",
             })}
           />
           <Route
-            path="/cart/:id"
-            element={mainTemplate(OrderDetails, {
+            path="/dash/portal/order/:id"
+            element={mainTemplate(PaymentDetails, {
               link: {
                 text: "بازگشت به سبد خرید",
-                url: "/cart",
+                url: "/dash/portal/order",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/support"
+            path="/dash/portal/support"
             element={mainTemplate(Support, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
-            path="/support/addTicket"
+            path="/dash/portal/support/addTicket"
             element={mainTemplate(AddTicket, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/support",
+                url: "/dash/portal/support",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/support/:id"
+            path="/dash/portal/support/:id"
             element={mainTemplate(Detail, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/support",
+                url: "/dash/portal/support",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= WALLET ======================================= */}
           <Route
-            path="/wallet"
+            path="/dash/portal/billing/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
           <Route
-            path="/wallet/bills"
+            path="/dash/portal/billing/user-bill"
             element={mainTemplate(UserBills, { pageTitle: "گزارش مصرف" })}
           />
           <Route
-            path="/wallet/report"
-            element={mainTemplate(Transactions, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
-            path="/wallet/:id"
-            element={mainTemplate(Transactions, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
-            path="/wallet/salesInvoice"
-            element={mainTemplate(Invoices, {
-              pageTitle: "فاکتور های فروش",
-            })}
-          />
-          <Route
-            path="/wallet/bills/:id"
+            path="/dash/portal/billing/user-bill/:id"
             element={mainTemplate(Bill, {
               link: {
                 text: "بازگشت به گزارش مصرف",
-                url: "/wallet/bills",
+                url: "/dash/portal/billing/user-bill",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/wallet/salesInvoice/:id"
+            path="/dash/portal/billing/payment"
+            element={mainTemplate(Transactions, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/payment:id"
+            element={mainTemplate(Transactions, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/invoice"
+            element={mainTemplate(Invoices, {
+              pageTitle: "فاکتور های فروش",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/invoice/:id"
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/wallet/salesInvoice",
+                url: "/dash/portal/billing/invoice",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= CDN ======================================= */}
           <Route
-            path="/cdn"
+            path="/dash/cdn"
             element={mainTemplate(DomainManagement, {
               pageTitle: "مدیریت دامنه ها",
             })}
           />
           <Route
-            path="/cdn/sslTslSettings"
+            path="/dash/cdn/sslTslSettings"
             element={mainTemplate(CDN, {
               pageTitle: "تنظیمات SSL/TSL",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/loadBalanceSettings"
+            path="/dash/cdn/loadBalanceSettings"
             element={mainTemplate(CDN, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/dnsRecordSettings"
+            path="/dash/cdn/dnsRecordSettings"
             element={mainTemplate(CDN, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/apiGatewaySettings"
+            path="/dash/cdn/apiGatewaySettings"
             element={mainTemplate(CDN, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/addDomain"
+            path="/dash/cdn/addDomain"
             element={mainTemplate(AddDomain, {
               link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
               hideSidebar: true,
@@ -267,24 +268,24 @@ const Router: FC = () => {
           />
           {/* ======================================= CLOUD ======================================= */}
           <Route
-            path="/payment/:id"
+            path="/dash/payment/:id"
             element={callbackTemplate(PaymentCallBack)}
           />
           {/* ======================================= CLOUD ======================================= */}
           <Route
-            path="/cloud"
+            path="/dash/cloud"
             element={mainTemplate(CloudManagement, {
               pageTitle: "مدیریت سرور ابری",
             })}
           />
           <Route
-            path="/cloud/addCloudServer"
+            path="/dash/cloud/addCloudServer"
             element={mainTemplate(
               AddCloudServer,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/cloud",
+                  url: "/dash/cloud",
                 },
                 hideSidebar: true,
               },
@@ -292,26 +293,27 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/cloud/:id"
+            path="/dash/cloud/:id"
             element={mainTemplate(
               EditCloudServer,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/cloud",
+                  url: "/dash/cloud",
                 },
                 hideSidebar: true,
               },
               EditServerContextProvider
             )}
           />
+          <Route
+            path="*"
+            element={mainTemplate(NotFound, {
+              pageTitle: " موردی یافت نشد!",
+            })}
+          />
         </Route>
-        <Route
-          path="*"
-          element={mainTemplate(NotFound, {
-            pageTitle: " موردی یافت نشد!",
-          })}
-        />
+        <Route path="*" element={<Navigate to="/dash/account/login" />} />
       </Routes>
     </BrowserRouter>
   );

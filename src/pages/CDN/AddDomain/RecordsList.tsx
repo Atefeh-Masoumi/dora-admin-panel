@@ -19,7 +19,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
     createZone({ createZoneModel: { zoneName } })
       .then(() => {
         toast.success("دامنه با موفقیت ایجاد شد");
-        navigate("/cdn");
+        navigate("/dash/cdn");
       })
       .catch((res) => {
         if (res.status === 401 || res.status === 404) {
@@ -61,7 +61,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
           <DorsaTextField
             disabled
             value="asiatech.ns.dorsacloud.com"
-            dir="ltr"
+            inputProps={{ dir: "ltr" }}
           />
           <Typography>:NS 1</Typography>
         </Stack>
@@ -69,7 +69,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
           <DorsaTextField
             disabled
             value="asiatech.ns.dorsacloud.com"
-            dir="ltr"
+            inputProps={{ dir: "ltr" }}
           />
           <Typography whiteSpace="nowrap">:NS 2</Typography>
         </Stack>
@@ -84,7 +84,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
         <Button
           fullWidth
           variant="outlined"
-          href="/cdn"
+          href="/dash/cdn"
           sx={{ py: 1.7, px: 5 }}
         >
           انصراف

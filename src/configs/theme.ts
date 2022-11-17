@@ -143,6 +143,7 @@ const theme = createTheme({
     grey: { 600: "#797979", 700: "#6E768A" },
     error: { main: "rgb(244, 95, 80)", light: "rgba(244, 95, 80, 0.12)" },
     success: { main: "rgba(13, 191, 102, 1)", light: "rgba(218, 246, 232, 1)" },
+    warning: { main: "rgba(255, 147, 68, 1)", light: "rgba(255, 233, 218, 1)" },
   },
   typography: {
     // htmlFontSize: 16 (MUI default),

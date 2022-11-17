@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Box, IconButton, Skeleton, Stack, Typography } from "@mui/material";
 import AddUserSvg from "src/components/atoms/svg/AddUser";
 import { Copy } from "src/components/atoms/svg/CopySvg";
@@ -92,7 +92,7 @@ export const InviteCode: FC = () => {
                     maxWidth: { xs: "143px", md: "200px" },
                     width: "200px",
                   }}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
               )}
               <IconButton
@@ -154,7 +154,7 @@ export const InviteCode: FC = () => {
                     maxWidth: { xs: "143px", md: "200px" },
                     width: "200px",
                   }}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
               )}
               <IconButton

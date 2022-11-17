@@ -6,6 +6,7 @@ export const referralTableStruct: columnType[] = [
   {
     id: "invoiceId",
     label: "شماره فاکتور",
+    format: priceToPersian,
   },
   {
     id: "totalPrice",

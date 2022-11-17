@@ -152,7 +152,7 @@ export const EmailValidation: FC<EmailValidationProps> = ({
                       {...getFieldProps("email")}
                       placeholder="ایمیل"
                       fullWidth
-                      dir="ltr"
+                      inputProps={{ dir: "ltr" }}
                     />
                   )}
                 </Box>
@@ -200,9 +200,8 @@ export const EmailValidation: FC<EmailValidationProps> = ({
                     variant="contained"
                     sx={{ px: 7, py: 2, fontSize: 16 }}
                     onClick={isCodeField ? submitConfirm : () => {}}
-                    disabled={input === email || Boolean(errors.email)}
                   >
-                    تایید ایمیل
+                    تایید و تغییر ایمیل
                   </LoadingButton>
                 </Stack>
               </Stack>

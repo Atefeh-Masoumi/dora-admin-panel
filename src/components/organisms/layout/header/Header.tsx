@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import {
   AppBar,
+  Badge,
   Button,
   IconButton,
   Popover,
@@ -20,6 +21,7 @@ import {
   ArrowForward as ArrowForwardIcon,
   ShoppingCartOutlined as ShoppingCartOutlinedIcon,
 } from "@mui/icons-material";
+import { useGetApiV2PortalOrderNotPaidListQuery } from "src/app/services/api.generated";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -58,6 +60,7 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
+  const { data: notPaidList } = useGetApiV2PortalOrderNotPaidListQuery();
   const desktopHeaderIcon = (
     <>
       <Notifications />
@@ -79,24 +82,34 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/support");
+          navigate("/dash/portal/support");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
       </IconButton>
-      <IconButton
-        sx={{
-          border: 1,
-          borderRadius: { xs: 62, lg: 8 },
-          borderColor: "rgba(110, 118, 138, 0.16)",
+      <Badge
+        badgeContent={notPaidList?.length}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
         }}
-        onClick={() => {
-          closeMenuHandler();
-          navigate("/cart");
-        }}
+        overlap='circular'
+        color="primary"
       >
-        <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />
-      </IconButton>
+        <IconButton
+          sx={{
+            border: 1,
+            borderRadius: { xs: 62, lg: 8 },
+            borderColor: "rgba(110, 118, 138, 0.16)",
+          }}
+          onClick={() => {
+            closeMenuHandler();
+            navigate("/dash/portal/order");
+          }}
+        >
+          <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />
+        </IconButton>
+      </Badge>
     </>
   );
 

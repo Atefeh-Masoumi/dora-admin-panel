@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { LoadingChat } from "src/components/organisms/support/LoadingChat";
 import moment from "jalali-moment";
 import { DorsaTooltip } from "src/components/organisms/referral/WelcomeTooltip";
+import { LoadingButton } from "@mui/lab";
 
 const Detail: FC = () => {
   /* const handleOpen = () => setOpen(true);
@@ -47,7 +48,8 @@ const Detail: FC = () => {
     setDate(m);
   }, [supportItems]);
 
-  const [itemCreate] = usePostApiV2PortalSupportItemCreateMutation();
+  const [itemCreate, { isLoading: LoadingSend }] =
+    usePostApiV2PortalSupportItemCreateMutation();
   const submit = () => {
     if (!id || !content) return;
 
@@ -120,7 +122,7 @@ const Detail: FC = () => {
         {isLoading ? (
           <LoadingChat />
         ) : (
-          <Stack spacing={2} overflow="scroll" maxHeight="600px" id="chat">
+          <Stack spacing={2} overflow="scroll" maxHeight="550px" id="chat">
             {supportItems?.transaction?.map((item, index) => {
               return <DorsaChat key={index} message={item} />;
             })}
@@ -164,16 +166,17 @@ const Detail: FC = () => {
                 />
               </Button>
             </DorsaTooltip>
-            <Button
+            <LoadingButton
               fullWidth
               variant="contained"
               size="large"
               sx={{ px: 3.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
               onClick={submit}
               disabled={isDisableButton}
+              loading={LoadingSend}
             >
               ارسال پیام
-            </Button>
+            </LoadingButton>
           </Stack>
         </Stack>
       </Stack>

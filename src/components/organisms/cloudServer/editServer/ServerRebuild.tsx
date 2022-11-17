@@ -6,6 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import { usePutApiV2VmVmRebuildMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/context/EditServerContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 type ServerRebuildSteps = 1 | 2;
 
@@ -17,6 +18,7 @@ export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const [rebuild, { isLoading }] = usePutApiV2VmVmRebuildMutation();
 
@@ -34,6 +36,7 @@ export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
         .unwrap()
         .then(() => {
           toast.success("درخواست بازسای با موفیت ارسال شد");
+          navigate("/dash/cloud");
         });
       return;
     }

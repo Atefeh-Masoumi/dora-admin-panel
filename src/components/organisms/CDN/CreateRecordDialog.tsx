@@ -213,14 +213,14 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                     error={Boolean(errors.name && touched.name)}
                     helperText={errors.name}
                     {...getFieldProps("name")}
-                    dir="ltr"
+                    inputProps={{ dir: "ltr" }}
                     label="Name"
                   />
                   <DorsaTextField
                     error={Boolean(errors.value && touched.value)}
                     helperText={errors.value}
                     {...getFieldProps("value")}
-                    dir="ltr"
+                    inputProps={{ dir: "ltr" }}
                     label={dnsTypeValueLabelObject[type]}
                   />
                   {type === "SRV" && (
@@ -229,21 +229,21 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                         error={Boolean(errors.priority && touched.priority)}
                         helperText={errors.priority}
                         {...getFieldProps("priority")}
-                        dir="ltr"
+                        inputProps={{ dir: "ltr" }}
                         label="Priority"
                       />
                       <DorsaTextField
                         error={Boolean(errors.weight && touched.weight)}
                         helperText={errors.weight}
                         {...getFieldProps("weight")}
-                        dir="ltr"
+                        inputProps={{ dir: "ltr" }}
                         label="Weight"
                       />
                       <DorsaTextField
                         error={Boolean(errors.port && touched.port)}
                         helperText={errors.port}
                         {...getFieldProps("port")}
-                        dir="ltr"
+                        inputProps={{ dir: "ltr" }}
                         label="Port"
                       />
                     </>
@@ -253,7 +253,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                       error={Boolean(errors.preference && touched.preference)}
                       helperText={errors.preference}
                       {...getFieldProps("preference")}
-                      dir="ltr"
+                      inputProps={{ dir: "ltr" }}
                       label="Priority (0 - 65535)"
                     />
                   )}

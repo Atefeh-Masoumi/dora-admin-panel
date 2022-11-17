@@ -6,6 +6,7 @@ import {
   usePutApiV2CdnZoneChangeRedirectMutation,
 } from "src/app/services/api.generated";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
+import PageLoading from "src/components/atoms/PageLoading";
 
 type SwitchHttpSettingPropsType = {
   id: number;
@@ -19,7 +20,8 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
   isRedirect,
   loading,
 }) => {
-  const [changeRedirect] = usePutApiV2CdnZoneChangeRedirectMutation();
+  const [changeRedirect, { isLoading: loadingRedirect }] =
+    usePutApiV2CdnZoneChangeRedirectMutation();
   const onChangeRedirect = () => {
     if (isRedirect === undefined) return;
     changeRedirect({
@@ -27,7 +29,8 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
     }).then(() => toast.success("وضعیت تبدیل لینک آپدیت شد"));
   };
 
-  const [changeHSTS] = usePutApiV2CdnZoneChangeHstsMutation();
+  const [changeHSTS, { isLoading: loadingHSTS }] =
+    usePutApiV2CdnZoneChangeHstsMutation();
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({ changeHstsModel: { id, isHsts: !isHSTS } }).then(() => {
@@ -51,60 +54,25 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
   ];
 
   return (
-    <Stack bgcolor="white" py={2} px={3} borderRadius={3}>
-      <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
-        {items.map(({ title, text, data, action }, index) => (
-          <Fragment key={index}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Stack spacing={1}>
-                <Typography variant="text1" fontWeight="bold">
-                  {title}
-                </Typography>
-                <Typography variant="text4" color="secondary">
-                  {text}
-                </Typography>
-              </Stack>
-              <Stack>
-                {loading ? (
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    sx={{ mx: { xs: 0, md: 2 } }}
-                  >
-                    <Skeleton variant="circular" width={10} height={10} />
-                    <Skeleton variant="circular" width={10} height={10} />
-                    <Skeleton variant="circular" width={10} height={10} />
-                  </Stack>
-                ) : (
-                  <DorsaSwitch
-                    onChange={action}
-                    checked={data}
-                    sx={{ mx: { xs: 0, md: 2 } }}
-                  />
-                )}
-              </Stack>
-            </Stack>
-            {index === 0 && <Divider sx={{ borderColor: "secondary.light" }} />}
-          </Fragment>
-        ))}
-      </Stack>
-      <Stack spacing={2} display={{ xs: "flex", md: "none" }}>
-        {items.map(({ title, text, data, action }, index) => (
-          <Fragment key={index}>
-            <Stack spacing={1}>
+    <>
+      {(loadingRedirect || loadingHSTS) && <PageLoading />}
+      <Stack bgcolor="white" py={2} px={3} borderRadius={3}>
+        <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
+          {items.map(({ title, text, data, action }, index) => (
+            <Fragment key={index}>
               <Stack
-                spacing={1}
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="text1" fontWeight="bold">
-                  {title}
-                </Typography>
+                <Stack spacing={1}>
+                  <Typography variant="text1" fontWeight="bold">
+                    {title}
+                  </Typography>
+                  <Typography variant="text4" color="secondary">
+                    {text}
+                  </Typography>
+                </Stack>
                 <Stack>
                   {loading ? (
                     <Stack
@@ -125,14 +93,56 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
                   )}
                 </Stack>
               </Stack>
-              <Typography variant="text4" color="secondary">
-                {text}
-              </Typography>
-            </Stack>
-            {index === 0 && <Divider sx={{ borderColor: "secondary.light" }} />}
-          </Fragment>
-        ))}
+              {index === 0 && (
+                <Divider sx={{ borderColor: "secondary.light" }} />
+              )}
+            </Fragment>
+          ))}
+        </Stack>
+        <Stack spacing={2} display={{ xs: "flex", md: "none" }}>
+          {items.map(({ title, text, data, action }, index) => (
+            <Fragment key={index}>
+              <Stack spacing={1}>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="text1" fontWeight="bold">
+                    {title}
+                  </Typography>
+                  <Stack>
+                    {loading ? (
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ mx: { xs: 0, md: 2 } }}
+                      >
+                        <Skeleton variant="circular" width={10} height={10} />
+                        <Skeleton variant="circular" width={10} height={10} />
+                        <Skeleton variant="circular" width={10} height={10} />
+                      </Stack>
+                    ) : (
+                      <DorsaSwitch
+                        onChange={action}
+                        checked={data}
+                        sx={{ mx: { xs: 0, md: 2 } }}
+                      />
+                    )}
+                  </Stack>
+                </Stack>
+                <Typography variant="text4" color="secondary">
+                  {text}
+                </Typography>
+              </Stack>
+              {index === 0 && (
+                <Divider sx={{ borderColor: "secondary.light" }} />
+              )}
+            </Fragment>
+          ))}
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };

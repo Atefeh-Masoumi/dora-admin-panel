@@ -11,6 +11,7 @@ import {
 import CloudSvg from "src/components/atoms/svg/CloudSvg.svg";
 import { usePutApiV2CdnZoneChangeZoneTypeMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import PageLoading from "src/components/atoms/PageLoading";
 
 const radioItems = [
   {
@@ -41,7 +42,8 @@ export const RadioHttpSetting: FC<RadioHttpSettingPropsType> = ({
   loading,
   id,
 }) => {
-  const [changeZoneType] = usePutApiV2CdnZoneChangeZoneTypeMutation();
+  const [changeZoneType, { isLoading: loadingChange }] =
+    usePutApiV2CdnZoneChangeZoneTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
     changeZoneType({ changeZoneTypeModel: { id, zoneTypeId } }).then(() => {
@@ -50,93 +52,96 @@ export const RadioHttpSetting: FC<RadioHttpSettingPropsType> = ({
   };
 
   return (
-    <Stack
-      bgcolor="white"
-      direction="row"
-      justifyContent="center"
-      sx={{ py: 2, px: 3, borderRadius: 3 }}
-    >
-      <Stack width="100%" direction="row" justifyContent="space-between">
-        <Stack>
+    <>
+      {loadingChange && <PageLoading />}
+      <Stack
+        bgcolor="white"
+        direction="row"
+        justifyContent="center"
+        sx={{ py: 2, px: 3, borderRadius: 3 }}
+      >
+        <Stack width="100%" direction="row" justifyContent="space-between">
           <Stack>
-            <Typography
-              variant="text1"
-              fontWeight="bold"
-              sx={{ paddingInlineStart: 1 }}
-            >
-              پروتکل ارتباطی بازدیدکننده با سرورهای درسا و سرورهای اصلی کاربر
-            </Typography>
-            <Typography variant="text15" color="secondary">
-              با تنظیم این گزینه می‌توانید شیوه‌ی ارتباط بین سرورهای ابر درسا و
-              کاربران خود را مشخص کنید.
-            </Typography>
-          </Stack>
-          {loading ? (
-            <Stack spacing={1} py={1.5}>
-              {[...Array(3)].map((_, index) => (
-                <Skeleton
-                  key={index}
-                  variant="rectangular"
-                  height={50}
-                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                />
-              ))}
+            <Stack>
+              <Typography
+                variant="text1"
+                fontWeight="bold"
+                sx={{ paddingInlineStart: 1 }}
+              >
+                پروتکل ارتباطی بازدیدکننده با سرورهای درسا و سرورهای اصلی کاربر
+              </Typography>
+              <Typography variant="text15" color="secondary">
+                با تنظیم این گزینه می‌توانید شیوه‌ی ارتباط بین سرورهای ابر درسا
+                و کاربران خود را مشخص کنید.
+              </Typography>
             </Stack>
-          ) : (
-            <Stack color="secondary">
-              <FormControl>
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={zoneTypeId}
-                  onChange={onChangeZoneType}
-                >
-                  <Stack py={3} spacing={3}>
-                    {radioItems.map(({ value: val, title, text }, index) => (
-                      <Stack
-                        direction="row"
-                        alignItems="start"
-                        key={index}
-                        spacing={1}
-                        sx={{
-                          "& .MuiRadio-root": { p: 0 },
-                          "& .MuiFormControlLabel-root": { m: 0 },
-                        }}
-                      >
-                        <FormControlLabel
-                          value={val}
-                          control={<Radio />}
-                          label=""
-                        />
+            {loading ? (
+              <Stack spacing={1} py={1.5}>
+                {[...Array(3)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rectangular"
+                    height={50}
+                    sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                  />
+                ))}
+              </Stack>
+            ) : (
+              <Stack color="secondary">
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={zoneTypeId}
+                    onChange={onChangeZoneType}
+                  >
+                    <Stack py={3} spacing={3}>
+                      {radioItems.map(({ value: val, title, text }, index) => (
                         <Stack
-                          color={
-                            zoneTypeId === val
-                              ? "primary.main"
-                              : "secondary.main"
-                          }
+                          direction="row"
+                          alignItems="start"
+                          key={index}
+                          spacing={1}
+                          sx={{
+                            "& .MuiRadio-root": { p: 0 },
+                            "& .MuiFormControlLabel-root": { m: 0 },
+                          }}
                         >
-                          <Typography variant="text14" fontWeight="bold">
-                            {title}
-                          </Typography>
-                          <Typography variant="text13">{text}</Typography>
+                          <FormControlLabel
+                            value={val}
+                            control={<Radio />}
+                            label=""
+                          />
+                          <Stack
+                            color={
+                              zoneTypeId === val
+                                ? "primary.main"
+                                : "secondary.main"
+                            }
+                          >
+                            <Typography variant="text14" fontWeight="bold">
+                              {title}
+                            </Typography>
+                            <Typography variant="text13">{text}</Typography>
+                          </Stack>
                         </Stack>
-                      </Stack>
-                    ))}
-                  </Stack>
-                </RadioGroup>
-              </FormControl>
-            </Stack>
-          )}
-        </Stack>
+                      ))}
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+              </Stack>
+            )}
+          </Stack>
 
-        <Stack
-          px={5}
-          justifyContent="center"
-          display={{ xs: "none", md: "flex" }}
-        >
-          <img src={CloudSvg} alt="Cloud" />
+          <Stack
+            px={5}
+            justifyContent="center"
+            display={{ xs: "none", md: "flex" }}
+          >
+            <img src={CloudSvg} alt="Cloud" />
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };

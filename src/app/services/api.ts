@@ -48,7 +48,7 @@ export const api = generatedApi
       "SupportItems",
       "CloudServer",
       "VmData",
-      "OrderDetails",
+      "CartDetails",
       "Cart",
     ],
     endpoints: {
@@ -80,7 +80,7 @@ export const api = generatedApi
         providesTags: () => ["VmData"],
       },
       getApiV2PortalOrderGetById: {
-        providesTags: () => ["OrderDetails"],
+        providesTags: () => ["CartDetails"],
       },
       getApiV2PortalOrderNotPaidList: {
         providesTags: () => ["Cart"],
@@ -159,10 +159,10 @@ export const api = generatedApi
         invalidatesTags: () => ["VmData"],
       },
       putApiV2PortalOrderPaymentType: {
-        invalidatesTags: () => ["OrderDetails"],
+        invalidatesTags: () => ["CartDetails"],
       },
       putApiV2PortalOrderDuration: {
-        invalidatesTags: () => ["OrderDetails"],
+        invalidatesTags: () => ["CartDetails"],
       },
       putApiV2PortalOrderCancelById: {
         invalidatesTags: () => ["Cart"],

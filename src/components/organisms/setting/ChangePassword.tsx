@@ -111,7 +111,7 @@ export const ChangePassword: FC = () => {
                   }}
                   label="رمز عبور فعلی"
                   fullWidth
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
                 <DorsaTextField
                   error={Boolean(errors.newPassword && touched.newPassword)}
@@ -131,7 +131,7 @@ export const ChangePassword: FC = () => {
                   }}
                   label="رمز عبور جدید"
                   fullWidth
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
                 <DorsaTextField
                   error={Boolean(
@@ -159,7 +159,7 @@ export const ChangePassword: FC = () => {
                   }}
                   label="تکرار رمز عبور"
                   fullWidth
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
                 <Stack
                   direction="column"

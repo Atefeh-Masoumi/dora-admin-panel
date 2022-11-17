@@ -8,9 +8,9 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { usePutApiV2VmVmEditMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
-const memoryUnitPrice = 250000;
-const cpuUnitPrice = 300000;
-const diskUnitPrice = 562500;
+const memoryUnitPrice = 300000;
+const cpuUnitPrice = 250000;
+const diskUnitPrice = 27000;
 
 type ServerConfigPropsType = {};
 

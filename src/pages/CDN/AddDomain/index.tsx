@@ -71,10 +71,10 @@ const AddDomain: FC = () => {
               onKeyDown={(e) => e.key === "Enter" && submit()}
               placeholder="example.com"
               fullWidth
-              dir="ltr"
+              inputProps={{ dir: "ltr" }}
             />
             <Stack direction="row" alignItems="center" spacing={1} width="100%">
-              <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/cdn">
+              <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/dash/cdn">
                 انصراف
               </Button>
               <LoadingButton

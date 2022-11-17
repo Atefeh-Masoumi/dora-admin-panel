@@ -152,7 +152,7 @@ export const MobileValidation: FC<MobileValidationProps> = ({
                       {...getFieldProps("phoneNumber")}
                       placeholder="شماره موبایل"
                       fullWidth
-                      dir="ltr"
+                      inputProps={{ dir: "ltr" }}
                     />
                   )}
                 </Box>
@@ -197,13 +197,10 @@ export const MobileValidation: FC<MobileValidationProps> = ({
                     type={isCodeField ? "button" : "submit"}
                     loading={isCodeField ? loadingConfirm : isLoading}
                     variant="contained"
-                    sx={{ px: 7, py: 2, fontSize: 16 }}
+                    sx={{ px: 4, py: 2, fontSize: 16 }}
                     onClick={isCodeField ? submitConfirm : () => {}}
-                    disabled={
-                      input === phoneNumber || Boolean(errors.phoneNumber)
-                    }
                   >
-                    تایید شماره موبایل
+                    تایید و تغییر شماره تماس
                   </LoadingButton>
                 </Stack>
               </Stack>

@@ -9,15 +9,15 @@ type SpecialOfferPropsType = {};
 export const SpecialOffer: FC<SpecialOfferPropsType> = () => {
   const { pathname } = useLocation();
 
-  const isCollapsed = pathname !== "/" && pathname !== "/api";
-  // TODO: add this component to sidebar
+  const isCollapsed = pathname !== "/dash" && pathname !== "/dash/api";
+
   return (
     <Stack
       display="none"
       alignItems="center"
       justifyContent="space-between"
       sx={{
-        // display: { xs: "none", lg: "flex" },
+        display: { xs: "none", lg: "flex" },
         width: 232,
         minHeight: 222,
         px: 1,

@@ -65,25 +65,25 @@ const items = [
     value: "wallet",
     label: "گزارش کیف پول",
     icon: WalletSvg,
-    link: "/wallet",
+    link: "/dash/portal/billing/wallet",
   },
   {
     value: "invoice",
     label: "فاکتور های فروش",
     icon: InvoiceSvg,
-    link: "/wallet/salesInvoice",
+    link: "/dash/portal/billing/invoice",
   },
   {
     value: "transaction",
     label: "گزارش تراکنش ها",
     icon: TransactionSvg,
-    link: "/wallet/report",
+    link: "/dash/portal/billing/payment",
   },
   {
     value: "calculations",
     label: "گزارش محاسبات",
     icon: CalculateSvg,
-    link: "/wallet/bills",
+    link: "/dash/portal/billing/user-bill",
   },
 ];
 
@@ -96,7 +96,10 @@ export const WalletMenu: FC = () => {
   };
   const handleClose = () => setAnchorEl(null);
 
-  const { data: balance, isLoading } = useGetApiV2PortalWalletGetBalanceQuery();
+  const { data: balance, isLoading } = useGetApiV2PortalWalletGetBalanceQuery(
+    null as any,
+    { refetchOnMountOrArgChange: true }
+  );
   const separateBalance = balance
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

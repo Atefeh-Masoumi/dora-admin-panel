@@ -14,6 +14,7 @@ import { useGetApiV2PortalDashboardUserBillShortListQuery } from "src/app/servic
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import moment from "jalali-moment";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش مصرف
         </Typography>
-        <Button color="secondary" href="/wallet/bills">
+        <Button color="secondary" href="/dash/portal/billing/user-bill">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -104,21 +105,21 @@ export const ShortUserBill: FC = () => {
                         }}
                       >
                         <Typography
-                          variant="text3"
+                          fontSize={14}
                           color="rgba(19, 25, 32, 1)"
                           fontWeight={500}
                         >
                           {date}
                         </Typography>
                         <Typography
-                          variant="text3"
+                          fontSize={14}
                           color="rgba(19, 25, 32, 1)"
                           fontWeight={500}
                         >
-                          {totalPrice}
+                          {totalPrice && priceToPersian(totalPrice)}
                         </Typography>
                         <IconButton
-                          onClick={() => navigate(`/wallet/bills/${id}`)}
+                          onClick={() => navigate(`/dash/portal/billing/user-bill/${id}`)}
                         >
                           <KeyboardArrowLeftIcon color="secondary" />
                         </IconButton>

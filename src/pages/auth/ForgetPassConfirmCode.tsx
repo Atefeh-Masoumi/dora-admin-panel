@@ -52,7 +52,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!email) navigate("/login");
+    if (!email) navigate("/dash/account/login");
   }, [email, navigate]);
 
   const submitHandler = (confirmCode: any[]) => {

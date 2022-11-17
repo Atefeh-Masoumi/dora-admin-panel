@@ -52,7 +52,7 @@ export const CreateZone: FC<CreateZonePropsType> = ({ goNext }) => {
         fullWidth
       />
       <Stack direction="row" alignItems="center" spacing={1} width="100%">
-        <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/cdn">
+        <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/dash/cdn">
           انصراف
         </Button>
         <LoadingButton

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 export const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
-  const rowClickHandler = () => navigate("/payment/" + row.id);
+  const rowClickHandler = () => navigate("/dash/portal/billing/payment" + row.id);
 
   const renderValueHandler = (column: any) => {
     const value = row[column.id];

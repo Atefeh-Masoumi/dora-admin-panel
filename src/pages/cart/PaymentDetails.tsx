@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
   useRef,
+  useEffect,
 } from "react";
 import {
   Paper,
@@ -45,7 +46,7 @@ const useDurationArray = [
 type OrderDetailsPropsType = {};
 
 const OrderDetails: FC<OrderDetailsPropsType> = () => {
-  const [paymentMethod, setPaymentMethod] = useState("2");
+  const [orderPaymentTypeId, setOrderPaymentTypeId] = useState("1");
   const [discountCode, setDiscountCode] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("1");
 
@@ -57,6 +58,12 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     useGetApiV2PortalOrderGetByIdQuery({
       id: Number(id),
     });
+
+  useEffect(() => {
+    if (!data || !data.orderPaymentTypeId) return;
+    setOrderPaymentTypeId(data.orderPaymentTypeId.toString());
+  }, [data]);
+
   const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] =
     usePutApiV2PortalOrderPaymentTypeMutation();
   const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] =
@@ -72,7 +79,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
 
-  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/" />;
+  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash" />;
 
   const generalInfo = [
     {
@@ -143,9 +150,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const paymentMethodChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
     value: string
-  ) => {
-    setPaymentMethod(value);
-  };
+  ) => setOrderPaymentTypeId(value);
   const useDurationChangeHandler = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) return;
     changeOrderDuration({
@@ -156,11 +161,6 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     })
       .unwrap()
       .then(() => toast.success("تغییرات با موفقیت اعمال شد"));
-    // setOrderInfo((prevState) => {
-    //   let result = { ...prevState };
-    //   result.orderDurationId = Number(event.target.value);
-    //   return result;
-    // });
   };
   const discountCodeChangeHandler: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -170,9 +170,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const paymentGatewayChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
     value: string
-  ) => {
-    setPaymentGateway(value);
-  };
+  ) => setPaymentGateway(value);
 
   const applyDiscountHandler = () => {
     if (!discountCode || !orderInfo.id) return;
@@ -188,8 +186,8 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const submitHandler = () => {
     if (!orderInfo) return;
-    if (paymentMethod === "2") {
-      navigate("/");
+    if (orderPaymentTypeId === "1") {
+      navigate("/dash");
       toast.success("پرداخت با موفقیت انجام شد");
     } else {
       goToBankPortal({
@@ -302,7 +300,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
           >
             <Typography sx={{ mb: 3 }}>نحوه پرداخت</Typography>
             <RadioGroup
-              value={paymentMethod}
+              value={orderPaymentTypeId}
               onChange={paymentMethodChangeHandler}
             >
               <FormControlLabel
@@ -367,7 +365,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               </Stack>
             </Grid2>
           )}
-          {paymentMethod === "1" && (
+          {orderPaymentTypeId === "1" && (
             <Grid2
               xs={12}
               md={5.8}

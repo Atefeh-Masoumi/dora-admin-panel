@@ -39,7 +39,7 @@ const CloudManagement: FC<CloudManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/cloud/addCloudServer");
+  const createCloudOnClick = () => navigate("/dash/cloud/addCloudServer");
 
   return (
     <Stack

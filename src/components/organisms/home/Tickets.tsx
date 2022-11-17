@@ -39,7 +39,7 @@ export const Tickets: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           تیکت های من
         </Typography>
-        <Button color="secondary" href="/support">
+        <Button color="secondary" href="/dash/portal/support">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -94,7 +94,7 @@ export const Tickets: FC = () => {
                       }}
                     >
                       <Typography
-                        variant="text3"
+                        fontSize={14}
                         color="rgba(19, 25, 32, 1)"
                         fontWeight={500}
                         whiteSpace="nowrap"
@@ -103,7 +103,7 @@ export const Tickets: FC = () => {
                       </Typography>
                       <CustomTooltip title={supportSubject as any} arrow>
                         <Typography
-                          variant="text3"
+                          fontSize={14}
                           color="rgba(19, 25, 32, 1)"
                           fontWeight={500}
                           sx={{
@@ -116,7 +116,7 @@ export const Tickets: FC = () => {
                           {supportSubject}
                         </Typography>
                       </CustomTooltip>
-                      <IconButton onClick={() => navigate(`support/${id}`)}>
+                      <IconButton onClick={() => navigate(`/dash/portal/support/${id}`)}>
                         <KeyboardArrowLeftIcon color="secondary" />
                       </IconButton>
                     </Stack>

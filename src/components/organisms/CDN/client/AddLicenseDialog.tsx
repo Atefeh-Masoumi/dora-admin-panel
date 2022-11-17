@@ -88,7 +88,7 @@ export const AddLicenseDialog: FC<AddLicenseDialogPropsType> = ({
                 <DorsaTextField
                   multiline
                   rows={4}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                   placeholder="Certificate (CRT)"
                   error={Boolean(errors.certPem && touched.certPem)}
                   helperText={touched.certPem && errors.certPem}
@@ -97,7 +97,7 @@ export const AddLicenseDialog: FC<AddLicenseDialogPropsType> = ({
                 <DorsaTextField
                   multiline
                   rows={4}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                   placeholder="Private Key (KEY)"
                   error={Boolean(errors.keyPem && touched.keyPem)}
                   helperText={touched.keyPem && errors.keyPem}

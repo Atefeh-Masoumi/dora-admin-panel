@@ -58,6 +58,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
             if (res) {
               let a = document.createElement("a");
               a.href = "/console/wmks-sdk.html?url=" + res;
+              a.target = "_blank";
               a.click();
             }
           });

@@ -55,7 +55,7 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
                   helperText={touched.email && errors.email}
                   fullWidth
                   {...getFieldProps("email")}
-                  dir="ltr"
+                  inputProps={{ dir: "ltr" }}
                 />
               </Stack>
               <LoadingButton

@@ -39,7 +39,7 @@ const Login: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("شما با موفقیت وارد شدید");
-        navigate("/");
+        navigate("/dash");
       })
       .catch(
         ({ status }: { status: number }) =>
@@ -65,7 +65,7 @@ const Login: FC = () => {
                 error={Boolean(errors.email && touched.email)}
                 {...getFieldProps("email")}
                 helperText={touched.email && errors.email}
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <DorsaTextField
                 label="رمز عبور *"
@@ -86,7 +86,7 @@ const Login: FC = () => {
                     </InputAdornment>
                   ),
                 }}
-                dir="ltr"
+                inputProps={{ dir: "ltr" }}
               />
               <Button color="secondary" sx={{ fontSize: 14 }} href="./forget">
                 رمز عبور خود را فراموش کرده اید؟

@@ -54,7 +54,7 @@ export const ReferralCode: FC = () => {
               onChange={(e) => setReferralCode(e.target.value)}
               mode="white"
               sx={{ width: "100%" }}
-              dir="ltr"
+              inputProps={{ dir: "ltr" }}
             />
           </Stack>
           <LoadingButton

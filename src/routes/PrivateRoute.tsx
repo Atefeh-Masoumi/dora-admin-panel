@@ -5,5 +5,5 @@ import { useAppSelector } from "src/app/hooks";
 export const PrivateRoute: FC = () => {
   const token = useAppSelector((state) => state.auth?.accessToken);
 
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  return token ? <Outlet /> : <Navigate to="/dash/account/login" />;
 };

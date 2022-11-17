@@ -80,7 +80,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     ServerRebuild,
   ];
 
-  if (!id) return <Navigate to="/cloud" />;
+  if (!id) return <Navigate to="/dash/cloud" />;
 
   return (
     <Stack
