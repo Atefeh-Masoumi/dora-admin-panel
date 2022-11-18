@@ -139,7 +139,8 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       pathname === "/dash/portal/setting" ||
       pathname === "/dash/portal/user-service" ||
       pathname === "/dash/portal/order" ||
-      pathname === "/dash/portal/referral",
+      pathname !== "/dash/portal/referral" &&
+      pathname !== "/dash/portal/notification",
     [pathname]
   );
 

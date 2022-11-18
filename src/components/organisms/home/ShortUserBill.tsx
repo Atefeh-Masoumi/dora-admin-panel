@@ -40,7 +40,7 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش مصرف
         </Typography>
-        <Button color="secondary" href="/dash/portal/billing/user-bill">
+        <Button color="secondary" href="/dash/portal/billing/user-bills">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>

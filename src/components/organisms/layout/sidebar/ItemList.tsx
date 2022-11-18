@@ -111,7 +111,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                   : "opacity 0.5s ease-in",
               }}
               primaryTypographyProps={{
-                color: pathname === "/dash/index" ? "primary" : "#6E768A",
+                color: pathname === "/dash" ? "primary" : "#6E768A",
                 fontSize: "16px",
                 fontWeight: 400,
               }}
