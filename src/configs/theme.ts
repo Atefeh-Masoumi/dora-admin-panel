@@ -147,7 +147,7 @@ const theme = createTheme({
   },
   typography: {
     // htmlFontSize: 16 (MUI default),
-    fontFamily: "dana VF",
+    fontFamily: "dana",
     button: { ...breakpointGenerator([12, 16]), textTransform: "capitalize" },
     title0: { ...breakpointGenerator([22, 36]) },
     title1: { ...breakpointGenerator([18, 40]) },

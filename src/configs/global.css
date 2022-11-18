@@ -1,25 +1,7 @@
-@font-face {
-  font-family: "dana VF";
-  src: url("src/assets/fonts/dana2webGX.woff") format("woff-variations"),
-    /* will be the standard and works in Safari now */
-      url("src/assets/fonts/dana2webGX.woff") format("woff");
-  /* for the other supporting browsers */
-  font-display: fallback;
-}
-/* dana version ? */
-
-@font-face {
-  font-family: dana;
-  src: url("src/assets/fonts/staticfonts/dana-regular.woff") format("woff");
-}
-@font-face {
-  font-family: dana;
-  src: url("src/assets/fonts/staticfonts/dana-bold.woff") format("woff");
-  font-weight: 700;
-}
+@import url(src/assets/fonts/dana/style.css);
 
 * {
-  font-family: "dana VF";
+  font-family: "dana";
   -moz-font-feature-settings: "ss02";
   -webkit-font-feature-settings: "ss02";
   font-feature-settings: "ss02";
@@ -27,17 +9,14 @@
   text-decoration: none;
 }
 
-/* .vf-FANU {
-  font-variation-settings: 'wght' 300, 'FANU' 1;
-} */
-
 body {
   font-family: dana, tahoma;
   overflow: overlay;
 }
+
 @supports (font-variation-settings: normal) {
   body {
-    font-family: "dana VF", tahoma;
+    font-family: "dana", tahoma;
   }
 }
 
