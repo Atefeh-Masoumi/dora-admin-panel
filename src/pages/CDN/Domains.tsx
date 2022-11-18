@@ -1,108 +1,119 @@
-import { FC, SyntheticEvent, useMemo } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router";
-import { Tabs, Stack, Box } from "@mui/material";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { useAppSelector } from "src/app/hooks";
-import { SSLSetting } from "src/components/organisms/cdn/cdnTabs/Ssl";
-import { DNSRecord } from "src/components/organisms/cdn/cdnTabs/DNSRecord";
-import LoadBalance from "src/components/organisms/cdn/cdnTabs/LoadBalance";
+import { FC, useState, useEffect, Fragment } from "react";
+import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import { SearchBox } from "src/components/molecules/SearchBox";
+import { Add } from "src/components/atoms/svg/AddSvg";
+import { DomainCard } from "src/components/organisms/cdn/DomainCard";
+import { useGetApiV2CdnZoneListQuery } from "src/app/services/api.generated";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
 
-const Domains: FC = () => {
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
-  const navigate = useNavigate();
+const DomainManagement: FC = () => {
+  const { data: zoneList, isLoading } = useGetApiV2CdnZoneListQuery();
+  const [search, setSearch] = useState("");
 
-  const { pathname } = useLocation();
+  const filteredList = zoneList?.filter((zone) =>
+    zone.zoneName?.includes(search)
+  );
 
-  const selectedTab = useMemo(() => {
-    let result;
-    if (pathname.includes("dnsRecordSetting")) {
-      result = "dnsRecordSettings";
-    }
-    if (pathname.includes("sslTslSettings")) {
-      result = "sslTslSettings";
-    }
-    if (pathname.includes("loadBalanceSettings")) {
-      result = "loadBalanceSettings";
-    }
-    if (pathname.includes("apiGatewaySettings")) {
-      result = "apiGatewaySettings";
-    }
-    return result;
-  }, [pathname]);
+  const [windowDimenion, detectHW] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
 
-  const handleChange = (_: SyntheticEvent, newValue: string) =>
-    navigate("/dash/cdn/" + newValue);
-
-  const renderHandler = () => {
-    let result = <></>;
-
-    switch (selectedTab) {
-      case "dnsRecordSettings":
-        result = <DNSRecord />;
-        break;
-      case "sslTslSettings":
-        result = <SSLSetting />;
-        break;
-      case "apiGatewaySettings":
-        result = <></>;
-        break;
-      case "loadBalanceSettings":
-        result = <LoadBalance />;
-        break;
-      default:
-        result = <DNSRecord />;
-        break;
-    }
-    return result;
+  const detectSize = () => {
+    detectHW({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
   };
 
-  if (!selectedDomain) return <Navigate to="/dash/cdn" />;
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+
+    return () => {
+      window.removeEventListener("resize", detectSize);
+    };
+  }, [windowDimenion]);
 
   return (
-    <Stack spacing={5} alignItems="center">
-      <Box
-        sx={{
-          overflow: "overlay",
-          maxWidth: "100%",
-          bgcolor: "white",
-          py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
-        }}
-      >
-        <Tabs
+    <Fragment>
+      <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          justifyContent="space-between"
+          alignItems="center"
+          px={{ xs: 2, md: 2 }}
           sx={{
-            minWidth: 520,
+            paddingBottom: windowDimenion.winWidth < 650 ? "10px" : "0",
           }}
-          TabIndicatorProps={{ style: { display: "none" } }}
-          value={selectedTab}
-          onChange={handleChange}
         >
-          <DorsaTab value="dnsRecordSettings" label="تنظیمات DNS Record" />
-          <DorsaTab value="sslTslSettings" label="تنظیمات SSL/TLS" />
-          <DorsaTab value="loadBalanceSettings" label="تنظیمات Load Balance" />
-          <DorsaTab value="apiGatewaySettings" label="تنظیمات API Gateway" />
-        </Tabs>
-      </Box>
-      {/* <Stack
-        p={2.5}
-        bgcolor="rgba(244, 95, 80, 1)"
-        direction="row"
-        spacing={1}
-        borderRadius={2}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineIcon />
-        <Typography variant="text14">
-          دامنه مورد نظر به دلیل بدهی مسدود می‌باشد، لطفا با پشتیبانی تماس
-          بگیرید.
-        </Typography>
-      </Stack> */}
-      {renderHandler()}
-    </Stack>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Typography
+              variant="text1"
+              color="rgba(110, 118, 138, 1)"
+              whiteSpace="nowrap"
+            >
+              لیست دامنه ها
+            </Typography>
+            {windowDimenion.winWidth >= 650 ? (
+              <SearchBox
+                onChange={(text) => setSearch(text)}
+                placeholder="جستجو در نام دامنه"
+              />
+            ) : (
+              <></>
+            )}
+          </Stack>
+          <Button
+            variant="outlined"
+            href="/dash/cdn/addDomain"
+            size="large"
+            sx={{ whiteSpace: "nowrap", px: 1.2 }}
+            startIcon={
+              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            }
+          >
+            افزودن دامنه جدید
+          </Button>
+        </Stack>
+        {windowDimenion.winWidth < 650 ? (
+          <SearchBox placeholder="جستجو در نام دامنه" />
+        ) : (
+          <></>
+        )}
+      </Stack>
+      {filteredList && filteredList?.length <= 0 && (
+        <Stack py={3}>
+          <Stack bgcolor="white" borderRadius={3}>
+            <EmptyTable text="دامنه ای وجود ندارد" />
+          </Stack>
+        </Stack>
+      )}
+      <Grid container justifyContent="end" spacing={3} py={3}>
+        {isLoading ? (
+          <Fragment>
+            {[...Array(12)].map((_, index) => (
+              <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
+                <Skeleton
+                  variant="rectangular"
+                  height={125}
+                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                />
+              </Grid>
+            ))}
+          </Fragment>
+        ) : (
+          <Fragment>
+            {filteredList?.map((item, index) => (
+              <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
+                <DomainCard zoneItem={item} />
+              </Grid>
+            ))}
+          </Fragment>
+        )}
+      </Grid>
+    </Fragment>
   );
 };
 
-export default Domains;
+export default DomainManagement;

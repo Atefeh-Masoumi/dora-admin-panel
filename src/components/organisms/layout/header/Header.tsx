@@ -82,7 +82,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/dash/portal/support");
+          navigate("/dash/portal/supports");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />

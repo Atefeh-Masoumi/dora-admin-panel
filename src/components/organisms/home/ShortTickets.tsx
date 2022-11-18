@@ -39,7 +39,7 @@ export const ShortTickets: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           تیکت های من
         </Typography>
-        <Button color="secondary" href="/dash/portal/support">
+        <Button color="secondary" href="/dash/portal/supports">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>

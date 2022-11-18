@@ -107,8 +107,8 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       Icon: HeadphoneSvg,
-      link: "/dash/portal/support",
-      subList: [{ title: "مرکز پشتیبانی", link: "/dash/portal/support" }],
+      link: "/dash/portal/supports",
+      subList: [{ title: "مرکز پشتیبانی", link: "/dash/portal/supports" }],
     },
     {
       Icon: CalculatorSvg,

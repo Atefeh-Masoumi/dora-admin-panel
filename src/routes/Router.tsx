@@ -17,35 +17,47 @@ import {
 } from "src/components/templates/CallBackTemplate";
 
 const Home = lazy(() => import("src/pages/Home"));
+const NotFound = lazy(() => import("src/pages/404"));
+
+const Login = lazy(() => import("src/pages/account/Login"));
+const Signup = lazy(() => import("src/pages/account/Signup"));
+const Forget = lazy(() => import("src/pages/account/forget"));
+
 const Profile = lazy(() => import("src/pages/portal/Profile"));
 const Setting = lazy(() => import("src/pages/portal/Setting"));
-const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
-const Services = lazy(() => import("src/pages/portal/UserServices"));
 const Sales = lazy(() => import("src/pages/portal/Sales"));
 const Notification = lazy(() => import("src/pages/portal/Notification"));
-const Support = lazy(() => import("src/pages/portal/support"));
-const AddTicket = lazy(() => import("src/pages/portal/support/AddTicket"));
-const Detail = lazy(() => import("src/pages/portal/support/Detail"));
+
+const Supports = lazy(() => import("src/pages/portal/support/Supports"));
+const Support = lazy(() => import("src/pages/portal/support/Support"));
+const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
+
 const Wallet = lazy(() => import("src/pages/portal/Wallet"));
+const UserServices = lazy(() => import("src/pages/portal/UserServices"));
+
+const Payments = lazy(() => import("src/pages/portal/payment/Payments"));
+const Payment = lazy(() => import("src/pages/portal/payment/Payment"));
+
+const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
+const ReferralCallBack = lazy(() => import("src/pages/portal/referral/ReferralCallBack"));
+
+const UserBill = lazy(() => import("src/pages/portal/userBill/UserBill"));
+const UserBills = lazy(() => import("src/pages/portal/userBill/UserBills"));
+
+const Orders = lazy(() => import("src/pages/portal/order/Orders"));
+const Order = lazy(() => import("src/pages/portal/order/Order"));
+
 const Invoices = lazy(() => import("src/pages/portal/invocie/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/invocie/Invoice"));
-const Bill = lazy(() => import("src/pages/portal/userBill/Bill"));
-const UserBills = lazy(() => import("src/pages/portal/userBill/UserBills"));
-const PaymentCallBack = lazy(() => import("src/pages/portal/payment/PaymentCallBack"));
-const Transactions = lazy(() => import("src/pages/portal/payment/Transactions"));
-const Login = lazy(() => import("src/pages/auth/Login"));
-const Signup = lazy(() => import("src/pages/auth/Signup"));
-const Forget = lazy(() => import("src/pages/auth/forget"));
-const NotFound = lazy(() => import("src/pages/404"));
-const AddDomain = lazy(() => import("src/pages/cdn/AddDomain"));
+
 const Domains = lazy(() => import("src/pages/cdn/Domains"));
-const DomainManagement = lazy(() => import("src/pages/cdn/DomainManagement"));
-const CloudManagement = lazy(() => import("src/pages/vm/VmManagement"));
+const Domain = lazy(() => import("src/pages/cdn/Domain"));
+const AddDomain = lazy(() => import("src/pages/cdn/AddDomain"));
+
+const VmManagement = lazy(() => import("src/pages/vm/VmManagement"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
-const EditCloudServer = lazy(() => import("src/pages/vm/EditVm"));
-const ReferralCallBack = lazy(() => import("src/pages/portal/referral/ReferralCallBack"));
-const PaymentDetails = lazy(() => import("src/pages/portal/order/PaymentDetails"));
-const Cart = lazy(() => import("src/pages/portal/order/Cart"));
+const EditVm = lazy(() => import("src/pages/vm/EditVm"));
+
 const RabbitManagement = lazy(() => import("src/pages/rabbit/RabbitManagement"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
@@ -116,7 +128,7 @@ const Router: FC = () => {
           />
           <Route
             path="/dash/portal/user-service"
-            element={mainTemplate(Services, {
+            element={mainTemplate(UserServices, {
               pageTitle: "سرویس های من",
             })}
           />
@@ -136,16 +148,16 @@ const Router: FC = () => {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
-          {/* ======================================= CART ======================================= */}
+          {/* ======================================= Order ======================================= */}
           <Route
             path="/dash/portal/order"
-            element={mainTemplate(Cart, {
+            element={mainTemplate(Orders, {
               pageTitle: "سبد خرید",
             })}
           />
           <Route
             path="/dash/portal/order/:id"
-            element={mainTemplate(PaymentDetails, {
+            element={mainTemplate(Order, {
               link: {
                 text: "بازگشت به سبد خرید",
                 url: "/dash/portal/order",
@@ -155,45 +167,67 @@ const Router: FC = () => {
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/dash/portal/support"
-            element={mainTemplate(Support, {
+            path="/dash/portal/supports"
+            element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
-            path="/dash/portal/support/addTicket"
-            element={mainTemplate(AddTicket, {
+            path="/dash/portal/support/:id"
+            element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/dash/portal/support",
+                url: "/dash/portal/supports",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/dash/portal/support/:id"
-            element={mainTemplate(Detail, {
+            path="/dash/portal/support/AddSupport"
+            element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/dash/portal/support",
+                url: "/dash/portal/supports",
               },
               hideSidebar: true,
             })}
           />
-          {/* ======================================= WALLET ======================================= */}
+          {/* ======================================= Payment ======================================= */}
+          <Route
+            path="/dash/portal/billing/payment"
+            element={mainTemplate(Payments, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/payment:id"
+            element={mainTemplate(Payment, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/payment/:id"
+            element={mainTemplate(Payment, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          {/* ======================================= Wallet ======================================= */}
           <Route
             path="/dash/portal/billing/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
+          {/* ======================================= UserBill ======================================= */}
           <Route
             path="/dash/portal/billing/user-bill"
-            element={mainTemplate(UserBills, { pageTitle: "گزارش مصرف" })}
+            element={mainTemplate(UserBills, {
+              pageTitle: "گزارش مصرف"
+            })}
           />
           <Route
             path="/dash/portal/billing/user-bill/:id"
-            element={mainTemplate(Bill, {
+            element={mainTemplate(UserBill, {
               link: {
                 text: "بازگشت به گزارش مصرف",
                 url: "/dash/portal/billing/user-bill",
@@ -201,18 +235,7 @@ const Router: FC = () => {
               hideSidebar: true,
             })}
           />
-          <Route
-            path="/dash/portal/billing/payment"
-            element={mainTemplate(Transactions, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
-            path="/dash/portal/billing/payment:id"
-            element={mainTemplate(Transactions, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
+          {/* ======================================= Invoice ======================================= */}
           <Route
             path="/dash/portal/billing/invoice"
             element={mainTemplate(Invoices, {
@@ -232,34 +255,34 @@ const Router: FC = () => {
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/dash/cdn"
-            element={mainTemplate(DomainManagement, {
+            element={mainTemplate(Domains, {
               pageTitle: "مدیریت دامنه ها",
             })}
           />
           <Route
             path="/dash/cdn/sslTslSettings"
-            element={mainTemplate(Domains, {
+            element={mainTemplate(Domain, {
               pageTitle: "تنظیمات SSL/TSL",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/loadBalanceSettings"
-            element={mainTemplate(Domains, {
+            element={mainTemplate(Domain, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/dnsRecordSettings"
-            element={mainTemplate(Domains, {
+            element={mainTemplate(Domain, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/apiGatewaySettings"
-            element={mainTemplate(Domains, {
+            element={mainTemplate(Domain, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}
@@ -273,13 +296,8 @@ const Router: FC = () => {
           />
           {/* ======================================= CLOUD ======================================= */}
           <Route
-            path="/dash/payment/:id"
-            element={callbackTemplate(PaymentCallBack)}
-          />
-          {/* ======================================= CLOUD ======================================= */}
-          <Route
             path="/dash/vm"
-            element={mainTemplate(CloudManagement, {
+            element={mainTemplate(VmManagement, {
               pageTitle: "مدیریت سرور ابری",
             })}
           />
@@ -300,7 +318,7 @@ const Router: FC = () => {
           <Route
             path="/dash/vm/:id"
             element={mainTemplate(
-              EditCloudServer,
+              EditVm,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",

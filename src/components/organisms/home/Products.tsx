@@ -61,10 +61,10 @@ export const Products: FC = () => {
                 </Stack>
                 <Stack direction="column">
                   <Typography
-                    fontWeight={700}
+                    fontWeight={600}
                     variant="title5"
                     color="primary"
-                    maxWidth={160}
+                    maxWidth={170}
                     sx={{ mb: { xs: -0.5, lg: 0 } }}
                   >
                     {title}

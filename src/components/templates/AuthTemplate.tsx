@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { East as EastIcon } from "@mui/icons-material";
-import { AuthCard } from "src/components/organisms/auth/AuthCard";
+import { AuthCard } from "src/components/organisms/account/AuthCard";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "src/app/hooks";
 

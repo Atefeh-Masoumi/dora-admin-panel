@@ -57,7 +57,7 @@ export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
               interval={4}
             />
             <YAxis
-              unit="$"
+              unit=""
               tickCount={5}
               width={130}
               axisLine={false}
