@@ -99,7 +99,7 @@ const Support: FC = () => {
         <Grid item order={{ xs: 2, md: 4 }}>
           <Button
             variant="outlined"
-            href="/dash/portal/support/addTicket"
+            href="/dash/portal/support/addSupport"
             size="large"
             sx={{ whiteSpace: "nowrap", px: 1.2 }}
             startIcon={

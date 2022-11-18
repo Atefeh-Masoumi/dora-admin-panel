@@ -4,7 +4,7 @@ import { useAppSelector } from "src/app/hooks";
 import { useGetApiV2CdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddLicenseDialog } from "../edge/AddLicenseDialog";
+import { AddLicenseDialog } from "./AddLicenseDialog";
 
 export const UserCertification: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);

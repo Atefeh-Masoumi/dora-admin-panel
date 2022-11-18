@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import { useGetApiV2CdnEdgeCertGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiV2CdnClientCertGetByZoneNameQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
@@ -10,7 +10,7 @@ export const CloudCertification: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
 
   const { data: edgeCert, isLoading } =
-    useGetApiV2CdnEdgeCertGetByZoneNameQuery({
+    useGetApiV2CdnClientCertGetByZoneNameQuery({
       zoneName: selectedDomain?.zoneName || "",
     });
 
@@ -40,7 +40,7 @@ export const CloudCertification: FC = () => {
           startIcon={
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
-          // onClick={submit}
+        // onClick={submit}
         >
           صدور گواهی
         </LoadingButton>

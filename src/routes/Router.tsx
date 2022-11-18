@@ -207,7 +207,7 @@ const Router: FC = () => {
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/dash/portal/billing/invoice",
+                url: "/dash/portal/billing/invoices",
               },
               hideSidebar: true,
             })}
@@ -221,7 +221,13 @@ const Router: FC = () => {
           <Route
             path="/dash/portal/billing/payment/:id"
             element={mainTemplate(Payment, {
-              pageTitle: "گزارش پرداخت ها",
+              link: {
+                text: "بازگشت به فاکتور‌های فروش",
+                url: "/dash/portal/billing/payments",
+              },
+              hideSidebar: true,
+
+              // pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
@@ -241,7 +247,7 @@ const Router: FC = () => {
             element={mainTemplate(UserBill, {
               link: {
                 text: "بازگشت به گزارش مصرف",
-                url: "/dash/portal/billing/user-bill",
+                url: "/dash/portal/billing/user-bills",
               },
               hideSidebar: true,
             })}
@@ -284,11 +290,11 @@ const Router: FC = () => {
           <Route
             path="/dash/cdn/addDomain"
             element={mainTemplate(AddDomain, {
-              link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
+              link: { text: "بازگشت به مدیریت دامنه ها", url: "/dash/cdn" },
               hideSidebar: true,
             })}
           />
-          {/* ======================================= CLOUD ======================================= */}
+          {/* ======================================= VM ======================================= */}
           <Route
             path="/dash/vm"
             element={mainTemplate(VmManagement, {
