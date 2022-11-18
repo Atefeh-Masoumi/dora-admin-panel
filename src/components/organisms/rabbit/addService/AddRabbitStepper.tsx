@@ -9,7 +9,7 @@ import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
-import { addRabbitStepsType } from "../context/AddRabbitContext";
+import { addRabbitStepsType } from "./context/AddRabbitContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {

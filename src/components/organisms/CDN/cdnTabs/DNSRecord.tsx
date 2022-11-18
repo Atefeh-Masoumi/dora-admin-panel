@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg/AddSvg";
-import { useGetApiV2CdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { zoneTableStruct } from "src/components/organisms/tables/zoneList/struct";
-import { ZoneTableRow } from "src/components/organisms/tables/zoneList/ZoneTableRow";
 import { useAppSelector } from "src/app/hooks";
-import { CreateRecordDialog } from "src/components/organisms/CDN/CreateRecordDialog";
+import { Add } from "src/components/atoms/svg/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { zoneTableStruct } from "src/components/organisms/cdn/dns/tables/struct";
+import { ZoneTableRow } from "../dns/tables/ZoneTableRow";
+import { CreateRecordDialog } from "../dns/dialogs/CreateRecordDialog";
+import { useGetApiV2CdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
 
 export const DNSRecord: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);

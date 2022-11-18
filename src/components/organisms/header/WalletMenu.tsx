@@ -8,7 +8,7 @@ import { LinearProgress, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
-import { DepositDialog } from "src/pages/wallet/DepositDialog";
+import { DepositDialog } from "src/components/organisms/portal/payment/DepositDialog";
 import { useGetApiV2PortalWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";

@@ -3,8 +3,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { useGetApiV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
-import { AddRabbitTableRow } from "src/components/organisms/rabbit/tables/AddRabbitTableRow";
-import { AddRabbitTableStruct } from "src/components/organisms/rabbit/tables/AddRabbitTableStruct";
+import { AddRabbitTableRow } from "../tables/AddRabbitTableRow";
+import { AddRabbitTableStruct } from "../tables/struct";
 
 type SelectConfigPropsType = {};
 

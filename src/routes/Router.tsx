@@ -6,46 +6,46 @@ import {
 } from "src/components/templates/MainTemplate";
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
-import { DomainSelect } from "src/components/organisms/CDN/DomainSelect";
+import { DomainSelect } from "src/components/organisms/cdn/DomainSelect";
 import AddServerContextProvider from "src/context/AddServerContext";
 import EditServerContextProvider from "src/context/EditServerContext";
-import AddRabbitContextProvider from "src/components/organisms/rabbit/context/AddRabbitContext";
-import EditRabbitContextProvider from "src/components/organisms/rabbit/context/EditRabbitContext";
+import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
+import EditRabbitContextProvider from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
 
 const Home = lazy(() => import("src/pages/Home"));
-const Profile = lazy(() => import("src/pages/Profile"));
-const Setting = lazy(() => import("src/pages/Setting"));
-const Referral = lazy(() => import("src/pages/Referral"));
-const Services = lazy(() => import("src/pages/Services"));
-const Sales = lazy(() => import("src/pages/Sales"));
-const Notification = lazy(() => import("src/pages/Notification"));
-const Support = lazy(() => import("src/pages/support"));
-const AddTicket = lazy(() => import("src/pages/support/AddTicket"));
-const Detail = lazy(() => import("src/pages/support/Detail"));
-const Wallet = lazy(() => import("src/pages/wallet"));
-const Invoices = lazy(() => import("src/pages/wallet/Invoices"));
-const Invoice = lazy(() => import("src/pages/wallet/Invoice"));
-const Bill = lazy(() => import("src/pages/wallet/Bill"));
-const UserBills = lazy(() => import("src/pages/wallet/UserBills"));
-const Transactions = lazy(() => import("src/pages/wallet/Transactions"));
+const Profile = lazy(() => import("src/pages/portal/Profile"));
+const Setting = lazy(() => import("src/pages/portal/Setting"));
+const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
+const Services = lazy(() => import("src/pages/portal/UserServices"));
+const Sales = lazy(() => import("src/pages/portal/Sales"));
+const Notification = lazy(() => import("src/pages/portal/Notification"));
+const Support = lazy(() => import("src/pages/portal/support"));
+const AddTicket = lazy(() => import("src/pages/portal/support/AddTicket"));
+const Detail = lazy(() => import("src/pages/portal/support/Detail"));
+const Wallet = lazy(() => import("src/pages/portal/Wallet"));
+const Invoices = lazy(() => import("src/pages/portal/invocie/Invoices"));
+const Invoice = lazy(() => import("src/pages/portal/invocie/Invoice"));
+const Bill = lazy(() => import("src/pages/portal/userBill/Bill"));
+const UserBills = lazy(() => import("src/pages/portal/userBill/UserBills"));
+const PaymentCallBack = lazy(() => import("src/pages/portal/payment/PaymentCallBack"));
+const Transactions = lazy(() => import("src/pages/portal/payment/Transactions"));
 const Login = lazy(() => import("src/pages/auth/Login"));
 const Signup = lazy(() => import("src/pages/auth/Signup"));
 const Forget = lazy(() => import("src/pages/auth/forget"));
 const NotFound = lazy(() => import("src/pages/404"));
-const AddDomain = lazy(() => import("src/pages/CDN/AddDomain"));
-const CDN = lazy(() => import("src/pages/CDN/CDN"));
-const DomainManagement = lazy(() => import("src/pages/CDN/DomainManagement"));
+const AddDomain = lazy(() => import("src/pages/cdn/AddDomain"));
+const Domains = lazy(() => import("src/pages/cdn/Domains"));
+const DomainManagement = lazy(() => import("src/pages/cdn/DomainManagement"));
 const CloudManagement = lazy(() => import("src/pages/cloud/CloudManagement"));
 const AddCloudServer = lazy(() => import("src/pages/cloud/AddCloudServer"));
 const EditCloudServer = lazy(() => import("src/pages/cloud/EditCloudServer"));
-const PaymentCallBack = lazy(() => import("src/pages/PaymentCallBack"));
-const ReferralCallBack = lazy(() => import("src/pages/ReferralCallBack"));
-const PaymentDetails = lazy(() => import("src/pages/cart/PaymentDetails"));
-const Cart = lazy(() => import("src/pages/cart/Cart"));
+const ReferralCallBack = lazy(() => import("src/pages/portal/referral/ReferralCallBack"));
+const PaymentDetails = lazy(() => import("src/pages/portal/order/PaymentDetails"));
+const Cart = lazy(() => import("src/pages/portal/order/Cart"));
 const RabbitManagement = lazy(() => import("src/pages/rabbit/RabbitManagement"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
@@ -238,28 +238,28 @@ const Router: FC = () => {
           />
           <Route
             path="/dash/cdn/sslTslSettings"
-            element={mainTemplate(CDN, {
+            element={mainTemplate(Domains, {
               pageTitle: "تنظیمات SSL/TSL",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/loadBalanceSettings"
-            element={mainTemplate(CDN, {
+            element={mainTemplate(Domains, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/dnsRecordSettings"
-            element={mainTemplate(CDN, {
+            element={mainTemplate(Domains, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/apiGatewaySettings"
-            element={mainTemplate(CDN, {
+            element={mainTemplate(Domains, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}

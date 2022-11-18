@@ -4,7 +4,7 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
 import { CloudTableRow } from "src/components/organisms/rabbit/tables/RabbitTableRow";
-import { RabbitTableStruct } from "src/components/organisms/rabbit/tables/RabbitTableStruct";
+import { RabbitTableStruct } from "src/components/organisms/rabbit/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";

@@ -5,7 +5,7 @@ import {
   DatacenterListResponse,
   useGetApiV2VmDatacenterListQuery,
 } from "src/app/services/api.generated";
-import { AddRabbitContext } from "src/components/organisms/rabbit/context/AddRabbitContext";
+import { AddRabbitContext } from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
 import asiatechImage from "src/assets/images/asiatech.jpg";
 import mobinNetImage from "src/assets/images/mobinnet.jpg";
 

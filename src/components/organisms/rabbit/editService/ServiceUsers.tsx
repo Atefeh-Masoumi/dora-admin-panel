@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
-import { EditRabbitContext } from "src/components/organisms/rabbit/context/EditRabbitContext";
+import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
 import {
   GetApiV2RabbitRabbitUserListByRabbitHostIdApiResponse,

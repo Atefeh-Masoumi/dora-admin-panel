@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import {
   AddRabbitContext,
   addRabbitStepsType,
-} from "src/components/organisms/rabbit/context/AddRabbitContext";
+} from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
 import { SelectConfig } from "src/components/organisms/rabbit/addService/addRabbitSteps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/rabbit/addService/addRabbitSteps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";

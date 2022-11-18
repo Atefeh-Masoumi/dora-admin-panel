@@ -10,7 +10,7 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditRabbitContext } from "src/components/organisms/rabbit/context/EditRabbitContext";
+import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import { ServiceInfo } from "src/components/organisms/rabbit/editService/ServiceInfo";
 import { ServiceUsers } from "src/components/organisms/rabbit/editService/ServiceUsers";
 import { ServerConfig } from "src/components/organisms/rabbit/editService/ServerConfig";

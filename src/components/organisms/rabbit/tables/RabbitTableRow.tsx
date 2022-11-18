@@ -1,10 +1,10 @@
 import { FC, Fragment, useState } from "react";
-import { RabbitTableStruct } from "./RabbitTableStruct";
+import { RabbitTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { DeleteRabbitDialog } from "../DeleteRabbitDialog";
+import { DeleteRabbitDialog } from "../dialogs/DeleteRabbitDialog";
 import { useNavigate } from "react-router";
 
 export const CloudTableRow: FC<{ row: any }> = ({ row }) => {

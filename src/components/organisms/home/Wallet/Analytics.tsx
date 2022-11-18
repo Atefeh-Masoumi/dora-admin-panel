@@ -15,7 +15,7 @@ import {
   BORDER_RADIUS_5,
 } from "src/configs/theme";
 import { SampleChart } from "../../charts/SampleChart";
-import { analyticsCategories } from "src/constant/homeAnalyticsConstant";
+import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 
 export const Analytics: FC = () => {
   const [categoryId, setCategoryId] = useState(0);

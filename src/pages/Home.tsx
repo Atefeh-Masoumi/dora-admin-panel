@@ -1,14 +1,14 @@
 import type { FC } from "react";
-import { Services } from "src/components/organisms/home/Services";
+import { Products } from "src/components/organisms/home/Products";
 import { Wallet } from "src/components/organisms/home/Wallet";
 import { ShortUserBill } from "src/components/organisms/home/ShortUserBill";
 import { Stack } from "@mui/material";
-import { Tickets } from "src/components/organisms/home/Tickets";
+import { ShortTickets } from "src/components/organisms/home/ShortTickets";
 
 const Home: FC = () => {
   return (
     <>
-      <Services />
+      <Products />
       <Wallet />
       <Stack
         direction={{ xs: "column", md: "row" }}
@@ -19,7 +19,7 @@ const Home: FC = () => {
         justifyContent="space-between"
       >
         <ShortUserBill />
-        <Tickets />
+        <ShortTickets />
       </Stack>
     </>
   );

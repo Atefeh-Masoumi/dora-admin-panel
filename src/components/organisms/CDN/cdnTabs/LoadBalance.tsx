@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
-import { useAppSelector } from "src/app/hooks";
-import { useGetApiV2CdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { loadBalanceTableStruct } from "src/components/organisms/tables/loadBalance/struct";
-import { LoadBalanceTableRow } from "src/components/organisms/tables/loadBalance/LoadBalanceTableRow";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { AddLoadBalanceDialog } from "src/components/organisms/CDN/AddLoadBalanceDialog";
+import { useAppSelector } from "src/app/hooks";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { loadBalanceTableStruct } from "src/components/organisms/cdn/loadbalance/tables/struct";
+import { LoadBalanceTableRow } from "src/components/organisms/cdn/loadbalance/tables/LoadBalanceTableRow";
+import { AddLoadBalanceDialog } from "src/components/organisms/cdn/loadbalance/dialogs/AddLoadBalanceDialog";
+import { useGetApiV2CdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
 
 type LoadBalancePropsType = {};
 
