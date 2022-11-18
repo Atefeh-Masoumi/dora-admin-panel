@@ -55,11 +55,11 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       ],
     },
     {
-      title: "Cloud",
+      title: "Virtual Machine",
       text: "سرویس سرور های ابری",
       Icon: DriverSvg,
-      link: "/dash/cloud",
-      subList: [{ title: "سرویس سرور‌های ابری", link: "/dash/cloud" }],
+      link: "/dash/vm",
+      subList: [{ title: "سرویس سرور‌های ابری", link: "/dash/vm" }],
     },
     {
       title: "RabbitMQ",
@@ -133,7 +133,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
 
   const hideSubLists = useMemo(
     () =>
-      pathname === "/dash" ||
+      pathname === "/dash/index" ||
       pathname === "/dash/api" ||
       pathname === "/dash/portal/profile" ||
       pathname === "/dash/portal/setting" ||

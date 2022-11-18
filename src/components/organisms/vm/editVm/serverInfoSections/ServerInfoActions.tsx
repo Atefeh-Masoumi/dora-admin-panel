@@ -18,7 +18,7 @@ import {
   usePutApiV2VmVmRebootByIdMutation,
   usePutApiV2VmVmShutdownByIdMutation,
 } from "src/app/services/api.generated";
-import { EditServerContext } from "src/context/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import { toast } from "react-toastify";
 
 type ServerInfoActionsPropsType = {};

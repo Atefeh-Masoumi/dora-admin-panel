@@ -1,37 +1,53 @@
-import { useContext, FC, useState, useMemo } from "react";
+import {
+  useContext,
+  FC,
+  useState,
+  useMemo,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
-import {
-  GetApiV2VmImageListByDatacenterIdApiResponse,
-  ImageListResponse,
-  useGetApiV2VmImageListByDatacenterIdQuery,
-} from "src/app/services/api.generated";
-import { AddServerContext } from "src/context/AddServerContext";
+import { GetApiV2VmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
+import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
+import { useLazyGetApiV2VmImageListByDatacenterIdQuery } from "src/app/services/api";
 
-type SelectOSPropsType = {};
+type ChooseOSPropsType = {
+  imageId: number;
+  setImageId: Dispatch<SetStateAction<number>>;
+};
 
-export const SelectOS: FC<SelectOSPropsType> = () => {
-  const { dataCenter, osVersion, setOsVersion } = useContext(AddServerContext);
+export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
+  const { dataCenter } = useContext(EditServerContext);
 
-  const { data: osVersionsList, isLoading } =
-    useGetApiV2VmImageListByDatacenterIdQuery({
-      datacenterId: dataCenter?.id || 0,
-    });
+  const [getData, { isLoading }] =
+    useLazyGetApiV2VmImageListByDatacenterIdQuery();
 
-  const [osType, setOsType] = useState<number | null>(osVersion?.osId || null);
+  const [data, setData] =
+    useState<GetApiV2VmImageListByDatacenterIdApiResponse | null>(null);
+
+  const [osType, setOsType] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (dataCenter) {
+      getData({ datacenterId: dataCenter })
+        .unwrap()
+        .then((res) => res && setData(res));
+    }
+  }, [dataCenter, getData]);
 
   const osTypeClickHandler = (id: number | undefined) => id && setOsType(id);
 
-  const osVersionClickHandler = (selectedOs: ImageListResponse) =>
-    setOsVersion(selectedOs);
+  const osVersionClickHandler = (selectedOs: number) => setImageId(selectedOs);
 
   const osArray = useMemo(() => {
     let result: GetApiV2VmImageListByDatacenterIdApiResponse = [];
-    if (osVersionsList) {
-      osVersionsList.forEach((item) => {
+    if (data) {
+      data.forEach((item) => {
         const idx = result.findIndex(({ osId }) => osId === item.osId);
         if (idx === -1) {
           result.push(item);
@@ -39,18 +55,15 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
       });
     }
     return result;
-  }, [osVersionsList]);
+  }, [data]);
 
   return (
     <Stack
       justifyContent="center"
       alignItems="center"
       spacing={4}
-      sx={{ px: 2 }}
+      sx={{ px: 2, my: 4 }}
     >
-      <Typography fontSize={24} fontWeight="bold" align="center">
-        سیستم عامل ماشین را انتخاب کنید
-      </Typography>
       <Grid2 container gap={2} justifyContent="center" width="100%">
         {isLoading &&
           [...Array(2)].map((_, index) => (
@@ -146,13 +159,13 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
         })}
       </Grid2>
       <Grid2 container gap={3}>
-        {osVersionsList &&
+        {data &&
           osType &&
-          osVersionsList
+          data
             .filter((optionItem) => optionItem.osId === osType)
             .map((osVersionItem) => {
               const { id, name } = osVersionItem;
-              const isSelected = id === osVersion?.id;
+              const isSelected = id === imageId;
               return (
                 <Grid2
                   xs
@@ -175,7 +188,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                     minHeight: 65,
                     cursor: "pointer",
                   }}
-                  onClick={() => osVersionClickHandler(osVersionItem)}
+                  onClick={() => id && osVersionClickHandler(id)}
                 >
                   <Typography
                     align="center"

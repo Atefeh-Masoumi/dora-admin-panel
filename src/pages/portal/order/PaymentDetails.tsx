@@ -22,6 +22,11 @@ import {
 } from "@mui/material";
 import { Navigate, useParams, useNavigate } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
+import PageLoading from "src/components/atoms/PageLoading";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { priceToPersian } from "src/utils/priceToPersian";
 import {
   usePostApiV2PortalOrderPayMutation,
   usePutApiV2PortalOrderPaymentTypeMutation,
@@ -30,11 +35,6 @@ import {
   useGetApiV2PortalOrderGetByIdQuery,
   GetOrderResponse,
 } from "src/app/services/api.generated";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { LoadingButton } from "@mui/lab";
-import { priceToPersian } from "src/utils/priceToPersian";
-import { toast } from "react-toastify";
-import PageLoading from "src/components/atoms/PageLoading";
 
 const useDurationArray = [
   { name: "یک ماه", value: "1" },
@@ -79,7 +79,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
 
-  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash" />;
+  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash/index" />;
 
   const generalInfo = [
     {
@@ -187,7 +187,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const submitHandler = () => {
     if (!orderInfo) return;
     if (orderPaymentTypeId === "1") {
-      navigate("/dash");
+      navigate("/dash/index");
       toast.success("پرداخت با موفقیت انجام شد");
     } else {
       goToBankPortal({

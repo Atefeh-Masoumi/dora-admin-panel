@@ -5,7 +5,7 @@ import {
   DatacenterListResponse,
   useGetApiV2VmDatacenterListQuery,
 } from "src/app/services/api.generated";
-import { AddServerContext } from "src/context/AddServerContext";
+import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import asiatechImage from "src/assets/images/asiatech.jpg";
 import mobinNetImage from "src/assets/images/mobinnet.jpg";
 

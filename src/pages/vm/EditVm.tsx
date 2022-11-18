@@ -10,11 +10,11 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditServerContext } from "src/context/EditServerContext";
-import { ServerInfo } from "src/components/organisms/cloudServer/editServer/ServerInfo";
-import { ServerIpAddress } from "src/components/organisms/cloudServer/editServer/ServerIpAddress";
-import { ServerConfig } from "src/components/organisms/cloudServer/editServer/ServerConfig";
-import { ServerRebuild } from "src/components/organisms/cloudServer/editServer/ServerRebuild";
+import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
+import { ServerInfo } from "src/components/organisms/vm/editVm/ServerInfo";
+import { ServerIpAddress } from "src/components/organisms/vm/editVm/ServerIpAddress";
+import { ServerConfig } from "src/components/organisms/vm/editVm/ServerConfig";
+import { ServerRebuild } from "src/components/organisms/vm/editVm/ServerRebuild";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -80,7 +80,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     ServerRebuild,
   ];
 
-  if (!id) return <Navigate to="/dash/cloud" />;
+  if (!id) return <Navigate to="/dash/vm" />;
 
   return (
     <Stack

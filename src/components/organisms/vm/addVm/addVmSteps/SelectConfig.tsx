@@ -2,8 +2,8 @@ import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useGetApiV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { AddCloudServerTableRow } from "src/components/organisms/tables/addCloudServer/AddCloudServerTableRow";
-import { addCloudServerTableStruct } from "src/components/organisms/tables/addCloudServer/struct";
+import { ProductBundleTableRow } from "src/components/organisms/vm/addVm/tables/ProductBundleTableRow";
+import { productBundleTableStruct } from "src/components/organisms/vm/addVm/tables/struct";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type SelectConfigPropsType = {};
@@ -17,8 +17,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const table = useMemo(
     () => (
       <BaseTable
-        struct={addCloudServerTableStruct}
-        RowComponent={AddCloudServerTableRow}
+        struct={productBundleTableStruct}
+        RowComponent={ProductBundleTableRow}
         rows={configsList || []}
         text=""
         isLoading={isLoading}

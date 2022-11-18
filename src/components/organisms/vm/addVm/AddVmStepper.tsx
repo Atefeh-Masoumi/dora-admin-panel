@@ -1,17 +1,15 @@
 import { FC, ReactElement } from "react";
 import { styled } from "@mui/material/styles";
+import { StepIconProps } from "@mui/material/StepIcon";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
-import { StepIconProps } from "@mui/material/StepIcon";
-import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
-import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
+import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
-import { addServerStepsType } from "src/context/AddServerContext";
+import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
+import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
+import { addServerStepsType } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -120,11 +118,11 @@ const steps = [
   "اطلاعات سرور",
 ];
 
-type AddCloudServerStepperPropsType = {
+type AddVmStepperPropsType = {
   step: addServerStepsType;
 };
 
-export const AddCloudServerStepper: FC<AddCloudServerStepperPropsType> = ({
+export const AddVmStepper: FC<AddVmStepperPropsType> = ({
   step,
 }) => {
   return (

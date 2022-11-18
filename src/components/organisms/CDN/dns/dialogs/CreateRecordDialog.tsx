@@ -27,7 +27,7 @@ import {
   dnsTTLItems,
   dnsTypeItemsArray,
   dnsTypeValueLabelObject,
-} from "src/constant/createDnsRecord";
+} from "src/components/organisms/cdn/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
 
 type CreateRecordDialogPropsType = {

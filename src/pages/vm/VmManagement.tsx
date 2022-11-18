@@ -3,16 +3,16 @@ import { useGetApiV2VmVmListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
-import { CloudTableRow } from "src/components/organisms/tables/cloud/CloudTableRow";
-import { cloudTableStruct } from "src/components/organisms/tables/cloud/struct";
+import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
+import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 
-type CloudManagementPropsType = {};
+type VmManagementPropsType = {};
 
-const CloudManagement: FC<CloudManagementPropsType> = () => {
+const VmManagement: FC<VmManagementPropsType> = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -39,7 +39,7 @@ const CloudManagement: FC<CloudManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/dash/cloud/addCloudServer");
+  const createCloudOnClick = () => navigate("/dash/vm/addVm");
 
   return (
     <Stack
@@ -117,8 +117,8 @@ const CloudManagement: FC<CloudManagementPropsType> = () => {
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
-          struct={cloudTableStruct}
-          RowComponent={CloudTableRow}
+          struct={addVmTableStruct}
+          RowComponent={AddVmTableRow}
           rows={filteredList}
           text="در حال حاضر دامنه وجود ندارد"
           isLoading={isLoading}
@@ -129,4 +129,4 @@ const CloudManagement: FC<CloudManagementPropsType> = () => {
   );
 };
 
-export default CloudManagement;
+export default VmManagement;

@@ -1,11 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { cloudTableStruct } from "./struct";
+import { addVmTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { DeleteCloudDialog } from "../../cloudServer/DeleteCloudDialog";
+import { DeleteCloudDialog } from "../dialogs/DeleteCloudDialog";
 import { useNavigate } from "react-router";
 import { usePostApiV2VmVmKmsGetMutation } from "src/app/services/api.generated";
 // import CreditCardIcon from "@mui/icons-material/CreditCard";
@@ -13,7 +13,7 @@ import { usePostApiV2VmVmKmsGetMutation } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { toast } from "react-toastify";
 
-export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
+export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
@@ -25,7 +25,7 @@ export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/dash/cloud/" + row["id"]);
+  const settingOnClick = () => navigate("/dash/vm/" + row["id"]);
   // const goToOrderDetails = () => {
   //   if (!row["id"] || isNaN(Number(row["id"]))) return;
   //   getOrderId({ id: Number(row["id"]) })
@@ -55,7 +55,7 @@ export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
     <Fragment>
       {getUrlLoading && <PageLoading />}
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {cloudTableStruct.map((column) => {
+        {addVmTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];

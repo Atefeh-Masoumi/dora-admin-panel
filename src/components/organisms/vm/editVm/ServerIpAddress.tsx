@@ -21,7 +21,7 @@ import {
 } from "src/app/services/api.generated";
 import { useLazyGetApiV2VmVmIpListByVmIdQuery } from "src/app/services/api";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
-import { EditServerContext } from "src/context/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 
 const IpRow: FC<VmIpListResponse> = ({ ip, isPrimary, id }) => {
   const [deleteIp, { isLoading }] = useDeleteApiV2VmVmIpDeleteByIdMutation();

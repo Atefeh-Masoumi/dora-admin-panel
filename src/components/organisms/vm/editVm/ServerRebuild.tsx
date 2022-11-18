@@ -4,7 +4,7 @@ import { ChooseOS } from "./serverRebuildSections/ChooseOS";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { LoadingButton } from "@mui/lab";
 import { usePutApiV2VmVmRebuildMutation } from "src/app/services/api.generated";
-import { EditServerContext } from "src/context/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
@@ -36,7 +36,7 @@ export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
         .unwrap()
         .then(() => {
           toast.success("درخواست بازسای با موفیت ارسال شد");
-          navigate("/dash/cloud");
+          navigate("/dash/vm");
         });
       return;
     }

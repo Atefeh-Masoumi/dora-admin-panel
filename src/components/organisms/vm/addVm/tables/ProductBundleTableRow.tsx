@@ -1,10 +1,10 @@
 import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { addCloudServerTableStruct } from "./struct";
-import { AddServerContext } from "src/context/AddServerContext";
+import { productBundleTableStruct } from "./struct";
+import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 
-export const AddCloudServerTableRow: FC<{ row: any }> = ({ row }) => {
+export const ProductBundleTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddServerContext);
 
   const isChecked = useMemo(
@@ -30,8 +30,8 @@ export const AddCloudServerTableRow: FC<{ row: any }> = ({ row }) => {
           onChange={onCheckboxClick}
         />
       </DorsaTableCell>
-      {addCloudServerTableStruct
-        .slice(1, addCloudServerTableStruct.length)
+      {productBundleTableStruct
+        .slice(1, productBundleTableStruct.length)
         .map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;

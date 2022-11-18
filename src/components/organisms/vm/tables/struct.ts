@@ -1,6 +1,6 @@
-import { columnType } from "../table.types";
+import { columnType } from "../../tables/table.types";
 
-export const cloudTableStruct: columnType[] = [
+export const addVmTableStruct: columnType[] = [
   {
     id: "id",
     label: "",

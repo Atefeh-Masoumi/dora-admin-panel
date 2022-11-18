@@ -71,7 +71,7 @@ const Signup: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("شما با موفقیت ثبت نام شدید");
-        navigate("/dash");
+        navigate("/dash/index");
       })
       .catch(
         ({ status }: { status: number }) =>

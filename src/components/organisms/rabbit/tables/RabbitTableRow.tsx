@@ -7,7 +7,7 @@ import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DeleteRabbitDialog } from "../dialogs/DeleteRabbitDialog";
 import { useNavigate } from "react-router";
 
-export const CloudTableRow: FC<{ row: any }> = ({ row }) => {
+export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);

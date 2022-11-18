@@ -49,7 +49,7 @@ const NotFound: FC = () => {
                 minWidth: "150px",
               }}
               variant="contained"
-              href="/dash"
+              href="/dash/index"
             >
               خانه
             </Button>

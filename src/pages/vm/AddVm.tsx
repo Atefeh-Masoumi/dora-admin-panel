@@ -1,21 +1,18 @@
 import { FC, useContext } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { SelectDataCenter } from "../../components/organisms/cloudServer/addServer/addServerSteps/SelectDataCenter";
-import { AddCloudServerStepper } from "src/components/organisms/cloudServer/addServer/AddCloudServerStepper";
 import { useNavigate } from "react-router";
-import { SelectOS } from "../../components/organisms/cloudServer/addServer/addServerSteps/SelectOS";
-import {
-  AddServerContext,
-  addServerStepsType,
-} from "src/context/AddServerContext";
-import { SelectConfig } from "../../components/organisms/cloudServer/addServer/addServerSteps/SelectConfig";
-import { ServerInfo } from "../../components/organisms/cloudServer/addServer/addServerSteps/ServerInfo";
-import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiV2VmVmCreateMutation } from "src/app/services/api.generated";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import { AddServerContext, addServerStepsType } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
+import { AddVmStepper } from "src/components/organisms/vm/addVm/AddVmStepper";
+import { SelectDataCenter } from "src/components/organisms/vm/addVm/addVmSteps/SelectDataCenter";
+import { SelectOS } from "src/components/organisms/vm/addVm/addVmSteps/SelectOS";
+import { SelectConfig } from "src/components/organisms/vm/addVm/addVmSteps/SelectConfig";
+import { ServerInfo } from "src/components/organisms/vm/addVm/addVmSteps/ServerInfo";
+import { passwordValidationRegex } from "src/utils/regexUtils";
+import { usePostApiV2VmVmCreateMutation } from "src/app/services/api.generated";
 
-const AddCloudServer: FC = () => {
+const AddVm: FC = () => {
   const {
     step,
     setStep,
@@ -30,7 +27,7 @@ const AddCloudServer: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/cloud");
+      navigate("/dash/vm");
       return;
     }
     setStep((step - 1) as addServerStepsType);
@@ -62,7 +59,7 @@ const AddCloudServer: FC = () => {
     })
       .unwrap()
       .then(() => {
-        toast.success("سرور ابری  با موفقیت ایجاد شد");
+        toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
         navigate("/dash/portal/order");
       });
   };
@@ -132,7 +129,7 @@ const AddCloudServer: FC = () => {
         }}
       >
         <Box sx={{ overflow: "overlay" }}>
-          <AddCloudServerStepper step={step} />
+          <AddVmStepper step={step} />
         </Box>
         <Box sx={{ my: 6 }}>{renderStepHandler()}</Box>
         <Stack
@@ -178,4 +175,4 @@ const AddCloudServer: FC = () => {
   );
 };
 
-export default AddCloudServer;
+export default AddVm;

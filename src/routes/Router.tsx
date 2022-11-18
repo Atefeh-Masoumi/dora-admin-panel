@@ -7,8 +7,8 @@ import {
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
 import { DomainSelect } from "src/components/organisms/cdn/DomainSelect";
-import AddServerContextProvider from "src/context/AddServerContext";
-import EditServerContextProvider from "src/context/EditServerContext";
+import AddServerContextProvider from "src/components/organisms/vm/addVm/contexts/AddServerContext";
+import EditServerContextProvider from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
 import EditRabbitContextProvider from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import {
@@ -40,9 +40,9 @@ const NotFound = lazy(() => import("src/pages/404"));
 const AddDomain = lazy(() => import("src/pages/cdn/AddDomain"));
 const Domains = lazy(() => import("src/pages/cdn/Domains"));
 const DomainManagement = lazy(() => import("src/pages/cdn/DomainManagement"));
-const CloudManagement = lazy(() => import("src/pages/cloud/CloudManagement"));
-const AddCloudServer = lazy(() => import("src/pages/cloud/AddCloudServer"));
-const EditCloudServer = lazy(() => import("src/pages/cloud/EditCloudServer"));
+const CloudManagement = lazy(() => import("src/pages/vm/VmManagement"));
+const AddVm = lazy(() => import("src/pages/vm/AddVm"));
+const EditCloudServer = lazy(() => import("src/pages/vm/EditVm"));
 const ReferralCallBack = lazy(() => import("src/pages/portal/referral/ReferralCallBack"));
 const PaymentDetails = lazy(() => import("src/pages/portal/order/PaymentDetails"));
 const Cart = lazy(() => import("src/pages/portal/order/Cart"));
@@ -87,9 +87,9 @@ const Router: FC = () => {
         <Route path="/dash/account/signup" element={<Signup />} />
         <Route path="/dash/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Navigate to="/dash" />} />
+          <Route path="/" element={<Navigate to="/dash/index" />} />
           <Route
-            path="/dash"
+            path="/dash/index"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
@@ -125,7 +125,7 @@ const Router: FC = () => {
             element={mainTemplate(Sales, {
               link: {
                 text: "بازگشت به داشبورد",
-                url: "/dash",
+                url: "/dash/index",
               },
               hideSidebar: true,
             })}
@@ -278,19 +278,19 @@ const Router: FC = () => {
           />
           {/* ======================================= CLOUD ======================================= */}
           <Route
-            path="/dash/cloud"
+            path="/dash/vm"
             element={mainTemplate(CloudManagement, {
               pageTitle: "مدیریت سرور ابری",
             })}
           />
           <Route
-            path="/dash/cloud/addCloudServer"
+            path="/dash/vm/addVm"
             element={mainTemplate(
-              AddCloudServer,
+              AddVm,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/dash/cloud",
+                  url: "/dash/vm",
                 },
                 hideSidebar: true,
               },
@@ -298,13 +298,13 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/dash/cloud/:id"
+            path="/dash/vm/:id"
             element={mainTemplate(
               EditCloudServer,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/dash/cloud",
+                  url: "/dash/vm",
                 },
                 hideSidebar: true,
               },

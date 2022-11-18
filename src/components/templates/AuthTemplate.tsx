@@ -19,7 +19,7 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
   const token = useAppSelector((store) => store.auth?.accessToken);
   useEffect(() => {
     if (token) {
-      navigate("/dash");
+      navigate("/dash/index");
     }
   }, [navigate, token]);
 

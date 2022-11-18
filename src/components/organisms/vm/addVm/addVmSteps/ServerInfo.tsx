@@ -2,7 +2,7 @@ import { FC, useContext, ChangeEvent } from "react";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
-import { AddServerContext } from "src/context/AddServerContext";
+import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 
 type ServerInfoPropsType = {};
 
