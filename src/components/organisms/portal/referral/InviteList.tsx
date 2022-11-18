@@ -11,7 +11,7 @@ export const InviteList: FC = () => {
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
       <Typography variant="text1" color="secondary">
-        لیست افراد دعوت شده
+        لیست درآمدهای شما از معرفی
       </Typography>
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>
@@ -19,7 +19,7 @@ export const InviteList: FC = () => {
           struct={referralTableStruct}
           RowComponent={ReferralTableRow}
           rows={billList || ([] as any)}
-          text="در حال حاضر کاربری وجود ندارد"
+          text="در حال حاضر درآمدی وجود ندارد"
           isLoading={isLoading}
           initialOrder={0}
         />

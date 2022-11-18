@@ -23,32 +23,27 @@ const Login = lazy(() => import("src/pages/account/Login"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
+const Sales = lazy(() => import("src/pages/portal/Sales"));
 const Profile = lazy(() => import("src/pages/portal/Profile"));
 const Setting = lazy(() => import("src/pages/portal/Setting"));
-const Sales = lazy(() => import("src/pages/portal/Sales"));
 const Notification = lazy(() => import("src/pages/portal/Notification"));
-
+const UserServices = lazy(() => import("src/pages/portal/UserServices"));
 const Supports = lazy(() => import("src/pages/portal/support/Supports"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
-
-const Wallet = lazy(() => import("src/pages/portal/Wallet"));
-const UserServices = lazy(() => import("src/pages/portal/UserServices"));
-
-const Payments = lazy(() => import("src/pages/portal/payment/Payments"));
-const Payment = lazy(() => import("src/pages/portal/payment/Payment"));
-
-const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
-const ReferralCallBack = lazy(() => import("src/pages/portal/referral/ReferralCallBack"));
-
-const UserBill = lazy(() => import("src/pages/portal/userBill/UserBill"));
-const UserBills = lazy(() => import("src/pages/portal/userBill/UserBills"));
-
 const Orders = lazy(() => import("src/pages/portal/order/Orders"));
 const Order = lazy(() => import("src/pages/portal/order/Order"));
+const Referrals = lazy(() => import("src/pages/portal/referral/Referrals"));
+const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
 
-const Invoices = lazy(() => import("src/pages/portal/invocie/Invoices"));
-const Invoice = lazy(() => import("src/pages/portal/invocie/Invoice"));
+
+const Wallet = lazy(() => import("src/pages/portal/billing/Wallet"));
+const Payments = lazy(() => import("src/pages/portal/billing/payment/Payments"));
+const Payment = lazy(() => import("src/pages/portal/billing/payment/PaymentCallBack"));
+const UserBills = lazy(() => import("src/pages/portal/billing/userBill/UserBills"));
+const UserBill = lazy(() => import("src/pages/portal/billing/userBill/UserBill"));
+const Invoices = lazy(() => import("src/pages/portal/billing/invocie/Invoices"));
+const Invoice = lazy(() => import("src/pages/portal/billing/invocie/Invoice"));
 
 const Domains = lazy(() => import("src/pages/cdn/Domains"));
 const Domain = lazy(() => import("src/pages/cdn/Domain"));
@@ -100,6 +95,7 @@ const Router: FC = () => {
         <Route path="/dash/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Navigate to="/dash/index" />} />
+          <Route path="/dash/" element={<Navigate to="/dash/index" />} />
           <Route
             path="/dash/index"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
@@ -118,13 +114,13 @@ const Router: FC = () => {
           />
           <Route
             path="/dash/portal/referral"
-            element={mainTemplate(Referral, {
+            element={mainTemplate(Referrals, {
               pageTitle: "کد معرف",
             })}
           />
           <Route
             path="/dash/portal/referral/:id"
-            element={callbackTemplate(ReferralCallBack)}
+            element={callbackTemplate(Referral)}
           />
           <Route
             path="/dash/portal/user-service"
@@ -192,52 +188,16 @@ const Router: FC = () => {
               hideSidebar: true,
             })}
           />
-          {/* ======================================= Payment ======================================= */}
-          <Route
-            path="/dash/portal/billing/payment"
-            element={mainTemplate(Payments, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
-            path="/dash/portal/billing/payment:id"
-            element={mainTemplate(Payment, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
-            path="/dash/payment/:id"
-            element={mainTemplate(Payment, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
           {/* ======================================= Wallet ======================================= */}
+          <Route path="/dash/portal/billing" element={<Navigate to="/dash/portal/billing/wallet" />} />
           <Route
             path="/dash/portal/billing/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
-          {/* ======================================= UserBill ======================================= */}
           <Route
-            path="/dash/portal/billing/user-bill"
-            element={mainTemplate(UserBills, {
-              pageTitle: "گزارش مصرف"
-            })}
-          />
-          <Route
-            path="/dash/portal/billing/user-bill/:id"
-            element={mainTemplate(UserBill, {
-              link: {
-                text: "بازگشت به گزارش مصرف",
-                url: "/dash/portal/billing/user-bill",
-              },
-              hideSidebar: true,
-            })}
-          />
-          {/* ======================================= Invoice ======================================= */}
-          <Route
-            path="/dash/portal/billing/invoice"
+            path="/dash/portal/billing/invoices"
             element={mainTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
@@ -248,6 +208,40 @@ const Router: FC = () => {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
                 url: "/dash/portal/billing/invoice",
+              },
+              hideSidebar: true,
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/payments"
+            element={mainTemplate(Payments, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/payment/:id"
+            element={mainTemplate(Payment, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/payment/:id"
+            element={mainTemplate(Payment, {
+              pageTitle: "گزارش پرداخت ها",
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/user-bills"
+            element={mainTemplate(UserBills, {
+              pageTitle: "گزارش مصرف"
+            })}
+          />
+          <Route
+            path="/dash/portal/billing/user-bill/:id"
+            element={mainTemplate(UserBill, {
+              link: {
+                text: "بازگشت به گزارش مصرف",
+                url: "/dash/portal/billing/user-bill",
               },
               hideSidebar: true,
             })}

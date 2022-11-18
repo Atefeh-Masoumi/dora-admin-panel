@@ -97,12 +97,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       Icon: EmptyWalletSvg,
-      link: "/dash/portal/billing/wallet",
+      link: "/dash/portal/billing",
       subList: [
         { title: "گزارش کیف پول", link: "/dash/portal/billing/wallet" },
         { title: "گزارش مصرف", link: "/dash/portal/billing/user-bill" },
         { title: "گزارش پرداخت ها", link: "/dash/portal/billing/payment" },
-        { title: "فاکتور های فروش", link: "/dash/portal/billing/invoice" },
+        { title: "فاکتور های فروش", link: "/dash/portal/billing/invoices" },
       ],
     },
     {

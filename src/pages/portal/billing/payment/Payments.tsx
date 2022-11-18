@@ -1,20 +1,18 @@
 import { FC, useState } from "react";
-import { Stack } from "@mui/system";
-import { Divider, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
+import moment from "jalali-moment";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { paymentTableStruct } from "src/components/organisms/portal/payment/tables/struct";
+import { PaymentTableRow } from "src/components/organisms/portal/payment/tables/PaymentTableRow";
 import {
   useGetApiV2PortalWalletPaymentListQuery,
   WalletPaymentListResponse,
 } from "src/app/services/api.generated";
-import moment from "jalali-moment";
-import { paymentTableStruct } from "src/components/organisms/portal/payment/tables/struct";
-import { PaymentTableRow } from "src/components/organisms/portal/payment/tables/PaymentTableRow";
 
-const Transactions: FC = () => {
-  const { data: transactions, isLoading } =
-    useGetApiV2PortalWalletPaymentListQuery();
+const Payments: FC = () => {
+  const { data: payments, isLoading } = useGetApiV2PortalWalletPaymentListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
@@ -24,15 +22,15 @@ const Transactions: FC = () => {
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
 
   const filteredList =
-    transactions?.filter(
-      (transaction: WalletPaymentListResponse) =>
-        transaction.id?.toString().includes(search) &&
+    payments?.filter(
+      (payment: WalletPaymentListResponse) =>
+        payment.id?.toString().includes(search) &&
         (!dateFrom ||
-          (transaction.transactionDate &&
-            timeStringToDate(transaction.transactionDate) > dateFrom)) &&
+          (payment.transactionDate &&
+            timeStringToDate(payment.transactionDate) > dateFrom)) &&
         (!dateTo ||
-          (transaction.transactionDate &&
-            timeStringToDate(transaction.transactionDate) < dateTo))
+          (payment.transactionDate &&
+            timeStringToDate(payment.transactionDate) < dateTo))
     ) || [];
 
   return (
@@ -94,4 +92,4 @@ const Transactions: FC = () => {
   );
 };
 
-export default Transactions;
+export default Payments;

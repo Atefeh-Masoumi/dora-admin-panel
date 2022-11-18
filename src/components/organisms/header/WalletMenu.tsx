@@ -62,28 +62,28 @@ const items = [
     function: true,
   },
   {
-    value: "wallet",
+    value: "wallets",
     label: "گزارش کیف پول",
     icon: WalletSvg,
     link: "/dash/portal/billing/wallet",
   },
   {
-    value: "invoice",
+    value: "invoices",
     label: "فاکتور های فروش",
     icon: InvoiceSvg,
-    link: "/dash/portal/billing/invoice",
+    link: "/dash/portal/billing/invoices",
   },
   {
-    value: "transaction",
+    value: "payments",
     label: "گزارش تراکنش ها",
     icon: TransactionSvg,
-    link: "/dash/portal/billing/payment",
+    link: "/dash/portal/billing/payments",
   },
   {
-    value: "calculations",
+    value: "user-bill",
     label: "گزارش محاسبات",
     icon: CalculateSvg,
-    link: "/dash/portal/billing/user-bill",
+    link: "/dash/portal/billing/user-bills",
   },
 ];
 
@@ -127,9 +127,8 @@ export const WalletMenu: FC = () => {
           </Stack>
         ) : (
           <Stack direction="row" spacing={0.5}>
-            <Typography sx={{ direction: "rtl" }}>{`${
-              separateBalance || 0
-            }`}</Typography>
+            <Typography sx={{ direction: "rtl" }}>{`${separateBalance || 0
+              }`}</Typography>
             <Typography> ریال </Typography>
           </Stack>
         )}

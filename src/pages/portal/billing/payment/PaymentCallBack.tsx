@@ -41,7 +41,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
     return result;
   }, [paymentInfo.paymentStatusId]);
 
-  const closeHandler = () => navigate("/dash/portal/billing/payment");
+  const closeHandler = () => navigate("/dash/portal/billing/payments");
 
   if (!id) return <></>;
 
@@ -69,24 +69,34 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
           {isSuccess ? "پرداخت موفق" : "پرداخت ناموفق"}
         </Typography>
         <Typography color="secondary.main" variant="text14" align="justify">
-          {isSuccess ? "پرداخت با موفقیت انجام شد" : "پرداخت با شکست انجام شد"}
+          {isSuccess
+            ? "پرداخت شما با موفقیت انجام شد!"
+            : "متاسفانه مشکلی در پرداخت پیش آمده است. در صورتی که وجهی از حساب شما کم شده است، تا ۷۲ ساعت دیگر به حساب شما بر خواهد گشت."}
         </Typography>
         <Stack spacing={2} color="secondary.main" width="100%">
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">مبلغ تراکنشی</Typography>
-            <Typography variant="text14">
-              {priceToPersian(paymentInfo.amount || 0)} تومان
+            <Typography variant="text14" dir="ltr">
+              {priceToPersian(paymentInfo.amount || 0)} ریال
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">زمان تراکنش</Typography>
-            <Typography variant="text14">
+            <Typography variant="text14" dir="ltr">
               {paymentInfo.transactionDate || ""}
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">کد پیگیری</Typography>
-            <Typography variant="text14">{paymentInfo.id || ""}</Typography>
+            <Typography variant="text14" dir="ltr">{paymentInfo.id || ""}</Typography>
+          </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">کد مرجع (بانک)</Typography>
+            <Typography variant="text14" dir="ltr">{paymentInfo.rrn || ""}</Typography>
+          </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">شماره کارت</Typography>
+            <Typography variant="text14" dir="ltr">{paymentInfo.hashCardNumber || ""}</Typography>
           </Stack>
         </Stack>
         <Button
