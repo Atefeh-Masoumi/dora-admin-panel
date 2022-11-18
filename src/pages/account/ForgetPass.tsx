@@ -29,7 +29,7 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
     sendMail({ forgotModel: { email } })
       .unwrap()
       .then(() => {
-        toast.success("کد تایید به شماره موبال شما ارسال شد");
+        toast.success("کد تایید بصورت ایمیل ارسال شد");
         goNext();
       });
     setSubmitting(false);

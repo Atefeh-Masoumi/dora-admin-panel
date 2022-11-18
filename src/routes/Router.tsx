@@ -221,13 +221,7 @@ const Router: FC = () => {
           <Route
             path="/dash/portal/billing/payment/:id"
             element={mainTemplate(Payment, {
-              link: {
-                text: "بازگشت به فاکتور‌های فروش",
-                url: "/dash/portal/billing/payments",
-              },
-              hideSidebar: true,
-
-              // pageTitle: "گزارش پرداخت ها",
+              pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
