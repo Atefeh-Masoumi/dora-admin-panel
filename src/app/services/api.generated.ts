@@ -2664,12 +2664,15 @@ export type RabbitHostListResponse = {
   datacenter?: string | null;
   name?: string | null;
   status?: string | null;
+  statusId?: number;
   createDate?: string;
 };
 export type GetRabbitHostResponse = {
   id?: number;
+  datacenterId?: number;
   datacenter?: string | null;
   name?: string | null;
+  statusId?: number;
   status?: string | null;
   createDate?: string;
 };
@@ -3280,3 +3283,4 @@ export const {
   usePostApiV2CdnEdgeCertCreateMutation,
   usePostApiV2CdnEdgeCertCreateUserCertMutation,
 } = api;
+

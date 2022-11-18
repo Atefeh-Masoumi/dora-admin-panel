@@ -9,6 +9,8 @@ import { PrivateRoute } from "./PrivateRoute";
 import { DomainSelect } from "src/components/organisms/CDN/DomainSelect";
 import AddServerContextProvider from "src/context/AddServerContext";
 import EditServerContextProvider from "src/context/EditServerContext";
+import AddRabbitContextProvider from "src/components/organisms/rabbit/context/AddRabbitContext";
+import EditRabbitContextProvider from "src/components/organisms/rabbit/context/EditRabbitContext";
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
@@ -44,6 +46,9 @@ const PaymentCallBack = lazy(() => import("src/pages/PaymentCallBack"));
 const ReferralCallBack = lazy(() => import("src/pages/ReferralCallBack"));
 const PaymentDetails = lazy(() => import("src/pages/cart/PaymentDetails"));
 const Cart = lazy(() => import("src/pages/cart/Cart"));
+const RabbitManagement = lazy(() => import("src/pages/rabbit/RabbitManagement"));
+const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
+const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -304,6 +309,41 @@ const Router: FC = () => {
                 hideSidebar: true,
               },
               EditServerContextProvider
+            )}
+          />
+          {/* ======================================= RabbitMQ ======================================= */}
+          <Route
+            path="/dash/rabbit"
+            element={mainTemplate(RabbitManagement, {
+              pageTitle: "مدیریت سرویس RabbitMQ",
+            })}
+          />
+          <Route
+            path="/dash/rabbit/addRabbitService"
+            element={mainTemplate(
+              AddRabbitService,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس RabbitMQ",
+                  url: "/dash/rabbit",
+                },
+                hideSidebar: true,
+              },
+              AddRabbitContextProvider
+            )}
+          />
+          <Route
+            path="/dash/rabbit/:id"
+            element={mainTemplate(
+              EditRabbitService,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس RabbitMQ",
+                  url: "/dash/rabbit",
+                },
+                hideSidebar: true,
+              },
+              EditRabbitContextProvider
             )}
           />
           <Route
