@@ -104,7 +104,7 @@ const Header: FC<HeaderPropsType> = ({
           }}
           onClick={() => {
             closeMenuHandler();
-            navigate("/dash/portal/order");
+            navigate("/dash/portal/orders");
           }}
         >
           <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />

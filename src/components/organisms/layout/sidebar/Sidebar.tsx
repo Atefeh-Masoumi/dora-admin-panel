@@ -74,27 +74,27 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     //   Icon: CoinSvg,
     //   link: "/dash/payment",
     // },
-    // {
-    //   title: "SMS",
-    //   text: "سرویس پیامک ابری",
-    //   Icon: SmsSvg,
-    //   link: "/dash/sms",
-    //   subList: [
-    //     { title: "خرید بسته پیامکی", link: "/dash/sms" },
-    //     { title: "سرشماره های من", link: "/dash/sms/" },
-    //     { title: "پیام های دریافتی", link: "/dash/sms/" },
-    //     { title: "پیام های ارسالی", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک تکی", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
-    //   ],
-    // },
-    // {
-    //   title: "API",
-    //   text: "کلیدهای دسترسی برنامه نویسی",
-    //   Icon: CodeCircleSvg,
-    //   link: "/dash/apis",
-    // },
+    {
+      title: "SMS",
+      text: "سرویس پیامک ابری",
+      Icon: SmsSvg,
+      link: "/dash/sms",
+      subList: [
+        { title: "خرید بسته پیامکی", link: "/dash/sms" },
+        { title: "سرشماره های من", link: "/dash/sms/" },
+        { title: "پیام های دریافتی", link: "/dash/sms/" },
+        { title: "پیام های ارسالی", link: "/dash/sms/" },
+        { title: "ارسال پیامک تکی", link: "/dash/sms/" },
+        { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
+        { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
+      ],
+    },
+    {
+      title: "API",
+      text: "کلیدهای دسترسی برنامه نویسی",
+      Icon: CodeCircleSvg,
+      link: "/dash/apis",
+    },
     {
       Icon: EmptyWalletSvg,
       link: "/dash/portal/billing",
@@ -133,14 +133,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
 
   const hideSubLists = useMemo(
     () =>
-      pathname === "/dash/index" ||
-      pathname === "/dash/api" ||
+      pathname === "/dash" ||
       pathname === "/dash/portal/profile" ||
       pathname === "/dash/portal/setting" ||
-      pathname === "/dash/portal/user-service" ||
-      pathname === "/dash/portal/order" ||
-      pathname !== "/dash/portal/referral" &&
-      pathname !== "/dash/portal/notification",
+      pathname === "/dash/portal/user-services" ||
+      pathname === "/dash/portal/orders" ||
+      pathname === "/dash/portal/referral" ||
+      pathname === "/dash/portal/notifications",
     [pathname]
   );
 

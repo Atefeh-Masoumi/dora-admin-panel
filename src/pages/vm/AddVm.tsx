@@ -60,7 +60,7 @@ const AddVm: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
-        navigate("/dash/portal/order");
+        navigate("/dash/portal/orders");
       });
   };
 

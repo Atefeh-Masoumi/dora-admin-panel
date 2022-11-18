@@ -79,7 +79,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
 
-  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash/index" />;
+  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash" />;
 
   const generalInfo = [
     {
@@ -187,7 +187,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const submitHandler = () => {
     if (!orderInfo) return;
     if (orderPaymentTypeId === "1") {
-      navigate("/dash/index");
+      navigate("/dash");
       toast.success("پرداخت با موفقیت انجام شد");
     } else {
       goToBankPortal({

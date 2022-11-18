@@ -94,10 +94,9 @@ const Router: FC = () => {
         <Route path="/dash/account/signup" element={<Signup />} />
         <Route path="/dash/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Navigate to="/dash/index" />} />
-          <Route path="/dash/" element={<Navigate to="/dash/index" />} />
+          <Route path="/" element={<Navigate to="/dash" />} />
           <Route
-            path="/dash/index"
+            path="/dash/"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
@@ -123,7 +122,7 @@ const Router: FC = () => {
             element={callbackTemplate(Referral)}
           />
           <Route
-            path="/dash/portal/user-service"
+            path="/dash/portal/user-services"
             element={mainTemplate(UserServices, {
               pageTitle: "سرویس های من",
             })}
@@ -139,14 +138,14 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/dash/portal/notification"
+            path="/dash/portal/notifications"
             element={mainTemplate(Notification, {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
           {/* ======================================= Order ======================================= */}
           <Route
-            path="/dash/portal/order"
+            path="/dash/portal/orders"
             element={mainTemplate(Orders, {
               pageTitle: "سبد خرید",
             })}
@@ -156,7 +155,7 @@ const Router: FC = () => {
             element={mainTemplate(Order, {
               link: {
                 text: "بازگشت به سبد خرید",
-                url: "/dash/portal/order",
+                url: "/dash/portal/orders",
               },
               hideSidebar: true,
             })}
@@ -225,12 +224,6 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/dash/payment/:id"
-            element={mainTemplate(Payment, {
-              pageTitle: "گزارش پرداخت ها",
-            })}
-          />
-          <Route
             path="/dash/portal/billing/user-bills"
             element={mainTemplate(UserBills, {
               pageTitle: "گزارش مصرف"
@@ -254,6 +247,13 @@ const Router: FC = () => {
             })}
           />
           <Route
+            path="/dash/cdn/dnsRecordSettings"
+            element={mainTemplate(Domain, {
+              pageTitle: "تنظیمات DNS Record",
+              RightComponent: DomainSelect,
+            })}
+          />
+          <Route
             path="/dash/cdn/sslTslSettings"
             element={mainTemplate(Domain, {
               pageTitle: "تنظیمات SSL/TSL",
@@ -264,13 +264,6 @@ const Router: FC = () => {
             path="/dash/cdn/loadBalanceSettings"
             element={mainTemplate(Domain, {
               pageTitle: "تنظیمات Load Balance",
-              RightComponent: DomainSelect,
-            })}
-          />
-          <Route
-            path="/dash/cdn/dnsRecordSettings"
-            element={mainTemplate(Domain, {
-              pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
@@ -297,15 +290,13 @@ const Router: FC = () => {
           />
           <Route
             path="/dash/vm/addVm"
-            element={mainTemplate(
-              AddVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/dash/vm",
-                },
-                hideSidebar: true,
+            element={mainTemplate(AddVm, {
+              link: {
+                text: "بازگشت به مدیریت سرور ابری",
+                url: "/dash/vm",
               },
+              hideSidebar: true,
+            },
               AddServerContextProvider
             )}
           />
@@ -340,22 +331,18 @@ const Router: FC = () => {
                   url: "/dash/rabbit",
                 },
                 hideSidebar: true,
-              },
-              AddRabbitContextProvider
+              }, AddRabbitContextProvider
             )}
           />
           <Route
             path="/dash/rabbit/:id"
-            element={mainTemplate(
-              EditRabbitService,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرویس RabbitMQ",
-                  url: "/dash/rabbit",
-                },
-                hideSidebar: true,
+            element={mainTemplate(EditRabbitService, {
+              link: {
+                text: "بازگشت به مدیریت سرویس RabbitMQ",
+                url: "/dash/rabbit",
               },
-              EditRabbitContextProvider
+              hideSidebar: true,
+            }, EditRabbitContextProvider
             )}
           />
           <Route
