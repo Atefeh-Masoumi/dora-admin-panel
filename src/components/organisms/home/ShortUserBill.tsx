@@ -76,7 +76,7 @@ export const ShortUserBill: FC = () => {
                       variant="text12"
                       color="rgba(110, 118, 138, 0.6)"
                     >
-                      در حال حاضر تیکت وجود ندارد
+                      در حال حاضر صورتحسابی وجود ندارد
                     </Typography>
                   </Stack>
                 </Stack>

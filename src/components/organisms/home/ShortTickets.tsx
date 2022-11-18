@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { useGetApiV2PortalDashboardSupportShortListQuery } from "src/app/services/api.generated";
+import moment from "jalali-moment";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import { CustomTooltip } from "../portal/notification/tables/NotificationTableRow";
-import moment from "jalali-moment";
+import { useGetApiV2PortalDashboardSupportShortListQuery } from "src/app/services/api.generated";
 
 export const ShortTickets: FC = () => {
   const { data: tickets, isLoading } =

@@ -31,7 +31,8 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       pathname !== "/dash/portal/setting" &&
       pathname !== "/dash/portal/user-service" &&
       pathname !== "/dash/portal/order" &&
-      pathname !== "/dash/portal/referral",
+      pathname !== "/dash/portal/referral" &&
+      pathname !== "/dash/portal/notification",
     [pathname]
   );
 
