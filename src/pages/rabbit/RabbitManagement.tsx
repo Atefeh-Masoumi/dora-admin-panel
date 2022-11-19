@@ -110,7 +110,7 @@ const CloudManagement: FC<RabbitManagementPropsType> = () => {
               </Stack>
             }
           >
-            سرویس ابری جدید
+            سرویس RabbitMQ جدید
           </Button>
         </Stack>
       </Stack>
