@@ -17,11 +17,11 @@ export const DeleteLoadBalanceDialog: FC<DeleteLoadBalanceDialogPropsType> = ({
   id,
 }) => {
   const onClose = () => handleClose();
-  const [deleteLoadBalance, { isLoading }] =
+  const [deleteItem, { isLoading }] =
     useDeleteApiV2CdnLoadBalanceDeleteByIdMutation();
 
   const submit = () =>
-    deleteLoadBalance({ id })
+    deleteItem({ id })
       .then(() => {
         toast.success("کلاستر با موفقیت حذف شد");
         handleClose();

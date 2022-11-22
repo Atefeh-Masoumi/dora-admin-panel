@@ -285,13 +285,13 @@ export const api = createApi({
         body: queryArg.registerDomainModel,
       }),
     }),
-    putApiV2DomainDeleteById: build.mutation<
-      PutApiV2DomainDeleteByIdApiResponse,
-      PutApiV2DomainDeleteByIdApiArg
+    deleteApiV2DomainDeleteById: build.mutation<
+      DeleteApiV2DomainDeleteByIdApiResponse,
+      DeleteApiV2DomainDeleteByIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/v2/domain/delete/${queryArg.id}`,
-        method: "PUT",
+        method: "DELETE",
       }),
     }),
     putApiV2DomainChangeContact: build.mutation<
@@ -418,14 +418,6 @@ export const api = createApi({
       GetApiV2PortalOrderNotPaidListApiArg
     >({
       query: () => ({ url: `/api/v2/portal/order/not-paid-list` }),
-    }),
-    getApiV2PortalOrderShortListByProductCategoryId: build.query<
-      GetApiV2PortalOrderShortListByProductCategoryIdApiResponse,
-      GetApiV2PortalOrderShortListByProductCategoryIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/short-list/${queryArg.productCategoryId}`,
-      }),
     }),
     getApiV2PortalOrderGetById: build.query<
       GetApiV2PortalOrderGetByIdApiResponse,
@@ -1600,8 +1592,8 @@ export type PostApiV2DomainRegisterApiResponse =
 export type PostApiV2DomainRegisterApiArg = {
   registerDomainModel: RegisterDomainModel;
 };
-export type PutApiV2DomainDeleteByIdApiResponse = unknown;
-export type PutApiV2DomainDeleteByIdApiArg = {
+export type DeleteApiV2DomainDeleteByIdApiResponse = unknown;
+export type DeleteApiV2DomainDeleteByIdApiArg = {
   id: number;
 };
 export type PutApiV2DomainChangeContactApiResponse = unknown;
@@ -1668,11 +1660,6 @@ export type GetApiV2PortalOrderListByProductCategoryIdApiArg = {
 export type GetApiV2PortalOrderNotPaidListApiResponse =
   /** status 200 Success */ OrderNotPaidListResponse[];
 export type GetApiV2PortalOrderNotPaidListApiArg = void;
-export type GetApiV2PortalOrderShortListByProductCategoryIdApiResponse =
-  /** status 200 Success */ OrderShortListResponse[];
-export type GetApiV2PortalOrderShortListByProductCategoryIdApiArg = {
-  productCategoryId: number;
-};
 export type GetApiV2PortalOrderGetByIdApiResponse =
   /** status 200 Success */ GetOrderResponse;
 export type GetApiV2PortalOrderGetByIdApiArg = {
@@ -2385,6 +2372,7 @@ export type DomainListResponse = {
   type?: string | null;
   ns1?: string | null;
   ns2?: string | null;
+  createDate?: string;
   expireDate?: string | null;
 };
 export type GetDomainResponse = {
@@ -2540,10 +2528,6 @@ export type OrderNotPaidListResponse = {
   status?: string | null;
   orderStatusId?: number;
   createDate?: string;
-};
-export type OrderShortListResponse = {
-  id?: number;
-  name?: string | null;
 };
 export type GetOrderResponse = {
   id?: number;
@@ -2938,6 +2922,7 @@ export type WebHostListResponse = {
   datacenter?: string | null;
   domainName?: string | null;
   status?: string | null;
+  statusId?: number;
   createDate?: string;
 };
 export type GetWebHostResponse = {
@@ -2945,6 +2930,7 @@ export type GetWebHostResponse = {
   datacenter?: string | null;
   domainName?: string | null;
   status?: string | null;
+  statusId?: number;
   createDate?: string;
 };
 export type GetLoginSessionResponse = {
@@ -3143,7 +3129,7 @@ export const {
   usePostApiV2DomainGetPriceMutation,
   useGetApiV2DomainPayByIdQuery,
   usePostApiV2DomainRegisterMutation,
-  usePutApiV2DomainDeleteByIdMutation,
+  useDeleteApiV2DomainDeleteByIdMutation,
   usePutApiV2DomainChangeContactMutation,
   usePutApiV2DomainChangeNsMutation,
   usePostApiV2DomainResendVerificationByIdMutation,
@@ -3160,7 +3146,6 @@ export const {
   useGetApiV2PortalNotificationShortListQuery,
   useGetApiV2PortalOrderListByProductCategoryIdQuery,
   useGetApiV2PortalOrderNotPaidListQuery,
-  useGetApiV2PortalOrderShortListByProductCategoryIdQuery,
   useGetApiV2PortalOrderGetByIdQuery,
   usePutApiV2PortalOrderPaymentTypeMutation,
   usePutApiV2PortalOrderDurationMutation,

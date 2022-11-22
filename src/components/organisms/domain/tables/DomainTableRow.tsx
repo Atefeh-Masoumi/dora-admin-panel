@@ -1,25 +1,25 @@
 import { FC, Fragment, useState } from "react";
-import { rabbitTableStruct } from "./struct";
+import { domainTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { DeleteRabbitDialog } from "../dialogs/DeleteRabbitDialog";
+import { DeleteDomainDialog } from "../dialogs/DeleteDomainDialog";
 import { useNavigate } from "react-router";
 
-export const RabbitTableRow: FC<{ row: any }> = ({ row }) => {
+export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/dash/rabbit/" + row["id"]);
+  const settingOnClick = () => navigate("/dash/domain/" + row["id"]);
 
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {rabbitTableStruct.map((column) => {
+        {domainTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
@@ -104,7 +104,7 @@ export const RabbitTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteRabbitDialog
+      <DeleteDomainDialog
         id={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}

@@ -3,8 +3,8 @@ import { useGetApiV2RabbitRabbitHostListQuery } from "src/app/services/api.gener
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
-import { AddVmTableRow } from "src/components/organisms/rabbit/tables/RabbitTableRow";
-import { RabbitTableStruct } from "src/components/organisms/rabbit/tables/struct";
+import { RabbitTableRow } from "src/components/organisms/rabbit/tables/RabbitTableRow";
+import { rabbitTableStruct } from "src/components/organisms/rabbit/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -39,7 +39,7 @@ const CloudManagement: FC<RabbitManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/rabbit/addRabbitService");
+  const createCloudOnClick = () => navigate("/dash/rabbit/addRabbitService");
 
   return (
     <Stack
@@ -117,8 +117,8 @@ const CloudManagement: FC<RabbitManagementPropsType> = () => {
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
-          struct={RabbitTableStruct}
-          RowComponent={AddVmTableRow}
+          struct={rabbitTableStruct}
+          RowComponent={RabbitTableRow}
           rows={filteredList}
           text="در حال حاضر سرویسی وجود ندارد"
           isLoading={isLoading}

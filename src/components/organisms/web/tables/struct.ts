@@ -1,6 +1,6 @@
 import { columnType } from "../../tables/table.types";
 
-export const rabbitTableStruct: columnType[] = [
+export const webTableStruct: columnType[] = [
   {
     id: "id",
     label: "",
@@ -11,7 +11,7 @@ export const rabbitTableStruct: columnType[] = [
     label: "مرکز داده",
   },
   {
-    id: "name",
+    id: "domainName",
     label: "نام سرویس",
   },
   {

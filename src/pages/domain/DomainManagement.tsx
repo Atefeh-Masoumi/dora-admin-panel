@@ -1,18 +1,18 @@
 import { FC, useState, useMemo } from "react";
-import { useGetApiV2VmVmListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
-import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
-import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { useNavigate } from "react-router";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate } from "react-router";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
+import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
+import { useGetApiV2DomainListQuery } from "src/app/services/api.generated";
 
-type VmManagementPropsType = {};
+type WebManagementPropsType = {};
 
-const VmManagement: FC<VmManagementPropsType> = () => {
+const WebManagement: FC<WebManagementPropsType> = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -20,7 +20,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiV2VmVmListQuery();
+  } = useGetApiV2DomainListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -30,8 +30,8 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   const filteredList =
     data?.filter((item) => {
       let result = null;
-      if (item?.name) {
-        result = item?.name.includes(search);
+      if (item?.domainName) {
+        result = item?.domainName.includes(search);
       }
       return result;
     }) || [];
@@ -39,7 +39,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/dash/vm/addVm");
+  const createCloudOnClick = () => navigate("/dash/web/addWebService");
 
   return (
     <Stack
@@ -62,11 +62,11 @@ const VmManagement: FC<VmManagementPropsType> = () => {
           spacing={2}
         >
           <Typography fontSize={18} color="secondary">
-            لیست سرورهای ابری
+            لیست ثبت/تمدید دامنه
           </Typography>
           <SearchBox
             onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام ماشین"
+            placeholder="جستجو در نام دامنه"
           />
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
@@ -110,17 +110,17 @@ const VmManagement: FC<VmManagementPropsType> = () => {
               </Stack>
             }
           >
-            سرور ابری جدید
+            ثبت/تمدید دامنه جدید
           </Button>
         </Stack>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
-          struct={addVmTableStruct}
-          RowComponent={AddVmTableRow}
+          struct={domainTableStruct}
+          RowComponent={DomainTableRow}
           rows={filteredList}
-          text="در حال حاضر سروری وجود ندارد"
+          text="در حال حاضر دامنه ای وجود ندارد"
           isLoading={isLoading}
           initialOrder={9}
         />
@@ -129,4 +129,4 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   );
 };
 
-export default VmManagement;
+export default WebManagement;

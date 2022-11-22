@@ -1,21 +1,22 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { Box, Stack } from "@mui/material";
+import { useLocation } from "react-router";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { sidebarWidth } from "src/components/templates/MainTemplate";
+import { sidebarItemType } from "src/types/itemsList.type";
+import { ItemList } from "./ItemList";
+import { SubItemList } from "./SubItemList";
+import { SpecialOffer } from "./SpecialOffer";
+import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
+import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
+import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
-import SmsSvg from "src/components/atoms/svg/SmsSvg";
-import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
-import { ItemList } from "./ItemList";
-import { SubItemList } from "./SubItemList";
-import { SpecialOffer } from "./SpecialOffer";
-import { sidebarWidth } from "src/components/templates/MainTemplate";
-import { sidebarItemType } from "src/types/itemsList.type";
-import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
-import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
-import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
-import { useLocation } from "react-router";
+// import SmsSvg from "src/components/atoms/svg/SmsSvg";
+// import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
+import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 
 type SidebarPropsType = {};
 
@@ -68,33 +69,41 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       link: "/dash/rabbit",
       subList: [{ title: "مدیریت RabbitMQ ابری", link: "/dash/rabbit" }],
     },
+    {
+      title: "Web Hosting",
+      text: "سرویس هاستینگ ابری",
+      Icon: CoinSvg,
+      link: "/dash/web",
+      subList: [{ title: "سرویس هاستینگ ابری", link: "/dash/web" }],
+    },
+    {
+      title: "Domain Registration",
+      text: "ثبت/تمدید دامنه",
+      Icon: BuildingSvg,
+      link: "/dash/domain",
+      subList: [{ title: "ثبت/تمدید دامنه", link: "/dash/domain" }],
+    },
     // {
-    //   title: "Payment",
-    //   text: "سرویس پرداخت ابری",
-    //   Icon: CoinSvg,
-    //   link: "/dash/payment",
+    //   title: "SMS",
+    //   text: "سرویس پیامک ابری",
+    //   Icon: SmsSvg,
+    //   link: "/dash/sms",
+    //   subList: [
+    //     { title: "خرید بسته پیامکی", link: "/dash/sms" },
+    //     { title: "سرشماره های من", link: "/dash/sms/" },
+    //     { title: "پیام های دریافتی", link: "/dash/sms/" },
+    //     { title: "پیام های ارسالی", link: "/dash/sms/" },
+    //     { title: "ارسال پیامک تکی", link: "/dash/sms/" },
+    //     { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
+    //     { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
+    //   ],
     // },
-    {
-      title: "SMS",
-      text: "سرویس پیامک ابری",
-      Icon: SmsSvg,
-      link: "/dash/sms",
-      subList: [
-        { title: "خرید بسته پیامکی", link: "/dash/sms" },
-        { title: "سرشماره های من", link: "/dash/sms/" },
-        { title: "پیام های دریافتی", link: "/dash/sms/" },
-        { title: "پیام های ارسالی", link: "/dash/sms/" },
-        { title: "ارسال پیامک تکی", link: "/dash/sms/" },
-        { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
-        { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
-      ],
-    },
-    {
-      title: "API",
-      text: "کلیدهای دسترسی برنامه نویسی",
-      Icon: CodeCircleSvg,
-      link: "/dash/apis",
-    },
+    // {
+    //   title: "API",
+    //   text: "کلیدهای دسترسی برنامه نویسی",
+    //   Icon: CodeCircleSvg,
+    //   link: "/dash/apis",
+    // },
     {
       Icon: EmptyWalletSvg,
       link: "/dash/portal/billing",

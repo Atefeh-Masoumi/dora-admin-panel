@@ -22,7 +22,7 @@ import { visuallyHidden } from "@mui/utils";
 
 export type tableOrderType = "asc" | "desc";
 
-const rowsPerPage = 5;
+const rowsPerPage = 10;
 
 type BaseTablePropsType = {
   rows: any[];
@@ -60,7 +60,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
     <Fragment>
       {isLoading ? (
         <Stack spacing={1} px={2}>
-          {[...Array(5)].map((_, index) => (
+          {[...Array(10)].map((_, index) => (
             <Skeleton
               key={index}
               variant="rectangular"
@@ -164,7 +164,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               display={rows.length <= rowsPerPage ? "none" : "flex"}
             >
               <DorsaTablePagination
-                count={Math.ceil(rows.length / 5)}
+                count={Math.ceil(rows.length / 10)}
                 color="primary"
                 siblingCount={0}
                 shape="rounded"
@@ -174,7 +174,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               />
               <Typography color="rgba(110, 118, 138, 0.8)">
                 {rows.length} نتیجه ، صفحه {page} از
-                {Math.ceil(rows.length / 5)}
+                {Math.ceil(rows.length /10)}
               </Typography>
             </Stack>
           </Stack>

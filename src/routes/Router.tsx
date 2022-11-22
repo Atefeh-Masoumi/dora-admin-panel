@@ -57,6 +57,10 @@ const RabbitManagement = lazy(() => import("src/pages/rabbit/RabbitManagement"))
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
 
+const WebManagement = lazy(() => import("src/pages/web/WebManagement"));
+
+const DomainManagement = lazy(() => import("src/pages/domain/DomainManagement"));
+
 const mainTemplate = (
   PageComponent: FC<any>,
   templateProps?: Omit<MainTemplatePropsType, "children">,
@@ -345,6 +349,21 @@ const Router: FC = () => {
             }, EditRabbitContextProvider
             )}
           />
+          {/* ======================================= WEB ======================================= */}
+          <Route
+            path="/dash/web"
+            element={mainTemplate(WebManagement, {
+              pageTitle: "مدیریت هاست وب ابری",
+            })}
+          />
+          {/* ======================================= Domain ======================================= */}
+          <Route
+            path="/dash/domain"
+            element={mainTemplate(DomainManagement, {
+              pageTitle: "مدیریت ثبت/تمدید دامنه",
+            })}
+          />
+
           <Route
             path="*"
             element={mainTemplate(NotFound, {

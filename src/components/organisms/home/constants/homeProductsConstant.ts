@@ -1,9 +1,10 @@
-import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
-import SmsSvg from "src/components/atoms/svg/SmsSvg";
+// import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
+// import SmsSvg from "src/components/atoms/svg/SmsSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
 import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
+import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 
 export const homeProductsConstantListItems = [
   {
@@ -27,13 +28,20 @@ export const homeProductsConstantListItems = [
     bgcolor: "rgba(255, 233, 218, 1)",
     link: "/dash/rabbit",
   },
-  // {
-  //   title: "Payment",
-  //   text: "سرویس پرداخت ابری",
-  //   Icon: CoinSvg,
-  //   bgcolor: "rgba(255, 69, 80, 0.2)",
-  //   link: "/dash/payment",
-  // },
+  {
+    title: "Web Hosting",
+    text: "سرویس هاستینگ ابری",
+    Icon: CoinSvg,
+    bgcolor: "rgba(255, 69, 80, 0.2)",
+    link: "/dash/web",
+  },
+  {
+    title: "Domain Registration",
+    text: "ثبت/تمدید دامنه",
+    Icon: BuildingSvg,
+    bgcolor: "rgba(159, 69, 255, 0.2)",
+    link: "/dash/domain",
+  },
   // {
   //   title: "SMS",
   //   text: "سرویس پیامک ابری",

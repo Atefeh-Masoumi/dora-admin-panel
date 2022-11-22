@@ -37,7 +37,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           alignItems="center"
         >
           <Typography fontSize={18} color="secondary">
-            لیست DNS Record
+            لیست Load Balancer ابری
           </Typography>
           <Button
             onClick={openDialog}
@@ -57,7 +57,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
             struct={loadBalanceTableStruct}
             RowComponent={LoadBalanceTableRow}
             rows={data || []}
-            text="در حال حاضر دامنه وجود ندارد"
+            text="در حال حاضر Load Balancer وجود ندارد"
             isLoading={isLoading}
           />
         </Box>

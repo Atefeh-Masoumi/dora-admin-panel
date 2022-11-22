@@ -1,29 +1,29 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiV2CdnLoadBalanceDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiV2WebWebHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
-type DeleteLoadBalanceDialogPropsType = {
+type DeleteWebDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteLoadBalanceDialog: FC<DeleteLoadBalanceDialogPropsType> = ({
+export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
   openDialog,
   handleClose,
   id,
 }) => {
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
-    useDeleteApiV2CdnLoadBalanceDeleteByIdMutation();
+    useDeleteApiV2WebWebHostDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
       .then(() => {
-        toast.success("کلاستر با موفقیت حذف شد");
+        toast.success("سرویس هاست ابری با موفقیت حذف شد");
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
@@ -40,7 +40,7 @@ export const DeleteLoadBalanceDialog: FC<DeleteLoadBalanceDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف کلاستر مطمئن هستید؟
+            از حذف سرویس هاست وب ابری مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد
@@ -62,7 +62,7 @@ export const DeleteLoadBalanceDialog: FC<DeleteLoadBalanceDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف کلاستر
+            حذف سرویس هاست ابری
           </LoadingButton>
         </Stack>
       </Stack>
