@@ -62,7 +62,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
           spacing={2}
         >
           <Typography fontSize={18} color="secondary">
-            لیست هاستینگ وب ابری
+            لیست سرویس هاستینگ ابری
           </Typography>
           <SearchBox
             onChange={(text) => setSearch(text)}
@@ -110,7 +110,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
               </Stack>
             }
           >
-            هاستینگ وب جدید
+            سرویس هاستینگ جدید
           </Button>
         </Stack>
       </Stack>

@@ -11,6 +11,8 @@ import AddServerContextProvider from "src/components/organisms/vm/addVm/contexts
 import EditServerContextProvider from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
 import EditRabbitContextProvider from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
+import AddWebHostContextProvider from "src/components/organisms/web/addService/context/AddWebHostContext";
+
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
@@ -58,6 +60,7 @@ const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"))
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
 
 const WebManagement = lazy(() => import("src/pages/web/WebManagement"));
+const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
 
 const DomainManagement = lazy(() => import("src/pages/domain/DomainManagement"));
 
@@ -353,8 +356,21 @@ const Router: FC = () => {
           <Route
             path="/dash/web"
             element={mainTemplate(WebManagement, {
-              pageTitle: "مدیریت هاست وب ابری",
+              pageTitle: "مدیریت هاستینگ ابری",
             })}
+          />
+          <Route
+            path="/dash/web/addWebHost"
+            element={mainTemplate(
+              AddWebHost,
+              {
+                link: {
+                  text: "بازگشت به مدیریت هاستینگ ابری",
+                  url: "/dash/web",
+                },
+                hideSidebar: true,
+              }, AddWebHostContextProvider
+            )}
           />
           {/* ======================================= Domain ======================================= */}
           <Route

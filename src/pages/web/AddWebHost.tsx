@@ -1,82 +1,76 @@
 import { FC, useContext } from "react";
-import { useNavigate } from "react-router";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import { AddServerContext, addServerStepsType } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
-import { AddVmStepper } from "src/components/organisms/vm/addVm/AddVmStepper";
-import { SelectDataCenter } from "src/components/organisms/vm/addVm/addVmSteps/SelectDataCenter";
-import { SelectOS } from "src/components/organisms/vm/addVm/addVmSteps/SelectOS";
-import { SelectConfig } from "src/components/organisms/vm/addVm/addVmSteps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/vm/addVm/addVmSteps/ServerInfo";
-import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiV2VmVmCreateMutation } from "src/app/services/api.generated";
+import { useNavigate } from "react-router";
+import { AddWebHostContext, addWebHostStepsType } from "src/components/organisms/web/addService/context/AddWebHostContext";
+import { AddWebHostStepper } from "src/components/organisms/web/addService/AddWebHostStepper";
+import { SelectDomain } from "src/components/organisms/web/addService/addServiceSteps/SelectDomain";
+import { SelectDataCenter } from "src/components/organisms/web/addService/addServiceSteps/SelectDataCenter";
+import { SelectConfig } from "src/components/organisms/web/addService/addServiceSteps/SelectConfig";
+import { Terms } from "src/components/organisms/web/addService/addServiceSteps/Terms";
+import { usePostApiV2WebWebHostCreateMutation } from "src/app/services/api.generated";
 
-const AddVm: FC = () => {
+const AddWebHost: FC = () => {
   const {
     step,
     setStep,
+    domainName,
     dataCenter,
-    osVersion,
     serverConfig,
-    serverName,
-    serverPassword,
-  } = useContext(AddServerContext);
+    term
+  } = useContext(AddWebHostContext);
 
   const navigate = useNavigate();
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/vm");
+      navigate("/dash/web");
       return;
     }
-    setStep((step - 1) as addServerStepsType);
+    setStep((step - 1) as addWebHostStepsType);
   };
 
-  const [createCloudServer, { isLoading }] = usePostApiV2VmVmCreateMutation();
+  const [createWebHost, { isLoading }] = usePostApiV2WebWebHostCreateMutation();
 
   const submitHandler = () => {
     if (
       step !== 4 ||
+      !domainName ||
+      domainName.length < 3 ||
       !dataCenter ||
       !dataCenter.id ||
-      !osVersion ||
-      !osVersion.id ||
       !serverConfig ||
-      !serverName ||
-      serverName.length < 3 ||
-      !passwordValidationRegex.test(serverPassword)
+      !term
     )
       return;
-    createCloudServer({
-      createVmModel: {
-        name: serverName,
-        password: serverPassword,
-        imageId: osVersion.id,
-        productBundleId: serverConfig.id || 0,
+    createWebHost({
+      createWebHostModel: {
+        domainName: domainName,
         datacenterId: dataCenter.id,
+        productBundleId: serverConfig.id || 0,
       },
     })
       .unwrap()
       .then(() => {
-        toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
-        navigate("/dash/portal/orders");
+        toast.success("سرویس هاست وب با موفقیت ایجاد شد");
+        navigate("/dash/web");
       });
   };
 
   const goNextStep = () => {
     switch (step) {
       case 1:
-        dataCenter && setStep(2);
+        domainName && setStep(2);
         break;
       case 2:
-        dataCenter && osVersion && setStep(3);
+        domainName && dataCenter && setStep(3);
         break;
       case 3:
-        dataCenter && osVersion && serverConfig && setStep(4);
+        domainName && dataCenter && serverConfig && setStep(4);
         break;
       case 4:
-        dataCenter && osVersion && serverConfig && serverName && serverPassword && submitHandler();
+        domainName && dataCenter && serverConfig && term && submitHandler();
         break;
       default:
         break;
@@ -87,16 +81,16 @@ const AddVm: FC = () => {
     let result = <></>;
     switch (step) {
       case 1:
-        result = <SelectDataCenter />;
+        result = <SelectDomain />;
         break;
       case 2:
-        result = <SelectOS />;
+        result = <SelectDataCenter />;
         break;
       case 3:
         result = <SelectConfig />;
         break;
       case 4:
-        result = <ServerInfo />;
+        result = <Terms />;
         break;
       default:
         break;
@@ -112,7 +106,7 @@ const AddVm: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد سرور مجازی جدید
+        ایجاد هاست وب جدید
       </Typography>
       <Box
         sx={{
@@ -124,7 +118,7 @@ const AddVm: FC = () => {
         }}
       >
         <Box sx={{ overflow: "overlay" }}>
-          <AddVmStepper step={step} />
+          <AddWebHostStepper step={step} />
         </Box>
         <Box sx={{ my: 6 }}>{renderStepHandler()}</Box>
         <Stack
@@ -162,7 +156,7 @@ const AddVm: FC = () => {
             }}
             onClick={goNextStep}
           >
-            {step === 4 ? "ایجاد ماشین" : "ادامه"}
+            {step === 4 ? "ایجاد سرویس" : "ادامه"}
           </LoadingButton>
         </Stack>
       </Box>
@@ -170,4 +164,4 @@ const AddVm: FC = () => {
   );
 };
 
-export default AddVm;
+export default AddWebHost;
