@@ -69,7 +69,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const tabArray = [
     "مشخصات سرور",
     "آدرس IP سرور",
-    "ارتقا یا تنزل سخت افزار",
+    "تغییر مشخصات سخت افزاری",
     "بازسازی سیستم عامل",
   ];
 

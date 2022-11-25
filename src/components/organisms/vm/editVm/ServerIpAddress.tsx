@@ -102,11 +102,10 @@ type ServerIpAddressPropsType = {};
 
 export const ServerIpAddress: FC<ServerIpAddressPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
+  const [getData, { isLoading }] = useLazyGetApiV2VmVmIpListByVmIdQuery();
   const [data, setData] = useState<GetApiV2VmVmIpListByVmIdApiResponse | null>(
     null
   );
-
-  const [getData, { isLoading }] = useLazyGetApiV2VmVmIpListByVmIdQuery();
 
   useEffect(() => {
     if (serverId) {

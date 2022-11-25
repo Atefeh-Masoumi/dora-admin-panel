@@ -12,8 +12,8 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import { ServiceInfo } from "src/components/organisms/rabbit/editService/ServiceInfo";
-import { ServiceUsers } from "src/components/organisms/rabbit/editService/ServiceUsers";
-import { ServerConfig } from "src/components/organisms/rabbit/editService/ServerConfig";
+import { ServiceUser } from "src/components/organisms/rabbit/editService/ServiceUsers";
+import { SelectConfig } from "src/components/organisms/rabbit/editService/SelectConfig";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -62,8 +62,7 @@ const EditRabbitService: FC<EditRabbitPropsType> = () => {
 
   const [section, setSection] = useState(0);
 
-  const handleChange = (_: SyntheticEvent, newValue: number) =>
-    setSection(newValue);
+  const handleChange = (_: SyntheticEvent, newValue: number) => setSection(newValue);
 
   const tabArray = [
     "مشخصات سرویس",
@@ -73,8 +72,8 @@ const EditRabbitService: FC<EditRabbitPropsType> = () => {
 
   const tabPanelArray = [
     ServiceInfo,
-    ServiceUsers,
-    ServerConfig
+    ServiceUser,
+    SelectConfig
   ];
 
   if (!id) return <Navigate to="/dash/rabbit" />;
@@ -111,7 +110,7 @@ const EditRabbitService: FC<EditRabbitPropsType> = () => {
       {id &&
         tabPanelArray.map((Component, index) => (
           <TabPanel value={section} index={index} key={index}>
-            <Component />
+            <Component row={id} />
           </TabPanel>
         ))}
     </Stack>

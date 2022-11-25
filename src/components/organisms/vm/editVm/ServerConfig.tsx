@@ -95,7 +95,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
         fontWeight={700}
         sx={{ mb: 2 }}
       >
-        ارتقا یا تنزل سخت افزار سرور
+        تغییر مشخصات سخت افزاری
       </Typography>
       <Paper
         elevation={0}

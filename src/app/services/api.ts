@@ -183,4 +183,6 @@ export const {
   useLazyGetApiV2PortalWalletPaymentGetByIdQuery,
   useLazyGetApiV2PortalUserBillDownloadByIdQuery,
   useLazyGetApiV2VmVmPayByIdQuery,
+  useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery,
+  useLazyGetApiV2RabbitRabbitUserListByRabbitHostIdQuery
 } = api;

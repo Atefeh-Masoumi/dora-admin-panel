@@ -27,7 +27,7 @@ export const AddRabbitContext = createContext<AddRabbitContextType>({
   dataCenter: null,
   setDataCenter: (dataCenter) => { },
   serverConfig: null,
-  setServerConfig: (osConfig) => { },
+  setServerConfig: (productBundle) => { },
   name: "",
   setName: (name) => { },
   serverUsername: "",

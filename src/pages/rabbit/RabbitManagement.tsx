@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 
 type RabbitManagementPropsType = {};
 
-const CloudManagement: FC<RabbitManagementPropsType> = () => {
+const RabbitManagement: FC<RabbitManagementPropsType> = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -129,4 +129,4 @@ const CloudManagement: FC<RabbitManagementPropsType> = () => {
   );
 };
 
-export default CloudManagement;
+export default RabbitManagement;

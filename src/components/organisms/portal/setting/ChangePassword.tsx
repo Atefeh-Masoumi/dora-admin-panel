@@ -11,13 +11,11 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { Form, Formik } from "formik";
-import {
-  passwordValidator,
-  passwordValidatorRegex,
-} from "src/utils/formValidator";
-import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiV2PortalProfileChangePasswordMutation } from "src/app/services/api.generated";
+import { useNavigate } from "react-router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { formikOnSubmitType } from "src/types/form.type";
+import { passwordValidator, passwordValidatorRegex } from "src/utils/formValidator";
+import { usePostApiV2PortalProfileChangePasswordMutation } from "src/app/services/api.generated";
 
 const passValidationHandler = (value: string) =>
   !value ? false : passwordValidatorRegex.test(value);
@@ -29,12 +27,12 @@ const formInitialValues = {
 };
 
 const formValidation = yup.object().shape({
-  oldPassword: yup
+  newPassword: yup
     .string()
     .test("Password validation", "Password is not valid", (value) =>
       passValidationHandler(value as string)
     ),
-  newPassword: passwordValidator.required("فیلد الزامیست"),
+  // newPassword: passwordValidator.required("فیلد الزامیست"),
   confirmPassword: passwordValidator.required("فیلد الزامیست"),
 });
 
@@ -42,8 +40,10 @@ export const ChangePassword: FC = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [changePassword, { isLoading }] =
-    usePostApiV2PortalProfileChangePasswordMutation();
+
+  const [changePassword, { isLoading }] = usePostApiV2PortalProfileChangePasswordMutation();
+
+  const navigate = useNavigate();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { oldPassword, newPassword, confirmPassword },
@@ -54,6 +54,7 @@ export const ChangePassword: FC = () => {
     })
       .unwrap()
       .then(() => {
+        navigate("/dash");
         toast.success("رمز عبور با موفقیت انجام شد");
       })
       .catch(({ status, data }) => {

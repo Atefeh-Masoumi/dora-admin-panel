@@ -1,11 +1,11 @@
 import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { addRabbitTableStruct } from "./struct";
-import { AddRabbitContext } from "../context/AddRabbitContext";
+import { editRabbitTableStruct } from "./struct";
+import { EditRabbitContext } from "../context/EditRabbitContext";
 
-export const AddRabbitTableRow: FC<{ row: any }> = ({ row }) => {
-  const { serverConfig, setServerConfig } = useContext(AddRabbitContext);
+export const EditRabbitTableRow: FC<{ row: any }> = ({ row }) => {
+  const { serverConfig, setServerConfig } = useContext(EditRabbitContext);
 
   const isChecked = useMemo(
     () => serverConfig?.id === row["id"],
@@ -30,8 +30,8 @@ export const AddRabbitTableRow: FC<{ row: any }> = ({ row }) => {
           onChange={onCheckboxClick}
         />
       </DorsaTableCell>
-      {addRabbitTableStruct
-        .slice(1, addRabbitTableStruct.length)
+      {editRabbitTableStruct
+        .slice(1, editRabbitTableStruct.length)
         .map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;

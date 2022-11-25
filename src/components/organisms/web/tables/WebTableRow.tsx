@@ -1,23 +1,34 @@
 import { FC, Fragment, useState } from "react";
+import { Chip, IconButton, Stack } from "@mui/material";
 import { webTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Chip, IconButton, Stack } from "@mui/material";
+import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
+import PageLoading from "src/components/atoms/PageLoading";
 import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
-import { useNavigate } from "react-router";
+import { useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
 
 export const WebTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const navigate = useNavigate();
-
-  const settingOnClick = () => navigate("/dash/web/" + row["id"]);
+  const [getUrl, { isLoading: getUrlLoading }] = useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery();
+  const monitorOnClick = () =>
+    getUrl({ id: row["id"] })
+      .unwrap()
+      .then((res) => {
+        if (res.location) {
+          let a = document.createElement("a");
+          a.href = res.location.toString();
+          a.target = "_blank";
+          a.click();
+        }
+      });
 
   return (
     <Fragment>
+      {getUrlLoading && <PageLoading />}
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
         {webTableStruct.map((column) => {
           const value = row[column.id];
@@ -37,7 +48,7 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <CreditCardIcon sx={{ color: "grey.700" }} />
                   </IconButton> */}
-                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                  {/* <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
                         "&> path": {
@@ -45,7 +56,11 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                         },
                       }}
                     />
+                  </IconButton> */}
+                  <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
+                    <MonitorSvg />
                   </IconButton>
+
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"

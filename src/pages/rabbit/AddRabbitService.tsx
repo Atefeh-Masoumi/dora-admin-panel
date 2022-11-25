@@ -60,9 +60,13 @@ const AddRabbitService: FC = () => {
       },
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
         toast.success("سرویس RabbitMQ  با موفقیت ایجاد شد");
-        navigate("/dash/rabbit");
+        if (res) {
+          let a = document.createElement("a");
+          a.href = "/dash/portal/order/" + res;
+          a.click();
+        }
       });
   };
 

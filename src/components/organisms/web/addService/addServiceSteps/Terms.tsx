@@ -9,8 +9,6 @@ export const Terms: FC<TermPropsType> = () => {
 
   const { term, setTerm } = useContext(AddWebHostContext);
 
-  const termInputChangeHandler = () => setTerm(term);
-
   return (
     <Stack py={1} px={2} direction="column" alignItems="center" spacing={2}>
       <Stack borderRadius="100%" border="18px solid rgba(60, 138, 255, 0.04)">
@@ -72,11 +70,9 @@ export const Terms: FC<TermPropsType> = () => {
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <Checkbox
             sx={{ p: 0, borderRadius: 0 }}
-            value={term}
-            onChange={termInputChangeHandler}
+            onChange={() => setTerm(!term)}
           />
           <Typography color="secondary.main">
-            {term}
             با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم.
           </Typography>
         </Stack>

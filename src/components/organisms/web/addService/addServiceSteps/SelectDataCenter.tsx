@@ -14,11 +14,9 @@ type SelectDataCenterPropsType = {};
 export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
   const { dataCenter, setDataCenter } = useContext(AddWebHostContext);
 
-  const { data: dataCenterList, isLoading } =
-    useGetApiV2VmDatacenterListQuery();
+  const { data: dataCenterList, isLoading } = useGetApiV2VmDatacenterListQuery();
 
-  const dataCenterOnClick = (dataCenter: DatacenterListResponse) =>
-    setDataCenter(dataCenter);
+  const dataCenterOnClick = (dataCenter: DatacenterListResponse) => setDataCenter(dataCenter);
 
   return (
     <Stack justifyContent="center" alignItems="center" spacing={4}>

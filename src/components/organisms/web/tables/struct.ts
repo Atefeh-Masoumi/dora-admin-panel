@@ -15,12 +15,16 @@ export const webTableStruct: columnType[] = [
     label: "نام سرویس",
   },
   {
-    id: "statusId",
-    label: "وضعیت",
-  },
-  {
     id: "createDate",
     label: "تاریخ ایجاد",
+  },
+  // {
+  //   id: "expireDate",
+  //   label: "تاریخ انقضا",
+  // },
+  {
+    id: "statusId",
+    label: "وضعیت",
   },
   { id: "control", label: "", disableSort: true },
 ];

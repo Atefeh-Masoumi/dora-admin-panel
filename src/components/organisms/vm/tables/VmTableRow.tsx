@@ -1,40 +1,25 @@
 import { FC, Fragment, useState } from "react";
-import { addVmTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Button, Chip, IconButton, Stack } from "@mui/material";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import PageLoading from "src/components/atoms/PageLoading";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { addVmTableStruct } from "./struct";
 import { DeleteCloudDialog } from "../dialogs/DeleteCloudDialog";
-import { useNavigate } from "react-router";
 import { usePostApiV2VmVmKmsGetMutation } from "src/app/services/api.generated";
-// import CreditCardIcon from "@mui/icons-material/CreditCard";
-// import { useLazyGetApiV2VmVmPayByIdQuery } from "src/app/services/api";
-import PageLoading from "src/components/atoms/PageLoading";
-import { toast } from "react-toastify";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const [getUrl, { isLoading: getUrlLoading }] =
-    usePostApiV2VmVmKmsGetMutation();
-  // const [getOrderId, { isLoading: getOrderIdLoading }] =
-  //   useLazyGetApiV2VmVmPayByIdQuery();
-
   const navigate = useNavigate();
-
   const settingOnClick = () => navigate("/dash/vm/" + row["id"]);
-  // const goToOrderDetails = () => {
-  //   if (!row["id"] || isNaN(Number(row["id"]))) return;
-  //   getOrderId({ id: Number(row["id"]) })
-  //     .unwrap()
-  //     .then((res) => {
-  //       if (!res) return;
-  //       navigate("/dash/order/" + res);
-  //     });
-  // };
+
+  const [getUrl, { isLoading: getUrlLoading }] = usePostApiV2VmVmKmsGetMutation();
   const monitorOnClick = () =>
     getUrl({
       getKmsModel: {
@@ -47,6 +32,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
         if (res) {
           let a = document.createElement("a");
           a.href = "/console/wmks-sdk.html?url=" + res;
+          a.target = "_blank";
           a.click();
         }
       });
@@ -110,7 +96,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                                 : id === 5
                                   ? "حذف شده"
                                   : id === 6
-                                    ? "انتظار"
+                                    ? "در انتظار انجام عملیات"
                                     : id === 7
                                       ? "بازسازی"
                                       : "ناموفق"

@@ -27,8 +27,7 @@ export const EmailValidation: FC<EmailValidationProps> = ({
   isVerified,
   email,
 }) => {
-  const [sendEmail, { isLoading }] =
-    usePutApiV2PortalProfileEditEmailMutation();
+  const [sendEmail, { isLoading }] = usePutApiV2PortalProfileEditEmailMutation();
   const [isCodeField, setIsCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
 
@@ -199,7 +198,7 @@ export const EmailValidation: FC<EmailValidationProps> = ({
                     loading={isCodeField ? loadingConfirm : isLoading}
                     variant="contained"
                     sx={{ px: 7, py: 2, fontSize: 16 }}
-                    onClick={isCodeField ? submitConfirm : () => {}}
+                    onClick={isCodeField ? submitConfirm : () => { }}
                   >
                     تایید و تغییر ایمیل
                   </LoadingButton>

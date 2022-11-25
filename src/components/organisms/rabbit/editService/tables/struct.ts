@@ -1,7 +1,7 @@
 import { priceToPersian } from "src/utils/priceToPersian";
 import { columnType } from "src/components/organisms/tables/table.types";
 
-export const addRabbitTableStruct: columnType[] = [
+export const editRabbitTableStruct: columnType[] = [
   { id: "productBundleId", label: "" },
   { id: "name", label: "نام سرویس" },
   { id: "description", label: "توضیحات" },

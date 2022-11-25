@@ -16,7 +16,7 @@ import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
 // import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
-import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
+import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 
 type SidebarPropsType = {};
 
@@ -79,7 +79,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     {
       title: "Domain Registration",
       text: "ثبت/تمدید دامنه",
-      Icon: BuildingSvg,
+      Icon: GlobalSvg,
       link: "/dash/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/dash/domain" }],
     },

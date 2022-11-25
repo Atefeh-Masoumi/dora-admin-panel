@@ -44,6 +44,7 @@ const AddWebHost: FC = () => {
       !term
     )
       return;
+
     createWebHost({
       createWebHostModel: {
         domainName: domainName,
@@ -52,9 +53,13 @@ const AddWebHost: FC = () => {
       },
     })
       .unwrap()
-      .then(() => {
+      .then((res) => {
         toast.success("سرویس هاست وب با موفقیت ایجاد شد");
-        navigate("/dash/web");
+        if (res) {
+          let a = document.createElement("a");
+          a.href = "/dash/portal/order/" + res;
+          a.click();
+        }
       });
   };
 
