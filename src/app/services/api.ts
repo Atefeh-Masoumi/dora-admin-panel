@@ -79,10 +79,10 @@ export const api = generatedApi
       getApiV2VmVmGetById: {
         providesTags: () => ["VmData"],
       },
-      getApiV2PortalOrderGetById: {
+      getApiV2PortalInvoiceGetById: {
         providesTags: () => ["CartDetails"],
       },
-      getApiV2PortalOrderNotPaidList: {
+      getApiV2PortalInvoiceNotPaidList: {
         providesTags: () => ["Cart"],
       },
       putApiV2PortalProfileEditAccountType: {
@@ -158,13 +158,13 @@ export const api = generatedApi
       putApiV2VmVmRebootById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2PortalOrderPaymentType: {
+      putApiV2PortalInvoicePaymentType: {
         invalidatesTags: () => ["CartDetails"],
       },
-      putApiV2PortalOrderDuration: {
+      putApiV2PortalInvoiceDuration: {
         invalidatesTags: () => ["CartDetails"],
       },
-      putApiV2PortalOrderCancelById: {
+      putApiV2PortalInvoiceCancelById: {
         invalidatesTags: () => ["Cart"],
       },
     },
@@ -178,7 +178,7 @@ export const {
   useLazyGetApiV2VmVmGetByIdQuery,
   useLazyGetApiV2CdnLoadBalanceGetByIdQuery,
   useLazyGetApiV2CdnDnsRecordGetByIdQuery,
-  useLazyGetApiV2PortalOrderGetByIdQuery,
+  useLazyGetApiV2PortalInvoiceGetByIdQuery,
   useLazyGetApiV2PortalSupportItemDownloadByIdQuery,
   useLazyGetApiV2PortalWalletPaymentGetByIdQuery,
   useLazyGetApiV2PortalUserBillDownloadByIdQuery,

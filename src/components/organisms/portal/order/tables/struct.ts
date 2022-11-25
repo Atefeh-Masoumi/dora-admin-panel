@@ -5,7 +5,11 @@ export const cartTableStruct: columnType[] = [
     id: "id",
     label: "شناسه سفارش",
   },
-  { id: "createDate", label: "تاریخ", type: "date" },
+  {
+    id: "invoiceDate",
+    label: "تاریخ",
+    type: "date"
+  },
   {
     id: "name",
     label: "نام سفارش",
@@ -13,5 +17,9 @@ export const cartTableStruct: columnType[] = [
   {
     id: "productName",
     label: "نام محصول",
+  },
+  {
+    id: "status",
+    label: "وضعیت",
   },
 ];

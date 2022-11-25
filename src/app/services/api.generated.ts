@@ -340,6 +340,61 @@ export const api = createApi({
         url: `/api/v2/portal/invoice/get/${queryArg.id}`,
       }),
     }),
+    getApiV2PortalInvoiceNotPaidList: build.query<
+      GetApiV2PortalInvoiceNotPaidListApiResponse,
+      GetApiV2PortalInvoiceNotPaidListApiArg
+    >({
+      query: () => ({ url: `/api/v2/portal/invoice/not-paid-list` }),
+    }),
+    putApiV2PortalInvoiceCancelById: build.mutation<
+      PutApiV2PortalInvoiceCancelByIdApiResponse,
+      PutApiV2PortalInvoiceCancelByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/invoice/cancel/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiV2PortalInvoicePaymentType: build.mutation<
+      PutApiV2PortalInvoicePaymentTypeApiResponse,
+      PutApiV2PortalInvoicePaymentTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/invoice/payment-type`,
+        method: "PUT",
+        body: queryArg.invoicePaymentTypeModel,
+      }),
+    }),
+    putApiV2PortalInvoiceDuration: build.mutation<
+      PutApiV2PortalInvoiceDurationApiResponse,
+      PutApiV2PortalInvoiceDurationApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/invoice/duration`,
+        method: "PUT",
+        body: queryArg.invoiceDurationModel,
+      }),
+    }),
+    putApiV2PortalInvoiceVoucher: build.mutation<
+      PutApiV2PortalInvoiceVoucherApiResponse,
+      PutApiV2PortalInvoiceVoucherApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/invoice/voucher`,
+        method: "PUT",
+        body: queryArg.invoiceVoucherModel,
+      }),
+    }),
+    postApiV2PortalInvoicePay: build.mutation<
+      PostApiV2PortalInvoicePayApiResponse,
+      PostApiV2PortalInvoicePayApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/invoice/pay`,
+        method: "POST",
+        body: queryArg.invoicePayModel,
+      }),
+    }),
     getApiV2CdnLoadBalanceListByZoneName: build.query<
       GetApiV2CdnLoadBalanceListByZoneNameApiResponse,
       GetApiV2CdnLoadBalanceListByZoneNameApiArg
@@ -404,75 +459,6 @@ export const api = createApi({
       GetApiV2PortalNotificationShortListApiArg
     >({
       query: () => ({ url: `/api/v2/portal/notification/short-list` }),
-    }),
-    getApiV2PortalOrderListByProductCategoryId: build.query<
-      GetApiV2PortalOrderListByProductCategoryIdApiResponse,
-      GetApiV2PortalOrderListByProductCategoryIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/list/${queryArg.productCategoryId}`,
-      }),
-    }),
-    getApiV2PortalOrderNotPaidList: build.query<
-      GetApiV2PortalOrderNotPaidListApiResponse,
-      GetApiV2PortalOrderNotPaidListApiArg
-    >({
-      query: () => ({ url: `/api/v2/portal/order/not-paid-list` }),
-    }),
-    getApiV2PortalOrderGetById: build.query<
-      GetApiV2PortalOrderGetByIdApiResponse,
-      GetApiV2PortalOrderGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/v2/portal/order/get/${queryArg.id}` }),
-    }),
-    putApiV2PortalOrderPaymentType: build.mutation<
-      PutApiV2PortalOrderPaymentTypeApiResponse,
-      PutApiV2PortalOrderPaymentTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/payment-type`,
-        method: "PUT",
-        body: queryArg.orderPaymentTypeModel,
-      }),
-    }),
-    putApiV2PortalOrderDuration: build.mutation<
-      PutApiV2PortalOrderDurationApiResponse,
-      PutApiV2PortalOrderDurationApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/duration`,
-        method: "PUT",
-        body: queryArg.orderDurationModel,
-      }),
-    }),
-    putApiV2PortalOrderVoucher: build.mutation<
-      PutApiV2PortalOrderVoucherApiResponse,
-      PutApiV2PortalOrderVoucherApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/voucher`,
-        method: "PUT",
-        body: queryArg.orderVoucherModel,
-      }),
-    }),
-    putApiV2PortalOrderCancelById: build.mutation<
-      PutApiV2PortalOrderCancelByIdApiResponse,
-      PutApiV2PortalOrderCancelByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/cancel/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    postApiV2PortalOrderPay: build.mutation<
-      PostApiV2PortalOrderPayApiResponse,
-      PostApiV2PortalOrderPayApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/order/pay`,
-        method: "POST",
-        body: queryArg.orderPayModel,
-      }),
     }),
     getApiV2PortalOrderPlanList: build.query<
       GetApiV2PortalOrderPlanListApiResponse,
@@ -931,6 +917,14 @@ export const api = createApi({
         url: `/api/v2/portal/user-company/edit`,
         method: "PUT",
         body: queryArg.editUserCompanyModel,
+      }),
+    }),
+    getApiV2PortalUserServiceListByProductCategoryId: build.query<
+      GetApiV2PortalUserServiceListByProductCategoryIdApiResponse,
+      GetApiV2PortalUserServiceListByProductCategoryIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v2/portal/user-service/list/${queryArg.productCategoryId}`,
       }),
     }),
     getApiV2SmsUserSmsCreditGetBalance: build.query<
@@ -1614,9 +1608,33 @@ export type GetApiV2PortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiV2PortalInvoiceListApiArg = void;
 export type GetApiV2PortalInvoiceGetByIdApiResponse =
-  /** status 200 Success */ InvoiceGetResponse;
+  /** status 200 Success */ GetInvoiceResponse;
 export type GetApiV2PortalInvoiceGetByIdApiArg = {
   id: number;
+};
+export type GetApiV2PortalInvoiceNotPaidListApiResponse =
+  /** status 200 Success */ InvoiceNotPaidListResponse[];
+export type GetApiV2PortalInvoiceNotPaidListApiArg = void;
+export type PutApiV2PortalInvoiceCancelByIdApiResponse = unknown;
+export type PutApiV2PortalInvoiceCancelByIdApiArg = {
+  id: number;
+};
+export type PutApiV2PortalInvoicePaymentTypeApiResponse = unknown;
+export type PutApiV2PortalInvoicePaymentTypeApiArg = {
+  invoicePaymentTypeModel: InvoicePaymentTypeModel;
+};
+export type PutApiV2PortalInvoiceDurationApiResponse = unknown;
+export type PutApiV2PortalInvoiceDurationApiArg = {
+  invoiceDurationModel: InvoiceDurationModel;
+};
+export type PutApiV2PortalInvoiceVoucherApiResponse = unknown;
+export type PutApiV2PortalInvoiceVoucherApiArg = {
+  invoiceVoucherModel: InvoiceVoucherModel;
+};
+export type PostApiV2PortalInvoicePayApiResponse =
+  /** status 200 Success */ InvoicePayResponse;
+export type PostApiV2PortalInvoicePayApiArg = {
+  invoicePayModel: InvoicePayModel;
 };
 export type GetApiV2CdnLoadBalanceListByZoneNameApiResponse =
   /** status 200 Success */ LoadBalanceListResponse[];
@@ -1652,40 +1670,6 @@ export type GetApiV2PortalNotificationListApiArg = void;
 export type GetApiV2PortalNotificationShortListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
 export type GetApiV2PortalNotificationShortListApiArg = void;
-export type GetApiV2PortalOrderListByProductCategoryIdApiResponse =
-  /** status 200 Success */ OrderListResponse[];
-export type GetApiV2PortalOrderListByProductCategoryIdApiArg = {
-  productCategoryId: number;
-};
-export type GetApiV2PortalOrderNotPaidListApiResponse =
-  /** status 200 Success */ OrderNotPaidListResponse[];
-export type GetApiV2PortalOrderNotPaidListApiArg = void;
-export type GetApiV2PortalOrderGetByIdApiResponse =
-  /** status 200 Success */ GetOrderResponse;
-export type GetApiV2PortalOrderGetByIdApiArg = {
-  id: number;
-};
-export type PutApiV2PortalOrderPaymentTypeApiResponse = unknown;
-export type PutApiV2PortalOrderPaymentTypeApiArg = {
-  orderPaymentTypeModel: OrderPaymentTypeModel;
-};
-export type PutApiV2PortalOrderDurationApiResponse = unknown;
-export type PutApiV2PortalOrderDurationApiArg = {
-  orderDurationModel: OrderDurationModel;
-};
-export type PutApiV2PortalOrderVoucherApiResponse = unknown;
-export type PutApiV2PortalOrderVoucherApiArg = {
-  orderVoucherModel: OrderVoucherModel;
-};
-export type PutApiV2PortalOrderCancelByIdApiResponse = unknown;
-export type PutApiV2PortalOrderCancelByIdApiArg = {
-  id: number;
-};
-export type PostApiV2PortalOrderPayApiResponse =
-  /** status 200 Success */ OrderPayResponse;
-export type PostApiV2PortalOrderPayApiArg = {
-  orderPayModel: OrderPayModel;
-};
 export type GetApiV2PortalOrderPlanListApiResponse =
   /** status 200 Success */ OrderPlanListResponse[];
 export type GetApiV2PortalOrderPlanListApiArg = void;
@@ -1911,6 +1895,11 @@ export type GetApiV2PortalUserCompanyGetApiArg = void;
 export type PutApiV2PortalUserCompanyEditApiResponse = unknown;
 export type PutApiV2PortalUserCompanyEditApiArg = {
   editUserCompanyModel: EditUserCompanyModel;
+};
+export type GetApiV2PortalUserServiceListByProductCategoryIdApiResponse =
+  /** status 200 Success */ UserServiceListResponse[];
+export type GetApiV2PortalUserServiceListByProductCategoryIdApiArg = {
+  productCategoryId: number;
 };
 export type GetApiV2SmsUserSmsCreditGetBalanceApiResponse =
   /** status 200 Success */ number;
@@ -2459,8 +2448,15 @@ export type InvoiceItemModel = {
   price?: number;
   totalPrice?: number;
 };
-export type InvoiceGetResponse = {
+export type GetInvoiceResponse = {
   id?: number;
+  invoicePaymentTypeId?: number;
+  productCategory?: string | null;
+  productBundle?: string | null;
+  name?: string | null;
+  prepaidStatus?: string | null;
+  isPrepaid?: boolean;
+  orderDurationId?: number;
   sellerName?: string | null;
   sellerAddress?: string | null;
   sellerPhone?: string | null;
@@ -2476,6 +2472,36 @@ export type InvoiceGetResponse = {
   vat?: number;
   invoicePrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
+};
+export type InvoiceNotPaidListResponse = {
+  id?: number;
+  name?: string | null;
+  productName?: string | null;
+  status?: string | null;
+  invoiceStatusId?: number;
+  invoiceDate?: string;
+};
+export type InvoicePaymentTypeModel = {
+  id?: number;
+  isPrepaid?: boolean;
+};
+export type InvoiceDurationModel = {
+  id?: number;
+  orderDurationId?: number;
+};
+export type InvoiceVoucherModel = {
+  id?: number;
+  voucherCode?: string | null;
+};
+export type InvoicePayResponse = {
+  invoicePaymentTypeId?: number;
+  status?: boolean;
+  location?: string | null;
+};
+export type InvoicePayModel = {
+  id?: number;
+  invoicePaymentTypeId?: number;
+  paymentProviderId?: number;
 };
 export type LoadBalanceListResponse = {
   id?: number;
@@ -2513,60 +2539,6 @@ export type NotificationListResponse = {
   content?: string | null;
   subject?: string | null;
   notificationDate?: string;
-};
-export type OrderListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  status?: string | null;
-  createDate?: string;
-};
-export type OrderNotPaidListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  status?: string | null;
-  orderStatusId?: number;
-  createDate?: string;
-};
-export type GetOrderResponse = {
-  id?: number;
-  name?: string | null;
-  productCategory?: string | null;
-  productBundle?: string | null;
-  orderStatus?: string | null;
-  orderStatusId?: number;
-  orderDate?: string;
-  orderPaymentTypeId?: number;
-  orderDurationId?: number;
-  isPrepaid?: boolean;
-  prepaidStatus?: string | null;
-  netPrice?: number;
-  discount?: number;
-  vat?: number;
-  orderPrice?: number;
-};
-export type OrderPaymentTypeModel = {
-  id?: number;
-  isPrepaid?: boolean;
-};
-export type OrderDurationModel = {
-  id?: number;
-  orderDurationId?: number;
-};
-export type OrderVoucherModel = {
-  id?: number;
-  voucherCode?: string | null;
-};
-export type OrderPayResponse = {
-  orderPaymentTypeId?: number;
-  status?: boolean;
-  location?: string | null;
-};
-export type OrderPayModel = {
-  id?: number;
-  orderPaymentTypeId?: number;
-  paymentProviderId?: number;
 };
 export type OrderPlanListResponse = {
   id?: number;
@@ -2830,6 +2802,13 @@ export type EditUserCompanyModel = {
   address: string;
   postalCode: string;
 };
+export type UserServiceListResponse = {
+  id?: number;
+  name?: string | null;
+  productName?: string | null;
+  status?: string | null;
+  createDate?: string;
+};
 export type VmListResponse = {
   id?: number;
   name?: string | null;
@@ -2924,6 +2903,7 @@ export type WebHostListResponse = {
   status?: string | null;
   statusId?: number;
   createDate?: string;
+  expireDate?: string;
 };
 export type GetWebHostResponse = {
   id?: number;
@@ -2932,6 +2912,7 @@ export type GetWebHostResponse = {
   status?: string | null;
   statusId?: number;
   createDate?: string;
+  expireDate?: string;
 };
 export type GetLoginSessionResponse = {
   location?: string | null;
@@ -3136,6 +3117,12 @@ export const {
   useGetQuery,
   useGetApiV2PortalInvoiceListQuery,
   useGetApiV2PortalInvoiceGetByIdQuery,
+  useGetApiV2PortalInvoiceNotPaidListQuery,
+  usePutApiV2PortalInvoiceCancelByIdMutation,
+  usePutApiV2PortalInvoicePaymentTypeMutation,
+  usePutApiV2PortalInvoiceDurationMutation,
+  usePutApiV2PortalInvoiceVoucherMutation,
+  usePostApiV2PortalInvoicePayMutation,
   useGetApiV2CdnLoadBalanceListByZoneNameQuery,
   useGetApiV2CdnLoadBalanceGetByIdQuery,
   usePostApiV2CdnLoadBalanceCreateMutation,
@@ -3144,14 +3131,6 @@ export const {
   useGetApiV2LogSmsReceiveByFromAndTextToQuery,
   useGetApiV2PortalNotificationListQuery,
   useGetApiV2PortalNotificationShortListQuery,
-  useGetApiV2PortalOrderListByProductCategoryIdQuery,
-  useGetApiV2PortalOrderNotPaidListQuery,
-  useGetApiV2PortalOrderGetByIdQuery,
-  usePutApiV2PortalOrderPaymentTypeMutation,
-  usePutApiV2PortalOrderDurationMutation,
-  usePutApiV2PortalOrderVoucherMutation,
-  usePutApiV2PortalOrderCancelByIdMutation,
-  usePostApiV2PortalOrderPayMutation,
   useGetApiV2PortalOrderPlanListQuery,
   usePostApiV2PortalOrderPlanOrderMutation,
   useGetApiV2PortalProductBundleListByProductCategoryIdQuery,
@@ -3206,6 +3185,7 @@ export const {
   useGetApiV2PortalUserBillDownloadByIdQuery,
   useGetApiV2PortalUserCompanyGetQuery,
   usePutApiV2PortalUserCompanyEditMutation,
+  useGetApiV2PortalUserServiceListByProductCategoryIdQuery,
   useGetApiV2SmsUserSmsCreditGetBalanceQuery,
   useGetApiV2VmVmListQuery,
   useGetApiV2VmVmGetByIdQuery,

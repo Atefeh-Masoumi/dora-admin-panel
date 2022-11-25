@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiV2PortalOrderCancelByIdMutation } from "src/app/services/api.generated";
+import { usePutApiV2PortalInvoiceCancelByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -15,8 +15,7 @@ export const DeleteCartDialog: FC<DeleteCartDialogPropsType> = ({
   id,
 }) => {
   const onClose = () => handleClose();
-  const [deleteOrder, { isLoading: deleteOrderLoading }] =
-    usePutApiV2PortalOrderCancelByIdMutation();
+  const [deleteOrder, { isLoading: deleteOrderLoading }] = usePutApiV2PortalInvoiceCancelByIdMutation();
 
   const submit = () =>
     deleteOrder({ id })

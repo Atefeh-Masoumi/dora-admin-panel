@@ -18,10 +18,10 @@ export const webTableStruct: columnType[] = [
     id: "createDate",
     label: "تاریخ ایجاد",
   },
-  // {
-  //   id: "expireDate",
-  //   label: "تاریخ انقضا",
-  // },
+  {
+    id: "expireDate",
+    label: "تاریخ انقضا",
+  },
   {
     id: "statusId",
     label: "وضعیت",

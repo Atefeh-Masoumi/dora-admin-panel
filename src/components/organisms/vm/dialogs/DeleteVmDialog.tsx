@@ -5,23 +5,22 @@ import { useDeleteApiV2VmVmDeleteByIdMutation } from "src/app/services/api.gener
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
-type DeleteCloudDialogPropsType = {
+type DeleteVmDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteCloudDialog: FC<DeleteCloudDialogPropsType> = ({
+export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
   openDialog,
   handleClose,
   id,
 }) => {
   const onClose = () => handleClose();
-  const [deleteLoadBalance, { isLoading }] =
-    useDeleteApiV2VmVmDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteApiV2VmVmDeleteByIdMutation();
 
   const submit = () =>
-    deleteLoadBalance({ id })
+    deleteItem({ id })
       .then(() => {
         toast.success("سرور ابری با موفقیت حذف شد");
         handleClose();

@@ -5,7 +5,6 @@ import {
   Fragment,
   useMemo,
   useState,
-  useRef,
   useEffect,
 } from "react";
 import {
@@ -28,12 +27,12 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePostApiV2PortalOrderPayMutation,
-  usePutApiV2PortalOrderPaymentTypeMutation,
-  usePutApiV2PortalOrderDurationMutation,
-  usePutApiV2PortalOrderVoucherMutation,
-  useGetApiV2PortalOrderGetByIdQuery,
-  GetOrderResponse,
+  usePostApiV2PortalInvoicePayMutation,
+  usePutApiV2PortalInvoicePaymentTypeMutation,
+  usePutApiV2PortalInvoiceDurationMutation,
+  usePutApiV2PortalInvoiceVoucherMutation,
+  useGetApiV2PortalInvoiceGetByIdQuery,
+  GetInvoiceResponse
 } from "src/app/services/api.generated";
 
 const useDurationArray = [
@@ -46,38 +45,29 @@ const useDurationArray = [
 type OrderDetailsPropsType = {};
 
 const OrderDetails: FC<OrderDetailsPropsType> = () => {
-  const [orderPaymentTypeId, setOrderPaymentTypeId] = useState("1");
+  const [invoicePaymentTypeId, setInvoicePaymentTypeId] = useState(1);
+  const [paymentGateway, setPaymentGateway] = useState(1);
   const [discountCode, setDiscountCode] = useState("");
-  const [paymentGateway, setPaymentGateway] = useState("1");
 
   const navigate = useNavigate();
 
   const { id } = useParams();
 
-  const { data, isLoading: getOrderInfoLoading } =
-    useGetApiV2PortalOrderGetByIdQuery({
-      id: Number(id),
-    });
+  const { data, isLoading: getOrderInfoLoading } = useGetApiV2PortalInvoiceGetByIdQuery({
+    id: Number(id),
+  });
 
   useEffect(() => {
-    if (!data || !data.orderPaymentTypeId) return;
-    setOrderPaymentTypeId(data.orderPaymentTypeId.toString());
+    if (!data || !data.invoicePaymentTypeId) return;
+    setInvoicePaymentTypeId(data.invoicePaymentTypeId);
   }, [data]);
 
-  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] =
-    usePutApiV2PortalOrderPaymentTypeMutation();
-  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] =
-    usePutApiV2PortalOrderDurationMutation();
-  const [goToBankPortal, { isLoading: goToBankPortalLoading }] =
-    usePostApiV2PortalOrderPayMutation();
-  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] =
-    usePutApiV2PortalOrderVoucherMutation();
+  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] = usePutApiV2PortalInvoicePaymentTypeMutation();
+  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] = usePutApiV2PortalInvoiceDurationMutation();
+  const [goToBankPortal, { isLoading: goToBankPortalLoading }] = usePostApiV2PortalInvoicePayMutation();
+  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] = usePutApiV2PortalInvoiceVoucherMutation();
 
-  const formRef = useRef(null);
-  const formToken = useRef(null);
-  const formRedirectURL = useRef(null);
-
-  const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
+  const orderInfo: GetInvoiceResponse = useMemo(() => data || {}, [data]);
 
   if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash" />;
 
@@ -96,11 +86,11 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
     {
       name: "تاریخ",
-      value: orderInfo.orderDate,
+      value: orderInfo.invoiceDate,
     },
     {
       name: "وضعیت",
-      value: orderInfo.orderStatus,
+      value: orderInfo.invoiceStatus,
     },
     {
       name: "نوع صورتحساب",
@@ -123,15 +113,15 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
     {
       name: "جمع مبلغ ماهیانه",
-      value: orderInfo.orderPrice,
+      value: orderInfo.invoicePrice,
     },
     {
       name: "حداقل موجودی کیف پول برای انجام عملیات",
-      value: orderInfo.orderPrice ? Math.round(orderInfo.orderPrice / 10) : 0,
+      value: orderInfo.invoicePrice ? Math.round(orderInfo.invoicePrice / 10) : 0,
     },
     {
       name: "مبلغ قابل پرداخت",
-      value: orderInfo.orderPrice,
+      value: orderInfo.invoicePrice,
     },
   ];
 
@@ -140,21 +130,23 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     value: string
   ) => {
     changePaymentMethod({
-      orderPaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === "1" },
+      invoicePaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === "1" },
     })
       .unwrap()
       .then(() => {
         toast.success("تغییرات با موفقیت اعمال شد");
       });
   };
+
   const paymentMethodChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
     value: string
-  ) => setOrderPaymentTypeId(value);
+  ) => setInvoicePaymentTypeId(parseInt(value));
+
   const useDurationChangeHandler = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) return;
     changeOrderDuration({
-      orderDurationModel: {
+      invoiceDurationModel: {
         id: orderInfo!.id,
         orderDurationId: Number(event.target.value),
       },
@@ -162,20 +154,22 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       .unwrap()
       .then(() => toast.success("تغییرات با موفقیت اعمال شد"));
   };
+
   const discountCodeChangeHandler: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = (event) => {
     setDiscountCode(event.target.value);
   };
+
   const paymentGatewayChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
     value: string
-  ) => setPaymentGateway(value);
+  ) => setPaymentGateway(parseInt(value));
 
   const applyDiscountHandler = () => {
     if (!discountCode || !orderInfo.id) return;
     applyDiscountCode({
-      orderVoucherModel: {
+      invoiceVoucherModel: {
         id: orderInfo.id,
         voucherCode: discountCode,
       },
@@ -186,26 +180,27 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const submitHandler = () => {
     if (!orderInfo) return;
-    if (orderPaymentTypeId === "1") {
-      navigate("/dash");
-      toast.success("پرداخت با موفقیت انجام شد");
-    } else {
-      goToBankPortal({
-        orderPayModel: {
-          id: orderInfo.id,
-          orderPaymentTypeId: orderInfo.orderPaymentTypeId,
-          paymentProviderId: Number(paymentGateway),
-        },
-      })
-        .unwrap()
-        .then((res) => {
-          if (!res || !res.location || !res.status) return;
+
+    goToBankPortal({
+      invoicePayModel: {
+        id: orderInfo.id,
+        invoicePaymentTypeId: orderInfo.invoicePaymentTypeId,
+        paymentProviderId: Number(paymentGateway),
+      },
+    }).unwrap()
+      .then((res) => {
+        if (!res || !res.location || !res.status) return;
+
+        if (res.invoicePaymentTypeId === 2) {
+          navigate("/dash");
+          toast.success("پرداخت با موفقیت انجام شد");
+        } else {
           let a = document.createElement("a");
           a.href = res.location;
           a.click();
           toast.success("در حال انتقال به صفحه پرداخت");
-        });
-    }
+        }
+      });
   };
 
   return (
@@ -252,7 +247,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 <Typography sx={{ pr: 1 }}>{name}:</Typography>
                 <Typography
                   color={
-                    index === 4 && orderInfo.orderStatusId === 1
+                    index === 4 && orderInfo.invoiceStatusId === 1
                       ? "error"
                       : "grey.700"
                   }
@@ -277,16 +272,8 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               value={orderInfo!.isPrepaid ? "1" : "2"}
               onChange={billTypeChangeHandler}
             >
-              <FormControlLabel
-                value="1"
-                control={<Radio />}
-                label="پیش پرداخت (پرداخت کامل فاکتور)"
-              />
-              <FormControlLabel
-                value="2"
-                control={<Radio />}
-                label="پرداخت بر اساس مصرف"
-              />
+              <FormControlLabel value="1" control={<Radio />} label="پیش پرداخت (پرداخت کامل فاکتور)" />
+              <FormControlLabel value="2" control={<Radio />} label="پرداخت بر اساس مصرف" />
             </RadioGroup>
           </Grid2>
           <Grid2
@@ -300,14 +287,10 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
           >
             <Typography sx={{ mb: 3 }}>نحوه پرداخت</Typography>
             <RadioGroup
-              value={orderPaymentTypeId}
+              value={invoicePaymentTypeId}
               onChange={paymentMethodChangeHandler}
             >
-              <FormControlLabel
-                value="1"
-                control={<Radio />}
-                label="پرداخت آنلاین"
-              />
+              <FormControlLabel value="1" control={<Radio />} label="پرداخت آنلاین" />
               <FormControlLabel value="2" control={<Radio />} label="کیف پول" />
             </RadioGroup>
           </Grid2>
@@ -365,7 +348,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               </Stack>
             </Grid2>
           )}
-          {orderPaymentTypeId === "1" && (
+          {invoicePaymentTypeId === 1 && (
             <Grid2
               xs={12}
               md={5.8}
@@ -379,11 +362,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 value={paymentGateway}
                 onChange={paymentGatewayChangeHandler}
               >
-                <FormControlLabel
-                  value="1"
-                  control={<Radio />}
-                  label="پارسیان"
-                />
+                <FormControlLabel value="1" control={<Radio />} label="پارسیان" />
                 <FormControlLabel value="2" control={<Radio />} label="سامان" />
               </RadioGroup>
             </Grid2>
@@ -429,19 +408,6 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
           </Grid2>
         </Grid2>
       </Paper>
-      <form
-        action="https://sep.shaparak.ir/payment.aspx"
-        method="POST"
-        ref={formRef}
-      >
-        <input ref={formToken} type="hidden" name="Token" value="token" />
-        <input
-          ref={formRedirectURL}
-          type="hidden"
-          name="RedirectURL"
-          value="redirect"
-        />
-      </form>
     </>
   );
 };

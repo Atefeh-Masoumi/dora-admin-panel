@@ -8,7 +8,7 @@ import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
-import { DeleteCloudDialog } from "../dialogs/DeleteCloudDialog";
+import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
 import { usePostApiV2VmVmKmsGetMutation } from "src/app/services/api.generated";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
@@ -139,7 +139,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteCloudDialog
+      <DeleteVmDialog
         id={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
