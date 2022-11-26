@@ -1,9 +1,9 @@
-import { FC, MouseEventHandler, useState } from "react";
-import { IconButton, Stack } from "@mui/material";
+import { FC, useState } from "react";
+import { Stack } from "@mui/material";
 import { cartTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
-import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
+// import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
 import { DeleteCartDialog } from "../DeleteCartDialog";
 
 export const CartTableRow: FC<{ row: any }> = ({ row }) => {
@@ -16,13 +16,13 @@ export const CartTableRow: FC<{ row: any }> = ({ row }) => {
   };
   const closeDialogHandler = () => setOpenDialog(false);
 
-  const deleteButtonClickHandler: MouseEventHandler<HTMLButtonElement> = (
-    e
-  ) => {
-    e.stopPropagation();
-    e.preventDefault();
-    openDialogHandler();
-  };
+  // const deleteButtonClickHandler: MouseEventHandler<HTMLButtonElement> = (
+  //   e
+  // ) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   openDialogHandler();
+  // };
 
   const goToOrderDetails = () => navigate(`/dash/portal/order/${row.id}`);
 
@@ -64,11 +64,11 @@ export const CartTableRow: FC<{ row: any }> = ({ row }) => {
             </DorsaTableCell>
           );
         })}
-        <DorsaTableCell align="center" sx={{ px: 5, whiteSpace: "nowrap" }}>
+        {/* <DorsaTableCell align="center" sx={{ px: 5, whiteSpace: "nowrap" }}>
           <IconButton onClick={deleteButtonClickHandler}>
             <DeleteSvg />
           </IconButton>
-        </DorsaTableCell>
+        </DorsaTableCell> */}
       </DorsaTableRow>
       {openDialog && (
         <DeleteCartDialog

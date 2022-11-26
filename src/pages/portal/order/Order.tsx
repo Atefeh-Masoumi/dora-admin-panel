@@ -184,8 +184,8 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     goToBankPortal({
       invoicePayModel: {
         id: orderInfo.id,
-        invoicePaymentTypeId: orderInfo.invoicePaymentTypeId,
-        paymentProviderId: Number(paymentGateway),
+        invoicePaymentTypeId: Number(invoicePaymentTypeId),
+        paymentProviderId: Number(paymentGateway)
       },
     }).unwrap()
       .then((res) => {
