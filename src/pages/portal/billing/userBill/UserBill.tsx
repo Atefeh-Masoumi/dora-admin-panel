@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiV2PortalUserBillGetByIdQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalUserBillGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
 import moment from "jalali-moment";
 import { billTableStruct } from "src/components/organisms/portal/userBill/tables/struct";
@@ -18,7 +18,7 @@ const Bill: FC = () => {
 
   const { id } = useParams();
 
-  const { data: bill, isLoading } = useGetApiV2PortalUserBillGetByIdQuery({
+  const { data: bill, isLoading } = useGetUserV2PortalUserBillGetByIdQuery({
     id: parseInt(id as string),
   });
 

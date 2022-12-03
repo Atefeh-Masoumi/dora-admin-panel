@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiV2CdnZoneChangeClientCertTypeMutation } from "src/app/services/api.generated";
+import { usePutUserV2CdnZoneChangeClientCertTypeMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg/UserSvg";
 import Cloud from "src/components/atoms/svg/Cloud.svg";
 import CloudOff from "src/components/atoms/svg/CloudOff.svg";
@@ -20,7 +20,7 @@ export const ClientCertification: FC<ClientCertificationPropsType> = ({
   certTypeId,
 }) => {
   const [changeClient, { isLoading }] =
-    usePutApiV2CdnZoneChangeClientCertTypeMutation();
+    usePutUserV2CdnZoneChangeClientCertTypeMutation();
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({

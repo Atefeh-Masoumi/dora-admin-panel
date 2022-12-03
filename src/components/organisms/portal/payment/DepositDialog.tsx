@@ -11,7 +11,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
-import { usePostApiV2PortalWalletPaymentCreateMutation } from "src/app/services/api.generated";
+import { usePostUserV2PortalWalletPaymentCreateMutation } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -47,7 +47,7 @@ export const DepositDialog: FC<HeaderPropsType> = ({
   handleClose,
 }) => {
   const [createDeposit, { isLoading }] =
-    usePostApiV2PortalWalletPaymentCreateMutation();
+    usePostUserV2PortalWalletPaymentCreateMutation();
 
   const formRef = useRef(null);
   const formToken = useRef(null);

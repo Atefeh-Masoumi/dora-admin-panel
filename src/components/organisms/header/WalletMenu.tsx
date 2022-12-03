@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
 import { DepositDialog } from "src/components/organisms/portal/payment/DepositDialog";
-import { useGetApiV2PortalWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
 import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
@@ -96,7 +96,7 @@ export const WalletMenu: FC = () => {
   };
   const handleClose = () => setAnchorEl(null);
 
-  const { data: balance, isLoading } = useGetApiV2PortalWalletGetBalanceQuery(
+  const { data: balance, isLoading } = useGetUserV2PortalWalletGetBalanceQuery(
     null as any,
     { refetchOnMountOrArgChange: true }
   );

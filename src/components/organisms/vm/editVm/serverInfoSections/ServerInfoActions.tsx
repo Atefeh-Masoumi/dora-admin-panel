@@ -10,13 +10,13 @@ import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
 import {
-  usePostApiV2VmVmKmsGetMutation,
-  usePutApiV2VmVmDisconnectByIdMutation,
-  usePutApiV2VmVmConnectByIdMutation,
-  usePutApiV2VmVmStartByIdMutation,
-  usePutApiV2VmVmStopByIdMutation,
-  usePutApiV2VmVmRebootByIdMutation,
-  usePutApiV2VmVmShutdownByIdMutation,
+  usePostUserV2VmVmKmsGetMutation,
+  usePutUserV2VmVmDisconnectByIdMutation,
+  usePutUserV2VmVmConnectByIdMutation,
+  usePutUserV2VmVmStartByIdMutation,
+  usePutUserV2VmVmStopByIdMutation,
+  usePutUserV2VmVmRebootByIdMutation,
+  usePutUserV2VmVmShutdownByIdMutation,
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import { toast } from "react-toastify";
@@ -26,19 +26,19 @@ type ServerInfoActionsPropsType = {};
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [getUrl, { isLoading: getUrlIsLoading }] =
-    usePostApiV2VmVmKmsGetMutation();
+    usePostUserV2VmVmKmsGetMutation();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
-    usePutApiV2VmVmDisconnectByIdMutation();
+    usePutUserV2VmVmDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
-    usePutApiV2VmVmConnectByIdMutation();
+    usePutUserV2VmVmConnectByIdMutation();
   const [startServer, { isLoading: startServerIsLoading }] =
-    usePutApiV2VmVmStartByIdMutation();
+    usePutUserV2VmVmStartByIdMutation();
   const [stopServer, { isLoading: stopServerIsLoading }] =
-    usePutApiV2VmVmStopByIdMutation();
+    usePutUserV2VmVmStopByIdMutation();
   const [shutdownServer, { isLoading: shutdownServerIsLoading }] =
-    usePutApiV2VmVmShutdownByIdMutation();
+    usePutUserV2VmVmShutdownByIdMutation();
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
-    usePutApiV2VmVmRebootByIdMutation();
+    usePutUserV2VmVmRebootByIdMutation();
 
   const actionsArray = [
     {

@@ -3,7 +3,7 @@ import { Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import moment from "jalali-moment";
 import {
-  useGetApiV2PortalUserBillListQuery,
+  useGetUserV2PortalUserBillListQuery,
   UserBillListResponseModel,
 } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -13,7 +13,7 @@ import { BillsTableRow } from "src/components/organisms/portal/userBill/tables/B
 import { billsTableStruct } from "src/components/organisms/portal/userBill/tables/struct";
 
 const UserBills: FC = () => {
-  const { data: userBill, isLoading } = useGetApiV2PortalUserBillListQuery();
+  const { data: userBill, isLoading } = useGetUserV2PortalUserBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);

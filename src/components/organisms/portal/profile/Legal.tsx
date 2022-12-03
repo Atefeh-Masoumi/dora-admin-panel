@@ -5,9 +5,9 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   GetUserCompanyResponse,
-  useGetApiV2PortalUserCompanyGetQuery,
-  usePutApiV2PortalProfileEditAccountTypeMutation,
-  usePutApiV2PortalUserCompanyEditMutation,
+  useGetUserV2PortalUserCompanyGetQuery,
+  usePutUserV2PortalProfileEditAccountTypeMutation,
+  usePutUserV2PortalUserCompanyEditMutation,
 } from "src/app/services/api.generated";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -51,7 +51,7 @@ type LegalPersonalityPropsType = { isCompany: boolean };
 export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   isCompany,
 }) => {
-  const { data } = useGetApiV2PortalUserCompanyGetQuery();
+  const { data } = useGetUserV2PortalUserCompanyGetQuery();
 
   const [companyInfo, setCompanyInfo] = useState(legalFormDefault);
 
@@ -61,7 +61,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   }, [data]);
 
   const [editUserCompany, { isLoading: loadingEdit }] =
-    usePutApiV2PortalUserCompanyEditMutation();
+    usePutUserV2PortalUserCompanyEditMutation();
 
   const submitHandler: formikOnSubmitType<GetUserCompanyResponse> = (
     {
@@ -115,7 +115,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
 
   // Account Type
   const [editType, { isLoading }] =
-    usePutApiV2PortalProfileEditAccountTypeMutation();
+    usePutUserV2PortalProfileEditAccountTypeMutation();
   const handleChange = () => {
     editType({ editAccountTypeModel: { isCompanyAccount: !isCompany } });
   };

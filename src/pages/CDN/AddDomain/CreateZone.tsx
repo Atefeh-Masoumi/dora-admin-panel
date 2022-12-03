@@ -2,14 +2,14 @@ import { FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
+import { usePostUserV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
 type CreateZonePropsType = { goNext: () => void };
 
 export const CreateZone: FC<CreateZonePropsType> = ({ goNext }) => {
-  const [checkZone, { isLoading }] = usePostApiV2CdnZoneCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostUserV2CdnZoneCheckZoneMutation();
   const [zoneName, setZoneName] = useState("");
 
   const submit = () => {

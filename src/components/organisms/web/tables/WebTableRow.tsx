@@ -6,14 +6,14 @@ import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
-import { useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
+import { useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
 
 export const WebTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const [getUrl, { isLoading: getUrlLoading }] = useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery();
+  const [getUrl, { isLoading: getUrlLoading }] = useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery();
   const monitorOnClick = () =>
     getUrl({ id: row["id"] })
       .unwrap()

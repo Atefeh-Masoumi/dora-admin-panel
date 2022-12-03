@@ -15,10 +15,10 @@ import { Add } from "src/components/atoms/svg/AddSvg";
 import { supportTableStruct } from "src/components/organisms/portal/support/tables/struct";
 import { SupportTableRow } from "src/components/organisms/portal/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/portal/support/constant";
-import { useGetApiV2PortalSupportListQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalSupportListQuery } from "src/app/services/api.generated";
 
 const Support: FC = () => {
-  const { data: supportList, isLoading } = useGetApiV2PortalSupportListQuery();
+  const { data: supportList, isLoading } = useGetUserV2PortalSupportListQuery();
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");

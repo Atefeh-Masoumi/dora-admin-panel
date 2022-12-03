@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import { useGetApiV2CdnClientCertGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnClientCertGetByZoneNameQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
@@ -10,7 +10,7 @@ export const CloudCertification: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
 
   const { data: edgeCert, isLoading } =
-    useGetApiV2CdnClientCertGetByZoneNameQuery({
+    useGetUserV2CdnClientCertGetByZoneNameQuery({
       zoneName: selectedDomain?.zoneName || "",
     });
 

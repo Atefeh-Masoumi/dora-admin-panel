@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiV2VmVmDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteUserV2VmVmDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -17,7 +17,7 @@ export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
   id,
 }) => {
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeleteApiV2VmVmDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteUserV2VmVmDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

@@ -10,7 +10,7 @@ import {
 import { SelectConfig } from "src/components/organisms/rabbit/addService/addRabbitSteps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/rabbit/addService/addRabbitSteps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiV2RabbitRabbitHostCreateMutation } from "src/app/services/api.generated";
+import { usePostUserV2RabbitRabbitHostCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -35,7 +35,7 @@ const AddRabbitService: FC = () => {
     setStep((step - 1) as addRabbitStepsType);
   };
 
-  const [createRabbitService, { isLoading }] = usePostApiV2RabbitRabbitHostCreateMutation();
+  const [createRabbitService, { isLoading }] = usePostUserV2RabbitRabbitHostCreateMutation();
 
   const submitHandler = () => {
     if (

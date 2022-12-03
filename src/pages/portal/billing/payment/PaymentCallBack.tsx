@@ -4,7 +4,7 @@ import { SuccessfulPayment } from "src/components/atoms/svg/SuccessfulSvg";
 import { UnsuccessfulPayment } from "src/components/atoms/svg/UnsuccessfulSvg";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useNavigate, useParams } from "react-router";
-import { useLazyGetApiV2PortalWalletPaymentGetByIdQuery } from "src/app/services/api";
+import { useLazyGetUserV2PortalWalletPaymentGetByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
 import { WalletPaymentListResponse } from "src/app/services/api.generated";
 
@@ -18,7 +18,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
   const navigate = useNavigate();
 
   const [getInfo, { isLoading }] =
-    useLazyGetApiV2PortalWalletPaymentGetByIdQuery();
+    useLazyGetUserV2PortalWalletPaymentGetByIdQuery();
 
   useEffect(() => {
     if (id === null || id === undefined || isNaN(Number(id))) {

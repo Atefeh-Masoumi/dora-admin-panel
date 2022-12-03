@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  usePutApiV2CdnZoneChangeHstsMutation,
-  usePutApiV2CdnZoneChangeRedirectMutation,
+  usePutUserV2CdnZoneChangeHstsMutation,
+  usePutUserV2CdnZoneChangeRedirectMutation,
 } from "src/app/services/api.generated";
 
 type SwitchHttpSettingPropsType = {
@@ -21,7 +21,7 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
   loading,
 }) => {
   const [changeRedirect, { isLoading: loadingRedirect }] =
-    usePutApiV2CdnZoneChangeRedirectMutation();
+    usePutUserV2CdnZoneChangeRedirectMutation();
   const onChangeRedirect = () => {
     if (isRedirect === undefined) return;
     changeRedirect({
@@ -30,7 +30,7 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
-    usePutApiV2CdnZoneChangeHstsMutation();
+    usePutUserV2CdnZoneChangeHstsMutation();
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({ changeHstsModel: { id, isHsts: !isHSTS } }).then(() => {

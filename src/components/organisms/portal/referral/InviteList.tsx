@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
-import { useGetApiV2PortalCommissionListQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalCommissionListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "../../tables/BaseTable";
 import { ReferralTableRow } from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
 
 export const InviteList: FC = () => {
-  const { data: billList, isLoading } = useGetApiV2PortalCommissionListQuery();
+  const { data: billList, isLoading } = useGetUserV2PortalCommissionListQuery();
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>

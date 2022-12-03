@@ -10,7 +10,7 @@ import {
 import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { useGetApiV2VmVmGetByIdQuery } from "src/app/services/api.generated";
+import { useGetUserV2VmVmGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
 type boxRowType = {
@@ -49,7 +49,7 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
     data: vmData,
     isLoading: getVmDataLoading,
     isFetching: getVmDataFetching,
-  } = useGetApiV2VmVmGetByIdQuery({
+  } = useGetUserV2VmVmGetByIdQuery({
     id: Number(id)!,
   });
 

@@ -14,7 +14,7 @@ const forgetPasswordSlice = createSlice({
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
-      api.endpoints.postApiV2AccountForgot.matchFulfilled,
+      api.endpoints.postUserV2AccountForgot.matchFulfilled,
       (state, actionPayload) => {
         state.email = actionPayload.meta.arg.originalArgs.forgotModel.email;
       }

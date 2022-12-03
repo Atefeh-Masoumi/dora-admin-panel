@@ -7,7 +7,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   CreateUserZoneClientCertificateModel,
-  usePostApiV2CdnEdgeCertCreateUserCertMutation,
+  usePostUserV2CdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -26,7 +26,7 @@ export const AddCertificateDialog: FC<AddCertificateDialogPropsType> = ({
   const formInitialValues = { zoneName, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiV2CdnEdgeCertCreateUserCertMutation();
+    usePostUserV2CdnEdgeCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 

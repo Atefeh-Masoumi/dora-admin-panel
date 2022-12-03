@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
-  usePostApiV2CdnEdgeCertCreateMutation,
-  useGetApiV2CdnEdgeCertGetByZoneNameQuery,
+  usePostUserV2CdnEdgeCertCreateMutation,
+  useGetUserV2CdnEdgeCertGetByZoneNameQuery,
 } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -13,10 +13,10 @@ import { LoadingButton } from "@mui/lab";
 export const CloudCertification: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const [createLicense, { isLoading: loadingCreate }] =
-    usePostApiV2CdnEdgeCertCreateMutation();
+    usePostUserV2CdnEdgeCertCreateMutation();
 
   const { data: edgeCert, isLoading } =
-    useGetApiV2CdnEdgeCertGetByZoneNameQuery({
+    useGetUserV2CdnEdgeCertGetByZoneNameQuery({
       zoneName: selectedDomain?.zoneName || "",
     });
 

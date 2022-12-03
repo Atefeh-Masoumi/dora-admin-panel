@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import {
   GetProfileResponse,
-  usePutApiV2PortalProfileEditMutation,
+  usePutUserV2PortalProfileEditMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -25,7 +25,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = ({
   data: userInformation,
 }) => {
   const [editProfile, { isLoading: loadingEdit }] =
-    usePutApiV2PortalProfileEditMutation();
+    usePutUserV2PortalProfileEditMutation();
 
   const submitHandler: formikOnSubmitType<GetProfileResponse> = (
     { firstName, lastName, nationalId, birthDate, address },

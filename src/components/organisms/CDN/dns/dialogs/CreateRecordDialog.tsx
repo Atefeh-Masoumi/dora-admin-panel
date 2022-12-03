@@ -12,15 +12,15 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   CreateDnsRecordModel,
-  usePostApiV2CdnDnsRecordCreateMutation,
-  usePutApiV2CdnDnsRecordEditMutation,
+  usePostUserV2CdnDnsRecordCreateMutation,
+  usePutUserV2CdnDnsRecordEditMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { useAppSelector } from "src/app/hooks";
-import { useLazyGetApiV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
+import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import { createDnsRecordType, dnsType } from "src/types/createRecordType";
 import {
   createDnsFormValidation,
@@ -39,7 +39,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   id,
   handleClose,
 }) => {
-  const [getInfo, { isLoading }] = useLazyGetApiV2CdnDnsRecordGetByIdQuery();
+  const [getInfo, { isLoading }] = useLazyGetUserV2CdnDnsRecordGetByIdQuery();
 
   const [type, setType] = useState<dnsType>("A");
   const [proxyStatus, setProxyStatus] = useState(false);
@@ -79,10 +79,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   const zoneName = selectedDomain?.zoneName || "";
 
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
-    usePostApiV2CdnDnsRecordCreateMutation();
+    usePostUserV2CdnDnsRecordCreateMutation();
 
   const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutApiV2CdnDnsRecordEditMutation();
+    usePutUserV2CdnDnsRecordEditMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference },

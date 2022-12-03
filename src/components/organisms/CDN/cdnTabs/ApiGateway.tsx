@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/loadbalance/tables/struct";
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/loadbalance/tables/LoadBalanceTableRow";
 import { AddLoadBalanceDialog } from "src/components/organisms/cdn/loadbalance/dialogs/AddLoadBalanceDialog";
-import { useGetApiV2CdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
 
 type ApiGatewayPropsType = {};
 
@@ -14,7 +14,7 @@ const ApiGateway: FC<ApiGatewayPropsType> = () => {
     const [showDialog, setShowDialog] = useState(false);
     const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
 
-    const { data, isLoading } = useGetApiV2CdnLoadBalanceListByZoneNameQuery({
+    const { data, isLoading } = useGetUserV2CdnLoadBalanceListByZoneNameQuery({
         zoneName: selectedDomain?.zoneName || "",
     });
 

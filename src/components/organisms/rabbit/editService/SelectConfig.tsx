@@ -7,14 +7,14 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditRabbitTableRow } from "./tables/EditRabbitTableRow";
 import { editRabbitTableStruct } from "./tables/struct";
-import { useGetApiV2PortalProductBundleListByProductCategoryIdQuery, usePutApiV2RabbitRabbitHostChangeServiceMutation } from "src/app/services/api.generated";
+import { useGetUserV2PortalProductBundleListByProductCategoryIdQuery, usePutUserV2RabbitRabbitHostChangeServiceMutation } from "src/app/services/api.generated";
 import { EditRabbitContext } from "./context/EditRabbitContext";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiV2PortalProductBundleListByProductCategoryIdQuery({
+    useGetUserV2PortalProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.RABBIT_MQ,
     });
 
@@ -34,7 +34,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const navigate = useNavigate();
 
   const { serverId, serverConfig } = useContext(EditRabbitContext);
-  const [editRabbitHostModel, { isLoading: updateLoading }] = usePutApiV2RabbitRabbitHostChangeServiceMutation();
+  const [editRabbitHostModel, { isLoading: updateLoading }] = usePutUserV2RabbitRabbitHostChangeServiceMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig)

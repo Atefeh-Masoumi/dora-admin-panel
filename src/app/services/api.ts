@@ -1,18 +1,18 @@
 import {
   api as generatedApi,
-  PostApiV2PortalSupportCreateApiArg,
-  PostApiV2PortalSupportItemCreateApiResponse,
-  PostApiV2PortalProfileGetNotificationStatusApiResponse,
-  PostApiV2PortalProfileGetNotificationStatusApiArg,
+  PostUserV2PortalSupportCreateApiArg,
+  PostUserV2PortalSupportItemCreateApiResponse,
+  PostUserV2PortalProfileGetNotificationStatusApiResponse,
+  PostUserV2PortalProfileGetNotificationStatusApiArg,
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
 export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
-      getApiV2PortalProfileGetNotificationStatus: build.query<
-        PostApiV2PortalProfileGetNotificationStatusApiResponse,
-        PostApiV2PortalProfileGetNotificationStatusApiArg
+      getUserV2PortalProfileGetNotificationStatus: build.query<
+        PostUserV2PortalProfileGetNotificationStatusApiResponse,
+        PostUserV2PortalProfileGetNotificationStatusApiArg
       >({
         query: () => ({
           url: `/api/v2/portal/profile/get-notification-status`,
@@ -20,8 +20,8 @@ export const api = generatedApi
         }),
       }),
       customMediaControllerUploadVideo: build.mutation<
-        PostApiV2PortalSupportItemCreateApiResponse,
-        PostApiV2PortalSupportCreateApiArg & {
+        PostUserV2PortalSupportItemCreateApiResponse,
+        PostUserV2PortalSupportCreateApiArg & {
           abortController?: AbortController;
           onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
@@ -52,116 +52,116 @@ export const api = generatedApi
       "Cart",
     ],
     endpoints: {
-      getApiV2PortalProfileGet: {
+      getUserV2PortalProfileGet: {
         providesTags: () => ["Profile"],
       },
-      getApiV2PortalProfileGetNotificationStatus: {
+      getUserV2PortalProfileGetNotificationStatus: {
         providesTags: () => ["Notification"],
       },
-      getApiV2CdnDnsRecordGetById: {
+      getUserV2CdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
       },
-      getApiV2CdnDnsRecordListByZoneName: {
+      getUserV2CdnDnsRecordListByZoneName: {
         providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
       },
-      getApiV2CdnZoneGetByZoneName: {
+      getUserV2CdnZoneGetByZoneName: {
         providesTags: () => ["ZoneData"],
       },
-      getApiV2PortalSupportItemListBySupportId: {
+      getUserV2PortalSupportItemListBySupportId: {
         providesTags: () => ["SupportItems"],
       },
-      getApiV2CdnLoadBalanceListByZoneName: {
+      getUserV2CdnLoadBalanceListByZoneName: {
         providesTags: () => ["LoadBalance"],
       },
-      getApiV2VmVmList: {
+      getUserV2VmVmList: {
         providesTags: () => ["CloudServer"],
       },
-      getApiV2VmVmGetById: {
+      getUserV2VmVmGetById: {
         providesTags: () => ["VmData"],
       },
-      getApiV2PortalInvoiceGetById: {
+      getUserV2PortalInvoiceGetById: {
         providesTags: () => ["CartDetails"],
       },
-      getApiV2PortalInvoiceNotPaidList: {
+      getUserV2PortalInvoiceNotPaidList: {
         providesTags: () => ["Cart"],
       },
-      putApiV2PortalProfileEditAccountType: {
+      putUserV2PortalProfileEditAccountType: {
         invalidatesTags: () => ["Profile"],
       },
-      postApiV2PortalProfileConfirmPhoneNumber: {
+      postUserV2PortalProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiV2PortalProfileEditPhoneNotification: {
+      putUserV2PortalProfileEditPhoneNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putApiV2PortalProfileEditEmailNotification: {
+      putUserV2PortalProfileEditEmailNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putApiV2CdnDnsRecordChangeProxyStatusById: {
+      putUserV2CdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
       },
-      deleteApiV2CdnDnsRecordDeleteById: {
+      deleteUserV2CdnDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putApiV2CdnDnsRecordEdit: {
+      putUserV2CdnDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      postApiV2CdnDnsRecordCreate: {
+      postUserV2CdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putApiV2CdnZoneChangeZoneType: { invalidatesTags: () => ["ZoneData"] },
-      putApiV2CdnZoneChangeHsts: { invalidatesTags: () => ["ZoneData"] },
-      putApiV2CdnZoneChangeRedirect: { invalidatesTags: () => ["ZoneData"] },
-      putApiV2CdnZoneChangeEdgeCertType: {
+      putUserV2CdnZoneChangeZoneType: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnZoneChangeHsts: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnZoneChangeRedirect: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnZoneChangeEdgeCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiV2CdnZoneChangeClientCertType: {
+      putUserV2CdnZoneChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
 
-      deleteApiV2CdnLoadBalanceDeleteById: {
+      deleteUserV2CdnLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      postApiV2CdnLoadBalanceCreate: {
+      postUserV2CdnLoadBalanceCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      putApiV2CdnLoadBalanceEdit: {
+      putUserV2CdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      postApiV2PortalSupportItemCreate: {
+      postUserV2PortalSupportItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
-      postApiV2VmVmCreate: {
+      postUserV2VmVmCreate: {
         invalidatesTags: () => ["CloudServer"],
       },
-      deleteApiV2VmVmDeleteById: {
+      deleteUserV2VmVmDeleteById: {
         invalidatesTags: () => ["CloudServer"],
       },
-      putApiV2VmVmEdit: {
+      putUserV2VmVmEdit: {
         invalidatesTags: () => ["CloudServer"],
       },
-      putApiV2VmVmConnectById: {
+      putUserV2VmVmConnectById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2VmVmDisconnectById: {
+      putUserV2VmVmDisconnectById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2VmVmShutdownById: {
+      putUserV2VmVmShutdownById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2VmVmStartById: {
+      putUserV2VmVmStartById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2VmVmStopById: {
+      putUserV2VmVmStopById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2VmVmRebootById: {
+      putUserV2VmVmRebootById: {
         invalidatesTags: () => ["VmData"],
       },
-      putApiV2PortalInvoicePaymentType: {
+      putUserV2PortalInvoicePaymentType: {
         invalidatesTags: () => ["CartDetails"],
       },
-      putApiV2PortalInvoiceDuration: {
+      putUserV2PortalInvoiceDuration: {
         invalidatesTags: () => ["CartDetails"],
       }
     },
@@ -169,16 +169,16 @@ export const api = generatedApi
 
 export const {
   useCustomMediaControllerUploadVideoMutation,
-  useGetApiV2PortalProfileGetNotificationStatusQuery,
-  useLazyGetApiV2VmVmIpListByVmIdQuery,
-  useLazyGetApiV2VmImageListByDatacenterIdQuery,
-  useLazyGetApiV2VmVmGetByIdQuery,
-  useLazyGetApiV2CdnLoadBalanceGetByIdQuery,
-  useLazyGetApiV2CdnDnsRecordGetByIdQuery,
-  useLazyGetApiV2PortalInvoiceGetByIdQuery,
-  useLazyGetApiV2PortalSupportItemDownloadByIdQuery,
-  useLazyGetApiV2PortalWalletPaymentGetByIdQuery,
-  useLazyGetApiV2PortalUserBillDownloadByIdQuery,
-  useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery,
-  useLazyGetApiV2RabbitRabbitUserListByRabbitHostIdQuery
+  useGetUserV2PortalProfileGetNotificationStatusQuery,
+  useLazyGetUserV2VmVmIpListByVmIdQuery,
+  useLazyGetUserV2VmImageListByDatacenterIdQuery,
+  useLazyGetUserV2VmVmGetByIdQuery,
+  useLazyGetUserV2CdnLoadBalanceGetByIdQuery,
+  useLazyGetUserV2CdnDnsRecordGetByIdQuery,
+  useLazyGetUserV2PortalInvoiceGetByIdQuery,
+  useLazyGetUserV2PortalSupportItemDownloadByIdQuery,
+  useLazyGetUserV2PortalWalletPaymentGetByIdQuery,
+  useLazyGetUserV2PortalUserBillDownloadByIdQuery,
+  useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery,
+  useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery
 } = api;

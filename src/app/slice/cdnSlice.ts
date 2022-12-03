@@ -24,8 +24,8 @@ const cdnSlice = createSlice({
       return initialState;
     });
     // addMatcher(
-    //   api.endpoints.postApiV2AccountLogin.matchFulfilled,
-    //   (_, { payload }: { payload: PostApiV2AccountLoginApiResponse }) => {
+    //   api.endpoints.postUserV2AccountLogin.matchFulfilled,
+    //   (_, { payload }: { payload: PostUserV2AccountLoginApiResponse }) => {
     //     localStorage.setItem("loginInfo", JSON.stringify(payload));
     //     return payload;
     //   }

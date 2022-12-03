@@ -6,7 +6,7 @@ import asiatechImage from "src/assets/images/asiatech.jpg";
 import mobinNetImage from "src/assets/images/mobinnet.jpg";
 import {
   DatacenterListResponse,
-  useGetApiV2VmDatacenterListQuery,
+  useGetUserV2VmDatacenterListQuery,
 } from "src/app/services/api.generated";
 
 type SelectDataCenterPropsType = {};
@@ -14,7 +14,7 @@ type SelectDataCenterPropsType = {};
 export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
   const { dataCenter, setDataCenter } = useContext(AddWebHostContext);
 
-  const { data: dataCenterList, isLoading } = useGetApiV2VmDatacenterListQuery();
+  const { data: dataCenterList, isLoading } = useGetUserV2VmDatacenterListQuery();
 
   const dataCenterOnClick = (dataCenter: DatacenterListResponse) => setDataCenter(dataCenter);
 

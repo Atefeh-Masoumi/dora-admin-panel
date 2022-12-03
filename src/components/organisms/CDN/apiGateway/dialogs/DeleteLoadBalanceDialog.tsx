@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiV2CdnLoadBalanceDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteUserV2CdnLoadBalanceDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -18,7 +18,7 @@ export const DeleteLoadBalanceDialog: FC<DeleteLoadBalanceDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
-    useDeleteApiV2CdnLoadBalanceDeleteByIdMutation();
+    useDeleteUserV2CdnLoadBalanceDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

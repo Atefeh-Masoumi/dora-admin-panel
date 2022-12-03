@@ -4,7 +4,7 @@ import { SuccessfulPayment } from "src/components/atoms/svg/SuccessfulSvg";
 import { UnsuccessfulPayment } from "src/components/atoms/svg/UnsuccessfulSvg";
 import { useNavigate, useParams } from "react-router";
 import PageLoading from "src/components/atoms/PageLoading";
-import { usePostApiV2PortalReferralJoinMutation } from "src/app/services/api.generated";
+import { usePostUserV2PortalReferralJoinMutation } from "src/app/services/api.generated";
 
 type ReferralCallBackPropsType = {};
 
@@ -15,7 +15,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
   const navigate = useNavigate();
 
   const [sendReferralCode, { isLoading }] =
-    usePostApiV2PortalReferralJoinMutation();
+    usePostUserV2PortalReferralJoinMutation();
 
   useEffect(() => {
     if (id) {

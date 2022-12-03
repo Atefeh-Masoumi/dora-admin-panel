@@ -4,10 +4,10 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { useGetApiV2CdnZoneListQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnZoneListQuery } from "src/app/services/api.generated";
 
 const DomainManagement: FC = () => {
-  const { data: zoneList, isLoading } = useGetApiV2CdnZoneListQuery();
+  const { data: zoneList, isLoading } = useGetUserV2CdnZoneListQuery();
   const [search, setSearch] = useState("");
 
   const filteredList = zoneList?.filter((zone) =>

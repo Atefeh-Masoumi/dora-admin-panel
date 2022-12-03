@@ -27,11 +27,11 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePostApiV2PortalInvoicePayMutation,
-  usePutApiV2PortalInvoicePaymentTypeMutation,
-  usePutApiV2PortalInvoiceDurationMutation,
-  usePutApiV2PortalInvoiceVoucherMutation,
-  useGetApiV2PortalInvoiceGetByIdQuery,
+  usePostUserV2PortalInvoicePayMutation,
+  usePutUserV2PortalInvoicePaymentTypeMutation,
+  usePutUserV2PortalInvoiceDurationMutation,
+  usePutUserV2PortalInvoiceVoucherMutation,
+  useGetUserV2PortalInvoiceGetByIdQuery,
   GetInvoiceResponse
 } from "src/app/services/api.generated";
 
@@ -53,7 +53,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const { id } = useParams();
 
-  const { data, isLoading: getOrderInfoLoading } = useGetApiV2PortalInvoiceGetByIdQuery({
+  const { data, isLoading: getOrderInfoLoading } = useGetUserV2PortalInvoiceGetByIdQuery({
     id: Number(id),
   });
 
@@ -62,10 +62,10 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     setInvoicePaymentTypeId(data.invoicePaymentTypeId);
   }, [data]);
 
-  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] = usePutApiV2PortalInvoicePaymentTypeMutation();
-  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] = usePutApiV2PortalInvoiceDurationMutation();
-  const [goToBankPortal, { isLoading: goToBankPortalLoading }] = usePostApiV2PortalInvoicePayMutation();
-  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] = usePutApiV2PortalInvoiceVoucherMutation();
+  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] = usePutUserV2PortalInvoicePaymentTypeMutation();
+  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] = usePutUserV2PortalInvoiceDurationMutation();
+  const [goToBankPortal, { isLoading: goToBankPortalLoading }] = usePostUserV2PortalInvoicePayMutation();
+  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] = usePutUserV2PortalInvoiceVoucherMutation();
 
   const orderInfo: GetInvoiceResponse = useMemo(() => data || {}, [data]);
 

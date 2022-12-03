@@ -6,11 +6,11 @@ import { Share } from "src/components/atoms/svg/ShareSvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ShareDialog } from "./ShareDialog";
 import { WelcomeTooltip } from "./WelcomeTooltip";
-import { useGetApiV2PortalReferralGetQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalReferralGetQuery } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
 export const InviteCode: FC = () => {
-  const { data: referralData, isLoading } = useGetApiV2PortalReferralGetQuery();
+  const { data: referralData, isLoading } = useGetUserV2PortalReferralGetQuery();
 
   const [code, setCode] = useState<string | undefined | null>();
   const handleOpen = () => {

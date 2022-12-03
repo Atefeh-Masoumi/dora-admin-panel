@@ -1,20 +1,20 @@
 import type { FC } from "react";
 import { Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { useGetApiV2PortalProfileGetNotificationStatusQuery } from "src/app/services/api";
+import { useGetUserV2PortalProfileGetNotificationStatusQuery } from "src/app/services/api";
 import {
-  usePutApiV2PortalProfileEditEmailNotificationMutation,
-  usePutApiV2PortalProfileEditPhoneNotificationMutation,
+  usePutUserV2PortalProfileEditEmailNotificationMutation,
+  usePutUserV2PortalProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
 
 export const SecuritySetting: FC = () => {
   const { data: notifyData, isLoading } =
-    useGetApiV2PortalProfileGetNotificationStatusQuery();
+    useGetUserV2PortalProfileGetNotificationStatusQuery();
 
   const [editPhoneNotify, { isLoading: loadingPhone }] =
-    usePutApiV2PortalProfileEditPhoneNotificationMutation();
+    usePutUserV2PortalProfileEditPhoneNotificationMutation();
   const submitPhone = () => {
     if (notifyData?.phoneNotify === undefined) return;
     editPhoneNotify({
@@ -23,7 +23,7 @@ export const SecuritySetting: FC = () => {
   };
 
   const [editEmailNotify, { isLoading: loadingEmail }] =
-    usePutApiV2PortalProfileEditEmailNotificationMutation();
+    usePutUserV2PortalProfileEditEmailNotificationMutation();
   const submitEmail = () => {
     if (notifyData?.emailNotify === undefined) return;
     editEmailNotify({

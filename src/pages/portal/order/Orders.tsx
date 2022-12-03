@@ -3,10 +3,10 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CartTableRow } from "src/components/organisms/portal/order/tables/CartTableRow";
 import { cartTableStruct } from "src/components/organisms/portal/order/tables/struct";
-import { useGetApiV2PortalInvoiceNotPaidListQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalInvoiceNotPaidListQuery } from "src/app/services/api.generated";
 
 const Cart: FC = () => {
-  const { data, isLoading } = useGetApiV2PortalInvoiceNotPaidListQuery();
+  const { data, isLoading } = useGetUserV2PortalInvoiceNotPaidListQuery();
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>

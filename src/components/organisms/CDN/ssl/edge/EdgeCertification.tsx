@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiV2CdnZoneChangeEdgeCertTypeMutation } from "src/app/services/api.generated";
+import { usePutUserV2CdnZoneChangeEdgeCertTypeMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg/UserSvg";
 import { CloudCertification } from "./CloudCertification";
 import Cloud from "src/components/atoms/svg/Cloud.svg";
@@ -20,7 +20,7 @@ export const EdgeCertification: FC<EdgeCertificationPropsType> = ({
   certTypeId,
 }) => {
   const [changeEdge, { isLoading }] =
-    usePutApiV2CdnZoneChangeEdgeCertTypeMutation();
+    usePutUserV2CdnZoneChangeEdgeCertTypeMutation();
   const onChangeEdge = (type: number) => {
     if (!certTypeId) return;
     changeEdge({ changeEdgeCertTypeModel: { id, zoneEdgeCertTypeId: type } });

@@ -9,7 +9,7 @@ import { SelectDomain } from "src/components/organisms/web/addService/addService
 import { SelectDataCenter } from "src/components/organisms/web/addService/addServiceSteps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/addService/addServiceSteps/SelectConfig";
 import { Terms } from "src/components/organisms/web/addService/addServiceSteps/Terms";
-import { usePostApiV2WebWebHostCreateMutation } from "src/app/services/api.generated";
+import { usePostUserV2WebWebHostCreateMutation } from "src/app/services/api.generated";
 
 const AddWebHost: FC = () => {
   const {
@@ -31,7 +31,7 @@ const AddWebHost: FC = () => {
     setStep((step - 1) as addWebHostStepsType);
   };
 
-  const [createWebHost, { isLoading }] = usePostApiV2WebWebHostCreateMutation();
+  const [createWebHost, { isLoading }] = usePostUserV2WebWebHostCreateMutation();
 
   const submitHandler = () => {
     if (

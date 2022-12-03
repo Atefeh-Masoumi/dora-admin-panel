@@ -14,11 +14,11 @@ import moment from "jalali-moment";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import { CustomTooltip } from "../portal/notification/tables/NotificationTableRow";
-import { useGetApiV2PortalDashboardSupportShortListQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalDashboardSupportShortListQuery } from "src/app/services/api.generated";
 
 export const ShortTickets: FC = () => {
   const { data: tickets, isLoading } =
-    useGetApiV2PortalDashboardSupportShortListQuery();
+    useGetUserV2PortalDashboardSupportShortListQuery();
 
   const navigate = useNavigate();
   return (

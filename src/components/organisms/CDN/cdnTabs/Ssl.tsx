@@ -5,7 +5,7 @@ import { RadioHttpSetting } from "src/components/organisms/cdn/ssl/RadioHttpSett
 import { SwitchHttpSetting } from "src/components/organisms/cdn/ssl/SwitchHttpSetting";
 import { EdgeCertification } from "src/components/organisms/cdn/ssl/edge/EdgeCertification";
 import { ClientCertification } from "src/components/organisms/cdn/ssl/client/ClientCertification";
-import { useGetApiV2CdnZoneGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnZoneGetByZoneNameQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -13,7 +13,7 @@ export const SSLSetting: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
   const id = selectedDomain?.id || 0;
 
-  const { data: zoneData, isLoading } = useGetApiV2CdnZoneGetByZoneNameQuery({
+  const { data: zoneData, isLoading } = useGetUserV2CdnZoneGetByZoneNameQuery({
     zoneName,
   });
   return (

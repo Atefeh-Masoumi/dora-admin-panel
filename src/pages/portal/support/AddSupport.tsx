@@ -13,10 +13,10 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
-  useGetApiV2PortalBusinessUnitListQuery,
-  useGetApiV2PortalProductCategoryListQuery,
-  usePostApiV2PortalSupportCreateMutation,
-  usePostApiV2PortalSupportSubjectSelectListMutation,
+  useGetUserV2PortalBusinessUnitListQuery,
+  useGetUserV2PortalProductCategoryListQuery,
+  usePostUserV2PortalSupportCreateMutation,
+  usePostUserV2PortalSupportSubjectSelectListMutation,
 } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
@@ -31,11 +31,11 @@ const AddTicket: FC = () => {
 
   const [unit, setUnit] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
-    useGetApiV2PortalBusinessUnitListQuery();
+    useGetUserV2PortalBusinessUnitListQuery();
 
   const [category, setCategory] = useState<number>();
   const { data: categories, isLoading: loadingCategories } =
-    useGetApiV2PortalProductCategoryListQuery();
+    useGetUserV2PortalProductCategoryListQuery();
 
   const [title, setTitle] = useState<number>();
 
@@ -49,7 +49,7 @@ const AddTicket: FC = () => {
 
   abortController.current = new AbortController();
 
-  const [selectList] = usePostApiV2PortalSupportSubjectSelectListMutation();
+  const [selectList] = usePostUserV2PortalSupportSubjectSelectListMutation();
   useEffect(() => {
     selectList({
       selectListModel: { productCategoryId: category, businessUnitId: unit },
@@ -62,7 +62,7 @@ const AddTicket: FC = () => {
   const [file, setFile] = useState<File>();
   const [list, setList] = useState<SupportSubjectListResponse[]>([]);
   const [createTicket, { isLoading: loadingCreate }] =
-    usePostApiV2PortalSupportCreateMutation();
+    usePostUserV2PortalSupportCreateMutation();
 
   const [upload] = useCustomMediaControllerUploadVideoMutation();
 

@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiV2CdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddCertificateDialog } from "./AddCertificateDialog";
@@ -11,7 +11,7 @@ export const UserCertification: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
 
   const { data: userCert, isLoading } =
-    useGetApiV2CdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);

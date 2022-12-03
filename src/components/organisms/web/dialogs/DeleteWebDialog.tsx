@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiV2WebWebHostDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteUserV2WebWebHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -18,7 +18,7 @@ export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
-    useDeleteApiV2WebWebHostDeleteByIdMutation();
+    useDeleteUserV2WebWebHostDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { useGetApiV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
 import { AddRabbitTableRow } from "../tables/AddRabbitTableRow";
 import { addRabbitTableStruct } from "../tables/struct";
 
@@ -10,7 +10,7 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiV2PortalProductBundleListByProductCategoryIdQuery({
+    useGetUserV2PortalProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.RABBIT_MQ,
     });
 

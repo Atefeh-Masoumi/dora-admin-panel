@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloudSvg from "src/components/atoms/svg/CloudSvg.svg";
-import { usePutApiV2CdnZoneChangeZoneTypeMutation } from "src/app/services/api.generated";
+import { usePutUserV2CdnZoneChangeZoneTypeMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
 
@@ -43,7 +43,7 @@ export const RadioHttpSetting: FC<RadioHttpSettingPropsType> = ({
   id,
 }) => {
   const [changeZoneType, { isLoading: loadingChange }] =
-    usePutApiV2CdnZoneChangeZoneTypeMutation();
+    usePutUserV2CdnZoneChangeZoneTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
     changeZoneType({ changeZoneTypeModel: { id, zoneTypeId } }).then(() => {

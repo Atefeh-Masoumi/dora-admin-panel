@@ -3,7 +3,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { RecordsList } from "./RecordsList";
 import { Terms } from "./Terms";
 import { toast } from "react-toastify";
-import { usePostApiV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
+import { usePostUserV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
 import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
@@ -11,7 +11,7 @@ import { LoadingButton } from "@mui/lab";
 const AddDomain: FC = () => {
   const [addDomainLevel, setAddDomainLevel] = useState(1);
 
-  const [checkZone, { isLoading }] = usePostApiV2CdnZoneCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostUserV2CdnZoneCheckZoneMutation();
   const [zoneName, setZoneName] = useState("");
 
   const submit = () => {

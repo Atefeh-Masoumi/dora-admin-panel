@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiV2DomainDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteUserV2DomainDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -18,7 +18,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
-    useDeleteApiV2DomainDeleteByIdMutation();
+    useDeleteUserV2DomainDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

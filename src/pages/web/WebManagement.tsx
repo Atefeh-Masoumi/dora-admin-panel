@@ -8,7 +8,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { WebTableRow } from "src/components/organisms/web/tables/WebTableRow";
 import { webTableStruct } from "src/components/organisms/web/tables/struct";
-import { useGetApiV2WebWebHostListQuery } from "src/app/services/api.generated";
+import { useGetUserV2WebWebHostListQuery } from "src/app/services/api.generated";
 
 type WebManagementPropsType = {};
 
@@ -20,7 +20,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiV2WebWebHostListQuery();
+  } = useGetUserV2WebWebHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
