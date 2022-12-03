@@ -269,12 +269,6 @@ export const api = createApi({
         body: queryArg.getPriceModel,
       }),
     }),
-    getApiV2DomainPayById: build.query<
-      GetApiV2DomainPayByIdApiResponse,
-      GetApiV2DomainPayByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/v2/domain/pay/${queryArg.id}` }),
-    }),
     postApiV2DomainRegister: build.mutation<
       PostApiV2DomainRegisterApiResponse,
       PostApiV2DomainRegisterApiArg
@@ -323,8 +317,17 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    get: build.query<GetApiResponse, GetApiArg>({
-      query: () => ({ url: `/` }),
+    getUserV2Index: build.query<
+      GetUserV2IndexApiResponse,
+      GetUserV2IndexApiArg
+    >({
+      query: () => ({ url: `/user/v2/index` }),
+    }),
+    getUserV2Handshake: build.query<
+      GetUserV2HandshakeApiResponse,
+      GetUserV2HandshakeApiArg
+    >({
+      query: () => ({ url: `/user/v2/handshake` }),
     }),
     getApiV2PortalInvoiceList: build.query<
       GetApiV2PortalInvoiceListApiResponse,
@@ -332,27 +335,18 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/v2/portal/invoice/list` }),
     }),
-    getApiV2PortalInvoiceGetById: build.query<
-      GetApiV2PortalInvoiceGetByIdApiResponse,
-      GetApiV2PortalInvoiceGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/portal/invoice/get/${queryArg.id}`,
-      }),
-    }),
     getApiV2PortalInvoiceNotPaidList: build.query<
       GetApiV2PortalInvoiceNotPaidListApiResponse,
       GetApiV2PortalInvoiceNotPaidListApiArg
     >({
       query: () => ({ url: `/api/v2/portal/invoice/not-paid-list` }),
     }),
-    putApiV2PortalInvoiceCancelById: build.mutation<
-      PutApiV2PortalInvoiceCancelByIdApiResponse,
-      PutApiV2PortalInvoiceCancelByIdApiArg
+    getApiV2PortalInvoiceGetById: build.query<
+      GetApiV2PortalInvoiceGetByIdApiResponse,
+      GetApiV2PortalInvoiceGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/v2/portal/invoice/cancel/${queryArg.id}`,
-        method: "PUT",
+        url: `/api/v2/portal/invoice/get/${queryArg.id}`,
       }),
     }),
     putApiV2PortalInvoicePaymentType: build.mutation<
@@ -607,14 +601,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/v2/rabbit/rabbit-host/get/${queryArg.id}`,
-      }),
-    }),
-    getApiV2RabbitRabbitHostPayById: build.query<
-      GetApiV2RabbitRabbitHostPayByIdApiResponse,
-      GetApiV2RabbitRabbitHostPayByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/rabbit/rabbit-host/pay/${queryArg.id}`,
       }),
     }),
     postApiV2RabbitRabbitHostCreate: build.mutation<
@@ -945,12 +931,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/api/v2/vm/vm/get/${queryArg.id}` }),
     }),
-    getApiV2VmVmPayById: build.query<
-      GetApiV2VmVmPayByIdApiResponse,
-      GetApiV2VmVmPayByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/v2/vm/vm/pay/${queryArg.id}` }),
-    }),
     postApiV2VmVmCreate: build.mutation<
       PostApiV2VmVmCreateApiResponse,
       PostApiV2VmVmCreateApiArg
@@ -1164,12 +1144,6 @@ export const api = createApi({
         url: `/api/v2/web/web-host/get-login-session/${queryArg.id}`,
       }),
     }),
-    getApiV2WebWebHostPayById: build.query<
-      GetApiV2WebWebHostPayByIdApiResponse,
-      GetApiV2WebWebHostPayByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/v2/web/web-host/pay/${queryArg.id}` }),
-    }),
     postApiV2WebWebHostCreate: build.mutation<
       PostApiV2WebWebHostCreateApiResponse,
       PostApiV2WebWebHostCreateApiArg
@@ -1197,78 +1171,6 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/v2/web/web-host/delete/${queryArg.id}`,
         method: "DELETE",
-      }),
-    }),
-    getApiV2WebAlarmList: build.query<
-      GetApiV2WebAlarmListApiResponse,
-      GetApiV2WebAlarmListApiArg
-    >({
-      query: () => ({ url: `/api/v2/web/alarm/list` }),
-    }),
-    getApiV2WebWebBlogList: build.query<
-      GetApiV2WebWebBlogListApiResponse,
-      GetApiV2WebWebBlogListApiArg
-    >({
-      query: () => ({ url: `/api/v2/web/web-blog/list` }),
-    }),
-    getApiV2WebWebBlogGetByLink: build.query<
-      GetApiV2WebWebBlogGetByLinkApiResponse,
-      GetApiV2WebWebBlogGetByLinkApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/web-blog/get/${queryArg.link}`,
-      }),
-    }),
-    getApiV2WebWebBlogGetRandomArticlesByLink: build.query<
-      GetApiV2WebWebBlogGetRandomArticlesByLinkApiResponse,
-      GetApiV2WebWebBlogGetRandomArticlesByLinkApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/web-blog/get-random-articles/${queryArg.link}`,
-      }),
-    }),
-    getApiV2WebWebBlogGetHeaderArticles: build.query<
-      GetApiV2WebWebBlogGetHeaderArticlesApiResponse,
-      GetApiV2WebWebBlogGetHeaderArticlesApiArg
-    >({
-      query: () => ({ url: `/api/v2/web/web-blog/get-header-articles` }),
-    }),
-    getApiV2WebWebBlogCommentGetById: build.query<
-      GetApiV2WebWebBlogCommentGetByIdApiResponse,
-      GetApiV2WebWebBlogCommentGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/web-blog-comment/get/${queryArg.id}`,
-      }),
-    }),
-    postApiV2WebWebBlogCommentCreate: build.mutation<
-      PostApiV2WebWebBlogCommentCreateApiResponse,
-      PostApiV2WebWebBlogCommentCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/web-blog-comment/create`,
-        method: "POST",
-        body: queryArg.createWebBolgCommentModel,
-      }),
-    }),
-    postApiV2WebContactUsCreate: build.mutation<
-      PostApiV2WebContactUsCreateApiResponse,
-      PostApiV2WebContactUsCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/contact-us/create`,
-        method: "POST",
-        body: queryArg.createContactUsModel,
-      }),
-    }),
-    postApiV2WebNewsLetterCreate: build.mutation<
-      PostApiV2WebNewsLetterCreateApiResponse,
-      PostApiV2WebNewsLetterCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/v2/web/news-letter/create`,
-        method: "POST",
-        body: queryArg.createNewsLetterModel,
       }),
     }),
     postApiV2DomainWhoisGet: build.mutation<
@@ -1577,10 +1479,6 @@ export type PostApiV2DomainGetPriceApiResponse =
 export type PostApiV2DomainGetPriceApiArg = {
   getPriceModel: GetPriceModel;
 };
-export type GetApiV2DomainPayByIdApiResponse = /** status 200 Success */ number;
-export type GetApiV2DomainPayByIdApiArg = {
-  id: number;
-};
 export type PostApiV2DomainRegisterApiResponse =
   /** status 200 Success */ number;
 export type PostApiV2DomainRegisterApiArg = {
@@ -1602,21 +1500,19 @@ export type PostApiV2DomainResendVerificationByIdApiResponse = unknown;
 export type PostApiV2DomainResendVerificationByIdApiArg = {
   id: number;
 };
-export type GetApiResponse = unknown;
-export type GetApiArg = void;
+export type GetUserV2IndexApiResponse = unknown;
+export type GetUserV2IndexApiArg = void;
+export type GetUserV2HandshakeApiResponse = unknown;
+export type GetUserV2HandshakeApiArg = void;
 export type GetApiV2PortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiV2PortalInvoiceListApiArg = void;
-export type GetApiV2PortalInvoiceGetByIdApiResponse =
-  /** status 200 Success */ GetInvoiceResponse;
-export type GetApiV2PortalInvoiceGetByIdApiArg = {
-  id: number;
-};
 export type GetApiV2PortalInvoiceNotPaidListApiResponse =
   /** status 200 Success */ InvoiceNotPaidListResponse[];
 export type GetApiV2PortalInvoiceNotPaidListApiArg = void;
-export type PutApiV2PortalInvoiceCancelByIdApiResponse = unknown;
-export type PutApiV2PortalInvoiceCancelByIdApiArg = {
+export type GetApiV2PortalInvoiceGetByIdApiResponse =
+  /** status 200 Success */ GetInvoiceResponse;
+export type GetApiV2PortalInvoiceGetByIdApiArg = {
   id: number;
 };
 export type PutApiV2PortalInvoicePaymentTypeApiResponse = unknown;
@@ -1733,11 +1629,6 @@ export type GetApiV2RabbitRabbitHostListApiArg = void;
 export type GetApiV2RabbitRabbitHostGetByIdApiResponse =
   /** status 200 Success */ GetRabbitHostResponse;
 export type GetApiV2RabbitRabbitHostGetByIdApiArg = {
-  id: number;
-};
-export type GetApiV2RabbitRabbitHostPayByIdApiResponse =
-  /** status 200 Success */ number;
-export type GetApiV2RabbitRabbitHostPayByIdApiArg = {
   id: number;
 };
 export type PostApiV2RabbitRabbitHostCreateApiResponse = unknown;
@@ -1912,10 +1803,6 @@ export type GetApiV2VmVmGetByIdApiResponse =
 export type GetApiV2VmVmGetByIdApiArg = {
   id: number;
 };
-export type GetApiV2VmVmPayByIdApiResponse = /** status 200 Success */ number;
-export type GetApiV2VmVmPayByIdApiArg = {
-  id: number;
-};
 export type PostApiV2VmVmCreateApiResponse = /** status 200 Success */ number;
 export type PostApiV2VmVmCreateApiArg = {
   createVmModel: CreateVmModel;
@@ -2039,11 +1926,6 @@ export type GetApiV2WebWebHostGetLoginSessionByIdApiResponse =
 export type GetApiV2WebWebHostGetLoginSessionByIdApiArg = {
   id: number;
 };
-export type GetApiV2WebWebHostPayByIdApiResponse =
-  /** status 200 Success */ number;
-export type GetApiV2WebWebHostPayByIdApiArg = {
-  id: number;
-};
 export type PostApiV2WebWebHostCreateApiResponse = unknown;
 export type PostApiV2WebWebHostCreateApiArg = {
   createWebHostModel: CreateWebHostModel;
@@ -2055,42 +1937,6 @@ export type PutApiV2WebWebHostEditApiArg = {
 export type DeleteApiV2WebWebHostDeleteByIdApiResponse = unknown;
 export type DeleteApiV2WebWebHostDeleteByIdApiArg = {
   id: number;
-};
-export type GetApiV2WebAlarmListApiResponse =
-  /** status 200 Success */ AlarmListResponse[];
-export type GetApiV2WebAlarmListApiArg = void;
-export type GetApiV2WebWebBlogListApiResponse =
-  /** status 200 Success */ WebBolgListResponse[];
-export type GetApiV2WebWebBlogListApiArg = void;
-export type GetApiV2WebWebBlogGetByLinkApiResponse =
-  /** status 200 Success */ GetWebBolgResponse;
-export type GetApiV2WebWebBlogGetByLinkApiArg = {
-  link: string;
-};
-export type GetApiV2WebWebBlogGetRandomArticlesByLinkApiResponse =
-  /** status 200 Success */ GetRandomArticleResponse[];
-export type GetApiV2WebWebBlogGetRandomArticlesByLinkApiArg = {
-  link: string;
-};
-export type GetApiV2WebWebBlogGetHeaderArticlesApiResponse =
-  /** status 200 Success */ GetHeaderArticleResponse[];
-export type GetApiV2WebWebBlogGetHeaderArticlesApiArg = void;
-export type GetApiV2WebWebBlogCommentGetByIdApiResponse =
-  /** status 200 Success */ GetWebBolgCommentResponse[];
-export type GetApiV2WebWebBlogCommentGetByIdApiArg = {
-  id: number;
-};
-export type PostApiV2WebWebBlogCommentCreateApiResponse = unknown;
-export type PostApiV2WebWebBlogCommentCreateApiArg = {
-  createWebBolgCommentModel: CreateWebBolgCommentModel;
-};
-export type PostApiV2WebContactUsCreateApiResponse = unknown;
-export type PostApiV2WebContactUsCreateApiArg = {
-  createContactUsModel: CreateContactUsModel;
-};
-export type PostApiV2WebNewsLetterCreateApiResponse = unknown;
-export type PostApiV2WebNewsLetterCreateApiArg = {
-  createNewsLetterModel: CreateNewsLetterModel;
 };
 export type PostApiV2DomainWhoisGetApiResponse = unknown;
 export type PostApiV2DomainWhoisGetApiArg = {
@@ -2442,6 +2288,14 @@ export type InvoiceListResponse = {
   invoiceStatus?: string | null;
   invoiceStatusId?: number;
 };
+export type InvoiceNotPaidListResponse = {
+  id?: number;
+  name?: string | null;
+  productName?: string | null;
+  status?: string | null;
+  invoiceStatusId?: number;
+  invoiceDate?: string;
+};
 export type InvoiceItemModel = {
   product?: string | null;
   quantity?: number;
@@ -2472,14 +2326,6 @@ export type GetInvoiceResponse = {
   vat?: number;
   invoicePrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
-};
-export type InvoiceNotPaidListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  status?: string | null;
-  invoiceStatusId?: number;
-  invoiceDate?: string;
 };
 export type InvoicePaymentTypeModel = {
   id?: number;
@@ -2926,70 +2772,6 @@ export type EditWebHostModel = {
   id?: number;
   productBundleId?: number;
 };
-export type AlarmListResponse = {
-  subject?: string | null;
-  link?: string | null;
-};
-export type WebBolgListResponse = {
-  link?: string | null;
-  imageLink?: string | null;
-  author?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  createDate?: string;
-  webBolgTags?: string[] | null;
-};
-export type GetWebBolgResponse = {
-  id?: number;
-  author?: string | null;
-  imageLink?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  text?: string | null;
-  viewCount?: number;
-  loveCount?: number;
-  createDate?: string;
-  webBolgTags?: string[] | null;
-};
-export type GetRandomArticleResponse = {
-  imageLink?: string | null;
-  link?: string | null;
-  author?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  createDate?: string;
-};
-export type GetHeaderArticleResponse = {
-  imageLink?: string | null;
-  author?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  createDate?: string;
-  webBolgTags?: string[] | null;
-};
-export type GetWebBolgCommentResponse = {
-  id?: number;
-  parentId?: number | null;
-  name?: string | null;
-  content?: string | null;
-  createDate?: string;
-};
-export type CreateWebBolgCommentModel = {
-  id?: number;
-  parentId?: number | null;
-  name: string;
-  email: string;
-  content: string;
-};
-export type CreateContactUsModel = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  content: string;
-};
-export type CreateNewsLetterModel = {
-  email: string;
-};
 export type GetDomainWhoisModel = {
   domainName: string;
   ext: string;
@@ -3108,17 +2890,16 @@ export const {
   useGetApiV2DomainGetByIdQuery,
   useGetApiV2DomainGetStatusByIdQuery,
   usePostApiV2DomainGetPriceMutation,
-  useGetApiV2DomainPayByIdQuery,
   usePostApiV2DomainRegisterMutation,
   useDeleteApiV2DomainDeleteByIdMutation,
   usePutApiV2DomainChangeContactMutation,
   usePutApiV2DomainChangeNsMutation,
   usePostApiV2DomainResendVerificationByIdMutation,
-  useGetQuery,
+  useGetUserV2IndexQuery,
+  useGetUserV2HandshakeQuery,
   useGetApiV2PortalInvoiceListQuery,
-  useGetApiV2PortalInvoiceGetByIdQuery,
   useGetApiV2PortalInvoiceNotPaidListQuery,
-  usePutApiV2PortalInvoiceCancelByIdMutation,
+  useGetApiV2PortalInvoiceGetByIdQuery,
   usePutApiV2PortalInvoicePaymentTypeMutation,
   usePutApiV2PortalInvoiceDurationMutation,
   usePutApiV2PortalInvoiceVoucherMutation,
@@ -3148,7 +2929,6 @@ export const {
   usePostApiV2PortalProfileChangePasswordMutation,
   useGetApiV2RabbitRabbitHostListQuery,
   useGetApiV2RabbitRabbitHostGetByIdQuery,
-  useGetApiV2RabbitRabbitHostPayByIdQuery,
   usePostApiV2RabbitRabbitHostCreateMutation,
   usePutApiV2RabbitRabbitHostChangeServiceMutation,
   useDeleteApiV2RabbitRabbitHostDeleteByIdMutation,
@@ -3189,7 +2969,6 @@ export const {
   useGetApiV2SmsUserSmsCreditGetBalanceQuery,
   useGetApiV2VmVmListQuery,
   useGetApiV2VmVmGetByIdQuery,
-  useGetApiV2VmVmPayByIdQuery,
   usePostApiV2VmVmCreateMutation,
   usePutApiV2VmVmEditMutation,
   useDeleteApiV2VmVmDeleteByIdMutation,
@@ -3215,19 +2994,9 @@ export const {
   useGetApiV2WebWebHostListQuery,
   useGetApiV2WebWebHostGetByIdQuery,
   useGetApiV2WebWebHostGetLoginSessionByIdQuery,
-  useGetApiV2WebWebHostPayByIdQuery,
   usePostApiV2WebWebHostCreateMutation,
   usePutApiV2WebWebHostEditMutation,
   useDeleteApiV2WebWebHostDeleteByIdMutation,
-  useGetApiV2WebAlarmListQuery,
-  useGetApiV2WebWebBlogListQuery,
-  useGetApiV2WebWebBlogGetByLinkQuery,
-  useGetApiV2WebWebBlogGetRandomArticlesByLinkQuery,
-  useGetApiV2WebWebBlogGetHeaderArticlesQuery,
-  useGetApiV2WebWebBlogCommentGetByIdQuery,
-  usePostApiV2WebWebBlogCommentCreateMutation,
-  usePostApiV2WebContactUsCreateMutation,
-  usePostApiV2WebNewsLetterCreateMutation,
   usePostApiV2DomainWhoisGetMutation,
   useGetApiV2CdnZoneListQuery,
   useGetApiV2CdnZoneGetByZoneNameQuery,

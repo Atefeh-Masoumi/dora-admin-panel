@@ -163,10 +163,7 @@ export const api = generatedApi
       },
       putApiV2PortalInvoiceDuration: {
         invalidatesTags: () => ["CartDetails"],
-      },
-      putApiV2PortalInvoiceCancelById: {
-        invalidatesTags: () => ["Cart"],
-      },
+      }
     },
   });
 
@@ -182,7 +179,6 @@ export const {
   useLazyGetApiV2PortalSupportItemDownloadByIdQuery,
   useLazyGetApiV2PortalWalletPaymentGetByIdQuery,
   useLazyGetApiV2PortalUserBillDownloadByIdQuery,
-  useLazyGetApiV2VmVmPayByIdQuery,
   useLazyGetApiV2WebWebHostGetLoginSessionByIdQuery,
   useLazyGetApiV2RabbitRabbitUserListByRabbitHostIdQuery
 } = api;

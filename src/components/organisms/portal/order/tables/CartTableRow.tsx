@@ -1,28 +1,11 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Stack } from "@mui/material";
 import { cartTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
-// import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
-import { DeleteCartDialog } from "../DeleteCartDialog";
 
 export const CartTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
-
-  const openDialogHandler = () => {
-    if (!row.id || isNaN(Number(row.id))) return;
-    setOpenDialog(true);
-  };
-  const closeDialogHandler = () => setOpenDialog(false);
-
-  // const deleteButtonClickHandler: MouseEventHandler<HTMLButtonElement> = (
-  //   e
-  // ) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   openDialogHandler();
-  // };
 
   const goToOrderDetails = () => navigate(`/dash/portal/order/${row.id}`);
 
@@ -70,12 +53,6 @@ export const CartTableRow: FC<{ row: any }> = ({ row }) => {
           </IconButton>
         </DorsaTableCell> */}
       </DorsaTableRow>
-      {openDialog && (
-        <DeleteCartDialog
-          id={Number(row.id)}
-          handleClose={closeDialogHandler}
-        />
-      )}
     </>
   );
 };
