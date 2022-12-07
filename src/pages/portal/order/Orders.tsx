@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CartTableRow } from "src/components/organisms/portal/order/tables/CartTableRow";
-import { cartTableStruct } from "src/components/organisms/portal/order/tables/struct";
+import { OrderTableRow } from "src/components/organisms/portal/order/tables/OrderTableRow";
+import { orderTableStruct } from "src/components/organisms/portal/order/tables/struct";
 import { useGetUserV2PortalInvoiceNotPaidListQuery } from "src/app/services/api.generated";
 
 const Cart: FC = () => {
@@ -30,8 +30,8 @@ const Cart: FC = () => {
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>
         <BaseTable
-          struct={cartTableStruct}
-          RowComponent={CartTableRow}
+          struct={orderTableStruct}
+          RowComponent={OrderTableRow}
           rows={data || []}
           text="سبد خرید شما خالی است"
           isLoading={isLoading}

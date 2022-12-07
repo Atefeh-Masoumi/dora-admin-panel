@@ -34,16 +34,22 @@ const AddWebHost: FC = () => {
   const [createWebHost, { isLoading }] = usePostUserV2WebWebHostCreateMutation();
 
   const submitHandler = () => {
+    if (term !== true) {
+      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.")
+      return;
+    }
+
     if (
       step !== 4 ||
       !domainName ||
       domainName.length < 3 ||
       !dataCenter ||
       !dataCenter.id ||
-      !serverConfig ||
-      !term
-    )
+      !serverConfig
+    ) {
+      toast.error("خطا در تکمیل اطلاعات")
       return;
+    }
 
     createWebHost({
       createWebHostModel: {
@@ -75,7 +81,7 @@ const AddWebHost: FC = () => {
         domainName && dataCenter && serverConfig && setStep(4);
         break;
       case 4:
-        domainName && dataCenter && serverConfig && term && submitHandler();
+        domainName && dataCenter && serverConfig && submitHandler();
         break;
       default:
         break;

@@ -1,13 +1,17 @@
-import { FC, useContext } from "react";
-import { Checkbox, Stack, Typography } from "@mui/material";
+import { ChangeEvent, FC, useContext } from "react";
+import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 import { Document } from "src/components/atoms/svg/Document";
-import { AddWebHostContext } from "src/components/organisms/web/addService/context/AddWebHostContext";
+import { AddDomainContext } from "src/components/organisms/domain/addDomain/context/AddDomainContext";
 
 type TermPropsType = {};
 
 export const Terms: FC<TermPropsType> = () => {
 
-  const { term, setTerm } = useContext(AddWebHostContext);
+  const { term, setTerm } = useContext(AddDomainContext);
+
+  const termInputChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => setTerm(e.target.checked);
 
   return (
     <Stack py={1} px={2} direction="column" alignItems="center" spacing={2}>
@@ -68,13 +72,17 @@ export const Terms: FC<TermPropsType> = () => {
         width="100%"
       >
         <Stack direction="row" alignItems="center" spacing={0.5}>
-          <Checkbox
-            sx={{ p: 0, borderRadius: 0 }}
-            onChange={() => setTerm(!term)}
+          <FormControlLabel
+            color="secondary.main"
+            label="با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم"
+            control={
+              <Checkbox
+                value={term}
+                checked={term}
+                sx={{ p: 0, borderRadius: 0 }}
+                onChange={termInputChangeHandler}
+              />}
           />
-          <Typography color="secondary.main">
-            با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم.
-          </Typography>
         </Stack>
       </Stack>
     </Stack>

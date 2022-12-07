@@ -1,5 +1,5 @@
 import { FC, useContext, ChangeEvent } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Grid, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { AddDomainContext } from "src/components/organisms/domain/addDomain/context/AddDomainContext";
@@ -47,13 +47,13 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setNs2(e.target.value);
 
-  // const autoRenewalInputChangeHandler = (
-  //   e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => setAutoRenewal(e.target.value);
+  const autoRenewalInputChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => setAutoRenewal(e.target.checked);
 
-  // const activeCdnInputChangeHandler = (
-  //   e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => setActiveCdn(e.target.value);
+  const activeCdnInputChangeHandler = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => setActiveCdn(e.target.checked);
 
   return (
     <Box sx={{ spacing: 2 }}>
@@ -201,7 +201,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="Name Server 1"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -212,12 +211,40 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="Name Server 2"
               fullWidth
               inputProps={{ dir: "ltr" }}
+            />
+          </Grid>
+        </Grid>
 
+        <Grid xs={12} lg={6} container item sx={{ m: 2 }} spacing={1}>
+          <Grid item xs={12}>
+            <FormControlLabel
+              color="secondary.main"
+              label="تمدید خودکار"
+              control={
+                <Checkbox
+                  value={autoRenewal}
+                  checked={autoRenewal}
+                  sx={{ p: 0, borderRadius: 0 }}
+                  onChange={autoRenewalInputChangeHandler}
+                />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              color="secondary.main"
+              label="ایجاد سرویس CDN و DNS"
+              control={
+                <Checkbox
+                  value={activeCdn}
+                  checked={activeCdn}
+                  sx={{ p: 0, borderRadius: 0 }}
+                  onChange={activeCdnInputChangeHandler}
+                />}
             />
           </Grid>
         </Grid>
 
       </Grid>
-    </Box>
+    </Box >
   );
 };

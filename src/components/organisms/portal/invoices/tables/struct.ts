@@ -6,7 +6,11 @@ export const invoicesTableStruct: columnType[] = [
     id: "id",
     label: "شماره فاکتور",
   },
-  { id: "invoiceDate", label: "تاریخ", type: "date" },
+  {
+    id: "invoiceDate",
+    label: "تاریخ",
+    type: "date"
+  },
   {
     id: "totalPrice",
     label: "جمع کل",

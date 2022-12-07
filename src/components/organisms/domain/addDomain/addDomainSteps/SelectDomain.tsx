@@ -68,11 +68,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
             <Autocomplete
               disablePortal
               disableClearable
-              value={
-                useDomainArray.find(
-                  (option: { name: string; value: string; }) => option.value === ext
-                )
-              }
+              value={useDomainArray.find((option: { name: string; value: string; }) => option.value === ext)}
               options={useDomainArray}
               getOptionLabel={(option: { name: string; value: string; }) => (option && option.name) || ""}
               onChange={extInputChangeHandler}

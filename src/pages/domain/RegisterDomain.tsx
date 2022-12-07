@@ -28,7 +28,9 @@ const RegisterDomain: FC = () => {
     ns1,
     ns2,
     autoRenewal,
-    activeCdn } = useContext(AddDomainContext);
+    activeCdn,
+    term
+  } = useContext(AddDomainContext);
 
   const navigate = useNavigate();
 
@@ -40,11 +42,11 @@ const RegisterDomain: FC = () => {
     setStep((step - 1) as addDomainStepsType);
   };
 
-  const [getPriceModel] = usePostUserV2DomainGetPriceMutation();
+  const [getPriceModel, { isLoading: checkLoading }] = usePostUserV2DomainGetPriceMutation();
 
   const CheckDomain = () => {
     if (domainName === "") return;
-    getPriceModel({ getPriceModel: { domainName, ext, typeId } })
+    getPriceModel({ getPriceModel: { domainName, ext, typeId, authCode } })
       .unwrap()
       .then(() => setStep(2))
       .catch((res) => {
@@ -53,9 +55,14 @@ const RegisterDomain: FC = () => {
       });
   }
 
-  const [RegisterDomainModel, { isLoading }] = usePostUserV2DomainRegisterMutation();
+  const [RegisterDomainModel, { isLoading: registerLoading }] = usePostUserV2DomainRegisterMutation();
 
   const submitHandler = () => {
+    if (term !== true) {
+      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.")
+      return;
+    }
+
     if (
       step !== 3 ||
       !domainName ||
@@ -79,12 +86,11 @@ const RegisterDomain: FC = () => {
       !ns1 ||
       ns1.length < 3 ||
       !ns2 ||
-      ns2.length < 3 ||
-      !autoRenewal ||
-      !activeCdn
-    )
+      ns2.length < 3
+    ) {
+      toast.error("خطا در تکمیل اطلاعات")
       return;
-
+    }
     RegisterDomainModel({
       registerDomainModel: {
         domainName: domainName,
@@ -100,8 +106,8 @@ const RegisterDomain: FC = () => {
         voice: voice,
         ns1: ns1,
         ns2: ns2,
-        autoRenewal: true,
-        activeCdn: true
+        autoRenewal: autoRenewal,
+        activeCdn: activeCdn
       }
     })
       .unwrap()
@@ -122,13 +128,12 @@ const RegisterDomain: FC = () => {
         break;
       case 2:
         domainName && ext && authCode &&
-          name && country && province && city && street && postalCode && voice && ns1 && ns2 && autoRenewal && activeCdn &&
+          name && country && province && city && street && postalCode && voice && ns1 && ns2 &&
           setStep(3);
         break;
       case 3:
         domainName && ext && authCode &&
-          name && country && province && city && street && postalCode && voice && ns1 && ns2 && autoRenewal && activeCdn &&
-          // term &&
+          name && country && province && city && street && postalCode && voice && ns1 && ns2 &&
           submitHandler();
         break;
       default:
@@ -200,7 +205,7 @@ const RegisterDomain: FC = () => {
             {step === 1 ? "انصراف" : "مرحله قبل"}
           </Button>
           <LoadingButton
-            loading={isLoading}
+            loading={checkLoading || registerLoading}
             fullWidth
             disableElevation
             variant="contained"

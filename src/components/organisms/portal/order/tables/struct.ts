@@ -1,6 +1,6 @@
 import { columnType } from "src/components/organisms/tables/table.types";
 
-export const cartTableStruct: columnType[] = [
+export const orderTableStruct: columnType[] = [
   {
     id: "id",
     label: "شناسه سفارش",
