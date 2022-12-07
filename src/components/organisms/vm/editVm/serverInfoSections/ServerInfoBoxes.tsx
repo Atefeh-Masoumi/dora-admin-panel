@@ -165,6 +165,11 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
+            title="IP Address"
+            value={vmData?.ip}
+            isLoading={isLoading}
+          />
+          <BoxRow
             title="MAC Address"
             value={vmData?.macAddress}
             isLoading={isLoading}

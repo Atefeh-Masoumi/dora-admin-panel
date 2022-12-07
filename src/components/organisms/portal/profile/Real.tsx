@@ -89,7 +89,9 @@ export const RealPersonality: FC<RealPersonalityPropsType> = ({
               error={Boolean(errors.birthDate && touched.birthDate)}
               {...getFieldProps("birthDate")}
               label="تاریخ تولد"
+              placeholder="13--/--/--"
               fullWidth
+              inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
               error={Boolean(errors.address && touched.address)}

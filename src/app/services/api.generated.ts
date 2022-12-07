@@ -1690,8 +1690,8 @@ export type PostUserV2SmsSendContentSendSmsApiArg = {
 export type PostUserV2SmsSendContentSend1ToNApiResponse = unknown;
 export type PostUserV2SmsSendContentSend1ToNApiArg = {
   body: {
-    Source: string;
-    SentContent: string;
+    FromNumber: string;
+    Content: string;
     SmsDataFile: Blob;
   };
 };
@@ -2540,9 +2540,9 @@ export type SmsSendContentListResponse = {
   content?: string | null;
 };
 export type SendSmsModel = {
-  source: string;
-  destination: string;
-  sentContent: string;
+  fromNumber: string;
+  toNumber: string;
+  content: string;
 };
 export type SendSmsSmsGatewayResponse = {
   status?: boolean;
@@ -2683,6 +2683,7 @@ export type GetVmResponse = {
   memory?: number;
   disk?: number;
   macAddress?: string | null;
+  ip?: string | null;
   operatingSystem?: string | null;
   powerStatus?: string | null;
   networkStatus?: string | null;

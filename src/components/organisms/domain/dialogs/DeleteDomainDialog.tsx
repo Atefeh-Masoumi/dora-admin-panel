@@ -23,7 +23,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
   const submit = () =>
     deleteItem({ id })
       .then(() => {
-        toast.success("سرویس هاست ابری با موفقیت حذف شد");
+        toast.success("دامنه با موفقیت حذف شد");
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
@@ -40,7 +40,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف سرویس هاست وب ابری مطمئن هستید؟
+            از حذف سفارش دامنه مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد
@@ -62,7 +62,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف سرویس هاست ابری
+            حذف دامنه
           </LoadingButton>
         </Stack>
       </Stack>
