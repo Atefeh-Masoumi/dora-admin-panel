@@ -58,5 +58,5 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
         <AddLoadBalanceDialog loadBalance={row} onClose={handleCloseEdit} />
       )}
     </Fragment>
-  );
+  ); 
 };

@@ -10,17 +10,11 @@ import {
 import { Form, Formik } from "formik";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import {
-  CreateDnsRecordModel,
-  usePostUserV2CdnDnsRecordCreateMutation,
-  usePutUserV2CdnDnsRecordEditMutation,
-} from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { useAppSelector } from "src/app/hooks";
-import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import { createDnsRecordType, dnsType } from "src/types/createRecordType";
 import {
   createDnsFormValidation,
@@ -29,22 +23,28 @@ import {
   dnsTypeValueLabelObject,
 } from "src/components/organisms/cdn/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
+import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
+import {
+  CreateDnsRecordModel,
+  usePostUserV2CdnDnsRecordCreateMutation,
+  usePutUserV2CdnDnsRecordEditMutation,
+} from "src/app/services/api.generated";
 
 type CreateRecordDialogPropsType = {
   id?: number;
-  handleClose: () => void;
+  onClose: () => void;
 };
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   id,
-  handleClose,
+  onClose,
 }) => {
-  const [getInfo, { isLoading }] = useLazyGetUserV2CdnDnsRecordGetByIdQuery();
+  const [getInfo, { isLoading: getDetailsLoading }] = useLazyGetUserV2CdnDnsRecordGetByIdQuery();
 
   const [type, setType] = useState<dnsType>("A");
   const [proxyStatus, setProxyStatus] = useState(false);
 
-  const [initialValues, setInitialValue] = useState<createDnsRecordType>({
+  const [initialValues, setInitialValues] = useState<createDnsRecordType>({
     ttl: "120",
     name: "",
     value: "",
@@ -60,14 +60,17 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       .unwrap()
       .then((res) => {
         if (!res || !res.type || !res.ttl || !res.name || !res.value) return;
-        setInitialValue({
-          ttl: res.ttl,
-          name: res.name,
-          value: res.value,
-          weight: res.weight || "",
-          port: res.port || "",
-          priority: res.priority || "",
-          preference: res.preference || "",
+        setInitialValues((prevState) => {
+          let result = { ...prevState };
+          result.ttl = res.ttl!;
+          result.name = res.name!;
+          result.value = res.value!;
+          result.weight = res.weight || "";
+          result.port = res.port || "";
+          result.priority = res.priority || "";
+          result.preference = res.preference || "";
+
+          return result;
         });
         setType(res.type as dnsType);
         setProxyStatus(res.useProxy || false);
@@ -76,13 +79,9 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
 
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
 
-  const zoneName = selectedDomain?.zoneName || "";
+  const [createDnsRecord, { isLoading: createDnsRecordLoading }] = usePostUserV2CdnDnsRecordCreateMutation();
 
-  const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
-    usePostUserV2CdnDnsRecordCreateMutation();
-
-  const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutUserV2CdnDnsRecordEditMutation();
+  const [editDnsRecord, { isLoading: editDnsRecordLoading }] = usePutUserV2CdnDnsRecordEditMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference },
@@ -90,7 +89,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   ) => {
     if (!name || !value) return;
     let result: CreateDnsRecordModel = {
-      zoneName,
+      zoneName: selectedDomain?.zoneName!,
       name,
       type,
       ttl,
@@ -109,7 +108,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .unwrap()
         .then(() => {
           toast.success("رکورد مورد نظر با موفقیت بروز شد");
-          handleClose();
+          onClose();
         });
     } else {
       createDnsRecord({
@@ -118,7 +117,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .unwrap()
         .then(() => {
           toast.success("رکورد جدید با موفقیت ایجاد شد");
-          handleClose();
+          onClose();
         });
     }
 
@@ -127,10 +126,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
 
   return (
     <>
-      {isLoading && <PageLoading />}
+      {getDetailsLoading && <PageLoading />}
       <Dialog
-        open={true}
-        onClose={handleClose}
+        open
+        onClose={onClose}
         components={{ Backdrop: BlurBackdrop }}
         maxWidth="xs"
         fullWidth
@@ -139,7 +138,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         }}
       >
         <DialogTitle fontWeight="bold" variant="text1">
-          ویرایش رکورد DNS
+          {id ? "ویرایش DNS" : "ایجاد DNS"}
         </DialogTitle>
         <Formik
           initialValues={initialValues}
@@ -300,7 +299,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                     variant="outlined"
                     color="secondary"
                     sx={{ px: 3, py: 0.8 }}
-                    onClick={handleClose}
+                    onClick={onClose}
                   >
                     انصراف
                   </Button>

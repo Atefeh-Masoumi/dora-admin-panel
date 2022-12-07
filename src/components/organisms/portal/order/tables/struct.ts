@@ -19,7 +19,7 @@ export const orderTableStruct: columnType[] = [
     label: "نام محصول",
   },
   {
-    id: "status",
+    id: "invoiceStatus",
     label: "وضعیت",
   },
 ];

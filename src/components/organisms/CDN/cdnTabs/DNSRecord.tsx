@@ -114,7 +114,7 @@ export const DNSRecord: FC = () => {
           />
         </Stack>
       </Stack>
-      {open && <CreateRecordDialog handleClose={handleClose} />}
+      {open && <CreateRecordDialog onClose={handleClose} />}
     </Stack>
   );
 };

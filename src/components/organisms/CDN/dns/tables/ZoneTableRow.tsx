@@ -60,7 +60,7 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
         handleClose={handleCloseDelete}
       />
       {openEdit && (
-        <CreateRecordDialog id={row.id} handleClose={handleCloseEdit} />
+        <CreateRecordDialog id={row.id} onClose={handleCloseEdit} />
       )}
     </Fragment>
   );

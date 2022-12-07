@@ -10,11 +10,21 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { LoadingButton } from "@mui/lab";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { formikOnSubmitType } from "src/types/form.type";
+import { useAppSelector } from "src/app/hooks";
+import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
+import { BORDER_RADIUS_5 } from "src/configs/theme";
+import PageLoading from "src/components/atoms/PageLoading";
+import { useLazyGetUserV2CdnLoadBalanceGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
   LoadBalanceListResponse,
@@ -22,16 +32,6 @@ import {
   usePostUserV2CdnLoadBalanceCreateMutation,
   usePutUserV2CdnLoadBalanceEditMutation,
 } from "src/app/services/api.generated";
-import { formikOnSubmitType } from "src/types/form.type";
-import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
-import { useAppSelector } from "src/app/hooks";
-import { Add } from "@mui/icons-material";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { useLazyGetUserV2CdnLoadBalanceGetByIdQuery } from "src/app/services/api";
-import PageLoading from "src/components/atoms/PageLoading";
 
 type initialValuesType = Omit<
   EditLoadBalanceModel,
@@ -56,7 +56,7 @@ const loadBalancePolicyArray = [
     value: 4,
   },
   {
-    label: "Rower of two cholces",
+    label: "Rower of two choices",
     value: 5,
   },
 ];
@@ -84,14 +84,11 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
 
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
-  const [getDetails, { isLoading: getDetailsLoading }] =
-    useLazyGetUserV2CdnLoadBalanceGetByIdQuery();
+  const [getDetails, { isLoading: getDetailsLoading }] = useLazyGetUserV2CdnLoadBalanceGetByIdQuery();
 
   useEffect(() => {
     if (!loadBalance?.id) return;
-    getDetails({
-      id: loadBalance.id,
-    })
+    getDetails({ id: loadBalance.id })
       .unwrap()
       .then((res) => {
         if (res) {
@@ -115,6 +112,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
       result.push({ address: "" });
       return result;
     });
+
   const removeDestinationInput = (index: number) => {
     setDestinations((prevState) => {
       let result = [...prevState];
@@ -123,14 +121,11 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     });
   };
 
-  const switchChangeHandler = () =>
-    setCertificateSwitch((prevState) => !prevState);
+  const switchChangeHandler = () => setCertificateSwitch((prevState) => !prevState);
 
-  const [createLoadBalance, { isLoading: createLoadBalanceLoading }] =
-    usePostUserV2CdnLoadBalanceCreateMutation();
+  const [createLoadBalance, { isLoading: createLoadBalanceLoading }] = usePostUserV2CdnLoadBalanceCreateMutation();
 
-  const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutUserV2CdnLoadBalanceEditMutation();
+  const [editLoadBalance, { isLoading: editLoadBalanceLoading }] = usePutUserV2CdnLoadBalanceEditMutation();
 
   const submitHandler: formikOnSubmitType<initialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
@@ -186,7 +181,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
           sx: { borderRadius: 2.5 },
         }}
       >
-        <DialogTitle>
+        <DialogTitle fontWeight="bold" variant="text1">
           {loadBalance ? "ویرایش کلاستر" : "ایجاد کلاستر"}
         </DialogTitle>
         <Formik
@@ -216,7 +211,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
                       label="نوع توزیع"
                       error={Boolean(
                         errors.loadBalancingPolicyId &&
-                          touched.loadBalancingPolicyId
+                        touched.loadBalancingPolicyId
                       )}
                       helperText={errors.loadBalancingPolicyId}
                       {...getFieldProps("loadBalancingPolicyId")}
@@ -249,7 +244,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
                       label="حداکثر کانکشن هر سرور"
                       error={Boolean(
                         errors.maxConnectionsPerServer &&
-                          touched.maxConnectionsPerServer
+                        touched.maxConnectionsPerServer
                       )}
                       helperText={errors.maxConnectionsPerServer}
                       {...getFieldProps("maxConnectionsPerServer")}
