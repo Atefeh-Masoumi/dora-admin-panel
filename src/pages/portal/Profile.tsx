@@ -7,8 +7,7 @@ import { useGetUserV2PortalProfileGetQuery } from "src/app/services/api.generate
 import { LegalPersonality } from "src/components/organisms/portal/profile/Legal";
 
 const Profile: FC = () => {
-  const { data: userInformation, isLoading } =
-    useGetUserV2PortalProfileGetQuery();
+  const { data: userInformation, isLoading } = useGetUserV2PortalProfileGetQuery();
 
   return (
     <Stack spacing={2}>

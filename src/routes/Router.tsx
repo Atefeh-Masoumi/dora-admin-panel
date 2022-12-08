@@ -13,6 +13,7 @@ import AddRabbitContextProvider from "src/components/organisms/rabbit/addService
 import EditRabbitContextProvider from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import AddWebHostContextProvider from "src/components/organisms/web/addService/context/AddWebHostContext";
 import AddDomainContextProvider from "src/components/organisms/domain/addDomain/context/AddDomainContext";
+import EditDomainContextProvider from "src/components/organisms/domain/editDomain/context/EditDomainContext";
 
 import {
   CallBackTemplate,
@@ -65,6 +66,7 @@ const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
 
 const DomainManagement = lazy(() => import("src/pages/domain/DomainManagement"));
 const RegisterDomain = lazy(() => import("src/pages/domain/RegisterDomain"));
+const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -392,6 +394,20 @@ const Router: FC = () => {
                 },
                 hideSidebar: true,
               }, AddDomainContextProvider
+            )}
+          />
+          <Route
+            path="/dash/domain/:id"
+            element={mainTemplate(
+              EditDomain,
+              {
+                link: {
+                  text: "بازگشت به مدیریت ثبت/تمدید دامنه",
+                  url: "/dash/domain",
+                },
+                hideSidebar: true,
+              },
+              EditDomainContextProvider
             )}
           />
           <Route

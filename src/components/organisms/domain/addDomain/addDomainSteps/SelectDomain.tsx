@@ -10,6 +10,15 @@ const useDomainArray = [
   { name: "net", value: "net" },
   { name: "org", value: "org" },
   { name: "zone", value: "zone" },
+  { name: "app", value: "app" },
+  { name: "cloud", value: "cloud" },
+  { name: "click", value: "click" },
+  { name: "shop", value: "shop" },
+  { name: "site", value: "site" },
+  { name: "support", value: "support" },
+  { name: "tech", value: "tech" },
+  { name: "tel", value: "tel" },
+  { name: "name", value: "name" },
 ];
 
 type SelectDomainPropsType = {};
@@ -46,14 +55,14 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   };
 
   return (
-    <Box sx={{ p: { xs: 0, md: 2 }, mx: "auto", maxWidth: "500px", textAlign: "center" }}>
+    <Box sx={{ p: { xs: 0, md: 2 }, mx: "auto", maxWidth: "600px", textAlign: "center" }}>
       <Grid
         container
         direction="row"
         justifyContent="center"
         sx={{ borderRadius: 1, bgcolor: "white" }}
       >
-        <Grid xs={12} lg={4} item sx={{ p: { xs: 2, lg: 0 }, mr: { xs: -3, lg: 0 } }}>
+        <Grid xs={12} lg={4} item spacing={1} sx={{ p: { xs: 2, lg: 0 }, mr: { xs: -3, lg: 0 } }}>
           <RadioGroup
             name={"typeId"}
             value={typeId.toString()}

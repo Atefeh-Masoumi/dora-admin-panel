@@ -66,7 +66,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
         <Grid xs={12} lg={6} item sx={{ m: 2 }} spacing={1}>
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            spacing={1}
+            spacing={2}
             sx={{ px: 2 }}
           >
             <ExclamationMarkCircleSvg
@@ -89,7 +89,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           </Stack>
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            spacing={1}
+            spacing={2}
             sx={{ px: 2 }}
           >
             <ExclamationMarkCircleSvg
@@ -108,6 +108,29 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               sx={{ color: ({ palette }) => palette.grey[700] }}
             >
               فرم زیر را به لاتین (انگلیسی) تکمیل نمایید.
+            </Typography>
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            sx={{ px: 2 }}
+          >
+            <ExclamationMarkCircleSvg
+              sx={{
+                transform: "rotate(180deg)",
+                "&>path:first-of-type": {
+                  opacity: 1,
+                  stroke: ({ palette }) => palette.grey[700],
+                  strokeWidth: 1,
+                  fill: "transparent",
+                },
+              }}
+            />
+            <Typography
+              align="center"
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
+              بعد از پرداخت ایمیل به منظور تائید ارسال میشود.
             </Typography>
           </Stack>
         </Grid>
@@ -132,7 +155,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="نام کشور"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
+              placeholder="Iran"
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -143,7 +166,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="نام استان"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
+              placeholder="Tehran"
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -154,7 +177,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="نام شهر"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
+              placeholder="Tehran"
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -165,7 +188,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="آدرس"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -176,7 +198,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="کد پستی"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
             />
           </Grid>
           <Grid item xs={12} lg={6}>
@@ -187,7 +208,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               label="تلفن"
               fullWidth
               inputProps={{ dir: "ltr" }}
-
+              placeholder="+9821________"
             />
           </Grid>
         </Grid>
