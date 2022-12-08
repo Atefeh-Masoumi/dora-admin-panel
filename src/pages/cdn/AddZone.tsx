@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import { RecordsList } from "./RecordsList";
-import { Terms } from "./Terms";
 import { toast } from "react-toastify";
-import { usePostUserV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
+import { LoadingButton } from "@mui/lab";
 import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { LoadingButton } from "@mui/lab";
+import { RecordsList } from "src/components/organisms/cdn/addZone/RecordsList";
+import { Terms } from "src/components/organisms/cdn/addZone/Terms";
+import { usePostUserV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
 
 const AddDomain: FC = () => {
   const [addDomainLevel, setAddDomainLevel] = useState(1);

@@ -1,4 +1,4 @@
-import { columnType } from "../../../tables/table.types";
+import { columnType } from "src/components/organisms/tables/table.types";
 
 export const zoneTableStruct: columnType[] = [
   { id: "name", label: "Name" },

@@ -3,9 +3,9 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { useAppSelector } from "src/app/hooks";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { loadBalanceTableStruct } from "src/components/organisms/cdn/loadbalance/tables/struct";
-import { LoadBalanceTableRow } from "src/components/organisms/cdn/loadbalance/tables/LoadBalanceTableRow";
-import { AddLoadBalanceDialog } from "src/components/organisms/cdn/loadbalance/dialogs/AddLoadBalanceDialog";
+import { loadBalanceTableStruct } from "src/components/organisms/cdn/editZone/loadbalance/tables/struct";
+import { LoadBalanceTableRow } from "src/components/organisms/cdn/editZone/loadbalance/tables/LoadBalanceTableRow";
+import { AddLoadBalanceDialog } from "src/components/organisms/cdn/editZone/loadbalance/dialogs/AddLoadBalanceDialog";
 import { useGetUserV2CdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
 
 type ApiGatewayPropsType = {};

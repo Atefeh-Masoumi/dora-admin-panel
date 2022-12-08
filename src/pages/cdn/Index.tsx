@@ -2,7 +2,7 @@ import { FC, useState, useEffect, Fragment } from "react";
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import { DomainCard } from "src/components/organisms/cdn/DomainCard";
+import { DomainCard } from "src/components/organisms/cdn/editZone/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { useGetUserV2CdnZoneListQuery } from "src/app/services/api.generated";
 

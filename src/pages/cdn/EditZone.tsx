@@ -4,9 +4,9 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { useAppSelector } from "src/app/hooks";
-import { SSLSetting } from "src/components/organisms/cdn/cdnTabs/Ssl";
-import { DNSRecord } from "src/components/organisms/cdn/cdnTabs/DNSRecord";
-import LoadBalance from "src/components/organisms/cdn/cdnTabs/LoadBalance";
+import { SSLSetting } from "src/components/organisms/cdn/editZone/ssl/Ssl";
+import { DNSRecord } from "src/components/organisms/cdn/editZone/dns/DNSRecord";
+import LoadBalance from "src/components/organisms/cdn/editZone/loadbalance/LoadBalance";
 
 const Domains: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);

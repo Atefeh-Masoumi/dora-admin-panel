@@ -21,7 +21,7 @@ import {
   dnsTTLItems,
   dnsTypeItemsArray,
   dnsTypeValueLabelObject,
-} from "src/components/organisms/cdn/dns/constants/createDnsRecord";
+} from "src/components/organisms/cdn/editZone/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {

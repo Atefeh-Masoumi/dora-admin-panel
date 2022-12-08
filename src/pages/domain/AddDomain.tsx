@@ -10,7 +10,7 @@ import { DomainInfo } from "src/components/organisms/domain/addDomain/addDomainS
 import { Terms } from "src/components/organisms/domain/addDomain/addDomainSteps/Terms";
 import { usePostUserV2DomainGetPriceMutation, usePostUserV2DomainRegisterMutation } from "src/app/services/api.generated";
 
-const RegisterDomain: FC = () => {
+const AddDomain: FC = () => {
   const {
     step,
     setStep,
@@ -225,4 +225,4 @@ const RegisterDomain: FC = () => {
   );
 };
 
-export default RegisterDomain;
+export default AddDomain;

@@ -6,7 +6,7 @@ import {
 } from "src/components/templates/MainTemplate";
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
-import { DomainSelect } from "src/components/organisms/cdn/DomainSelect";
+import { DomainSelect } from "src/components/organisms/cdn/editZone/DomainSelect";
 import AddServerContextProvider from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import EditServerContextProvider from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
@@ -40,7 +40,6 @@ const Order = lazy(() => import("src/pages/portal/order/Order"));
 const Referrals = lazy(() => import("src/pages/portal/referral/Referrals"));
 const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
 
-
 const Wallet = lazy(() => import("src/pages/portal/billing/Wallet"));
 const Payments = lazy(() => import("src/pages/portal/billing/payment/Payments"));
 const Payment = lazy(() => import("src/pages/portal/billing/payment/PaymentCallBack"));
@@ -49,23 +48,23 @@ const UserBill = lazy(() => import("src/pages/portal/billing/userBill/UserBill")
 const Invoices = lazy(() => import("src/pages/portal/billing/invocie/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/billing/invocie/Invoice"));
 
-const Domains = lazy(() => import("src/pages/cdn/Domains"));
-const Domain = lazy(() => import("src/pages/cdn/Domain"));
-const AddDomain = lazy(() => import("src/pages/cdn/AddDomain"));
+const ZoneIndex = lazy(() => import("src/pages/cdn/Index"));
+const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
+const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
-const VmManagement = lazy(() => import("src/pages/vm/VmManagement"));
+const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
-const RabbitManagement = lazy(() => import("src/pages/rabbit/RabbitManagement"));
+const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
 
-const WebManagement = lazy(() => import("src/pages/web/WebManagement"));
+const WebIndex = lazy(() => import("src/pages/web/Index"));
 const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
 
-const DomainManagement = lazy(() => import("src/pages/domain/DomainManagement"));
-const RegisterDomain = lazy(() => import("src/pages/domain/RegisterDomain"));
+const DomainIndex = lazy(() => import("src/pages/domain/Index"));
+const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
 const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
 
 const mainTemplate = (
@@ -253,41 +252,41 @@ const Router: FC = () => {
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/dash/cdn"
-            element={mainTemplate(Domains, {
+            element={mainTemplate(ZoneIndex, {
               pageTitle: "مدیریت دامنه ها",
             })}
           />
           <Route
             path="/dash/cdn/dnsRecordSettings"
-            element={mainTemplate(Domain, {
+            element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/sslTslSettings"
-            element={mainTemplate(Domain, {
+            element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات SSL/TSL",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/loadBalanceSettings"
-            element={mainTemplate(Domain, {
+            element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/apiGatewaySettings"
-            element={mainTemplate(Domain, {
+            element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/dash/cdn/addDomain"
-            element={mainTemplate(AddDomain, {
+            element={mainTemplate(AddZone, {
               link: { text: "بازگشت به مدیریت دامنه ها", url: "/dash/cdn" },
               hideSidebar: true,
             })}
@@ -295,7 +294,7 @@ const Router: FC = () => {
           {/* ======================================= VM ======================================= */}
           <Route
             path="/dash/vm"
-            element={mainTemplate(VmManagement, {
+            element={mainTemplate(VmIndex, {
               pageTitle: "مدیریت سرور ابری",
             })}
           />
@@ -328,7 +327,7 @@ const Router: FC = () => {
           {/* ======================================= RabbitMQ ======================================= */}
           <Route
             path="/dash/rabbit"
-            element={mainTemplate(RabbitManagement, {
+            element={mainTemplate(RabbitIndex, {
               pageTitle: "مدیریت سرویس RabbitMQ",
             })}
           />
@@ -359,7 +358,7 @@ const Router: FC = () => {
           {/* ======================================= WEB ======================================= */}
           <Route
             path="/dash/web"
-            element={mainTemplate(WebManagement, {
+            element={mainTemplate(WebIndex, {
               pageTitle: "مدیریت هاستینگ ابری",
             })}
           />
@@ -379,14 +378,14 @@ const Router: FC = () => {
           {/* ======================================= Domain ======================================= */}
           <Route
             path="/dash/domain"
-            element={mainTemplate(DomainManagement, {
+            element={mainTemplate(DomainIndex, {
               pageTitle: "مدیریت ثبت/تمدید دامنه",
             })}
           />
           <Route
             path="/dash/domain/registerDomain"
             element={mainTemplate(
-              RegisterDomain,
+              AddDomain,
               {
                 link: {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",

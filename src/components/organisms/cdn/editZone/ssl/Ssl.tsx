@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { RadioHttpSetting } from "src/components/organisms/cdn/ssl/RadioHttpSetting";
-import { SwitchHttpSetting } from "src/components/organisms/cdn/ssl/SwitchHttpSetting";
-import { EdgeCertification } from "src/components/organisms/cdn/ssl/edge/EdgeCertification";
-import { ClientCertification } from "src/components/organisms/cdn/ssl/client/ClientCertification";
+import { RadioHttpSetting } from "src/components/organisms/cdn/editZone/ssl/RadioHttpSetting";
+import { SwitchHttpSetting } from "src/components/organisms/cdn/editZone/ssl/SwitchHttpSetting";
+import { EdgeCertification } from "src/components/organisms/cdn/editZone/ssl/edge/EdgeCertification";
+import { ClientCertification } from "src/components/organisms/cdn/editZone/ssl/client/ClientCertification";
 import { useGetUserV2CdnZoneGetByZoneNameQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {

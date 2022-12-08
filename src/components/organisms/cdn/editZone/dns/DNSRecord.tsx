@@ -4,9 +4,9 @@ import { useAppSelector } from "src/app/hooks";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { zoneTableStruct } from "src/components/organisms/cdn/dns/tables/struct";
-import { ZoneTableRow } from "../dns/tables/ZoneTableRow";
-import { CreateRecordDialog } from "../dns/dialogs/CreateRecordDialog";
+import { zoneTableStruct } from "src/components/organisms/cdn/editZone/dns/tables/struct";
+import { ZoneTableRow } from "./tables/ZoneTableRow";
+import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 import { useGetUserV2CdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
 
 export const DNSRecord: FC = () => {
