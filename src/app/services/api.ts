@@ -15,7 +15,7 @@ export const api = generatedApi
         PostUserV2PortalProfileGetNotificationStatusApiArg
       >({
         query: () => ({
-          url: `/api/v2/portal/profile/get-notification-status`,
+          url: `/user/v2/portal/profile/get-notification-status`,
           method: "POST",
         }),
       }),
@@ -27,7 +27,7 @@ export const api = generatedApi
         }
       >({
         query: ({ body, abortController, onUploadProgress }) => ({
-          url: `/api/v2/portal/support/create`,
+          url: `/user/v2/portal/support/create`,
           method: "POST",
           body,
           abortController,

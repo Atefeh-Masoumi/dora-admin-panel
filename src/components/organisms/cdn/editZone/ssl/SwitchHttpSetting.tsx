@@ -56,6 +56,10 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
   return (
     <>
       {(loadingRedirect || loadingHSTS) && <PageLoading />}
+      <Typography fontSize={24} color="secondary" fontWeight="bold">
+        تنظیمات امنیتی
+      </Typography>
+
       <Stack bgcolor="white" py={2} px={3} borderRadius={3}>
         <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
           {items.map(({ title, text, data, action }, index) => (
@@ -69,7 +73,7 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
                   <Typography variant="text1" fontWeight="bold">
                     {title}
                   </Typography>
-                  <Typography variant="text4" color="secondary">
+                  <Typography variant="text4" color="secondary" align="right">
                     {text}
                   </Typography>
                 </Stack>
