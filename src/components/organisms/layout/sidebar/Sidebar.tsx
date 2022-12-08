@@ -109,7 +109,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       link: "/dash/portal/billing",
       subList: [
         { title: "گزارش کیف پول", link: "/dash/portal/billing/wallet" },
-        { title: "گزارش مصرف", link: "/dash/portal/billing/user-bills" },
+        { title: "گزارش محاسبات", link: "/dash/portal/billing/user-bills" },
         { title: "گزارش پرداخت ها", link: "/dash/portal/billing/payments" },
         { title: "فاکتور های فروش", link: "/dash/portal/billing/invoices" },
       ],

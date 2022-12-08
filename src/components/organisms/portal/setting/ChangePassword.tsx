@@ -14,7 +14,7 @@ import { Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { formikOnSubmitType } from "src/types/form.type";
-import { passwordValidator, passwordValidatorRegex } from "src/utils/formValidator";
+import { passwordValidatorRegex } from "src/utils/formValidator";
 import { usePostUserV2PortalProfileChangePasswordMutation } from "src/app/services/api.generated";
 
 const passValidationHandler = (value: string) =>
@@ -22,8 +22,7 @@ const passValidationHandler = (value: string) =>
 
 const formInitialValues = {
   oldPassword: "",
-  newPassword: "",
-  confirmPassword: "",
+  newPassword: ""
 };
 
 const formValidation = yup.object().shape({
@@ -32,25 +31,23 @@ const formValidation = yup.object().shape({
     .test("Password validation", "Password is not valid", (value) =>
       passValidationHandler(value as string)
     ),
-  // newPassword: passwordValidator.required("فیلد الزامیست"),
-  confirmPassword: passwordValidator.required("فیلد الزامیست"),
+  // newPassword: passwordValidator.required("فیلد الزامیست")
 });
 
 export const ChangePassword: FC = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [changePassword, { isLoading }] = usePostUserV2PortalProfileChangePasswordMutation();
 
   const navigate = useNavigate();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { oldPassword, newPassword, confirmPassword },
+    { oldPassword, newPassword },
     { setSubmitting }
   ) => {
     changePassword({
-      changePasswordModel: { oldPassword, newPassword, confirmPassword },
+      changePasswordModel: { oldPassword, newPassword },
     })
       .unwrap()
       .then(() => {
@@ -131,34 +128,6 @@ export const ChangePassword: FC = () => {
                     ),
                   }}
                   label="رمز عبور جدید"
-                  fullWidth
-                  inputProps={{ dir: "ltr" }}
-                />
-                <DorsaTextField
-                  error={Boolean(
-                    errors.confirmPassword && touched.confirmPassword
-                  )}
-                  {...getFieldProps("confirmPassword")}
-                  type={showConfirmPassword ? "text" : "password"}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <IconButton
-                          onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                          }
-                          edge="start"
-                        >
-                          {showConfirmPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label="تکرار رمز عبور"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
                 />

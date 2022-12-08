@@ -236,14 +236,14 @@ const Router: FC = () => {
           <Route
             path="/dash/portal/billing/user-bills"
             element={mainTemplate(UserBills, {
-              pageTitle: "گزارش مصرف"
+              pageTitle: "گزارش محاسبات"
             })}
           />
           <Route
             path="/dash/portal/billing/user-bill/:id"
             element={mainTemplate(UserBill, {
               link: {
-                text: "بازگشت به گزارش مصرف",
+                text: "بازگشت به گزارش محاسبات",
                 url: "/dash/portal/billing/user-bills",
               },
               hideSidebar: true,

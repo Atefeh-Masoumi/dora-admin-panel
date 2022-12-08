@@ -2464,7 +2464,6 @@ export type EditPhoneNotifyModel = {
 export type ChangePasswordModel = {
   oldPassword: string;
   newPassword: string;
-  confirmPassword: string;
 };
 export type RabbitHostListResponse = {
   id?: number;

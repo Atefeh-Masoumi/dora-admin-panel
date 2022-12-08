@@ -38,7 +38,7 @@ export const ShortUserBill: FC = () => {
         sx={{ pb: 1.3 }}
       >
         <Typography variant="text1" fontWeight={500} color="secondary">
-          گزارش مصرف
+          گزارش محاسبات
         </Typography>
         <Button color="secondary" href="/dash/portal/billing/user-bills">
           <Typography variant="text9">مشاهده همه</Typography>

@@ -46,7 +46,7 @@ const UserBills: FC = () => {
           width="100%"
         >
           <Typography variant="text1" color="secondary" whiteSpace="nowrap">
-            لیست محاسبات مصرف
+            لیست محاسبات
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
