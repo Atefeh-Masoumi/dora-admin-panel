@@ -1,6 +1,7 @@
 import { FC, useEffect, useContext, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
 import { rabbitUserTableStruct } from "src/components/organisms/rabbit/editService/ServiceUsers/tables/struct";
@@ -35,45 +36,54 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
 
   return (
     <>
-      <Stack
-        bgcolor="white"
-        py={3}
-        px={3}
-        width="100%"
-        borderRadius={3}
-        direction="column"
+      <Grid2
+        container
+        spacing={3}
+        alignItems="center"
+        justifyContent="center"
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography fontSize={18} color="secondary">
-            لیست کاربران
-          </Typography>
-          <Button
-            onClick={openDialog}
-            variant="outlined"
-            size="large"
-            sx={{ whiteSpace: "nowrap", px: 1.2 }}
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
+        <Grid2 xs={12} md={8}>
+          <Stack
+            bgcolor="white"
+            py={3}
+            px={3}
+            width="100%"
+            borderRadius={3}
+            direction="column"
           >
-            افزودن کاربر جدید
-          </Button>
-        </Stack>
-        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-        <Box width="100%" sx={{ pt: 1.5 }}>
-          <BaseTable
-            struct={rabbitUserTableStruct}
-            RowComponent={RabbitUserTableRow}
-            rows={data || []}
-            text="در حال حاضر کاربری وجود ندارد"
-            isLoading={isLoading}
-          />
-        </Box>
-      </Stack>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography fontSize={18} color="secondary">
+                لیست کاربران
+              </Typography>
+              <Button
+                onClick={openDialog}
+                variant="outlined"
+                size="large"
+                sx={{ whiteSpace: "nowrap", px: 1.2 }}
+                startIcon={
+                  <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                }
+              >
+                افزودن کاربر جدید
+              </Button>
+            </Stack>
+            <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+            <Box width="100%" sx={{ pt: 1.5 }}>
+              <BaseTable
+                struct={rabbitUserTableStruct}
+                RowComponent={RabbitUserTableRow}
+                rows={data || []}
+                text="در حال حاضر کاربری وجود ندارد"
+                isLoading={isLoading}
+              />
+            </Box>
+          </Stack>
+        </Grid2>
+      </Grid2>
       {showDialog && <AddRabbitUserDialog onClose={closeDialog} />}
     </>
   );

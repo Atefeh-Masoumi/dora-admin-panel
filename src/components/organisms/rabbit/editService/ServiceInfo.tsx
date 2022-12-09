@@ -73,7 +73,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Grid2 xs={12} md={6}>
+      <Grid2 xs={12} md={8}>
         <Paper
           component={Stack}
           rowGap={2}
