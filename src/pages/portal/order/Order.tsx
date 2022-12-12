@@ -18,6 +18,7 @@ import {
   MenuItem,
   SelectChangeEvent,
   Divider,
+  Button,
 } from "@mui/material";
 import { Navigate, useParams, useNavigate } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -34,6 +35,8 @@ import {
   useGetUserV2PortalInvoiceGetByIdQuery,
   GetInvoiceResponse
 } from "src/app/services/api.generated";
+import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
+import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 
 const useDurationArray = [
   { name: "یک ماه", value: "1" },
@@ -46,7 +49,7 @@ type OrderDetailsPropsType = {};
 
 const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const [invoicePaymentTypeId, setInvoicePaymentTypeId] = useState(1);
-  const [paymentGateway, setPaymentGateway] = useState(1);
+  const [paymentProviderId, setPaymentGateway] = useState(2);
   const [discountCode, setDiscountCode] = useState("");
 
   const navigate = useNavigate();
@@ -185,7 +188,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       invoicePayModel: {
         id: orderInfo.id,
         invoicePaymentTypeId: Number(invoicePaymentTypeId),
-        paymentProviderId: Number(paymentGateway)
+        paymentProviderId: Number(paymentProviderId)
       },
     }).unwrap()
       .then((res) => {
@@ -348,25 +351,6 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               </Stack>
             </Grid2>
           )}
-          {invoicePaymentTypeId === 1 && (
-            <Grid2
-              xs={12}
-              md={5.8}
-              component={Paper}
-              elevation={0}
-              sx={{ border: "0.5px solid #aaa" }}
-              p={{ xs: 2, sm: 3, md: 4 }}
-            >
-              <Typography sx={{ mb: 3 }}>درگاه پرداخت</Typography>
-              <RadioGroup
-                value={paymentGateway}
-                onChange={paymentGatewayChangeHandler}
-              >
-                <FormControlLabel value="1" control={<Radio />} label="پارسیان" />
-                <FormControlLabel value="2" control={<Radio />} label="سامان" />
-              </RadioGroup>
-            </Grid2>
-          )}
           <Grid2
             xs={12}
             md={5.8}
@@ -394,6 +378,78 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               );
             })}
           </Grid2>
+          {invoicePaymentTypeId === 1 && (
+            <Grid2
+              xs={12}
+              md={5.8}
+              component={Paper}
+              elevation={0}
+              p={{ xs: 2, sm: 3, md: 4 }}
+            >
+              <Stack
+                spacing={2}
+                border={1}
+                borderRadius={2}
+                borderColor="secondary.light"
+                p={2}
+              >
+                <Typography variant="text14" color="secondary">
+                  درگاه پرداخت
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  whiteSpace="nowrap"
+                >
+                  <Button
+                    onClick={() => setPaymentGateway(1)}
+                    variant="outlined"
+                    color={paymentProviderId === 1 ? "primary" : "secondary"}
+                    sx={{
+                      border:
+                        paymentProviderId === 1
+                          ? "2px solid #3C8AFF !important"
+                          : 1,
+                      py: 1,
+                    }}
+                    fullWidth
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems={{ xs: "start", md: "end" }}
+                    >
+                      <ParsianLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
+                      <Typography variant="text14">بانک پارسیان</Typography>
+                    </Stack>
+                  </Button>
+                  <Button
+                    onClick={() => setPaymentGateway(2)}
+                    variant="outlined"
+                    color={paymentProviderId === 2 ? "primary" : "secondary"}
+                    sx={{
+                      border:
+                        paymentProviderId === 2
+                          ? "2px solid #3C8AFF !important"
+                          : 1,
+                      py: 1,
+                    }}
+                    fullWidth
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems={{ xs: "start", md: "end" }}
+                    >
+                      <SamanLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
+                      <Typography variant="text14">بانک سامان</Typography>
+                    </Stack>
+                  </Button>
+                </Stack>
+              </Stack>
+            </Grid2>
+          )}
           <Grid2 xs={12} container justifyContent="center">
             <LoadingButton
               disableElevation
