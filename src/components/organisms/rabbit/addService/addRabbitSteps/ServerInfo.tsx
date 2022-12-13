@@ -48,18 +48,21 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام سرویس (VHost)"
+        dir="ltr"
       />
       <DorsaTextField
         value={serverUsername}
         onChange={usernameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام کاربری (User Name)"
+        dir="ltr"
       />
       <DorsaTextField
         value={serverPassword}
         onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="رمز عبور (Password)"
+        dir="ltr"
       />
       <Stack justifyContent="center" spacing={1}>
         <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
