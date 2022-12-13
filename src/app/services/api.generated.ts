@@ -335,11 +335,11 @@ export const api = createApi({
     >({
       query: () => ({ url: `/user/v2/portal/invoice/list` }),
     }),
-    getUserV2PortalInvoiceNotPaidList: build.query<
-      GetUserV2PortalInvoiceNotPaidListApiResponse,
-      GetUserV2PortalInvoiceNotPaidListApiArg
+    getUserV2PortalInvoiceOrder: build.query<
+      GetUserV2PortalInvoiceOrderApiResponse,
+      GetUserV2PortalInvoiceOrderApiArg
     >({
-      query: () => ({ url: `/user/v2/portal/invoice/not-paid-list` }),
+      query: () => ({ url: `/user/v2/portal/invoice/order` }),
     }),
     getUserV2PortalInvoiceGetById: build.query<
       GetUserV2PortalInvoiceGetByIdApiResponse,
@@ -1202,6 +1202,14 @@ export const api = createApi({
         url: `/user/v2/cdn/zone/get/${queryArg.zoneName}`,
       }),
     }),
+    getUserV2CdnZoneOverviewByZoneName: build.query<
+      GetUserV2CdnZoneOverviewByZoneNameApiResponse,
+      GetUserV2CdnZoneOverviewByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/zone/overview/${queryArg.zoneName}`,
+      }),
+    }),
     getUserV2CdnZoneGetNsStatusByZoneName: build.query<
       GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse,
       GetUserV2CdnZoneGetNsStatusByZoneNameApiArg
@@ -1512,9 +1520,9 @@ export type GetUserV2HandshakeApiArg = void;
 export type GetUserV2PortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetUserV2PortalInvoiceListApiArg = void;
-export type GetUserV2PortalInvoiceNotPaidListApiResponse =
-  /** status 200 Success */ InvoiceNotPaidListResponse[];
-export type GetUserV2PortalInvoiceNotPaidListApiArg = void;
+export type GetUserV2PortalInvoiceOrderApiResponse =
+  /** status 200 Success */ InvoiceOrderListResponse[];
+export type GetUserV2PortalInvoiceOrderApiArg = void;
 export type GetUserV2PortalInvoiceGetByIdApiResponse =
   /** status 200 Success */ GetInvoiceResponse;
 export type GetUserV2PortalInvoiceGetByIdApiArg = {
@@ -1955,6 +1963,11 @@ export type GetUserV2CdnZoneGetByZoneNameApiResponse =
 export type GetUserV2CdnZoneGetByZoneNameApiArg = {
   zoneName: string;
 };
+export type GetUserV2CdnZoneOverviewByZoneNameApiResponse =
+  /** status 200 Success */ OverviewResponse;
+export type GetUserV2CdnZoneOverviewByZoneNameApiArg = {
+  zoneName: string;
+};
 export type GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse =
   /** status 200 Success */ GetNsStatusResponse;
 export type GetUserV2CdnZoneGetNsStatusByZoneNameApiArg = {
@@ -2293,11 +2306,12 @@ export type InvoiceListResponse = {
   invoiceStatus?: string | null;
   invoiceStatusId?: number;
 };
-export type InvoiceNotPaidListResponse = {
+export type InvoiceOrderListResponse = {
   id?: number;
   name?: string | null;
   productName?: string | null;
-  status?: string | null;
+  invoiceType?: string | null;
+  invoiceStatus?: string | null;
   invoiceStatusId?: number;
   invoiceDate?: string;
 };
@@ -2797,6 +2811,13 @@ export type GetZoneResponse = {
   isHsts?: boolean;
   isRedirect?: boolean;
 };
+export type OverviewResponse = {
+  id?: number;
+  domainName?: string | null;
+  statusId?: number;
+  status?: string | null;
+  createDate?: string;
+};
 export type GetNsStatusResponse = {
   status?: boolean;
   ns?: string[] | null;
@@ -2903,7 +2924,7 @@ export const {
   useGetUserV2IndexQuery,
   useGetUserV2HandshakeQuery,
   useGetUserV2PortalInvoiceListQuery,
-  useGetUserV2PortalInvoiceNotPaidListQuery,
+  useGetUserV2PortalInvoiceOrderQuery,
   useGetUserV2PortalInvoiceGetByIdQuery,
   usePutUserV2PortalInvoicePaymentTypeMutation,
   usePutUserV2PortalInvoiceDurationMutation,
@@ -3005,6 +3026,7 @@ export const {
   usePostUserV2DomainWhoisGetMutation,
   useGetUserV2CdnZoneListQuery,
   useGetUserV2CdnZoneGetByZoneNameQuery,
+  useGetUserV2CdnZoneOverviewByZoneNameQuery,
   useGetUserV2CdnZoneGetNsStatusByZoneNameQuery,
   usePostUserV2CdnZoneCheckZoneMutation,
   usePostUserV2CdnZoneCreateMutation,

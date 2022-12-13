@@ -30,12 +30,14 @@ export const ChooseInfo: FC<ChooseInfoPropsType> = ({
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام سرور ابری (Server Name)"
+        dir="ltr"
       />
       <DorsaTextField
         value={password}
         onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="رمز عبور سرور ابری (Password)"
+        dir="ltr"
       />
     </Stack>
   );

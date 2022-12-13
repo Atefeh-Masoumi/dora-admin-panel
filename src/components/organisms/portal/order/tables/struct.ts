@@ -19,6 +19,10 @@ export const orderTableStruct: columnType[] = [
     label: "نام محصول",
   },
   {
+    id: "invoiceType",
+    label: "نوع صورتحساب",
+  },
+  {
     id: "invoiceStatus",
     label: "وضعیت",
   },

@@ -82,7 +82,7 @@ export const api = generatedApi
       getUserV2PortalInvoiceGetById: {
         providesTags: () => ["CartDetails"],
       },
-      getUserV2PortalInvoiceNotPaidList: {
+      getUserV2PortalInvoiceOrder: {
         providesTags: () => ["Cart"],
       },
       putUserV2PortalProfileEditAccountType: {
