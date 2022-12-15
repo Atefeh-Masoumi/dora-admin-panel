@@ -139,7 +139,7 @@ const Bill: FC = () => {
             struct={billTableStruct}
             RowComponent={BillTableRow}
             rows={bill?.userBillItems || []}
-            text="فاکتور موجود نیست"
+            text="گزارش موجود نیست"
             isLoading={isLoading}
           />
         </Stack>
