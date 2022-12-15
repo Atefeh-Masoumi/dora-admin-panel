@@ -409,13 +409,14 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               borderColor="secondary.light"
               p={2}
             >
-              <Typography sx={{ mb: 2 }}>مدت استفاده</Typography>
+              <Typography variant="text14" color="secondary">
+                مدت استفاده
+              </Typography>
               <Select
                 fullWidth
                 labelId="category-select-label"
                 id="category-select"
                 value={orderInfo.orderDurationId?.toString() || "1"}
-                label="محصولات"
                 onChange={useDurationChangeHandler}
               >
                 {useDurationArray.map(({ value, name }, index) => (
@@ -442,7 +443,9 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               borderColor="secondary.light"
               p={2}
             >
-              <Typography sx={{ mb: 2 }}>کد تخفیف</Typography>
+              <Typography variant="text14" color="secondary">
+                کد تخفیف
+              </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
                 <DorsaTextField
                   fullWidth
