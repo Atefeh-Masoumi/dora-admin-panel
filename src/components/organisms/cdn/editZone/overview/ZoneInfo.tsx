@@ -1,0 +1,171 @@
+import { FC, useMemo, useState } from "react";
+import {
+  Chip,
+  Divider,
+  Button,
+  Skeleton,
+  Stack,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useAppSelector } from "src/app/hooks";
+import { useGetUserV2CdnZoneOverviewByZoneNameQuery } from "src/app/services/api.generated";
+import { DeleteZoneDialog } from "./dialogs/DeleteZoneDialog";
+import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+
+type boxRowType = {
+  title: string;
+  value?: string | number | undefined | null;
+  component?: any;
+  isLoading: boolean;
+};
+
+const BoxRow: FC<boxRowType> = ({ title, value, component, isLoading }) => (
+  <Stack direction="row" alignItems="center" justifyContent="space-between">
+    {isLoading ? (
+      <Skeleton width={150} height={24} />
+    ) : component ? (
+      component
+    ) : (
+      <Typography
+        sx={{ color: ({ palette }) => palette.grey[700], direction: "rtl" }}
+      >
+        {value || ""}
+      </Typography>
+    )}
+    <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
+      :{title}
+    </Typography>
+  </Stack>
+);
+
+type ZoneInfoPropsType = {};
+
+export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
+  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+
+  const handleOpenDelete = () => setOpenDelete(true);
+  const [openDelete, setOpenDelete] = useState(false);
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  const {
+    data: zoneData,
+    isLoading: getDataLoading,
+    isFetching: getDataFetching,
+  } = useGetUserV2CdnZoneOverviewByZoneNameQuery({
+    zoneName: selectedDomain?.zoneName || "",
+  });
+
+  const isLoading = useMemo(
+    () => getDataLoading || getDataFetching,
+    [getDataFetching, getDataLoading]
+  );
+
+  const isActive = useMemo(() => zoneData?.statusId === 2, [zoneData?.statusId]);
+
+  return (
+    <Stack
+      bgcolor="white"
+      py={2}
+      px={3}
+      borderRadius={3}
+      width="60%"
+      direction="row"
+      justifyContent="center"
+    >
+      <Stack width="100%">
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          alignItems={{ xs: "start", md: "center" }}
+          justifyContent="space-between"
+          spacing={2}
+        >
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={2}
+            alignItems={{ xs: "start", md: "center" }}
+            width="100%"
+          >
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              width="100%"
+              alignItems="center"
+            >
+              <Stack direction="row" alignItems="center" spacing={1.5}>
+                <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
+                  مشخصات دامنه
+                </Typography>
+              </Stack>
+              <Stack display={{ xs: "flex", md: "none" }}>
+                <IconButton
+                  sx={{ borderRadius: 1 }}
+                  color="error"
+                  onClick={handleOpenDelete}
+                >
+                  <TrashSvg />
+                </IconButton>
+              </Stack>
+
+              <Stack
+                display={{ xs: "none", md: "flex" }}
+                direction="row"
+                spacing={2}
+                alignItems="center"
+              >
+                <Button
+                  variant="outlined"
+                  onClick={handleOpenDelete}
+                  color="error"
+                  size="large"
+                  sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
+                  startIcon={
+                    <TrashSvg color="error" />
+                  }
+                >
+                  حذف زون
+                </Button>
+              </Stack>
+            </Stack>
+          </Stack>
+          <DeleteZoneDialog
+            id={zoneData?.id ?? 0}
+            openDialog={openDelete}
+            handleClose={handleCloseDelete}
+          />
+        </Stack>
+
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack py={1.5} spacing={2}>
+          <BoxRow
+            title="Status"
+            component={
+              <Chip
+                label={zoneData?.status}
+                sx={{
+                  bgcolor: ({ palette }) =>
+                    isActive ? palette.success.light : palette.error.light,
+                  color: ({ palette }) =>
+                    isActive ? palette.success.main : palette.error.main,
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              />
+            }
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Domain Name"
+            value={zoneData?.domainName}
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Create Date"
+            value={zoneData?.createDate}
+            isLoading={isLoading}
+          />
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};

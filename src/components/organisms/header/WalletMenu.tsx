@@ -75,7 +75,7 @@ const items = [
   },
   {
     value: "payments",
-    label: "گزارش تراکنش ها",
+    label: "گزارش پرداخت ها",
     icon: TransactionSvg,
     link: "/dash/portal/billing/payments",
   },

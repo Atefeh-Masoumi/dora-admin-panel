@@ -257,6 +257,13 @@ const Router: FC = () => {
             })}
           />
           <Route
+            path="/dash/cdn/overview"
+            element={mainTemplate(EditZone, {
+              pageTitle: "مشخصات زون",
+              RightComponent: DomainSelect,
+            })}
+          />
+          <Route
             path="/dash/cdn/dnsRecordSettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",

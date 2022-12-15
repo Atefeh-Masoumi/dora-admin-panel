@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   ChangeEventHandler,
   FC,
   Fragment,
@@ -11,9 +10,6 @@ import {
   Paper,
   Typography,
   Stack,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Select,
   MenuItem,
   SelectChangeEvent,
@@ -37,6 +33,10 @@ import {
 } from "src/app/services/api.generated";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
 import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
+import { InvoiceSvg } from "src/components/atoms/svg/InvoiceSvg";
+import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
+import AddIcon from "@mui/icons-material/Add";
+import { Wallet } from "@mui/icons-material";
 
 const useDurationArray = [
   { name: "یک ماه", value: "1" },
@@ -128,23 +128,11 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
   ];
 
-  const billTypeChangeHandler = (
-    _: ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
-    changePaymentMethod({
-      invoicePaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === "1" },
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("تغییرات با موفقیت اعمال شد");
-      });
+  const discountCodeChangeHandler: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
+    setDiscountCode(event.target.value);
   };
-
-  const paymentMethodChangeHandler = (
-    _: ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => setInvoicePaymentTypeId(parseInt(value));
 
   const useDurationChangeHandler = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) return;
@@ -158,16 +146,17 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       .then(() => toast.success("تغییرات با موفقیت اعمال شد"));
   };
 
-  const discountCodeChangeHandler: ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = (event) => {
-    setDiscountCode(event.target.value);
+  const billTypeChangeHandler = (value: number) => {
+    if (!value)
+      return;
+    changePaymentMethod({
+      invoicePaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === 1 },
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("تغییرات با موفقیت اعمال شد");
+      });
   };
-
-  const paymentGatewayChangeHandler = (
-    _: ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => setPaymentGateway(parseInt(value));
 
   const applyDiscountHandler = () => {
     if (!discountCode || !orderInfo.id) return;
@@ -223,26 +212,27 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       <Paper elevation={0} sx={{ overflow: "hidden" }}>
         <Grid2
           container
-          gap={3}
-          p={{ xs: 2, sm: 3, md: 4 }}
+          p={{ xs: 2, sm: 2, md: 2 }}
           justifyContent="space-between"
           alignItems="stretch"
         >
           <Grid2
-            container
             xs={12}
             component={Paper}
             elevation={0}
-            sx={{ border: "0.5px solid #aaa" }}
-            p={2}
+            p={{ xs: 2, sm: 3, md: 4 }}
+            border={1}
+            borderRadius={2}
+            borderColor="secondary.light"
+            container
           >
             {generalInfo.map(({ name, value }, index) => (
               <Grid2
                 container
                 xs={12}
-                sm={6}
+                sm={4}
                 key={index}
-                p={2}
+                p={1}
                 wrap="nowrap"
                 textOverflow="ellipsis"
                 overflow="hidden"
@@ -261,50 +251,163 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               </Grid2>
             ))}
           </Grid2>
+
           <Grid2
-            direction="column"
             xs={12}
-            md={5.8}
+            md={6}
             component={Paper}
             elevation={0}
-            sx={{ border: "0.5px solid #aaa" }}
-            p={{ xs: 2, sm: 3, md: 4 }}
+            pt={1}
+            pr={{ md: 1 }}
           >
-            <Typography sx={{ mb: 3 }}>نوع صورتحساب</Typography>
-            <RadioGroup
-              value={orderInfo!.isPrepaid ? "1" : "2"}
-              onChange={billTypeChangeHandler}
+            <Stack
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
             >
-              <FormControlLabel value="1" control={<Radio />} label="پیش پرداخت (پرداخت کامل فاکتور)" />
-              <FormControlLabel value="2" control={<Radio />} label="پرداخت بر اساس مصرف" />
-            </RadioGroup>
+              <Typography variant="text14" color="secondary">
+                نوع صورتحساب
+              </Typography>
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                whiteSpace="nowrap"
+              >
+                <Button
+                  onClick={() => billTypeChangeHandler(1)}
+                  variant="outlined"
+                  color={orderInfo!.isPrepaid === true ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      orderInfo!.isPrepaid === true
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
+                  >
+                    <InvoiceSvg sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">پرداخت کامل فاکتور</Typography>
+                  </Stack>
+                </Button>
+                <Button
+                  onClick={() => billTypeChangeHandler(2)}
+                  variant="outlined"
+                  color={orderInfo!.isPrepaid === false ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      orderInfo!.isPrepaid === false
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
+                  >
+                    <CalculateSvg sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">پرداخت بر اساس مصرف</Typography>
+                  </Stack>
+                </Button>
+              </Stack>
+            </Stack>
           </Grid2>
+
           <Grid2
-            direction="column"
             xs={12}
-            md={5.8}
+            md={6}
             component={Paper}
             elevation={0}
-            sx={{ border: "0.5px solid #aaa" }}
-            p={{ xs: 2, sm: 3, md: 4 }}
+            pt={1}
+            pl={{ md: 1 }}
           >
-            <Typography sx={{ mb: 3 }}>نحوه پرداخت</Typography>
-            <RadioGroup
-              value={invoicePaymentTypeId}
-              onChange={paymentMethodChangeHandler}
+            <Stack
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
             >
-              <FormControlLabel value="1" control={<Radio />} label="پرداخت آنلاین" />
-              <FormControlLabel value="2" control={<Radio />} label="کیف پول" />
-            </RadioGroup>
+              <Typography variant="text14" color="secondary">
+                نحوه پرداخت
+              </Typography>
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                whiteSpace="nowrap"
+              >
+                <Button
+                  onClick={() => setInvoicePaymentTypeId(1)}
+                  variant="outlined"
+                  color={invoicePaymentTypeId === 1 ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      invoicePaymentTypeId === 1
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
+                  >
+                    <AddIcon sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">پرداخت آنلاین</Typography>
+                  </Stack>
+                </Button>
+                <Button
+                  onClick={() => setInvoicePaymentTypeId(2)}
+                  variant="outlined"
+                  color={invoicePaymentTypeId === 2 ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      invoicePaymentTypeId === 2
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
+                  >
+                    <Wallet sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">کیف پول</Typography>
+                  </Stack>
+                </Button>
+              </Stack>
+            </Stack>
           </Grid2>
-          {orderInfo.isPrepaid && (
-            <Grid2
-              xs={12}
-              md={5.8}
-              component={Paper}
-              elevation={0}
-              sx={{ border: "0.5px solid #aaa" }}
-              p={{ xs: 2, sm: 3, md: 4 }}
+
+          {/* {orderInfo.isPrepaid && ( */}
+          <Grid2
+            xs={12}
+            md={6}
+            component={Paper}
+            elevation={0}
+            pt={1}
+            pr={{ md: 1 }}
+          >
+            <Stack
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
             >
               <Typography sx={{ mb: 2 }}>مدت استفاده</Typography>
               <Select
@@ -321,16 +424,23 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </Grid2>
-          )}
-          {orderInfo.isPrepaid && (
-            <Grid2
-              xs={12}
-              md={5.8}
-              component={Paper}
-              elevation={0}
-              sx={{ border: "0.5px solid #aaa" }}
-              p={{ xs: 2, sm: 3, md: 4 }}
+            </Stack>
+          </Grid2>
+
+          {/* {orderInfo.isPrepaid && ( */}
+          <Grid2
+            xs={12}
+            md={6}
+            component={Paper}
+            elevation={0}
+            pt={1}
+            pl={{ md: 1 }}
+          >
+            <Stack
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
             >
               <Typography sx={{ mb: 2 }}>کد تخفیف</Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
@@ -349,107 +459,116 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                   اعمال
                 </LoadingButton>
               </Stack>
-            </Grid2>
-          )}
+            </Stack>
+          </Grid2>
+
           <Grid2
             xs={12}
-            md={5.8}
+            md={6}
             component={Paper}
             elevation={0}
-            sx={{ border: "0.5px solid #aaa" }}
-            p={{ xs: 2, sm: 3, md: 4 }}
+            pt={1}
+            pr={{ md: 1 }}
           >
-            {amountInfo.map(({ name, value }, index) => {
-              if (orderInfo.isPrepaid && (index === 3 || index === 4))
-                return null;
-              if (!orderInfo.isPrepaid && index === 5) return null;
-              return (
-                <Fragment key={index}>
-                  {orderInfo.isPrepaid && index === 5 && <Divider />}
-                  {!orderInfo.isPrepaid && index === 3 && <Divider />}
-                  <Stack direction="row" spacing={1} p={1}>
-                    <Typography color="grey.700">{name}:</Typography>
-                    <Typography>
-                      {priceToPersian((value as number) || 0)}
-                    </Typography>
-                    <Typography color="grey.700">ریال</Typography>
-                  </Stack>
-                </Fragment>
-              );
-            })}
-          </Grid2>
-          {invoicePaymentTypeId === 1 && (
-            <Grid2
-              xs={12}
-              md={5.8}
-              component={Paper}
-              elevation={0}
-              p={{ xs: 2, sm: 3, md: 4 }}
+            <Stack
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
             >
+              <Typography variant="text14" color="secondary">
+                درگاه پرداخت
+              </Typography>
               <Stack
-                spacing={2}
-                border={1}
-                borderRadius={2}
-                borderColor="secondary.light"
-                p={2}
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                whiteSpace="nowrap"
               >
-                <Typography variant="text14" color="secondary">
-                  درگاه پرداخت
-                </Typography>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  whiteSpace="nowrap"
+                <Button
+                  onClick={() => setPaymentGateway(1)}
+                  variant="outlined"
+                  color={paymentProviderId === 1 ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      paymentProviderId === 1
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
                 >
-                  <Button
-                    onClick={() => setPaymentGateway(1)}
-                    variant="outlined"
-                    color={paymentProviderId === 1 ? "primary" : "secondary"}
-                    sx={{
-                      border:
-                        paymentProviderId === 1
-                          ? "2px solid #3C8AFF !important"
-                          : 1,
-                      py: 1,
-                    }}
-                    fullWidth
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
                   >
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems={{ xs: "start", md: "end" }}
-                    >
-                      <ParsianLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                      <Typography variant="text14">بانک پارسیان</Typography>
-                    </Stack>
-                  </Button>
-                  <Button
-                    onClick={() => setPaymentGateway(2)}
-                    variant="outlined"
-                    color={paymentProviderId === 2 ? "primary" : "secondary"}
-                    sx={{
-                      border:
-                        paymentProviderId === 2
-                          ? "2px solid #3C8AFF !important"
-                          : 1,
-                      py: 1,
-                    }}
-                    fullWidth
+                    <ParsianLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">بانک پارسیان</Typography>
+                  </Stack>
+                </Button>
+                <Button
+                  onClick={() => setPaymentGateway(2)}
+                  variant="outlined"
+                  color={paymentProviderId === 2 ? "primary" : "secondary"}
+                  sx={{
+                    border:
+                      paymentProviderId === 2
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
                   >
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems={{ xs: "start", md: "end" }}
-                    >
-                      <SamanLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                      <Typography variant="text14">بانک سامان</Typography>
-                    </Stack>
-                  </Button>
-                </Stack>
+                    <SamanLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
+                    <Typography variant="text14">بانک سامان</Typography>
+                  </Stack>
+                </Button>
               </Stack>
-            </Grid2>
-          )}
+            </Stack>
+          </Grid2>
+
+          <Grid2
+            xs={12}
+            md={6}
+            component={Paper}
+            elevation={0}
+            pt={1}
+            pl={{ md: 1 }}
+          >
+            <Stack
+              spacing={2}
+              border={1}
+              borderRadius={2}
+              borderColor="secondary.light"
+              p={2}
+            >
+              {amountInfo.map(({ name, value }, index) => {
+                if (orderInfo.isPrepaid && (index === 3 || index === 4))
+                  return null;
+                if (!orderInfo.isPrepaid && index === 5) return null;
+                return (
+                  <Fragment key={index}>
+                    {orderInfo.isPrepaid && index === 5 && <Divider />}
+                    {!orderInfo.isPrepaid && index === 3 && <Divider />}
+                    <Stack direction="row" spacing={1} p={1}>
+                      <Typography color="grey.700">{name}:</Typography>
+                      <Typography>
+                        {priceToPersian((value as number) || 0)}
+                      </Typography>
+                      <Typography color="grey.700">ریال</Typography>
+                    </Stack>
+                  </Fragment>
+                );
+              })}
+            </Stack>
+          </Grid2>
+
           <Grid2 xs={12} container justifyContent="center">
             <LoadingButton
               disableElevation

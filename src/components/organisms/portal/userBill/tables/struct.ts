@@ -33,7 +33,7 @@ export const billsTableStruct: columnType[] = [
 
 export const billTableStruct: columnType[] = [
   {
-    id: "product",
+    id: "productCategory",
     label: "گروه",
   },
   {

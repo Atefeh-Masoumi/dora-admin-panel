@@ -1,13 +1,32 @@
-import { FC, useState, useEffect, Fragment } from "react";
+import { FC, useState, useEffect, Fragment, useMemo } from "react";
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { DomainCard } from "src/components/organisms/cdn/editZone/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { useGetUserV2CdnZoneListQuery } from "src/app/services/api.generated";
+import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { BORDER_RADIUS_5 } from "src/configs/theme";
 
 const DomainManagement: FC = () => {
-  const { data: zoneList, isLoading } = useGetUserV2CdnZoneListQuery();
+  const {
+    data: zoneList,
+    isLoading: getDataLoading,
+    refetch,
+    isFetching,
+  } = useGetUserV2CdnZoneListQuery();
+
+  const isLoading = useMemo(
+    () => getDataLoading || isFetching,
+    [getDataLoading, isFetching]
+  );
+
+  const navigate = useNavigate();
+
+  const refetchOnClick = () => refetch();
+  const createCloudOnClick = () => navigate("/dash/cdn/addDomain");
+
   const [search, setSearch] = useState("");
 
   const filteredList = zoneList?.filter((zone) =>
@@ -64,17 +83,32 @@ const DomainManagement: FC = () => {
               <></>
             )}
           </Stack>
-          <Button
-            variant="outlined"
-            href="/dash/cdn/addDomain"
-            size="large"
-            sx={{ whiteSpace: "nowrap", px: 1.2 }}
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
-          >
-            افزودن دامنه جدید
-          </Button>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Button
+              onClick={refetchOnClick}
+              variant="outlined"
+              size="large"
+              sx={{
+                whiteSpace: "nowrap",
+                px: 1.2,
+                borderRadius: BORDER_RADIUS_5,
+              }}
+              startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
+            >
+              بازخوانی
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={createCloudOnClick}
+              size="large"
+              sx={{ whiteSpace: "nowrap", px: 1.2 }}
+              startIcon={
+                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+              }
+            >
+              افزودن دامنه جدید
+            </Button>
+          </Stack>
         </Stack>
         {windowDimenion.winWidth < 650 ? (
           <SearchBox placeholder="جستجو در نام دامنه" />

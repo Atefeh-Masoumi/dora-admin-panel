@@ -7,6 +7,7 @@ import { useAppSelector } from "src/app/hooks";
 import { SSLSetting } from "src/components/organisms/cdn/editZone/ssl/Ssl";
 import { DNSRecord } from "src/components/organisms/cdn/editZone/dns/DNSRecord";
 import LoadBalance from "src/components/organisms/cdn/editZone/loadbalance/LoadBalance";
+import { ZoneInfo } from "src/components/organisms/cdn/editZone/overview/ZoneInfo";
 
 const Domains: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
@@ -16,6 +17,9 @@ const Domains: FC = () => {
 
   const selectedTab = useMemo(() => {
     let result;
+    if (pathname.includes("overview")) {
+      result = "overview";
+    }
     if (pathname.includes("dnsRecordSetting")) {
       result = "dnsRecordSettings";
     }
@@ -38,20 +42,23 @@ const Domains: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
+      case "overview":
+        result = <ZoneInfo />;
+        break;
       case "dnsRecordSettings":
         result = <DNSRecord />;
         break;
       case "sslTslSettings":
         result = <SSLSetting />;
         break;
-      case "apiGatewaySettings":
-        result = <></>;
-        break;
       case "loadBalanceSettings":
         result = <LoadBalance />;
         break;
+      case "apiGatewaySettings":
+        result = <></>;
+        break;
       default:
-        result = <DNSRecord />;
+        result = <ZoneInfo />;
         break;
     }
     return result;
@@ -78,6 +85,7 @@ const Domains: FC = () => {
           value={selectedTab}
           onChange={handleChange}
         >
+          <DorsaTab value="overview" label="مشخصات دامنه" />
           <DorsaTab value="dnsRecordSettings" label="تنظیمات DNS Record" />
           <DorsaTab value="sslTslSettings" label="تنظیمات SSL/TLS" />
           <DorsaTab value="loadBalanceSettings" label="تنظیمات Load Balance" />

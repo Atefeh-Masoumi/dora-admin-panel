@@ -17,7 +17,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
 
   const cardClickHandler = () => {
     dispatch(setSelectedDomainAction(zoneItem));
-    navigate("/dash/cdn/dnsRecordSettings");
+    navigate("/dash/cdn/overview");
   };
 
   const isActive = useMemo(() => zoneStatusId === 2, [zoneStatusId]);

@@ -48,18 +48,18 @@ const Payments: FC = () => {
           width="100%"
         >
           <Typography variant="text1" color="secondary" whiteSpace="nowrap">
-            لیست گزارش ها
+            لیست پرداخت ها
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
-              placeholder="جستجو در شماره گزارش"
+              placeholder="جستجو در شماره پرداخت"
               onChange={(text) => setSearch(text)}
               fullWidth
             />
           </Stack>
           <Stack display={{ xs: "none", md: "flex" }}>
             <SearchBox
-              placeholder="جستجو در شماره گزارش"
+              placeholder="جستجو در شماره پرداخت"
               onChange={(text) => setSearch(text)}
             />
           </Stack>
