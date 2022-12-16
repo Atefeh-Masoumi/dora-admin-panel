@@ -76,7 +76,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const generalInfo = [
     {
-      name: "دسته بندی محصول",
+      name: "گروه محصول",
       value: orderInfo.productCategory,
     },
     {
@@ -128,9 +128,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
   ];
 
-  const discountCodeChangeHandler: ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = (event) => {
+  const discountCodeChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     setDiscountCode(event.target.value);
   };
 
