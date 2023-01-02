@@ -28,7 +28,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
       .unwrap()
       .then(() => {
         navigate("/dash/cdn");
-        toast.error("زون مورد نظر حذف شد", { icon: Success });
+        toast.error("دامنه مورد نظر حذف شد", { icon: Success });
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
 
@@ -37,6 +37,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
       open={openDialog}
       onClose={onClose}
       components={{ Backdrop: BlurBackdrop }}
+      disableEscapeKeyDown
       maxWidth="xs"
       fullWidth
       sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
@@ -44,7 +45,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف زون مطمئن هستید؟
+            از حذف دامنه مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد
@@ -66,7 +67,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف زون
+            حذف دامنه
           </LoadingButton>
         </Stack>
       </Stack>

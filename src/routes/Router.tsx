@@ -259,7 +259,7 @@ const Router: FC = () => {
           <Route
             path="/dash/cdn/overview"
             element={mainTemplate(EditZone, {
-              pageTitle: "مشخصات زون",
+              pageTitle: "مشخصات دامنه",
               RightComponent: DomainSelect,
             })}
           />

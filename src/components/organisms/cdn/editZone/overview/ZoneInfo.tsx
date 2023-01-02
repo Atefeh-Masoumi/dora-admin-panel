@@ -8,11 +8,12 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
 import { useGetUserV2CdnZoneOverviewByZoneNameQuery } from "src/app/services/api.generated";
 import { DeleteZoneDialog } from "./dialogs/DeleteZoneDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 
 type boxRowType = {
   title: string;
@@ -49,9 +50,12 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleCloseDelete = () => setOpenDelete(false);
 
+  const refetchOnClick = () => refetch();
+
   const {
     data: zoneData,
     isLoading: getDataLoading,
+    refetch,
     isFetching: getDataFetching,
   } = useGetUserV2CdnZoneOverviewByZoneNameQuery({
     zoneName: selectedDomain?.zoneName || "",
@@ -70,7 +74,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
       py={2}
       px={3}
       borderRadius={3}
-      width="60%"
+      width="80%"
       direction="row"
       justifyContent="center"
     >
@@ -79,11 +83,9 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
           direction={{ xs: "column", md: "row" }}
           alignItems={{ xs: "start", md: "center" }}
           justifyContent="space-between"
-          spacing={2}
         >
           <Stack
             direction={{ xs: "column", md: "row" }}
-            spacing={2}
             alignItems={{ xs: "start", md: "center" }}
             width="100%"
           >
@@ -115,6 +117,20 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                 alignItems="center"
               >
                 <Button
+                  onClick={refetchOnClick}
+                  variant="outlined"
+                  size="large"
+                  sx={{
+                    whiteSpace: "nowrap",
+                    px: 1.2,
+                    borderRadius: BORDER_RADIUS_5,
+                  }}
+                  startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
+                >
+                  بررسی مجدد دامنه
+                </Button>
+
+                <Button
                   variant="outlined"
                   onClick={handleOpenDelete}
                   color="error"
@@ -124,7 +140,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                     <TrashSvg color="error" />
                   }
                 >
-                  حذف زون
+                  حذف دامنه
                 </Button>
               </Stack>
             </Stack>

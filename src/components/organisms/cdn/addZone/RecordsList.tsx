@@ -6,6 +6,7 @@ import { usePostUserV2CdnZoneCreateMutation } from "src/app/services/api.generat
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import { useNavigate } from "react-router";
+import { ContentCopyOutlined } from "@mui/icons-material";
 
 type RecordsListPropsType = { zoneName: string };
 
@@ -62,14 +63,42 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
             disabled
             value="asiatech.ns.dorsacloud.com"
             inputProps={{ dir: "ltr" }}
+            sx={{ width: "280px", cursor: "pointer", py: 0, px: 0 }}
+            InputProps={{
+              endAdornment:
+                <Button
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigator.clipboard.writeText("asiatech.ns.dorsacloud.com");
+                    toast.success("NS کپی شد", { position: "bottom-left" });
+                  }}
+
+                >
+                  <ContentCopyOutlined />
+                </Button>
+            }}
           />
           <Typography>:NS 1</Typography>
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
           <DorsaTextField
             disabled
-            value="asiatech.ns.dorsacloud.com"
+            value="mobin.ns.dorsacloud.com"
             inputProps={{ dir: "ltr" }}
+            sx={{ width: "280px", cursor: "pointer", py: 0, px: 0 }}
+            InputProps={{
+              endAdornment:
+                <Button
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigator.clipboard.writeText("mobin.ns.dorsacloud.com");
+                    toast.success("NS کپی شد", { position: "bottom-left" });
+                  }}
+
+                >
+                  <ContentCopyOutlined />
+                </Button>
+            }}
           />
           <Typography whiteSpace="nowrap">:NS 2</Typography>
         </Stack>

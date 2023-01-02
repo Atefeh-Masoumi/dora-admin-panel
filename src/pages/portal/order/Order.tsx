@@ -292,7 +292,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                     alignItems={{ xs: "start", md: "end" }}
                   >
                     <InvoiceSvg sx={{ fontSize: { xs: 20, md: 30 } }} />
-                    <Typography variant="text14">پرداخت کامل فاکتور</Typography>
+                    <Typography variant="text14">پیش پرداخت</Typography>
                   </Stack>
                 </Button>
                 <Button

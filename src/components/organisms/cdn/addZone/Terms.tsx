@@ -85,20 +85,32 @@ export const Terms: FC<CreateZonePropsType> = ({ goNext }) => {
             با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم.
           </Typography>
         </Stack>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Button fullWidth variant="outlined" sx={{ py: 1.4 }} href="/dash/cdn">
-            انصراف
-          </Button>
-          <Button
-            onClick={submit}
-            fullWidth
-            variant="contained"
-            sx={{ py: 1.4 }}
-          >
-            ادامه
-          </Button>
-        </Stack>
       </Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={1}
+        width="100%"
+        maxWidth={400}
+      >
+        <Button
+          fullWidth
+          variant="outlined"
+          href="/dash/cdn"
+          sx={{ py: 1.7, px: 5 }}
+        >
+          انصراف
+        </Button>
+        <Button
+          onClick={submit}
+          fullWidth
+          variant="contained"
+          sx={{ py: 1.7, px: 5 }}
+        >
+          ادامه
+        </Button>
+      </Stack>
+
     </Stack>
   );
 };
