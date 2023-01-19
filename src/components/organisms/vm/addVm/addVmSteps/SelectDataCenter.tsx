@@ -6,7 +6,7 @@ import {
   useGetUserV2VmDatacenterListQuery,
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
-import asiatechImage from "src/assets/images/asiatech.jpg";
+import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.jpg";
 
 type SelectDataCenterPropsType = {};

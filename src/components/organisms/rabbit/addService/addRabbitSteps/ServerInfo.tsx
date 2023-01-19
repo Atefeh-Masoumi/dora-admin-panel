@@ -1,5 +1,6 @@
-import { FC, useContext, ChangeEvent } from "react";
-import { Stack, Typography } from "@mui/material";
+import { FC, useContext, ChangeEvent, useState } from "react";
+import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { AddRabbitContext } from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
@@ -7,6 +8,7 @@ import { AddRabbitContext } from "src/components/organisms/rabbit/addService/con
 type ServerInfoPropsType = {};
 
 export const ServerInfo: FC<ServerInfoPropsType> = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { name, setName, serverUsername, setServerUsername, serverPassword, setServerPassword } =
     useContext(AddRabbitContext);
 
@@ -42,27 +44,47 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
             },
           }}
         />
+        <Typography
+          align="center"
+          sx={{ color: ({ palette }) => palette.grey[700] }}
+        >
+          نام کاربری و رمز عبور برای سرویس ابری خود را وارد نمایید.
+        </Typography>
+
       </Stack>
       <DorsaTextField
         value={name}
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام سرویس (VHost)"
-        dir="ltr"
+        inputProps={{ dir: "ltr" }}
       />
       <DorsaTextField
         value={serverUsername}
         onChange={usernameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام کاربری (User Name)"
-        dir="ltr"
+        inputProps={{ dir: "ltr" }}
       />
       <DorsaTextField
+        type={showPassword ? "text" : "password"}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="start"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         value={serverPassword}
         onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="رمز عبور (Password)"
-        dir="ltr"
+        inputProps={{ dir: "ltr" }}
       />
       <Stack justifyContent="center" spacing={1}>
         <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>

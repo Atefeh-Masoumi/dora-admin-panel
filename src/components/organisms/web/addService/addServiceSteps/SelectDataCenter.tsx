@@ -2,7 +2,7 @@ import { useContext, FC } from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { AddWebHostContext } from "src/components/organisms/web/addService/context/AddWebHostContext";
-import asiatechImage from "src/assets/images/asiatech.jpg";
+import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.jpg";
 import {
   DatacenterListResponse,

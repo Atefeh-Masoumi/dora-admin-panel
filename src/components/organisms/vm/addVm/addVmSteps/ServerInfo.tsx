@@ -1,12 +1,14 @@
-import { FC, useContext, ChangeEvent } from "react";
-import { Stack, Typography } from "@mui/material";
+import { FC, useContext, ChangeEvent, useState } from "react";
+import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type ServerInfoPropsType = {};
 
 export const ServerInfo: FC<ServerInfoPropsType> = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { serverName, setServerName, serverPassword, setServerPassword } =
     useContext(AddServerContext);
 
@@ -51,14 +53,27 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام سرور ابری (Server Name)"
-        dir="ltr"
+        inputProps={{ dir: "ltr" }}
       />
       <DorsaTextField
+        type={showPassword ? "text" : "password"}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge="start"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         value={serverPassword}
         onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="رمز عبور سرور ابری (Password)"
-        dir="ltr"
+        inputProps={{ dir: "ltr" }}
       />
       <Stack justifyContent="center" spacing={1}>
         <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>

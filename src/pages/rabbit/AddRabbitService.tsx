@@ -46,10 +46,17 @@ const AddRabbitService: FC = () => {
       !name ||
       name.length < 3 ||
       !serverUsername ||
-      serverUsername.length < 3 ||
-      !passwordValidationRegex.test(serverPassword)
-    )
+      serverUsername.length < 3
+    ) {
+      toast.error("خطا در اعتبارسنجی.");
       return;
+    }
+
+    if (!passwordValidationRegex.test(serverPassword)) {
+      toast.error("رمز عبور نامعتبر است.");
+      return;
+    }
+
     createRabbitService({
       createRabbitHostModel: {
         name: name,

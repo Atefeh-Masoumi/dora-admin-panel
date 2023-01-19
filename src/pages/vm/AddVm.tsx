@@ -44,10 +44,16 @@ const AddVm: FC = () => {
       !osVersion.id ||
       !serverConfig ||
       !serverName ||
-      serverName.length < 3 ||
-      !passwordValidationRegex.test(serverPassword)
-    )
+      serverName.length < 3
+    ) {
+      toast.error("خطا در اعتبارسنجی.");
       return;
+    }
+
+    if (!passwordValidationRegex.test(serverPassword)) {
+      toast.error("رمز عبور نامعتبر است.");
+      return;
+    }
     createCloudServer({
       createVmModel: {
         name: serverName,
