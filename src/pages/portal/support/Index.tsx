@@ -1,24 +1,16 @@
 import { FC, useState } from "react";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { Box, Button, Divider, MenuItem, Stack, Typography } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { useNavigate } from "react-router";
+import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { Add } from "src/components/atoms/svg/AddSvg";
 import { supportTableStruct } from "src/components/organisms/portal/support/tables/struct";
 import { SupportTableRow } from "src/components/organisms/portal/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/portal/support/constant";
 import { useGetUserV2PortalSupportListQuery } from "src/app/services/api.generated";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { useNavigate } from "react-router";
 
 const Support: FC = () => {
   const { data: supportList, refetch, isLoading } = useGetUserV2PortalSupportListQuery();
@@ -26,7 +18,7 @@ const Support: FC = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createOnClick = () => navigate("/portal/support/addSupport");
+  const createCloudOnClick = () => navigate("/portal/support/addSupport");
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");
@@ -39,32 +31,35 @@ const Support: FC = () => {
   );
 
   return (
-    <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 2.2 }}>
-      <Grid
-        container
-        spacing={2}
+    <Stack
+      bgcolor="white"
+      py={3}
+      px={3}
+      width="100%"
+      borderRadius={3}
+      direction="column"
+    >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
         alignItems="center"
-        px={{ xs: 0, md: 2 }}
+        rowGap={4}
       >
-        <Grid item order={{ md: 1 }}>
-          <Typography
-            variant="text1"
-            color="secondary"
-            display={{ xs: "none", md: "block" }}
-          >
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography fontSize={18} color="secondary">
             لیست تیکت ها
           </Typography>
-        </Grid>
-        <Grid item order={{ xs: 2, md: 2 }}>
-          <Box width={{ xs: "160px", md: "185px" }}>
-            <SearchBox
-              onChange={(text) => setSearch(text)}
-              placeholder="جستجو ..."
-            />
-          </Box>
-        </Grid>
-        <Grid item order={{ xs: 4, md: 3 }}>
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو"
+          />
+        </Stack>
+
+        <Stack direction="row" alignItems="center" spacing={1}>
           <Box component="form" width={{ xs: "160px", md: "185px" }}>
             <DorsaTextField
               inputProps={{ fontSize: "20px !important" }}
@@ -94,8 +89,9 @@ const Support: FC = () => {
               ))}
             </DorsaTextField>
           </Box>
-        </Grid>
-        <Grid item order={{ xs: 3, md: 4 }}>
+        </Stack>
+
+        <Stack direction="row" alignItems="center" spacing={1}>
           <Button
             onClick={refetchOnClick}
             variant="outlined"
@@ -105,25 +101,36 @@ const Support: FC = () => {
           >
             بازخوانی
           </Button>
-        </Grid>
-
-        <Grid item order={{ xs: 1, md: 5 }}>
           <Button
-            onClick={createOnClick}
+            onClick={createCloudOnClick}
             variant="outlined"
             size="large"
             sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
-            startIcon={<Add sx={{ stroke: "rgba(60, 138, 255, 1)" }} />}
+            startIcon={
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  width: 24,
+                  height: 24,
+                  border: ({ palette }) => "1px solid " + palette.primary.main,
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              >
+                <Add
+                  fontSize="small"
+                  sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                />
+              </Stack>
+            }
           >
-            ثبت تیکت جدید
+            تیکت جدید
           </Button>
-        </Grid>
-      </Grid>
-      <Divider
-        variant="middle"
-        sx={{ my: 2, color: "rgba(110, 118, 138, 0.8)" }}
-      />
-      <Stack>
+        </Stack>
+      </Stack>
+
+      <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+      <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
           struct={supportTableStruct}
           RowComponent={SupportTableRow}
@@ -132,8 +139,8 @@ const Support: FC = () => {
           isLoading={isLoading}
           initialOrder={1}
         />
-      </Stack>
-    </Stack >
+      </Box>
+    </Stack>
   );
 };
 

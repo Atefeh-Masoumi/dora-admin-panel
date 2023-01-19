@@ -74,11 +74,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
             onClick={refetchOnClick}
             variant="outlined"
             size="large"
-            sx={{
-              whiteSpace: "nowrap",
-              px: 1.2,
-              borderRadius: BORDER_RADIUS_5,
-            }}
+            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
             startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
           >
             بازخوانی
@@ -87,11 +83,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
             onClick={createCloudOnClick}
             variant="outlined"
             size="large"
-            sx={{
-              whiteSpace: "nowrap",
-              px: 1.2,
-              borderRadius: BORDER_RADIUS_5,
-            }}
+            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
             startIcon={
               <Stack
                 alignItems="center"

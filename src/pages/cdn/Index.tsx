@@ -101,7 +101,7 @@ const DomainManagement: FC = () => {
               variant="outlined"
               onClick={createCloudOnClick}
               size="large"
-              sx={{ whiteSpace: "nowrap", px: 1.2 }}
+              sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
               startIcon={
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
