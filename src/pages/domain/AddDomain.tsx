@@ -36,7 +36,7 @@ const AddDomain: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/domain");
+      navigate("/domain");
       return;
     }
     setStep((step - 1) as addDomainStepsType);
@@ -115,7 +115,7 @@ const AddDomain: FC = () => {
         toast.success("اطلاعات دامنه با موفقیت ثبت شد");
         if (res) {
           let a = document.createElement("a");
-          a.href = "/dash/portal/order/" + res;
+          a.href = "/portal/order/" + res;
           a.click();
         }
       });

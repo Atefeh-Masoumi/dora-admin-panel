@@ -108,7 +108,7 @@ const AddTicket: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("تیکت با موفقیت اضافه شد");
-        navigate("/dash/portal/supports");
+        navigate("/portal/supports");
       })
       .catch((res) => {
         if (res.status === 401 || res.status === 404) {
@@ -349,7 +349,7 @@ const AddTicket: FC = () => {
               fullWidth
               color="secondary"
               sx={{ px: 4, py: { xs: 0, md: 1.5 } }}
-              href="/dash/portal/supports"
+              href="/portal/supports"
             >
               انصراف
             </Button>

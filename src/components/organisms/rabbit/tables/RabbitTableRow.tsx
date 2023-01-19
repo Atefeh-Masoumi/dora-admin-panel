@@ -14,7 +14,7 @@ export const RabbitTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/dash/rabbit/" + row["id"]);
+  const settingOnClick = () => navigate("/rabbit/" + row["id"]);
 
   return (
     <Fragment>

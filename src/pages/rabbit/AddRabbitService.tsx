@@ -29,7 +29,7 @@ const AddRabbitService: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/rabbit");
+      navigate("/rabbit");
       return;
     }
     setStep((step - 1) as addRabbitStepsType);
@@ -71,7 +71,7 @@ const AddRabbitService: FC = () => {
         toast.success("سرویس RabbitMQ  با موفقیت ایجاد شد");
         if (res) {
           let a = document.createElement("a");
-          a.href = "/dash/portal/order/" + res;
+          a.href = "/portal/order/" + res;
           a.click();
         }
       });

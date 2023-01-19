@@ -4,10 +4,7 @@ import { invoicesTableStruct } from "src/components/organisms/portal/invoices/ta
 import { InvoicesTableRow } from "src/components/organisms/portal/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import {
-  InvoiceListResponse,
-  useGetUserV2PortalInvoiceListQuery,
-} from "src/app/services/api.generated";
+import { InvoiceListResponse, useGetUserV2PortalInvoiceListQuery } from "src/app/services/api.generated";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import moment from "jalali-moment";
 

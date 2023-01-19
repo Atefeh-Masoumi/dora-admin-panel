@@ -31,27 +31,27 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "CDN / DNS",
       text: "شبکه مدیریت و توزیع محتوا",
       Icon: CloudConnectionSvg,
-      link: "/dash/cdn",
+      link: "/cdn",
       subList: [
         {
           title: "مدیریت دامنه‌ها",
-          link: "/dash/cdn",
+          link: "/cdn",
         },
         {
           title: "تنظیمات DNS Record",
-          link: "/dash/cdn/dnsRecordSettings",
+          link: "/cdn/dnsRecordSettings",
         },
         {
           title: "تنظیمات SSL/TLS",
-          link: "/dash/cdn/sslTslSettings",
+          link: "/cdn/sslTslSettings",
         },
         {
           title: "تنظیمات Load Balance",
-          link: "/dash/cdn/loadBalanceSettings",
+          link: "/cdn/loadBalanceSettings",
         },
         {
           title: "تنظیمات API Gateway",
-          link: "/dash/cdn/apiGatewaySettings",
+          link: "/cdn/apiGatewaySettings",
         },
       ],
     },
@@ -59,65 +59,65 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "Virtual Machine",
       text: "سرویس سرور های ابری",
       Icon: DriverSvg,
-      link: "/dash/vm",
-      subList: [{ title: "سرویس سرور‌های ابری", link: "/dash/vm" }],
+      link: "/vm",
+      subList: [{ title: "سرویس سرور‌های ابری", link: "/vm" }],
     },
     {
       title: "RabbitMQ",
       text: "سرویس RabbitMQ ابری",
       Icon: DeviceMessageSvg,
-      link: "/dash/rabbit",
-      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/dash/rabbit" }],
+      link: "/rabbit",
+      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
     },
     {
       title: "Web Hosting",
       text: "سرویس هاستینگ ابری",
       Icon: CoinSvg,
-      link: "/dash/web",
-      subList: [{ title: "سرویس هاستینگ ابری", link: "/dash/web" }],
+      link: "/web",
+      subList: [{ title: "سرویس هاستینگ ابری", link: "/web" }],
     },
     {
       title: "Domain Registration",
       text: "ثبت/تمدید دامنه",
       Icon: GlobalSvg,
-      link: "/dash/domain",
-      subList: [{ title: "ثبت/تمدید دامنه", link: "/dash/domain" }],
+      link: "/domain",
+      subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
     },
     // {
     //   title: "SMS",
     //   text: "سرویس پیامک ابری",
     //   Icon: SmsSvg,
-    //   link: "/dash/sms",
+    //   link: "/sms",
     //   subList: [
-    //     { title: "خرید بسته پیامکی", link: "/dash/sms" },
-    //     { title: "سرشماره های من", link: "/dash/sms/" },
-    //     { title: "پیام های دریافتی", link: "/dash/sms/" },
-    //     { title: "پیام های ارسالی", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک تکی", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک یک به چند", link: "/dash/sms/" },
-    //     { title: "ارسال پیامک چند به چند", link: "/dash/sms/" },
+    //     { title: "خرید بسته پیامکی", link: "/sms" },
+    //     { title: "سرشماره های من", link: "/sms/" },
+    //     { title: "پیام های دریافتی", link: "/sms/" },
+    //     { title: "پیام های ارسالی", link: "/sms/" },
+    //     { title: "ارسال پیامک تکی", link: "/sms/" },
+    //     { title: "ارسال پیامک یک به چند", link: "/sms/" },
+    //     { title: "ارسال پیامک چند به چند", link: "/sms/" },
     //   ],
     // },
     // {
     //   title: "API",
     //   text: "کلیدهای دسترسی برنامه نویسی",
     //   Icon: CodeCircleSvg,
-    //   link: "/dash/apis",
+    //   link: "/apis",
     // },
     {
       Icon: EmptyWalletSvg,
-      link: "/dash/portal/billing",
+      link: "/portal/billing",
       subList: [
-        { title: "گزارش کیف پول", link: "/dash/portal/billing/wallet" },
-        { title: "فاکتور های فروش", link: "/dash/portal/billing/invoices" },
-        { title: "گزارش پرداخت ها", link: "/dash/portal/billing/payments" },
-        { title: "گزارش محاسبات", link: "/dash/portal/billing/user-bills" },
+        { title: "گزارش کیف پول", link: "/portal/billing/wallet" },
+        { title: "فاکتور های فروش", link: "/portal/billing/invoices" },
+        { title: "گزارش پرداخت ها", link: "/portal/billing/payments" },
+        { title: "گزارش محاسبات", link: "/portal/billing/user-bills" },
       ],
     },
     {
       Icon: HeadphoneSvg,
-      link: "/dash/portal/supports",
-      subList: [{ title: "مرکز پشتیبانی", link: "/dash/portal/supports" }],
+      link: "/portal/supports",
+      subList: [{ title: "مرکز پشتیبانی", link: "/portal/supports" }],
     },
     {
       Icon: CalculatorSvg,
@@ -142,13 +142,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
 
   const hideSubLists = useMemo(
     () =>
-      pathname === "/dash" ||
-      pathname === "/dash/portal/profile" ||
-      pathname === "/dash/portal/setting" ||
-      pathname === "/dash/portal/user-services" ||
-      pathname === "/dash/portal/orders" ||
-      pathname === "/dash/portal/referral" ||
-      pathname === "/dash/portal/notifications",
+      pathname === "/" ||
+      pathname === "/portal/profile" ||
+      pathname === "/portal/setting" ||
+      pathname === "/portal/user-services" ||
+      pathname === "/portal/orders" ||
+      pathname === "/portal/referral" ||
+      pathname === "/portal/notifications",
     [pathname]
   );
 

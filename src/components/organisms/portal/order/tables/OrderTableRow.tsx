@@ -13,7 +13,7 @@ export const OrderTableRow: FC<{ row: any }> = ({ row }) => {
       tabIndex={-1}
       key={row.usedCode}
       sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/dash/portal/order/${row.id}`)}
+      onClick={() => navigate(`/portal/order/${row.id}`)}
     >
       {orderTableStruct.map((column) => {
         const value = row[column.id];

@@ -3,7 +3,7 @@ import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { AddWebHostContext } from "src/components/organisms/web/addService/context/AddWebHostContext";
 import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.jpg";
+import mobinNetImage from "src/assets/images/mobinnet.png";
 import {
   DatacenterListResponse,
   useGetUserV2VmDatacenterListQuery,
@@ -95,7 +95,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                     style={{
                       verticalAlign: "center",
                       width: "100%",
-                      height: id === 2 ? "70%" : "100%",
+                      height: "100%",
                     }}
                   />
                 </Stack>

@@ -76,7 +76,7 @@ const EditRabbitService: FC<EditRabbitPropsType> = () => {
     SelectConfig
   ];
 
-  if (!id) return <Navigate to="/dash/rabbit" />;
+  if (!id) return <Navigate to="/rabbit" />;
 
   return (
     <Stack

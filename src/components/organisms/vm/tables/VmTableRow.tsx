@@ -17,7 +17,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseDelete = () => setOpenDelete(false);
 
   const navigate = useNavigate();
-  const settingOnClick = () => navigate("/dash/vm/" + row["id"]);
+  const settingOnClick = () => navigate("/vm/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] = usePostUserV2VmVmKmsGetMutation();
   const monitorOnClick = () =>

@@ -51,7 +51,7 @@ export const ChangePassword: FC = () => {
     })
       .unwrap()
       .then(() => {
-        navigate("/dash");
+        navigate("/");
         toast.success("رمز عبور با موفقیت انجام شد");
       })
       .catch(({ status, data }) => {

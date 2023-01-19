@@ -27,7 +27,7 @@ const AddVm: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/vm");
+      navigate("/vm");
       return;
     }
     setStep((step - 1) as addServerStepsType);
@@ -68,7 +68,7 @@ const AddVm: FC = () => {
         toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
         if (res) {
           let a = document.createElement("a");
-          a.href = "/dash/portal/order/" + res;
+          a.href = "/portal/order/" + res;
           a.click();
         }
       });

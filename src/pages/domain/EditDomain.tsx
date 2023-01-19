@@ -76,7 +76,7 @@ const EditDomain: FC<EditDomainPropsType> = () => {
     EditDomainNs
   ];
 
-  if (!id) return <Navigate to="/dash/domain" />;
+  if (!id) return <Navigate to="/domain" />;
 
   return (
     <Stack

@@ -39,7 +39,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/dash/domain/registerDomain");
+  const createCloudOnClick = () => navigate("/domain/registerDomain");
 
   return (
     <Stack

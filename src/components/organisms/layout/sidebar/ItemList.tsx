@@ -25,13 +25,13 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
 
   const isCollapsed = useMemo(
     () =>
-      pathname !== "/dash" &&
-      pathname !== "/dash/portal/profile" &&
-      pathname !== "/dash/portal/setting" &&
-      pathname !== "/dash/portal/user-services" &&
-      pathname !== "/dash/portal/orders" &&
-      pathname !== "/dash/portal/referral" &&
-      pathname !== "/dash/portal/notifications",
+      pathname !== "/" &&
+      pathname !== "/portal/profile" &&
+      pathname !== "/portal/setting" &&
+      pathname !== "/portal/user-services" &&
+      pathname !== "/portal/orders" &&
+      pathname !== "/portal/referral" &&
+      pathname !== "/portal/notifications",
     [pathname]
   );
 
@@ -83,7 +83,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       <List sx={{ p: 0 }}>
         <ListItem disablePadding sx={{ mb: 3 }}>
           <CustomListItemButton
-            to="/dash"
+            to="/"
             sx={{ px: 0, "&:hover": { bgcolor: "transparent" } }}
           >
             <ListItemIcon>
@@ -93,12 +93,12 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                 sx={{
                   width: 40,
                   height: 40,
-                  bgcolor: pathname === "/dash" ? "#0560FD14" : "#6E768A14",
+                  bgcolor: pathname === "/" ? "#0560FD14" : "#6E768A14",
                   borderRadius: BORDER_RADIUS_1,
                 }}
               >
                 <CategorySvg
-                  mode={pathname === "/dash" ? "selected" : "default"}
+                  mode={pathname === "/" ? "selected" : "default"}
                 />
               </Stack>
             </ListItemIcon>
@@ -110,7 +110,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                   : "opacity 0.5s ease-in",
               }}
               primaryTypographyProps={{
-                color: pathname === "/dash" ? "primary" : "#6E768A",
+                color: pathname === "/" ? "primary" : "#6E768A",
                 fontSize: "16px",
                 fontWeight: 400,
               }}

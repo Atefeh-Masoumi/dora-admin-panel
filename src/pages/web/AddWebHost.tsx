@@ -25,7 +25,7 @@ const AddWebHost: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/dash/web");
+      navigate("/web");
       return;
     }
     setStep((step - 1) as addWebHostStepsType);
@@ -63,7 +63,7 @@ const AddWebHost: FC = () => {
         toast.success("سرویس هاست وب با موفقیت ایجاد شد");
         if (res) {
           let a = document.createElement("a");
-          a.href = "/dash/portal/order/" + res;
+          a.href = "/portal/order/" + res;
           a.click();
         }
       });

@@ -7,7 +7,7 @@ import {
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.jpg";
+import mobinNetImage from "src/assets/images/mobinnet.png";
 
 type SelectDataCenterPropsType = {};
 
@@ -98,7 +98,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                     style={{
                       verticalAlign: "center",
                       width: "100%",
-                      height: id === 2 ? "70%" : "100%",
+                      height: "100%",
                     }}
                   />
                 </Stack>

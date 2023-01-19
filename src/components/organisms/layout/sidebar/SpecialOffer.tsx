@@ -9,7 +9,7 @@ type SpecialOfferPropsType = {};
 export const SpecialOffer: FC<SpecialOfferPropsType> = () => {
   const { pathname } = useLocation();
 
-  const isCollapsed = pathname !== "/dash" && pathname !== "/dash/api";
+  const isCollapsed = pathname !== "/" && pathname !== "/api";
 
   return (
     <Stack

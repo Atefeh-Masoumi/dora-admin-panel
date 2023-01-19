@@ -96,7 +96,7 @@ export const Terms: FC<CreateZonePropsType> = ({ goNext }) => {
         <Button
           fullWidth
           variant="outlined"
-          href="/dash/cdn"
+          href="/cdn"
           sx={{ py: 1.7, px: 5 }}
         >
           انصراف

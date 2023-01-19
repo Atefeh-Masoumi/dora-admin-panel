@@ -74,7 +74,7 @@ const AddDomain: FC = () => {
               inputProps={{ dir: "ltr" }}
             />
             <Stack direction="row" alignItems="center" spacing={1} width="100%">
-              <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/dash/cdn">
+              <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/cdn">
                 انصراف
               </Button>
               <LoadingButton

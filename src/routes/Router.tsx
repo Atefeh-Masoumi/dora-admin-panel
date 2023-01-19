@@ -27,25 +27,25 @@ const Login = lazy(() => import("src/pages/account/Login"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
-const Sales = lazy(() => import("src/pages/portal/Sales"));
-const Profile = lazy(() => import("src/pages/portal/Profile"));
-const Setting = lazy(() => import("src/pages/portal/Setting"));
-const Notification = lazy(() => import("src/pages/portal/Notification"));
-const UserServices = lazy(() => import("src/pages/portal/UserServices"));
-const Supports = lazy(() => import("src/pages/portal/support/Supports"));
+const Sales = lazy(() => import("src/pages/portal/sales/Index"));
+const Profile = lazy(() => import("src/pages/portal/profile/Index"));
+const Setting = lazy(() => import("src/pages/portal/setting/Index"));
+const Notification = lazy(() => import("src/pages/portal/notification/Index"));
+const UserServices = lazy(() => import("src/pages/portal/userService/Index"));
+const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
-const Orders = lazy(() => import("src/pages/portal/order/Orders"));
+const Orders = lazy(() => import("src/pages/portal/order/Inex"));
 const Order = lazy(() => import("src/pages/portal/order/Order"));
-const Referrals = lazy(() => import("src/pages/portal/referral/Referrals"));
+const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
 const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
 
-const Wallet = lazy(() => import("src/pages/portal/billing/Wallet"));
-const Payments = lazy(() => import("src/pages/portal/billing/payment/Payments"));
+const Wallet = lazy(() => import("src/pages/portal/billing/wallet/Index"));
+const Payments = lazy(() => import("src/pages/portal/billing/payment/Index"));
 const Payment = lazy(() => import("src/pages/portal/billing/payment/PaymentCallBack"));
-const UserBills = lazy(() => import("src/pages/portal/billing/userBill/UserBills"));
+const UserBills = lazy(() => import("src/pages/portal/billing/userBill/Index"));
 const UserBill = lazy(() => import("src/pages/portal/billing/userBill/UserBill"));
-const Invoices = lazy(() => import("src/pages/portal/billing/invocie/Invoices"));
+const Invoices = lazy(() => import("src/pages/portal/billing/invocie/Inex"));
 const Invoice = lazy(() => import("src/pages/portal/billing/invocie/Invoice"));
 
 const ZoneIndex = lazy(() => import("src/pages/cdn/Index"));
@@ -100,217 +100,220 @@ const Router: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/dash/account/login" element={<Login />} />
-        <Route path="/dash/account/signup" element={<Signup />} />
-        <Route path="/dash/account/forget" element={<Forget />} />
+        <Route path="/account/login" element={<Login />} />
+        <Route path="/account/signup" element={<Signup />} />
+        <Route path="/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Navigate to="/dash" />} />
           <Route
-            path="/dash/"
+            path="/"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
-            path="/dash/portal/profile"
+            path="/portal/profile"
             element={mainTemplate(Profile, {
               pageTitle: "حساب کاربری",
             })}
           />
           <Route
-            path="/dash/portal/setting"
+            path="/portal/setting"
             element={mainTemplate(Setting, {
               pageTitle: "تنظیمات",
             })}
           />
           <Route
-            path="/dash/portal/referral"
+            path="/portal/referral"
             element={mainTemplate(Referrals, {
               pageTitle: "کد معرف",
             })}
           />
           <Route
-            path="/dash/portal/referral/:id"
+            path="/portal/referral/:id"
             element={callbackTemplate(Referral)}
           />
           <Route
-            path="/dash/portal/user-services"
+            path="/referral/:id"
+            element={callbackTemplate(Referral)}
+          />
+          <Route
+            path="/portal/user-services"
             element={mainTemplate(UserServices, {
               pageTitle: "سرویس های من",
             })}
           />
           <Route
-            path="/dash/portal/sales"
+            path="/portal/sales"
             element={mainTemplate(Sales, {
               link: {
                 text: "بازگشت به داشبورد",
-                url: "/dash/index",
+                url: "/",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/dash/portal/notifications"
+            path="/portal/notifications"
             element={mainTemplate(Notification, {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
           {/* ======================================= Order ======================================= */}
           <Route
-            path="/dash/portal/orders"
+            path="/portal/orders"
             element={mainTemplate(Orders, {
               pageTitle: "سبد خرید",
             })}
           />
           <Route
-            path="/dash/portal/order/:id"
+            path="/portal/order/:id"
             element={mainTemplate(Order, {
               link: {
                 text: "بازگشت به سبد خرید",
-                url: "/dash/portal/orders",
+                url: "/portal/orders",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/dash/portal/supports"
+            path="/portal/supports"
             element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
-            path="/dash/portal/support/:id"
+            path="/portal/support/:id"
             element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/dash/portal/supports",
+                url: "/portal/supports",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/dash/portal/support/AddSupport"
+            path="/portal/support/AddSupport"
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/dash/portal/supports",
+                url: "/portal/supports",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
-          <Route path="/dash/portal/billing" element={<Navigate to="/dash/portal/billing/wallet" />} />
+          <Route path="/portal/billing" element={<Navigate to="/portal/billing/wallet" />} />
           <Route
-            path="/dash/portal/billing/wallet"
+            path="/portal/billing/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
           <Route
-            path="/dash/portal/billing/invoices"
+            path="/portal/billing/invoices"
             element={mainTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
           />
           <Route
-            path="/dash/portal/billing/invoice/:id"
+            path="/portal/billing/invoice/:id"
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/dash/portal/billing/invoices",
+                url: "/portal/billing/invoices",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/dash/portal/billing/payments"
+            path="/portal/billing/payments"
             element={mainTemplate(Payments, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/dash/portal/billing/payment/:id"
+            path="/portal/billing/payment/:id"
             element={mainTemplate(Payment, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/dash/portal/billing/user-bills"
+            path="/portal/billing/user-bills"
             element={mainTemplate(UserBills, {
               pageTitle: "گزارش محاسبات"
             })}
           />
           <Route
-            path="/dash/portal/billing/user-bill/:id"
+            path="/portal/billing/user-bill/:id"
             element={mainTemplate(UserBill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/dash/portal/billing/user-bills",
+                url: "/portal/billing/user-bills",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= CDN ======================================= */}
           <Route
-            path="/dash/cdn"
+            path="/cdn"
             element={mainTemplate(ZoneIndex, {
               pageTitle: "مدیریت دامنه ها",
             })}
           />
           <Route
-            path="/dash/cdn/overview"
+            path="/cdn/overview"
             element={mainTemplate(EditZone, {
               pageTitle: "مشخصات دامنه",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/dash/cdn/dnsRecordSettings"
+            path="/cdn/dnsRecordSettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/dash/cdn/sslTslSettings"
+            path="/cdn/sslTslSettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات SSL/TSL",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/dash/cdn/loadBalanceSettings"
+            path="/cdn/loadBalanceSettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/dash/cdn/apiGatewaySettings"
+            path="/cdn/apiGatewaySettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/dash/cdn/addDomain"
+            path="/cdn/addDomain"
             element={mainTemplate(AddZone, {
-              link: { text: "بازگشت به مدیریت دامنه ها", url: "/dash/cdn" },
+              link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
               hideSidebar: true,
             })}
           />
           {/* ======================================= VM ======================================= */}
           <Route
-            path="/dash/vm"
+            path="/vm"
             element={mainTemplate(VmIndex, {
               pageTitle: "مدیریت سرور ابری",
             })}
           />
           <Route
-            path="/dash/vm/addVm"
+            path="/vm/addVm"
             element={mainTemplate(AddVm, {
               link: {
                 text: "بازگشت به مدیریت سرور ابری",
-                url: "/dash/vm",
+                url: "/vm",
               },
               hideSidebar: true,
             },
@@ -318,13 +321,13 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/dash/vm/:id"
+            path="/vm/:id"
             element={mainTemplate(
               EditVm,
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/dash/vm",
+                  url: "/vm",
                 },
                 hideSidebar: true,
               },
@@ -333,30 +336,30 @@ const Router: FC = () => {
           />
           {/* ======================================= RabbitMQ ======================================= */}
           <Route
-            path="/dash/rabbit"
+            path="/rabbit"
             element={mainTemplate(RabbitIndex, {
               pageTitle: "مدیریت سرویس RabbitMQ",
             })}
           />
           <Route
-            path="/dash/rabbit/addRabbitService"
+            path="/rabbit/addRabbitService"
             element={mainTemplate(
               AddRabbitService,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس RabbitMQ",
-                  url: "/dash/rabbit",
+                  url: "/rabbit",
                 },
                 hideSidebar: true,
               }, AddRabbitContextProvider
             )}
           />
           <Route
-            path="/dash/rabbit/:id"
+            path="/rabbit/:id"
             element={mainTemplate(EditRabbitService, {
               link: {
                 text: "بازگشت به مدیریت سرویس RabbitMQ",
-                url: "/dash/rabbit",
+                url: "/rabbit",
               },
               hideSidebar: true,
             }, EditRabbitContextProvider
@@ -364,19 +367,19 @@ const Router: FC = () => {
           />
           {/* ======================================= WEB ======================================= */}
           <Route
-            path="/dash/web"
+            path="/web"
             element={mainTemplate(WebIndex, {
               pageTitle: "مدیریت هاستینگ ابری",
             })}
           />
           <Route
-            path="/dash/web/addWebHost"
+            path="/web/addWebHost"
             element={mainTemplate(
               AddWebHost,
               {
                 link: {
                   text: "بازگشت به مدیریت هاستینگ ابری",
-                  url: "/dash/web",
+                  url: "/web",
                 },
                 hideSidebar: true,
               }, AddWebHostContextProvider
@@ -384,32 +387,32 @@ const Router: FC = () => {
           />
           {/* ======================================= Domain ======================================= */}
           <Route
-            path="/dash/domain"
+            path="/domain"
             element={mainTemplate(DomainIndex, {
               pageTitle: "مدیریت ثبت/تمدید دامنه",
             })}
           />
           <Route
-            path="/dash/domain/registerDomain"
+            path="/domain/registerDomain"
             element={mainTemplate(
               AddDomain,
               {
                 link: {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
-                  url: "/dash/domain",
+                  url: "/domain",
                 },
                 hideSidebar: true,
               }, AddDomainContextProvider
             )}
           />
           <Route
-            path="/dash/domain/:id"
+            path="/domain/:id"
             element={mainTemplate(
               EditDomain,
               {
                 link: {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
-                  url: "/dash/domain",
+                  url: "/domain",
                 },
                 hideSidebar: true,
               },
@@ -423,7 +426,7 @@ const Router: FC = () => {
             })}
           />
         </Route>
-        <Route path="*" element={<Navigate to="/dash/account/login" />} />
+        <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>
   );

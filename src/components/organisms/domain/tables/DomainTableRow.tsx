@@ -14,7 +14,7 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/dash/domain/" + row["id"]);
+  const settingOnClick = () => navigate("/domain/" + row["id"]);
 
   return (
     <Fragment>

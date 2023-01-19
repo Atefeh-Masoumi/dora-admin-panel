@@ -25,7 +25,7 @@ const DomainManagement: FC = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/dash/cdn/addDomain");
+  const createCloudOnClick = () => navigate("/cdn/addDomain");
 
   const [search, setSearch] = useState("");
 

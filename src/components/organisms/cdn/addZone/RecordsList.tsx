@@ -20,7 +20,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
     createZone({ createZoneModel: { zoneName } })
       .then(() => {
         toast.success("دامنه با موفقیت ایجاد شد");
-        navigate("/dash/cdn");
+        navigate("/cdn");
       })
       .catch((res) => {
         if (res.status === 401 || res.status === 404) {
@@ -113,7 +113,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
         <Button
           fullWidth
           variant="outlined"
-          href="/dash/cdn"
+          href="/cdn"
           sx={{ py: 1.7, px: 5 }}
         >
           انصراف

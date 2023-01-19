@@ -16,9 +16,17 @@ import { supportTableStruct } from "src/components/organisms/portal/support/tabl
 import { SupportTableRow } from "src/components/organisms/portal/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/portal/support/constant";
 import { useGetUserV2PortalSupportListQuery } from "src/app/services/api.generated";
+import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { useNavigate } from "react-router";
 
 const Support: FC = () => {
-  const { data: supportList, isLoading } = useGetUserV2PortalSupportListQuery();
+  const { data: supportList, refetch, isLoading } = useGetUserV2PortalSupportListQuery();
+
+  const navigate = useNavigate();
+
+  const refetchOnClick = () => refetch();
+  const createOnClick = () => navigate("/portal/support/addSupport");
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");
@@ -39,7 +47,7 @@ const Support: FC = () => {
         alignItems="center"
         px={{ xs: 0, md: 2 }}
       >
-        <Grid item order={1}>
+        <Grid item order={{ md: 1 }}>
           <Typography
             variant="text1"
             color="secondary"
@@ -47,17 +55,9 @@ const Support: FC = () => {
           >
             لیست تیکت ها
           </Typography>
-          <Typography
-            variant="title6"
-            color="secondary"
-            fontWeight="700"
-            display={{ xs: "block", md: "none" }}
-          >
-            دسترسی پذیرنده
-          </Typography>
         </Grid>
-        <Grid item order={{ xs: 3, md: 2 }}>
-          <Box width={{ xs: "153px", md: "186px" }}>
+        <Grid item order={{ xs: 2, md: 2 }}>
+          <Box width={{ xs: "160px", md: "185px" }}>
             <SearchBox
               onChange={(text) => setSearch(text)}
               placeholder="جستجو ..."
@@ -65,7 +65,7 @@ const Support: FC = () => {
           </Box>
         </Grid>
         <Grid item order={{ xs: 4, md: 3 }}>
-          <Box component="form" width={{ xs: "160px", md: "180px" }}>
+          <Box component="form" width={{ xs: "160px", md: "185px" }}>
             <DorsaTextField
               inputProps={{ fontSize: "20px !important" }}
               select
@@ -95,16 +95,25 @@ const Support: FC = () => {
             </DorsaTextField>
           </Box>
         </Grid>
-        <Grid item order={4} md display={{ xs: "none", md: "block" }} />
-        <Grid item order={{ xs: 2, md: 4 }}>
+        <Grid item order={{ xs: 3, md: 4 }}>
           <Button
+            onClick={refetchOnClick}
             variant="outlined"
-            href="/dash/portal/support/addSupport"
             size="large"
-            sx={{ whiteSpace: "nowrap", px: 1.2 }}
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
+            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
+            startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
+          >
+            بازخوانی
+          </Button>
+        </Grid>
+
+        <Grid item order={{ xs: 1, md: 5 }}>
+          <Button
+            onClick={createOnClick}
+            variant="outlined"
+            size="large"
+            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
+            startIcon={<Add sx={{ stroke: "rgba(60, 138, 255, 1)" }} />}
           >
             ثبت تیکت جدید
           </Button>
@@ -124,7 +133,7 @@ const Support: FC = () => {
           initialOrder={1}
         />
       </Stack>
-    </Stack>
+    </Stack >
   );
 };
 

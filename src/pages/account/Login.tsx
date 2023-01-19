@@ -39,7 +39,7 @@ const Login: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("شما با موفقیت وارد شدید");
-        navigate("/dash");
+        navigate("/");
       })
       .catch(
         ({ status }: { status: number }) =>

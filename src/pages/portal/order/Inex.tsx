@@ -1,12 +1,16 @@
 import { FC } from "react";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { OrderTableRow } from "src/components/organisms/portal/order/tables/OrderTableRow";
 import { orderTableStruct } from "src/components/organisms/portal/order/tables/struct";
 import { useGetUserV2PortalInvoiceOrderQuery } from "src/app/services/api.generated";
+import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { BORDER_RADIUS_5 } from "src/configs/theme";
 
 const Cart: FC = () => {
-  const { data, isLoading } = useGetUserV2PortalInvoiceOrderQuery();
+  const { data, refetch, isLoading } = useGetUserV2PortalInvoiceOrderQuery();
+
+  const refetchOnClick = () => refetch();
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
@@ -25,6 +29,21 @@ const Cart: FC = () => {
           <Typography variant="text1" color="secondary" whiteSpace="nowrap">
             لیست سبد خرید
           </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Button
+            onClick={refetchOnClick}
+            variant="outlined"
+            size="large"
+            sx={{
+              whiteSpace: "nowrap",
+              px: 1.2,
+              borderRadius: BORDER_RADIUS_5,
+            }}
+            startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
+          >
+            بازخوانی
+          </Button>
         </Stack>
       </Stack>
       <Divider variant="middle" sx={{ my: 2 }} />

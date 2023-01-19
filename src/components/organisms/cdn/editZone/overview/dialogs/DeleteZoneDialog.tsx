@@ -27,7 +27,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
     DeleteZone({ id })
       .unwrap()
       .then(() => {
-        navigate("/dash/cdn");
+        navigate("/cdn");
         toast.error("دامنه مورد نظر حذف شد", { icon: Success });
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));

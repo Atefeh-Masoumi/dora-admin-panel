@@ -82,7 +82,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/dash/portal/supports");
+          navigate("/portal/supports");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
@@ -104,7 +104,7 @@ const Header: FC<HeaderPropsType> = ({
           }}
           onClick={() => {
             closeMenuHandler();
-            navigate("/dash/portal/orders");
+            navigate("/portal/orders");
           }}
         >
           <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />

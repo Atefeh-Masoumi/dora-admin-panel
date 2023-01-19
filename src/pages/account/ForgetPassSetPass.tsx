@@ -51,7 +51,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
 
   useEffect(() => {
     if (!email || !code) {
-      navigate("/dash/account/login");
+      navigate("/account/login");
     }
   }, [email, code, navigate]);
 
@@ -73,7 +73,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
       .then(() => {
         toast.success("گذرواژه با موفقیت آپدیت شد");
         dispatch(resetForgetPasswordStateAction());
-        navigate("/dash/account/login");
+        navigate("/account/login");
       });
   };
 

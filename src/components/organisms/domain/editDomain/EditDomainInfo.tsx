@@ -60,7 +60,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
       .unwrap()
       .then(() => {
         toast.success("درخواست بازسای با موفیت ثبت شد");
-        navigate("/dash/domain");
+        navigate("/domain");
       });
     return;
   };

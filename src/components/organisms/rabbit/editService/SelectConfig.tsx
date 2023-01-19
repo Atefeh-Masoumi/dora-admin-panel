@@ -49,7 +49,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     })
       .unwrap()
       .then(() => {
-        navigate("/dash/rabbit");
+        navigate("/rabbit");
         toast.success("درخواست تغییر سرویس با موفقیت انجام شد");
       });
     return;

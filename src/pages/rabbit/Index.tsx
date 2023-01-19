@@ -39,7 +39,7 @@ const RabbitManagement: FC<RabbitManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/dash/rabbit/addRabbitService");
+  const createCloudOnClick = () => navigate("/rabbit/addRabbitService");
 
   return (
     <Stack

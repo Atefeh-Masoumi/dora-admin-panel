@@ -72,7 +72,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const orderInfo: GetInvoiceResponse = useMemo(() => data || {}, [data]);
 
-  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/dash" />;
+  if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/" />;
 
   const generalInfo = [
     {
@@ -182,7 +182,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
         if (!res || !res.location || !res.status) return;
 
         if (res.invoicePaymentTypeId === 2) {
-          navigate("/dash");
+          navigate("/");
           toast.success("پرداخت با موفقیت انجام شد");
         } else {
           let a = document.createElement("a");

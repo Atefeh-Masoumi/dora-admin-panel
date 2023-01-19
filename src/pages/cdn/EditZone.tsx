@@ -36,7 +36,7 @@ const Domains: FC = () => {
   }, [pathname]);
 
   const handleChange = (_: SyntheticEvent, newValue: string) =>
-    navigate("/dash/cdn/" + newValue);
+    navigate("/cdn/" + newValue);
 
   const renderHandler = () => {
     let result = <></>;
@@ -64,7 +64,7 @@ const Domains: FC = () => {
     return result;
   };
 
-  if (!selectedDomain) return <Navigate to="/dash/cdn" />;
+  if (!selectedDomain) return <Navigate to="/cdn" />;
 
   return (
     <Stack spacing={5} alignItems="center">
