@@ -2344,6 +2344,7 @@ export type GetInvoiceResponse = {
   totalPrice?: number;
   vat?: number;
   invoicePrice?: number;
+  minPrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
 };
 export type InvoicePaymentTypeModel = {

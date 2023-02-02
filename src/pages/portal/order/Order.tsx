@@ -120,7 +120,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
     {
       name: "حداقل موجودی کیف پول برای انجام عملیات",
-      value: orderInfo.invoicePrice ? Math.round(orderInfo.invoicePrice / 10) : 0,
+      value: orderInfo.minPrice,
     },
     {
       name: "مبلغ قابل پرداخت",
