@@ -26,6 +26,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
   CreateDnsRecordModel,
+  EditDnsRecordModel,
   usePostUserV2CdnDnsRecordCreateMutation,
   usePutUserV2CdnDnsRecordEditMutation,
 } from "src/app/services/api.generated";
@@ -58,22 +59,25 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     if (!id) return;
     getInfo({ id })
       .unwrap()
-      .then((res) => {
-        if (!res || !res.type || !res.ttl || !res.name || !res.value) return;
+      .then((response) => {
+        if (!response || !response.type || !response.ttl || !response.name || !response.value) return;
+
+        setType(response.type as dnsType);
+
+        setProxyStatus(response.useProxy || false);
+
         setInitialValues((prevState) => {
           let result = { ...prevState };
-          result.ttl = res.ttl!;
-          result.name = res.name!;
-          result.value = res.value!;
-          result.weight = res.weight || "";
-          result.port = res.port || "";
-          result.priority = res.priority || "";
-          result.preference = res.preference || "";
+          result.ttl = response.ttl!;
+          result.name = response.name!;
+          result.value = response.value!;
+          result.weight = response.weight || "";
+          result.port = response.port || "";
+          result.priority = response.priority || "";
+          result.preference = response.preference || "";
 
           return result;
         });
-        setType(res.type as dnsType);
-        setProxyStatus(res.useProxy || false);
       });
   }, [getInfo, id]);
 
@@ -88,20 +92,20 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     { setSubmitting }
   ) => {
     if (!name || !value) return;
-    let result: CreateDnsRecordModel = {
-      zoneName: selectedDomain?.zoneName!,
-      name,
-      type,
-      ttl,
-      value,
-      useProxy: proxyStatus,
-      preference,
-      priority,
-      weight,
-      port,
-    };
-
     if (id) {
+      let result: EditDnsRecordModel = {
+        id: id,
+        zoneName: selectedDomain?.zoneName!,
+        name,
+        type,
+        ttl,
+        value,
+        useProxy: proxyStatus,
+        preference,
+        priority,
+        weight,
+        port,
+      };
       editDnsRecord({
         editDnsRecordModel: result,
       })
@@ -111,6 +115,19 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           onClose();
         });
     } else {
+      let result: CreateDnsRecordModel = {
+        zoneName: selectedDomain?.zoneName!,
+        name,
+        type,
+        ttl,
+        value,
+        useProxy: proxyStatus,
+        preference,
+        priority,
+        weight,
+        port,
+      };
+
       createDnsRecord({
         createDnsRecordModel: result,
       })

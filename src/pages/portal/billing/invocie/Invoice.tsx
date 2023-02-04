@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import {
   Button,
   Chip,
@@ -14,7 +14,7 @@ import { invoiceTableRow } from "src/components/organisms/portal/invoices/tables
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetUserV2PortalInvoiceGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
-import moment from "jalali-moment";
+// import moment from "jalali-moment";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 const Invoice: FC = () => {
@@ -28,22 +28,32 @@ const Invoice: FC = () => {
       label: "جمع کل",
       value: priceToPersian(invoiceItem?.totalPrice as number),
     },
-    { label: "تخفیف", value: priceToPersian(invoiceItem?.discount as number) },
+    {
+      label: "تخفیف",
+      value: priceToPersian(invoiceItem?.discount as number)
+    },
     {
       label: "مالیات بر ارزش افزوده",
       value: priceToPersian(invoiceItem?.vat as number),
     },
   ];
 
-  const [date, setDate] = useState("");
-  useEffect(() => {
-    if (!invoiceItem || !invoiceItem.invoiceDate) return;
-    const m = moment
-      .from(invoiceItem.invoiceDate, "fa", "YYYY/MM/DD HH:mm:ss")
-      .locale("fa")
-      .format("YYYY/MM/DD");
-    setDate(m);
-  }, [invoiceItem]);
+  // const [date, setDate] = useState("");
+  // const [createDate, setCreateDate] = useState("");
+  // useEffect(() => {
+  //   if (!invoiceItem || !invoiceItem.invoiceDate || !invoiceItem.createDate) return;
+  //   const m = moment
+  //     .from(invoiceItem.invoiceDate, "fa", "YYYY/MM/DD HH:mm:ss")
+  //     .locale("fa")
+  //     .format("YYYY/MM/DD");
+  //   setDate(m);
+
+  //   const m2 = moment
+  //     .from(invoiceItem.createDate, "fa", "YYYY/MM/DD HH:mm:ss")
+  //     .locale("fa")
+  //     .format("YYYY/MM/DD");
+  //   setCreateDate(m2);
+  // }, [invoiceItem]);
 
   return (
     <Stack spacing={2}>
@@ -97,7 +107,7 @@ const Invoice: FC = () => {
                 spacing={1}
                 sx={{ color: "secondary.main" }}
               >
-                <Typography variant="text13">تاریخ ایجاد: {date}</Typography>
+                <Typography variant="text13">تاریخ صورتحساب: {invoiceItem?.invoiceDate}</Typography>
               </Stack>
             )}
             {isLoading ? (
@@ -128,16 +138,34 @@ const Invoice: FC = () => {
           </Stack>
         </Stack>
 
-        <Stack
-          display={{ xs: "flex", md: "none" }}
-          direction="row"
-          spacing={1}
-          sx={{ color: "secondary.main" }}
-        >
-          <Typography fontSize={10}>تاریخ ایجاد: {date}</Typography>
-        </Stack>
+        <Grid container rowGap={3}>
+          <Grid item width="100%">
+            <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
+              <Grid item md={4}>
+                <Typography variant="text9">تاریخ ایجاد: {invoiceItem?.createDate}</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
 
-        <Grid container rowGap={2}>
+          <Grid item width="100%">
+            <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
+              <Grid item md={2}>
+                <Typography variant="text9">
+                  نام فروشنده: {invoiceItem?.sellerName}
+                </Typography>
+              </Grid>
+              <Grid item md={4}>
+                <Typography variant="text9">
+                  شماره تماس: {invoiceItem?.sellerPhone}
+                </Typography>
+              </Grid>
+              <Grid item md>
+                <Typography variant="text9">
+                  آدرس: {invoiceItem?.sellerAddress}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid item width="100%">
             <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
               <Grid item md={2}>
@@ -172,25 +200,6 @@ const Invoice: FC = () => {
                     آدرس: {invoiceItem?.customerAddress}
                   </Typography>
                 )}
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item width="100%">
-            <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
-              <Grid item md={2}>
-                <Typography variant="text9">
-                  نام فروشنده: {invoiceItem?.sellerName}
-                </Typography>
-              </Grid>
-              <Grid item md={4}>
-                <Typography variant="text9">
-                  شماره تماس: {invoiceItem?.sellerPhone}
-                </Typography>
-              </Grid>
-              <Grid item md>
-                <Typography variant="text9">
-                  آدرس: {invoiceItem?.sellerAddress}
-                </Typography>
               </Grid>
             </Grid>
           </Grid>

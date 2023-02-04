@@ -2314,6 +2314,7 @@ export type InvoiceOrderListResponse = {
   invoiceStatus?: string | null;
   invoiceStatusId?: number;
   invoiceDate?: string;
+  createDate?: string;
 };
 export type InvoiceItemModel = {
   product?: string | null;
@@ -2339,6 +2340,7 @@ export type GetInvoiceResponse = {
   invoiceStatusId?: number;
   invoiceStatus?: string | null;
   invoiceDate?: string;
+  createDate?: string;
   netPrice?: number;
   discount?: number;
   totalPrice?: number;
