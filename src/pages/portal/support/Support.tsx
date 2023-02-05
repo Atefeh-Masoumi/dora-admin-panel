@@ -13,10 +13,6 @@ import {
 } from "src/app/services/api.generated";
 
 const Detail: FC = () => {
-  /* const handleOpen = () => setOpen(true);
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false); */
-
   const [file, setFile] = useState<string | Blob>();
   const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
   const handleFileChange = (e: any) => {
@@ -37,14 +33,21 @@ const Detail: FC = () => {
     useGetUserV2PortalSupportItemListBySupportIdQuery({
       supportId: parseInt(id as string),
     });
+
   const [date, setDate] = useState("");
+
   useEffect(() => {
     if (!supportItems || !supportItems.supportDate) return;
     const m = moment
       .from(supportItems.supportDate, "fa", "YYYY/MM/DD HH:mm:ss")
       .locale("fa")
-      .format("YYYY/MM/DD");
+      .format("YYYY/MM/DD ساعت: HH:mm");
     setDate(m);
+  }, [supportItems]);
+
+  useEffect(() => {
+    const el = document.getElementById("chat");
+    if (el) el.scrollTop = el.scrollHeight;
   }, [supportItems]);
 
   const [itemCreate, { isLoading: LoadingSend }] =
@@ -64,11 +67,6 @@ const Detail: FC = () => {
       });
   };
 
-  useEffect(() => {
-    const el = document.getElementById("chat");
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [supportItems]);
-
   return (
     <Fragment>
       <Stack p={2} bgcolor="white" spacing={3} borderRadius={2}>
@@ -84,9 +82,9 @@ const Detail: FC = () => {
             </Typography>
             <Stack direction="row" spacing={1} color="secondary">
               <Typography variant="text9">تاریخ ایجاد: {date}</Typography>
-              <Typography variant="text9">
+              {/* <Typography variant="text9">
                 آخرین بروزرسانی: ۱۹ روز پیش
-              </Typography>
+              </Typography> */}
             </Stack>
           </Stack>
           <Chip
@@ -94,8 +92,8 @@ const Detail: FC = () => {
               supportItems?.supportStatusId === 1
                 ? "در انتظار پاسخ"
                 : supportItems?.supportStatusId === 2
-                  ? "پاسخ داده شده"
-                  : "تکمیل شده"
+                ? "پاسخ داده شده"
+                : "تکمیل شده"
             }
             sx={{
               color:

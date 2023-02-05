@@ -19,7 +19,7 @@ export const api = generatedApi
           method: "POST",
         }),
       }),
-      customMediaControllerUploadVideo: build.mutation<
+      customCreateSupport: build.mutation<
         PostUserV2PortalSupportItemCreateApiResponse,
         PostUserV2PortalSupportCreateApiArg & {
           abortController?: AbortController;
@@ -168,7 +168,7 @@ export const api = generatedApi
   });
 
 export const {
-  useCustomMediaControllerUploadVideoMutation,
+  useCustomCreateSupportMutation,
   useGetUserV2PortalProfileGetNotificationStatusQuery,
   useLazyGetUserV2VmVmIpListByVmIdQuery,
   useLazyGetUserV2VmImageListByDatacenterIdQuery,

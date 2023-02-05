@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, FC } from "react";
+import { useEffect, useState, useRef, FC, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -9,20 +9,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { AxiosProgressEvent } from "axios";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
   useGetUserV2PortalBusinessUnitListQuery,
   useGetUserV2PortalProductCategoryListQuery,
-  usePostUserV2PortalSupportCreateMutation,
   usePostUserV2PortalSupportSubjectSelectListMutation,
 } from "src/app/services/api.generated";
-import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
-import { useCustomMediaControllerUploadVideoMutation } from "src/app/services/api";
-import { useNavigate } from "react-router";
-import { AxiosProgressEvent } from "axios";
+import { useCustomCreateSupportMutation } from "src/app/services/api";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
@@ -41,30 +40,22 @@ const AddTicket: FC = () => {
 
   const [content, setContent] = useState("");
 
-  const [uploadProcessEvent, setUploadProcessEvent] = useState<
-    { loaded: number; total: number } | undefined
-  >();
-
-  const abortController = useRef<AbortController | undefined>();
-
-  abortController.current = new AbortController();
-
   const [selectList] = usePostUserV2PortalSupportSubjectSelectListMutation();
   useEffect(() => {
     selectList({
       selectListModel: { productCategoryId: category, businessUnitId: unit },
     })
       .unwrap()
-      .then((res) => setList(res));
+      .then((res: SetStateAction<SupportSubjectListResponse[]>) =>
+        setList(res)
+      );
   }, [unit, category, selectList]);
 
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File>();
   const [list, setList] = useState<SupportSubjectListResponse[]>([]);
-  const [createTicket, { isLoading: loadingCreate }] =
-    usePostUserV2PortalSupportCreateMutation();
 
-  const [upload] = useCustomMediaControllerUploadVideoMutation();
+  const [upload] = useCustomCreateSupportMutation();
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -77,25 +68,25 @@ const AddTicket: FC = () => {
     setUploading(true);
   };
 
+  const [uploadProcessEvent, setUploadProcessEvent] = useState<
+    { loaded: number; total: number } | undefined
+  >();
+
+  const abortController = useRef<AbortController | undefined>();
+
+  abortController.current = new AbortController();
+
   const submit = () => {
     if (!unit || !content || !title || !category) {
       toast.error("لطفا تمام فیلد ها را پر کنید");
       return;
     }
     let formData = new FormData();
-    formData.append("Content", content);
-    formData.append("BusinessUnitId", "" + unit);
-    formData.append("SupportSubjectId", "" + title);
-    formData.append("ProductCategoryId", "" + category);
-    formData.append("Attachment", file as Blob);
-    createTicket({ body: formData as any })
-      .unwrap()
-      .then(() => toast.success("تیکت با موفقیت اضافه شد"))
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) {
-          toast.error("اطلاعات را کامل وارد کنید");
-        } else toast.error(res.data[""][0]);
-      });
+    formData.append("content", content);
+    formData.append("businessUnitId", "" + unit);
+    formData.append("supportSubjectId", "" + title);
+    formData.append("productCategoryId", "" + category);
+    formData.append("attachment", file as Blob);
     upload({
       body: formData as any,
       abortController: abortController.current,
@@ -110,7 +101,7 @@ const AddTicket: FC = () => {
         toast.success("تیکت با موفقیت اضافه شد");
         navigate("/portal/supports");
       })
-      .catch((res) => {
+      .catch((res: any) => {
         if (res.status === 401 || res.status === 404) {
           toast.error("مشکلی پیش آمده");
         } else {
@@ -354,7 +345,7 @@ const AddTicket: FC = () => {
               انصراف
             </Button>
             <LoadingButton
-              loading={loadingCreate}
+              // loading={loadingCreate}
               onClick={submit}
               fullWidth
               variant="contained"
