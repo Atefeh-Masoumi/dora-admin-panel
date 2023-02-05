@@ -62,7 +62,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           />
         </Box>
       </Stack>
-      {showDialog && <AddLoadBalanceDialog onClose={closeDialog} />}
+      <AddLoadBalanceDialog openDialog={showDialog} onClose={closeDialog} />
     </>
   );
 };

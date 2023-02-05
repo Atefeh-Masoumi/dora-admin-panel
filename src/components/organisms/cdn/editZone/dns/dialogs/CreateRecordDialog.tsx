@@ -15,7 +15,10 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { useAppSelector } from "src/app/hooks";
-import { createDnsRecordType, dnsType } from "src/types/createRecordType";
+import {
+  createDnsRecordType,
+  dnsType,
+} from "src/components/organisms/cdn/editZone/dns/types/createRecordType";
 import {
   createDnsFormValidation,
   dnsTTLItems,
@@ -25,8 +28,6 @@ import {
 import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetUserV2CdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
-  CreateDnsRecordModel,
-  EditDnsRecordModel,
   usePostUserV2CdnDnsRecordCreateMutation,
   usePutUserV2CdnDnsRecordEditMutation,
 } from "src/app/services/api.generated";
@@ -34,21 +35,24 @@ import {
 type CreateRecordDialogPropsType = {
   id?: number;
   onClose: () => void;
+  openDialog: boolean;
 };
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   id,
   onClose,
+  openDialog,
 }) => {
-  const [getInfo, { isLoading: getDetailsLoading }] = useLazyGetUserV2CdnDnsRecordGetByIdQuery();
+  const [getInfo, { isLoading: getDetailsLoading }] =
+    useLazyGetUserV2CdnDnsRecordGetByIdQuery();
 
   const [type, setType] = useState<dnsType>("A");
-  const [proxyStatus, setProxyStatus] = useState(false);
 
   const [initialValues, setInitialValues] = useState<createDnsRecordType>({
-    ttl: "120",
     name: "",
     value: "",
+    ttl: "120",
+    useProxy: false,
     weight: "",
     port: "",
     priority: "",
@@ -60,17 +64,23 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     getInfo({ id })
       .unwrap()
       .then((response) => {
-        if (!response || !response.type || !response.ttl || !response.name || !response.value) return;
+        if (
+          !response ||
+          !response.name ||
+          !response.value ||
+          !response.ttl ||
+          !response.type
+        )
+          return;
 
         setType(response.type as dnsType);
 
-        setProxyStatus(response.useProxy || false);
-
         setInitialValues((prevState) => {
           let result = { ...prevState };
-          result.ttl = response.ttl!;
           result.name = response.name!;
           result.value = response.value!;
+          result.ttl = response.ttl!;
+          result.useProxy = response.useProxy!;
           result.weight = response.weight || "";
           result.port = response.port || "";
           result.priority = response.priority || "";
@@ -83,31 +93,32 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
 
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
 
-  const [createDnsRecord, { isLoading: createDnsRecordLoading }] = usePostUserV2CdnDnsRecordCreateMutation();
+  const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
+    usePostUserV2CdnDnsRecordCreateMutation();
 
-  const [editDnsRecord, { isLoading: editDnsRecordLoading }] = usePutUserV2CdnDnsRecordEditMutation();
+  const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
+    usePutUserV2CdnDnsRecordEditMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
-    { ttl, name, weight, port, value, priority, preference },
+    { ttl, name, weight, port, value, priority, preference, useProxy },
     { setSubmitting }
   ) => {
     if (!name || !value) return;
     if (id) {
-      let result: EditDnsRecordModel = {
-        id: id,
-        zoneName: selectedDomain?.zoneName!,
-        name,
-        type,
-        ttl,
-        value,
-        useProxy: proxyStatus,
-        preference,
-        priority,
-        weight,
-        port,
-      };
       editDnsRecord({
-        editDnsRecordModel: result,
+        editDnsRecordModel: {
+          id: id,
+          zoneName: selectedDomain?.zoneName!,
+          name,
+          type,
+          ttl,
+          value,
+          useProxy,
+          preference,
+          priority,
+          weight,
+          port,
+        },
       })
         .unwrap()
         .then(() => {
@@ -115,21 +126,19 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           onClose();
         });
     } else {
-      let result: CreateDnsRecordModel = {
-        zoneName: selectedDomain?.zoneName!,
-        name,
-        type,
-        ttl,
-        value,
-        useProxy: proxyStatus,
-        preference,
-        priority,
-        weight,
-        port,
-      };
-
       createDnsRecord({
-        createDnsRecordModel: result,
+        createDnsRecordModel: {
+          zoneName: selectedDomain?.zoneName!,
+          name,
+          type,
+          ttl,
+          value,
+          useProxy,
+          preference,
+          priority,
+          weight,
+          port,
+        },
       })
         .unwrap()
         .then(() => {
@@ -142,199 +151,206 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   };
 
   return (
-    <>
+    <Dialog
+      open={openDialog}
+      onClose={onClose}
+      components={{ Backdrop: BlurBackdrop }}
+      maxWidth="xs"
+      fullWidth
+      PaperProps={{
+        sx: { borderRadius: 2.5 },
+      }}
+    >
       {getDetailsLoading && <PageLoading />}
-      <Dialog
-        open
-        onClose={onClose}
-        components={{ Backdrop: BlurBackdrop }}
-        maxWidth="xs"
-        fullWidth
-        PaperProps={{
-          sx: { borderRadius: 2.5 },
-        }}
+      <DialogTitle fontWeight="bold" variant="text1">
+        {id ? "ویرایش DNS" : "ایجاد DNS"}
+      </DialogTitle>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={createDnsFormValidation}
+        onSubmit={submitHandler}
+        enableReinitialize
       >
-        <DialogTitle fontWeight="bold" variant="text1">
-          {id ? "ویرایش DNS" : "ایجاد DNS"}
-        </DialogTitle>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={createDnsFormValidation}
-          onSubmit={submitHandler}
-        >
-          {({ errors, touched, getFieldProps }) => (
-            <Form autoComplete="on">
-              <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
-                <Stack spacing={3}>
-                  <Stack direction="row" spacing={3}>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      select
-                      fullWidth
-                      label="Type"
-                      value={type}
-                      onChange={(e) => setType(e.target.value as dnsType)}
-                    >
-                      {dnsTypeItemsArray.map((type, index) => (
-                        <MenuItem
-                          key={index}
-                          value={type}
-                          sx={{
-                            borderRadius: 1,
-                            backgroundColor: "#F3F4F6",
-                            m: 0.5,
-                            py: 1.5,
-                            color: "secondary",
-                            "&: focus": {
-                              color: "rgba(60, 138, 255, 1)",
-                              backgroundColor: "rgba(60, 138, 255, 0.1)",
-                            },
-                          }}
-                        >
-                          {type}
-                        </MenuItem>
-                      ))}
-                    </DorsaTextField>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      select
-                      fullWidth
-                      label="TTL"
-                      error={Boolean(errors.ttl && touched.ttl)}
-                      helperText={errors.ttl}
-                      {...getFieldProps("ttl")}
-                    >
-                      {dnsTTLItems.map(({ label, value }) => (
-                        <MenuItem
-                          key={value}
-                          value={value}
-                          sx={{
-                            borderRadius: 1,
-                            backgroundColor: "#F3F4F6",
-                            m: 0.5,
-                            py: 1.5,
-                            color: "secondary",
-                            "&: focus": {
-                              color: "rgba(60, 138, 255, 1)",
-                              backgroundColor: "rgba(60, 138, 255, 0.1)",
-                            },
-                          }}
-                        >
-                          {label}
-                        </MenuItem>
-                      ))}
-                    </DorsaTextField>
-                  </Stack>
+        {({ errors, touched, getFieldProps }) => (
+          <Form autoComplete="on">
+            <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
+              <Stack spacing={3}>
+                <Stack direction="row" spacing={3}>
                   <DorsaTextField
-                    error={Boolean(errors.name && touched.name)}
-                    helperText={errors.name}
-                    {...getFieldProps("name")}
-                    inputProps={{ dir: "ltr" }}
-                    label="Name"
-                  />
-                  <DorsaTextField
-                    error={Boolean(errors.value && touched.value)}
-                    helperText={errors.value}
-                    {...getFieldProps("value")}
-                    inputProps={{ dir: "ltr" }}
-                    label={dnsTypeValueLabelObject[type]}
-                  />
-                  {type === "SRV" && (
-                    <>
-                      <DorsaTextField
-                        error={Boolean(errors.priority && touched.priority)}
-                        helperText={errors.priority}
-                        {...getFieldProps("priority")}
-                        inputProps={{ dir: "ltr" }}
-                        label="Priority"
-                      />
-                      <DorsaTextField
-                        error={Boolean(errors.weight && touched.weight)}
-                        helperText={errors.weight}
-                        {...getFieldProps("weight")}
-                        inputProps={{ dir: "ltr" }}
-                        label="Weight"
-                      />
-                      <DorsaTextField
-                        error={Boolean(errors.port && touched.port)}
-                        helperText={errors.port}
-                        {...getFieldProps("port")}
-                        inputProps={{ dir: "ltr" }}
-                        label="Port"
-                      />
-                    </>
-                  )}
-                  {type === "MX" && (
-                    <DorsaTextField
-                      error={Boolean(errors.preference && touched.preference)}
-                      helperText={errors.preference}
-                      {...getFieldProps("preference")}
-                      inputProps={{ dir: "ltr" }}
-                      label="Priority (0 - 65535)"
-                    />
-                  )}
-                </Stack>
-                {(type === "A" || type === "AAAA" || type === "CNAME") && (
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    border={1}
-                    borderColor={
-                      proxyStatus === true ? "primary.light" : "secondary.light"
-                    }
-                    borderRadius={2}
-                    alignItems="center"
-                    p={1.5}
-                    boxShadow={
-                      proxyStatus === true
-                        ? "0px 2px 11px rgba(60, 138, 255, 0.44)"
-                        : "none"
-                    }
+                    inputProps={{ fontSize: "20px !important" }}
+                    select
+                    fullWidth
+                    label="Type"
+                    value={type}
+                    onChange={(e) => setType(e.target.value as dnsType)}
                   >
-                    <Stack color="secondary.main">
-                      <Typography
-                        color={
-                          proxyStatus === true
-                            ? "primary.main"
-                            : "secondary.main"
-                        }
-                        fontSize={16}
+                    {dnsTypeItemsArray.map((type, index) => (
+                      <MenuItem
+                        key={index}
+                        value={type}
+                        sx={{
+                          borderRadius: 1,
+                          backgroundColor: "#F3F4F6",
+                          m: 0.5,
+                          py: 1.5,
+                          color: "secondary",
+                          "&: focus": {
+                            color: "rgba(60, 138, 255, 1)",
+                            backgroundColor: "rgba(60, 138, 255, 0.1)",
+                          },
+                        }}
                       >
-                        استفاده از Proxy
-                      </Typography>
-                      <Typography variant="text8" color="secondary">
-                        با انتخاب این گزینه ترافیک از ابر درسا عبور خواهد کرد
-                      </Typography>
-                    </Stack>
-                    <DorsaSwitch
-                      onChange={() => setProxyStatus(!proxyStatus)}
-                    />
-                  </Stack>
-                )}
-                <Stack direction="row" justifyContent="end" spacing={1}>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ px: 3, py: 0.8 }}
-                    onClick={onClose}
+                        {type}
+                      </MenuItem>
+                    ))}
+                  </DorsaTextField>
+                  <DorsaTextField
+                    inputProps={{ fontSize: "20px !important" }}
+                    select
+                    fullWidth
+                    label="TTL"
+                    error={Boolean(errors.ttl && touched.ttl)}
+                    helperText={errors.ttl}
+                    {...getFieldProps("ttl")}
                   >
-                    انصراف
-                  </Button>
-                  <LoadingButton
-                    component="button"
-                    type="submit"
-                    loading={createDnsRecordLoading || editDnsRecordLoading}
-                    variant="contained"
-                    sx={{ px: 3, py: 0.8 }}
-                  >
-                    ثبت رکورد جدید
-                  </LoadingButton>
+                    {dnsTTLItems.map(({ label, value }) => (
+                      <MenuItem
+                        key={value}
+                        value={value}
+                        sx={{
+                          borderRadius: 1,
+                          backgroundColor: "#F3F4F6",
+                          m: 0.5,
+                          py: 1.5,
+                          color: "secondary",
+                          "&: focus": {
+                            color: "rgba(60, 138, 255, 1)",
+                            backgroundColor: "rgba(60, 138, 255, 0.1)",
+                          },
+                        }}
+                      >
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </DorsaTextField>
                 </Stack>
+                <DorsaTextField
+                  error={Boolean(errors.name && touched.name)}
+                  helperText={errors.name}
+                  {...getFieldProps("name")}
+                  inputProps={{ dir: "ltr" }}
+                  label="Name"
+                />
+                <DorsaTextField
+                  error={Boolean(errors.value && touched.value)}
+                  helperText={errors.value}
+                  {...getFieldProps("value")}
+                  inputProps={{ dir: "ltr" }}
+                  label={dnsTypeValueLabelObject[type]}
+                />
+                {type === "SRV" && (
+                  <>
+                    <DorsaTextField
+                      error={Boolean(errors.priority && touched.priority)}
+                      helperText={errors.priority}
+                      {...getFieldProps("priority")}
+                      inputProps={{ dir: "ltr" }}
+                      label="Priority"
+                    />
+                    <DorsaTextField
+                      error={Boolean(errors.weight && touched.weight)}
+                      helperText={errors.weight}
+                      {...getFieldProps("weight")}
+                      inputProps={{ dir: "ltr" }}
+                      label="Weight"
+                    />
+                    <DorsaTextField
+                      error={Boolean(errors.port && touched.port)}
+                      helperText={errors.port}
+                      {...getFieldProps("port")}
+                      inputProps={{ dir: "ltr" }}
+                      label="Port"
+                    />
+                  </>
+                )}
+                {type === "MX" && (
+                  <DorsaTextField
+                    error={Boolean(errors.preference && touched.preference)}
+                    helperText={errors.preference}
+                    {...getFieldProps("preference")}
+                    inputProps={{ dir: "ltr" }}
+                    label="Priority (0 - 65535)"
+                  />
+                )}
               </Stack>
-            </Form>
-          )}
-        </Formik>
-      </Dialog>
-    </>
+              {(type === "A" || type === "AAAA" || type === "CNAME") && (
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  border={1}
+                  borderColor={
+                    initialValues.useProxy === true
+                      ? "primary.light"
+                      : "secondary.light"
+                  }
+                  borderRadius={2}
+                  alignItems="center"
+                  p={1.5}
+                  boxShadow={
+                    initialValues.useProxy === true
+                      ? "0px 2px 11px rgba(60, 138, 255, 0.44)"
+                      : "none"
+                  }
+                >
+                  <Stack color="secondary.main">
+                    <Typography
+                      color={
+                        initialValues.useProxy === true
+                          ? "primary.main"
+                          : "secondary.main"
+                      }
+                      fontSize={16}
+                    >
+                      استفاده از Proxy
+                    </Typography>
+                    <Typography variant="text8" color="secondary">
+                      با انتخاب این گزینه ترافیک از ابر درسا عبور خواهد کرد
+                    </Typography>
+                  </Stack>
+                  <DorsaSwitch
+                    checked={initialValues.useProxy}
+                    onChange={() =>
+                      setInitialValues((previousState) => ({
+                        ...previousState,
+                        useProxy: !previousState.useProxy,
+                      }))
+                    }
+                  />
+                </Stack>
+              )}
+              <Stack direction="row" justifyContent="end" spacing={1}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
+                  onClick={onClose}
+                >
+                  انصراف
+                </Button>
+                <LoadingButton
+                  component="button"
+                  type="submit"
+                  loading={createDnsRecordLoading || editDnsRecordLoading}
+                  variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
+                >
+                  ثبت رکورد جدید
+                </LoadingButton>
+              </Stack>
+            </Stack>
+          </Form>
+        )}
+      </Formik>
+    </Dialog>
   );
 };

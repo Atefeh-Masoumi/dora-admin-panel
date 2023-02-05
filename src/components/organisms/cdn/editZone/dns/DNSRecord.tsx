@@ -5,7 +5,7 @@ import { Add } from "src/components/atoms/svg/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { zoneTableStruct } from "src/components/organisms/cdn/editZone/dns/tables/struct";
-import { ZoneTableRow } from "./tables/ZoneTableRow";
+import { ZoneTableRow } from "./tables/DnsTableRow";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 import { useGetUserV2CdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
 
@@ -20,9 +20,9 @@ export const DNSRecord: FC = () => {
 
   const filteredList = zoneList?.filter((zone) => zone.name?.includes(search));
 
-  const handleOpen = () => setOpen(true);
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setShowDialog(true);
+  const [showDialog, setShowDialog] = useState(false);
+  const handleClose = () => setShowDialog(false);
 
   return (
     <Stack
@@ -114,7 +114,7 @@ export const DNSRecord: FC = () => {
           />
         </Stack>
       </Stack>
-      {open && <CreateRecordDialog onClose={handleClose} />}
+      <CreateRecordDialog openDialog={showDialog} onClose={handleClose} />
     </Stack>
   );
 };

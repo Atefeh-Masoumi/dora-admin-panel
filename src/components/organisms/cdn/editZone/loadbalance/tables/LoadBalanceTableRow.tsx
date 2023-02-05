@@ -50,13 +50,17 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
       <DeleteLoadBalanceDialog
-        id={row["id"]}
+        id={row.id}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
       />
       {openEdit && (
-        <AddLoadBalanceDialog loadBalance={row} onClose={handleCloseEdit} />
+        <AddLoadBalanceDialog
+          id={row.id}
+          openDialog={openEdit}
+          onClose={handleCloseEdit}
+        />
       )}
     </Fragment>
-  ); 
+  );
 };

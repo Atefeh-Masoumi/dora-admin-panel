@@ -27,16 +27,18 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetUserV2CdnLoadBalanceGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  LoadBalanceListResponse,
-  EditLoadBalanceModel,
   usePostUserV2CdnLoadBalanceCreateMutation,
   usePutUserV2CdnLoadBalanceEditMutation,
 } from "src/app/services/api.generated";
 
-type initialValuesType = Omit<
-  EditLoadBalanceModel,
-  "id" | "destinations" | "dangerousAcceptAnyServerCertificate"
->;
+type InitialValuesType = {
+  id: number;
+  host: string;
+  destinations?: DestinationModel[] | null;
+  loadBalancingPolicyId: number;
+  maxConnectionsPerServer: number;
+  dangerousAcceptAnyServerCertificate: boolean;
+};
 
 const loadBalancePolicyArray = [
   {
@@ -68,43 +70,51 @@ const formValidation = yup.object().shape({
 
 type AddLoadBalanceDialogPropsType = {
   onClose: () => void;
-  loadBalance?: LoadBalanceListResponse;
+  id?: number;
+  openDialog: boolean;
 };
 
 export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
   onClose,
-  loadBalance,
+  id,
+  openDialog,
 }) => {
-  const [initialValues, setInitialValues] = useState<initialValuesType>({
-    host: loadBalance?.host || "",
+  const [initialValues, setInitialValues] = useState<InitialValuesType>({
+    id: 0,
+    host: "",
+    destinations: [],
     loadBalancingPolicyId: 1,
-    maxConnectionsPerServer: loadBalance?.maxConnectionsPerServer || 0,
+    maxConnectionsPerServer: 0,
+    dangerousAcceptAnyServerCertificate: false,
   });
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
 
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
-  const [getDetails, { isLoading: getDetailsLoading }] = useLazyGetUserV2CdnLoadBalanceGetByIdQuery();
+  const [getDetails, { isLoading: getDetailsLoading }] =
+    useLazyGetUserV2CdnLoadBalanceGetByIdQuery();
 
   useEffect(() => {
-    if (!loadBalance?.id) return;
-    getDetails({ id: loadBalance.id })
+    if (!id) return;
+    getDetails({ id: id })
       .unwrap()
       .then((res) => {
         if (res) {
-          res.dangerousAcceptAnyServerCertificate &&
-            setCertificateSwitch(res.dangerousAcceptAnyServerCertificate);
+          if (!res.destinations || !res.host) return;
 
-          res.destinations && setDestinations(res.destinations);
-          res.loadBalancingPolicyId !== undefined &&
-            setInitialValues((prevState) => {
-              let result = { ...prevState };
-              result.loadBalancingPolicyId = res.loadBalancingPolicyId!;
-              return result;
-            });
+          setCertificateSwitch(res.dangerousAcceptAnyServerCertificate!);
+          setDestinations(res.destinations!);
+          setInitialValues((prevState) => {
+            let result = { ...prevState };
+            result.host = res.host as string;
+            result.maxConnectionsPerServer =
+              res.maxConnectionsPerServer as number;
+            result.loadBalancingPolicyId = res.loadBalancingPolicyId!;
+            return result;
+          });
         }
       });
-  }, [getDetails, loadBalance]);
+  }, [getDetails, id]);
 
   const addDestinationInput = () =>
     setDestinations((prevState) => {
@@ -121,17 +131,20 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     });
   };
 
-  const switchChangeHandler = () => setCertificateSwitch((prevState) => !prevState);
+  const switchChangeHandler = () =>
+    setCertificateSwitch((prevState) => !prevState);
 
-  const [createLoadBalance, { isLoading: createLoadBalanceLoading }] = usePostUserV2CdnLoadBalanceCreateMutation();
+  const [createLoadBalance, { isLoading: createLoadBalanceLoading }] =
+    usePostUserV2CdnLoadBalanceCreateMutation();
 
-  const [editLoadBalance, { isLoading: editLoadBalanceLoading }] = usePutUserV2CdnLoadBalanceEditMutation();
+  const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
+    usePutUserV2CdnLoadBalanceEditMutation();
 
-  const submitHandler: formikOnSubmitType<initialValuesType> = (
+  const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
     { setSubmitting }
   ) => {
-    if (loadBalance) {
+    if (id) {
       editLoadBalance({
         editLoadBalanceModel: {
           id: selectedDomain?.id!,
@@ -170,9 +183,8 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
 
   return (
     <>
-      {getDetailsLoading && <PageLoading />}
       <Dialog
-        open
+        open={openDialog}
         onClose={onClose}
         components={{ Backdrop: BlurBackdrop }}
         maxWidth="xs"
@@ -181,13 +193,15 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
           sx: { borderRadius: 2.5 },
         }}
       >
+        {getDetailsLoading && <PageLoading />}
         <DialogTitle fontWeight="bold" variant="text1">
-          {loadBalance ? "ویرایش کلاستر" : "ایجاد کلاستر"}
+          {id ? "ویرایش کلاستر" : "ایجاد کلاستر"}
         </DialogTitle>
         <Formik
           initialValues={initialValues}
           validationSchema={formValidation}
           onSubmit={submitHandler}
+          enableReinitialize
         >
           {({ errors, touched, getFieldProps }) => (
             <Form autoComplete="on">
@@ -211,7 +225,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
                       label="نوع توزیع"
                       error={Boolean(
                         errors.loadBalancingPolicyId &&
-                        touched.loadBalancingPolicyId
+                          touched.loadBalancingPolicyId
                       )}
                       helperText={errors.loadBalancingPolicyId}
                       {...getFieldProps("loadBalancingPolicyId")}
@@ -244,7 +258,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
                       label="حداکثر کانکشن هر سرور"
                       error={Boolean(
                         errors.maxConnectionsPerServer &&
-                        touched.maxConnectionsPerServer
+                          touched.maxConnectionsPerServer
                       )}
                       helperText={errors.maxConnectionsPerServer}
                       {...getFieldProps("maxConnectionsPerServer")}

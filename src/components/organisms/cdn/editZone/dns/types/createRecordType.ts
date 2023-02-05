@@ -10,9 +10,10 @@ export type dnsType =
   | "CAA";
 
 export type createDnsRecordType = {
-  ttl: string;
   name: string;
   value: string;
+  ttl: string;
+  useProxy: boolean;
   weight?: string;
   port?: string;
   priority?: string;
