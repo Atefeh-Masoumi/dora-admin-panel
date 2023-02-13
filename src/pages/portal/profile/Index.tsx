@@ -82,7 +82,7 @@ const Profile: FC = () => {
           )}
         </Stack>
       </Stack>
-      <LegalPersonality isCompany={userInformation?.isCompanyAccount!} />
+      <LegalPersonality isLegal={userInformation?.isLegal || false} />
     </Stack>
   );
 };

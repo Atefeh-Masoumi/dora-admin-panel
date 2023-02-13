@@ -34,7 +34,7 @@ export const billsTableStruct: columnType[] = [
 export const billTableStruct: columnType[] = [
   {
     id: "productCategory",
-    label: "گروه",
+    label: "گروه محصول",
   },
   {
     id: "userProduct",
@@ -47,6 +47,7 @@ export const billTableStruct: columnType[] = [
   {
     id: "duration",
     label: "میزان مصرف (دقیقه)",
+    format: priceToPersian,
   },
   {
     id: "price",

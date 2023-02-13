@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Form, Formik } from "formik";
-import { MenuItem, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   GetUserCompanyResponse,
   useGetUserV2PortalUserCompanyGetQuery,
-  usePutUserV2PortalProfileEditAccountTypeMutation,
   usePutUserV2PortalUserCompanyEditMutation,
+  usePutUserV2PortalProfileEditAccountTypeMutation,
 } from "src/app/services/api.generated";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -17,39 +17,17 @@ import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 
 const formValidation = yup.object().shape({
-  id: yup.number(),
-  userCompanyTypeId: yup.number(),
   name: yup.string(),
   nationalId: yup.string(),
-  registrationNumber: yup.string(),
-  registrationDate: yup.string(),
-  economicNumber: yup.string(),
   businessPhone: yup.string(),
   address: yup.string(),
   postalCode: yup.string(),
 });
 
-const typeItems = [
-  "سهامی عام",
-  "سهامی خاص",
-  "مسئولیت محدود",
-  "تضامنی",
-  "مختلط غیر سهامی",
-  "مختلط سهامی",
-  "نسبی",
-  "تعاونی",
-  "دولتی",
-  "وزارتخانه",
-  "سفارتخانه",
-  "مسجد",
-  "مدرسه",
-  "NGO",
-];
-
-type LegalPersonalityPropsType = { isCompany: boolean };
+type LegalPersonalityPropsType = { isLegal: boolean };
 
 export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
-  isCompany,
+  isLegal,
 }) => {
   const { data } = useGetUserV2PortalUserCompanyGetQuery();
 
@@ -64,40 +42,15 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
     usePutUserV2PortalUserCompanyEditMutation();
 
   const submitHandler: formikOnSubmitType<GetUserCompanyResponse> = (
-    {
-      id,
-      userCompanyTypeId,
-      name,
-      nationalId,
-      registrationNumber,
-      registrationDate,
-      economicNumber,
-      businessPhone,
-      address,
-      postalCode,
-    },
+    { name, nationalId, businessPhone, address, postalCode },
     { setSubmitting }
   ) => {
-    if (
-      !userCompanyTypeId ||
-      !name ||
-      !nationalId ||
-      !registrationNumber ||
-      !registrationDate ||
-      !economicNumber ||
-      !businessPhone ||
-      !address ||
-      !postalCode
-    )
+    if (!name || !nationalId || !businessPhone || !address || !postalCode)
       return;
     editUserCompany({
       editUserCompanyModel: {
-        userCompanyTypeId,
         name,
         nationalId,
-        registrationNumber,
-        registrationDate,
-        economicNumber,
         businessPhone,
         address,
         postalCode,
@@ -117,7 +70,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   const [editType, { isLoading }] =
     usePutUserV2PortalProfileEditAccountTypeMutation();
   const handleChange = () => {
-    editType({ editAccountTypeModel: { isCompanyAccount: !isCompany } });
+    editType({ editAccountTypeModel: { isLegal: !isLegal } });
   };
 
   return (
@@ -125,13 +78,14 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
       {isLoading && <PageLoading />}
       <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
         <Stack direction="row" alignItems="center" spacing={1} py={1}>
-          <DorsaSwitch onChange={handleChange} checked={isCompany || false} />
+          <DorsaSwitch onChange={handleChange} checked={isLegal || false} />
           <Typography>حساب کاربری حقوقی باشد</Typography>
         </Stack>
-        <Stack display={isCompany ? "flex" : "none"} py={2}>
+        <Stack display={isLegal ? "flex" : "none"} py={2}>
           <Formik
             initialValues={companyInfo}
             validationSchema={formValidation}
+            enableReinitialize
             onSubmit={submitHandler}
           >
             {({ errors, touched, getFieldProps }) => (
@@ -139,86 +93,20 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
                 <Stack rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}>
                   <Stack direction="row" spacing={1}>
                     <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      select
-                      fullWidth
-                      label="نوع شرکت"
-                      error={Boolean(
-                        errors.userCompanyTypeId && touched.userCompanyTypeId
-                      )}
-                      helperText={errors.userCompanyTypeId}
-                      {...getFieldProps("userCompanyTypeId")}
-                      defaultValue={""}
-                      value={companyInfo.userCompanyTypeId}
-                    >
-                      {typeItems.map((label, index) => (
-                        <MenuItem
-                          key={index}
-                          value={index + 1}
-                          sx={{
-                            borderRadius: 1,
-                            backgroundColor: "#F3F4F6",
-                            m: 0.5,
-                            py: 1.5,
-                            color: "secondary",
-                            "&: focus": {
-                              color: "rgba(60, 138, 255, 1)",
-                              backgroundColor: "rgba(60, 138, 255, 0.1)",
-                            },
-                          }}
-                        >
-                          {label}
-                        </MenuItem>
-                      ))}
-                    </DorsaTextField>
-                    <DorsaTextField
                       error={Boolean(errors.name && touched.name)}
                       helperText={errors.name}
                       {...getFieldProps("name")}
                       label="نام شرکت"
                       fullWidth
                     />
-                  </Stack>
-                  <Stack direction="row" spacing={1}>
                     <DorsaTextField
                       error={Boolean(errors.nationalId && touched.nationalId)}
                       helperText={errors.nationalId}
                       {...getFieldProps("nationalId")}
-                      label="کد ملی"
+                      label="شناسه ملی"
                       fullWidth
                       inputProps={{ dir: "ltr" }}
                       type="text"
-                    />
-                    <DorsaTextField
-                      error={Boolean(
-                        errors.registrationNumber && touched.registrationNumber
-                      )}
-                      helperText={errors.registrationNumber}
-                      {...getFieldProps("registrationNumber")}
-                      label="کد اقتصادی"
-                      fullWidth
-                      inputProps={{ dir: "ltr" }}
-                    />
-                  </Stack>
-                  <Stack direction="row" spacing={1}>
-                    <DorsaTextField
-                      error={Boolean(
-                        errors.registrationDate && touched.registrationDate
-                      )}
-                      helperText={errors.registrationDate}
-                      {...getFieldProps("registrationDate")}
-                      label="تاریخ ثبت"
-                      fullWidth
-                    />
-                    <DorsaTextField
-                      error={Boolean(
-                        errors.economicNumber && touched.economicNumber
-                      )}
-                      helperText={errors.economicNumber}
-                      {...getFieldProps("economicNumber")}
-                      label="شماره ثبت"
-                      fullWidth
-                      inputProps={{ dir: "ltr" }}
                     />
                   </Stack>
                   <Stack direction="row" spacing={1}>

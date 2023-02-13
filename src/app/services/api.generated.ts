@@ -105,6 +105,28 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getUserV2PortalUserBillList: build.query<
+      GetUserV2PortalUserBillListApiResponse,
+      GetUserV2PortalUserBillListApiArg
+    >({
+      query: () => ({ url: `/user/v2/portal/user-bill/list` }),
+    }),
+    getUserV2PortalUserBillGetById: build.query<
+      GetUserV2PortalUserBillGetByIdApiResponse,
+      GetUserV2PortalUserBillGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/portal/user-bill/get/${queryArg.id}`,
+      }),
+    }),
+    getUserV2PortalUserBillDownloadById: build.query<
+      GetUserV2PortalUserBillDownloadByIdApiResponse,
+      GetUserV2PortalUserBillDownloadByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/portal/user-bill/download/${queryArg.id}`,
+      }),
+    }),
     getUserV2PortalBusinessUnitList: build.query<
       GetUserV2PortalBusinessUnitListApiResponse,
       GetUserV2PortalBusinessUnitListApiArg
@@ -870,28 +892,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getUserV2PortalUserBillList: build.query<
-      GetUserV2PortalUserBillListApiResponse,
-      GetUserV2PortalUserBillListApiArg
-    >({
-      query: () => ({ url: `/user/v2/portal/user-bill/list` }),
-    }),
-    getUserV2PortalUserBillGetById: build.query<
-      GetUserV2PortalUserBillGetByIdApiResponse,
-      GetUserV2PortalUserBillGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/user-bill/get/${queryArg.id}`,
-      }),
-    }),
-    getUserV2PortalUserBillDownloadById: build.query<
-      GetUserV2PortalUserBillDownloadByIdApiResponse,
-      GetUserV2PortalUserBillDownloadByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/user-bill/download/${queryArg.id}`,
-      }),
-    }),
     getUserV2PortalUserCompanyGet: build.query<
       GetUserV2PortalUserCompanyGetApiResponse,
       GetUserV2PortalUserCompanyGetApiArg
@@ -1149,6 +1149,16 @@ export const api = createApi({
         url: `/user/v2/web/web-host/get-login-session/${queryArg.id}`,
       }),
     }),
+    postUserV2WebWebHostCheckDomain: build.mutation<
+      PostUserV2WebWebHostCheckDomainApiResponse,
+      PostUserV2WebWebHostCheckDomainApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/web/web-host/check-domain`,
+        method: "POST",
+        body: queryArg.checkWebHostDomainModel,
+      }),
+    }),
     postUserV2WebWebHostCreate: build.mutation<
       PostUserV2WebWebHostCreateApiResponse,
       PostUserV2WebWebHostCreateApiArg
@@ -1202,20 +1212,20 @@ export const api = createApi({
         url: `/user/v2/cdn/zone/get/${queryArg.zoneName}`,
       }),
     }),
-    getUserV2CdnZoneOverviewByZoneName: build.query<
-      GetUserV2CdnZoneOverviewByZoneNameApiResponse,
-      GetUserV2CdnZoneOverviewByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/overview/${queryArg.zoneName}`,
-      }),
-    }),
     getUserV2CdnZoneGetNsStatusByZoneName: build.query<
       GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse,
       GetUserV2CdnZoneGetNsStatusByZoneNameApiArg
     >({
       query: (queryArg) => ({
         url: `/user/v2/cdn/zone/get-ns-status/${queryArg.zoneName}`,
+      }),
+    }),
+    getUserV2CdnZoneOverviewByZoneName: build.query<
+      GetUserV2CdnZoneOverviewByZoneNameApiResponse,
+      GetUserV2CdnZoneOverviewByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/zone/overview/${queryArg.zoneName}`,
       }),
     }),
     postUserV2CdnZoneCheckZone: build.mutation<
@@ -1405,6 +1415,18 @@ export type PutUserV2CdnApiGatewayEditApiArg = {
 };
 export type DeleteUserV2CdnApiGatewayDeleteByIdApiResponse = unknown;
 export type DeleteUserV2CdnApiGatewayDeleteByIdApiArg = {
+  id: number;
+};
+export type GetUserV2PortalUserBillListApiResponse =
+  /** status 200 Success */ UserBillListResponseModel[];
+export type GetUserV2PortalUserBillListApiArg = void;
+export type GetUserV2PortalUserBillGetByIdApiResponse =
+  /** status 200 Success */ GetUserBillResponseModel;
+export type GetUserV2PortalUserBillGetByIdApiArg = {
+  id: number;
+};
+export type GetUserV2PortalUserBillDownloadByIdApiResponse = unknown;
+export type GetUserV2PortalUserBillDownloadByIdApiArg = {
   id: number;
 };
 export type GetUserV2PortalBusinessUnitListApiResponse =
@@ -1781,18 +1803,6 @@ export type DeleteUserV2PortalUserApiKeyDeleteByIdApiResponse = unknown;
 export type DeleteUserV2PortalUserApiKeyDeleteByIdApiArg = {
   id: number;
 };
-export type GetUserV2PortalUserBillListApiResponse =
-  /** status 200 Success */ UserBillListResponseModel[];
-export type GetUserV2PortalUserBillListApiArg = void;
-export type GetUserV2PortalUserBillGetByIdApiResponse =
-  /** status 200 Success */ GetUserBillResponseModel;
-export type GetUserV2PortalUserBillGetByIdApiArg = {
-  id: number;
-};
-export type GetUserV2PortalUserBillDownloadByIdApiResponse = unknown;
-export type GetUserV2PortalUserBillDownloadByIdApiArg = {
-  id: number;
-};
 export type GetUserV2PortalUserCompanyGetApiResponse =
   /** status 200 Success */ GetUserCompanyResponse[];
 export type GetUserV2PortalUserCompanyGetApiArg = void;
@@ -1939,6 +1949,10 @@ export type GetUserV2WebWebHostGetLoginSessionByIdApiResponse =
 export type GetUserV2WebWebHostGetLoginSessionByIdApiArg = {
   id: number;
 };
+export type PostUserV2WebWebHostCheckDomainApiResponse = unknown;
+export type PostUserV2WebWebHostCheckDomainApiArg = {
+  checkWebHostDomainModel: CheckWebHostDomainModel;
+};
 export type PostUserV2WebWebHostCreateApiResponse = unknown;
 export type PostUserV2WebWebHostCreateApiArg = {
   createWebHostModel: CreateWebHostModel;
@@ -1963,14 +1977,14 @@ export type GetUserV2CdnZoneGetByZoneNameApiResponse =
 export type GetUserV2CdnZoneGetByZoneNameApiArg = {
   zoneName: string;
 };
-export type GetUserV2CdnZoneOverviewByZoneNameApiResponse =
-  /** status 200 Success */ OverviewResponse;
-export type GetUserV2CdnZoneOverviewByZoneNameApiArg = {
-  zoneName: string;
-};
 export type GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse =
   /** status 200 Success */ GetNsStatusResponse;
 export type GetUserV2CdnZoneGetNsStatusByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetUserV2CdnZoneOverviewByZoneNameApiResponse =
+  /** status 200 Success */ OverviewResponse;
+export type GetUserV2CdnZoneOverviewByZoneNameApiArg = {
   zoneName: string;
 };
 export type PostUserV2CdnZoneCheckZoneApiResponse = unknown;
@@ -2105,6 +2119,29 @@ export type EditApiGatewayModel = {
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
+};
+export type UserBillListResponseModel = {
+  id?: number;
+  billDate?: string;
+  netPrice?: number;
+  vat?: number;
+  totalPrice?: number;
+};
+export type UserBillItemsModel = {
+  productCategory?: string | null;
+  userProduct?: string | null;
+  createDate?: string;
+  price?: number;
+  duration?: number;
+};
+export type GetUserBillResponseModel = {
+  id?: number;
+  name?: string | null;
+  billDate?: string;
+  netPrice?: number;
+  vat?: number;
+  totalPrice?: number;
+  userBillItems?: UserBillItemsModel[] | null;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2298,6 +2335,7 @@ export type ChangeNsModel = {
 export type InvoiceListResponse = {
   id?: number;
   invoiceDate?: string;
+  createDate?: string;
   netPrice?: number;
   discount?: number;
   vat?: number;
@@ -2314,7 +2352,6 @@ export type InvoiceOrderListResponse = {
   invoiceStatus?: string | null;
   invoiceStatusId?: number;
   invoiceDate?: string;
-  createDate?: string;
 };
 export type InvoiceItemModel = {
   product?: string | null;
@@ -2443,7 +2480,7 @@ export type GetProfileResponse = {
   nationalId?: string | null;
   birthDate?: string | null;
   address?: string | null;
-  isCompanyAccount?: boolean;
+  isLegal?: boolean;
 };
 export type GetNotificationStatusResponse = {
   id?: string;
@@ -2458,7 +2495,7 @@ export type EditProfileModel = {
   address: string;
 };
 export type EditAccountTypeModel = {
-  isCompanyAccount?: boolean;
+  isLegal?: boolean;
 };
 export type EditEmailModel = {
   email: string;
@@ -2622,49 +2659,16 @@ export type UserApiKeyListResponse = {
 export type CreateUserApiKeyModel = {
   title: string;
 };
-export type UserBillListResponseModel = {
-  id?: number;
-  userId?: string;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
-};
-export type UserBillItemsModel = {
-  product?: string | null;
-  userProduct?: string | null;
-  createDate?: string;
-  price?: number;
-  duration?: number;
-};
-export type GetUserBillResponseModel = {
-  id?: number;
-  name?: string | null;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
-  userBillItems?: UserBillItemsModel[] | null;
-};
 export type GetUserCompanyResponse = {
-  id?: number;
-  userCompanyTypeId?: number;
   name?: string | null;
   nationalId?: string | null;
-  registrationNumber?: string | null;
-  registrationDate?: string | null;
-  economicNumber?: string | null;
   businessPhone?: string | null;
   address?: string | null;
   postalCode?: string | null;
 };
 export type EditUserCompanyModel = {
-  userCompanyTypeId?: number;
   name: string;
   nationalId: string;
-  registrationNumber: string;
-  registrationDate: string;
-  economicNumber: string;
   businessPhone: string;
   address: string;
   postalCode: string;
@@ -2785,6 +2789,9 @@ export type GetWebHostResponse = {
 export type GetLoginSessionResponse = {
   location?: string | null;
 };
+export type CheckWebHostDomainModel = {
+  domainName: string;
+};
 export type CreateWebHostModel = {
   domainName: string;
   datacenterId?: number;
@@ -2814,17 +2821,17 @@ export type GetZoneResponse = {
   isHsts?: boolean;
   isRedirect?: boolean;
 };
+export type GetNsStatusResponse = {
+  status?: boolean;
+  ns?: string[] | null;
+  cloudNs?: string[] | null;
+};
 export type OverviewResponse = {
   id?: number;
   domainName?: string | null;
   statusId?: number;
   status?: string | null;
   createDate?: string;
-};
-export type GetNsStatusResponse = {
-  status?: boolean;
-  ns?: string[] | null;
-  cloudNs?: string[] | null;
 };
 export type CheckZoneModel = {
   zoneName: string;
@@ -2898,6 +2905,9 @@ export const {
   usePostUserV2CdnApiGatewayCreateMutation,
   usePutUserV2CdnApiGatewayEditMutation,
   useDeleteUserV2CdnApiGatewayDeleteByIdMutation,
+  useGetUserV2PortalUserBillListQuery,
+  useGetUserV2PortalUserBillGetByIdQuery,
+  useGetUserV2PortalUserBillDownloadByIdQuery,
   useGetUserV2PortalBusinessUnitListQuery,
   useGetUserV2PortalCalculateMonthListQuery,
   useGetUserV2PortalCommissionListQuery,
@@ -2989,9 +2999,6 @@ export const {
   useGetUserV2PortalUserApiKeyListQuery,
   usePostUserV2PortalUserApiKeyCreateMutation,
   useDeleteUserV2PortalUserApiKeyDeleteByIdMutation,
-  useGetUserV2PortalUserBillListQuery,
-  useGetUserV2PortalUserBillGetByIdQuery,
-  useGetUserV2PortalUserBillDownloadByIdQuery,
   useGetUserV2PortalUserCompanyGetQuery,
   usePutUserV2PortalUserCompanyEditMutation,
   useGetUserV2PortalUserServiceListByProductCategoryIdQuery,
@@ -3023,14 +3030,15 @@ export const {
   useGetUserV2WebWebHostListQuery,
   useGetUserV2WebWebHostGetByIdQuery,
   useGetUserV2WebWebHostGetLoginSessionByIdQuery,
+  usePostUserV2WebWebHostCheckDomainMutation,
   usePostUserV2WebWebHostCreateMutation,
   usePutUserV2WebWebHostEditMutation,
   useDeleteUserV2WebWebHostDeleteByIdMutation,
   usePostUserV2DomainWhoisGetMutation,
   useGetUserV2CdnZoneListQuery,
   useGetUserV2CdnZoneGetByZoneNameQuery,
-  useGetUserV2CdnZoneOverviewByZoneNameQuery,
   useGetUserV2CdnZoneGetNsStatusByZoneNameQuery,
+  useGetUserV2CdnZoneOverviewByZoneNameQuery,
   usePostUserV2CdnZoneCheckZoneMutation,
   usePostUserV2CdnZoneCreateMutation,
   useDeleteUserV2CdnZoneDeleteByIdMutation,
