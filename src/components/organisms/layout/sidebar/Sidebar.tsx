@@ -106,12 +106,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
     {
       Icon: EmptyWalletSvg,
-      link: "/portal/billing",
+      link: "/portal",
       subList: [
-        { title: "گزارش کیف پول", link: "/portal/billing/wallet" },
-        { title: "فاکتور های فروش", link: "/portal/billing/invoices" },
-        { title: "گزارش پرداخت ها", link: "/portal/billing/payments" },
-        { title: "گزارش محاسبات", link: "/portal/billing/user-bills" },
+        { title: "گزارش کیف پول", link: "/portal/wallet" },
+        { title: "فاکتور های فروش", link: "/portal/invoices" },
+        { title: "گزارش پرداخت ها", link: "/portal/payments" },
+        { title: "گزارش محاسبات", link: "/portal/user-bills" },
       ],
     },
     {

@@ -13,7 +13,7 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
       tabIndex={-1}
       key={row.usedCode}
       sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/portal/billing/invoice/${row.id}`)}
+      onClick={() => navigate(`/portal/invoice/${row.id}`)}
     >
       {invoicesTableStruct.map((column) => {
         const value = row[column.id];
