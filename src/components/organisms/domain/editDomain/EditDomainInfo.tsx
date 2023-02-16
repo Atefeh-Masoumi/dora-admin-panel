@@ -7,7 +7,10 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { useNavigate, useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import { useGetUserV2DomainGetByIdQuery, usePutUserV2DomainChangeContactMutation } from "src/app/services/api.generated";
+import {
+  useGetUserV2DomainGetByIdQuery,
+  usePutUserV2DomainChangeContactMutation,
+} from "src/app/services/api.generated";
 
 type EditDomainInfoPropsType = {};
 
@@ -29,7 +32,8 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
 
   const navigate = useNavigate();
 
-  const [changeContactModel, { isLoading: loadEdit }] = usePutUserV2DomainChangeContactMutation();
+  const [changeContactModel, { isLoading: loadEdit }] =
+    usePutUserV2DomainChangeContactMutation();
 
   const submitHandler = () => {
     if (
@@ -42,7 +46,8 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
       !domainData?.postalCode ||
       !domainData?.voice ||
       !domainData?.email
-    ) return;
+    )
+      return;
 
     changeContactModel({
       changeContactModel: {
@@ -66,12 +71,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
   };
 
   return (
-    <Grid2
-      container
-      spacing={3}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Grid2 container spacing={3} alignItems="center" justifyContent="center">
       <Grid2 xs={12} md={8}>
         <Paper
           component={Stack}
@@ -134,7 +134,8 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                   align="center"
                   sx={{ color: ({ palette }) => palette.grey[700] }}
                 >
-                  بعد از تغییر، ایمیلی برای شما ارسال میگردد و بعد از تائید تغییر اعمال میگردد.
+                  بعد از تغییر، ایمیلی برای شما ارسال میگردد و بعد از تائید
+                  تغییر اعمال میگردد.
                 </Typography>
               </Stack>
             </Grid>
@@ -145,6 +146,15 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                   value={domainData?.name}
                   sx={{ minWidth: 300 }}
                   label="نام و نام خانوادگی"
+                  fullWidth
+                  inputProps={{ dir: "ltr" }}
+                />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <DorsaTextField
+                  value={domainData?.email}
+                  sx={{ minWidth: 300 }}
+                  label="ایمیل"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
                 />
@@ -213,7 +223,11 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                   loading={isLoading || loadEdit}
                   variant="contained"
                   onClick={submitHandler}
-                  sx={{ width: { xs: "100%", sm: "auto" }, px: { sm: 8 }, py: 2.1 }}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    px: { sm: 8 },
+                    py: 2.1,
+                  }}
                 >
                   ذخیره اطلاعات
                 </LoadingButton>
@@ -223,7 +237,5 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
         </Paper>
       </Grid2>
     </Grid2>
-
   );
 };
-
