@@ -6,7 +6,7 @@ export const productBundleTableStruct: columnType[] = [
   { id: "name", label: "نام سروریس" },
   { id: "description", label: "توضیحات" },
   {
-    id: "minimumPrice",
+    id: "price",
     label: "قیمت (ماهیانه)",
     format: (x) => priceToPersian(x),
   },

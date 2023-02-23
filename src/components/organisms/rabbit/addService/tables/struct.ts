@@ -6,7 +6,7 @@ export const addRabbitTableStruct: columnType[] = [
   { id: "name", label: "نام سرویس" },
   { id: "description", label: "توضیحات" },
   {
-    id: "minimumPrice",
+    id: "price",
     label: "قیمت (ماهیانه)",
     format: (x) => priceToPersian(x),
   },

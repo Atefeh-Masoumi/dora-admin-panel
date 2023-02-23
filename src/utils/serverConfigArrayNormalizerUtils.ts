@@ -3,7 +3,6 @@ import { GetUserV2PortalProductBundleListByProductCategoryIdApiResponse } from "
 export type normalizedServerConfigArray = {
   productBundleId: number;
   name: string;
-  minimumPrice: number;
   price: number;
   cpu: number;
   memory: number;
@@ -22,7 +21,7 @@ export const serverConfigArrayNormalizerUtils = (
   //     let item: normalizedServerConfigArray = {
   //       productBundleId: productBundleId || 0,
   //       name: name || "",
-  //       minimumPrice: minimumPrice || 0,
+  //       price: price || 0,
   //       price: price || 0,
   //       cpu: 0,
   //       memory: 0,

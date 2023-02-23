@@ -351,6 +351,14 @@ export const api = createApi({
     >({
       query: () => ({ url: `/user/v2/handshake` }),
     }),
+    getUserV2PortalUserServiceListByProductCategoryId: build.query<
+      GetUserV2PortalUserServiceListByProductCategoryIdApiResponse,
+      GetUserV2PortalUserServiceListByProductCategoryIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/portal/user-service/list/${queryArg.productCategoryId}`,
+      }),
+    }),
     getUserV2PortalInvoiceList: build.query<
       GetUserV2PortalInvoiceListApiResponse,
       GetUserV2PortalInvoiceListApiArg
@@ -906,14 +914,6 @@ export const api = createApi({
         url: `/user/v2/portal/user-company/edit`,
         method: "PUT",
         body: queryArg.editUserCompanyModel,
-      }),
-    }),
-    getUserV2PortalUserServiceListByProductCategoryId: build.query<
-      GetUserV2PortalUserServiceListByProductCategoryIdApiResponse,
-      GetUserV2PortalUserServiceListByProductCategoryIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/user-service/list/${queryArg.productCategoryId}`,
       }),
     }),
     getUserV2SmsUserSmsCreditGetBalance: build.query<
@@ -1539,6 +1539,11 @@ export type GetUserV2IndexApiResponse = unknown;
 export type GetUserV2IndexApiArg = void;
 export type GetUserV2HandshakeApiResponse = unknown;
 export type GetUserV2HandshakeApiArg = void;
+export type GetUserV2PortalUserServiceListByProductCategoryIdApiResponse =
+  /** status 200 Success */ UserServiceListResponse[];
+export type GetUserV2PortalUserServiceListByProductCategoryIdApiArg = {
+  productCategoryId: number;
+};
 export type GetUserV2PortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetUserV2PortalInvoiceListApiArg = void;
@@ -1762,7 +1767,7 @@ export type PostUserV2PortalSupportCreateApiArg = {
     Content: string;
     BusinessUnitId: number;
     SupportSubjectId: number;
-    OrderId?: number;
+    HostProductId?: number;
     ProductCategoryId?: number;
     Attachment?: Blob;
   };
@@ -1809,11 +1814,6 @@ export type GetUserV2PortalUserCompanyGetApiArg = void;
 export type PutUserV2PortalUserCompanyEditApiResponse = unknown;
 export type PutUserV2PortalUserCompanyEditApiArg = {
   editUserCompanyModel: EditUserCompanyModel;
-};
-export type GetUserV2PortalUserServiceListByProductCategoryIdApiResponse =
-  /** status 200 Success */ UserServiceListResponse[];
-export type GetUserV2PortalUserServiceListByProductCategoryIdApiArg = {
-  productCategoryId: number;
 };
 export type GetUserV2SmsUserSmsCreditGetBalanceApiResponse =
   /** status 200 Success */ number;
@@ -2157,7 +2157,6 @@ export type CommissionListResponse = {
   totalPrice?: number;
   commissionPrice?: number;
   commissionDate?: string;
-  user?: string | null;
 };
 export type GetUserAnalyticsResponseModel = {
   data?: number[] | null;
@@ -2332,6 +2331,13 @@ export type ChangeNsModel = {
   ns1: string;
   ns2: string;
 };
+export type UserServiceListResponse = {
+  id?: number;
+  name?: string | null;
+  productName?: string | null;
+  status?: string | null;
+  createDate?: string;
+};
 export type InvoiceListResponse = {
   id?: number;
   invoiceDate?: string;
@@ -2461,7 +2467,6 @@ export type ProductBundleListResponse = {
   id?: number;
   name?: string | null;
   description?: string | null;
-  minimumPrice?: number;
   price?: number;
 };
 export type ProductCategoryListResponse = {
@@ -2673,13 +2678,6 @@ export type EditUserCompanyModel = {
   address: string;
   postalCode: string;
 };
-export type UserServiceListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  status?: string | null;
-  createDate?: string;
-};
 export type VmListResponse = {
   id?: number;
   name?: string | null;
@@ -2775,7 +2773,7 @@ export type WebHostListResponse = {
   status?: string | null;
   statusId?: number;
   createDate?: string;
-  expireDate?: string;
+  expireDate?: string | null;
 };
 export type GetWebHostResponse = {
   id?: number;
@@ -2784,7 +2782,7 @@ export type GetWebHostResponse = {
   status?: string | null;
   statusId?: number;
   createDate?: string;
-  expireDate?: string;
+  expireDate?: string | null;
 };
 export type GetLoginSessionResponse = {
   location?: string | null;
@@ -2936,6 +2934,7 @@ export const {
   usePostUserV2DomainResendVerificationByIdMutation,
   useGetUserV2IndexQuery,
   useGetUserV2HandshakeQuery,
+  useGetUserV2PortalUserServiceListByProductCategoryIdQuery,
   useGetUserV2PortalInvoiceListQuery,
   useGetUserV2PortalInvoiceOrderQuery,
   useGetUserV2PortalInvoiceGetByIdQuery,
@@ -3001,7 +3000,6 @@ export const {
   useDeleteUserV2PortalUserApiKeyDeleteByIdMutation,
   useGetUserV2PortalUserCompanyGetQuery,
   usePutUserV2PortalUserCompanyEditMutation,
-  useGetUserV2PortalUserServiceListByProductCategoryIdQuery,
   useGetUserV2SmsUserSmsCreditGetBalanceQuery,
   useGetUserV2VmVmListQuery,
   useGetUserV2VmVmGetByIdQuery,
