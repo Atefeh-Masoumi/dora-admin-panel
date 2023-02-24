@@ -2477,7 +2477,6 @@ export type OrderPayResponse = {
 };
 export type OrderPayModel = {
   id?: number;
-  orderPaymentTypeId?: number;
   paymentProviderId?: number;
 };
 export type OrderPlanListResponse = {

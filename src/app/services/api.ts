@@ -40,16 +40,17 @@ export const api = generatedApi
     addTagTypes: [
       "Profile",
       "Notification",
+      "Order",
+      "Orders",
+      "ZoneData",
       "EditRecordDialog",
       "ProxyStatus",
       "DNSRecordSetting",
-      "ZoneData",
       "LoadBalance",
+      "SslSetting",
       "SupportItems",
-      "CloudServer",
-      "VmData",
-      "CartDetails",
-      "Cart",
+      "VmHosts",
+      "VmHost",
     ],
     endpoints: {
       getUserV2PortalProfileGet: {
@@ -73,23 +74,17 @@ export const api = generatedApi
       getUserV2CdnLoadBalanceListByZoneName: {
         providesTags: () => ["LoadBalance"],
       },
-      getUserV2VmVmList: {
-        providesTags: () => ["CloudServer"],
-      },
-      getUserV2VmVmGetById: {
-        providesTags: () => ["VmData"],
-      },
       getUserV2PortalOrderList: {
-        providesTags: () => ["Cart"],
+        providesTags: () => ["Orders"],
       },
       getUserV2PortalOrderGetById: {
-        providesTags: () => ["CartDetails"],
+        providesTags: () => ["Order"],
       },
       putUserV2PortalOrderPaymentType: {
-        invalidatesTags: () => ["CartDetails"],
+        invalidatesTags: () => ["Order"],
       },
       putUserV2PortalOrderDuration: {
-        invalidatesTags: () => ["CartDetails"],
+        invalidatesTags: () => ["Order"],
       },
       putUserV2PortalProfileEditAccountType: {
         invalidatesTags: () => ["Profile"],
@@ -124,7 +119,6 @@ export const api = generatedApi
       putUserV2CdnZoneChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-
       deleteUserV2CdnLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
@@ -134,35 +128,56 @@ export const api = generatedApi
       putUserV2CdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
+      getUserV2CdnEdgeCertGetByZoneName: {
+        providesTags: () => ["SslSetting"],
+      },
+      getUserV2CdnEdgeCertGetUserCertByZoneName: {
+        providesTags: () => ["SslSetting"],
+      },
+      getUserV2CdnClientCertGetByZoneName: {
+        providesTags: () => ["SslSetting"],
+      },
+      postUserV2CdnEdgeCertCreate: {
+        invalidatesTags: () => ["SslSetting"],
+      },
+      postUserV2CdnEdgeCertCreateUserCert: {
+        invalidatesTags: () => ["SslSetting"],
+      },
       postUserV2PortalSupportItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
+      getUserV2VmVmList: {
+        providesTags: () => ["VmHosts"],
+      },
       postUserV2VmVmCreate: {
-        invalidatesTags: () => ["CloudServer"],
+        invalidatesTags: () => ["VmHosts"],
       },
       deleteUserV2VmVmDeleteById: {
-        invalidatesTags: () => ["CloudServer"],
+        invalidatesTags: () => ["VmHosts"],
       },
       putUserV2VmVmEdit: {
-        invalidatesTags: () => ["CloudServer"],
+        invalidatesTags: () => ["VmHosts"],
+      },
+      getUserV2VmVmGetById: {
+        providesTags: () => ["VmHost"],
       },
       putUserV2VmVmConnectById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
       putUserV2VmVmDisconnectById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
       putUserV2VmVmShutdownById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
       putUserV2VmVmStartById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
       putUserV2VmVmStopById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
       putUserV2VmVmRebootById: {
-        invalidatesTags: () => ["VmData"],
+        invalidatesTags: () => ["VmHost"],
       },
     },
   });
