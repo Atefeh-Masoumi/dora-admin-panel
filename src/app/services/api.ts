@@ -79,11 +79,17 @@ export const api = generatedApi
       getUserV2VmVmGetById: {
         providesTags: () => ["VmData"],
       },
-      getUserV2PortalInvoiceGetById: {
+      getUserV2PortalOrderList: {
+        providesTags: () => ["Cart"],
+      },
+      getUserV2PortalOrderGetById: {
         providesTags: () => ["CartDetails"],
       },
-      getUserV2PortalInvoiceOrder: {
-        providesTags: () => ["Cart"],
+      putUserV2PortalOrderPaymentType: {
+        invalidatesTags: () => ["CartDetails"],
+      },
+      putUserV2PortalOrderDuration: {
+        invalidatesTags: () => ["CartDetails"],
       },
       putUserV2PortalProfileEditAccountType: {
         invalidatesTags: () => ["Profile"],
@@ -158,12 +164,6 @@ export const api = generatedApi
       putUserV2VmVmRebootById: {
         invalidatesTags: () => ["VmData"],
       },
-      putUserV2PortalInvoicePaymentType: {
-        invalidatesTags: () => ["CartDetails"],
-      },
-      putUserV2PortalInvoiceDuration: {
-        invalidatesTags: () => ["CartDetails"],
-      }
     },
   });
 
@@ -180,5 +180,5 @@ export const {
   useLazyGetUserV2PortalWalletPaymentGetByIdQuery,
   useLazyGetUserV2PortalUserBillDownloadByIdQuery,
   useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery,
-  useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery
+  useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery,
 } = api;

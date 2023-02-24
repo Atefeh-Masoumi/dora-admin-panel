@@ -6,7 +6,7 @@ export const orderTableStruct: columnType[] = [
     label: "شناسه سفارش",
   },
   {
-    id: "invoiceDate",
+    id: "orderDate",
     label: "تاریخ",
     type: "date"
   },
@@ -19,11 +19,11 @@ export const orderTableStruct: columnType[] = [
     label: "نام محصول",
   },
   {
-    id: "invoiceType",
+    id: "orderType",
     label: "نوع صورتحساب",
   },
   {
-    id: "invoiceStatus",
+    id: "orderStatus",
     label: "وضعیت",
   },
 ];

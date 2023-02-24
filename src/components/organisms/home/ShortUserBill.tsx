@@ -109,6 +109,13 @@ export const ShortUserBill: FC = () => {
                           color="rgba(19, 25, 32, 1)"
                           fontWeight={500}
                         >
+                          {id}
+                        </Typography>
+                        <Typography
+                          fontSize={14}
+                          color="rgba(19, 25, 32, 1)"
+                          fontWeight={500}
+                        >
                           {date}
                         </Typography>
                         <Typography

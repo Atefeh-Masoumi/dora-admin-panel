@@ -39,17 +39,17 @@ export const OrderTableRow: FC<{ row: any }> = ({ row }) => {
               </Stack>
             ) : (
               <Stack>
-                {column.id === "invoiceStatus" ? (
+                {column.id === "orderStatus" ? (
                   <Chip
                     label={text}
                     sx={{
                       cursor: "pointer",
                       backgroundColor:
-                        row["invoiceStatusId"] === 2
+                        row["orderStatusId"] === 2
                           ? "success.light"
                           : "error.light",
                       color:
-                        row["invoiceStatusId"] === 2
+                        row["orderStatusId"] === 2
                           ? "success.main"
                           : "error.main",
                       py: 2.2,

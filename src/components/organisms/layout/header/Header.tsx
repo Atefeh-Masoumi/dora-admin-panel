@@ -21,7 +21,7 @@ import {
   ArrowForward as ArrowForwardIcon,
   ShoppingCartOutlined as ShoppingCartOutlinedIcon,
 } from "@mui/icons-material";
-import { useGetUserV2PortalInvoiceOrderQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalOrderListQuery } from "src/app/services/api.generated";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -60,7 +60,7 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
-  const { data: notPaidList } = useGetUserV2PortalInvoiceOrderQuery();
+  const { data: notPaidList } = useGetUserV2PortalOrderListQuery();
   const desktopHeaderIcon = (
     <>
       <Notifications />

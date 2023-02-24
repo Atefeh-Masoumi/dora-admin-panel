@@ -20,23 +20,23 @@ import { Navigate, useParams, useNavigate } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import PageLoading from "src/components/atoms/PageLoading";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { priceToPersian } from "src/utils/priceToPersian";
-import {
-  usePostUserV2PortalInvoicePayMutation,
-  usePutUserV2PortalInvoicePaymentTypeMutation,
-  usePutUserV2PortalInvoiceDurationMutation,
-  usePutUserV2PortalInvoiceVoucherMutation,
-  useGetUserV2PortalInvoiceGetByIdQuery,
-  GetInvoiceResponse
-} from "src/app/services/api.generated";
+import AddIcon from "@mui/icons-material/Add";
+import { Wallet } from "@mui/icons-material";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
 import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 import { InvoiceSvg } from "src/components/atoms/svg/InvoiceSvg";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
-import AddIcon from "@mui/icons-material/Add";
-import { Wallet } from "@mui/icons-material";
+import PageLoading from "src/components/atoms/PageLoading";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { priceToPersian } from "src/utils/priceToPersian";
+import {
+  usePostUserV2PortalOrderPayMutation,
+  usePutUserV2PortalOrderPaymentTypeMutation,
+  usePutUserV2PortalOrderDurationMutation,
+  usePutUserV2PortalOrderVoucherMutation,
+  useGetUserV2PortalOrderGetByIdQuery,
+  GetOrderResponse,
+} from "src/app/services/api.generated";
 
 const useDurationArray = [
   { name: "یک ماه", value: "1" },
@@ -48,7 +48,7 @@ const useDurationArray = [
 type OrderDetailsPropsType = {};
 
 const OrderDetails: FC<OrderDetailsPropsType> = () => {
-  const [invoicePaymentTypeId, setInvoicePaymentTypeId] = useState(1);
+  const [orderPaymentTypeId, setOrderPaymentTypeId] = useState(1);
   const [paymentProviderId, setPaymentGateway] = useState(2);
   const [discountCode, setDiscountCode] = useState("");
 
@@ -56,21 +56,26 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
 
   const { id } = useParams();
 
-  const { data, isLoading: getOrderInfoLoading } = useGetUserV2PortalInvoiceGetByIdQuery({
-    id: Number(id),
-  });
+  const { data, isLoading: getOrderInfoLoading } =
+    useGetUserV2PortalOrderGetByIdQuery({
+      id: Number(id),
+    });
 
   useEffect(() => {
-    if (!data || !data.invoicePaymentTypeId) return;
-    setInvoicePaymentTypeId(data.invoicePaymentTypeId);
+    if (!data || !data.orderPaymentTypeId) return;
+    setOrderPaymentTypeId(data.orderPaymentTypeId);
   }, [data]);
 
-  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] = usePutUserV2PortalInvoicePaymentTypeMutation();
-  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] = usePutUserV2PortalInvoiceDurationMutation();
-  const [goToBankPortal, { isLoading: goToBankPortalLoading }] = usePostUserV2PortalInvoicePayMutation();
-  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] = usePutUserV2PortalInvoiceVoucherMutation();
+  const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] =
+    usePutUserV2PortalOrderPaymentTypeMutation();
+  const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] =
+    usePutUserV2PortalOrderDurationMutation();
+  const [orderOnlinePay, { isLoading: orderOnlinePayLoading }] =
+    usePostUserV2PortalOrderPayMutation();
+  const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] =
+    usePutUserV2PortalOrderVoucherMutation();
 
-  const orderInfo: GetInvoiceResponse = useMemo(() => data || {}, [data]);
+  const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
 
   if (!id || (!data && !getOrderInfoLoading)) return <Navigate to="/" />;
 
@@ -80,25 +85,21 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       value: orderInfo.productCategory,
     },
     {
-      name: "نام محصول",
-      value: orderInfo.productBundle,
-    },
-    {
       name: "نام محصول کاربر",
       value: orderInfo.name,
     },
     {
       name: "تاریخ",
-      value: orderInfo.invoiceDate,
+      value: orderInfo.orderDate,
     },
     {
       name: "وضعیت",
-      value: orderInfo.invoiceStatus,
+      value: orderInfo.orderStatus,
     },
-    {
-      name: "نوع صورتحساب",
-      value: orderInfo.prepaidStatus,
-    },
+    // {
+    //   name: "نوع صورتحساب",
+    //   value: orderInfo.prepaidStatus,
+    // },
   ];
 
   const amountInfo = [
@@ -116,26 +117,28 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     },
     {
       name: "جمع مبلغ ماهیانه",
-      value: orderInfo.invoicePrice,
+      value: orderInfo.orderPrice,
     },
     {
-      name: "حداقل موجودی کیف پول برای انجام عملیات",
+      name: "حداقل موجودی (برای پرداخت براساس مصرف)",
       value: orderInfo.minPrice,
     },
     {
       name: "مبلغ قابل پرداخت",
-      value: orderInfo.invoicePrice,
+      value: orderInfo.orderPrice,
     },
   ];
 
-  const discountCodeChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
+  const orderDiscountChangeHandler: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
     setDiscountCode(event.target.value);
   };
 
-  const useDurationChangeHandler = (event: SelectChangeEvent<string>) => {
+  const orderDurationChangeHandler = (event: SelectChangeEvent<string>) => {
     if (!event.target.value) return;
     changeOrderDuration({
-      invoiceDurationModel: {
+      orderDurationModel: {
         id: orderInfo!.id,
         orderDurationId: Number(event.target.value),
       },
@@ -144,11 +147,10 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
       .then(() => toast.success("تغییرات با موفقیت اعمال شد"));
   };
 
-  const billTypeChangeHandler = (value: number) => {
-    if (!value)
-      return;
+  const orderTypeChangeHandler = (value: number) => {
+    if (!value) return;
     changePaymentMethod({
-      invoicePaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === 1 },
+      orderPaymentTypeModel: { id: orderInfo!.id, isPrepaid: value === 1 },
     })
       .unwrap()
       .then(() => {
@@ -159,7 +161,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const applyDiscountHandler = () => {
     if (!discountCode || !orderInfo.id) return;
     applyDiscountCode({
-      invoiceVoucherModel: {
+      orderVoucherModel: {
         id: orderInfo.id,
         voucherCode: discountCode,
       },
@@ -171,17 +173,18 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const submitHandler = () => {
     if (!orderInfo) return;
 
-    goToBankPortal({
-      invoicePayModel: {
+    orderOnlinePay({
+      orderPayModel: {
         id: orderInfo.id,
-        invoicePaymentTypeId: Number(invoicePaymentTypeId),
-        paymentProviderId: Number(paymentProviderId)
+        orderPaymentTypeId: Number(orderPaymentTypeId),
+        paymentProviderId: Number(paymentProviderId),
       },
-    }).unwrap()
+    })
+      .unwrap()
       .then((res) => {
         if (!res || !res.location || !res.status) return;
 
-        if (res.invoicePaymentTypeId === 2) {
+        if (res.orderPaymentTypeId === 2) {
           navigate("/");
           toast.success("پرداخت با موفقیت انجام شد");
         } else {
@@ -228,7 +231,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
               <Grid2
                 container
                 xs={12}
-                sm={4}
+                sm={3}
                 key={index}
                 p={1}
                 wrap="nowrap"
@@ -238,7 +241,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 <Typography sx={{ pr: 1 }}>{name}:</Typography>
                 <Typography
                   color={
-                    index === 4 && orderInfo.invoiceStatusId === 1
+                    index === 4 && orderInfo.orderStatusId === 1
                       ? "error"
                       : "grey.700"
                   }
@@ -274,9 +277,11 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 whiteSpace="nowrap"
               >
                 <Button
-                  onClick={() => billTypeChangeHandler(1)}
+                  onClick={() => orderTypeChangeHandler(1)}
                   variant="outlined"
-                  color={orderInfo!.isPrepaid === true ? "primary" : "secondary"}
+                  color={
+                    orderInfo!.isPrepaid === true ? "primary" : "secondary"
+                  }
                   sx={{
                     border:
                       orderInfo!.isPrepaid === true
@@ -296,9 +301,11 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                   </Stack>
                 </Button>
                 <Button
-                  onClick={() => billTypeChangeHandler(2)}
+                  onClick={() => orderTypeChangeHandler(2)}
                   variant="outlined"
-                  color={orderInfo!.isPrepaid === false ? "primary" : "secondary"}
+                  color={
+                    orderInfo!.isPrepaid === false ? "primary" : "secondary"
+                  }
                   sx={{
                     border:
                       orderInfo!.isPrepaid === false
@@ -314,7 +321,9 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                     alignItems={{ xs: "start", md: "end" }}
                   >
                     <CalculateSvg sx={{ fontSize: { xs: 20, md: 30 } }} />
-                    <Typography variant="text14">پرداخت بر اساس مصرف</Typography>
+                    <Typography variant="text14">
+                      پرداخت بر اساس مصرف
+                    </Typography>
                   </Stack>
                 </Button>
               </Stack>
@@ -345,12 +354,12 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 whiteSpace="nowrap"
               >
                 <Button
-                  onClick={() => setInvoicePaymentTypeId(1)}
+                  onClick={() => setOrderPaymentTypeId(1)}
                   variant="outlined"
-                  color={invoicePaymentTypeId === 1 ? "primary" : "secondary"}
+                  color={orderPaymentTypeId === 1 ? "primary" : "secondary"}
                   sx={{
                     border:
-                      invoicePaymentTypeId === 1
+                      orderPaymentTypeId === 1
                         ? "2px solid #3C8AFF !important"
                         : 1,
                     py: 1,
@@ -367,12 +376,12 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                   </Stack>
                 </Button>
                 <Button
-                  onClick={() => setInvoicePaymentTypeId(2)}
+                  onClick={() => setOrderPaymentTypeId(2)}
                   variant="outlined"
-                  color={invoicePaymentTypeId === 2 ? "primary" : "secondary"}
+                  color={orderPaymentTypeId === 2 ? "primary" : "secondary"}
                   sx={{
                     border:
-                      invoicePaymentTypeId === 2
+                      orderPaymentTypeId === 2
                         ? "2px solid #3C8AFF !important"
                         : 1,
                     py: 1,
@@ -415,7 +424,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 labelId="category-select-label"
                 id="category-select"
                 value={orderInfo.orderDurationId?.toString() || "1"}
-                onChange={useDurationChangeHandler}
+                onChange={orderDurationChangeHandler}
               >
                 {useDurationArray.map(({ value, name }, index) => (
                   <MenuItem value={value} key={index}>
@@ -448,7 +457,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
                 <DorsaTextField
                   fullWidth
                   variant="outlined"
-                  onChange={discountCodeChangeHandler}
+                  onChange={orderDiscountChangeHandler}
                 />
                 <LoadingButton
                   loading={applyDiscountCodeLoading}
@@ -573,7 +582,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
           <Grid2 xs={12} container justifyContent="center">
             <LoadingButton
               disableElevation
-              loading={goToBankPortalLoading}
+              loading={orderOnlinePayLoading}
               size="large"
               variant="contained"
               sx={{ mt: 2, width: { xs: "100%", sm: 250 } }}

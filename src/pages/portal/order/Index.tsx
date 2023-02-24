@@ -3,12 +3,12 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { OrderTableRow } from "src/components/organisms/portal/order/tables/OrderTableRow";
 import { orderTableStruct } from "src/components/organisms/portal/order/tables/struct";
-import { useGetUserV2PortalInvoiceOrderQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalOrderListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 
 const Cart: FC = () => {
-  const { data, refetch, isLoading } = useGetUserV2PortalInvoiceOrderQuery();
+  const { data, refetch, isLoading } = useGetUserV2PortalOrderListQuery();
 
   const refetchOnClick = () => refetch();
 

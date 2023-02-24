@@ -35,7 +35,7 @@ const UserServices = lazy(() => import("src/pages/portal/userService/Index"));
 const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
-const Orders = lazy(() => import("src/pages/portal/order/Inex"));
+const Orders = lazy(() => import("src/pages/portal/order/Index"));
 const Order = lazy(() => import("src/pages/portal/order/Order"));
 const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
 const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
