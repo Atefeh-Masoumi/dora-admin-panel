@@ -45,11 +45,11 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
                     sx={{
                       cursor: "pointer",
                       backgroundColor:
-                        row["invoiceStatusId"] === 2
+                        row["invoiceStatusId"] === 1
                           ? "success.light"
                           : "error.light",
                       color:
-                        row["invoiceStatusId"] === 2
+                        row["invoiceStatusId"] === 1
                           ? "success.main"
                           : "error.main",
                       py: 2.2,

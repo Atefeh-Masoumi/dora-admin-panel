@@ -122,11 +122,11 @@ const Invoice: FC = () => {
                 label={invoiceItem?.invoiceStatus}
                 sx={{
                   backgroundColor:
-                    invoiceItem?.invoiceStatusId === 2
+                    invoiceItem?.invoiceStatusId === 1
                       ? "success.light"
                       : "error.light",
                   color:
-                    invoiceItem?.invoiceStatusId === 2
+                    invoiceItem?.invoiceStatusId === 1
                       ? "success.main"
                       : "error.main",
                   py: { xs: 1.5, md: 2.5 },
@@ -142,7 +142,7 @@ const Invoice: FC = () => {
           <Grid item width="100%">
             <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
               <Grid item md={4}>
-                <Typography variant="text9">تاریخ ایجاد: {invoiceItem?.createDate}</Typography>
+                <Typography variant="text9">تاریخ صورتحساب: {invoiceItem?.invoiceDate}</Typography>
               </Grid>
             </Grid>
           </Grid>

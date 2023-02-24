@@ -51,12 +51,12 @@ export const invoiceTableStruct: columnType[] = [
     label: "تعداد",
   },
   {
-    id: "price",
+    id: "unitPrice",
     label: "مبلغ",
     format: priceToPersian,
   },
   {
-    id: "totalPrice",
+    id: "price",
     label: "جمع کل",
     format: priceToPersian,
   },

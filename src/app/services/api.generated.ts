@@ -2354,7 +2354,6 @@ export type UserServiceListResponse = {
 export type InvoiceListResponse = {
   id?: number;
   invoiceDate?: string;
-  createDate?: string;
   netPrice?: number;
   discount?: number;
   vat?: number;
@@ -2370,12 +2369,6 @@ export type InvoiceItemModel = {
 };
 export type GetInvoiceResponse = {
   id?: number;
-  invoicePaymentTypeId?: number;
-  productCategory?: string | null;
-  name?: string | null;
-  prepaidStatus?: string | null;
-  isPrepaid?: boolean;
-  hostProductDurationId?: number | null;
   sellerName?: string | null;
   sellerAddress?: string | null;
   sellerPhone?: string | null;
@@ -2385,7 +2378,6 @@ export type GetInvoiceResponse = {
   invoiceStatusId?: number;
   invoiceStatus?: string | null;
   invoiceDate?: string;
-  createDate?: string;
   netPrice?: number;
   discount?: number;
   totalPrice?: number;
