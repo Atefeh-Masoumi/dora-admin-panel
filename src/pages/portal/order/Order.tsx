@@ -176,6 +176,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
     orderOnlinePay({
       orderPayModel: {
         id: orderInfo.id,
+        orderPaymentTypeId: Number(orderPaymentTypeId),
         paymentProviderId: Number(paymentProviderId),
       },
     })
