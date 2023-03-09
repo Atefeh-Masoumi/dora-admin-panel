@@ -7,10 +7,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import { useGetUserV2RabbitRabbitHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
+import { useGetUserV2StorageStorageHostGetByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -44,21 +44,21 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
   const { id } = useParams();
 
   const {
-    data: rabbitData,
-    isLoading: getRabbitDataLoading,
-    isFetching: getRabbitDataFetching,
-  } = useGetUserV2RabbitRabbitHostGetByIdQuery({
+    data: storageData,
+    isLoading: getStorageDataLoading,
+    isFetching: getStorageDataFetching,
+  } = useGetUserV2StorageStorageHostGetByIdQuery({
     id: Number(id)!,
   });
 
   const isLoading = useMemo(
-    () => getRabbitDataLoading || getRabbitDataFetching,
-    [getRabbitDataFetching, getRabbitDataLoading]
+    () => getStorageDataLoading || getStorageDataFetching,
+    [getStorageDataFetching, getStorageDataLoading]
   );
 
   const isActive = useMemo(
-    () => rabbitData?.statusId === 2,
-    [rabbitData?.statusId]
+    () => storageData?.statusId === 2,
+    [storageData?.statusId]
   );
 
   return (
@@ -71,14 +71,14 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
         >
           <Typography align="center" fontWeight={700} fontSize={18}>
-            RabbitMQ Service
+            فضای ابری
           </Typography>
           <Divider />
           <BoxRow
             title="Status"
             component={
               <Chip
-                label={rabbitData?.status}
+                label={storageData?.status}
                 sx={{
                   bgcolor: ({ palette }) =>
                     isActive ? palette.success.light : palette.error.light,
@@ -91,18 +91,23 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
-            title="Service Name (VHost)"
-            value={rabbitData?.name}
+            title="Object Storage Name"
+            value={storageData?.name}
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Access"
+            value={storageData?.public}
             isLoading={isLoading}
           />
           <BoxRow
             title="DataCenter"
-            value={rabbitData?.datacenter}
+            value={storageData?.datacenter}
             isLoading={isLoading}
           />
           <BoxRow
             title="Create Date"
-            value={rabbitData?.createDate}
+            value={storageData?.createDate}
             isLoading={isLoading}
           />
         </Paper>

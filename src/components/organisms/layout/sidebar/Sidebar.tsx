@@ -17,6 +17,7 @@ import CoinSvg from "src/components/atoms/svg/CoinSvg";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
 // import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
+import { StorageOutlined } from "@mui/icons-material";
 
 type SidebarPropsType = {};
 
@@ -82,6 +83,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: GlobalSvg,
       link: "/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
+    },
+    {
+      title: "Object Storage",
+      text: "فضای ابری",
+      Icon: StorageOutlined,
+      link: "/storage",
+      subList: [{ title: "فضای ابری", link: "/storage" }],
     },
     // {
     //   title: "SMS",

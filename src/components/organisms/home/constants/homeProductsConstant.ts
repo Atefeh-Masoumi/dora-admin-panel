@@ -5,6 +5,7 @@ import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
+import { StorageOutlined } from "@mui/icons-material";
 
 export const homeProductsConstantListItems = [
   {
@@ -32,7 +33,7 @@ export const homeProductsConstantListItems = [
     title: "Web Hosting",
     text: "سرویس هاستینگ ابری",
     Icon: CoinSvg,
-    bgcolor: "rgba(255, 69, 80, 0.2)",
+    bgcolor: "rgba(230, 69, 80, 0.2)",
     link: "/web",
   },
   {
@@ -41,6 +42,13 @@ export const homeProductsConstantListItems = [
     Icon: BuildingSvg,
     bgcolor: "rgba(159, 69, 255, 0.2)",
     link: "/domain",
+  },
+  {
+    title: "Object Storage",
+    text: "فضای ابری",
+    Icon: StorageOutlined,
+    bgcolor: "rgba(140, 69, 255, 0.1)",
+    link: "/storage",
   },
   // {
   //   title: "SMS",

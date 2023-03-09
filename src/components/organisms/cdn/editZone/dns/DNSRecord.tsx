@@ -9,7 +9,7 @@ import { ZoneTableRow } from "./tables/DnsTableRow";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 import { useGetUserV2CdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
 
-export const DNSRecord: FC = () => {
+export const DnsRecord: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
   const { data: zoneList, isLoading } =
     useGetUserV2CdnDnsRecordListByZoneNameQuery({

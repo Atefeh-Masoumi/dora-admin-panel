@@ -11,4 +11,5 @@ export enum PRODUCT_CATEGORY_ENUM {
   WEB = 13,
   FIREWALL = 14,
   MONITOR = 15,
+  STORAGE = 16
 }

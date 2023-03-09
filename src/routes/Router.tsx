@@ -14,6 +14,8 @@ import EditRabbitContextProvider from "src/components/organisms/rabbit/editServi
 import AddWebHostContextProvider from "src/components/organisms/web/addService/context/AddWebHostContext";
 import AddDomainContextProvider from "src/components/organisms/domain/addDomain/context/AddDomainContext";
 import EditDomainContextProvider from "src/components/organisms/domain/editDomain/context/EditDomainContext";
+import AddStorageContextProvider from "src/components/organisms/storage/add/context/AddStorageContext";
+import EditStorageContextProvider from "src/components/organisms/storage/edit/context/EditStorageContext";
 
 import {
   CallBackTemplate,
@@ -57,8 +59,12 @@ const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
 const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
-const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbitService"));
-const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbitService"));
+const AddRabbitService = lazy(
+  () => import("src/pages/rabbit/AddRabbitService")
+);
+const EditRabbitService = lazy(
+  () => import("src/pages/rabbit/EditRabbitService")
+);
 
 const WebIndex = lazy(() => import("src/pages/web/Index"));
 const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
@@ -66,6 +72,14 @@ const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
 const DomainIndex = lazy(() => import("src/pages/domain/Index"));
 const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
 const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
+
+const StorageIndex = lazy(() => import("src/pages/storage/Index"));
+const AddStorageService = lazy(
+  () => import("src/pages/storage/AddStorageService")
+);
+const EditStorageService = lazy(
+  () => import("src/pages/storage/EditStorageService")
+);
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -130,10 +144,7 @@ const Router: FC = () => {
             path="/portal/referral/:id"
             element={callbackTemplate(Referral)}
           />
-          <Route
-            path="/referral/:id"
-            element={callbackTemplate(Referral)}
-          />
+          <Route path="/referral/:id" element={callbackTemplate(Referral)} />
           <Route
             path="/portal/user-services"
             element={mainTemplate(UserServices, {
@@ -239,7 +250,7 @@ const Router: FC = () => {
           <Route
             path="/portal/user-bills"
             element={mainTemplate(UserBills, {
-              pageTitle: "گزارش محاسبات"
+              pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
@@ -310,13 +321,15 @@ const Router: FC = () => {
           />
           <Route
             path="/vm/addVm"
-            element={mainTemplate(AddVm, {
-              link: {
-                text: "بازگشت به مدیریت سرور ابری",
-                url: "/vm",
+            element={mainTemplate(
+              AddVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm",
+                },
+                hideSidebar: true,
               },
-              hideSidebar: true,
-            },
               AddServerContextProvider
             )}
           />
@@ -351,18 +364,22 @@ const Router: FC = () => {
                   url: "/rabbit",
                 },
                 hideSidebar: true,
-              }, AddRabbitContextProvider
+              },
+              AddRabbitContextProvider
             )}
           />
           <Route
             path="/rabbit/:id"
-            element={mainTemplate(EditRabbitService, {
-              link: {
-                text: "بازگشت به مدیریت سرویس RabbitMQ",
-                url: "/rabbit",
+            element={mainTemplate(
+              EditRabbitService,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس RabbitMQ",
+                  url: "/rabbit",
+                },
+                hideSidebar: true,
               },
-              hideSidebar: true,
-            }, EditRabbitContextProvider
+              EditRabbitContextProvider
             )}
           />
           {/* ======================================= WEB ======================================= */}
@@ -382,7 +399,8 @@ const Router: FC = () => {
                   url: "/web",
                 },
                 hideSidebar: true,
-              }, AddWebHostContextProvider
+              },
+              AddWebHostContextProvider
             )}
           />
           {/* ======================================= Domain ======================================= */}
@@ -402,7 +420,8 @@ const Router: FC = () => {
                   url: "/domain",
                 },
                 hideSidebar: true,
-              }, AddDomainContextProvider
+              },
+              AddDomainContextProvider
             )}
           />
           <Route
@@ -419,6 +438,42 @@ const Router: FC = () => {
               EditDomainContextProvider
             )}
           />
+          {/* ======================================= Storage ======================================= */}
+          <Route
+            path="/storage"
+            element={mainTemplate(StorageIndex, {
+              pageTitle: "مدیریت سرویس فضای ابری",
+            })}
+          />
+          <Route
+            path="/storage/addStorageService"
+            element={mainTemplate(
+              AddStorageService,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس فضای ابری",
+                  url: "/storage",
+                },
+                hideSidebar: true,
+              },
+              AddStorageContextProvider
+            )}
+          />
+          <Route
+            path="/storage/:id"
+            element={mainTemplate(
+              EditStorageService,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس فضای ابری",
+                  url: "/storage",
+                },
+                hideSidebar: true,
+              },
+              EditStorageContextProvider
+            )}
+          />
+
           <Route
             path="*"
             element={mainTemplate(NotFound, {

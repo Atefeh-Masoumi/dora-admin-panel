@@ -825,6 +825,49 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getUserV2StorageStorageHostList: build.query<
+      GetUserV2StorageStorageHostListApiResponse,
+      GetUserV2StorageStorageHostListApiArg
+    >({
+      query: () => ({ url: `/user/v2/storage/storage-host/list` }),
+    }),
+    getUserV2StorageStorageHostGetById: build.query<
+      GetUserV2StorageStorageHostGetByIdApiResponse,
+      GetUserV2StorageStorageHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/storage/storage-host/get/${queryArg.id}`,
+      }),
+    }),
+    postUserV2StorageStorageHostCreate: build.mutation<
+      PostUserV2StorageStorageHostCreateApiResponse,
+      PostUserV2StorageStorageHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/storage/storage-host/create`,
+        method: "POST",
+        body: queryArg.createStorageHostModel,
+      }),
+    }),
+    putUserV2StorageStorageHostEdit: build.mutation<
+      PutUserV2StorageStorageHostEditApiResponse,
+      PutUserV2StorageStorageHostEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/storage/storage-host/edit`,
+        method: "PUT",
+        body: queryArg.editStorageHostModel,
+      }),
+    }),
+    deleteUserV2StorageStorageHostDeleteById: build.mutation<
+      DeleteUserV2StorageStorageHostDeleteByIdApiResponse,
+      DeleteUserV2StorageStorageHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/storage/storage-host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
     getUserV2PortalSupportList: build.query<
       GetUserV2PortalSupportListApiResponse,
       GetUserV2PortalSupportListApiArg
@@ -1771,6 +1814,26 @@ export type DeleteUserV2SmsSmsNumberHostDeleteByIdApiResponse = unknown;
 export type DeleteUserV2SmsSmsNumberHostDeleteByIdApiArg = {
   id: number;
 };
+export type GetUserV2StorageStorageHostListApiResponse =
+  /** status 200 Success */ StorageHostListResponse[];
+export type GetUserV2StorageStorageHostListApiArg = void;
+export type GetUserV2StorageStorageHostGetByIdApiResponse =
+  /** status 200 Success */ GetStorageHostResponse;
+export type GetUserV2StorageStorageHostGetByIdApiArg = {
+  id: number;
+};
+export type PostUserV2StorageStorageHostCreateApiResponse = unknown;
+export type PostUserV2StorageStorageHostCreateApiArg = {
+  createStorageHostModel: CreateStorageHostModel;
+};
+export type PutUserV2StorageStorageHostEditApiResponse = unknown;
+export type PutUserV2StorageStorageHostEditApiArg = {
+  editStorageHostModel: EditStorageHostModel;
+};
+export type DeleteUserV2StorageStorageHostDeleteByIdApiResponse = unknown;
+export type DeleteUserV2StorageStorageHostDeleteByIdApiArg = {
+  id: number;
+};
 export type GetUserV2PortalSupportListApiResponse =
   /** status 200 Success */ SupportListModel[];
 export type GetUserV2PortalSupportListApiArg = void;
@@ -2239,7 +2302,7 @@ export type CreateDnsRecordModel = {
   type: string;
   ttl: string;
   value: string;
-  useProxy?: boolean;
+  useProxy: boolean;
   preference?: string | null;
   flags?: string | null;
   tag?: string | null;
@@ -2255,7 +2318,7 @@ export type EditDnsRecordModel = {
   type: string;
   ttl: string;
   value: string;
-  useProxy?: boolean;
+  useProxy: boolean;
   preference?: string | null;
   flags?: string | null;
   tag?: string | null;
@@ -2360,12 +2423,13 @@ export type InvoiceListResponse = {
   totalPrice?: number;
   invoicePrice?: number;
   invoiceStatusId?: number;
+  invoiceStatus?: string | null;
 };
 export type InvoiceItemModel = {
   product?: string | null;
   quantity?: number;
+  unitPrice?: number;
   price?: number;
-  totalPrice?: number;
 };
 export type GetInvoiceResponse = {
   id?: number;
@@ -2644,6 +2708,38 @@ export type UserSmsNumberListResponse = {
 };
 export type CreateUserSmsNumberModel = {
   id: number;
+};
+export type StorageHostListResponse = {
+  id?: number;
+  datacenter?: string | null;
+  name?: string | null;
+  status?: string | null;
+  statusId?: number;
+  isPublic?: boolean;
+  public?: string | null;
+  createDate?: string;
+  expireDate?: string | null;
+};
+export type GetStorageHostResponse = {
+  id?: number;
+  datacenter?: string | null;
+  name?: string | null;
+  status?: string | null;
+  statusId?: number;
+  isPublic?: boolean;
+  public?: string | null;
+  createDate?: string;
+  expireDate?: string | null;
+};
+export type CreateStorageHostModel = {
+  name: string;
+  isPublic?: boolean;
+  datacenterId?: number;
+  productBundleId?: number;
+};
+export type EditStorageHostModel = {
+  id?: number;
+  productBundleId?: number;
 };
 export type SupportListModel = {
   id?: number;
@@ -3010,6 +3106,11 @@ export const {
   useGetUserV2SmsSmsNumberHostListQuery,
   usePostUserV2SmsSmsNumberHostCreateMutation,
   useDeleteUserV2SmsSmsNumberHostDeleteByIdMutation,
+  useGetUserV2StorageStorageHostListQuery,
+  useGetUserV2StorageStorageHostGetByIdQuery,
+  usePostUserV2StorageStorageHostCreateMutation,
+  usePutUserV2StorageStorageHostEditMutation,
+  useDeleteUserV2StorageStorageHostDeleteByIdMutation,
   useGetUserV2PortalSupportListQuery,
   usePostUserV2PortalSupportCreateMutation,
   useGetUserV2PortalSupportItemListBySupportIdQuery,

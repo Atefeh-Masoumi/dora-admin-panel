@@ -5,7 +5,7 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { useAppSelector } from "src/app/hooks";
 import { SSLSetting } from "src/components/organisms/cdn/editZone/ssl/Ssl";
-import { DNSRecord } from "src/components/organisms/cdn/editZone/dns/DnsRecord";
+import { DnsRecord } from "src/components/organisms/cdn/editZone/dns/DnsRecord";
 import LoadBalance from "src/components/organisms/cdn/editZone/loadbalance/LoadBalance";
 import { ZoneInfo } from "src/components/organisms/cdn/editZone/overview/ZoneInfo";
 
@@ -46,7 +46,7 @@ const Domains: FC = () => {
         result = <ZoneInfo />;
         break;
       case "dnsRecordSettings":
-        result = <DNSRecord />;
+        result = <DnsRecord />;
         break;
       case "sslTslSettings":
         result = <SSLSetting />;
