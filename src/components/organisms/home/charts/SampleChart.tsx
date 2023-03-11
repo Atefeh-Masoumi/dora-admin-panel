@@ -18,7 +18,9 @@ type SampleChartPropsType = {
 
 export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
   const { data: userAnalytics, isLoading } =
-    useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery({ categoryId });
+    useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery({
+      categoryId,
+    });
   return (
     <Fragment>
       {isLoading ? (

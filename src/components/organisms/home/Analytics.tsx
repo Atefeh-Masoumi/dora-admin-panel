@@ -14,7 +14,7 @@ import {
   BORDER_RADIUS_4,
   BORDER_RADIUS_5,
 } from "src/configs/theme";
-import { SampleChart } from "../../charts/SampleChart";
+import { SampleChart } from "./charts/SampleChart";
 import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 
 export const Analytics: FC = () => {

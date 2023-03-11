@@ -278,6 +278,13 @@ const Router: FC = () => {
             })}
           />
           <Route
+            path="/cdn/analytics"
+            element={mainTemplate(EditZone, {
+              pageTitle: "آنالیز ترافیک",
+              RightComponent: DomainSelect,
+            })}
+          />
+          <Route
             path="/cdn/dnsRecordSettings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",

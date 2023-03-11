@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material";
-import { Balance } from "./wallet/Balance";
-import { Analytics } from "./wallet/Analytics";
+import { Balance } from "./Balance";
+import { Analytics } from "./Analytics";
 
 export const Wallet: FC = () => {
   return (

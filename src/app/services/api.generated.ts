@@ -50,14 +50,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/user/v2/account/logout`, method: "POST" }),
     }),
-    postUserV2CdnAnalyticGet: build.mutation<
-      PostUserV2CdnAnalyticGetApiResponse,
-      PostUserV2CdnAnalyticGetApiArg
+    getUserV2CdnAnalyticGetByZoneNameAndPeriodId: build.query<
+      GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiResponse,
+      GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/user/v2/cdn/analytic/get`,
-        method: "POST",
-        body: queryArg.getAnalyticModel,
+        url: `/user/v2/cdn/analytic/get/${queryArg.zoneName}/${queryArg.periodId}`,
       }),
     }),
     getUserV2CdnApiGatewayListByZoneName: build.query<
@@ -1441,10 +1439,11 @@ export type PostUserV2AccountForgotConfirmApiArg = {
 };
 export type PostUserV2AccountLogoutApiResponse = unknown;
 export type PostUserV2AccountLogoutApiArg = void;
-export type PostUserV2CdnAnalyticGetApiResponse =
-  /** status 200 Success */ GetAnalyticResponseModel[];
-export type PostUserV2CdnAnalyticGetApiArg = {
-  getAnalyticModel: GetAnalyticModel;
+export type GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiResponse =
+  /** status 200 Success */ GetAnalyticResponseModel;
+export type GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiArg = {
+  zoneName: string;
+  periodId: number;
 };
 export type GetUserV2CdnApiGatewayListByZoneNameApiResponse =
   /** status 200 Success */ ApiGatewayListResponse[];
@@ -2152,13 +2151,13 @@ export type ConfirmForgotModel = {
   confirmCode: string;
   password: string;
 };
-export type GetAnalyticResponseModel = {
-  data?: number[] | null;
+export type SeriesModel = {
   name?: string | null;
+  data?: number[] | null;
 };
-export type GetAnalyticModel = {
-  periodId?: number;
-  zoneName?: string | null;
+export type GetAnalyticResponseModel = {
+  categories?: string[] | null;
+  series?: SeriesModel[] | null;
 };
 export type ApiGatewayListResponse = {
   id?: number;
@@ -3014,7 +3013,7 @@ export const {
   usePostUserV2AccountForgotMutation,
   usePostUserV2AccountForgotConfirmMutation,
   usePostUserV2AccountLogoutMutation,
-  usePostUserV2CdnAnalyticGetMutation,
+  useGetUserV2CdnAnalyticGetByZoneNameAndPeriodIdQuery,
   useGetUserV2CdnApiGatewayListByZoneNameQuery,
   useGetUserV2CdnApiGatewayGetByIdQuery,
   usePostUserV2CdnApiGatewayCreateMutation,

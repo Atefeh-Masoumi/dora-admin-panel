@@ -39,6 +39,14 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           link: "/cdn",
         },
         {
+          title: "اطلاعات دامنه",
+          link: "/cdn/overview",
+        },
+        {
+          title: "آنالیز ترافیک",
+          link: "/cdn/analytics",
+        },
+        {
           title: "تنظیمات DNS Record",
           link: "/cdn/dnsRecordSettings",
         },
