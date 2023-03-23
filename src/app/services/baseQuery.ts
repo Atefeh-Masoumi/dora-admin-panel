@@ -5,7 +5,7 @@ import { logoutAction } from "../slice/authSlice";
 import { RootStateType } from "../store";
 
 const defaultErrorMessage =
-  "به نظر مشکلی پیش آمده است، لطفاً چند دقیقه دیگر دوباره امتحان کنید";
+  "مشکلی پیش آمده است، لطفاً چند دقیقه دیگر دوباره امتحان کنید";
 
 export const baseUrl =
   process.env.NODE_ENV === "development"
@@ -39,8 +39,10 @@ export const baseQuery: BaseQueryFn<
   try {
     const { auth } = getState() as RootStateType;
 
+    type AuthorizedRequest = Express.Request & { authorization: string };
+
     const axiosHeader = () => {
-      let result = { ...headers };
+      let result = { ...headers } as AuthorizedRequest;
       if (auth?.accessToken) {
         result.authorization = `Bearer ${auth.accessToken}`;
       }
