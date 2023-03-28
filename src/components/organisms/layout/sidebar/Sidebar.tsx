@@ -72,6 +72,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       subList: [{ title: "سرویس سرور‌های ابری", link: "/vm" }],
     },
     {
+      title: "Object Storage",
+      text: "فضای ابری",
+      Icon: StorageOutlined,
+      link: "/storage",
+      subList: [{ title: "فضای ابری", link: "/storage" }],
+    },
+    {
       title: "RabbitMQ",
       text: "سرویس RabbitMQ ابری",
       Icon: DeviceMessageSvg,
@@ -91,13 +98,6 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: GlobalSvg,
       link: "/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
-    },
-    {
-      title: "Object Storage",
-      text: "فضای ابری",
-      Icon: StorageOutlined,
-      link: "/storage",
-      subList: [{ title: "فضای ابری", link: "/storage" }],
     },
     // {
     //   title: "SMS",

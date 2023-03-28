@@ -23,6 +23,13 @@ export const homeProductsConstantListItems = [
     link: "/vm",
   },
   {
+    title: "Object Storage",
+    text: "فضای ابری",
+    Icon: StorageOutlined,
+    bgcolor: "rgba(140, 69, 255, 0.1)",
+    link: "/storage",
+  },
+  {
     title: "RabbitMQ",
     text: "سرویس RabbitMQ ابری",
     Icon: DeviceMessageSvg,
@@ -42,13 +49,6 @@ export const homeProductsConstantListItems = [
     Icon: BuildingSvg,
     bgcolor: "rgba(159, 69, 255, 0.2)",
     link: "/domain",
-  },
-  {
-    title: "Object Storage",
-    text: "فضای ابری",
-    Icon: StorageOutlined,
-    bgcolor: "rgba(140, 69, 255, 0.1)",
-    link: "/storage",
   },
   // {
   //   title: "SMS",
