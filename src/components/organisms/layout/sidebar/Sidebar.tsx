@@ -127,7 +127,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         { title: "گزارش کیف پول", link: "/portal/wallet" },
         { title: "فاکتور های فروش", link: "/portal/invoices" },
         { title: "گزارش پرداخت ها", link: "/portal/payments" },
-        { title: "گزارش محاسبات", link: "/portal/user-bills" },
+        { title: "گزارش محاسبات", link: "/portal/bills" },
       ],
     },
     {
@@ -161,7 +161,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       pathname === "/" ||
       pathname === "/portal/profile" ||
       pathname === "/portal/setting" ||
-      pathname === "/portal/user-services" ||
+      pathname === "/portal/host-products" ||
       pathname === "/portal/orders" ||
       pathname === "/portal/referral" ||
       pathname === "/portal/notifications",

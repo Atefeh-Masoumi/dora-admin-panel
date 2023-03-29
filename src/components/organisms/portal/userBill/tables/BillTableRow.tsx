@@ -13,7 +13,7 @@ export const BillsTableRow: FC<{ row: any }> = ({ row }) => {
       tabIndex={-1}
       key={row.id}
       sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/portal/user-bill/${row.id}`)}
+      onClick={() => navigate(`/portal/bill/${row.id}`)}
     >
       {billsTableStruct.map((column) => {
         const value = row[column.id];

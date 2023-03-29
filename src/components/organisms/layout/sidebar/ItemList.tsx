@@ -28,7 +28,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       pathname !== "/" &&
       pathname !== "/portal/profile" &&
       pathname !== "/portal/setting" &&
-      pathname !== "/portal/user-services" &&
+      pathname !== "/portal/host-products" &&
       pathname !== "/portal/orders" &&
       pathname !== "/portal/referral" &&
       pathname !== "/portal/notifications",

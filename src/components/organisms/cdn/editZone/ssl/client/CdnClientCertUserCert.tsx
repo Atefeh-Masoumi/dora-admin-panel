@@ -1,55 +1,37 @@
-import type { FC } from "react";
-import { Divider, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg/AddSvg";
-import {
-  usePostUserV2CdnEdgeCertCreateMutation,
-  useGetUserV2CdnEdgeCertGetByZoneNameQuery,
-} from "src/app/services/api.generated";
+import { Button, Divider, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
+import { useGetUserV2CdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
+import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
 
-export const CloudCertification: FC = () => {
+export const CdnClientCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const [createLicense, { isLoading: loadingCreate }] =
-    usePostUserV2CdnEdgeCertCreateMutation();
+  const zoneName = selectedDomain?.zoneName || "";
 
-  const { data: edgeCert, isLoading } =
-    useGetUserV2CdnEdgeCertGetByZoneNameQuery({
-      zoneName: selectedDomain?.zoneName || "",
-    });
+  const { data: userCert, isLoading } =
+    useGetUserV2CdnClientCertGetUserCertByZoneNameQuery({ zoneName });
 
-  const submit = () => {
-    createLicense({
-      createZoneEdgeCertificateModel: {
-        zoneName: selectedDomain?.zoneName || "",
-      },
-    })
-      .unwrap()
-      .then(() => toast.success("Certificate created"))
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
-        else toast.error(res.data[""][0]);
-      });
-  };
+  const handleOpen = () => setOpen(true);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
 
   return (
     <Stack bgcolor="white" borderRadius={2} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی ابر درسا</Typography>
-        <LoadingButton
-          loading={loadingCreate}
+        <Typography>گواهی کاربر</Typography>
+        <Button
           variant="outlined"
           size="large"
           sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: 1.5, border: 1 }}
           startIcon={
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
-          onClick={submit}
+          onClick={handleOpen}
         >
-          صدور گواهی
-        </LoadingButton>
+          افزودن گواهی
+        </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
       <Stack spacing={2} px={1} color="secondary.main">
@@ -58,7 +40,7 @@ export const CloudCertification: FC = () => {
           {isLoading ? (
             <TextLoading num={9} />
           ) : (
-            <Typography variant="text15">{edgeCert?.issuer}</Typography>
+            <Typography variant="text15">{userCert?.issuer}</Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">
@@ -66,7 +48,7 @@ export const CloudCertification: FC = () => {
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{edgeCert?.expirationDate}</Typography>
+            <Typography variant="text15">{userCert?.expirationDate}</Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">
@@ -74,10 +56,15 @@ export const CloudCertification: FC = () => {
           {isLoading ? (
             <TextLoading num={9} />
           ) : (
-            <Typography variant="text15">{edgeCert?.commonName}</Typography>
+            <Typography variant="text15">{userCert?.commonName}</Typography>
           )}
         </Stack>
       </Stack>
+      <AddClientUserCertDialog
+        openDialog={open}
+        handleClose={handleClose}
+        zoneName={zoneName}
+      />
     </Stack>
   );
 };

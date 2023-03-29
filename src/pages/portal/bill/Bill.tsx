@@ -1,24 +1,24 @@
 import { FC, useEffect, useState } from "react";
 import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetUserV2PortalUserBillGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
+import { LoadingButton } from "@mui/lab";
+import { baseUrl } from "src/app/services/baseQuery";
+import { useAppSelector } from "src/app/hooks";
 import moment from "jalali-moment";
 import { billTableStruct } from "src/components/organisms/portal/userBill/tables/struct";
 import { BillTableRow } from "src/components/organisms/portal/userBill/tables/BillTableRow";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { LoadingButton } from "@mui/lab";
-import { baseUrl } from "src/app/services/baseQuery";
-import { useAppSelector } from "src/app/hooks";
+import { useGetUserV2PortalBillGetByIdQuery } from "src/app/services/api.generated";
 
-const downloadFileUrl = baseUrl + "/user/v2/portal/user-bill/download/";
+const downloadFileUrl = baseUrl + "/user/v2/portal/bill/download/";
 
 const Bill: FC = () => {
   const [downloadFileLoading, setDownloadFileLoading] = useState(false);
 
   const { id } = useParams();
 
-  const { data: bill, isLoading } = useGetUserV2PortalUserBillGetByIdQuery({
+  const { data: bill, isLoading } = useGetUserV2PortalBillGetByIdQuery({
     id: parseInt(id as string),
   });
 
@@ -138,7 +138,7 @@ const Bill: FC = () => {
           <BaseTable
             struct={billTableStruct}
             RowComponent={BillTableRow}
-            rows={bill?.userBillItems || []}
+            rows={bill?.billItems || []}
             text="گزارش موجود نیست"
             isLoading={isLoading}
           />

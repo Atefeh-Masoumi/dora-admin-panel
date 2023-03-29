@@ -60,7 +60,7 @@ export const DepositDialog: FC<HeaderPropsType> = ({
     if (amount === undefined) return;
 
     createDeposit({
-      createPaymentModel: {
+      createWalletPaymentModel: {
         paymentProviderId,
         amount,
         orderPlanId,

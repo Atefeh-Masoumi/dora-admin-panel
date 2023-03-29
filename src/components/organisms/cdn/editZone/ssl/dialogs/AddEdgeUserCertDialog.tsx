@@ -6,19 +6,19 @@ import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
-  CreateUserZoneClientCertificateModel,
-  usePostUserV2CdnClientCertCreateUserCertMutation,
+  CreateCdnEdgeUserCertModel,
+  usePostUserV2CdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 
-type AddLicenseDialogPropsType = {
+type AddEdgeUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   zoneName: string;
 };
 
-export const AddLicenseDialog: FC<AddLicenseDialogPropsType> = ({
+export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
   zoneName,
@@ -26,7 +26,7 @@ export const AddLicenseDialog: FC<AddLicenseDialogPropsType> = ({
   const formInitialValues = { zoneName, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostUserV2CdnClientCertCreateUserCertMutation();
+    usePostUserV2CdnEdgeCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -37,12 +37,13 @@ export const AddLicenseDialog: FC<AddLicenseDialogPropsType> = ({
     bundleCertPem: yup.string(),
   });
 
-  const submitHandler: formikOnSubmitType<
-    CreateUserZoneClientCertificateModel
-  > = ({ zoneName, keyPem, certPem }, { setSubmitting }) => {
+  const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
+    { zoneName, keyPem, certPem },
+    { setSubmitting }
+  ) => {
     if (!zoneName || !keyPem || !certPem) return;
     createUserCert({
-      createUserZoneClientCertificateModel: { zoneName, keyPem, certPem },
+      createCdnEdgeUserCertModel: { zoneName, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

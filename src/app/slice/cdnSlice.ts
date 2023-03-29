@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ZoneListResponse } from "../services/api.generated";
+import { CdnListResponse } from "../services/api.generated";
 import { logoutAction } from "./authSlice";
 
-type cdnSliceType = { selectedDomain: ZoneListResponse | null };
+type cdnSliceType = { selectedDomain: CdnListResponse | null };
 
 const initialState: cdnSliceType = {
   selectedDomain: null,
@@ -14,7 +14,7 @@ const cdnSlice = createSlice({
   reducers: {
     setSelectedDomain: (
       state,
-      { payload }: { payload: ZoneListResponse | null }
+      { payload }: { payload: CdnListResponse | null }
     ) => {
       state.selectedDomain = payload;
     },

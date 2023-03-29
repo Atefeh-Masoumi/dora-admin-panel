@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
-import { SupportItemTransactionModel } from "src/app/services/api.generated";
+import { SupportItemModel } from "src/app/services/api.generated";
 import { Document } from "src/components/atoms/svg/DocumentSvg";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
@@ -8,9 +8,7 @@ import { useAppSelector } from "src/app/hooks";
 
 const downloadFileUrl = baseUrl + "/user/v2/portal/support-item/download/";
 
-export const DorsaChat: FC<{ message: SupportItemTransactionModel }> = ({
-  message,
-}) => {
+export const DorsaChat: FC<{ message: SupportItemModel }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
   const token = useAppSelector((state) => state.auth?.accessToken);
 

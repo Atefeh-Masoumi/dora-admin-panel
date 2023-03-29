@@ -41,7 +41,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/user/v2/account/forgot-confirm`,
         method: "POST",
-        body: queryArg.confirmForgotModel,
+        body: queryArg.forgotConfirmModel,
       }),
     }),
     postUserV2AccountLogout: build.mutation<
@@ -103,26 +103,24 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getUserV2PortalUserBillList: build.query<
-      GetUserV2PortalUserBillListApiResponse,
-      GetUserV2PortalUserBillListApiArg
+    getUserV2PortalBillList: build.query<
+      GetUserV2PortalBillListApiResponse,
+      GetUserV2PortalBillListApiArg
     >({
-      query: () => ({ url: `/user/v2/portal/user-bill/list` }),
+      query: () => ({ url: `/user/v2/portal/bill/list` }),
     }),
-    getUserV2PortalUserBillGetById: build.query<
-      GetUserV2PortalUserBillGetByIdApiResponse,
-      GetUserV2PortalUserBillGetByIdApiArg
+    getUserV2PortalBillGetById: build.query<
+      GetUserV2PortalBillGetByIdApiResponse,
+      GetUserV2PortalBillGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/user/v2/portal/bill/get/${queryArg.id}` }),
+    }),
+    getUserV2PortalBillDownloadById: build.query<
+      GetUserV2PortalBillDownloadByIdApiResponse,
+      GetUserV2PortalBillDownloadByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/user/v2/portal/user-bill/get/${queryArg.id}`,
-      }),
-    }),
-    getUserV2PortalUserBillDownloadById: build.query<
-      GetUserV2PortalUserBillDownloadByIdApiResponse,
-      GetUserV2PortalUserBillDownloadByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/user-bill/download/${queryArg.id}`,
+        url: `/user/v2/portal/bill/download/${queryArg.id}`,
       }),
     }),
     getUserV2PortalBusinessUnitList: build.query<
@@ -136,6 +134,177 @@ export const api = createApi({
       GetUserV2PortalCalculateMonthListApiArg
     >({
       query: () => ({ url: `/user/v2/portal/calculate-month/list` }),
+    }),
+    getUserV2CdnCdnList: build.query<
+      GetUserV2CdnCdnListApiResponse,
+      GetUserV2CdnCdnListApiArg
+    >({
+      query: () => ({ url: `/user/v2/cdn/cdn/list` }),
+    }),
+    getUserV2CdnCdnGetByZoneName: build.query<
+      GetUserV2CdnCdnGetByZoneNameApiResponse,
+      GetUserV2CdnCdnGetByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/get/${queryArg.zoneName}`,
+      }),
+    }),
+    getUserV2CdnCdnGetNsStatusByZoneName: build.query<
+      GetUserV2CdnCdnGetNsStatusByZoneNameApiResponse,
+      GetUserV2CdnCdnGetNsStatusByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/get-ns-status/${queryArg.zoneName}`,
+      }),
+    }),
+    getUserV2CdnCdnOverviewByZoneName: build.query<
+      GetUserV2CdnCdnOverviewByZoneNameApiResponse,
+      GetUserV2CdnCdnOverviewByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/overview/${queryArg.zoneName}`,
+      }),
+    }),
+    postUserV2CdnCdnCheckZone: build.mutation<
+      PostUserV2CdnCdnCheckZoneApiResponse,
+      PostUserV2CdnCdnCheckZoneApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/check-zone`,
+        method: "POST",
+        body: queryArg.checkCdnModel,
+      }),
+    }),
+    postUserV2CdnCdnCreate: build.mutation<
+      PostUserV2CdnCdnCreateApiResponse,
+      PostUserV2CdnCdnCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/create`,
+        method: "POST",
+        body: queryArg.createCdnModel,
+      }),
+    }),
+    deleteUserV2CdnCdnDeleteById: build.mutation<
+      DeleteUserV2CdnCdnDeleteByIdApiResponse,
+      DeleteUserV2CdnCdnDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    putUserV2CdnCdnChangeClientCertType: build.mutation<
+      PutUserV2CdnCdnChangeClientCertTypeApiResponse,
+      PutUserV2CdnCdnChangeClientCertTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-client-cert-type`,
+        method: "PUT",
+        body: queryArg.changeClientCertTypeModel,
+      }),
+    }),
+    putUserV2CdnCdnChangeEdgeCertType: build.mutation<
+      PutUserV2CdnCdnChangeEdgeCertTypeApiResponse,
+      PutUserV2CdnCdnChangeEdgeCertTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-edge-cert-type`,
+        method: "PUT",
+        body: queryArg.changeEdgeCertTypeModel,
+      }),
+    }),
+    putUserV2CdnCdnChangeHsts: build.mutation<
+      PutUserV2CdnCdnChangeHstsApiResponse,
+      PutUserV2CdnCdnChangeHstsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-hsts`,
+        method: "PUT",
+        body: queryArg.changeHstsModel,
+      }),
+    }),
+    putUserV2CdnCdnChangeRedirect: build.mutation<
+      PutUserV2CdnCdnChangeRedirectApiResponse,
+      PutUserV2CdnCdnChangeRedirectApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-redirect`,
+        method: "PUT",
+        body: queryArg.changeRedirectModel,
+      }),
+    }),
+    putUserV2CdnCdnChangeCdnType: build.mutation<
+      PutUserV2CdnCdnChangeCdnTypeApiResponse,
+      PutUserV2CdnCdnChangeCdnTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-Cdn-type`,
+        method: "PUT",
+        body: queryArg.changeCdnTypeModel,
+      }),
+    }),
+    getUserV2CdnClientCertGetByZoneName: build.query<
+      GetUserV2CdnClientCertGetByZoneNameApiResponse,
+      GetUserV2CdnClientCertGetByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/client-cert/get/${queryArg.zoneName}`,
+      }),
+    }),
+    getUserV2CdnClientCertGetUserCertByZoneName: build.query<
+      GetUserV2CdnClientCertGetUserCertByZoneNameApiResponse,
+      GetUserV2CdnClientCertGetUserCertByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/client-cert/get-user-cert/${queryArg.zoneName}`,
+      }),
+    }),
+    postUserV2CdnClientCertCreateUserCert: build.mutation<
+      PostUserV2CdnClientCertCreateUserCertApiResponse,
+      PostUserV2CdnClientCertCreateUserCertApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/client-cert/create-user-cert`,
+        method: "POST",
+        body: queryArg.createCdnClientUserCertModel,
+      }),
+    }),
+    getUserV2CdnEdgeCertGetByZoneName: build.query<
+      GetUserV2CdnEdgeCertGetByZoneNameApiResponse,
+      GetUserV2CdnEdgeCertGetByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/edge-cert/get/${queryArg.zoneName}`,
+      }),
+    }),
+    getUserV2CdnEdgeCertGetUserCertByZoneName: build.query<
+      GetUserV2CdnEdgeCertGetUserCertByZoneNameApiResponse,
+      GetUserV2CdnEdgeCertGetUserCertByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/edge-cert/get-user-cert/${queryArg.zoneName}`,
+      }),
+    }),
+    postUserV2CdnEdgeCertCreate: build.mutation<
+      PostUserV2CdnEdgeCertCreateApiResponse,
+      PostUserV2CdnEdgeCertCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/edge-cert/create`,
+        method: "POST",
+        body: queryArg.createCdnEdgeCertModel,
+      }),
+    }),
+    postUserV2CdnEdgeCertCreateUserCert: build.mutation<
+      PostUserV2CdnEdgeCertCreateUserCertApiResponse,
+      PostUserV2CdnEdgeCertCreateUserCertApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/edge-cert/create-user-cert`,
+        method: "POST",
+        body: queryArg.createCdnEdgeUserCertModel,
+      }),
     }),
     getUserV2PortalCommissionList: build.query<
       GetUserV2PortalCommissionListApiResponse,
@@ -151,11 +320,11 @@ export const api = createApi({
         url: `/user/v2/portal/dashboard/get-user-analytics/${queryArg.categoryId}`,
       }),
     }),
-    getUserV2PortalDashboardUserBillShortList: build.query<
-      GetUserV2PortalDashboardUserBillShortListApiResponse,
-      GetUserV2PortalDashboardUserBillShortListApiArg
+    getUserV2PortalDashboardBillShortList: build.query<
+      GetUserV2PortalDashboardBillShortListApiResponse,
+      GetUserV2PortalDashboardBillShortListApiArg
     >({
-      query: () => ({ url: `/user/v2/portal/dashboard/user-bill-short-list` }),
+      query: () => ({ url: `/user/v2/portal/dashboard/bill-short-list` }),
     }),
     getUserV2PortalDashboardSupportShortList: build.query<
       GetUserV2PortalDashboardSupportShortListApiResponse,
@@ -168,42 +337,6 @@ export const api = createApi({
       GetUserV2VmDatacenterListApiArg
     >({
       query: () => ({ url: `/user/v2/vm/datacenter/list` }),
-    }),
-    getUserV2VmImageListByDatacenterId: build.query<
-      GetUserV2VmImageListByDatacenterIdApiResponse,
-      GetUserV2VmImageListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/vm/image/list/${queryArg.datacenterId}`,
-      }),
-    }),
-    getUserV2VmIsoListByDatacenterId: build.query<
-      GetUserV2VmIsoListByDatacenterIdApiResponse,
-      GetUserV2VmIsoListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/vm/iso/list/${queryArg.datacenterId}`,
-      }),
-    }),
-    putUserV2VmIsoMount: build.mutation<
-      PutUserV2VmIsoMountApiResponse,
-      PutUserV2VmIsoMountApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/vm/iso/mount`,
-        method: "PUT",
-        body: queryArg.mountModel,
-      }),
-    }),
-    putUserV2VmIsoUnmount: build.mutation<
-      PutUserV2VmIsoUnmountApiResponse,
-      PutUserV2VmIsoUnmountApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/vm/iso/unmount`,
-        method: "PUT",
-        body: queryArg.unmountModel,
-      }),
     }),
     getUserV2CdnDnsRecordListByZoneName: build.query<
       GetUserV2CdnDnsRecordListByZoneNameApiResponse,
@@ -349,12 +482,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/user/v2/handshake` }),
     }),
-    getUserV2PortalUserServiceListByProductCategoryId: build.query<
-      GetUserV2PortalUserServiceListByProductCategoryIdApiResponse,
-      GetUserV2PortalUserServiceListByProductCategoryIdApiArg
+    getUserV2PortalHostProductListByProductCategoryId: build.query<
+      GetUserV2PortalHostProductListByProductCategoryIdApiResponse,
+      GetUserV2PortalHostProductListByProductCategoryIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/user/v2/portal/user-service/list/${queryArg.productCategoryId}`,
+        url: `/user/v2/portal/host-product/list/${queryArg.productCategoryId}`,
       }),
     }),
     getUserV2PortalInvoiceList: build.query<
@@ -921,7 +1054,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/user/v2/portal/support-subject/select-list`,
         method: "POST",
-        body: queryArg.selectListModel,
+        body: queryArg.supportSubjectSelectListModel,
       }),
     }),
     getUserV2PortalUserApiKeyList: build.query<
@@ -1120,6 +1253,42 @@ export const api = createApi({
         body: queryArg.getKmsModel,
       }),
     }),
+    getUserV2VmImageListByDatacenterId: build.query<
+      GetUserV2VmImageListByDatacenterIdApiResponse,
+      GetUserV2VmImageListByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/vm/image/list/${queryArg.datacenterId}`,
+      }),
+    }),
+    getUserV2VmIsoListByDatacenterId: build.query<
+      GetUserV2VmIsoListByDatacenterIdApiResponse,
+      GetUserV2VmIsoListByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/vm/iso/list/${queryArg.datacenterId}`,
+      }),
+    }),
+    putUserV2VmIsoMount: build.mutation<
+      PutUserV2VmIsoMountApiResponse,
+      PutUserV2VmIsoMountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/vm/iso/mount`,
+        method: "PUT",
+        body: queryArg.mountModel,
+      }),
+    }),
+    putUserV2VmIsoUnmount: build.mutation<
+      PutUserV2VmIsoUnmountApiResponse,
+      PutUserV2VmIsoUnmountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/vm/iso/unmount`,
+        method: "PUT",
+        body: queryArg.unmountModel,
+      }),
+    }),
     getUserV2PortalWalletList: build.query<
       GetUserV2PortalWalletListApiResponse,
       GetUserV2PortalWalletListApiArg
@@ -1153,7 +1322,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/user/v2/portal/wallet-payment/create`,
         method: "POST",
-        body: queryArg.createPaymentModel,
+        body: queryArg.createWalletPaymentModel,
       }),
     }),
     postUserV2PortalWalletPaymentPecCallBack: build.mutation<
@@ -1247,177 +1416,6 @@ export const api = createApi({
         body: queryArg.getDomainWhoisModel,
       }),
     }),
-    getUserV2CdnZoneList: build.query<
-      GetUserV2CdnZoneListApiResponse,
-      GetUserV2CdnZoneListApiArg
-    >({
-      query: () => ({ url: `/user/v2/cdn/zone/list` }),
-    }),
-    getUserV2CdnZoneGetByZoneName: build.query<
-      GetUserV2CdnZoneGetByZoneNameApiResponse,
-      GetUserV2CdnZoneGetByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/get/${queryArg.zoneName}`,
-      }),
-    }),
-    getUserV2CdnZoneGetNsStatusByZoneName: build.query<
-      GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse,
-      GetUserV2CdnZoneGetNsStatusByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/get-ns-status/${queryArg.zoneName}`,
-      }),
-    }),
-    getUserV2CdnZoneOverviewByZoneName: build.query<
-      GetUserV2CdnZoneOverviewByZoneNameApiResponse,
-      GetUserV2CdnZoneOverviewByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/overview/${queryArg.zoneName}`,
-      }),
-    }),
-    postUserV2CdnZoneCheckZone: build.mutation<
-      PostUserV2CdnZoneCheckZoneApiResponse,
-      PostUserV2CdnZoneCheckZoneApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/check-zone`,
-        method: "POST",
-        body: queryArg.checkZoneModel,
-      }),
-    }),
-    postUserV2CdnZoneCreate: build.mutation<
-      PostUserV2CdnZoneCreateApiResponse,
-      PostUserV2CdnZoneCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/create`,
-        method: "POST",
-        body: queryArg.createZoneModel,
-      }),
-    }),
-    deleteUserV2CdnZoneDeleteById: build.mutation<
-      DeleteUserV2CdnZoneDeleteByIdApiResponse,
-      DeleteUserV2CdnZoneDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    putUserV2CdnZoneChangeClientCertType: build.mutation<
-      PutUserV2CdnZoneChangeClientCertTypeApiResponse,
-      PutUserV2CdnZoneChangeClientCertTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/change-client-cert-type`,
-        method: "PUT",
-        body: queryArg.changeClientCertTypeModel,
-      }),
-    }),
-    putUserV2CdnZoneChangeEdgeCertType: build.mutation<
-      PutUserV2CdnZoneChangeEdgeCertTypeApiResponse,
-      PutUserV2CdnZoneChangeEdgeCertTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/change-edge-cert-type`,
-        method: "PUT",
-        body: queryArg.changeEdgeCertTypeModel,
-      }),
-    }),
-    putUserV2CdnZoneChangeHsts: build.mutation<
-      PutUserV2CdnZoneChangeHstsApiResponse,
-      PutUserV2CdnZoneChangeHstsApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/change-hsts`,
-        method: "PUT",
-        body: queryArg.changeHstsModel,
-      }),
-    }),
-    putUserV2CdnZoneChangeRedirect: build.mutation<
-      PutUserV2CdnZoneChangeRedirectApiResponse,
-      PutUserV2CdnZoneChangeRedirectApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/change-redirect`,
-        method: "PUT",
-        body: queryArg.changeRedirectModel,
-      }),
-    }),
-    putUserV2CdnZoneChangeZoneType: build.mutation<
-      PutUserV2CdnZoneChangeZoneTypeApiResponse,
-      PutUserV2CdnZoneChangeZoneTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/zone/change-zone-type`,
-        method: "PUT",
-        body: queryArg.changeZoneTypeModel,
-      }),
-    }),
-    getUserV2CdnClientCertGetByZoneName: build.query<
-      GetUserV2CdnClientCertGetByZoneNameApiResponse,
-      GetUserV2CdnClientCertGetByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/client-cert/get/${queryArg.zoneName}`,
-      }),
-    }),
-    getUserV2CdnClientCertGetUserCertByZoneName: build.query<
-      GetUserV2CdnClientCertGetUserCertByZoneNameApiResponse,
-      GetUserV2CdnClientCertGetUserCertByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/client-cert/get-user-cert/${queryArg.zoneName}`,
-      }),
-    }),
-    postUserV2CdnClientCertCreateUserCert: build.mutation<
-      PostUserV2CdnClientCertCreateUserCertApiResponse,
-      PostUserV2CdnClientCertCreateUserCertApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/client-cert/create-user-cert`,
-        method: "POST",
-        body: queryArg.createUserZoneClientCertificateModel,
-      }),
-    }),
-    getUserV2CdnEdgeCertGetByZoneName: build.query<
-      GetUserV2CdnEdgeCertGetByZoneNameApiResponse,
-      GetUserV2CdnEdgeCertGetByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/edge-cert/get/${queryArg.zoneName}`,
-      }),
-    }),
-    getUserV2CdnEdgeCertGetUserCertByZoneName: build.query<
-      GetUserV2CdnEdgeCertGetUserCertByZoneNameApiResponse,
-      GetUserV2CdnEdgeCertGetUserCertByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/edge-cert/get-user-cert/${queryArg.zoneName}`,
-      }),
-    }),
-    postUserV2CdnEdgeCertCreate: build.mutation<
-      PostUserV2CdnEdgeCertCreateApiResponse,
-      PostUserV2CdnEdgeCertCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/edge-cert/create`,
-        method: "POST",
-        body: queryArg.createZoneEdgeCertificateModel,
-      }),
-    }),
-    postUserV2CdnEdgeCertCreateUserCert: build.mutation<
-      PostUserV2CdnEdgeCertCreateUserCertApiResponse,
-      PostUserV2CdnEdgeCertCreateUserCertApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/cdn/edge-cert/create-user-cert`,
-        method: "POST",
-        body: queryArg.createUserZoneEdgeCertificateModel,
-      }),
-    }),
   }),
 });
 export type PostUserV2AccountLoginApiResponse =
@@ -1435,12 +1433,12 @@ export type PostUserV2AccountForgotApiArg = {
 };
 export type PostUserV2AccountForgotConfirmApiResponse = unknown;
 export type PostUserV2AccountForgotConfirmApiArg = {
-  confirmForgotModel: ConfirmForgotModel;
+  forgotConfirmModel: ForgotConfirmModel;
 };
 export type PostUserV2AccountLogoutApiResponse = unknown;
 export type PostUserV2AccountLogoutApiArg = void;
 export type GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiResponse =
-  /** status 200 Success */ GetAnalyticResponseModel;
+  /** status 200 Success */ GetAnalyticResponse;
 export type GetUserV2CdnAnalyticGetByZoneNameAndPeriodIdApiArg = {
   zoneName: string;
   periodId: number;
@@ -1467,16 +1465,16 @@ export type DeleteUserV2CdnApiGatewayDeleteByIdApiResponse = unknown;
 export type DeleteUserV2CdnApiGatewayDeleteByIdApiArg = {
   id: number;
 };
-export type GetUserV2PortalUserBillListApiResponse =
-  /** status 200 Success */ UserBillListResponseModel[];
-export type GetUserV2PortalUserBillListApiArg = void;
-export type GetUserV2PortalUserBillGetByIdApiResponse =
-  /** status 200 Success */ GetUserBillResponseModel;
-export type GetUserV2PortalUserBillGetByIdApiArg = {
+export type GetUserV2PortalBillListApiResponse =
+  /** status 200 Success */ BillListResponse[];
+export type GetUserV2PortalBillListApiArg = void;
+export type GetUserV2PortalBillGetByIdApiResponse =
+  /** status 200 Success */ GetBillResponse;
+export type GetUserV2PortalBillGetByIdApiArg = {
   id: number;
 };
-export type GetUserV2PortalUserBillDownloadByIdApiResponse = unknown;
-export type GetUserV2PortalUserBillDownloadByIdApiArg = {
+export type GetUserV2PortalBillDownloadByIdApiResponse = unknown;
+export type GetUserV2PortalBillDownloadByIdApiArg = {
   id: number;
 };
 export type GetUserV2PortalBusinessUnitListApiResponse =
@@ -1485,41 +1483,105 @@ export type GetUserV2PortalBusinessUnitListApiArg = void;
 export type GetUserV2PortalCalculateMonthListApiResponse =
   /** status 200 Success */ CalculateMonthListResponse[];
 export type GetUserV2PortalCalculateMonthListApiArg = void;
+export type GetUserV2CdnCdnListApiResponse =
+  /** status 200 Success */ CdnListResponse[];
+export type GetUserV2CdnCdnListApiArg = void;
+export type GetUserV2CdnCdnGetByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnResponse;
+export type GetUserV2CdnCdnGetByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetUserV2CdnCdnGetNsStatusByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnNsStatusResponse;
+export type GetUserV2CdnCdnGetNsStatusByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetUserV2CdnCdnOverviewByZoneNameApiResponse =
+  /** status 200 Success */ CdnOverviewResponse;
+export type GetUserV2CdnCdnOverviewByZoneNameApiArg = {
+  zoneName: string;
+};
+export type PostUserV2CdnCdnCheckZoneApiResponse = unknown;
+export type PostUserV2CdnCdnCheckZoneApiArg = {
+  checkCdnModel: CheckCdnModel;
+};
+export type PostUserV2CdnCdnCreateApiResponse = unknown;
+export type PostUserV2CdnCdnCreateApiArg = {
+  createCdnModel: CreateCdnModel;
+};
+export type DeleteUserV2CdnCdnDeleteByIdApiResponse = unknown;
+export type DeleteUserV2CdnCdnDeleteByIdApiArg = {
+  id: number;
+};
+export type PutUserV2CdnCdnChangeClientCertTypeApiResponse = unknown;
+export type PutUserV2CdnCdnChangeClientCertTypeApiArg = {
+  changeClientCertTypeModel: ChangeClientCertTypeModel;
+};
+export type PutUserV2CdnCdnChangeEdgeCertTypeApiResponse = unknown;
+export type PutUserV2CdnCdnChangeEdgeCertTypeApiArg = {
+  changeEdgeCertTypeModel: ChangeEdgeCertTypeModel;
+};
+export type PutUserV2CdnCdnChangeHstsApiResponse = unknown;
+export type PutUserV2CdnCdnChangeHstsApiArg = {
+  changeHstsModel: ChangeHstsModel;
+};
+export type PutUserV2CdnCdnChangeRedirectApiResponse = unknown;
+export type PutUserV2CdnCdnChangeRedirectApiArg = {
+  changeRedirectModel: ChangeRedirectModel;
+};
+export type PutUserV2CdnCdnChangeCdnTypeApiResponse = unknown;
+export type PutUserV2CdnCdnChangeCdnTypeApiArg = {
+  changeCdnTypeModel: ChangeCdnTypeModel;
+};
+export type GetUserV2CdnClientCertGetByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetUserV2CdnClientCertGetByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetUserV2CdnClientCertGetUserCertByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetUserV2CdnClientCertGetUserCertByZoneNameApiArg = {
+  zoneName: string;
+};
+export type PostUserV2CdnClientCertCreateUserCertApiResponse = unknown;
+export type PostUserV2CdnClientCertCreateUserCertApiArg = {
+  createCdnClientUserCertModel: CreateCdnClientUserCertModel;
+};
+export type GetUserV2CdnEdgeCertGetByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetUserV2CdnEdgeCertGetByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetUserV2CdnEdgeCertGetUserCertByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetUserV2CdnEdgeCertGetUserCertByZoneNameApiArg = {
+  zoneName: string;
+};
+export type PostUserV2CdnEdgeCertCreateApiResponse = unknown;
+export type PostUserV2CdnEdgeCertCreateApiArg = {
+  createCdnEdgeCertModel: CreateCdnEdgeCertModel;
+};
+export type PostUserV2CdnEdgeCertCreateUserCertApiResponse = unknown;
+export type PostUserV2CdnEdgeCertCreateUserCertApiArg = {
+  createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
+};
 export type GetUserV2PortalCommissionListApiResponse =
   /** status 200 Success */ CommissionListResponse;
 export type GetUserV2PortalCommissionListApiArg = void;
 export type GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiResponse =
-  /** status 200 Success */ GetUserAnalyticsResponseModel[];
+  /** status 200 Success */ GetUserAnalyticsResponse[];
 export type GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiArg = {
   categoryId: number;
 };
-export type GetUserV2PortalDashboardUserBillShortListApiResponse =
-  /** status 200 Success */ UserBillShortListResponseModel[];
-export type GetUserV2PortalDashboardUserBillShortListApiArg = void;
+export type GetUserV2PortalDashboardBillShortListApiResponse =
+  /** status 200 Success */ BillShortListResponse[];
+export type GetUserV2PortalDashboardBillShortListApiArg = void;
 export type GetUserV2PortalDashboardSupportShortListApiResponse =
-  /** status 200 Success */ SupportShortListModel[];
+  /** status 200 Success */ SupportShortListResponse[];
 export type GetUserV2PortalDashboardSupportShortListApiArg = void;
 export type GetUserV2VmDatacenterListApiResponse =
   /** status 200 Success */ DatacenterListResponse[];
 export type GetUserV2VmDatacenterListApiArg = void;
-export type GetUserV2VmImageListByDatacenterIdApiResponse =
-  /** status 200 Success */ ImageListResponse[];
-export type GetUserV2VmImageListByDatacenterIdApiArg = {
-  datacenterId: number;
-};
-export type GetUserV2VmIsoListByDatacenterIdApiResponse =
-  /** status 200 Success */ IsoListResponse[];
-export type GetUserV2VmIsoListByDatacenterIdApiArg = {
-  datacenterId: number;
-};
-export type PutUserV2VmIsoMountApiResponse = unknown;
-export type PutUserV2VmIsoMountApiArg = {
-  mountModel: MountModel;
-};
-export type PutUserV2VmIsoUnmountApiResponse = unknown;
-export type PutUserV2VmIsoUnmountApiArg = {
-  unmountModel: UnmountModel;
-};
 export type GetUserV2CdnDnsRecordListByZoneNameApiResponse =
   /** status 200 Success */ DnsHostListResponse[];
 export type GetUserV2CdnDnsRecordListByZoneNameApiArg = {
@@ -1589,9 +1651,9 @@ export type GetUserV2IndexApiResponse = unknown;
 export type GetUserV2IndexApiArg = void;
 export type GetUserV2HandshakeApiResponse = unknown;
 export type GetUserV2HandshakeApiArg = void;
-export type GetUserV2PortalUserServiceListByProductCategoryIdApiResponse =
-  /** status 200 Success */ UserServiceListResponse[];
-export type GetUserV2PortalUserServiceListByProductCategoryIdApiArg = {
+export type GetUserV2PortalHostProductListByProductCategoryIdApiResponse =
+  /** status 200 Success */ HostProductListResponse[];
+export type GetUserV2PortalHostProductListByProductCategoryIdApiArg = {
   productCategoryId: number;
 };
 export type GetUserV2PortalInvoiceListApiResponse =
@@ -1834,7 +1896,7 @@ export type DeleteUserV2StorageStorageHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetUserV2PortalSupportListApiResponse =
-  /** status 200 Success */ SupportListModel[];
+  /** status 200 Success */ SupportListResponse[];
 export type GetUserV2PortalSupportListApiArg = void;
 export type PostUserV2PortalSupportCreateApiResponse = unknown;
 export type PostUserV2PortalSupportCreateApiArg = {
@@ -1870,7 +1932,7 @@ export type GetUserV2PortalSupportSubjectListApiArg = void;
 export type PostUserV2PortalSupportSubjectSelectListApiResponse =
   /** status 200 Success */ SupportSubjectListResponse[];
 export type PostUserV2PortalSupportSubjectSelectListApiArg = {
-  selectListModel: SelectListModel;
+  supportSubjectSelectListModel: SupportSubjectSelectListModel;
 };
 export type GetUserV2PortalUserApiKeyListApiResponse =
   /** status 200 Success */ UserApiKeyListResponse[];
@@ -1962,6 +2024,24 @@ export type PostUserV2VmVmKmsGetApiResponse = /** status 200 Success */ string;
 export type PostUserV2VmVmKmsGetApiArg = {
   getKmsModel: GetKmsModel;
 };
+export type GetUserV2VmImageListByDatacenterIdApiResponse =
+  /** status 200 Success */ ImageListResponse[];
+export type GetUserV2VmImageListByDatacenterIdApiArg = {
+  datacenterId: number;
+};
+export type GetUserV2VmIsoListByDatacenterIdApiResponse =
+  /** status 200 Success */ IsoListResponse[];
+export type GetUserV2VmIsoListByDatacenterIdApiArg = {
+  datacenterId: number;
+};
+export type PutUserV2VmIsoMountApiResponse = unknown;
+export type PutUserV2VmIsoMountApiArg = {
+  mountModel: MountModel;
+};
+export type PutUserV2VmIsoUnmountApiResponse = unknown;
+export type PutUserV2VmIsoUnmountApiArg = {
+  unmountModel: UnmountModel;
+};
 export type GetUserV2PortalWalletListApiResponse =
   /** status 200 Success */ WalletListResponse[];
 export type GetUserV2PortalWalletListApiArg = void;
@@ -1979,7 +2059,7 @@ export type GetUserV2PortalWalletPaymentGetByIdApiArg = {
 export type PostUserV2PortalWalletPaymentCreateApiResponse =
   /** status 200 Success */ CreateWalletPaymentResponse;
 export type PostUserV2PortalWalletPaymentCreateApiArg = {
-  createPaymentModel: CreatePaymentModel;
+  createWalletPaymentModel: CreateWalletPaymentModel;
 };
 export type PostUserV2PortalWalletPaymentPecCallBackApiResponse = unknown;
 export type PostUserV2PortalWalletPaymentPecCallBackApiArg = {
@@ -2044,88 +2124,6 @@ export type PostUserV2DomainWhoisGetApiResponse = unknown;
 export type PostUserV2DomainWhoisGetApiArg = {
   getDomainWhoisModel: GetDomainWhoisModel;
 };
-export type GetUserV2CdnZoneListApiResponse =
-  /** status 200 Success */ ZoneListResponse[];
-export type GetUserV2CdnZoneListApiArg = void;
-export type GetUserV2CdnZoneGetByZoneNameApiResponse =
-  /** status 200 Success */ GetZoneResponse;
-export type GetUserV2CdnZoneGetByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetUserV2CdnZoneGetNsStatusByZoneNameApiResponse =
-  /** status 200 Success */ GetNsStatusResponse;
-export type GetUserV2CdnZoneGetNsStatusByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetUserV2CdnZoneOverviewByZoneNameApiResponse =
-  /** status 200 Success */ OverviewResponse;
-export type GetUserV2CdnZoneOverviewByZoneNameApiArg = {
-  zoneName: string;
-};
-export type PostUserV2CdnZoneCheckZoneApiResponse = unknown;
-export type PostUserV2CdnZoneCheckZoneApiArg = {
-  checkZoneModel: CheckZoneModel;
-};
-export type PostUserV2CdnZoneCreateApiResponse = unknown;
-export type PostUserV2CdnZoneCreateApiArg = {
-  createZoneModel: CreateZoneModel;
-};
-export type DeleteUserV2CdnZoneDeleteByIdApiResponse = unknown;
-export type DeleteUserV2CdnZoneDeleteByIdApiArg = {
-  id: number;
-};
-export type PutUserV2CdnZoneChangeClientCertTypeApiResponse = unknown;
-export type PutUserV2CdnZoneChangeClientCertTypeApiArg = {
-  changeClientCertTypeModel: ChangeClientCertTypeModel;
-};
-export type PutUserV2CdnZoneChangeEdgeCertTypeApiResponse = unknown;
-export type PutUserV2CdnZoneChangeEdgeCertTypeApiArg = {
-  changeEdgeCertTypeModel: ChangeEdgeCertTypeModel;
-};
-export type PutUserV2CdnZoneChangeHstsApiResponse = unknown;
-export type PutUserV2CdnZoneChangeHstsApiArg = {
-  changeHstsModel: ChangeHstsModel;
-};
-export type PutUserV2CdnZoneChangeRedirectApiResponse = unknown;
-export type PutUserV2CdnZoneChangeRedirectApiArg = {
-  changeRedirectModel: ChangeRedirectModel;
-};
-export type PutUserV2CdnZoneChangeZoneTypeApiResponse = unknown;
-export type PutUserV2CdnZoneChangeZoneTypeApiArg = {
-  changeZoneTypeModel: ChangeZoneTypeModel;
-};
-export type GetUserV2CdnClientCertGetByZoneNameApiResponse =
-  /** status 200 Success */ GetZoneClientCertificateResponse;
-export type GetUserV2CdnClientCertGetByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetUserV2CdnClientCertGetUserCertByZoneNameApiResponse =
-  /** status 200 Success */ GetZoneClientUserCertificateResponse;
-export type GetUserV2CdnClientCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
-};
-export type PostUserV2CdnClientCertCreateUserCertApiResponse = unknown;
-export type PostUserV2CdnClientCertCreateUserCertApiArg = {
-  createUserZoneClientCertificateModel: CreateUserZoneClientCertificateModel;
-};
-export type GetUserV2CdnEdgeCertGetByZoneNameApiResponse =
-  /** status 200 Success */ GetZoneEdgeCertificateResponse;
-export type GetUserV2CdnEdgeCertGetByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetUserV2CdnEdgeCertGetUserCertByZoneNameApiResponse =
-  /** status 200 Success */ GetZoneEdgeUserCertificateResponse;
-export type GetUserV2CdnEdgeCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
-};
-export type PostUserV2CdnEdgeCertCreateApiResponse = unknown;
-export type PostUserV2CdnEdgeCertCreateApiArg = {
-  createZoneEdgeCertificateModel: CreateZoneEdgeCertificateModel;
-};
-export type PostUserV2CdnEdgeCertCreateUserCertApiResponse = unknown;
-export type PostUserV2CdnEdgeCertCreateUserCertApiArg = {
-  createUserZoneEdgeCertificateModel: CreateUserZoneEdgeCertificateModel;
-};
 export type LoginResponseModel = {
   accessToken?: string | null;
   expiration?: string;
@@ -2146,7 +2144,7 @@ export type RegisterModel = {
 export type ForgotModel = {
   email: string;
 };
-export type ConfirmForgotModel = {
+export type ForgotConfirmModel = {
   email: string;
   confirmCode: string;
   password: string;
@@ -2155,7 +2153,7 @@ export type SeriesModel = {
   name?: string | null;
   data?: number[] | null;
 };
-export type GetAnalyticResponseModel = {
+export type GetAnalyticResponse = {
   categories?: string[] | null;
   series?: SeriesModel[] | null;
 };
@@ -2195,28 +2193,28 @@ export type EditApiGatewayModel = {
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
 };
-export type UserBillListResponseModel = {
+export type BillListResponse = {
   id?: number;
   billDate?: string;
   netPrice?: number;
   vat?: number;
   totalPrice?: number;
 };
-export type UserBillItemsModel = {
+export type BillItemsModel = {
   productCategory?: string | null;
   userProduct?: string | null;
   createDate?: string;
   price?: number;
   duration?: number;
 };
-export type GetUserBillResponseModel = {
+export type GetBillResponse = {
   id?: number;
   name?: string | null;
   billDate?: string;
   netPrice?: number;
   vat?: number;
   totalPrice?: number;
-  userBillItems?: UserBillItemsModel[] | null;
+  billItems?: BillItemsModel[] | null;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2226,6 +2224,79 @@ export type CalculateMonthListResponse = {
   id?: number;
   name?: string | null;
 };
+export type CdnListResponse = {
+  id?: number;
+  zoneName?: string | null;
+  zoneStatus?: string | null;
+  zoneStatusId?: number;
+  createDate?: string;
+};
+export type GetCdnResponse = {
+  id?: number;
+  zoneStatusId?: number;
+  zoneTypeId?: number;
+  zoneEdgeCertTypeId?: number;
+  zoneClientCertTypeId?: number;
+  isHsts?: boolean;
+  isRedirect?: boolean;
+};
+export type GetCdnNsStatusResponse = {
+  status?: boolean;
+  ns?: string[] | null;
+  cloudNs?: string[] | null;
+};
+export type CdnOverviewResponse = {
+  id?: number;
+  domainName?: string | null;
+  statusId?: number;
+  status?: string | null;
+  createDate?: string;
+};
+export type CheckCdnModel = {
+  zoneName: string;
+};
+export type CreateCdnModel = {
+  zoneName: string;
+};
+export type ChangeClientCertTypeModel = {
+  id?: number;
+  zoneClientCertTypeId?: number;
+};
+export type ChangeEdgeCertTypeModel = {
+  id?: number;
+  zoneEdgeCertTypeId?: number;
+};
+export type ChangeHstsModel = {
+  id?: number;
+  isHsts?: boolean;
+};
+export type ChangeRedirectModel = {
+  id?: number;
+  isRedirect?: boolean;
+};
+export type ChangeCdnTypeModel = {
+  id?: number;
+  zoneTypeId?: number;
+};
+export type GetCdnCertResponse = {
+  issuer?: string | null;
+  commonName?: string | null;
+  expirationDate?: string | null;
+};
+export type CreateCdnClientUserCertModel = {
+  zoneName: string;
+  keyPem: string;
+  certPem: string;
+};
+export type CreateCdnEdgeCertModel = {
+  zoneName: string;
+};
+export type CreateCdnEdgeUserCertModel = {
+  zoneName: string;
+  keyPem: string;
+  certPem: string;
+  bundleCertPem?: string | null;
+};
 export type CommissionListResponse = {
   id?: number;
   orderId?: number;
@@ -2233,16 +2304,16 @@ export type CommissionListResponse = {
   commissionPrice?: number;
   commissionDate?: string;
 };
-export type GetUserAnalyticsResponseModel = {
+export type GetUserAnalyticsResponse = {
   data?: number[] | null;
   name?: string | null;
 };
-export type UserBillShortListResponseModel = {
+export type BillShortListResponse = {
   id?: number;
   billDate?: string;
   totalPrice?: number;
 };
-export type SupportShortListModel = {
+export type SupportShortListResponse = {
   id?: number;
   supportDate?: string;
   supportSubject?: string | null;
@@ -2251,24 +2322,6 @@ export type SupportShortListModel = {
 export type DatacenterListResponse = {
   id?: number;
   name?: string | null;
-};
-export type ImageListResponse = {
-  id?: number;
-  name?: string | null;
-  osId?: number;
-  os?: string | null;
-};
-export type IsoListResponse = {
-  id?: number;
-  name?: string | null;
-};
-export type MountModel = {
-  id?: number;
-  vmId?: number;
-};
-export type UnmountModel = {
-  id?: number;
-  vmId?: number;
 };
 export type DnsHostListResponse = {
   id?: number;
@@ -2406,7 +2459,7 @@ export type ChangeNsModel = {
   ns1: string;
   ns2: string;
 };
-export type UserServiceListResponse = {
+export type HostProductListResponse = {
   id?: number;
   name?: string | null;
   productName?: string | null;
@@ -2740,7 +2793,7 @@ export type EditStorageHostModel = {
   id?: number;
   productBundleId?: number;
 };
-export type SupportListModel = {
+export type SupportListResponse = {
   id?: number;
   supportDate?: string;
   supportSubject?: string | null;
@@ -2748,7 +2801,7 @@ export type SupportListModel = {
   supportStatus?: string | null;
   supportStatusId?: number;
 };
-export type SupportItemTransactionModel = {
+export type SupportItemModel = {
   id?: number;
   supportDate?: string;
   content?: string | null;
@@ -2762,13 +2815,13 @@ export type SupportItemListResponse = {
   supportDate?: string;
   supportSubject?: string | null;
   supportStatusId?: number;
-  transaction?: SupportItemTransactionModel[] | null;
+  transaction?: SupportItemModel[] | null;
 };
 export type SupportSubjectListResponse = {
   id?: number;
   name?: string | null;
 };
-export type SelectListModel = {
+export type SupportSubjectSelectListModel = {
   productCategoryId?: number;
   businessUnitId?: number;
 };
@@ -2801,9 +2854,6 @@ export type VmListResponse = {
   statusId?: number;
   datacenter?: string | null;
   operatingSystem?: string | null;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
   ipv4?: string | null;
   createDate?: string;
 };
@@ -2852,6 +2902,24 @@ export type GetKmsModel = {
   id?: number;
   typeId?: number;
 };
+export type ImageListResponse = {
+  id?: number;
+  name?: string | null;
+  osId?: number;
+  os?: string | null;
+};
+export type IsoListResponse = {
+  id?: number;
+  name?: string | null;
+};
+export type MountModel = {
+  id?: number;
+  vmId?: number;
+};
+export type UnmountModel = {
+  id?: number;
+  vmId?: number;
+};
 export type WalletListResponse = {
   id?: number;
   transactionDate?: string;
@@ -2876,7 +2944,7 @@ export type CreateWalletPaymentResponse = {
   status?: boolean;
   location?: string | null;
 };
-export type CreatePaymentModel = {
+export type CreateWalletPaymentModel = {
   paymentProviderId?: number;
   amount: number;
   orderPlanId?: number | null;
@@ -2919,94 +2987,6 @@ export type GetDomainWhoisModel = {
   domainName: string;
   ext: string;
 };
-export type ZoneListResponse = {
-  id?: number;
-  zoneName?: string | null;
-  zoneStatus?: string | null;
-  zoneStatusId?: number;
-  createDate?: string;
-};
-export type GetZoneResponse = {
-  id?: number;
-  zoneStatusId?: number;
-  zoneTypeId?: number;
-  zoneEdgeCertTypeId?: number;
-  zoneClientCertTypeId?: number;
-  isHsts?: boolean;
-  isRedirect?: boolean;
-};
-export type GetNsStatusResponse = {
-  status?: boolean;
-  ns?: string[] | null;
-  cloudNs?: string[] | null;
-};
-export type OverviewResponse = {
-  id?: number;
-  domainName?: string | null;
-  statusId?: number;
-  status?: string | null;
-  createDate?: string;
-};
-export type CheckZoneModel = {
-  zoneName: string;
-};
-export type CreateZoneModel = {
-  zoneName: string;
-};
-export type ChangeClientCertTypeModel = {
-  id?: number;
-  zoneClientCertTypeId?: number;
-};
-export type ChangeEdgeCertTypeModel = {
-  id?: number;
-  zoneEdgeCertTypeId?: number;
-};
-export type ChangeHstsModel = {
-  id?: number;
-  isHsts?: boolean;
-};
-export type ChangeRedirectModel = {
-  id?: number;
-  isRedirect?: boolean;
-};
-export type ChangeZoneTypeModel = {
-  id?: number;
-  zoneTypeId?: number;
-};
-export type GetZoneClientCertificateResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type GetZoneClientUserCertificateResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type CreateUserZoneClientCertificateModel = {
-  zoneName: string;
-  keyPem: string;
-  certPem: string;
-};
-export type GetZoneEdgeCertificateResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type GetZoneEdgeUserCertificateResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type CreateZoneEdgeCertificateModel = {
-  zoneName: string;
-};
-export type CreateUserZoneEdgeCertificateModel = {
-  zoneName: string;
-  keyPem: string;
-  certPem: string;
-  bundleCertPem?: string | null;
-};
 export const {
   usePostUserV2AccountLoginMutation,
   usePostUserV2AccountRegisterMutation,
@@ -3019,20 +2999,35 @@ export const {
   usePostUserV2CdnApiGatewayCreateMutation,
   usePutUserV2CdnApiGatewayEditMutation,
   useDeleteUserV2CdnApiGatewayDeleteByIdMutation,
-  useGetUserV2PortalUserBillListQuery,
-  useGetUserV2PortalUserBillGetByIdQuery,
-  useGetUserV2PortalUserBillDownloadByIdQuery,
+  useGetUserV2PortalBillListQuery,
+  useGetUserV2PortalBillGetByIdQuery,
+  useGetUserV2PortalBillDownloadByIdQuery,
   useGetUserV2PortalBusinessUnitListQuery,
   useGetUserV2PortalCalculateMonthListQuery,
+  useGetUserV2CdnCdnListQuery,
+  useGetUserV2CdnCdnGetByZoneNameQuery,
+  useGetUserV2CdnCdnGetNsStatusByZoneNameQuery,
+  useGetUserV2CdnCdnOverviewByZoneNameQuery,
+  usePostUserV2CdnCdnCheckZoneMutation,
+  usePostUserV2CdnCdnCreateMutation,
+  useDeleteUserV2CdnCdnDeleteByIdMutation,
+  usePutUserV2CdnCdnChangeClientCertTypeMutation,
+  usePutUserV2CdnCdnChangeEdgeCertTypeMutation,
+  usePutUserV2CdnCdnChangeHstsMutation,
+  usePutUserV2CdnCdnChangeRedirectMutation,
+  usePutUserV2CdnCdnChangeCdnTypeMutation,
+  useGetUserV2CdnClientCertGetByZoneNameQuery,
+  useGetUserV2CdnClientCertGetUserCertByZoneNameQuery,
+  usePostUserV2CdnClientCertCreateUserCertMutation,
+  useGetUserV2CdnEdgeCertGetByZoneNameQuery,
+  useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery,
+  usePostUserV2CdnEdgeCertCreateMutation,
+  usePostUserV2CdnEdgeCertCreateUserCertMutation,
   useGetUserV2PortalCommissionListQuery,
   useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery,
-  useGetUserV2PortalDashboardUserBillShortListQuery,
+  useGetUserV2PortalDashboardBillShortListQuery,
   useGetUserV2PortalDashboardSupportShortListQuery,
   useGetUserV2VmDatacenterListQuery,
-  useGetUserV2VmImageListByDatacenterIdQuery,
-  useGetUserV2VmIsoListByDatacenterIdQuery,
-  usePutUserV2VmIsoMountMutation,
-  usePutUserV2VmIsoUnmountMutation,
   useGetUserV2CdnDnsRecordListByZoneNameQuery,
   useGetUserV2CdnDnsRecordGetByIdQuery,
   usePostUserV2CdnDnsRecordCreateMutation,
@@ -3050,7 +3045,7 @@ export const {
   usePostUserV2DomainResendVerificationByIdMutation,
   useGetUserV2IndexQuery,
   useGetUserV2HandshakeQuery,
-  useGetUserV2PortalUserServiceListByProductCategoryIdQuery,
+  useGetUserV2PortalHostProductListByProductCategoryIdQuery,
   useGetUserV2PortalInvoiceListQuery,
   useGetUserV2PortalInvoiceGetByIdQuery,
   useGetUserV2CdnLoadBalanceListByZoneNameQuery,
@@ -3140,6 +3135,10 @@ export const {
   usePostUserV2VmVmIpCreateMutation,
   useDeleteUserV2VmVmIpDeleteByIdMutation,
   usePostUserV2VmVmKmsGetMutation,
+  useGetUserV2VmImageListByDatacenterIdQuery,
+  useGetUserV2VmIsoListByDatacenterIdQuery,
+  usePutUserV2VmIsoMountMutation,
+  usePutUserV2VmIsoUnmountMutation,
   useGetUserV2PortalWalletListQuery,
   useGetUserV2PortalWalletGetBalanceQuery,
   useGetUserV2PortalWalletPaymentListQuery,
@@ -3155,24 +3154,5 @@ export const {
   usePutUserV2WebWebHostEditMutation,
   useDeleteUserV2WebWebHostDeleteByIdMutation,
   usePostUserV2DomainWhoisGetMutation,
-  useGetUserV2CdnZoneListQuery,
-  useGetUserV2CdnZoneGetByZoneNameQuery,
-  useGetUserV2CdnZoneGetNsStatusByZoneNameQuery,
-  useGetUserV2CdnZoneOverviewByZoneNameQuery,
-  usePostUserV2CdnZoneCheckZoneMutation,
-  usePostUserV2CdnZoneCreateMutation,
-  useDeleteUserV2CdnZoneDeleteByIdMutation,
-  usePutUserV2CdnZoneChangeClientCertTypeMutation,
-  usePutUserV2CdnZoneChangeEdgeCertTypeMutation,
-  usePutUserV2CdnZoneChangeHstsMutation,
-  usePutUserV2CdnZoneChangeRedirectMutation,
-  usePutUserV2CdnZoneChangeZoneTypeMutation,
-  useGetUserV2CdnClientCertGetByZoneNameQuery,
-  useGetUserV2CdnClientCertGetUserCertByZoneNameQuery,
-  usePostUserV2CdnClientCertCreateUserCertMutation,
-  useGetUserV2CdnEdgeCertGetByZoneNameQuery,
-  useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery,
-  usePostUserV2CdnEdgeCertCreateMutation,
-  usePostUserV2CdnEdgeCertCreateUserCertMutation,
 } = api;
 

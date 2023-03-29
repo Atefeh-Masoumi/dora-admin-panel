@@ -33,7 +33,7 @@ const Sales = lazy(() => import("src/pages/portal/sales/Index"));
 const Profile = lazy(() => import("src/pages/portal/profile/Index"));
 const Setting = lazy(() => import("src/pages/portal/setting/Index"));
 const Notification = lazy(() => import("src/pages/portal/notification/Index"));
-const UserServices = lazy(() => import("src/pages/portal/userService/Index"));
+const HostProducts = lazy(() => import("src/pages/portal/hostProduct/Index"));
 const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
@@ -43,14 +43,14 @@ const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
 const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
 
 const Wallet = lazy(() => import("src/pages/portal/wallet/Index"));
-const Payments = lazy(() => import("src/pages/portal/payment/Index"));
-const Payment = lazy(() => import("src/pages/portal/payment/PaymentCallBack"));
-const UserBills = lazy(() => import("src/pages/portal/userBill/Index"));
-const UserBill = lazy(() => import("src/pages/portal/userBill/UserBill"));
-const Invoices = lazy(() => import("src/pages/portal/invocie/Inex"));
-const Invoice = lazy(() => import("src/pages/portal/invocie/Invoice"));
+const Payments = lazy(() => import("src/pages/portal/walletPayment/Index"));
+const Payment = lazy(() => import("src/pages/portal/walletPayment/PaymentCallBack"));
+const Bills = lazy(() => import("src/pages/portal/bill/Index"));
+const Bill = lazy(() => import("src/pages/portal/bill/Bill"));
+const Invoices = lazy(() => import("src/pages/portal/invoice/Index"));
+const Invoice = lazy(() => import("src/pages/portal/invoice/Invoice"));
 
-const ZoneIndex = lazy(() => import("src/pages/cdn/Index"));
+const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
 const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
@@ -146,8 +146,8 @@ const Router: FC = () => {
           />
           <Route path="/referral/:id" element={callbackTemplate(Referral)} />
           <Route
-            path="/portal/user-services"
-            element={mainTemplate(UserServices, {
+            path="/portal/host-products"
+            element={mainTemplate(HostProducts, {
               pageTitle: "سرویس های من",
             })}
           />
@@ -248,17 +248,17 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/user-bills"
-            element={mainTemplate(UserBills, {
+            path="/portal/bills"
+            element={mainTemplate(Bills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
-            path="/portal/user-bill/:id"
-            element={mainTemplate(UserBill, {
+            path="/portal/bill/:id"
+            element={mainTemplate(Bill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/portal/user-bills",
+                url: "/portal/bills",
               },
               hideSidebar: true,
             })}
@@ -266,7 +266,7 @@ const Router: FC = () => {
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/cdn"
-            element={mainTemplate(ZoneIndex, {
+            element={mainTemplate(CdnIndex, {
               pageTitle: "مدیریت دامنه ها",
             })}
           />

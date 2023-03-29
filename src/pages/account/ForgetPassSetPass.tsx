@@ -68,10 +68,10 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
       setSubmitting(false);
       return;
     }
-    setPassword({ confirmForgotModel: { confirmCode: code, email, password } })
+    setPassword({ forgotConfirmModel: { confirmCode: code, email, password } })
       .unwrap()
       .then(() => {
-        toast.success("گذرواژه با موفقیت آپدیت شد");
+        toast.success("گذرواژه با موفقیت بروز رسانی شد");
         dispatch(resetForgetPasswordStateAction());
         navigate("/account/login");
       });

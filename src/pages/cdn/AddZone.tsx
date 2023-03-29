@@ -6,12 +6,12 @@ import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { RecordsList } from "src/components/organisms/cdn/addZone/RecordsList";
 import { Terms } from "src/components/organisms/cdn/addZone/Terms";
-import { usePostUserV2CdnZoneCheckZoneMutation } from "src/app/services/api.generated";
+import { usePostUserV2CdnCdnCheckZoneMutation } from "src/app/services/api.generated";
 
 const AddDomain: FC = () => {
   const [addDomainLevel, setAddDomainLevel] = useState(1);
 
-  const [checkZone, { isLoading }] = usePostUserV2CdnZoneCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostUserV2CdnCdnCheckZoneMutation();
   const [zoneName, setZoneName] = useState("");
 
   const submit = () => {
@@ -19,7 +19,7 @@ const AddDomain: FC = () => {
       toast.warning("نام دامنه را وارد کنید");
       return;
     }
-    checkZone({ checkZoneModel: { zoneName } })
+    checkZone({ checkCdnModel: { zoneName } })
       .unwrap()
       .then(() => {
         toast.success("دامنه تایید شد");

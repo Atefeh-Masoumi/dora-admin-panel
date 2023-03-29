@@ -43,7 +43,10 @@ const AddTicket: FC = () => {
   const [selectList] = usePostUserV2PortalSupportSubjectSelectListMutation();
   useEffect(() => {
     selectList({
-      selectListModel: { productCategoryId: category, businessUnitId: unit },
+      supportSubjectSelectListModel: {
+        productCategoryId: category,
+        businessUnitId: unit,
+      },
     })
       .unwrap()
       .then((res: SetStateAction<SupportSubjectListResponse[]>) =>

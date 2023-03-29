@@ -5,7 +5,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { DomainCard } from "src/components/organisms/cdn/editZone/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { useGetUserV2CdnZoneListQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnCdnListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 
@@ -15,7 +15,7 @@ const DomainManagement: FC = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetUserV2CdnZoneListQuery();
+  } = useGetUserV2CdnCdnListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -101,7 +101,11 @@ const DomainManagement: FC = () => {
               variant="outlined"
               onClick={createCloudOnClick}
               size="large"
-              sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
+              sx={{
+                whiteSpace: "nowrap",
+                px: 1.2,
+                borderRadius: BORDER_RADIUS_5,
+              }}
               startIcon={
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }

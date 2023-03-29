@@ -4,37 +4,37 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  usePutUserV2CdnZoneChangeHstsMutation,
-  usePutUserV2CdnZoneChangeRedirectMutation,
+  usePutUserV2CdnCdnChangeHstsMutation,
+  usePutUserV2CdnCdnChangeRedirectMutation,
 } from "src/app/services/api.generated";
 
-type SwitchHttpSettingPropsType = {
+type CdnSecuritySettingPropsType = {
   id: number;
   isHSTS: boolean | undefined;
   isRedirect: boolean | undefined;
   loading: boolean;
 };
-export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
+export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   id,
   isHSTS,
   isRedirect,
   loading,
 }) => {
   const [changeRedirect, { isLoading: loadingRedirect }] =
-    usePutUserV2CdnZoneChangeRedirectMutation();
+    usePutUserV2CdnCdnChangeRedirectMutation();
   const onChangeRedirect = () => {
     if (isRedirect === undefined) return;
     changeRedirect({
       changeRedirectModel: { id, isRedirect: !isRedirect },
-    }).then(() => toast.success("وضعیت تبدیل لینک آپدیت شد"));
+    }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
-    usePutUserV2CdnZoneChangeHstsMutation();
+    usePutUserV2CdnCdnChangeHstsMutation();
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({ changeHstsModel: { id, isHsts: !isHSTS } }).then(() => {
-      toast.success("وضعیت  HSTS آپدیت شد");
+      toast.success("وضعیت HSTS بروز رسانی شد");
     });
   };
 
@@ -47,7 +47,7 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
     },
     {
       title: "فعالسازی تبدیل لینک های Http به Https",
-      text: "Automatic HTTPS Rewrites helps fix mixed content by changing “http”  to “https” for all resources or links on your web site that can be  served with HTTPS.",
+      text: "Automatic HTTPS Rewrites helps fix mixed content by changing “http”  to “https” for all resources or links on your web site that can be  served with HTTPS",
       data: isRedirect,
       action: onChangeRedirect,
     },
@@ -64,16 +64,12 @@ export const SwitchHttpSetting: FC<SwitchHttpSettingPropsType> = ({
         <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
           {items.map(({ title, text, data, action }, index) => (
             <Fragment key={index}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
+              <Stack direction="row" justifyContent="space-between">
                 <Stack spacing={1}>
                   <Typography variant="text1" fontWeight="bold">
                     {title}
                   </Typography>
-                  <Typography variant="text4" color="secondary" align="right">
+                  <Typography variant="text4" color="secondary" paragraph>
                     {text}
                   </Typography>
                 </Stack>

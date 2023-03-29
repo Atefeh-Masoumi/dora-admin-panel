@@ -1,17 +1,17 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { useGetUserV2CdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddLicenseDialog } from "./AddLicenseDialog";
+import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
 
-export const UserCertification: FC = () => {
+export const CdnEdgeCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const zoneName = selectedDomain?.zoneName || "";
 
   const { data: userCert, isLoading } =
-    useGetUserV2CdnClientCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetUserV2CdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
@@ -60,7 +60,7 @@ export const UserCertification: FC = () => {
           )}
         </Stack>
       </Stack>
-      <AddLicenseDialog
+      <AddEdgeUserCertDialog
         openDialog={open}
         handleClose={handleClose}
         zoneName={zoneName}

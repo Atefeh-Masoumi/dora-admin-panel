@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { RadioHttpSetting } from "src/components/organisms/cdn/editZone/ssl/RadioHttpSetting";
-import { SwitchHttpSetting } from "src/components/organisms/cdn/editZone/ssl/SwitchHttpSetting";
-import { EdgeCertification } from "src/components/organisms/cdn/editZone/ssl/edge/EdgeCertification";
-import { ClientCertification } from "src/components/organisms/cdn/editZone/ssl/client/ClientCertification";
-import { useGetUserV2CdnZoneGetByZoneNameQuery } from "src/app/services/api.generated";
+import { CdnTypeSetting } from "src/components/organisms/cdn/editZone/ssl/CdnTypeSetting";
+import { CdnSecuritySetting } from "src/components/organisms/cdn/editZone/ssl/CdnSecuritySetting";
+import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/editZone/ssl/edge/CdnChangeEdgeCertType";
+import { CdnChangeClientCertType } from "src/components/organisms/cdn/editZone/ssl/client/CdnChangeClientCertType";
+import { useGetUserV2CdnCdnGetByZoneNameQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -13,7 +13,7 @@ export const SSLSetting: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
   const id = selectedDomain?.id || 0;
 
-  const { data: zoneData, isLoading } = useGetUserV2CdnZoneGetByZoneNameQuery({
+  const { data: zoneData, isLoading } = useGetUserV2CdnCdnGetByZoneNameQuery({
     zoneName,
   });
   return (
@@ -22,12 +22,12 @@ export const SSLSetting: FC = () => {
         <Typography fontSize={24} color="secondary" fontWeight="bold">
           تنظیمات HTTPS
         </Typography>
-        <RadioHttpSetting
+        <CdnTypeSetting
           zoneTypeId={zoneData?.zoneTypeId as number}
           loading={isLoading}
           id={id}
         />
-        <SwitchHttpSetting
+        <CdnSecuritySetting
           id={id}
           isHSTS={zoneData?.isHsts}
           isRedirect={zoneData?.isRedirect}
@@ -38,7 +38,7 @@ export const SSLSetting: FC = () => {
         <Typography fontSize={24} color="secondary" fontWeight="bold">
           گواهی های لبه (EDGE)
         </Typography>
-        <EdgeCertification
+        <CdnChangeEdgeCertType
           id={id}
           loading={isLoading}
           certTypeId={zoneData?.zoneEdgeCertTypeId}
@@ -46,9 +46,9 @@ export const SSLSetting: FC = () => {
       </Stack>
       <Stack spacing={2}>
         <Typography fontSize={24} color="secondary" fontWeight="bold">
-          گواهی های سرور (CLIENT)
+          گواهی های سرور (ORIGIN)
         </Typography>
-        <ClientCertification
+        <CdnChangeClientCertType
           id={id}
           loading={isLoading}
           certTypeId={zoneData?.zoneClientCertTypeId}

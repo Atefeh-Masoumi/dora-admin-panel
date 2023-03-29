@@ -25,7 +25,7 @@ const items = [
   { title: "حساب کاربری", icon: Account, link: "/portal/profile" },
   { title: "تنظیمات", icon: Setting, link: "/portal/setting" },
   { title: "کد معرف و درآمد", icon: Referral, link: "/portal/referral" },
-  { title: "سرویس های من", icon: Service, link: "/portal/user-services" },
+  { title: "سرویس های من", icon: Service, link: "/portal/host-products" },
 ];
 
 export const UserMenu: FC = () => {

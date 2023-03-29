@@ -5,7 +5,7 @@ import { serviceTableStruct } from "src/components/organisms/portal/userService/
 import { ServiceTableRow } from "src/components/organisms/portal/userService/tables/ServiceTableRow";
 import {
   useGetUserV2PortalProductCategoryListQuery,
-  useGetUserV2PortalUserServiceListByProductCategoryIdQuery,
+  useGetUserV2PortalHostProductListByProductCategoryIdQuery,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -13,14 +13,16 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
 
-  const { data: services, isLoading: getServicesLoading } = useGetUserV2PortalUserServiceListByProductCategoryIdQuery({
-    productCategoryId: Number(selectedCategory),
-  });
+  const { data: services, isLoading: getServicesLoading } =
+    useGetUserV2PortalHostProductListByProductCategoryIdQuery({
+      productCategoryId: Number(selectedCategory),
+    });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     setSelectedCategory(event.target.value as string);
 
-  const { data: categories = [], isLoading: getCategoriesLoading } = useGetUserV2PortalProductCategoryListQuery();
+  const { data: categories = [], isLoading: getCategoriesLoading } =
+    useGetUserV2PortalProductCategoryListQuery();
 
   return (
     <>

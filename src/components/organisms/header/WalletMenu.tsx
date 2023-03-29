@@ -83,7 +83,7 @@ const items = [
     value: "user-bill",
     label: "گزارش محاسبات",
     icon: CalculateSvg,
-    link: "/portal/user-bills",
+    link: "/portal/bills",
   },
 ];
 

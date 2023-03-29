@@ -65,7 +65,7 @@ export const api = generatedApi
       getUserV2CdnDnsRecordListByZoneName: {
         providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
       },
-      getUserV2CdnZoneGetByZoneName: {
+      getUserV2CdnCdnGetByZoneName: {
         providesTags: () => ["ZoneData"],
       },
       getUserV2PortalSupportItemListBySupportId: {
@@ -110,13 +110,13 @@ export const api = generatedApi
       postUserV2CdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putUserV2CdnZoneChangeZoneType: { invalidatesTags: () => ["ZoneData"] },
-      putUserV2CdnZoneChangeHsts: { invalidatesTags: () => ["ZoneData"] },
-      putUserV2CdnZoneChangeRedirect: { invalidatesTags: () => ["ZoneData"] },
-      putUserV2CdnZoneChangeEdgeCertType: {
+      putUserV2CdnCdnChangeCdnType: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnCdnChangeHsts: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnCdnChangeRedirect: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnCdnChangeEdgeCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnZoneChangeClientCertType: {
+      putUserV2CdnCdnChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
       deleteUserV2CdnLoadBalanceDeleteById: {
@@ -193,7 +193,7 @@ export const {
   useLazyGetUserV2PortalInvoiceGetByIdQuery,
   useLazyGetUserV2PortalSupportItemDownloadByIdQuery,
   useLazyGetUserV2PortalWalletPaymentGetByIdQuery,
-  useLazyGetUserV2PortalUserBillDownloadByIdQuery,
+  useLazyGetUserV2PortalBillDownloadByIdQuery,
   useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery,
   useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery,
 } = api;

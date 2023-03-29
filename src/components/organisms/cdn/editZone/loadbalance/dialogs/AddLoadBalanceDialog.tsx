@@ -157,7 +157,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
       })
         .unwrap()
         .then(() => {
-          toast.success("کلاستر با موفقیت آپدیت شد");
+          toast.success("کلاستر با موفقیت بروز رسانی شد");
           onClose();
         });
     } else {
@@ -173,7 +173,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
       })
         .unwrap()
         .then(() => {
-          toast.success("کلاستر با موفقیت آپدیت شد");
+          toast.success("کلاستر با موفقیت بروز رسانی شد");
           onClose();
         });
     }

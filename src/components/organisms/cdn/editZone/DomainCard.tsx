@@ -4,10 +4,10 @@ import CircleTickSvg from "src/components/atoms/svg/CircleTickSvg";
 import ClockSvg from "src/components/atoms/svg/ClockSvg";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
-import { ZoneListResponse } from "src/app/services/api.generated";
+import { CdnListResponse } from "src/app/services/api.generated";
 import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
 
-type DomainCardPropsType = { zoneItem: ZoneListResponse };
+type DomainCardPropsType = { zoneItem: CdnListResponse };
 
 export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
   const { zoneName, zoneStatusId } = zoneItem;

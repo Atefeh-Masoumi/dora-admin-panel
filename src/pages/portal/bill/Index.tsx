@@ -2,18 +2,18 @@ import { FC, useState } from "react";
 import { Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import moment from "jalali-moment";
-import {
-  useGetUserV2PortalUserBillListQuery,
-  UserBillListResponseModel,
-} from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BillsTableRow } from "src/components/organisms/portal/userBill/tables/BillTableRow";
 import { billsTableStruct } from "src/components/organisms/portal/userBill/tables/struct";
+import {
+  useGetUserV2PortalBillListQuery,
+  BillListResponse,
+} from "src/app/services/api.generated";
 
 const UserBills: FC = () => {
-  const { data: userBill, isLoading } = useGetUserV2PortalUserBillListQuery();
+  const { data: userBill, isLoading } = useGetUserV2PortalBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
@@ -24,7 +24,7 @@ const UserBills: FC = () => {
 
   const filteredList =
     userBill?.filter(
-      (bill: UserBillListResponseModel) =>
+      (bill: BillListResponse) =>
         bill.id?.toString().includes(search) &&
         (!dateFrom ||
           (bill.billDate && timeStringToDate(bill.billDate) > dateFrom)) &&

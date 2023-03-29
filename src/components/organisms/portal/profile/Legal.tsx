@@ -57,7 +57,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
       },
     })
       .unwrap()
-      .then(() => toast.success("مشخصات با موفقیت آپدیت شد"))
+      .then(() => toast.success("مشخصات با موفقیت بروز رسانی شد"))
       .catch(({ status, data }) => {
         if (status === 401 || status === 404) {
           toast.error("اطلاعات را درست وارد کنید");

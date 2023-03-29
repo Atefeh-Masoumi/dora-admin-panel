@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
-import { useGetUserV2CdnZoneOverviewByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetUserV2CdnCdnOverviewByZoneNameQuery } from "src/app/services/api.generated";
 import { DeleteZoneDialog } from "./dialogs/DeleteZoneDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
@@ -57,7 +57,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetUserV2CdnZoneOverviewByZoneNameQuery({
+  } = useGetUserV2CdnCdnOverviewByZoneNameQuery({
     zoneName: selectedDomain?.zoneName || "",
   });
 
@@ -66,7 +66,10 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     [getDataFetching, getDataLoading]
   );
 
-  const isActive = useMemo(() => zoneData?.statusId === 2, [zoneData?.statusId]);
+  const isActive = useMemo(
+    () => zoneData?.statusId === 2,
+    [zoneData?.statusId]
+  );
 
   return (
     <Stack
@@ -136,9 +139,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                   color="error"
                   size="large"
                   sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-                  startIcon={
-                    <TrashSvg color="error" />
-                  }
+                  startIcon={<TrashSvg color="error" />}
                 >
                   حذف دامنه
                 </Button>

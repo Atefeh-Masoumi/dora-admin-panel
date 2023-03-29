@@ -1,13 +1,13 @@
 import { ChangeEvent, FC } from "react";
 import { MenuItem, Skeleton } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { useGetUserV2CdnZoneListQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
+import { useGetUserV2CdnCdnListQuery } from "src/app/services/api.generated";
 
 export const DomainSelect: FC = () => {
-  const { data: domains, isLoading } = useGetUserV2CdnZoneListQuery();
+  const { data: domains, isLoading } = useGetUserV2CdnCdnListQuery();
 
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
 

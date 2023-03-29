@@ -1,26 +1,26 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutUserV2CdnZoneChangeClientCertTypeMutation } from "src/app/services/api.generated";
+import { usePutUserV2CdnCdnChangeClientCertTypeMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg/UserSvg";
 import Cloud from "src/components/atoms/svg/Cloud.svg";
 import CloudOff from "src/components/atoms/svg/CloudOff.svg";
-import { UserCertification } from "./UserCertification";
-import { CloudCertification } from "./CloudCertification";
 import PageLoading from "src/components/atoms/PageLoading";
+import { CdnClientCertUserCert } from "./CdnClientCertUserCert";
+import { CdnClientCert } from "./CdnClientCert";
 
-type ClientCertificationPropsType = {
+type CdnChangeClientCertTypePropsType = {
   id: number;
   loading: boolean | undefined;
   certTypeId: number | undefined;
 };
 
-export const ClientCertification: FC<ClientCertificationPropsType> = ({
+export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
   id,
   loading,
   certTypeId,
 }) => {
   const [changeClient, { isLoading }] =
-    usePutUserV2CdnZoneChangeClientCertTypeMutation();
+    usePutUserV2CdnCdnChangeClientCertTypeMutation();
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
@@ -98,7 +98,7 @@ export const ClientCertification: FC<ClientCertificationPropsType> = ({
             </Fragment>
           )}
         </Stack>
-        {certTypeId === 1 ? <CloudCertification /> : <UserCertification />}
+        {certTypeId === 1 ? <CdnClientCert /> : <CdnClientCertUserCert />}
       </Stack>
     </>
   );

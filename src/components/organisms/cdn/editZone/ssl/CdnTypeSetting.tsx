@@ -9,9 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import CloudSvg from "src/components/atoms/svg/CloudSvg.svg";
-import { usePutUserV2CdnZoneChangeZoneTypeMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
+import { usePutUserV2CdnCdnChangeCdnTypeMutation } from "src/app/services/api.generated";
 
 const radioItems = [
   {
@@ -31,22 +31,22 @@ const radioItems = [
   },
 ];
 
-type RadioHttpSettingPropsType = {
+type CdnTypeSettingPropsType = {
   zoneTypeId: number;
   loading: boolean;
   id: number;
 };
 
-export const RadioHttpSetting: FC<RadioHttpSettingPropsType> = ({
+export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
   zoneTypeId,
   loading,
   id,
 }) => {
-  const [changeZoneType, { isLoading: loadingChange }] =
-    usePutUserV2CdnZoneChangeZoneTypeMutation();
+  const [changeCdnType, { isLoading: loadingChange }] =
+    usePutUserV2CdnCdnChangeCdnTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
-    changeZoneType({ changeZoneTypeModel: { id, zoneTypeId } }).then(() => {
+    changeCdnType({ changeCdnTypeModel: { id, zoneTypeId } }).then(() => {
       toast.success("بروزرسانی پروتکل ارتباطی انجام شد");
     });
   };

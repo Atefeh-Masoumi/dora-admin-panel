@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { useGetUserV2PortalDashboardUserBillShortListQuery } from "src/app/services/api.generated";
+import { useGetUserV2PortalDashboardBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import moment from "jalali-moment";
@@ -20,7 +20,7 @@ export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
 
   const { data: reports, isLoading } =
-    useGetUserV2PortalDashboardUserBillShortListQuery();
+    useGetUserV2PortalDashboardBillShortListQuery();
 
   return (
     <Stack
@@ -40,7 +40,7 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش محاسبات
         </Typography>
-        <Button color="secondary" href="/portal/user-bills">
+        <Button color="secondary" href="/portal/bills">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -126,7 +126,7 @@ export const ShortUserBill: FC = () => {
                           {totalPrice && priceToPersian(totalPrice)}
                         </Typography>
                         <IconButton
-                          onClick={() => navigate(`/portal/user-bill/${id}`)}
+                          onClick={() => navigate(`/portal/bill/${id}`)}
                         >
                           <KeyboardArrowLeftIcon color="secondary" />
                         </IconButton>
