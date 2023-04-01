@@ -3,25 +3,25 @@ import { Form, Formik } from "formik";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
-import {
-  GetUserCompanyResponse,
-  useGetUserV2PortalUserCompanyGetQuery,
-  usePutUserV2PortalUserCompanyEditMutation,
-  usePutUserV2PortalProfileEditAccountTypeMutation,
-} from "src/app/services/api.generated";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import { formikOnSubmitType } from "src/types/form.type";
 import { legalFormDefault } from "./constants";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
+import {
+  GetCompanyResponse,
+  useGetUserV2PortalCompanyGetQuery,
+  usePutUserV2PortalCompanyEditMutation,
+  usePutUserV2PortalCompanyEditAccountTypeMutation,
+} from "src/app/services/api.generated";
 
 const formValidation = yup.object().shape({
-  name: yup.string(),
-  nationalId: yup.string(),
-  businessPhone: yup.string(),
-  address: yup.string(),
-  postalCode: yup.string(),
+  name: yup.string().required("نام شرکت را وارد کنید"),
+  nationalId: yup.number().required("شناسه ملی را به عدد وارد کنید"),
+  phone: yup.number().required("تلفن را به عدد وارد کنید"),
+  address: yup.string().required("آدرس وارد کنید"),
+  postalCode: yup.number().required("کد پستی را به عدد وارد کنید"),
 });
 
 type LegalPersonalityPropsType = { isLegal: boolean };
@@ -29,29 +29,34 @@ type LegalPersonalityPropsType = { isLegal: boolean };
 export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   isLegal,
 }) => {
-  const { data } = useGetUserV2PortalUserCompanyGetQuery();
+  const { data, refetch } = useGetUserV2PortalCompanyGetQuery();
+
+  const refetchOnClick = () => {
+    refetch().then(() => {
+      setCompanyInfo(data as GetCompanyResponse);
+    });
+  };
 
   const [companyInfo, setCompanyInfo] = useState(legalFormDefault);
 
   useEffect(() => {
     if (!data) return;
-    setCompanyInfo(data as GetUserCompanyResponse);
+    setCompanyInfo(data as GetCompanyResponse);
   }, [data]);
 
-  const [editUserCompany, { isLoading: loadingEdit }] =
-    usePutUserV2PortalUserCompanyEditMutation();
+  const [editCompany, { isLoading: loadingEdit }] =
+    usePutUserV2PortalCompanyEditMutation();
 
-  const submitHandler: formikOnSubmitType<GetUserCompanyResponse> = (
-    { name, nationalId, businessPhone, address, postalCode },
+  const submitHandler: formikOnSubmitType<GetCompanyResponse> = (
+    { name, nationalId, phone, address, postalCode },
     { setSubmitting }
   ) => {
-    if (!name || !nationalId || !businessPhone || !address || !postalCode)
-      return;
-    editUserCompany({
-      editUserCompanyModel: {
+    if (!name || !nationalId || !phone || !address || !postalCode) return;
+    editCompany({
+      editCompanyModel: {
         name,
         nationalId,
-        businessPhone,
+        phone,
         address,
         postalCode,
       },
@@ -68,9 +73,11 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
 
   // Account Type
   const [editType, { isLoading }] =
-    usePutUserV2PortalProfileEditAccountTypeMutation();
+    usePutUserV2PortalCompanyEditAccountTypeMutation();
   const handleChange = () => {
-    editType({ editAccountTypeModel: { isLegal: !isLegal } });
+    editType({ editAccountTypeModel: { isLegal: !isLegal } }).then(() =>
+      refetchOnClick()
+    );
   };
 
   return (
@@ -96,14 +103,14 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
                       error={Boolean(errors.name && touched.name)}
                       helperText={errors.name}
                       {...getFieldProps("name")}
-                      label="نام شرکت"
+                      label="نام شرکت/طرف حساب"
                       fullWidth
                     />
                     <DorsaTextField
                       error={Boolean(errors.nationalId && touched.nationalId)}
                       helperText={errors.nationalId}
                       {...getFieldProps("nationalId")}
-                      label="شناسه ملی"
+                      label="شناسه ملی/کد ملی"
                       fullWidth
                       inputProps={{ dir: "ltr" }}
                       type="text"
@@ -111,11 +118,9 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
                   </Stack>
                   <Stack direction="row" spacing={1}>
                     <DorsaTextField
-                      error={Boolean(
-                        errors.businessPhone && touched.businessPhone
-                      )}
-                      helperText={errors.businessPhone}
-                      {...getFieldProps("businessPhone")}
+                      error={Boolean(errors.phone && touched.phone)}
+                      helperText={errors.phone}
+                      {...getFieldProps("phone")}
                       label="تلفن شرکت"
                       fullWidth
                       inputProps={{ dir: "ltr" }}

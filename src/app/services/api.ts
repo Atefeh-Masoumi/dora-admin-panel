@@ -86,8 +86,11 @@ export const api = generatedApi
       putUserV2PortalOrderDuration: {
         invalidatesTags: () => ["Order"],
       },
-      putUserV2PortalProfileEditAccountType: {
+      putUserV2PortalCompanyEditAccountType: {
         invalidatesTags: () => ["Profile"],
+      },
+      getUserV2PortalCompanyGet: {
+        providesTags: () => ["Profile"],
       },
       postUserV2PortalProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
@@ -110,9 +113,15 @@ export const api = generatedApi
       postUserV2CdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putUserV2CdnCdnChangeCdnType: { invalidatesTags: () => ["ZoneData"] },
-      putUserV2CdnCdnChangeHsts: { invalidatesTags: () => ["ZoneData"] },
-      putUserV2CdnCdnChangeRedirect: { invalidatesTags: () => ["ZoneData"] },
+      putUserV2CdnCdnChangeCdnType: {
+        invalidatesTags: () => ["ZoneData"],
+      },
+      putUserV2CdnCdnChangeHsts: {
+        invalidatesTags: () => ["ZoneData"],
+      },
+      putUserV2CdnCdnChangeRedirect: {
+        invalidatesTags: () => ["ZoneData"],
+      },
       putUserV2CdnCdnChangeEdgeCertType: {
         invalidatesTags: () => ["ZoneData"],
       },

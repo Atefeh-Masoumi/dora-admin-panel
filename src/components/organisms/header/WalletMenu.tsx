@@ -127,8 +127,9 @@ export const WalletMenu: FC = () => {
           </Stack>
         ) : (
           <Stack direction="row" spacing={0.5}>
-            <Typography sx={{ direction: "rtl" }}>{`${separateBalance || 0
-              }`}</Typography>
+            <Typography sx={{ direction: "rtl" }}>{`${
+              separateBalance || 0
+            }`}</Typography>
             <Typography> ریال </Typography>
           </Stack>
         )}

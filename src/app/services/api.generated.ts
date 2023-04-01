@@ -312,6 +312,32 @@ export const api = createApi({
     >({
       query: () => ({ url: `/user/v2/portal/commission/list` }),
     }),
+    getUserV2PortalCompanyGet: build.query<
+      GetUserV2PortalCompanyGetApiResponse,
+      GetUserV2PortalCompanyGetApiArg
+    >({
+      query: () => ({ url: `/user/v2/portal/company/get` }),
+    }),
+    putUserV2PortalCompanyEdit: build.mutation<
+      PutUserV2PortalCompanyEditApiResponse,
+      PutUserV2PortalCompanyEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/portal/company/edit`,
+        method: "PUT",
+        body: queryArg.editCompanyModel,
+      }),
+    }),
+    putUserV2PortalCompanyEditAccountType: build.mutation<
+      PutUserV2PortalCompanyEditAccountTypeApiResponse,
+      PutUserV2PortalCompanyEditAccountTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/portal/company/edit-account-type`,
+        method: "PUT",
+        body: queryArg.editAccountTypeModel,
+      }),
+    }),
     getUserV2PortalDashboardGetUserAnalyticsByCategoryId: build.query<
       GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiResponse,
       GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiArg
@@ -676,16 +702,6 @@ export const api = createApi({
         url: `/user/v2/portal/profile/edit`,
         method: "PUT",
         body: queryArg.editProfileModel,
-      }),
-    }),
-    putUserV2PortalProfileEditAccountType: build.mutation<
-      PutUserV2PortalProfileEditAccountTypeApiResponse,
-      PutUserV2PortalProfileEditAccountTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/profile/edit-account-type`,
-        method: "PUT",
-        body: queryArg.editAccountTypeModel,
       }),
     }),
     putUserV2PortalProfileEditEmail: build.mutation<
@@ -1082,22 +1098,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getUserV2PortalUserCompanyGet: build.query<
-      GetUserV2PortalUserCompanyGetApiResponse,
-      GetUserV2PortalUserCompanyGetApiArg
-    >({
-      query: () => ({ url: `/user/v2/portal/user-company/get` }),
-    }),
-    putUserV2PortalUserCompanyEdit: build.mutation<
-      PutUserV2PortalUserCompanyEditApiResponse,
-      PutUserV2PortalUserCompanyEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user/v2/portal/user-company/edit`,
-        method: "PUT",
-        body: queryArg.editUserCompanyModel,
-      }),
-    }),
     getUserV2SmsUserSmsCreditGetBalance: build.query<
       GetUserV2SmsUserSmsCreditGetBalanceApiResponse,
       GetUserV2SmsUserSmsCreditGetBalanceApiArg
@@ -1289,6 +1289,22 @@ export const api = createApi({
         body: queryArg.unmountModel,
       }),
     }),
+    getUserV2VmProjectList: build.query<
+      GetUserV2VmProjectListApiResponse,
+      GetUserV2VmProjectListApiArg
+    >({
+      query: () => ({ url: `/user/v2/vm/project/list` }),
+    }),
+    postUserV2VmProjectCreate: build.mutation<
+      PostUserV2VmProjectCreateApiResponse,
+      PostUserV2VmProjectCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/vm/project/create`,
+        method: "POST",
+        body: queryArg.createVmProjectModel,
+      }),
+    }),
     getUserV2PortalWalletList: build.query<
       GetUserV2PortalWalletListApiResponse,
       GetUserV2PortalWalletListApiArg
@@ -1419,7 +1435,7 @@ export const api = createApi({
   }),
 });
 export type PostUserV2AccountLoginApiResponse =
-  /** status 200 Success */ LoginResponseModel;
+  /** status 200 Success */ LoginResponse;
 export type PostUserV2AccountLoginApiArg = {
   loginModel: LoginModel;
 };
@@ -1568,6 +1584,17 @@ export type PostUserV2CdnEdgeCertCreateUserCertApiArg = {
 export type GetUserV2PortalCommissionListApiResponse =
   /** status 200 Success */ CommissionListResponse;
 export type GetUserV2PortalCommissionListApiArg = void;
+export type GetUserV2PortalCompanyGetApiResponse =
+  /** status 200 Success */ GetCompanyResponse[];
+export type GetUserV2PortalCompanyGetApiArg = void;
+export type PutUserV2PortalCompanyEditApiResponse = unknown;
+export type PutUserV2PortalCompanyEditApiArg = {
+  editCompanyModel: EditCompanyModel;
+};
+export type PutUserV2PortalCompanyEditAccountTypeApiResponse = unknown;
+export type PutUserV2PortalCompanyEditAccountTypeApiArg = {
+  editAccountTypeModel: EditAccountTypeModel;
+};
 export type GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiResponse =
   /** status 200 Success */ GetUserAnalyticsResponse[];
 export type GetUserV2PortalDashboardGetUserAnalyticsByCategoryIdApiArg = {
@@ -1747,10 +1774,6 @@ export type PostUserV2PortalProfileGetNotificationStatusApiArg = void;
 export type PutUserV2PortalProfileEditApiResponse = unknown;
 export type PutUserV2PortalProfileEditApiArg = {
   editProfileModel: EditProfileModel;
-};
-export type PutUserV2PortalProfileEditAccountTypeApiResponse = unknown;
-export type PutUserV2PortalProfileEditAccountTypeApiArg = {
-  editAccountTypeModel: EditAccountTypeModel;
 };
 export type PutUserV2PortalProfileEditEmailApiResponse = unknown;
 export type PutUserV2PortalProfileEditEmailApiArg = {
@@ -1945,13 +1968,6 @@ export type DeleteUserV2PortalUserApiKeyDeleteByIdApiResponse = unknown;
 export type DeleteUserV2PortalUserApiKeyDeleteByIdApiArg = {
   id: number;
 };
-export type GetUserV2PortalUserCompanyGetApiResponse =
-  /** status 200 Success */ GetUserCompanyResponse[];
-export type GetUserV2PortalUserCompanyGetApiArg = void;
-export type PutUserV2PortalUserCompanyEditApiResponse = unknown;
-export type PutUserV2PortalUserCompanyEditApiArg = {
-  editUserCompanyModel: EditUserCompanyModel;
-};
 export type GetUserV2SmsUserSmsCreditGetBalanceApiResponse =
   /** status 200 Success */ number;
 export type GetUserV2SmsUserSmsCreditGetBalanceApiArg = void;
@@ -2042,6 +2058,13 @@ export type PutUserV2VmIsoUnmountApiResponse = unknown;
 export type PutUserV2VmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
 };
+export type GetUserV2VmProjectListApiResponse =
+  /** status 200 Success */ ProjectListResponse[];
+export type GetUserV2VmProjectListApiArg = void;
+export type PostUserV2VmProjectCreateApiResponse = unknown;
+export type PostUserV2VmProjectCreateApiArg = {
+  createVmProjectModel: CreateVmProjectModel;
+};
 export type GetUserV2PortalWalletListApiResponse =
   /** status 200 Success */ WalletListResponse[];
 export type GetUserV2PortalWalletListApiArg = void;
@@ -2124,7 +2147,7 @@ export type PostUserV2DomainWhoisGetApiResponse = unknown;
 export type PostUserV2DomainWhoisGetApiArg = {
   getDomainWhoisModel: GetDomainWhoisModel;
 };
-export type LoginResponseModel = {
+export type LoginResponse = {
   accessToken?: string | null;
   expiration?: string;
   userTitle?: string | null;
@@ -2303,6 +2326,23 @@ export type CommissionListResponse = {
   totalPrice?: number;
   commissionPrice?: number;
   commissionDate?: string;
+};
+export type GetCompanyResponse = {
+  name?: string | null;
+  nationalId?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  postalCode?: string | null;
+};
+export type EditCompanyModel = {
+  name: string;
+  nationalId: string;
+  phone: string;
+  address: string;
+  postalCode: string;
+};
+export type EditAccountTypeModel = {
+  isLegal?: boolean;
 };
 export type GetUserAnalyticsResponse = {
   data?: number[] | null;
@@ -2617,12 +2657,12 @@ export type GetProfileResponse = {
   email?: string | null;
   emailConfirmed?: boolean;
   idConfirmed?: boolean;
+  isLegal?: boolean;
   firstName?: string | null;
   lastName?: string | null;
   nationalId?: string | null;
   birthDate?: string | null;
   address?: string | null;
-  isLegal?: boolean;
 };
 export type GetNotificationStatusResponse = {
   id?: string;
@@ -2635,9 +2675,6 @@ export type EditProfileModel = {
   nationalId: string;
   birthDate: string;
   address: string;
-};
-export type EditAccountTypeModel = {
-  isLegal?: boolean;
 };
 export type EditEmailModel = {
   email: string;
@@ -2833,20 +2870,6 @@ export type UserApiKeyListResponse = {
 export type CreateUserApiKeyModel = {
   title: string;
 };
-export type GetUserCompanyResponse = {
-  name?: string | null;
-  nationalId?: string | null;
-  businessPhone?: string | null;
-  address?: string | null;
-  postalCode?: string | null;
-};
-export type EditUserCompanyModel = {
-  name: string;
-  nationalId: string;
-  businessPhone: string;
-  address: string;
-  postalCode: string;
-};
 export type VmListResponse = {
   id?: number;
   name?: string | null;
@@ -2919,6 +2942,22 @@ export type MountModel = {
 export type UnmountModel = {
   id?: number;
   vmId?: number;
+};
+export type ProjectListResponse = {
+  id?: number;
+  name?: string | null;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+  ip?: number;
+  createDate?: string;
+};
+export type CreateVmProjectModel = {
+  name: string;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+  ip?: number;
 };
 export type WalletListResponse = {
   id?: number;
@@ -3024,6 +3063,9 @@ export const {
   usePostUserV2CdnEdgeCertCreateMutation,
   usePostUserV2CdnEdgeCertCreateUserCertMutation,
   useGetUserV2PortalCommissionListQuery,
+  useGetUserV2PortalCompanyGetQuery,
+  usePutUserV2PortalCompanyEditMutation,
+  usePutUserV2PortalCompanyEditAccountTypeMutation,
   useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery,
   useGetUserV2PortalDashboardBillShortListQuery,
   useGetUserV2PortalDashboardSupportShortListQuery,
@@ -3069,7 +3111,6 @@ export const {
   useGetUserV2PortalProfileGetQuery,
   usePostUserV2PortalProfileGetNotificationStatusMutation,
   usePutUserV2PortalProfileEditMutation,
-  usePutUserV2PortalProfileEditAccountTypeMutation,
   usePutUserV2PortalProfileEditEmailMutation,
   usePostUserV2PortalProfileConfirmEmailMutation,
   usePutUserV2PortalProfileEditPhoneNumberMutation,
@@ -3115,8 +3156,6 @@ export const {
   useGetUserV2PortalUserApiKeyListQuery,
   usePostUserV2PortalUserApiKeyCreateMutation,
   useDeleteUserV2PortalUserApiKeyDeleteByIdMutation,
-  useGetUserV2PortalUserCompanyGetQuery,
-  usePutUserV2PortalUserCompanyEditMutation,
   useGetUserV2SmsUserSmsCreditGetBalanceQuery,
   useGetUserV2VmVmListQuery,
   useGetUserV2VmVmGetByIdQuery,
@@ -3139,6 +3178,8 @@ export const {
   useGetUserV2VmIsoListByDatacenterIdQuery,
   usePutUserV2VmIsoMountMutation,
   usePutUserV2VmIsoUnmountMutation,
+  useGetUserV2VmProjectListQuery,
+  usePostUserV2VmProjectCreateMutation,
   useGetUserV2PortalWalletListQuery,
   useGetUserV2PortalWalletGetBalanceQuery,
   useGetUserV2PortalWalletPaymentListQuery,
