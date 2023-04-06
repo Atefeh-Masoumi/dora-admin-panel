@@ -30,7 +30,8 @@ export const SSLSetting: FC = () => {
         <CdnSecuritySetting
           id={id}
           isHSTS={zoneData?.isHsts}
-          isRedirect={zoneData?.isRedirect}
+          isHttpsRedirect={zoneData?.isHttpsRedirect}
+          isNonWwwRedirect={zoneData?.isNonWwwRedirect}
           loading={isLoading}
         />
       </Stack>

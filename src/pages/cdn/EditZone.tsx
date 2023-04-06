@@ -93,9 +93,9 @@ const Domains: FC = () => {
           onChange={handleChange}
         >
           <DorsaTab value="overview" label="مشخصات دامنه" />
+          <DorsaTab value="sslTslSettings" label="تنظیمات" />
           <DorsaTab value="analytics" label="آنالیز ترافیک" />
           <DorsaTab value="dnsRecordSettings" label="تنظیمات DNS Record" />
-          <DorsaTab value="sslTslSettings" label="تنظیمات SSL/TLS" />
           <DorsaTab value="loadBalanceSettings" label="تنظیمات Load Balance" />
           <DorsaTab value="apiGatewaySettings" label="تنظیمات API Gateway" />
         </Tabs>

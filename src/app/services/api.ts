@@ -119,7 +119,10 @@ export const api = generatedApi
       putUserV2CdnCdnChangeHsts: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeRedirect: {
+      putUserV2CdnCdnChangeHttpsRedirect: {
+        invalidatesTags: () => ["ZoneData"],
+      },
+      putUserV2CdnCdnChangeNonWwwRedirect: {
         invalidatesTags: () => ["ZoneData"],
       },
       putUserV2CdnCdnChangeEdgeCertType: {

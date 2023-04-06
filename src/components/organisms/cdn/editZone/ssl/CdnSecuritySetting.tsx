@@ -5,32 +5,47 @@ import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
   usePutUserV2CdnCdnChangeHstsMutation,
-  usePutUserV2CdnCdnChangeRedirectMutation,
+  usePutUserV2CdnCdnChangeHttpsRedirectMutation,
+  usePutUserV2CdnCdnChangeNonWwwRedirectMutation,
 } from "src/app/services/api.generated";
 
 type CdnSecuritySettingPropsType = {
   id: number;
   isHSTS: boolean | undefined;
-  isRedirect: boolean | undefined;
+  isHttpsRedirect: boolean | undefined;
+  isNonWwwRedirect: boolean | undefined;
   loading: boolean;
 };
 export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   id,
   isHSTS,
-  isRedirect,
+  isHttpsRedirect,
+  isNonWwwRedirect,
   loading,
 }) => {
-  const [changeRedirect, { isLoading: loadingRedirect }] =
-    usePutUserV2CdnCdnChangeRedirectMutation();
-  const onChangeRedirect = () => {
-    if (isRedirect === undefined) return;
-    changeRedirect({
-      changeRedirectModel: { id, isRedirect: !isRedirect },
+  const [changeHttpsRedirect, { isLoading: loadingRedirect }] =
+    usePutUserV2CdnCdnChangeHttpsRedirectMutation();
+
+  const onChangeHttpsRedirect = () => {
+    if (isHttpsRedirect === undefined) return;
+    changeHttpsRedirect({
+      changeHttpsRedirectModel: { id, isHttpsRedirect: !isHttpsRedirect },
+    }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
+  };
+
+  const [changeNonWwwRedirect, { isLoading: loadingNonWwwRedirect }] =
+    usePutUserV2CdnCdnChangeNonWwwRedirectMutation();
+
+  const onChangeNonWwwRedirect = () => {
+    if (isNonWwwRedirect === undefined) return;
+    changeNonWwwRedirect({
+      changeNonWwwRedirectModel: { id, isNonWwwRedirect: !isNonWwwRedirect },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
     usePutUserV2CdnCdnChangeHstsMutation();
+
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({ changeHstsModel: { id, isHsts: !isHSTS } }).then(() => {
@@ -48,16 +63,24 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
     {
       title: "فعالسازی تبدیل لینک های Http به Https",
       text: "Automatic HTTPS Rewrites helps fix mixed content by changing “http”  to “https” for all resources or links on your web site that can be  served with HTTPS",
-      data: isRedirect,
-      action: onChangeRedirect,
+      data: isHttpsRedirect,
+      action: onChangeHttpsRedirect,
+    },
+    {
+      title: "فعالسازی تبدیل لینک با www به بدون www",
+      text: "Automatic Rewrites Domain URL to non-www. If you use a www URL, redirecting it to non-www ",
+      data: isNonWwwRedirect,
+      action: onChangeNonWwwRedirect,
     },
   ];
 
   return (
     <>
-      {(loadingRedirect || loadingHSTS) && <PageLoading />}
+      {(loadingRedirect || loadingNonWwwRedirect || loadingHSTS) && (
+        <PageLoading />
+      )}
       <Typography fontSize={24} color="secondary" fontWeight="bold">
-        تنظیمات امنیتی
+        تنظیمات دامنه
       </Typography>
 
       <Stack bgcolor="white" py={2} px={3} borderRadius={3}>
@@ -93,7 +116,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
                   )}
                 </Stack>
               </Stack>
-              {index === 0 && (
+              {(index === 0 || index === 1) && (
                 <Divider sx={{ borderColor: "secondary.light" }} />
               )}
             </Fragment>
@@ -136,7 +159,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
                   {text}
                 </Typography>
               </Stack>
-              {index === 0 && (
+              {(index === 0 || index === 1) && (
                 <Divider sx={{ borderColor: "secondary.light" }} />
               )}
             </Fragment>

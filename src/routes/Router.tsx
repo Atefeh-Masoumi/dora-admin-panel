@@ -294,7 +294,7 @@ const Router: FC = () => {
           <Route
             path="/cdn/sslTslSettings"
             element={mainTemplate(EditZone, {
-              pageTitle: "تنظیمات SSL/TSL",
+              pageTitle: "تنظیمات",
               RightComponent: DomainSelect,
             })}
           />

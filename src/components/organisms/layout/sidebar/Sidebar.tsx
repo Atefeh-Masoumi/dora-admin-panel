@@ -39,8 +39,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           link: "/cdn",
         },
         {
-          title: "اطلاعات دامنه",
+          title: "مشخصات دامنه",
           link: "/cdn/overview",
+        },
+        {
+          title: "تنظیمات",
+          link: "/cdn/sslTslSettings",
         },
         {
           title: "آنالیز ترافیک",
@@ -49,10 +53,6 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         {
           title: "تنظیمات DNS Record",
           link: "/cdn/dnsRecordSettings",
-        },
-        {
-          title: "تنظیمات SSL/TLS",
-          link: "/cdn/sslTslSettings",
         },
         {
           title: "تنظیمات Load Balance",

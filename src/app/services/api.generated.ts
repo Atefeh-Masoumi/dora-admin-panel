@@ -194,6 +194,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    putUserV2CdnCdnChangeCdnType: build.mutation<
+      PutUserV2CdnCdnChangeCdnTypeApiResponse,
+      PutUserV2CdnCdnChangeCdnTypeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/user/v2/cdn/cdn/change-Cdn-type`,
+        method: "PUT",
+        body: queryArg.changeCdnTypeModel,
+      }),
+    }),
     putUserV2CdnCdnChangeClientCertType: build.mutation<
       PutUserV2CdnCdnChangeClientCertTypeApiResponse,
       PutUserV2CdnCdnChangeClientCertTypeApiArg
@@ -224,24 +234,24 @@ export const api = createApi({
         body: queryArg.changeHstsModel,
       }),
     }),
-    putUserV2CdnCdnChangeRedirect: build.mutation<
-      PutUserV2CdnCdnChangeRedirectApiResponse,
-      PutUserV2CdnCdnChangeRedirectApiArg
+    putUserV2CdnCdnChangeHttpsRedirect: build.mutation<
+      PutUserV2CdnCdnChangeHttpsRedirectApiResponse,
+      PutUserV2CdnCdnChangeHttpsRedirectApiArg
     >({
       query: (queryArg) => ({
-        url: `/user/v2/cdn/cdn/change-redirect`,
+        url: `/user/v2/cdn/cdn/change-https-redirect`,
         method: "PUT",
-        body: queryArg.changeRedirectModel,
+        body: queryArg.changeHttpsRedirectModel,
       }),
     }),
-    putUserV2CdnCdnChangeCdnType: build.mutation<
-      PutUserV2CdnCdnChangeCdnTypeApiResponse,
-      PutUserV2CdnCdnChangeCdnTypeApiArg
+    putUserV2CdnCdnChangeNonWwwRedirect: build.mutation<
+      PutUserV2CdnCdnChangeNonWwwRedirectApiResponse,
+      PutUserV2CdnCdnChangeNonWwwRedirectApiArg
     >({
       query: (queryArg) => ({
-        url: `/user/v2/cdn/cdn/change-Cdn-type`,
+        url: `/user/v2/cdn/cdn/change-non-www-redirect`,
         method: "PUT",
-        body: queryArg.changeCdnTypeModel,
+        body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
     getUserV2CdnClientCertGetByZoneName: build.query<
@@ -1529,6 +1539,10 @@ export type DeleteUserV2CdnCdnDeleteByIdApiResponse = unknown;
 export type DeleteUserV2CdnCdnDeleteByIdApiArg = {
   id: number;
 };
+export type PutUserV2CdnCdnChangeCdnTypeApiResponse = unknown;
+export type PutUserV2CdnCdnChangeCdnTypeApiArg = {
+  changeCdnTypeModel: ChangeCdnTypeModel;
+};
 export type PutUserV2CdnCdnChangeClientCertTypeApiResponse = unknown;
 export type PutUserV2CdnCdnChangeClientCertTypeApiArg = {
   changeClientCertTypeModel: ChangeClientCertTypeModel;
@@ -1541,13 +1555,13 @@ export type PutUserV2CdnCdnChangeHstsApiResponse = unknown;
 export type PutUserV2CdnCdnChangeHstsApiArg = {
   changeHstsModel: ChangeHstsModel;
 };
-export type PutUserV2CdnCdnChangeRedirectApiResponse = unknown;
-export type PutUserV2CdnCdnChangeRedirectApiArg = {
-  changeRedirectModel: ChangeRedirectModel;
+export type PutUserV2CdnCdnChangeHttpsRedirectApiResponse = unknown;
+export type PutUserV2CdnCdnChangeHttpsRedirectApiArg = {
+  changeHttpsRedirectModel: ChangeHttpsRedirectModel;
 };
-export type PutUserV2CdnCdnChangeCdnTypeApiResponse = unknown;
-export type PutUserV2CdnCdnChangeCdnTypeApiArg = {
-  changeCdnTypeModel: ChangeCdnTypeModel;
+export type PutUserV2CdnCdnChangeNonWwwRedirectApiResponse = unknown;
+export type PutUserV2CdnCdnChangeNonWwwRedirectApiArg = {
+  changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
 export type GetUserV2CdnClientCertGetByZoneNameApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
@@ -2261,7 +2275,8 @@ export type GetCdnResponse = {
   zoneEdgeCertTypeId?: number;
   zoneClientCertTypeId?: number;
   isHsts?: boolean;
-  isRedirect?: boolean;
+  isHttpsRedirect?: boolean;
+  isNonWwwRedirect?: boolean;
 };
 export type GetCdnNsStatusResponse = {
   status?: boolean;
@@ -2281,6 +2296,10 @@ export type CheckCdnModel = {
 export type CreateCdnModel = {
   zoneName: string;
 };
+export type ChangeCdnTypeModel = {
+  id?: number;
+  zoneTypeId?: number;
+};
 export type ChangeClientCertTypeModel = {
   id?: number;
   zoneClientCertTypeId?: number;
@@ -2293,13 +2312,13 @@ export type ChangeHstsModel = {
   id?: number;
   isHsts?: boolean;
 };
-export type ChangeRedirectModel = {
+export type ChangeHttpsRedirectModel = {
   id?: number;
-  isRedirect?: boolean;
+  isHttpsRedirect?: boolean;
 };
-export type ChangeCdnTypeModel = {
+export type ChangeNonWwwRedirectModel = {
   id?: number;
-  zoneTypeId?: number;
+  isNonWwwRedirect?: boolean;
 };
 export type GetCdnCertResponse = {
   issuer?: string | null;
@@ -3050,11 +3069,12 @@ export const {
   usePostUserV2CdnCdnCheckZoneMutation,
   usePostUserV2CdnCdnCreateMutation,
   useDeleteUserV2CdnCdnDeleteByIdMutation,
+  usePutUserV2CdnCdnChangeCdnTypeMutation,
   usePutUserV2CdnCdnChangeClientCertTypeMutation,
   usePutUserV2CdnCdnChangeEdgeCertTypeMutation,
   usePutUserV2CdnCdnChangeHstsMutation,
-  usePutUserV2CdnCdnChangeRedirectMutation,
-  usePutUserV2CdnCdnChangeCdnTypeMutation,
+  usePutUserV2CdnCdnChangeHttpsRedirectMutation,
+  usePutUserV2CdnCdnChangeNonWwwRedirectMutation,
   useGetUserV2CdnClientCertGetByZoneNameQuery,
   useGetUserV2CdnClientCertGetUserCertByZoneNameQuery,
   usePostUserV2CdnClientCertCreateUserCertMutation,
