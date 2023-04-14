@@ -9,8 +9,9 @@ import StepConnector, {
 } from "@mui/material/StepConnector";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
+import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
-import { addDomainStepsType } from "./context/AddDomainContext";
+import { addZoneStepsType } from "./context/AddZoneContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -75,8 +76,20 @@ const ColorlibStepIcon = (props: StepIconProps) => {
 
   const icons: { [index: string]: ReactElement } = {
     1: <BuildingSvg />,
-    2: <DriverSvg mode={active || completed ? "selected" : "default"} />,
-    3: (
+    2: (
+      <WindowsSvg
+        sx={{
+          "&>path": {
+            fill: ({ palette }) =>
+              active || completed
+                ? `${palette.primary.main} !important`
+                : undefined,
+          },
+        }}
+      />
+    ),
+    3: <DriverSvg mode={active || completed ? "selected" : "default"} />,
+    4: (
       <ExclamationMarkCircleSvg
         sx={{
           "&>path": {
@@ -100,13 +113,13 @@ const ColorlibStepIcon = (props: StepIconProps) => {
   );
 };
 
-const steps = ["انتخاب دامنه", "مشخصات سرویس"];
+const steps = ["انتخاب دامنه", "اطلاعات NS"];
 
-type AddDomainStepperPropsType = {
-  step: addDomainStepsType;
+type AddZoneStepperPropsType = {
+  step: addZoneStepsType;
 };
 
-export const AddDomainStepper: FC<AddDomainStepperPropsType> = ({ step }) => {
+export const AddZoneStepper: FC<AddZoneStepperPropsType> = ({ step }) => {
   return (
     <Stepper
       alternativeLabel

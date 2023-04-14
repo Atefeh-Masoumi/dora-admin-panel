@@ -1,34 +1,13 @@
 import type { FC } from "react";
-import { LoadingButton } from "@mui/lab";
 import { Button, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import { usePostUserV2CdnCdnCreateMutation } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
-import { useNavigate } from "react-router";
 import { ContentCopyOutlined } from "@mui/icons-material";
 
 type RecordsListPropsType = { zoneName: string };
 
 export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
-  const navigate = useNavigate();
-
-  const [createCdn, { isLoading }] = usePostUserV2CdnCdnCreateMutation();
-
-  const submit = () => {
-    if (!zoneName) return;
-    createCdn({ createCdnModel: { zoneName } })
-      .then(() => {
-        toast.success("دامنه با موفقیت ایجاد شد");
-        navigate("/cdn");
-      })
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) {
-          toast.error("مشکلی پیش آمده");
-        } else toast.error(res.data[""][0]);
-      });
-  };
-
   return (
     <Stack alignItems="center" spacing={1} px={{ xs: 2, md: 0 }}>
       <Stack borderRadius="100%" border="18px solid rgba(60, 138, 255, 0.04)">
@@ -102,31 +81,6 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
           />
           <Typography whiteSpace="nowrap">:NS 2</Typography>
         </Stack>
-      </Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        width="100%"
-        maxWidth={400}
-      >
-        <Button
-          fullWidth
-          variant="outlined"
-          href="/cdn"
-          sx={{ py: 1.7, px: 5 }}
-        >
-          انصراف
-        </Button>
-        <LoadingButton
-          onClick={submit}
-          fullWidth
-          variant="contained"
-          sx={{ py: 1.7, px: 5 }}
-          loading={isLoading}
-        >
-          ثبت دامنه
-        </LoadingButton>
       </Stack>
     </Stack>
   );

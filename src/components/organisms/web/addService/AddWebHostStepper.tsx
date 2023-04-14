@@ -4,7 +4,9 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { StepIconProps } from "@mui/material/StepIcon";
-import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
@@ -74,17 +76,18 @@ const ColorlibStepIcon = (props: StepIconProps) => {
 
   const icons: { [index: string]: ReactElement } = {
     1: <BuildingSvg />,
-    2: <WindowsSvg
-      sx={{
-        "&>path": {
-          fill: ({ palette }) =>
-            active || completed
-              ? `${palette.primary.main} !important`
-              : undefined,
-        },
-      }}
-    />
-    ,
+    2: (
+      <WindowsSvg
+        sx={{
+          "&>path": {
+            fill: ({ palette }) =>
+              active || completed
+                ? `${palette.primary.main} !important`
+                : undefined,
+          },
+        }}
+      />
+    ),
     3: <DriverSvg mode={active || completed ? "selected" : "default"} />,
     4: (
       <ExclamationMarkCircleSvg
@@ -110,20 +113,13 @@ const ColorlibStepIcon = (props: StepIconProps) => {
   );
 };
 
-const steps = [
-  "انتخاب دامنه",
-  "انتخاب مرکز داده",
-  "انتخاب مشخصات سرویس",
-  "قوانین و مقررات",
-];
+const steps = ["انتخاب دامنه", "انتخاب مرکز داده", "انتخاب مشخصات سرویس"];
 
 type AddWebHostStepperPropsType = {
   step: addWebHostStepsType;
 };
 
-export const AddWebHostStepper: FC<AddWebHostStepperPropsType> = ({
-  step,
-}) => {
+export const AddWebHostStepper: FC<AddWebHostStepperPropsType> = ({ step }) => {
   return (
     <Stepper
       alternativeLabel

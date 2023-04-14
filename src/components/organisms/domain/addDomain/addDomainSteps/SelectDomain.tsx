@@ -1,5 +1,12 @@
 import { ChangeEvent, FC, useContext } from "react";
-import { Radio, RadioGroup, Grid, Autocomplete } from "@mui/material";
+import {
+  Radio,
+  RadioGroup,
+  Grid,
+  Autocomplete,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AddDomainContext } from "src/components/organisms/domain/addDomain/context/AddDomainContext";
 import { Box } from "@mui/system";
@@ -28,6 +35,10 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const { ext, setExt } = useContext(AddDomainContext);
   const { typeId, setTypeId } = useContext(AddDomainContext);
   const { authCode, setAuthCode } = useContext(AddDomainContext);
+  const { term, setTerm } = useContext(AddDomainContext);
+
+  const termInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    setTerm(e.target.checked);
 
   const typeChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
@@ -35,11 +46,11 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   ) => {
     setTypeId(parseInt(value));
     if (parseInt(value) === 1) {
-      setAuthCode("Auth Code")
+      setAuthCode("Auth Code");
     } else {
-      setAuthCode("")
+      setAuthCode("");
     }
-  }
+  };
 
   const domainNameInputChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,27 +60,53 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setAuthCode(e.target.value);
 
-  const extInputChangeHandler = (_event: any, newValue: { name: string; value: string; } | null) => {
+  const extInputChangeHandler = (
+    _event: any,
+    newValue: { name: string; value: string } | null
+  ) => {
     if (!newValue) return;
-    setExt((newValue && newValue.value) || "")
+    setExt((newValue && newValue.value) || "");
   };
 
   return (
-    <Box sx={{ p: { xs: 0, md: 2 }, mx: "auto", maxWidth: "600px", textAlign: "center" }}>
+    <Box
+      sx={{
+        p: { xs: 0, md: 2 },
+        mx: "auto",
+        maxWidth: "600px",
+        textAlign: "center",
+      }}
+    >
       <Grid
         container
         direction="row"
         justifyContent="center"
         sx={{ borderRadius: 1, bgcolor: "white" }}
       >
-        <Grid xs={12} lg={4} item spacing={1} sx={{ p: { xs: 2, lg: 0 }, mr: { xs: -3, lg: 0 } }}>
+        <Grid
+          xs={12}
+          lg={4}
+          item
+          spacing={1}
+          sx={{ p: { xs: 2, lg: 0 }, mr: { xs: -3, lg: 0 } }}
+        >
           <RadioGroup
             name={"typeId"}
             value={typeId.toString()}
             onChange={typeChangeHandler}
           >
-            <DorsaRadio sx={{ width: { xs: "100%", lg: "100%" }, }} value="1" control={<Radio />} label="ثبت دامنه" />
-            <DorsaRadio sx={{ width: { xs: "100%", lg: "100%" }, }} value="2" control={<Radio />} label="انتقال دامنه" />
+            <DorsaRadio
+              sx={{ width: { xs: "100%", lg: "100%" } }}
+              value="1"
+              control={<Radio />}
+              label="ثبت دامنه"
+            />
+            <DorsaRadio
+              sx={{ width: { xs: "100%", lg: "100%" } }}
+              value="2"
+              control={<Radio />}
+              label="انتقال دامنه"
+            />
           </RadioGroup>
         </Grid>
         <Grid xs={12} lg={8} item container spacing={1}>
@@ -77,17 +114,26 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
             <Autocomplete
               disablePortal
               disableClearable
-              value={useDomainArray.find((option: { name: string; value: string; }) => option.value === ext)}
+              value={useDomainArray.find(
+                (option: { name: string; value: string }) =>
+                  option.value === ext
+              )}
               options={useDomainArray}
-              getOptionLabel={(option: { name: string; value: string; }) => (option && option.name) || ""}
+              getOptionLabel={(option: { name: string; value: string }) =>
+                (option && option.name) || ""
+              }
               onChange={extInputChangeHandler}
-              renderInput={(params) => <DorsaTextField {...params} label="دامنه" />}
+              renderInput={(params) => (
+                <DorsaTextField {...params} label="دامنه" />
+              )}
             />
           </Grid>
           <Grid item xs={8}>
             <DorsaTextField
               value={domainName}
-              onKeyDown={(e) => e.key === "Enter" && { domainNameInputChangeHandler }}
+              onKeyDown={(e) =>
+                e.key === "Enter" && { domainNameInputChangeHandler }
+              }
               onChange={domainNameInputChangeHandler}
               placeholder="example.com"
               fullWidth
@@ -98,13 +144,36 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
             {typeId === 2 && (
               <DorsaTextField
                 value={authCode}
-                onKeyDown={(e) => e.key === "Enter" && { authCodeInputChangeHandler }}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && { authCodeInputChangeHandler }
+                }
                 onChange={authCodeInputChangeHandler}
                 placeholder="کد انتقال"
                 fullWidth
                 inputProps={{ dir: "ltr" }}
               />
             )}
+          </Grid>
+        </Grid>
+        <Grid
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+          spacing={{ xs: 1, md: 0 }}
+          width="100%"
+        >
+          <Grid direction="row" alignItems="center" spacing={0.5}>
+            <FormControlLabel
+              color="secondary.main"
+              label="با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم"
+              control={
+                <Checkbox
+                  value={term}
+                  checked={term}
+                  sx={{ p: 0, borderRadius: 0 }}
+                  onChange={termInputChangeHandler}
+                />
+              }
+            />
           </Grid>
         </Grid>
       </Grid>

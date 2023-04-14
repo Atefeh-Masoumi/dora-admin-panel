@@ -1,101 +1,170 @@
-import { FC, useState } from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { FC, useContext } from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { RecordsList } from "src/components/organisms/cdn/addZone/RecordsList";
-import { Terms } from "src/components/organisms/cdn/addZone/Terms";
-import { usePostUserV2CdnCdnCheckZoneMutation } from "src/app/services/api.generated";
+import { useNavigate } from "react-router";
+import { SelectDomain } from "src/components/organisms/cdn/addZone/AddZoneSteps/SelectDomain";
+import { RecordsList } from "src/components/organisms/cdn/addZone/AddZoneSteps/RecordsList";
+import { AddZoneStepper } from "src/components/organisms/cdn/addZone/AddZoneStepper";
+import {
+  usePostUserV2CdnCdnCheckZoneMutation,
+  usePostUserV2CdnCdnCreateMutation,
+} from "src/app/services/api.generated";
+import {
+  AddZoneContext,
+  addZoneStepsType,
+} from "src/components/organisms/cdn/addZone/context/AddZoneContext";
 
-const AddDomain: FC = () => {
-  const [addDomainLevel, setAddDomainLevel] = useState(1);
+const AddZone: FC = () => {
+  const { step, setStep, domainName, term } = useContext(AddZoneContext);
 
-  const [checkZone, { isLoading }] = usePostUserV2CdnCdnCheckZoneMutation();
-  const [zoneName, setZoneName] = useState("");
+  const navigate = useNavigate();
 
-  const submit = () => {
-    if (zoneName === "") {
-      toast.warning("نام دامنه را وارد کنید");
+  const goPreviousStep = () => {
+    if (step === 1) {
+      navigate("/cdn");
       return;
     }
-    checkZone({ checkCdnModel: { zoneName } })
+    setStep((step - 1) as addZoneStepsType);
+  };
+
+  const [checkZone, { isLoading }] = usePostUserV2CdnCdnCheckZoneMutation();
+  const [createCdn, { isLoading: createCdnLoading }] =
+    usePostUserV2CdnCdnCreateMutation();
+
+  const submitHandler = () => {
+    if (term !== true) {
+      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
+      return;
+    }
+
+    if (step !== 2 || !domainName || domainName.length < 3) {
+      toast.error("خطا در تکمیل اطلاعات");
+      return;
+    }
+
+    createCdn({
+      createCdnModel: {
+        zoneName: domainName,
+      },
+    })
       .unwrap()
-      .then(() => {
-        toast.success("دامنه تایید شد");
-        setAddDomainLevel(2);
-      })
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
-        else toast.error(res.data[""][0]);
+      .then((res) => {
+        toast.success("زون با موفقیت ایجاد شد");
+        navigate("/cdn");
       });
   };
+
+  const goNextStep = () => {
+    switch (step) {
+      case 1:
+        if (term !== true) {
+          toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
+          return;
+        }
+        checkZone({
+          checkCdnModel: {
+            zoneName: domainName,
+          },
+        })
+          .unwrap()
+          .then(() => {
+            toast.success("دامنه تایید شد");
+          })
+          .catch((res) => {
+            if (res.status === 401 || res.status === 404)
+              toast.error("خطای سرور");
+            else toast.error(res.data[""][0]);
+          });
+        domainName && setStep(2);
+        break;
+      case 2:
+        domainName && submitHandler();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const renderStepHandler = () => {
+    let result = <></>;
+    switch (step) {
+      case 1:
+        result = <SelectDomain />;
+        break;
+      case 2:
+        result = <RecordsList zoneName={domainName} />;
+        break;
+      default:
+        break;
+    }
+    return result;
+  };
+
   return (
-    <Stack p={{ xs: 0, md: 2 }} spacing={1}>
-      <Typography variant="title6" color="secondary" fontWeight="700">
-        افزودن دامنه جدید
-      </Typography>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        sx={{ py: 2, borderRadius: 3, bgcolor: "white" }}
+    <>
+      <Typography
+        variant="title6"
+        color="secondary"
+        fontWeight="700"
+        sx={{ mb: 3 }}
       >
-        {addDomainLevel === 1 ? (
-          <Stack spacing={1.5} py={2} px={1} alignItems="center">
-            <Stack
-              borderRadius="100%"
-              border="18px solid rgba(60, 138, 255, 0.04)"
-            >
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="center"
-                sx={{
-                  width: { xs: "120px", md: "196px" },
-                  height: { xs: "120px", md: "196px" },
-                  borderRadius: "100%",
-                  backgroundColor: "rgba(60, 138, 255, 0.1)",
-                }}
-                p={3}
-              >
-                <GlobalEdit
-                  sx={{ width: "100%", height: "100%", color: "primary.main" }}
-                />
-              </Stack>
-            </Stack>
-            <Typography variant="text14" color="secondary">
-              لطفا آدرس دامنه خود را بدون www وارد کنید
-            </Typography>
-            <DorsaTextField
-              onChange={(e) => setZoneName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && submit()}
-              placeholder="example.com"
-              fullWidth
-              inputProps={{ dir: "ltr" }}
-            />
-            <Stack direction="row" alignItems="center" spacing={1} width="100%">
-              <Button fullWidth variant="outlined" sx={{ py: 1.3 }} href="/cdn">
-                انصراف
-              </Button>
-              <LoadingButton
-                loading={isLoading}
-                onClick={() => submit()}
-                fullWidth
-                variant="contained"
-                sx={{ py: 1.3 }}
-              >
-                ادامه
-              </LoadingButton>
-            </Stack>
-          </Stack>
-        ) : addDomainLevel === 2 ? (
-          <Terms goNext={() => setAddDomainLevel(3)} />
-        ) : (
-          <RecordsList zoneName={zoneName} />
-        )}
-      </Stack>
-    </Stack>
+        ایجاد زون جدید
+      </Typography>
+      <Box
+        sx={{
+          borderRadius: 3,
+          bgcolor: "white",
+          py: 6,
+          px: 2,
+          overflow: "overlay",
+        }}
+      >
+        <Box sx={{ overflow: "overlay" }}>
+          <AddZoneStepper step={step} />
+        </Box>
+        <Box sx={{ my: 6 }}>{renderStepHandler()}</Box>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+          px={1.7}
+        >
+          <Button
+            fullWidth
+            disableElevation
+            sx={{
+              height: 58,
+              maxWidth: { xs: "50%", sm: 200 },
+              borderRadius: "10px",
+              border: "1px solid rgba(110, 118, 138, 0.32)",
+              color: "rgba(110, 118, 138, 1)",
+              fontSize: "16px !important",
+            }}
+            onClick={goPreviousStep}
+          >
+            {step === 1 ? "انصراف" : "مرحله قبل"}
+          </Button>
+          <LoadingButton
+            loading={isLoading || createCdnLoading}
+            fullWidth
+            disableElevation
+            variant="contained"
+            sx={{
+              height: 58,
+              maxWidth: { xs: "50%", sm: 200 },
+              borderRadius: "10px",
+              fontSize: "16px !important",
+            }}
+            onClick={goNextStep}
+          >
+            {step === 2 ? "ایجاد سرویس" : "ادامه"}
+          </LoadingButton>
+        </Stack>
+      </Box>
+    </>
   );
 };
 
-export default AddDomain;
+export default AddZone;

@@ -3,12 +3,17 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { AddDomainContext, addDomainStepsType } from "src/components/organisms/domain/addDomain/context/AddDomainContext";
+import {
+  AddDomainContext,
+  addDomainStepsType,
+} from "src/components/organisms/domain/addDomain/context/AddDomainContext";
 import { AddDomainStepper } from "src/components/organisms/domain/addDomain/AddDomainStepper";
 import { SelectDomain } from "src/components/organisms/domain/addDomain/addDomainSteps/SelectDomain";
 import { DomainInfo } from "src/components/organisms/domain/addDomain/addDomainSteps/DomainInfo";
-import { Terms } from "src/components/organisms/domain/addDomain/addDomainSteps/Terms";
-import { usePostUserV2DomainGetPriceMutation, usePostUserV2DomainRegisterMutation } from "src/app/services/api.generated";
+import {
+  usePostUserV2DomainGetPriceMutation,
+  usePostUserV2DomainRegisterMutation,
+} from "src/app/services/api.generated";
 
 const AddDomain: FC = () => {
   const {
@@ -29,7 +34,7 @@ const AddDomain: FC = () => {
     ns2,
     autoRenewal,
     activeCdn,
-    term
+    term,
   } = useContext(AddDomainContext);
 
   const navigate = useNavigate();
@@ -42,7 +47,8 @@ const AddDomain: FC = () => {
     setStep((step - 1) as addDomainStepsType);
   };
 
-  const [getPriceModel, { isLoading: checkLoading }] = usePostUserV2DomainGetPriceMutation();
+  const [getPriceModel, { isLoading: checkLoading }] =
+    usePostUserV2DomainGetPriceMutation();
 
   const CheckDomain = () => {
     if (domainName === "") return;
@@ -53,18 +59,19 @@ const AddDomain: FC = () => {
         if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
         else toast.error(res.data[""][0]);
       });
-  }
+  };
 
-  const [RegisterDomainModel, { isLoading: registerLoading }] = usePostUserV2DomainRegisterMutation();
+  const [RegisterDomainModel, { isLoading: registerLoading }] =
+    usePostUserV2DomainRegisterMutation();
 
   const submitHandler = () => {
     if (term !== true) {
-      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.")
+      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
       return;
     }
 
     if (
-      step !== 3 ||
+      step !== 2 ||
       !domainName ||
       domainName.length < 3 ||
       !ext ||
@@ -88,7 +95,7 @@ const AddDomain: FC = () => {
       !ns2 ||
       ns2.length < 3
     ) {
-      toast.error("خطا در تکمیل اطلاعات")
+      toast.error("خطا در تکمیل اطلاعات");
       return;
     }
     RegisterDomainModel({
@@ -107,8 +114,8 @@ const AddDomain: FC = () => {
         ns1: ns1,
         ns2: ns2,
         autoRenewal: autoRenewal,
-        activeCdn: activeCdn
-      }
+        activeCdn: activeCdn,
+      },
     })
       .unwrap()
       .then((res) => {
@@ -124,16 +131,26 @@ const AddDomain: FC = () => {
   const goNextStep = () => {
     switch (step) {
       case 1:
+        if (term !== true) {
+          toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
+          return;
+        }
+
         domainName && ext && authCode && CheckDomain();
         break;
       case 2:
-        domainName && ext && authCode &&
-          name && country && province && city && street && postalCode && voice && ns1 && ns2 &&
-          setStep(3);
-        break;
-      case 3:
-        domainName && ext && authCode &&
-          name && country && province && city && street && postalCode && voice && ns1 && ns2 &&
+        domainName &&
+          ext &&
+          authCode &&
+          name &&
+          country &&
+          province &&
+          city &&
+          street &&
+          postalCode &&
+          voice &&
+          ns1 &&
+          ns2 &&
           submitHandler();
         break;
       default:
@@ -149,9 +166,6 @@ const AddDomain: FC = () => {
         break;
       case 2:
         result = <DomainInfo />;
-        break;
-      case 3:
-        result = <Terms />;
         break;
       default:
         break;
@@ -217,7 +231,7 @@ const AddDomain: FC = () => {
             }}
             onClick={goNextStep}
           >
-            {step === 3 ? "ایجاد سرویس" : "ادامه"}
+            {step === 2 ? "ایجاد سرویس" : "ادامه"}
           </LoadingButton>
         </Stack>
       </Box>

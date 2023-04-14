@@ -3,23 +3,19 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { AddWebHostContext, addWebHostStepsType } from "src/components/organisms/web/addService/context/AddWebHostContext";
+import {
+  AddWebHostContext,
+  addWebHostStepsType,
+} from "src/components/organisms/web/addService/context/AddWebHostContext";
 import { AddWebHostStepper } from "src/components/organisms/web/addService/AddWebHostStepper";
 import { SelectDomain } from "src/components/organisms/web/addService/addServiceSteps/SelectDomain";
 import { SelectDataCenter } from "src/components/organisms/web/addService/addServiceSteps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/addService/addServiceSteps/SelectConfig";
-import { Terms } from "src/components/organisms/web/addService/addServiceSteps/Terms";
 import { usePostUserV2WebWebHostCreateMutation } from "src/app/services/api.generated";
 
 const AddWebHost: FC = () => {
-  const {
-    step,
-    setStep,
-    domainName,
-    dataCenter,
-    serverConfig,
-    term
-  } = useContext(AddWebHostContext);
+  const { step, setStep, domainName, dataCenter, serverConfig, term } =
+    useContext(AddWebHostContext);
 
   const navigate = useNavigate();
 
@@ -31,23 +27,24 @@ const AddWebHost: FC = () => {
     setStep((step - 1) as addWebHostStepsType);
   };
 
-  const [createWebHost, { isLoading }] = usePostUserV2WebWebHostCreateMutation();
+  const [createWebHost, { isLoading }] =
+    usePostUserV2WebWebHostCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {
-      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.")
+      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
       return;
     }
 
     if (
-      step !== 4 ||
+      step !== 3 ||
       !domainName ||
       domainName.length < 3 ||
       !dataCenter ||
       !dataCenter.id ||
       !serverConfig
     ) {
-      toast.error("خطا در تکمیل اطلاعات")
+      toast.error("خطا در تکمیل اطلاعات");
       return;
     }
 
@@ -72,15 +69,16 @@ const AddWebHost: FC = () => {
   const goNextStep = () => {
     switch (step) {
       case 1:
+        if (term !== true) {
+          toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
+          return;
+        }
         domainName && setStep(2);
         break;
       case 2:
         domainName && dataCenter && setStep(3);
         break;
       case 3:
-        domainName && dataCenter && serverConfig && setStep(4);
-        break;
-      case 4:
         domainName && dataCenter && serverConfig && submitHandler();
         break;
       default:
@@ -99,9 +97,6 @@ const AddWebHost: FC = () => {
         break;
       case 3:
         result = <SelectConfig />;
-        break;
-      case 4:
-        result = <Terms />;
         break;
       default:
         break;
@@ -167,7 +162,7 @@ const AddWebHost: FC = () => {
             }}
             onClick={goNextStep}
           >
-            {step === 4 ? "ایجاد سرویس" : "ادامه"}
+            {step === 3 ? "ایجاد سرویس" : "ادامه"}
           </LoadingButton>
         </Stack>
       </Box>

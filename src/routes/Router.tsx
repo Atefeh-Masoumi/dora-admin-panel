@@ -7,6 +7,7 @@ import {
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
 import { DomainSelect } from "src/components/organisms/cdn/editZone/DomainSelect";
+import AddZoneContextProvider from "src/components/organisms/cdn/addZone/context/AddZoneContext";
 import AddServerContextProvider from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import EditServerContextProvider from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
@@ -44,7 +45,9 @@ const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
 
 const Wallet = lazy(() => import("src/pages/portal/wallet/Index"));
 const Payments = lazy(() => import("src/pages/portal/walletPayment/Index"));
-const Payment = lazy(() => import("src/pages/portal/walletPayment/PaymentCallBack"));
+const Payment = lazy(
+  () => import("src/pages/portal/walletPayment/PaymentCallBack")
+);
 const Bills = lazy(() => import("src/pages/portal/bill/Index"));
 const Bill = lazy(() => import("src/pages/portal/bill/Bill"));
 const Invoices = lazy(() => import("src/pages/portal/invoice/Index"));
@@ -269,6 +272,17 @@ const Router: FC = () => {
             element={mainTemplate(CdnIndex, {
               pageTitle: "مدیریت دامنه ها",
             })}
+          />
+          <Route
+            path="/cdn/addDomain"
+            element={mainTemplate(
+              AddZone,
+              {
+                link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
+                hideSidebar: true,
+              },
+              AddZoneContextProvider
+            )}
           />
           <Route
             path="/cdn/overview"

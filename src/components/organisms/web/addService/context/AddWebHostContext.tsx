@@ -1,5 +1,8 @@
 import { FC, createContext, ReactNode, useState } from "react";
-import { DatacenterListResponse, ProductBundleListResponse } from "src/app/services/api.generated";
+import {
+  DatacenterListResponse,
+  ProductBundleListResponse,
+} from "src/app/services/api.generated";
 
 export type addWebHostStepsType = 1 | 2 | 3 | 4;
 
@@ -18,15 +21,15 @@ type AddWebHostContextType = {
 
 export const AddWebHostContext = createContext<AddWebHostContextType>({
   step: 1,
-  setStep: (step) => { },
+  setStep: (step) => {},
   domainName: "",
-  setDomainName: (domainName) => { },
+  setDomainName: (domainName) => {},
   dataCenter: null,
-  setDataCenter: (dataCenter) => { },
+  setDataCenter: (dataCenter) => {},
   serverConfig: null,
-  setServerConfig: (osConfig) => { },
+  setServerConfig: (serverConfig) => {},
   term: false,
-  setTerm: (term) => { }
+  setTerm: (term) => {},
 });
 
 type AddWebHostContextProviderPropsType = {
@@ -38,8 +41,11 @@ const AddWebHostContextProvider: FC<AddWebHostContextProviderPropsType> = ({
 }) => {
   const [step, setStep] = useState<addWebHostStepsType>(1);
   const [domainName, setDomainName] = useState("");
-  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
+    null
+  );
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
   const [term, setTerm] = useState(false);
 
   return (
@@ -54,7 +60,7 @@ const AddWebHostContextProvider: FC<AddWebHostContextProviderPropsType> = ({
         serverConfig,
         setServerConfig,
         term,
-        setTerm
+        setTerm,
       }}
     >
       {children}

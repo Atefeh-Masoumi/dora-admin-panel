@@ -2,13 +2,13 @@ import { ChangeEvent, FC, useContext } from "react";
 import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 import { GlobalEdit } from "src/components/atoms/svg/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { AddWebHostContext } from "src/components/organisms/web/addService/context/AddWebHostContext";
+import { AddZoneContext } from "src/components/organisms/cdn/addZone/context/AddZoneContext";
 
 type SelectDomainPropsType = {};
 
 export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const { domainName, setDomainName, term, setTerm } =
-    useContext(AddWebHostContext);
+    useContext(AddZoneContext);
 
   const domainNameInputChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
