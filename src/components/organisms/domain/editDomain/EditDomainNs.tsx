@@ -47,7 +47,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     })
       .unwrap()
       .then(() => {
-        toast.success("درخواست بازسای با موفیت ثبت شد");
+        toast.success("درخواست با موفقیت انجام شد");
         navigate("/domain");
       });
     return;

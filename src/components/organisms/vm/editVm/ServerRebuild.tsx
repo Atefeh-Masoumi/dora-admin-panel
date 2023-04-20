@@ -35,7 +35,7 @@ export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
       })
         .unwrap()
         .then(() => {
-          toast.success("درخواست بازسای با موفیت ارسال شد");
+          toast.success("درخواست با موفقیت انجام شد");
           navigate("/vm");
         });
       return;

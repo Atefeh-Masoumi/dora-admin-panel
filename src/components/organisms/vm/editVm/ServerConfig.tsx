@@ -8,9 +8,10 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { usePutUserV2VmVmEditMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
-const memoryUnitPrice = 300000;
-const cpuUnitPrice = 250000;
-const diskUnitPrice = 27000;
+const memoryUnitPrice = 600000;
+const cpuUnitPrice = 500000;
+const diskUnitPrice = 45000;
+const ipAddress = 600000;
 
 type ServerConfigPropsType = {};
 
@@ -70,7 +71,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     const m = memoryUnitPrice * memory;
     const c = cpuUnitPrice * cpu;
     const d = diskUnitPrice * disk;
-    return m + c + d;
+    return m + c + d + ipAddress;
   }, [cpu, disk, memory]);
 
   const submitClickHandler = () => {
@@ -97,10 +98,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
       >
         تغییر مشخصات سخت افزاری
       </Typography>
-      <Paper
-        elevation={0}
-        sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
-      >
+      <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}>
         <Stack rowGap={{ xs: 3, md: 7.4 }} sx={{ p: 4 }}>
           {resourceList.map(
             ({ name, value, onChange, min, max, step }, index) => (
