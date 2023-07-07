@@ -7,8 +7,8 @@ import { EditRabbitContext } from "src/components/organisms/rabbit/editService/c
 import { rabbitUserTableStruct } from "src/components/organisms/rabbit/editService/ServiceUsers/tables/struct";
 import { RabbitUserTableRow } from "src/components/organisms/rabbit/editService/ServiceUsers/tables/RabbitUserTableRow";
 import { AddRabbitUserDialog } from "src/components/organisms/rabbit/editService/ServiceUsers/dialogs/AddRabbitUserDialog";
-import { useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery } from "src/app/services/api";
-import { GetUserV2RabbitRabbitUserListByRabbitHostIdApiResponse } from "src/app/services/api.generated";
+import { useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery } from "src/app/services/api";
+import { GetPortalRabbitRabbitUserListByRabbitHostIdApiResponse } from "src/app/services/api.generated";
 
 type ServiceUserPropsType = { row: any };
 
@@ -19,8 +19,8 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
   const closeDialog = () => setShowDialog(false);
 
   const { serverId } = useContext(EditRabbitContext);
-  const [getData, { isLoading }] = useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery();
-  const [data, setData] = useState<GetUserV2RabbitRabbitUserListByRabbitHostIdApiResponse | null>(
+  const [getData, { isLoading }] = useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery();
+  const [data, setData] = useState<GetPortalRabbitRabbitUserListByRabbitHostIdApiResponse | null>(
     null
   );
 

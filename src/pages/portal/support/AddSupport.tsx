@@ -17,9 +17,9 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
-  useGetUserV2PortalBusinessUnitListQuery,
-  useGetUserV2PortalProductCategoryListQuery,
-  usePostUserV2PortalSupportSubjectSelectListMutation,
+  useGetPortalPanelBusinessUnitListQuery,
+  useGetPortalPanelProductCategoryListQuery,
+  usePostPortalPanelSupportSubjectSelectListMutation,
 } from "src/app/services/api.generated";
 import { useCustomCreateSupportMutation } from "src/app/services/api";
 
@@ -30,17 +30,17 @@ const AddTicket: FC = () => {
 
   const [unit, setUnit] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
-    useGetUserV2PortalBusinessUnitListQuery();
+    useGetPortalPanelBusinessUnitListQuery();
 
   const [category, setCategory] = useState<number>();
   const { data: categories, isLoading: loadingCategories } =
-    useGetUserV2PortalProductCategoryListQuery();
+    useGetPortalPanelProductCategoryListQuery();
 
   const [title, setTitle] = useState<number>();
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostUserV2PortalSupportSubjectSelectListMutation();
+  const [selectList] = usePostPortalPanelSupportSubjectSelectListMutation();
   useEffect(() => {
     selectList({
       supportSubjectSelectListModel: {

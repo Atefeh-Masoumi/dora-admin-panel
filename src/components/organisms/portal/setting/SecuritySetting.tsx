@@ -3,16 +3,16 @@ import { Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useGetUserV2PortalProfileGetNotificationStatusQuery } from "src/app/services/api";
+import { useGetPortalPanelProfileGetNotificationStatusQuery } from "src/app/services/api";
 import {
-  usePutUserV2PortalProfileEditEmailNotificationMutation,
-  usePutUserV2PortalProfileEditPhoneNotificationMutation,
+  usePutPortalPanelProfileEditEmailNotificationMutation,
+  usePutPortalPanelProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 
 export const SecuritySetting: FC = () => {
-  const { data: notifyData, isLoading } = useGetUserV2PortalProfileGetNotificationStatusQuery();
+  const { data: notifyData, isLoading } = useGetPortalPanelProfileGetNotificationStatusQuery();
 
-  const [editPhoneNotify, { isLoading: loadingPhone }] = usePutUserV2PortalProfileEditPhoneNotificationMutation();
+  const [editPhoneNotify, { isLoading: loadingPhone }] = usePutPortalPanelProfileEditPhoneNotificationMutation();
   const submitPhone = () => {
     if (notifyData?.phoneNotify === undefined) return;
     editPhoneNotify({
@@ -20,7 +20,7 @@ export const SecuritySetting: FC = () => {
     }).then(() => toast.success("بروزرسانی پیامک انجام شد"));
   };
 
-  const [editEmailNotify, { isLoading: loadingEmail }] = usePutUserV2PortalProfileEditEmailNotificationMutation();
+  const [editEmailNotify, { isLoading: loadingEmail }] = usePutPortalPanelProfileEditEmailNotificationMutation();
   const submitEmail = () => {
     if (notifyData?.emailNotify === undefined) return;
     editEmailNotify({

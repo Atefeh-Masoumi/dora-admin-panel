@@ -1,6 +1,6 @@
-import { GetCompanyResponse } from "src/app/services/api.generated";
+import { GetCustomerResponse } from "src/app/services/api.generated";
 
-export const legalFormDefault: GetCompanyResponse = {
+export const legalFormDefault: GetCustomerResponse = {
   name: "",
   nationalId: "",
   phone: "",

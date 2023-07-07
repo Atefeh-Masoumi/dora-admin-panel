@@ -4,8 +4,8 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { serviceTableStruct } from "src/components/organisms/portal/userService/tables/struct";
 import { ServiceTableRow } from "src/components/organisms/portal/userService/tables/ServiceTableRow";
 import {
-  useGetUserV2PortalProductCategoryListQuery,
-  useGetUserV2PortalHostProductListByProductCategoryIdQuery,
+  useGetPortalPanelProductCategoryListQuery,
+  useGetPortalPanelHostProductListByProductCategoryIdQuery,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -14,7 +14,7 @@ const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
 
   const { data: services, isLoading: getServicesLoading } =
-    useGetUserV2PortalHostProductListByProductCategoryIdQuery({
+    useGetPortalPanelHostProductListByProductCategoryIdQuery({
       productCategoryId: Number(selectedCategory),
     });
 
@@ -22,7 +22,7 @@ const Services: FC = () => {
     setSelectedCategory(event.target.value as string);
 
   const { data: categories = [], isLoading: getCategoriesLoading } =
-    useGetUserV2PortalProductCategoryListQuery();
+    useGetPortalPanelProductCategoryListQuery();
 
   return (
     <>

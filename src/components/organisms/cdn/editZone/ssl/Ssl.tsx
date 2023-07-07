@@ -5,7 +5,7 @@ import { CdnTypeSetting } from "src/components/organisms/cdn/editZone/ssl/CdnTyp
 import { CdnSecuritySetting } from "src/components/organisms/cdn/editZone/ssl/CdnSecuritySetting";
 import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/editZone/ssl/edge/CdnChangeEdgeCertType";
 import { CdnChangeClientCertType } from "src/components/organisms/cdn/editZone/ssl/client/CdnChangeClientCertType";
-import { useGetUserV2CdnCdnGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetPortalCdnCdnGetByZoneNameQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -13,7 +13,7 @@ export const SSLSetting: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
   const id = selectedDomain?.id || 0;
 
-  const { data: zoneData, isLoading } = useGetUserV2CdnCdnGetByZoneNameQuery({
+  const { data: zoneData, isLoading } = useGetPortalCdnCdnGetByZoneNameQuery({
     zoneName,
   });
   return (

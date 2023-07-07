@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteUserV2CdnDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeletePortalCdnDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg/SuccessSvg";
@@ -19,7 +19,7 @@ export const DeleteRecordDialog: FC<DeleteRecordDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteRecord, { isLoading }] =
-    useDeleteUserV2CdnDnsRecordDeleteByIdMutation();
+    useDeletePortalCdnDnsRecordDeleteByIdMutation();
 
   const submit = () =>
     deleteRecord({ id })

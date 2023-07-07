@@ -12,14 +12,14 @@ import {
 import { invoiceTableStruct } from "src/components/organisms/portal/invoices/tables/struct";
 import { invoiceTableRow } from "src/components/organisms/portal/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetUserV2PortalInvoiceGetByIdQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelInvoiceGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
 // import moment from "jalali-moment";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 const Invoice: FC = () => {
   const { id } = useParams();
-  const { data: invoiceItem, isLoading } = useGetUserV2PortalInvoiceGetByIdQuery(
+  const { data: invoiceItem, isLoading } = useGetPortalPanelInvoiceGetByIdQuery(
     { id: parseInt(id as string) }
   );
 

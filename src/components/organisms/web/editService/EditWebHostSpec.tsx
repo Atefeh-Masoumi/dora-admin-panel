@@ -7,7 +7,7 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { useNavigate, useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import { useGetUserV2DomainGetByIdQuery, usePutUserV2DomainChangeContactMutation } from "src/app/services/api.generated";
+import { useGetPortalDomainGetByIdQuery, usePutPortalDomainChangeContactMutation } from "src/app/services/api.generated";
 
 type EditWebHostSpecPropsType = {};
 
@@ -18,7 +18,7 @@ export const EditWebHostSpec: FC<EditWebHostSpecPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetUserV2DomainGetByIdQuery({
+  } = useGetPortalDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -29,7 +29,7 @@ export const EditWebHostSpec: FC<EditWebHostSpecPropsType> = () => {
 
   const navigate = useNavigate();
 
-  const [changeContactModel, { isLoading: loadEdit }] = usePutUserV2DomainChangeContactMutation();
+  const [changeContactModel, { isLoading: loadEdit }] = usePutPortalDomainChangeContactMutation();
 
   const submitHandler = () => {
     if (

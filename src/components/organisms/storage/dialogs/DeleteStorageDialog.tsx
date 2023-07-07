@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteUserV2StorageStorageHostDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeletePortalStorageStorageHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
@@ -18,7 +18,7 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteStorage, { isLoading }] =
-    useDeleteUserV2StorageStorageHostDeleteByIdMutation();
+    useDeletePortalStorageStorageHostDeleteByIdMutation();
 
   const submit = () =>
     deleteStorage({ id })

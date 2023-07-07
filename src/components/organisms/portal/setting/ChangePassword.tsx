@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { formikOnSubmitType } from "src/types/form.type";
 import { passwordValidatorRegex } from "src/utils/formValidator";
-import { usePostUserV2PortalProfileChangePasswordMutation } from "src/app/services/api.generated";
+import { usePostPortalPanelProfileChangePasswordMutation } from "src/app/services/api.generated";
 
 const passValidationHandler = (value: string) =>
   !value ? false : passwordValidatorRegex.test(value);
@@ -38,7 +38,7 @@ export const ChangePassword: FC = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
 
-  const [changePassword, { isLoading }] = usePostUserV2PortalProfileChangePasswordMutation();
+  const [changePassword, { isLoading }] = usePostPortalPanelProfileChangePasswordMutation();
 
   const navigate = useNavigate();
 

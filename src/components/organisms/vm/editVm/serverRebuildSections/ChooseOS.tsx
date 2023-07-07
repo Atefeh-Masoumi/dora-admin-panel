@@ -9,12 +9,12 @@ import {
 } from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
-import { GetUserV2VmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
+import { GetPortalVmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
-import { useLazyGetUserV2VmImageListByDatacenterIdQuery } from "src/app/services/api";
+import { useLazyGetPortalVmImageListByDatacenterIdQuery } from "src/app/services/api";
 
 type ChooseOSPropsType = {
   imageId: number;
@@ -25,10 +25,10 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
   const { dataCenter } = useContext(EditServerContext);
 
   const [getData, { isLoading }] =
-    useLazyGetUserV2VmImageListByDatacenterIdQuery();
+    useLazyGetPortalVmImageListByDatacenterIdQuery();
 
   const [data, setData] =
-    useState<GetUserV2VmImageListByDatacenterIdApiResponse | null>(null);
+    useState<GetPortalVmImageListByDatacenterIdApiResponse | null>(null);
 
   const [osType, setOsType] = useState<number | null>(null);
 
@@ -45,7 +45,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
   const osVersionClickHandler = (selectedOs: number) => setImageId(selectedOs);
 
   const osArray = useMemo(() => {
-    let result: GetUserV2VmImageListByDatacenterIdApiResponse = [];
+    let result: GetPortalVmImageListByDatacenterIdApiResponse = [];
     if (data) {
       data.forEach((item) => {
         const idx = result.findIndex(({ osId }) => osId === item.osId);

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useAppSelector } from "src/app/hooks";
 import { CodeField } from "src/components/atoms/CodeField";
 import Countdown from "react-countdown";
-import { usePostUserV2AccountForgotMutation } from "src/app/services/api.generated";
+import { usePostPortalAccountForgotMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
 type ForgetPassConfirmCodePropsType = {
@@ -33,7 +33,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
 
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
 
-  const [sendMail] = usePostUserV2AccountForgotMutation();
+  const [sendMail] = usePostPortalAccountForgotMutation();
   const resendCode = () => {
     if (!email) {
       toast.warning("لطفا ابتدا ایمیل خود را وارد کنید");

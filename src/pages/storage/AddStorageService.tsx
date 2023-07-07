@@ -11,7 +11,7 @@ import {
   AddStorageContext,
   addStorageStepsType,
 } from "src/components/organisms/storage/add/context/AddStorageContext";
-import { usePostUserV2StorageStorageHostCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalStorageStorageHostCreateMutation } from "src/app/services/api.generated";
 
 const AddStorageService: FC = () => {
   const { step, setStep, dataCenter, serverConfig, name, isPublic } =
@@ -28,7 +28,7 @@ const AddStorageService: FC = () => {
   };
 
   const [createStorageService, { isLoading }] =
-    usePostUserV2StorageStorageHostCreateMutation();
+    usePostPortalStorageStorageHostCreateMutation();
 
   const submitHandler = () => {
     if (step !== 3 || name.length < 3) {

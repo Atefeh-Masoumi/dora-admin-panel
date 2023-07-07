@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
-import { usePostUserV2RabbitRabbitUserCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalRabbitRabbitUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 
 const formInitialValues = {
@@ -35,7 +35,7 @@ export const AddRabbitUserDialog: FC<AddRabbitUserDialogPropsType> = ({ onClose,
 
 
   const [createRabbitUserCreate, { isLoading: createRabbitUserLoading }] =
-    usePostUserV2RabbitRabbitUserCreateMutation();
+    usePostPortalRabbitRabbitUserCreateMutation();
 
   const { serverId } = useContext(EditRabbitContext);
 

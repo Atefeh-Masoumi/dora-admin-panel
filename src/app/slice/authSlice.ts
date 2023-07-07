@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { api, PostUserV2AccountLoginApiResponse } from "../services/api.generated";
+import { api, PostPortalAccountLoginApiResponse } from "../services/api.generated";
 
-type authSliceType = PostUserV2AccountLoginApiResponse | null;
+type authSliceType = PostPortalAccountLoginApiResponse | null;
 
 const initialState: () => authSliceType = () => {
   const localStorageUserInfo = localStorage.getItem("loginInfo");
@@ -11,7 +11,7 @@ const initialState: () => authSliceType = () => {
     if (!localStorageUserInfo) {
       return result;
     }
-    result = JSON.parse(localStorageUserInfo) as PostUserV2AccountLoginApiResponse;
+    result = JSON.parse(localStorageUserInfo) as PostPortalAccountLoginApiResponse;
   } catch {
     localStorage.removeItem("loginInfo");
   }
@@ -30,8 +30,8 @@ const authSlice = createSlice({
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
-      api.endpoints.postUserV2AccountLogin.matchFulfilled,
-      (_, { payload }: { payload: PostUserV2AccountLoginApiResponse }) => {
+      api.endpoints.postPortalAccountLogin.matchFulfilled,
+      (_, { payload }: { payload: PostPortalAccountLoginApiResponse }) => {
         localStorage.setItem("loginInfo", JSON.stringify(payload));
         return payload;
       }

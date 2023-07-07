@@ -8,7 +8,7 @@ import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
-import { useGetUserV2StorageStorageHostListQuery } from "src/app/services/api.generated";
+import { useGetPortalStorageStorageHostListQuery } from "src/app/services/api.generated";
 
 type StorageManagementPropsType = {};
 
@@ -20,7 +20,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetUserV2StorageStorageHostListQuery();
+  } = useGetPortalStorageStorageHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

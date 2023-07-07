@@ -1,5 +1,5 @@
 import { FC, useState, useMemo } from "react";
-import { useGetUserV2VmVmListQuery } from "src/app/services/api.generated";
+import { useGetPortalVmVmListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -20,7 +20,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetUserV2VmVmListQuery();
+  } = useGetPortalVmVmListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

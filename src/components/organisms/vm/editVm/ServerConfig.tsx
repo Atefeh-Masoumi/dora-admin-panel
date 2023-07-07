@@ -1,11 +1,11 @@
 import { FC, useContext, useEffect, useState, useMemo } from "react";
 import { Stack, Typography, Paper } from "@mui/material";
-import { useLazyGetUserV2VmVmGetByIdQuery } from "src/app/services/api";
+import { useLazyGetPortalVmVmGetByIdQuery } from "src/app/services/api";
 import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { usePutUserV2VmVmEditMutation } from "src/app/services/api.generated";
+import { usePutPortalVmVmEditMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
 const memoryUnitPrice = 600000;
@@ -21,10 +21,10 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [cpu, setCpu] = useState(1);
   const [disk, setDisk] = useState(25);
 
-  const [getData] = useLazyGetUserV2VmVmGetByIdQuery();
+  const [getData] = useLazyGetPortalVmVmGetByIdQuery();
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutUserV2VmVmEditMutation();
+    usePutPortalVmVmEditMutation();
 
   useEffect(() => {
     if (serverId) {

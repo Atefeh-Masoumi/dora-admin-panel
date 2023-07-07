@@ -3,12 +3,12 @@ import { Skeleton, Stack } from "@mui/material";
 import { Specifications } from "src/components/organisms/portal/profile/Specifications";
 import { MobileValidation } from "src/components/organisms/portal/profile/MobileValidation";
 import { EmailValidation } from "src/components/organisms/portal/profile/EmailValidation";
-import { useGetUserV2PortalProfileGetQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelProfileGetQuery } from "src/app/services/api.generated";
 import { LegalPersonality } from "src/components/organisms/portal/profile/Legal";
 
 const Profile: FC = () => {
   const { data: userInformation, isLoading } =
-    useGetUserV2PortalProfileGetQuery();
+    useGetPortalPanelProfileGetQuery();
 
   return (
     <Stack spacing={2}>

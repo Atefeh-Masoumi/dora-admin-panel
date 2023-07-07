@@ -10,10 +10,10 @@ import { legalFormDefault } from "./constants";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  GetCompanyResponse,
-  useGetUserV2PortalCompanyGetQuery,
-  usePutUserV2PortalCompanyEditMutation,
-  usePutUserV2PortalCompanyEditAccountTypeMutation,
+  GetCustomerResponse,
+  useGetPortalPanelCustomerGetQuery,
+  usePutPortalPanelCustomerEditMutation,
+  usePutPortalPanelCustomerEditCustomerTypeMutation,
 } from "src/app/services/api.generated";
 
 const formValidation = yup.object().shape({
@@ -29,31 +29,31 @@ type LegalPersonalityPropsType = { isLegal: boolean };
 export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   isLegal,
 }) => {
-  const { data, refetch } = useGetUserV2PortalCompanyGetQuery();
+  const { data, refetch } = useGetPortalPanelCustomerGetQuery();
 
   const refetchOnClick = () => {
     refetch().then(() => {
-      setCompanyInfo(data as GetCompanyResponse);
+      setCustomerInfo(data as GetCustomerResponse);
     });
   };
 
-  const [companyInfo, setCompanyInfo] = useState(legalFormDefault);
+  const [CustomerInfo, setCustomerInfo] = useState(legalFormDefault);
 
   useEffect(() => {
     if (!data) return;
-    setCompanyInfo(data as GetCompanyResponse);
+    setCustomerInfo(data as GetCustomerResponse);
   }, [data]);
 
-  const [editCompany, { isLoading: loadingEdit }] =
-    usePutUserV2PortalCompanyEditMutation();
+  const [editCustomer, { isLoading: loadingEdit }] =
+    usePutPortalPanelCustomerEditMutation();
 
-  const submitHandler: formikOnSubmitType<GetCompanyResponse> = (
+  const submitHandler: formikOnSubmitType<GetCustomerResponse> = (
     { name, nationalId, phone, address, postalCode },
     { setSubmitting }
   ) => {
     if (!name || !nationalId || !phone || !address || !postalCode) return;
-    editCompany({
-      editCompanyModel: {
+    editCustomer({
+      editCustomerModel: {
         name,
         nationalId,
         phone,
@@ -71,11 +71,11 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
     setSubmitting(false);
   };
 
-  // Account Type
+  // Customer Type
   const [editType, { isLoading }] =
-    usePutUserV2PortalCompanyEditAccountTypeMutation();
+    usePutPortalPanelCustomerEditCustomerTypeMutation();
   const handleChange = () => {
-    editType({ editAccountTypeModel: { isLegal: !isLegal } }).then(() =>
+    editType({ editCustomerTypeModel: { isLegal: !isLegal } }).then(() =>
       refetchOnClick()
     );
   };
@@ -90,7 +90,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
         </Stack>
         <Stack display={isLegal ? "flex" : "none"} py={2}>
           <Formik
-            initialValues={companyInfo}
+            initialValues={CustomerInfo}
             validationSchema={formValidation}
             enableReinitialize
             onSubmit={submitHandler}

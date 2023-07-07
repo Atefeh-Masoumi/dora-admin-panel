@@ -1,4 +1,4 @@
-import { GetUserV2PortalProductBundleListByProductCategoryIdApiResponse } from "src/app/services/api.generated";
+import { GetPortalPanelHostProductListByProductCategoryIdApiResponse } from "src/app/services/api.generated";
 
 export type normalizedServerConfigArray = {
   productBundleId: number;
@@ -11,7 +11,7 @@ export type normalizedServerConfigArray = {
 
 export const serverConfigArrayNormalizerUtils = (
   originalArray:
-    | GetUserV2PortalProductBundleListByProductCategoryIdApiResponse
+    | GetPortalPanelHostProductListByProductCategoryIdApiResponse
     | undefined
 ) => {
   if (!originalArray || originalArray.length === 0) return [];

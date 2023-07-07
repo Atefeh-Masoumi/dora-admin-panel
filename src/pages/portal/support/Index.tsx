@@ -10,10 +10,10 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { supportTableStruct } from "src/components/organisms/portal/support/tables/struct";
 import { SupportTableRow } from "src/components/organisms/portal/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/portal/support/constant";
-import { useGetUserV2PortalSupportListQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelSupportListQuery } from "src/app/services/api.generated";
 
 const Support: FC = () => {
-  const { data: supportList, refetch, isLoading } = useGetUserV2PortalSupportListQuery();
+  const { data: supportList, refetch, isLoading } = useGetPortalPanelSupportListQuery();
 
   const navigate = useNavigate();
 

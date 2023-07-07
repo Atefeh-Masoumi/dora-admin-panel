@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetUserV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/addVm/tables/ProductBundleTableRow";
 import { productBundleTableStruct } from "src/components/organisms/vm/addVm/tables/struct";
@@ -10,7 +10,7 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetUserV2PortalProductBundleListByProductCategoryIdQuery({
+    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.VM,
     });
 

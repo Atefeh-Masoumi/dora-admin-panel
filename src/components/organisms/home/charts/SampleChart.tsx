@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelDashboardGetUserAnalyticsByCategoryIdQuery } from "src/app/services/api.generated";
 import { ChartTooltip } from "./ChartTooltip";
 
 type SampleChartPropsType = {
@@ -18,7 +18,7 @@ type SampleChartPropsType = {
 
 export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
   const { data: userAnalytics, isLoading } =
-    useGetUserV2PortalDashboardGetUserAnalyticsByCategoryIdQuery({
+    useGetPortalPanelDashboardGetUserAnalyticsByCategoryIdQuery({
       categoryId,
     });
   return (

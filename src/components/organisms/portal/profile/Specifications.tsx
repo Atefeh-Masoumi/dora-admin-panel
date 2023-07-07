@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import { Chip, Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { RealPersonality } from "./Real";
-import { useGetUserV2PortalProfileGetQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelProfileGetQuery } from "src/app/services/api.generated";
 
 export const Specifications: FC = () => {
   const { data: userInformation, isLoading: loadingData } =
-    useGetUserV2PortalProfileGetQuery();
+    useGetPortalPanelProfileGetQuery();
 
   return (
     <Stack

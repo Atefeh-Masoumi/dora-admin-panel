@@ -7,7 +7,7 @@ import { DomainCard } from "src/components/organisms/cdn/editZone/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { useGetUserV2CdnCdnListQuery } from "src/app/services/api.generated";
+import { useGetPortalCdnCdnListQuery } from "src/app/services/api.generated";
 
 const VdcManagement: FC = () => {
   const {
@@ -15,7 +15,7 @@ const VdcManagement: FC = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetUserV2CdnCdnListQuery();
+  } = useGetPortalCdnCdnListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

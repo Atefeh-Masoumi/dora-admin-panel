@@ -2,9 +2,9 @@ import { useContext, FC, useState, useMemo } from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import {
-  GetUserV2VmImageListByDatacenterIdApiResponse,
+  GetPortalVmImageListByDatacenterIdApiResponse,
   ImageListResponse,
-  useGetUserV2VmImageListByDatacenterIdQuery,
+  useGetPortalVmImageListByDatacenterIdQuery,
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -17,7 +17,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
   const { dataCenter, osVersion, setOsVersion } = useContext(AddServerContext);
 
   const { data: osVersionsList, isLoading } =
-    useGetUserV2VmImageListByDatacenterIdQuery({
+    useGetPortalVmImageListByDatacenterIdQuery({
       datacenterId: dataCenter?.id || 0,
     });
 
@@ -29,7 +29,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
     setOsVersion(selectedOs);
 
   const osArray = useMemo(() => {
-    let result: GetUserV2VmImageListByDatacenterIdApiResponse = [];
+    let result: GetPortalVmImageListByDatacenterIdApiResponse = [];
     if (osVersionsList) {
       osVersionsList.forEach((item) => {
         const idx = result.findIndex(({ osId }) => osId === item.osId);

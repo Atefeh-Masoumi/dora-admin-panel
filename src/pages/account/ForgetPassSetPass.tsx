@@ -11,7 +11,7 @@ import { AuthTemplate } from "src/components/templates/AuthTemplate";
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { usePostUserV2AccountForgotConfirmMutation } from "src/app/services/api.generated";
+import { usePostPortalAccountForgotConfirmMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { passwordValidatorRegex } from "src/utils/formValidator";
@@ -56,7 +56,7 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
   }, [email, code, navigate]);
 
   const [setPassword, { isLoading }] =
-    usePostUserV2AccountForgotConfirmMutation();
+    usePostPortalAccountForgotConfirmMutation();
 
   const dispatch = useDispatch();
 

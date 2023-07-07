@@ -1,18 +1,18 @@
 import {
   api as generatedApi,
-  PostUserV2PortalSupportCreateApiArg,
-  PostUserV2PortalSupportItemCreateApiResponse,
-  PostUserV2PortalProfileGetNotificationStatusApiResponse,
-  PostUserV2PortalProfileGetNotificationStatusApiArg,
+  PostPortalPanelSupportCreateApiArg,
+  PostPortalPanelSupportItemCreateApiResponse,
+  PostPortalPanelProfileGetNotificationStatusApiResponse,
+  PostPortalPanelProfileGetNotificationStatusApiArg,
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
 export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
-      getUserV2PortalProfileGetNotificationStatus: build.query<
-        PostUserV2PortalProfileGetNotificationStatusApiResponse,
-        PostUserV2PortalProfileGetNotificationStatusApiArg
+      getPortalPanelProfileGetNotificationStatus: build.query<
+        PostPortalPanelProfileGetNotificationStatusApiResponse,
+        PostPortalPanelProfileGetNotificationStatusApiArg
       >({
         query: () => ({
           url: `/user/v2/portal/profile/get-notification-status`,
@@ -20,8 +20,8 @@ export const api = generatedApi
         }),
       }),
       customCreateSupport: build.mutation<
-        PostUserV2PortalSupportItemCreateApiResponse,
-        PostUserV2PortalSupportCreateApiArg & {
+        PostPortalPanelSupportItemCreateApiResponse,
+        PostPortalPanelSupportCreateApiArg & {
           abortController?: AbortController;
           onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
@@ -53,142 +53,142 @@ export const api = generatedApi
       "VmHost",
     ],
     endpoints: {
-      getUserV2PortalProfileGet: {
+      getPortalPanelProfileGet: {
         providesTags: () => ["Profile"],
       },
-      getUserV2PortalProfileGetNotificationStatus: {
+      getPortalPanelProfileGetNotificationStatus: {
         providesTags: () => ["Notification"],
       },
-      getUserV2CdnDnsRecordGetById: {
+      getPortalCdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
       },
-      getUserV2CdnDnsRecordListByZoneName: {
+      getPortalCdnDnsRecordListByZoneName: {
         providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
       },
-      getUserV2CdnCdnGetByZoneName: {
+      getPortalCdnCdnGetByZoneName: {
         providesTags: () => ["ZoneData"],
       },
-      getUserV2PortalSupportItemListBySupportId: {
+      getPortalPanelSupportItemListBySupportId: {
         providesTags: () => ["SupportItems"],
       },
-      getUserV2CdnLoadBalanceListByZoneName: {
+      getPortalCdnLoadBalanceListByZoneName: {
         providesTags: () => ["LoadBalance"],
       },
-      getUserV2PortalOrderList: {
+      getPortalPanelOrderList: {
         providesTags: () => ["Orders"],
       },
-      getUserV2PortalOrderGetById: {
+      getPortalPanelOrderGetById: {
         providesTags: () => ["Order"],
       },
-      putUserV2PortalOrderPaymentType: {
+      putPortalPanelOrderPaymentType: {
         invalidatesTags: () => ["Order"],
       },
-      putUserV2PortalOrderDuration: {
+      putPortalPanelOrderDuration: {
         invalidatesTags: () => ["Order"],
       },
-      putUserV2PortalCompanyEditAccountType: {
+      putPortalPanelCustomerEditCustomerType: {
         invalidatesTags: () => ["Profile"],
       },
-      getUserV2PortalCompanyGet: {
+      getPortalPanelCustomerGet: {
         providesTags: () => ["Profile"],
       },
-      postUserV2PortalProfileConfirmPhoneNumber: {
+      postPortalPanelProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      putUserV2PortalProfileEditPhoneNotification: {
+      putPortalPanelProfileEditPhoneNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putUserV2PortalProfileEditEmailNotification: {
+      putPortalPanelProfileEditEmailNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putUserV2CdnDnsRecordChangeProxyStatusById: {
+      putPortalCdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
       },
-      deleteUserV2CdnDnsRecordDeleteById: {
+      deletePortalCdnDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putUserV2CdnDnsRecordEdit: {
+      putPortalCdnDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      postUserV2CdnDnsRecordCreate: {
+      postPortalCdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putUserV2CdnCdnChangeCdnType: {
+      putPortalCdnCdnChangeCdnType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeHsts: {
+      putPortalCdnCdnChangeHsts: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeHttpsRedirect: {
+      putPortalCdnCdnChangeHttpsRedirect: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeNonWwwRedirect: {
+      putPortalCdnCdnChangeNonWwwRedirect: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeEdgeCertType: {
+      putPortalCdnCdnChangeEdgeCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putUserV2CdnCdnChangeClientCertType: {
+      putPortalCdnCdnChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      deleteUserV2CdnLoadBalanceDeleteById: {
+      deletePortalCdnLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      postUserV2CdnLoadBalanceCreate: {
+      postPortalCdnLoadBalanceCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      putUserV2CdnLoadBalanceEdit: {
+      putPortalCdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      getUserV2CdnEdgeCertGetByZoneName: {
+      getPortalCdnEdgeCertGetByZoneName: {
         providesTags: () => ["SslSetting"],
       },
-      getUserV2CdnEdgeCertGetUserCertByZoneName: {
+      getPortalCdnEdgeCertGetUserCertByZoneName: {
         providesTags: () => ["SslSetting"],
       },
-      getUserV2CdnClientCertGetByZoneName: {
+      getPortalCdnClientCertGetByZoneName: {
         providesTags: () => ["SslSetting"],
       },
-      postUserV2CdnEdgeCertCreate: {
+      postPortalCdnEdgeCertCreate: {
         invalidatesTags: () => ["SslSetting"],
       },
-      postUserV2CdnEdgeCertCreateUserCert: {
+      postPortalCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      postUserV2PortalSupportItemCreate: {
+      postPortalPanelSupportItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
-      getUserV2VmVmList: {
+      getPortalVmVmList: {
         providesTags: () => ["VmHosts"],
       },
-      postUserV2VmVmCreate: {
+      postPortalVmVmCreate: {
         invalidatesTags: () => ["VmHosts"],
       },
-      deleteUserV2VmVmDeleteById: {
+      deletePortalVmVmDeleteById: {
         invalidatesTags: () => ["VmHosts"],
       },
-      putUserV2VmVmEdit: {
+      putPortalVmVmEdit: {
         invalidatesTags: () => ["VmHosts"],
       },
-      getUserV2VmVmGetById: {
+      getPortalVmVmGetById: {
         providesTags: () => ["VmHost"],
       },
-      putUserV2VmVmConnectById: {
+      putPortalVmVmConnectById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putUserV2VmVmDisconnectById: {
+      putPortalVmVmDisconnectById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putUserV2VmVmShutdownById: {
+      putPortalVmVmShutdownById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putUserV2VmVmStartById: {
+      putPortalVmVmStartById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putUserV2VmVmStopById: {
+      putPortalVmVmStopById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putUserV2VmVmRebootById: {
+      putPortalVmVmRebootById: {
         invalidatesTags: () => ["VmHost"],
       },
     },
@@ -196,16 +196,16 @@ export const api = generatedApi
 
 export const {
   useCustomCreateSupportMutation,
-  useGetUserV2PortalProfileGetNotificationStatusQuery,
-  useLazyGetUserV2VmVmIpListByVmIdQuery,
-  useLazyGetUserV2VmImageListByDatacenterIdQuery,
-  useLazyGetUserV2VmVmGetByIdQuery,
-  useLazyGetUserV2CdnLoadBalanceGetByIdQuery,
-  useLazyGetUserV2CdnDnsRecordGetByIdQuery,
-  useLazyGetUserV2PortalInvoiceGetByIdQuery,
-  useLazyGetUserV2PortalSupportItemDownloadByIdQuery,
-  useLazyGetUserV2PortalWalletPaymentGetByIdQuery,
-  useLazyGetUserV2PortalBillDownloadByIdQuery,
-  useLazyGetUserV2WebWebHostGetLoginSessionByIdQuery,
-  useLazyGetUserV2RabbitRabbitUserListByRabbitHostIdQuery,
+  useGetPortalPanelProfileGetNotificationStatusQuery,
+  useLazyGetPortalVmVmIpListByVmIdQuery,
+  useLazyGetPortalVmImageListByDatacenterIdQuery,
+  useLazyGetPortalVmVmGetByIdQuery,
+  useLazyGetPortalCdnLoadBalanceGetByIdQuery,
+  useLazyGetPortalCdnDnsRecordGetByIdQuery,
+  useLazyGetPortalPanelInvoiceGetByIdQuery,
+  useLazyGetPortalPanelSupportItemDownloadByIdQuery,
+  useLazyGetPortalPanelWalletPaymentGetByIdQuery,
+  useLazyGetPortalPanelBillDownloadByIdQuery,
+  useLazyGetPortalWebWebHostGetLoginSessionByIdQuery,
+  useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery,
 } = api;

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { useGetUserV2PortalDashboardBillShortListQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelDashboardBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import moment from "jalali-moment";
@@ -20,7 +20,7 @@ export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
 
   const { data: reports, isLoading } =
-    useGetUserV2PortalDashboardBillShortListQuery();
+    useGetPortalPanelDashboardBillShortListQuery();
 
   return (
     <Stack

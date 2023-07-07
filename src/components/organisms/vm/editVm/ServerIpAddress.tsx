@@ -15,16 +15,16 @@ import {
 } from "@mui/icons-material";
 import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
 import {
-  GetUserV2VmVmIpListByVmIdApiResponse,
-  useDeleteUserV2VmVmIpDeleteByIdMutation,
+  GetPortalVmVmIpListByVmIdApiResponse,
+  useDeletePortalVmVmIpDeleteByIdMutation,
   VmIpListResponse,
 } from "src/app/services/api.generated";
-import { useLazyGetUserV2VmVmIpListByVmIdQuery } from "src/app/services/api";
+import { useLazyGetPortalVmVmIpListByVmIdQuery } from "src/app/services/api";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
 import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
 
 const IpRow: FC<VmIpListResponse> = ({ ip, isPrimary, id }) => {
-  const [deleteIp, { isLoading }] = useDeleteUserV2VmVmIpDeleteByIdMutation();
+  const [deleteIp, { isLoading }] = useDeletePortalVmVmIpDeleteByIdMutation();
 
   const onClick = () => id && deleteIp({ id });
 
@@ -102,8 +102,8 @@ type ServerIpAddressPropsType = {};
 
 export const ServerIpAddress: FC<ServerIpAddressPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const [getData, { isLoading }] = useLazyGetUserV2VmVmIpListByVmIdQuery();
-  const [data, setData] = useState<GetUserV2VmVmIpListByVmIdApiResponse | null>(
+  const [getData, { isLoading }] = useLazyGetPortalVmVmIpListByVmIdQuery();
+  const [data, setData] = useState<GetPortalVmVmIpListByVmIdApiResponse | null>(
     null
   );
 

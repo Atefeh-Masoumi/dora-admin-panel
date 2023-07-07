@@ -9,7 +9,7 @@ import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
-import { usePostUserV2VmVmKmsGetMutation } from "src/app/services/api.generated";
+import { usePostPortalVmVmKmsGetMutation } from "src/app/services/api.generated";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -19,7 +19,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
   const settingOnClick = () => navigate("/vm/" + row["id"]);
 
-  const [getUrl, { isLoading: getUrlLoading }] = usePostUserV2VmVmKmsGetMutation();
+  const [getUrl, { isLoading: getUrlLoading }] = usePostPortalVmVmKmsGetMutation();
   const monitorOnClick = () =>
     getUrl({
       getKmsModel: {

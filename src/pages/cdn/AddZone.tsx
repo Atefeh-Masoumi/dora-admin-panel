@@ -7,8 +7,8 @@ import { SelectDomain } from "src/components/organisms/cdn/addZone/AddZoneSteps/
 import { RecordsList } from "src/components/organisms/cdn/addZone/AddZoneSteps/RecordsList";
 import { AddZoneStepper } from "src/components/organisms/cdn/addZone/AddZoneStepper";
 import {
-  usePostUserV2CdnCdnCheckZoneMutation,
-  usePostUserV2CdnCdnCreateMutation,
+  usePostPortalCdnCdnCheckZoneMutation,
+  usePostPortalCdnCdnCreateMutation,
 } from "src/app/services/api.generated";
 import {
   AddZoneContext,
@@ -28,9 +28,9 @@ const AddZone: FC = () => {
     setStep((step - 1) as addZoneStepsType);
   };
 
-  const [checkZone, { isLoading }] = usePostUserV2CdnCdnCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostPortalCdnCdnCheckZoneMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
-    usePostUserV2CdnCdnCreateMutation();
+    usePostPortalCdnCdnCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {

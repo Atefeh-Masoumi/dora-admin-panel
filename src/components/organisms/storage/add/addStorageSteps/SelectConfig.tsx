@@ -4,13 +4,13 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetUserV2PortalProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetUserV2PortalProductBundleListByProductCategoryIdQuery({
+    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 

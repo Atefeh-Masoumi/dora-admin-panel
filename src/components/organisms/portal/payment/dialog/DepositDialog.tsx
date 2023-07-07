@@ -17,7 +17,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
-import { usePostUserV2PortalWalletPaymentCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalPanelWalletPaymentCreateMutation } from "src/app/services/api.generated";
 
 type HeaderPropsType = { openDialog: boolean; handleClose: () => void };
 
@@ -47,7 +47,7 @@ export const DepositDialog: FC<HeaderPropsType> = ({
   handleClose,
 }) => {
   const [createDeposit, { isLoading }] =
-    usePostUserV2PortalWalletPaymentCreateMutation();
+    usePostPortalPanelWalletPaymentCreateMutation();
 
   const formRef = useRef(null);
   const formToken = useRef(null);

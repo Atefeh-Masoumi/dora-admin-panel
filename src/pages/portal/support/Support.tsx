@@ -8,8 +8,8 @@ import { LoadingChat } from "src/components/organisms/portal/support/LoadingChat
 import { DorsaTooltip } from "src/components/organisms/portal/referral/WelcomeTooltip";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
 import {
-  useGetUserV2PortalSupportItemListBySupportIdQuery,
-  usePostUserV2PortalSupportItemCreateMutation,
+  useGetPortalPanelSupportItemListBySupportIdQuery,
+  usePostPortalPanelSupportItemCreateMutation,
 } from "src/app/services/api.generated";
 
 const Detail: FC = () => {
@@ -30,7 +30,7 @@ const Detail: FC = () => {
 
   const { id } = useParams();
   const { data: supportItems, isLoading } =
-    useGetUserV2PortalSupportItemListBySupportIdQuery({
+    useGetPortalPanelSupportItemListBySupportIdQuery({
       supportId: parseInt(id as string),
     });
 
@@ -51,7 +51,7 @@ const Detail: FC = () => {
   }, [supportItems]);
 
   const [itemCreate, { isLoading: LoadingSend }] =
-    usePostUserV2PortalSupportItemCreateMutation();
+    usePostPortalPanelSupportItemCreateMutation();
   const submit = () => {
     if (!id || !content) return;
 

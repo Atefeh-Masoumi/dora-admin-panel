@@ -11,8 +11,8 @@ import { AddDomainStepper } from "src/components/organisms/domain/addDomain/AddD
 import { SelectDomain } from "src/components/organisms/domain/addDomain/addDomainSteps/SelectDomain";
 import { DomainInfo } from "src/components/organisms/domain/addDomain/addDomainSteps/DomainInfo";
 import {
-  usePostUserV2DomainGetPriceMutation,
-  usePostUserV2DomainRegisterMutation,
+  usePostPortalDomainGetPriceMutation,
+  usePostPortalDomainRegisterMutation,
 } from "src/app/services/api.generated";
 
 const AddDomain: FC = () => {
@@ -48,7 +48,7 @@ const AddDomain: FC = () => {
   };
 
   const [getPriceModel, { isLoading: checkLoading }] =
-    usePostUserV2DomainGetPriceMutation();
+    usePostPortalDomainGetPriceMutation();
 
   const CheckDomain = () => {
     if (domainName === "") return;
@@ -62,7 +62,7 @@ const AddDomain: FC = () => {
   };
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
-    usePostUserV2DomainRegisterMutation();
+    usePostPortalDomainRegisterMutation();
 
   const submitHandler = () => {
     if (term !== true) {

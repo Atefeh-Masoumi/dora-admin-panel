@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg/SuccessSvg";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteUserV2CdnCdnDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeletePortalCdnCdnDeleteByIdMutation } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 
 type DeleteZoneDialogPropsType = {
@@ -19,7 +19,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
   handleClose,
 }) => {
   const onClose = () => handleClose();
-  const [DeleteZone, { isLoading }] = useDeleteUserV2CdnCdnDeleteByIdMutation();
+  const [DeleteZone, { isLoading }] = useDeletePortalCdnCdnDeleteByIdMutation();
 
   const navigate = useNavigate();
 

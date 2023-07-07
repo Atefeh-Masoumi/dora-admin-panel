@@ -10,7 +10,7 @@ import { SelectOS } from "src/components/organisms/vm/addVm/addVmSteps/SelectOS"
 import { SelectConfig } from "src/components/organisms/vm/addVm/addVmSteps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/vm/addVm/addVmSteps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostUserV2VmVmCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalVmVmCreateMutation } from "src/app/services/api.generated";
 
 const AddVm: FC = () => {
   const {
@@ -33,7 +33,7 @@ const AddVm: FC = () => {
     setStep((step - 1) as addServerStepsType);
   };
 
-  const [createCloudServer, { isLoading }] = usePostUserV2VmVmCreateMutation();
+  const [createCloudServer, { isLoading }] = usePostPortalVmVmCreateMutation();
 
   const submitHandler = () => {
     if (

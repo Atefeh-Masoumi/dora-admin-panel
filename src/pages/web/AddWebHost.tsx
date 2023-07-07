@@ -11,7 +11,7 @@ import { AddWebHostStepper } from "src/components/organisms/web/addService/AddWe
 import { SelectDomain } from "src/components/organisms/web/addService/addServiceSteps/SelectDomain";
 import { SelectDataCenter } from "src/components/organisms/web/addService/addServiceSteps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/addService/addServiceSteps/SelectConfig";
-import { usePostUserV2WebWebHostCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalWebWebHostCreateMutation } from "src/app/services/api.generated";
 
 const AddWebHost: FC = () => {
   const { step, setStep, domainName, dataCenter, serverConfig, term } =
@@ -28,7 +28,7 @@ const AddWebHost: FC = () => {
   };
 
   const [createWebHost, { isLoading }] =
-    usePostUserV2WebWebHostCreateMutation();
+    usePostPortalWebWebHostCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {

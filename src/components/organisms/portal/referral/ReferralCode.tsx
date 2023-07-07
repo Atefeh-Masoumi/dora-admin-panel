@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostUserV2PortalReferralJoinMutation } from "src/app/services/api.generated";
+import { usePostPortalPanelReferralJoinMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
 export const ReferralCode: FC = () => {
   const [joinReferral, { isLoading }] =
-    usePostUserV2PortalReferralJoinMutation();
+    usePostPortalPanelReferralJoinMutation();
 
   const [referralCode, setReferralCode] = useState("");
 

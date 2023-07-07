@@ -6,7 +6,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
-import { useGetUserV2DomainGetByIdQuery, usePutUserV2DomainChangeNsMutation } from "src/app/services/api.generated";
+import { useGetPortalDomainGetByIdQuery, usePutPortalDomainChangeNsMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 
 type EditDomainNsPropsType = {};
@@ -18,7 +18,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetUserV2DomainGetByIdQuery({
+  } = useGetPortalDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -29,7 +29,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
 
   const navigate = useNavigate();
 
-  const [changeNsModel, { isLoading: loadEdit }] = usePutUserV2DomainChangeNsMutation();
+  const [changeNsModel, { isLoading: loadEdit }] = usePutPortalDomainChangeNsMutation();
 
   const submitHandler = () => {
     if (

@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useGetUserV2PortalWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetPortalPanelWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
 import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
 
@@ -17,7 +17,7 @@ export const Balance: FC = () => {
   const closeDeposit = () => setOpenDeposit(false);
 
   const { data: balance, isLoading: loadingBalance } =
-    useGetUserV2PortalWalletGetBalanceQuery();
+    useGetPortalPanelWalletGetBalanceQuery();
   const separateBalance = balance
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -8,7 +8,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
 import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
-import { useGetUserV2DomainListQuery } from "src/app/services/api.generated";
+import { useGetPortalDomainListQuery } from "src/app/services/api.generated";
 
 type WebManagementPropsType = {};
 
@@ -20,7 +20,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetUserV2DomainListQuery();
+  } = useGetPortalDomainListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

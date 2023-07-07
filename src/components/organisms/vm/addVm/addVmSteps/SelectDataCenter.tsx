@@ -3,7 +3,7 @@ import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import {
   DatacenterListResponse,
-  useGetUserV2VmDatacenterListQuery,
+  useGetPortalVmDatacenterListQuery,
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
 import asiatechImage from "src/assets/images/asiatech.png";
@@ -15,7 +15,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
   const { dataCenter, setDataCenter } = useContext(AddServerContext);
 
   const { data: dataCenterList, isLoading } =
-    useGetUserV2VmDatacenterListQuery();
+    useGetPortalVmDatacenterListQuery();
 
   const dataCenterOnClick = (dataCenter: DatacenterListResponse) =>
     setDataCenter(dataCenter);

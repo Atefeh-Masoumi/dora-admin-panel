@@ -30,11 +30,11 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePostUserV2PortalOrderPayMutation,
-  usePutUserV2PortalOrderPaymentTypeMutation,
-  usePutUserV2PortalOrderDurationMutation,
-  usePutUserV2PortalOrderVoucherMutation,
-  useGetUserV2PortalOrderGetByIdQuery,
+  usePostPortalPanelOrderPayMutation,
+  usePutPortalPanelOrderPaymentTypeMutation,
+  usePutPortalPanelOrderDurationMutation,
+  usePutPortalPanelOrderVoucherMutation,
+  useGetPortalPanelOrderGetByIdQuery,
   GetOrderResponse,
 } from "src/app/services/api.generated";
 
@@ -57,7 +57,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const { id } = useParams();
 
   const { data, isLoading: getOrderInfoLoading } =
-    useGetUserV2PortalOrderGetByIdQuery({
+    useGetPortalPanelOrderGetByIdQuery({
       id: Number(id),
     });
 
@@ -67,13 +67,13 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   }, [data]);
 
   const [changePaymentMethod, { isLoading: changePaymentMethodLoading }] =
-    usePutUserV2PortalOrderPaymentTypeMutation();
+    usePutPortalPanelOrderPaymentTypeMutation();
   const [changeOrderDuration, { isLoading: changeOrderDurationLoading }] =
-    usePutUserV2PortalOrderDurationMutation();
+    usePutPortalPanelOrderDurationMutation();
   const [orderOnlinePay, { isLoading: orderOnlinePayLoading }] =
-    usePostUserV2PortalOrderPayMutation();
+    usePostPortalPanelOrderPayMutation();
   const [applyDiscountCode, { isLoading: applyDiscountCodeLoading }] =
-    usePutUserV2PortalOrderVoucherMutation();
+    usePutPortalPanelOrderVoucherMutation();
 
   const orderInfo: GetOrderResponse = useMemo(() => data || {}, [data]);
 

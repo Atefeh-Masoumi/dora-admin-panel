@@ -3,7 +3,7 @@ import { Button, Stack, Typography, Dialog } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import Dropzone from "src/components/molecules/Dropzone";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostUserV2PortalSupportItemCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalPanelSupportItemCreateMutation } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
 type HeaderPropsType = {
@@ -17,7 +17,7 @@ export const UploadDialog: FC<HeaderPropsType> = ({
 }) => {
   const { id } = useParams();
 
-  const [itemCreate] = usePostUserV2PortalSupportItemCreateMutation();
+  const [itemCreate] = usePostPortalPanelSupportItemCreateMutation();
 
   const [fileSelected, setFileSelected] = useState<File>();
   const [uploading, setUploading] = useState(false);

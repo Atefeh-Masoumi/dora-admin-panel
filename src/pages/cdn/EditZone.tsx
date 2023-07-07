@@ -5,7 +5,7 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { useAppSelector } from "src/app/hooks";
 import { SSLSetting } from "src/components/organisms/cdn/editZone/ssl/Ssl";
-import { DnsRecord } from "src/components/organisms/cdn/editZone/dns/DnsRecord";
+import { DnsRecord } from "src/components/organisms/cdn/editZone/dns/DnsRecords";
 import LoadBalance from "src/components/organisms/cdn/editZone/loadbalance/LoadBalance";
 import { ZoneInfo } from "src/components/organisms/cdn/editZone/overview/ZoneInfo";
 import { AnalyticChart } from "src/components/organisms/cdn/editZone/analytics/AnalyticChart";

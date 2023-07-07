@@ -7,8 +7,8 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { useNavigate, useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import {
-  useGetUserV2DomainGetByIdQuery,
-  usePutUserV2DomainChangeContactMutation,
+  useGetPortalDomainGetByIdQuery,
+  usePutPortalDomainChangeContactMutation,
 } from "src/app/services/api.generated";
 
 type EditDomainInfoPropsType = {};
@@ -20,7 +20,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetUserV2DomainGetByIdQuery({
+  } = useGetPortalDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -32,7 +32,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
   const navigate = useNavigate();
 
   const [changeContactModel, { isLoading: loadEdit }] =
-    usePutUserV2DomainChangeContactMutation();
+    usePutPortalDomainChangeContactMutation();
 
   const submitHandler = () => {
     if (

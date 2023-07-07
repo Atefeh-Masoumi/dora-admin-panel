@@ -9,8 +9,8 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditStorageTableRow } from "./tables/EditStorageTableRow";
 import { editStorageTableStruct } from "./tables/struct";
 import {
-  useGetUserV2PortalProductBundleListByProductCategoryIdQuery,
-  usePutUserV2StorageStorageHostEditMutation,
+  useGetPortalPanelProductBundleListByProductCategoryIdQuery,
+  usePutPortalStorageStorageHostEditMutation,
 } from "src/app/services/api.generated";
 import { EditStorageContext } from "./context/EditStorageContext";
 
@@ -18,7 +18,7 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetUserV2PortalProductBundleListByProductCategoryIdQuery({
+    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
@@ -39,7 +39,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { serverId, serverConfig } = useContext(EditStorageContext);
   const [editStorageHostModel, { isLoading: updateLoading }] =
-    usePutUserV2StorageStorageHostEditMutation();
+    usePutPortalStorageStorageHostEditMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;
