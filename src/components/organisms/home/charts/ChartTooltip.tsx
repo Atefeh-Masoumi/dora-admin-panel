@@ -23,7 +23,7 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
         {category}
       </Typography>
       <Typography fontSize="12px" color="rgba(255, 255, 255, 0.8)">
-        {analyticsValue} {categoryId === 1 && "ریال"}
+        {analyticsValue} {categoryId === 2 && "ریال"}
       </Typography>
     </Paper>
   );

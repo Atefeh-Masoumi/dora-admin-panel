@@ -11,7 +11,7 @@ import { BillTableRow } from "src/components/organisms/portal/userBill/tables/Bi
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetPortalPanelBillGetByIdQuery } from "src/app/services/api.generated";
 
-const downloadFileUrl = baseUrl + "/user/v2/portal/bill/download/";
+const downloadFileUrl = baseUrl + "/portal/panel/bill/download/";
 
 const Bill: FC = () => {
   const [downloadFileLoading, setDownloadFileLoading] = useState(false);

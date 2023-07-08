@@ -6,7 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 
-const downloadFileUrl = baseUrl + "/user/v2/portal/support-item/download/";
+const downloadFileUrl = baseUrl + "/portal/panel/support-item/download/";
 
 export const DorsaChat: FC<{ message: SupportItemModel }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
