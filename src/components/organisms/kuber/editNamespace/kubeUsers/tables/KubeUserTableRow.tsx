@@ -3,9 +3,9 @@ import { IconButton, Stack } from "@mui/material";
 import { kubeUserTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { Edit } from "src/components/atoms/svg/EditSvg";
 import { DeleteKubeUserDialog } from "../dialogs/DeleteKubeUserDialog";
 import { EditKubeUserDialog } from "../dialogs/EditKubeUserDialog";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
 export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
   const handleOpenDelete = () => setOpenDelete(true);
@@ -43,7 +43,7 @@ export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
                     color="info"
                     onClick={handleOpenEdit}
                   >
-                    <Edit />
+                    <VpnKeyIcon color="secondary" />
                   </IconButton>
                 </Stack>
               ) : (
