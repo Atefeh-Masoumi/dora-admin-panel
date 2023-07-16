@@ -17,6 +17,8 @@ import AddDomainContextProvider from "src/components/organisms/domain/addDomain/
 import EditDomainContextProvider from "src/components/organisms/domain/editDomain/context/EditDomainContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/context/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/context/EditStorageContext";
+import AddNamespaceContext from "src/components/organisms/kuber/addNamespace/context/AddNamespaceContext";
+import EditNamespaceContext from "src/components/organisms/kuber/editNamespace/context/EditNamespaceContext";
 
 import {
   CallBackTemplate,
@@ -83,6 +85,10 @@ const AddStorageService = lazy(
 const EditStorageService = lazy(
   () => import("src/pages/storage/EditStorageService")
 );
+
+const KubeIndex = lazy(() => import("src/pages/kube/Index"));
+const AddNamespace = lazy(() => import("src/pages/kube/AddNamespace"));
+const EditNamespace = lazy(() => import("src/pages/kube/EditNamespace"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -401,6 +407,41 @@ const Router: FC = () => {
                 hideSidebar: true,
               },
               EditRabbitContextProvider
+            )}
+          />
+          {/* ======================================= Kube ======================================= */}
+          <Route
+            path="/kube"
+            element={mainTemplate(KubeIndex, {
+              pageTitle: "مدیریت سرویس کوبرنتیز",
+            })}
+          />
+          <Route
+            path="/kube/addKubernetes"
+            element={mainTemplate(
+              AddNamespace,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
+                  url: "/kube",
+                },
+                hideSidebar: true,
+              },
+              AddNamespaceContext
+            )}
+          />
+          <Route
+            path="/kube/:id"
+            element={mainTemplate(
+              EditNamespace,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
+                  url: "/kube",
+                },
+                hideSidebar: true,
+              },
+              EditNamespaceContext
             )}
           />
           {/* ======================================= WEB ======================================= */}

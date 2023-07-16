@@ -15,7 +15,7 @@ export const api = generatedApi
         PostPortalPanelProfileGetNotificationStatusApiArg
       >({
         query: () => ({
-          url: `/user/v2/portal/profile/get-notification-status`,
+          url: `/portal/panel/profile/get-notification-status`,
           method: "POST",
         }),
       }),
@@ -27,7 +27,7 @@ export const api = generatedApi
         }
       >({
         query: ({ body, abortController, onUploadProgress }) => ({
-          url: `/user/v2/portal/support/create`,
+          url: `/portal/panel/support/create`,
           method: "POST",
           body,
           abortController,
@@ -208,4 +208,7 @@ export const {
   useLazyGetPortalPanelBillDownloadByIdQuery,
   useLazyGetPortalWebWebHostGetLoginSessionByIdQuery,
   useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery,
+  useLazyGetPortalKubeUserListByKubeHostIdQuery,
+  useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery
+
 } = api;

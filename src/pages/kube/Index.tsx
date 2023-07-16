@@ -1,19 +1,19 @@
 import { FC, useState, useMemo } from "react";
+import { useGetPortalKubeNamespaceListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
-import { useNavigate } from "react-router";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { Add } from "@mui/icons-material";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { NamespaceTableRow } from "src/components/organisms/kuber/tables/NamespaceTableRow";
+import { namespaceTableStruct } from "src/components/organisms/kuber/tables/struct";
+import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
-import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
-import { useGetPortalStorageStorageHostListQuery } from "src/app/services/api.generated";
+import { useNavigate } from "react-router";
 
-type StorageManagementPropsType = {};
+type NamespaceManagementPropsType = {};
 
-const StorageManagement: FC<StorageManagementPropsType> = () => {
+const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -21,7 +21,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalStorageStorageHostListQuery();
+  } = useGetPortalKubeNamespaceListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -40,7 +40,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/storage/addStorageService");
+  const createCloudOnClick = () => navigate("/kube/addKubernetes");
 
   return (
     <Stack
@@ -63,7 +63,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
           spacing={2}
         >
           <Typography fontSize={18} color="secondary">
-            لیست سرویس فضای ابری
+            لیست سرویس کوبرنتیز ابری
           </Typography>
           <SearchBox
             onChange={(text) => setSearch(text)}
@@ -111,7 +111,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
               </Stack>
             }
           >
-            فضای ابری جدید
+            سرویس کوبرنتیز جدید
           </Button>
         </Stack>
       </Stack>
@@ -119,7 +119,6 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
       <Stack
         py={3}
         px={3}
-        pt={3}
         bgcolor="rgba(244, 95, 80, 1)"
         direction="row"
         spacing={3}
@@ -140,11 +139,10 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
           <br />
         </Typography>
       </Stack>
-
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
-          struct={storageTableStruct}
-          RowComponent={StorageTableRow}
+          struct={namespaceTableStruct}
+          RowComponent={NamespaceTableRow}
           rows={filteredList}
           text="در حال حاضر سرویسی وجود ندارد"
           isLoading={isLoading}
@@ -155,4 +153,4 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   );
 };
 
-export default StorageManagement;
+export default NamespaceManagement;

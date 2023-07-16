@@ -13,13 +13,13 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { EditStorageContext } from "../../context/EditStorageContext";
-import { usePostPortalRabbitRabbitUserCreateMutation } from "src/app/services/api.generated";
+import { EditNamespaceContext } from "../../context/EditNamespaceContext";
+import { usePostPortalKubeUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 
 const formInitialValues = {
   username: "",
-  password: ""
+  password: "",
 };
 
 const formValidation = yup.object().shape({
@@ -27,30 +27,31 @@ const formValidation = yup.object().shape({
   password: yup.string().required("رمز عبور الزامیست!"),
 });
 
-type AddRabbitUserDialogPropsType = {
+type AddKubeUserDialogPropsType = {
   onClose: () => void;
 };
 
-export const AddRabbitUserDialog: FC<AddRabbitUserDialogPropsType> = ({ onClose, }) => {
+export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
+  onClose,
+}) => {
+  const [createKubeUserCreate, { isLoading: createKubeUserLoading }] =
+    usePostPortalKubeUserCreateMutation();
 
+  const { serverId } = useContext(EditNamespaceContext);
 
-  const [createRabbitUserCreate, { isLoading: createRabbitUserLoading }] =
-    usePostPortalRabbitRabbitUserCreateMutation();
-
-  const { serverId } = useContext(EditStorageContext);
-
-  const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { username, password },
-  ) => {
+  const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
+    username,
+    password,
+  }) => {
     if (!serverId) {
       return;
     }
 
-    createRabbitUserCreate({
-      createRabbitUserModel: {
-        rabbitHostId: serverId,
+    createKubeUserCreate({
+      createKubeUserModel: {
+        kubeHostId: serverId,
         username: username,
-        password: password
+        password: password,
       },
     })
       .unwrap()
@@ -72,19 +73,16 @@ export const AddRabbitUserDialog: FC<AddRabbitUserDialogPropsType> = ({ onClose,
           sx: { borderRadius: 2.5 },
         }}
       >
-        <DialogTitle>
-          ایجاد کاربر سرویس RabbitMQ
-        </DialogTitle>
+        <DialogTitle>ایجاد کاربر سرویس</DialogTitle>
         <Formik
           initialValues={{
             username: "",
-            password: ""
+            password: "",
           }}
           validationSchema={formValidation}
           onSubmit={submitHandler}
         >
           {({ errors, touched, getFieldProps }) => (
-
             <Form autoComplete="on">
               <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
                 <Grid2 container spacing={3}>
@@ -122,7 +120,7 @@ export const AddRabbitUserDialog: FC<AddRabbitUserDialogPropsType> = ({ onClose,
                   <LoadingButton
                     component="button"
                     type="submit"
-                    loading={createRabbitUserLoading}
+                    loading={createKubeUserLoading}
                     variant="contained"
                     sx={{ px: 3, py: 0.8 }}
                   >

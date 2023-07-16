@@ -15,9 +15,10 @@ import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
-// import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
+//import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 import { StorageOutlined } from "@mui/icons-material";
+import DnsOutlinedIcon from '@mui/icons-material/DnsOutlined';
 
 type SidebarPropsType = {};
 
@@ -70,6 +71,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: DriverSvg,
       link: "/vm",
       subList: [{ title: "سرویس سرور‌های ابری", link: "/vm" }],
+    },
+    {
+      title: "Kubernetes",
+      text: "سرویس کوبرنتیز ابری",
+      Icon: DnsOutlinedIcon,
+      link: "/kube",
+      subList: [{ title: "سرویس کوبرنتیز  ابری", link: "/kube" }],
     },
     {
       title: "Object Storage",
