@@ -21,7 +21,7 @@ const AddNamespaceService: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/Namespace");
+      navigate("/kube");
       return;
     }
     setStep((step - 1) as addNamespaceStepsType);
