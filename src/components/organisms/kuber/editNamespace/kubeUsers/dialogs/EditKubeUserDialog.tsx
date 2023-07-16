@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import {
   Button,
   Dialog,
@@ -13,59 +13,76 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { EditNamespaceContext } from "../../context/EditNamespaceContext";
-import { usePostPortalKubeUserCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalKubeUserChangePasswordMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 
 const formInitialValues = {
-  username: "",
   password: "",
+  passwordConfirm: "",
 };
 
 const formValidation = yup.object().shape({
-  username: yup.string().required("نام کاربری الزامیست!"),
-  password: yup.string().required("رمز عبور الزامیست!"),
+  password: yup
+    .string()
+    .required("رمز عبور را وارد کنید")
+    .min(8, "رمز عبور حداقل ۸ کاراکتر میباشد")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@!%&?]).{8,}$/,
+      "پسورد باید شامل 8 کارکتر، به همراه حداقل یک حرف خاص (#$@!%&*) ، یک حرف بزرگ ، یک حرف کوچک و بدون space باشد"
+    )
+    .trim(),
+  passwordConfirm: yup
+    .string()
+    .required("تکرار رمز عبور را وارد کنید")
+    .min(8, "تکرار رمز عبور حداقل ۸ کاراکتر میباشد")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@!%&?]).{8,}$/,
+      "پسورد باید شامل 8 کارکتر، به همراه حداقل یک حرف خاص (#$@!%&*) ، یک حرف بزرگ ، یک حرف کوچک و بدون space باشد"
+    )
+    .oneOf([yup.ref("password")], "تکرار رمز عبور صحیح نمیباشد")
+    .trim(),
 });
 
-type AddKubeUserDialogPropsType = {
-  onClose: () => void;
+type EditKubeUserDialogPropsType = {
+  openDialog: boolean;
+  handleClose: () => void;
+  id: number;
 };
 
-export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
-  onClose,
+export const EditKubeUserDialog: FC<EditKubeUserDialogPropsType> = ({
+  openDialog,
+  handleClose,
+  id,
 }) => {
-  const [createKubeUserCreate, { isLoading: createKubeUserLoading }] =
-    usePostPortalKubeUserCreateMutation();
-
-  const { serverId } = useContext(EditNamespaceContext);
+  const [editKubeUser, { isLoading: editKubeUserLoading }] =
+    usePostPortalKubeUserChangePasswordMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
-    username,
     password,
+    passwordConfirm,
   }) => {
-    if (!serverId) {
+    if (!id) {
       return;
     }
 
-    createKubeUserCreate({
-      createKubeUserModel: {
-        kubeHostId: serverId,
-        username: username,
-        password: password,
+    editKubeUser({
+      changeKubeUserPasswordModel: {
+        id,
+        password,
       },
     })
       .unwrap()
       .then(() => {
         toast.success("کاربر با موفقیت ایجاد شد");
-        onClose();
+        handleClose();
       });
   };
 
   return (
     <>
       <Dialog
-        open
-        onClose={onClose}
+        open={openDialog}
+        onClose={handleClose}
         components={{ Backdrop: BlurBackdrop }}
         maxWidth="xs"
         fullWidth
@@ -73,11 +90,11 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
           sx: { borderRadius: 2.5 },
         }}
       >
-        <DialogTitle>ایجاد کاربر سرویس</DialogTitle>
+        <DialogTitle>تغییر رمز عبور کاربر</DialogTitle>
         <Formik
           initialValues={{
-            username: "",
             password: "",
+            passwordConfirm: "",
           }}
           validationSchema={formValidation}
           onSubmit={submitHandler}
@@ -90,10 +107,11 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
                     <DorsaTextField
                       inputProps={{ fontSize: "20px !important" }}
                       fullWidth
-                      label="نام کاربری"
-                      error={Boolean(errors.username && touched.username)}
-                      helperText={errors.username}
-                      {...getFieldProps("username")}
+                      type="password"
+                      label="رمز عبور"
+                      error={Boolean(errors.password && touched.password)}
+                      helperText={errors.password}
+                      {...getFieldProps("password")}
                     />
                   </Grid2>
                   <Grid2 xs={12}>
@@ -101,10 +119,12 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
                       inputProps={{ fontSize: "20px !important" }}
                       fullWidth
                       type="password"
-                      label="رمز عبور"
-                      error={Boolean(errors.password && touched.password)}
-                      helperText={errors.password}
-                      {...getFieldProps("password")}
+                      label="تکرار رمز عبور"
+                      error={Boolean(
+                        errors.passwordConfirm && touched.passwordConfirm
+                      )}
+                      helperText={errors.passwordConfirm}
+                      {...getFieldProps("passwordConfirm")}
                     />
                   </Grid2>
                 </Grid2>
@@ -114,14 +134,14 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
                     variant="outlined"
                     color="secondary"
                     sx={{ px: 3, py: 0.8 }}
-                    onClick={onClose}
+                    onClick={handleClose}
                   >
                     انصراف
                   </Button>
                   <LoadingButton
                     component="button"
                     type="submit"
-                    loading={createKubeUserLoading}
+                    loading={editKubeUserLoading}
                     variant="contained"
                     sx={{ px: 3, py: 0.8 }}
                   >

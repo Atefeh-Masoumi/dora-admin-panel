@@ -3,12 +3,18 @@ import { IconButton, Stack } from "@mui/material";
 import { kubeUserTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { Edit } from "src/components/atoms/svg/EditSvg";
 import { DeleteKubeUserDialog } from "../dialogs/DeleteKubeUserDialog";
+import { EditKubeUserDialog } from "../dialogs/EditKubeUserDialog";
 
 export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
   const handleOpenDelete = () => setOpenDelete(true);
   const [openDelete, setOpenDelete] = useState(false);
   const handleCloseDelete = () => setOpenDelete(false);
+
+  const handleOpenEdit = () => setOpenEdit(true);
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleCloseEdit = () => setOpenEdit(false);
 
   return (
     <Fragment>
@@ -32,6 +38,13 @@ export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <TrashSvg />
                   </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    color="info"
+                    onClick={handleOpenEdit}
+                  >
+                    <Edit />
+                  </IconButton>
                 </Stack>
               ) : (
                 text
@@ -44,6 +57,11 @@ export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
         id={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
+      />
+      <EditKubeUserDialog
+        id={row["id"]}
+        openDialog={openEdit}
+        handleClose={handleCloseEdit}
       />
     </Fragment>
   );
