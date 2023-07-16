@@ -10,8 +10,16 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
   const { name, setName } = useContext(AddNamespaceContext);
 
   const nameInputChangeHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setName(e.target.value);
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = event.target;
+    const regex =
+      /^((?![\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFBC1\uFE70-\uFEFC]).)*$/;
+
+    if (regex.test(value)) {
+      setName(event.target.value);
+    }
+  };
 
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
