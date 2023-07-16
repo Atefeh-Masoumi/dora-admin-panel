@@ -5,7 +5,7 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { DeleteKubeUserDialog } from "../dialogs/DeleteKubeUserDialog";
 import { EditKubeUserDialog } from "../dialogs/EditKubeUserDialog";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import PasswordOutlinedIcon from "@mui/icons-material/PasswordOutlined";
 
 export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
   const handleOpenDelete = () => setOpenDelete(true);
@@ -43,7 +43,7 @@ export const KubeUserTableRow: FC<{ row: any }> = ({ row }) => {
                     color="info"
                     onClick={handleOpenEdit}
                   >
-                    <VpnKeyIcon color="secondary" />
+                    <PasswordOutlinedIcon color="secondary" />
                   </IconButton>
                 </Stack>
               ) : (
