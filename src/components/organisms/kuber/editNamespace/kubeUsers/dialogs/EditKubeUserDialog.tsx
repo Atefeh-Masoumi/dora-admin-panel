@@ -73,7 +73,7 @@ export const EditKubeUserDialog: FC<EditKubeUserDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        toast.success("کاربر با موفقیت ایجاد شد");
+        toast.success("رمز عبور با موفقیت تغییر کرد");
         handleClose();
       });
   };
