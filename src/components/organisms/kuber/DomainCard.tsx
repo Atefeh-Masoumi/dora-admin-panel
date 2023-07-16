@@ -9,6 +9,7 @@ import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery } from "src/app/services/api";
 import { useNavigate } from "react-router";
+import { DeleteNamespaceDialog } from "./dialogs/DeleteNamespaceDialog";
 
 type DomainCardPropsType = { item: KubeNamespaceListResponse };
 
@@ -163,6 +164,11 @@ export const DomainCard: FC<DomainCardPropsType> = ({ item }) => {
           </IconButton>
         </Stack>
       </Stack>
+      <DeleteNamespaceDialog
+        id={id || 0}
+        openDialog={openDelete}
+        handleClose={handleCloseDelete}
+      />
     </Stack>
   );
 };
