@@ -19,12 +19,18 @@ import { formikOnSubmitType } from "src/types/form.type";
 
 const formInitialValues = {
   username: "",
+  email: "",
   password: "",
 };
 
 const formValidation = yup.object().shape({
   username: yup.string().required("نام کاربری الزامیست!"),
   password: yup.string().required("رمز عبور الزامیست!"),
+  email: yup
+    .string()
+    .required("پست الکترونیکی خود را وارد کنید")
+    .trim()
+    .email("پست الکترونیکی خود را صحیح وارد کنید"),
 });
 
 type AddKubeUserDialogPropsType = {
@@ -42,6 +48,7 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     username,
     password,
+    email,
   }) => {
     if (!serverId) {
       return;
@@ -51,6 +58,7 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
       createKubeUserModel: {
         kubeHostId: serverId,
         username: username,
+        email: email,
         password: password,
       },
     })
@@ -78,6 +86,7 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
           initialValues={{
             username: "",
             password: "",
+            email: "",
           }}
           validationSchema={formValidation}
           onSubmit={submitHandler}
@@ -86,6 +95,16 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
             <Form autoComplete="on">
               <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
                 <Grid2 container spacing={3}>
+                  <Grid2 xs={12}>
+                    <DorsaTextField
+                      inputProps={{ fontSize: "20px !important" }}
+                      fullWidth
+                      label="پست الکترونیکی"
+                      error={Boolean(errors.email && touched.email)}
+                      helperText={errors.email}
+                      {...getFieldProps("email")}
+                    />
+                  </Grid2>
                   <Grid2 xs={12}>
                     <DorsaTextField
                       inputProps={{ fontSize: "20px !important" }}

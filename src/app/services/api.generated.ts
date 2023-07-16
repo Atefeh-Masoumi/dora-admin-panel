@@ -2734,6 +2734,7 @@ export type KubeUserListResponse = {
 };
 export type CreateKubeUserModel = {
   kubeHostId?: number;
+  email: string;
   username: string;
   password: string;
 };
@@ -3374,4 +3375,3 @@ export const {
   useDeletePortalWebWebHostDeleteByIdMutation,
   usePostPortalDomainWhoisGetMutation,
 } = api;
-
