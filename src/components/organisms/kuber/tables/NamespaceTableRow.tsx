@@ -56,8 +56,28 @@ export const NamespaceTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <CreditCardIcon sx={{ color: "grey.700" }} />
                   </IconButton> */}
-                  <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
+                  <IconButton
+                    disabled={row.statusId !== 2}
+                    sx={{
+                      borderRadius: 1,
+                    }}
+                    onClick={monitorOnClick}
+                  >
                     <MonitorSvg />
+                    {row.statusId !== 2 && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -40%)",
+                          fontSize: "30px",
+                          color: "red",
+                        }}
+                      >
+                        &#10005;
+                      </div>
+                    )}
                   </IconButton>
 
                   <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
