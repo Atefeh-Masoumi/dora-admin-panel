@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalKubeNamespaceDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { DomainContext } from "src/pages/kube/Index";
 
 type DeleteNamespaceDialogPropsType = {
   openDialog: boolean;
@@ -18,12 +19,15 @@ export const DeleteNamespaceDialog: FC<DeleteNamespaceDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteLoadBalance, { isLoading }] =
-  useDeletePortalKubeNamespaceDeleteByIdMutation();
+    useDeletePortalKubeNamespaceDeleteByIdMutation();
+
+  const { refetchOnClick } = useContext(DomainContext);
 
   const submit = () =>
     deleteLoadBalance({ id })
       .then(() => {
         toast.success("سرویس ابری با موفقیت حذف شد");
+        refetchOnClick();
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));

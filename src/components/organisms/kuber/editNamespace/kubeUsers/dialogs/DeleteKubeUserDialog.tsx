@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalKubeUserDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { ServiceUsersContext } from "../../ServiceUsers";
 
 type DeleteKubeUserDialogPropsType = {
   openDialog: boolean;
@@ -16,12 +17,16 @@ export const DeleteKubeUserDialog: FC<DeleteKubeUserDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchUsersData } = useContext(ServiceUsersContext);
+
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeletePortalKubeUserDeleteByIdMutation();
+  const [deleteItem, { isLoading }] =
+    useDeletePortalKubeUserDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
       .then(() => {
+        refetchUsersData();
         toast.success("کاربر سرویس با موفقیت حذف شد");
         handleClose();
       })

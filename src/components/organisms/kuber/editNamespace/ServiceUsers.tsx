@@ -1,4 +1,4 @@
-import { FC, useEffect, useContext, useState } from "react";
+import { FC, useEffect, useContext, useState, createContext } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -13,6 +13,14 @@ import { GetPortalKubeUserListByKubeHostIdApiResponse } from "src/app/services/a
 
 type ServiceUserPropsType = { row: any };
 
+type ServiceUsersContextValueType = {
+  refetchUsersData: () => any;
+};
+
+export const ServiceUsersContext = createContext<ServiceUsersContextValueType>({
+  refetchUsersData: () => null,
+});
+
 export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
   const [showDialog, setShowDialog] = useState(false);
 
@@ -25,18 +33,24 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
   const [data, setData] =
     useState<GetPortalKubeUserListByKubeHostIdApiResponse | null>(null);
 
+  const getUsersData = (id: number) => {
+    getData({ kubeHostId: id })
+      .unwrap()
+      .then((res) => {
+        res && setData(res);
+      });
+  };
+
   useEffect(() => {
     if (serverId) {
-      getData({ kubeHostId: serverId })
-        .unwrap()
-        .then((res) => {
-          res && setData(res);
-        });
+      getUsersData(serverId);
     }
-  }, [getData, serverId]);
+  }, [serverId]);
 
   return (
-    <>
+    <ServiceUsersContext.Provider
+      value={{ refetchUsersData: () => serverId && getUsersData(serverId) }}
+    >
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
         <Grid2 xs={12} md={8}>
           <Stack
@@ -111,6 +125,6 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
         </Grid2>
       </Grid2>
       {showDialog && <AddKubeUserDialog onClose={closeDialog} />}
-    </>
+    </ServiceUsersContext.Provider>
   );
 };

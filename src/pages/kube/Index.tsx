@@ -1,4 +1,11 @@
-import { FC, useState, useMemo, Fragment } from "react";
+import {
+  FC,
+  useState,
+  useMemo,
+  Fragment,
+  createContext,
+  useContext,
+} from "react";
 import { useGetPortalKubeNamespaceListQuery } from "src/app/services/api.generated";
 import {
   Box,
@@ -9,16 +16,24 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { NamespaceTableRow } from "src/components/organisms/kuber/tables/NamespaceTableRow";
-import { namespaceTableStruct } from "src/components/organisms/kuber/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 import { DomainCard } from "src/components/organisms/kuber/DomainCard";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
+
+// Define the type for your context value
+type DomainContextValueType = {
+  refetchOnClick: () => any;
+};
+
+// Create the context
+export const DomainContext = createContext<DomainContextValueType>({
+  refetchOnClick: () => null,
+});
 
 type NamespaceManagementPropsType = {};
 
@@ -52,7 +67,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
   const createCloudOnClick = () => navigate("/kube/addKubernetes");
 
   return (
-    <>
+    <DomainContext.Provider value={{ refetchOnClick }}>
       <Stack
         bgcolor="white"
         py={3}
@@ -162,6 +177,13 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
         </Box> */}
       </Stack>
       <Stack py={3} px={3} width="100%" borderRadius={3} direction="column">
+        {filteredList && filteredList?.length <= 0 && (
+          <Stack py={3}>
+            <Stack bgcolor="white" borderRadius={3}>
+              <EmptyTable text=" سرویس کوبرنتیز وجود ندارد" />
+            </Stack>
+          </Stack>
+        )}
         <Grid container justifyContent="end" spacing={3} py={3}>
           {isLoading ? (
             <Fragment>
@@ -186,7 +208,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
           )}
         </Grid>
       </Stack>
-    </>
+    </DomainContext.Provider>
   );
 };
 

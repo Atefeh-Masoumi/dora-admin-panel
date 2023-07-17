@@ -16,16 +16,36 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { EditNamespaceContext } from "../../context/EditNamespaceContext";
 import { usePostPortalKubeUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
+import { ServiceUsersContext } from "../../ServiceUsers";
 
 const formInitialValues = {
   username: "",
   email: "",
   password: "",
+  passwordConfirm: "",
 };
 
 const formValidation = yup.object().shape({
   username: yup.string().required("نام کاربری الزامیست!"),
-  password: yup.string().required("رمز عبور الزامیست!"),
+  password: yup
+    .string()
+    .required("رمز عبور را وارد کنید")
+    .min(8, "رمز عبور حداقل ۸ کاراکتر میباشد")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@!%&?]).{8,}$/,
+      "پسورد باید شامل 8 کارکتر، به همراه حداقل یک حرف خاص (#$@!%&*) ، یک حرف بزرگ ، یک حرف کوچک و بدون space باشد"
+    )
+    .trim(),
+  passwordConfirm: yup
+    .string()
+    .required(" تکرار رمز عبور را وارد کنید")
+    .min(8, "تکرار رمز عبور حداقل ۸ کاراکتر میباشد")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@!%&?]).{8,}$/,
+      "پسورد باید شامل 8 کارکتر، به همراه حداقل یک حرف خاص (#$@!%&*) ، یک حرف بزرگ ، یک حرف کوچک و بدون space باشد"
+    )
+    .oneOf([yup.ref("password")], "تکرار رمز عبور صحیح نمیباشد")
+    .trim(),
   email: yup
     .string()
     .required("پست الکترونیکی خود را وارد کنید")
@@ -40,6 +60,8 @@ type AddKubeUserDialogPropsType = {
 export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
   onClose,
 }) => {
+  const { refetchUsersData } = useContext(ServiceUsersContext);
+
   const [createKubeUserCreate, { isLoading: createKubeUserLoading }] =
     usePostPortalKubeUserCreateMutation();
 
@@ -56,7 +78,6 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
 
     createKubeUserCreate({
       createKubeUserModel: {
-        kubeHostId: serverId,
         username: username,
         email: email,
         password: password,
@@ -64,6 +85,7 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
+        refetchUsersData();
         toast.success("کاربر با موفقیت ایجاد شد");
         onClose();
       });
@@ -87,6 +109,7 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
             username: "",
             password: "",
             email: "",
+            passwordConfirm: "",
           }}
           validationSchema={formValidation}
           onSubmit={submitHandler}
@@ -124,6 +147,19 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
                       error={Boolean(errors.password && touched.password)}
                       helperText={errors.password}
                       {...getFieldProps("password")}
+                    />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <DorsaTextField
+                      inputProps={{ fontSize: "20px !important" }}
+                      fullWidth
+                      type="password"
+                      label="تکرار رمز عبور"
+                      error={Boolean(
+                        errors.passwordConfirm && touched.passwordConfirm
+                      )}
+                      helperText={errors.passwordConfirm}
+                      {...getFieldProps("passwordConfirm")}
                     />
                   </Grid2>
                 </Grid2>

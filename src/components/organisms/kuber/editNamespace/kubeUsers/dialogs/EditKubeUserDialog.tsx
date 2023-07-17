@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import {
   Button,
   Dialog,
@@ -15,6 +15,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostPortalKubeUserChangePasswordMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
+import { ServiceUsersContext } from "../../ServiceUsers";
 
 const formInitialValues = {
   password: "",
@@ -54,6 +55,8 @@ export const EditKubeUserDialog: FC<EditKubeUserDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchUsersData } = useContext(ServiceUsersContext);
+
   const [editKubeUser, { isLoading: editKubeUserLoading }] =
     usePostPortalKubeUserChangePasswordMutation();
 
@@ -73,6 +76,7 @@ export const EditKubeUserDialog: FC<EditKubeUserDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
+        refetchUsersData();
         toast.success("رمز عبور با موفقیت تغییر کرد");
         handleClose();
       });

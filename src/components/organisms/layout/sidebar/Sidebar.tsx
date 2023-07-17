@@ -18,7 +18,7 @@ import CoinSvg from "src/components/atoms/svg/CoinSvg";
 //import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 import { StorageOutlined } from "@mui/icons-material";
-import DnsOutlinedIcon from '@mui/icons-material/DnsOutlined';
+import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 
 type SidebarPropsType = {};
 
@@ -203,7 +203,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         }}
       >
         <ItemList listItems={listItems} />
-        {hideSubLists && showSpecialOffer && <SpecialOffer />}
+        {/* {hideSubLists && showSpecialOffer && <SpecialOffer />} */}
       </Stack>
     </Box>
   );
