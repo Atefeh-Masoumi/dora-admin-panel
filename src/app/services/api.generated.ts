@@ -659,6 +659,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/portal/kube/user/list` }),
     }),
+    getPortalKubeUserShortList: build.query<
+      GetPortalKubeUserShortListApiResponse,
+      GetPortalKubeUserShortListApiArg
+    >({
+      query: () => ({ url: `/portal/kube/user/short-list` }),
+    }),
     postPortalKubeUserCreate: build.mutation<
       PostPortalKubeUserCreateApiResponse,
       PostPortalKubeUserCreateApiArg
@@ -1942,6 +1948,9 @@ export type DeletePortalKubeHostDeleteByIdApiArg = {
 export type GetPortalKubeUserListApiResponse =
   /** status 200 Success */ KubeUserListResponse[];
 export type GetPortalKubeUserListApiArg = void;
+export type GetPortalKubeUserShortListApiResponse =
+  /** status 200 Success */ KubeShortListResponse[];
+export type GetPortalKubeUserShortListApiArg = void;
 export type PostPortalKubeUserCreateApiResponse = unknown;
 export type PostPortalKubeUserCreateApiArg = {
   createKubeUserModel: CreateKubeUserModel;
@@ -2890,6 +2899,10 @@ export type KubeUserListResponse = {
   userName?: string | null;
   createDate?: string;
 };
+export type KubeShortListResponse = {
+  id?: number;
+  name?: string | null;
+};
 export type CreateKubeUserModel = {
   email: string;
   username: string;
@@ -2912,12 +2925,13 @@ export type CreateKubeUserRoleModel = {
 export type KubeVolumeListResponse = {
   id?: number;
   name?: string | null;
+  capacity?: number;
   createDate?: string;
 };
 export type CreateKubeVolumeModel = {
   kubeHostId?: number;
   name: string;
-  capacity: string;
+  capacity: number;
 };
 export type KubeWorkspaceListResponse = {
   id?: number;
@@ -3487,6 +3501,7 @@ export const {
   usePutPortalKubeHostChangeServiceMutation,
   useDeletePortalKubeHostDeleteByIdMutation,
   useGetPortalKubeUserListQuery,
+  useGetPortalKubeUserShortListQuery,
   usePostPortalKubeUserCreateMutation,
   useDeletePortalKubeUserDeleteByIdMutation,
   usePostPortalKubeUserChangePasswordMutation,
