@@ -208,7 +208,5 @@ export const {
   useLazyGetPortalPanelBillDownloadByIdQuery,
   useLazyGetPortalWebWebHostGetLoginSessionByIdQuery,
   useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery,
-  useLazyGetPortalKubeUserListByKubeHostIdQuery,
-  useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery
-
+  useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery,
 } = api;
