@@ -604,64 +604,60 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getPortalKubeNamespaceList: build.query<
-      GetPortalKubeNamespaceListApiResponse,
-      GetPortalKubeNamespaceListApiArg
+    getPortalKubeHostList: build.query<
+      GetPortalKubeHostListApiResponse,
+      GetPortalKubeHostListApiArg
     >({
-      query: () => ({ url: `/portal/kube/namespace/list` }),
+      query: () => ({ url: `/portal/kube/host/list` }),
     }),
-    getPortalKubeNamespaceGetById: build.query<
-      GetPortalKubeNamespaceGetByIdApiResponse,
-      GetPortalKubeNamespaceGetByIdApiArg
+    getPortalKubeHostGetById: build.query<
+      GetPortalKubeHostGetByIdApiResponse,
+      GetPortalKubeHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/portal/kube/host/get/${queryArg.id}` }),
+    }),
+    getPortalKubeHostGetLoginSessionById: build.query<
+      GetPortalKubeHostGetLoginSessionByIdApiResponse,
+      GetPortalKubeHostGetLoginSessionByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/namespace/get/${queryArg.id}`,
+        url: `/portal/kube/host/get-login-session/${queryArg.id}`,
       }),
     }),
-    getPortalKubeNamespaceGetLoginSessionById: build.query<
-      GetPortalKubeNamespaceGetLoginSessionByIdApiResponse,
-      GetPortalKubeNamespaceGetLoginSessionByIdApiArg
+    postPortalKubeHostCreate: build.mutation<
+      PostPortalKubeHostCreateApiResponse,
+      PostPortalKubeHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/namespace/get-login-session/${queryArg.id}`,
-      }),
-    }),
-    postPortalKubeNamespaceCreate: build.mutation<
-      PostPortalKubeNamespaceCreateApiResponse,
-      PostPortalKubeNamespaceCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/kube/namespace/create`,
+        url: `/portal/kube/host/create`,
         method: "POST",
         body: queryArg.createKubeNamespaceModel,
       }),
     }),
-    putPortalKubeNamespaceChangeService: build.mutation<
-      PutPortalKubeNamespaceChangeServiceApiResponse,
-      PutPortalKubeNamespaceChangeServiceApiArg
+    putPortalKubeHostChangeService: build.mutation<
+      PutPortalKubeHostChangeServiceApiResponse,
+      PutPortalKubeHostChangeServiceApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/namespace/change-service`,
+        url: `/portal/kube/host/change-service`,
         method: "PUT",
         body: queryArg.editKubeNamespaceModel,
       }),
     }),
-    deletePortalKubeNamespaceDeleteById: build.mutation<
-      DeletePortalKubeNamespaceDeleteByIdApiResponse,
-      DeletePortalKubeNamespaceDeleteByIdApiArg
+    deletePortalKubeHostDeleteById: build.mutation<
+      DeletePortalKubeHostDeleteByIdApiResponse,
+      DeletePortalKubeHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/namespace/delete/${queryArg.id}`,
+        url: `/portal/kube/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getPortalKubeUserListByKubeHostId: build.query<
-      GetPortalKubeUserListByKubeHostIdApiResponse,
-      GetPortalKubeUserListByKubeHostIdApiArg
+    getPortalKubeUserList: build.query<
+      GetPortalKubeUserListApiResponse,
+      GetPortalKubeUserListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/portal/kube/user/list/${queryArg.kubeHostId}`,
-      }),
+      query: () => ({ url: `/portal/kube/user/list` }),
     }),
     postPortalKubeUserCreate: build.mutation<
       PostPortalKubeUserCreateApiResponse,
@@ -1918,36 +1914,34 @@ export type DeletePortalKubeServiceDeleteByIdApiResponse = unknown;
 export type DeletePortalKubeServiceDeleteByIdApiArg = {
   id: number;
 };
-export type GetPortalKubeNamespaceListApiResponse =
+export type GetPortalKubeHostListApiResponse =
   /** status 200 Success */ KubeNamespaceListResponse[];
-export type GetPortalKubeNamespaceListApiArg = void;
-export type GetPortalKubeNamespaceGetByIdApiResponse =
+export type GetPortalKubeHostListApiArg = void;
+export type GetPortalKubeHostGetByIdApiResponse =
   /** status 200 Success */ GetKubeNamespaceResponse;
-export type GetPortalKubeNamespaceGetByIdApiArg = {
+export type GetPortalKubeHostGetByIdApiArg = {
   id: number;
 };
-export type GetPortalKubeNamespaceGetLoginSessionByIdApiResponse =
+export type GetPortalKubeHostGetLoginSessionByIdApiResponse =
   /** status 200 Success */ GetLoginNamespaceResponse;
-export type GetPortalKubeNamespaceGetLoginSessionByIdApiArg = {
+export type GetPortalKubeHostGetLoginSessionByIdApiArg = {
   id: number;
 };
-export type PostPortalKubeNamespaceCreateApiResponse = unknown;
-export type PostPortalKubeNamespaceCreateApiArg = {
+export type PostPortalKubeHostCreateApiResponse = unknown;
+export type PostPortalKubeHostCreateApiArg = {
   createKubeNamespaceModel: CreateKubeNamespaceModel;
 };
-export type PutPortalKubeNamespaceChangeServiceApiResponse = unknown;
-export type PutPortalKubeNamespaceChangeServiceApiArg = {
+export type PutPortalKubeHostChangeServiceApiResponse = unknown;
+export type PutPortalKubeHostChangeServiceApiArg = {
   editKubeNamespaceModel: EditKubeNamespaceModel;
 };
-export type DeletePortalKubeNamespaceDeleteByIdApiResponse = unknown;
-export type DeletePortalKubeNamespaceDeleteByIdApiArg = {
+export type DeletePortalKubeHostDeleteByIdApiResponse = unknown;
+export type DeletePortalKubeHostDeleteByIdApiArg = {
   id: number;
 };
-export type GetPortalKubeUserListByKubeHostIdApiResponse =
+export type GetPortalKubeUserListApiResponse =
   /** status 200 Success */ KubeUserListResponse[];
-export type GetPortalKubeUserListByKubeHostIdApiArg = {
-  kubeHostId: number;
-};
+export type GetPortalKubeUserListApiArg = void;
 export type PostPortalKubeUserCreateApiResponse = unknown;
 export type PostPortalKubeUserCreateApiArg = {
   createKubeUserModel: CreateKubeUserModel;
@@ -3486,13 +3480,13 @@ export const {
   useGetPortalKubeServiceGetByIdQuery,
   usePostPortalKubeServiceCreateMutation,
   useDeletePortalKubeServiceDeleteByIdMutation,
-  useGetPortalKubeNamespaceListQuery,
-  useGetPortalKubeNamespaceGetByIdQuery,
-  useGetPortalKubeNamespaceGetLoginSessionByIdQuery,
-  usePostPortalKubeNamespaceCreateMutation,
-  usePutPortalKubeNamespaceChangeServiceMutation,
-  useDeletePortalKubeNamespaceDeleteByIdMutation,
-  useGetPortalKubeUserListByKubeHostIdQuery,
+  useGetPortalKubeHostListQuery,
+  useGetPortalKubeHostGetByIdQuery,
+  useGetPortalKubeHostGetLoginSessionByIdQuery,
+  usePostPortalKubeHostCreateMutation,
+  usePutPortalKubeHostChangeServiceMutation,
+  useDeletePortalKubeHostDeleteByIdMutation,
+  useGetPortalKubeUserListQuery,
   usePostPortalKubeUserCreateMutation,
   useDeletePortalKubeUserDeleteByIdMutation,
   usePostPortalKubeUserChangePasswordMutation,
