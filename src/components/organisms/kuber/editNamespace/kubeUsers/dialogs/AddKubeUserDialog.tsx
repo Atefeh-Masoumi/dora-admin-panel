@@ -13,10 +13,9 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { EditNamespaceContext } from "../../context/EditNamespaceContext";
 import { usePostPortalKubeUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ServiceUsersContext } from "../../ServiceUsers";
+import { ServiceUsersContext } from "src/pages/kube/ServiceUsers";
 
 const formInitialValues = {
   username: "",
@@ -65,17 +64,11 @@ export const AddKubeUserDialog: FC<AddKubeUserDialogPropsType> = ({
   const [createKubeUserCreate, { isLoading: createKubeUserLoading }] =
     usePostPortalKubeUserCreateMutation();
 
-  const { serverId } = useContext(EditNamespaceContext);
-
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     username,
     password,
     email,
   }) => {
-    if (!serverId) {
-      return;
-    }
-
     createKubeUserCreate({
       createKubeUserModel: {
         username: username,

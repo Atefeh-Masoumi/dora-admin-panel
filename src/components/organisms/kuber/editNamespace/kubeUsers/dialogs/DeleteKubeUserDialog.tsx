@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalKubeUserDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { ServiceUsersContext } from "../../ServiceUsers";
+import { ServiceUsersContext } from "src/pages/kube/ServiceUsers";
 
 type DeleteKubeUserDialogPropsType = {
   openDialog: boolean;

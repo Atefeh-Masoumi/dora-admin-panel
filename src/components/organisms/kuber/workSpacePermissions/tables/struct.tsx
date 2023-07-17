@@ -1,6 +1,6 @@
 import { columnType } from "src/components/organisms/tables/table.types";
 
-export const kubeUserTableStruct: columnType[] = [
+export const permissionTableStruct: columnType[] = [
   {
     id: "id",
     label: "",
@@ -9,10 +9,6 @@ export const kubeUserTableStruct: columnType[] = [
   {
     id: "userName",
     label: "نام کاربری",
-  },
-  {
-    id: "email",
-    label: "ایمیل",
   },
   {
     id: "createDate",

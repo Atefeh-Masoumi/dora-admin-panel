@@ -6,7 +6,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { useGetPortalKubeNamespaceListQuery } from "src/app/services/api.generated";
+import { useGetPortalKubeWorkspaceListQuery } from "src/app/services/api.generated";
 import {
   Box,
   Button,
@@ -45,7 +45,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalKubeNamespaceListQuery();
+  } = useGetPortalKubeWorkspaceListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

@@ -1,17 +1,13 @@
-import { FC, useEffect, useContext, useState, createContext } from "react";
+import { FC, useState, createContext } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { EditNamespaceContext } from "./context/EditNamespaceContext";
-import { kubeUserTableStruct } from "../editNamespace/kubeUsers/tables/struct";
-import { KubeUserTableRow } from "./kubeUsers/tables/KubeUserTableRow";
-import { AddKubeUserDialog } from "./kubeUsers/dialogs/AddKubeUserDialog";
-import { useLazyGetPortalKubeUserListByKubeHostIdQuery } from "src/app/services/api";
-import { GetPortalKubeUserListByKubeHostIdApiResponse } from "src/app/services/api.generated";
-
-type ServiceUserPropsType = { row: any };
+import { useGetPortalKubeUserListQuery } from "src/app/services/api.generated";
+import { AddKubeUserDialog } from "src/components/organisms/kuber/editNamespace/kubeUsers/dialogs/AddKubeUserDialog";
+import { kubeUserTableStruct } from "src/components/organisms/kuber/editNamespace/kubeUsers/tables/struct";
+import { KubeUserTableRow } from "src/components/organisms/kuber/editNamespace/kubeUsers/tables/KubeUserTableRow";
 
 type ServiceUsersContextValueType = {
   refetchUsersData: () => any;
@@ -21,36 +17,16 @@ export const ServiceUsersContext = createContext<ServiceUsersContextValueType>({
   refetchUsersData: () => null,
 });
 
-export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
+export const ServiceUsers: FC<void> = () => {
   const [showDialog, setShowDialog] = useState(false);
 
   const openDialog = () => setShowDialog(true);
   const closeDialog = () => setShowDialog(false);
 
-  const { serverId } = useContext(EditNamespaceContext);
-  const [getData, { isLoading }] =
-    useLazyGetPortalKubeUserListByKubeHostIdQuery();
-  const [data, setData] =
-    useState<GetPortalKubeUserListByKubeHostIdApiResponse | null>(null);
-
-  const getUsersData = (id: number) => {
-    getData({ kubeHostId: id })
-      .unwrap()
-      .then((res) => {
-        res && setData(res);
-      });
-  };
-
-  useEffect(() => {
-    if (serverId) {
-      getUsersData(serverId);
-    }
-  }, [serverId]);
+  const { data, isLoading, refetch } = useGetPortalKubeUserListQuery();
 
   return (
-    <ServiceUsersContext.Provider
-      value={{ refetchUsersData: () => serverId && getUsersData(serverId) }}
-    >
+    <ServiceUsersContext.Provider value={{ refetchUsersData: () => refetch() }}>
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
         <Grid2 xs={12} md={8}>
           <Stack

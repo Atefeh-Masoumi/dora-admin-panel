@@ -24,6 +24,7 @@ import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
+import { ServiceUsers } from "src/pages/kube/ServiceUsers";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -414,6 +415,12 @@ const Router: FC = () => {
             path="/kube"
             element={mainTemplate(KubeIndex, {
               pageTitle: "مدیریت سرویس کوبرنتیز",
+            })}
+          />
+          <Route
+            path="kube/service-users"
+            element={mainTemplate(ServiceUsers, {
+              pageTitle: "شناسه های کاربری",
             })}
           />
           <Route

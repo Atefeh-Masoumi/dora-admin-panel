@@ -15,7 +15,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostPortalKubeUserChangePasswordMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ServiceUsersContext } from "../../ServiceUsers";
+import { ServiceUsersContext } from "src/pages/kube/ServiceUsers";
 
 const formInitialValues = {
   password: "",

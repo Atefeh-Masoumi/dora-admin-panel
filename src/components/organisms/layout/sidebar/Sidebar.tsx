@@ -77,7 +77,10 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       text: "سرویس کوبرنتیز ابری",
       Icon: DnsOutlinedIcon,
       link: "/kube",
-      subList: [{ title: "سرویس کوبرنتیز  ابری", link: "/kube" }],
+      subList: [
+        { title: "سرویس کوبرنتیز  ابری", link: "/kube" },
+        { title: "شناسه های کاربری", link: "/kube/service-users" },
+      ],
     },
     {
       title: "Object Storage",

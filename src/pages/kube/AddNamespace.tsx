@@ -9,7 +9,7 @@ import {
 } from "src/components/organisms/kuber/addNamespace/context/AddNamespaceContext";
 import { SelectConfig } from "src/components/organisms/kuber/addNamespace/addNamespaceSteps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/kuber/addNamespace/addNamespaceSteps/ServerInfo";
-import { usePostPortalKubeNamespaceCreateMutation } from "src/app/services/api.generated";
+import { usePostPortalKubeWorkspaceCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -27,8 +27,8 @@ const AddNamespaceService: FC = () => {
     setStep((step - 1) as addNamespaceStepsType);
   };
 
-  const [createNamespaceService, { isLoading }] =
-    usePostPortalKubeNamespaceCreateMutation();
+  const [createWorkspaceService, { isLoading }] =
+    usePostPortalKubeWorkspaceCreateMutation();
 
   const submitHandler = () => {
     if (
@@ -43,8 +43,8 @@ const AddNamespaceService: FC = () => {
       return;
     }
 
-    createNamespaceService({
-      createKubeNamespaceModel: {
+    createWorkspaceService({
+      createKubeWorkspaceModel: {
         name: name,
         datacenterId: dataCenter.id,
         productBundleId: serverConfig.id || 0,

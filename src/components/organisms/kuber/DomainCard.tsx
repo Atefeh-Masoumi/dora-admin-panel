@@ -1,13 +1,10 @@
 import { FC, useMemo, useState } from "react";
 import { Chip, Divider, IconButton, Stack, Typography } from "@mui/material";
-import CircleTickSvg from "src/components/atoms/svg/CircleTickSvg";
-import ClockSvg from "src/components/atoms/svg/ClockSvg";
 import { KubeNamespaceListResponse } from "src/app/services/api.generated";
-import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery } from "src/app/services/api";
+import { useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery } from "src/app/services/api";
 import { useNavigate } from "react-router";
 import { DeleteNamespaceDialog } from "./dialogs/DeleteNamespaceDialog";
 
@@ -26,7 +23,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({ item }) => {
   const settingOnClick = () => navigate("/kube/" + id);
 
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery();
+    useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery();
 
   const monitorOnClick = () =>
     getUrl({ id: id || 0 })

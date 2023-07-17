@@ -6,7 +6,7 @@ import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DeleteNamespaceDialog } from "../dialogs/DeleteNamespaceDialog";
 import { useNavigate } from "react-router";
-import { useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery } from "src/app/services/api";
+import { useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery } from "src/app/services/api";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 
@@ -20,7 +20,7 @@ export const NamespaceTableRow: FC<{ row: any }> = ({ row }) => {
   const settingOnClick = () => navigate("/kube/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetPortalKubeNamespaceGetLoginSessionByIdQuery();
+    useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery();
 
   const monitorOnClick = () =>
     getUrl({ id: row["id"] })

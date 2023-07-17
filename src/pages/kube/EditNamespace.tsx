@@ -12,7 +12,7 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditNamespaceContext } from "src/components/organisms/kuber/editNamespace/context/EditNamespaceContext";
 import { ServiceInfo } from "src/components/organisms/kuber/editNamespace/ServiceInfo";
-import { ServiceUser } from "src/components/organisms/kuber/editNamespace/ServiceUsers";
+import { PermissionManagement } from "src/components/organisms/kuber/editNamespace/PermissionManagement";
 import { SelectConfig } from "src/components/organisms/kuber/editNamespace/SelectConfig";
 
 type TabPanelProps = {
@@ -65,9 +65,9 @@ const EditNamespaceService: FC<EditNamespacePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "شناسه کاربری", "تغییر مشخصات سرویس"];
+  const tabArray = ["مشخصات سرویس", "مدیریت دسترسی ها", "تغییر مشخصات سرویس"];
 
-  const tabPanelArray = [ServiceInfo, ServiceUser, SelectConfig];
+  const tabPanelArray = [ServiceInfo, PermissionManagement, SelectConfig];
 
   if (!id) return <Navigate to="/kube" />;
 

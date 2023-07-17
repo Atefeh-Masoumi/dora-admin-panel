@@ -11,7 +11,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { useParams } from "react-router";
-import { useGetPortalKubeNamespaceGetByIdQuery } from "src/app/services/api.generated";
+import { useGetPortalKubeWorkspaceGetByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -48,7 +48,7 @@ export const ServiceInfoBoxes: FC<ServiceInfoBoxesPropsType> = () => {
     data: rabbitData,
     isLoading: getRabbitDataLoading,
     isFetching: getRabbitDataFetching,
-  } = useGetPortalKubeNamespaceGetByIdQuery({
+  } = useGetPortalKubeWorkspaceGetByIdQuery({
     id: Number(id)!,
   });
 
