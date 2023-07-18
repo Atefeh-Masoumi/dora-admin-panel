@@ -119,63 +119,67 @@ const Detail: FC = () => {
         {isLoading ? (
           <LoadingChat />
         ) : (
-          <Stack spacing={2} overflow="scroll" maxHeight="550px" id="chat">
+          <Stack spacing={2} overflow="visible" id="chat">
             {supportItems?.transaction?.map((item, index) => {
               return <DorsaChat key={index} message={item} />;
             })}
+            <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+              <DorsaTextField
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="متن پیام را بنویسید ..."
+                fullWidth
+                autoFocus
+                autoComplete="off"
+                multiline
+                rows={3}
+              />
+              <Stack direction="row" spacing={1} alignItems="center">
+                <DorsaTooltip
+                  title={
+                    <Stack>
+                      <Typography>فرمت های مجاز jpg, png, jpeg, pdf</Typography>
+                      <Typography>حداکثر حجم فایل: 2 مگابایت</Typography>
+                    </Stack>
+                  }
+                  arrow
+                >
+                  <Button
+                    // onClick={handleOpen}
+                    component="label"
+                    variant="outlined"
+                    size="large"
+                    fullWidth
+                    sx={{
+                      px: 5.5,
+                      py: { xs: 1, md: 1.5 },
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <Typography>بارگذاری پیوست</Typography>
+                    <Input
+                      inputProps={{ ...dropzoneOptions }}
+                      onChange={handleFileChange}
+                      sx={{ display: "none" }}
+                      type="file"
+                    />
+                  </Button>
+                </DorsaTooltip>
+                <LoadingButton
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  sx={{ px: 3.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
+                  onClick={submit}
+                  disabled={isDisableButton}
+                  loading={LoadingSend}
+                >
+                  ارسال پیام
+                </LoadingButton>
+              </Stack>
+            </Stack>
           </Stack>
         )}
-        <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-          <DorsaTextField
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="متن پیام را بنویسید ..."
-            fullWidth
-            autoFocus
-            autoComplete="off"
-            multiline
-            rows={3}
-          />
-          <Stack direction="row" spacing={1} alignItems="center">
-            <DorsaTooltip
-              title={
-                <Stack>
-                  <Typography>فرمت های مجاز jpg, png, jpeg, pdf</Typography>
-                  <Typography>حداکثر حجم فایل: 2 مگابایت</Typography>
-                </Stack>
-              }
-              arrow
-            >
-              <Button
-                // onClick={handleOpen}
-                component="label"
-                variant="outlined"
-                size="large"
-                fullWidth
-                sx={{ px: 5.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
-              >
-                <Typography>بارگذاری پیوست</Typography>
-                <Input
-                  inputProps={{ ...dropzoneOptions }}
-                  onChange={handleFileChange}
-                  sx={{ display: "none" }}
-                  type="file"
-                />
-              </Button>
-            </DorsaTooltip>
-            <LoadingButton
-              fullWidth
-              variant="contained"
-              size="large"
-              sx={{ px: 3.5, py: { xs: 1, md: 1.5 }, whiteSpace: "nowrap" }}
-              onClick={submit}
-              disabled={isDisableButton}
-              loading={LoadingSend}
-            >
-              ارسال پیام
-            </LoadingButton>
-          </Stack>
-        </Stack>
       </Stack>
       {/* <UploadDialog openDialog={open} handleClose={handleClose} /> */}
     </Fragment>
