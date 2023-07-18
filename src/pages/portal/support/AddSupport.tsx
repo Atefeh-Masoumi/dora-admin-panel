@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton, getLoadingButtonUtilityClass } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AxiosProgressEvent } from "axios";
@@ -18,8 +18,10 @@ import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
   useGetPortalPanelBusinessUnitListQuery,
+  useCallGetPortalPanelHostProductListByProductCategoryIdMutation,
   useGetPortalPanelProductCategoryListQuery,
   usePostPortalPanelSupportSubjectSelectListMutation,
+  GetPortalPanelHostProductListByProductCategoryIdApiResponse,
 } from "src/app/services/api.generated";
 import { useCustomCreateSupportMutation } from "src/app/services/api";
 
@@ -31,6 +33,19 @@ const AddTicket: FC = () => {
   const [unit, setUnit] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetPortalPanelBusinessUnitListQuery();
+
+  const [portalPanelHostProductList, setPortalPanelHostProductList] =
+    useState<GetPortalPanelHostProductListByProductCategoryIdApiResponse | null>(
+      null
+    );
+
+  const [selectedPortalPanelHostProduct, setSelectedPortalPanelHostProduct] =
+    useState<number>(0);
+
+  const [
+    callGetPortalPanelHostProductList,
+    { isLoading: getPortalPanelHostLoading },
+  ] = useCallGetPortalPanelHostProductListByProductCategoryIdMutation();
 
   const [category, setCategory] = useState<number>();
   const { data: categories, isLoading: loadingCategories } =
@@ -52,6 +67,13 @@ const AddTicket: FC = () => {
       .then((res: SetStateAction<SupportSubjectListResponse[]>) =>
         setList(res)
       );
+    if (category) {
+      callGetPortalPanelHostProductList({ productCategoryId: Number(category) })
+        .unwrap()
+        .then((res) => {
+          setPortalPanelHostProductList(res);
+        });
+    }
   }, [unit, category, selectList]);
 
   const [uploading, setUploading] = useState(false);
@@ -89,6 +111,9 @@ const AddTicket: FC = () => {
     formData.append("businessUnitId", "" + unit);
     formData.append("supportSubjectId", "" + title);
     formData.append("productCategoryId", "" + category);
+    if (selectedPortalPanelHostProduct !== 0) {
+      formData.append("hostProductId", "" + selectedPortalPanelHostProduct);
+    }
     formData.append("attachment", file as Blob);
     upload({
       body: formData as any,
@@ -214,6 +239,57 @@ const AddTicket: FC = () => {
                     }}
                   >
                     {category.name}
+                  </MenuItem>
+                ))}
+              </DorsaTextField>
+            )}
+          </Box>
+          {/* related projects */}
+          <Box component="form" width="100%">
+            {getPortalPanelHostLoading ? (
+              <Stack>
+                <Skeleton
+                  variant="rectangular"
+                  height={50}
+                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                />
+              </Stack>
+            ) : (
+              <DorsaTextField
+                inputProps={{ fontSize: "20px !important" }}
+                select
+                fullWidth
+                label="محصولات کابر"
+                value={selectedPortalPanelHostProduct || ""}
+                onChange={(e) =>
+                  setSelectedPortalPanelHostProduct(+e.target.value)
+                }
+              >
+                {(!portalPanelHostProductList ||
+                  portalPanelHostProductList?.length === 0) && (
+                  <ListSubheader>
+                    <Typography sx={{ py: 1.6 }}>
+                      داده ای موجودی نیست
+                    </Typography>
+                  </ListSubheader>
+                )}
+                {portalPanelHostProductList?.map((option) => (
+                  <MenuItem
+                    key={option.id}
+                    value={option.id}
+                    sx={{
+                      borderRadius: 1,
+                      backgroundColor: "#F3F4F6",
+                      m: 0.5,
+                      py: 1.5,
+                      color: "secondary",
+                      "&: focus": {
+                        color: "rgba(60, 138, 255, 1)",
+                        backgroundColor: "rgba(60, 138, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    {option.name}
                   </MenuItem>
                 ))}
               </DorsaTextField>

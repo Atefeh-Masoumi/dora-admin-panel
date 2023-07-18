@@ -41,8 +41,14 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
                   <Chip
                     label={text}
                     sx={{
-                      backgroundColor: "rgba(229, 232, 242, 1)",
-                      color: "rgba(140, 152, 174, 1)",
+                      backgroundColor:
+                        row.supportStatusId === 3
+                          ? "success.light"
+                          : "error.light",
+                      color:
+                        row.supportStatusId === 3
+                          ? "success.main"
+                          : "error.main",
                       py: 2.2,
                       borderRadius: 1,
                       fontSize: "14px",

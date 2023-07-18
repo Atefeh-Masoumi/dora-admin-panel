@@ -1,5 +1,12 @@
-import { FC, useState } from "react";
-import { Box, Button, Divider, MenuItem, Stack, Typography } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useNavigate } from "react-router";
@@ -13,12 +20,20 @@ import { tickets } from "src/components/organisms/portal/support/constant";
 import { useGetPortalPanelSupportListQuery } from "src/app/services/api.generated";
 
 const Support: FC = () => {
-  const { data: supportList, refetch, isLoading } = useGetPortalPanelSupportListQuery();
+  const {
+    data: supportList,
+    refetch,
+    isLoading,
+  } = useGetPortalPanelSupportListQuery();
 
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
   const createCloudOnClick = () => navigate("/portal/support/add-ticket");
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");
@@ -27,7 +42,7 @@ const Support: FC = () => {
       supportItem.id?.toString().includes(search) &&
       (ticket === "all" ||
         supportItem.supportStatus ===
-        tickets.find((t) => t.value === ticket)?.label)
+          tickets.find((t) => t.value === ticket)?.label)
   );
 
   return (
@@ -53,10 +68,7 @@ const Support: FC = () => {
           <Typography fontSize={18} color="secondary">
             لیست تیکت ها
           </Typography>
-          <SearchBox
-            onChange={(text) => setSearch(text)}
-            placeholder="جستجو"
-          />
+          <SearchBox onChange={(text) => setSearch(text)} placeholder="جستجو" />
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1}>
@@ -96,7 +108,11 @@ const Support: FC = () => {
             onClick={refetchOnClick}
             variant="outlined"
             size="large"
-            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
+            sx={{
+              whiteSpace: "nowrap",
+              px: 1.2,
+              borderRadius: BORDER_RADIUS_5,
+            }}
             startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
           >
             بازخوانی
@@ -105,7 +121,11 @@ const Support: FC = () => {
             onClick={createCloudOnClick}
             variant="outlined"
             size="large"
-            sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: BORDER_RADIUS_5, }}
+            sx={{
+              whiteSpace: "nowrap",
+              px: 1.2,
+              borderRadius: BORDER_RADIUS_5,
+            }}
             startIcon={
               <Stack
                 alignItems="center"

@@ -526,6 +526,14 @@ export const api = createApi({
         url: `/portal/panel/host-product/list/${queryArg.productCategoryId}`,
       }),
     }),
+    callGetPortalPanelHostProductListByProductCategoryId: build.mutation<
+      GetPortalPanelHostProductListByProductCategoryIdApiResponse,
+      GetPortalPanelHostProductListByProductCategoryIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/portal/panel/host-product/list/${queryArg.productCategoryId}`,
+      }),
+    }),
     getPortalPanelInvoiceList: build.query<
       GetPortalPanelInvoiceListApiResponse,
       GetPortalPanelInvoiceListApiArg
@@ -3499,5 +3507,5 @@ export const {
   usePutPortalWebWebHostEditMutation,
   useDeletePortalWebWebHostDeleteByIdMutation,
   usePostPortalDomainWhoisGetMutation,
+  useCallGetPortalPanelHostProductListByProductCategoryIdMutation,
 } = api;
-
