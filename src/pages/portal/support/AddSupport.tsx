@@ -18,12 +18,14 @@ import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
   useGetPortalPanelBusinessUnitListQuery,
-  useCallGetPortalPanelHostProductListByProductCategoryIdMutation,
   useGetPortalPanelProductCategoryListQuery,
   usePostPortalPanelSupportSubjectSelectListMutation,
   GetPortalPanelHostProductListByProductCategoryIdApiResponse,
 } from "src/app/services/api.generated";
-import { useCustomCreateSupportMutation } from "src/app/services/api";
+import {
+  useCustomCreateSupportMutation,
+  useLazyGetPortalPanelHostProductListByProductCategoryIdQuery,
+} from "src/app/services/api";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
@@ -45,7 +47,7 @@ const AddTicket: FC = () => {
   const [
     callGetPortalPanelHostProductList,
     { isLoading: getPortalPanelHostLoading },
-  ] = useCallGetPortalPanelHostProductListByProductCategoryIdMutation();
+  ] = useLazyGetPortalPanelHostProductListByProductCategoryIdQuery();
 
   const [category, setCategory] = useState<number>();
   const { data: categories, isLoading: loadingCategories } =

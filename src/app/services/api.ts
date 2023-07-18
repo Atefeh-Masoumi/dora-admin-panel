@@ -209,4 +209,5 @@ export const {
   useLazyGetPortalWebWebHostGetLoginSessionByIdQuery,
   useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery,
   useLazyGetPortalKubeWorkspaceGetLoginSessionByIdQuery,
+  useLazyGetPortalPanelHostProductListByProductCategoryIdQuery,
 } = api;
