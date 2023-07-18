@@ -18,7 +18,7 @@ import { SampleChart } from "./charts/SampleChart";
 import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 
 export const Analytics: FC = () => {
-  const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategoryId(+event.target.value);
