@@ -4,11 +4,11 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { useAppSelector } from "src/app/hooks";
-import { SSLSetting } from "src/components/organisms/cdn/editZone/ssl/Ssl";
-import { DnsRecord } from "src/components/organisms/cdn/editZone/dns/DnsRecords";
-import LoadBalance from "src/components/organisms/cdn/editZone/loadbalance/LoadBalance";
-import { ZoneInfo } from "src/components/organisms/cdn/editZone/overview/ZoneInfo";
-import { AnalyticChart } from "src/components/organisms/cdn/editZone/analytics/AnalyticChart";
+import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
+import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
+import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalance";
+import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
+import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
 
 const Domains: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
@@ -24,17 +24,17 @@ const Domains: FC = () => {
     if (pathname.includes("analytics")) {
       result = "analytics";
     }
-    if (pathname.includes("dnsRecordSettings")) {
-      result = "dnsRecordSettings";
+    if (pathname.includes("dns-record-settings")) {
+      result = "dns-record-settings";
     }
-    if (pathname.includes("sslTslSettings")) {
-      result = "sslTslSettings";
+    if (pathname.includes("ssl-tls-settings")) {
+      result = "ssl-tls-settings";
     }
-    if (pathname.includes("loadBalanceSettings")) {
-      result = "loadBalanceSettings";
+    if (pathname.includes("load-balance-settings")) {
+      result = "load-balance-settings";
     }
-    if (pathname.includes("apiGatewaySettings")) {
-      result = "apiGatewaySettings";
+    if (pathname.includes("api-gateway-settings")) {
+      result = "api-gateway-settings";
     }
     return result;
   }, [pathname]);
@@ -52,16 +52,16 @@ const Domains: FC = () => {
       case "analytics":
         result = <AnalyticChart />;
         break;
-      case "dnsRecordSettings":
+      case "dns-record-settings":
         result = <DnsRecord />;
         break;
-      case "sslTslSettings":
+      case "ssl-tls-settings":
         result = <SSLSetting />;
         break;
-      case "loadBalanceSettings":
+      case "load-balance-settings":
         result = <LoadBalance />;
         break;
-      case "apiGatewaySettings":
+      case "api-gateway-settings":
         result = <></>;
         break;
       default:
@@ -93,11 +93,14 @@ const Domains: FC = () => {
           onChange={handleChange}
         >
           <DorsaTab value="overview" label="مشخصات دامنه" />
-          <DorsaTab value="sslTslSettings" label="تنظیمات" />
+          <DorsaTab value="ssl-tls-settings" label="تنظیمات" />
           <DorsaTab value="analytics" label="آنالیز ترافیک" />
-          <DorsaTab value="dnsRecordSettings" label="تنظیمات DNS Record" />
-          <DorsaTab value="loadBalanceSettings" label="تنظیمات Load Balance" />
-          <DorsaTab value="apiGatewaySettings" label="تنظیمات API Gateway" />
+          <DorsaTab value="dns-record-settings" label="تنظیمات DNS Record" />
+          <DorsaTab
+            value="load-balance-settings"
+            label="تنظیمات Load Balance"
+          />
+          <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" />
         </Tabs>
       </Box>
       {/* <Stack

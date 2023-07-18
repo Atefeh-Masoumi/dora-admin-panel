@@ -10,11 +10,11 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditServerContext } from "src/components/organisms/vm/editVm/contexts/EditServerContext";
-import { ServerInfo } from "src/components/organisms/vm/editVm/ServerInfo";
-import { ServerIpAddress } from "src/components/organisms/vm/editVm/ServerIpAddress";
-import { ServerConfig } from "src/components/organisms/vm/editVm/ServerConfig";
-import { ServerRebuild } from "src/components/organisms/vm/editVm/ServerRebuild";
+import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { ServerInfo } from "src/components/organisms/vm/edit/ServerInfo";
+import { ServerIpAddress } from "src/components/organisms/vm/edit/ServerIpAddress";
+import { ServerConfig } from "src/components/organisms/vm/edit/ServerConfig";
+import { ServerRebuild } from "src/components/organisms/vm/edit/ServerRebuild";
 
 type TabPanelProps = {
   children?: ReactNode;

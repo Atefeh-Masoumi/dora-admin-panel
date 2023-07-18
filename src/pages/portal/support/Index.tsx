@@ -18,7 +18,7 @@ const Support: FC = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/portal/support/addSupport");
+  const createCloudOnClick = () => navigate("/portal/support/add-ticket");
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");

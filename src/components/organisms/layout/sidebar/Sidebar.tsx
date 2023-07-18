@@ -6,7 +6,6 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
 import { SubItemList } from "./SubItemList";
-import { SpecialOffer } from "./SpecialOffer";
 import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
 import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
 import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
@@ -14,6 +13,7 @@ import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
+//import { SpecialOffer } from "./SpecialOffer";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
 //import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
@@ -45,7 +45,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         },
         {
           title: "تنظیمات",
-          link: "/cdn/sslTslSettings",
+          link: "/cdn/ssl-tls-settings",
         },
         {
           title: "آنالیز ترافیک",
@@ -53,15 +53,15 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         },
         {
           title: "تنظیمات DNS Record",
-          link: "/cdn/dnsRecordSettings",
+          link: "/cdn/dns-record-settings",
         },
         {
           title: "تنظیمات Load Balance",
-          link: "/cdn/loadBalanceSettings",
+          link: "/cdn/load-balance-settings",
         },
         {
           title: "تنظیمات API Gateway",
-          link: "/cdn/apiGatewaySettings",
+          link: "/cdn/api-gateway-settings",
         },
       ],
     },
@@ -76,10 +76,10 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "Kubernetes",
       text: "سرویس کوبرنتیز ابری",
       Icon: DnsOutlinedIcon,
-      link: "/kube",
+      link: "/kubernetes",
       subList: [
-        { title: "سرویس کوبرنتیز  ابری", link: "/kube" },
-        { title: "شناسه های کاربری", link: "/kube/service-users" },
+        { title: "سرویس کوبرنتیز  ابری", link: "/kubernetes" },
+        { title: "شناسه های کاربری", link: "/kubernetes/users" },
       ],
     },
     {

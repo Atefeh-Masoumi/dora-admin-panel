@@ -604,55 +604,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getPortalKubeHostList: build.query<
-      GetPortalKubeHostListApiResponse,
-      GetPortalKubeHostListApiArg
-    >({
-      query: () => ({ url: `/portal/kube/host/list` }),
-    }),
-    getPortalKubeHostGetById: build.query<
-      GetPortalKubeHostGetByIdApiResponse,
-      GetPortalKubeHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/portal/kube/host/get/${queryArg.id}` }),
-    }),
-    getPortalKubeHostGetLoginSessionById: build.query<
-      GetPortalKubeHostGetLoginSessionByIdApiResponse,
-      GetPortalKubeHostGetLoginSessionByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/kube/host/get-login-session/${queryArg.id}`,
-      }),
-    }),
-    postPortalKubeHostCreate: build.mutation<
-      PostPortalKubeHostCreateApiResponse,
-      PostPortalKubeHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/kube/host/create`,
-        method: "POST",
-        body: queryArg.createKubeNamespaceModel,
-      }),
-    }),
-    putPortalKubeHostChangeService: build.mutation<
-      PutPortalKubeHostChangeServiceApiResponse,
-      PutPortalKubeHostChangeServiceApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/kube/host/change-service`,
-        method: "PUT",
-        body: queryArg.editKubeNamespaceModel,
-      }),
-    }),
-    deletePortalKubeHostDeleteById: build.mutation<
-      DeletePortalKubeHostDeleteByIdApiResponse,
-      DeletePortalKubeHostDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/kube/host/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
     getPortalKubeUserList: build.query<
       GetPortalKubeUserListApiResponse,
       GetPortalKubeUserListApiArg
@@ -1920,31 +1871,6 @@ export type DeletePortalKubeServiceDeleteByIdApiResponse = unknown;
 export type DeletePortalKubeServiceDeleteByIdApiArg = {
   id: number;
 };
-export type GetPortalKubeHostListApiResponse =
-  /** status 200 Success */ KubeNamespaceListResponse[];
-export type GetPortalKubeHostListApiArg = void;
-export type GetPortalKubeHostGetByIdApiResponse =
-  /** status 200 Success */ GetKubeNamespaceResponse;
-export type GetPortalKubeHostGetByIdApiArg = {
-  id: number;
-};
-export type GetPortalKubeHostGetLoginSessionByIdApiResponse =
-  /** status 200 Success */ GetLoginNamespaceResponse;
-export type GetPortalKubeHostGetLoginSessionByIdApiArg = {
-  id: number;
-};
-export type PostPortalKubeHostCreateApiResponse = unknown;
-export type PostPortalKubeHostCreateApiArg = {
-  createKubeNamespaceModel: CreateKubeNamespaceModel;
-};
-export type PutPortalKubeHostChangeServiceApiResponse = unknown;
-export type PutPortalKubeHostChangeServiceApiArg = {
-  editKubeNamespaceModel: EditKubeNamespaceModel;
-};
-export type DeletePortalKubeHostDeleteByIdApiResponse = unknown;
-export type DeletePortalKubeHostDeleteByIdApiArg = {
-  id: number;
-};
 export type GetPortalKubeUserListApiResponse =
   /** status 200 Success */ KubeUserListResponse[];
 export type GetPortalKubeUserListApiArg = void;
@@ -2859,40 +2785,6 @@ export type CreateKubeServiceModel = {
   memory?: number;
   autoScale?: boolean;
 };
-export type KubeNamespaceListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-  expireDate?: string | null;
-};
-export type GetKubeNamespaceResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-  ipAddress?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-  expireDate?: string | null;
-};
-export type GetLoginNamespaceResponse = {
-  location?: string | null;
-};
-export type CreateKubeNamespaceModel = {
-  name: string;
-  datacenterId?: number;
-  productBundleId?: number;
-};
-export type EditKubeNamespaceModel = {
-  id?: number;
-  productBundleId?: number;
-};
 export type KubeUserListResponse = {
   id?: number;
   email?: string | null;
@@ -3494,12 +3386,6 @@ export const {
   useGetPortalKubeServiceGetByIdQuery,
   usePostPortalKubeServiceCreateMutation,
   useDeletePortalKubeServiceDeleteByIdMutation,
-  useGetPortalKubeHostListQuery,
-  useGetPortalKubeHostGetByIdQuery,
-  useGetPortalKubeHostGetLoginSessionByIdQuery,
-  usePostPortalKubeHostCreateMutation,
-  usePutPortalKubeHostChangeServiceMutation,
-  useDeletePortalKubeHostDeleteByIdMutation,
   useGetPortalKubeUserListQuery,
   useGetPortalKubeUserShortListQuery,
   usePostPortalKubeUserCreateMutation,

@@ -3,10 +3,10 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { EditRabbitContext } from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
-import { rabbitUserTableStruct } from "src/components/organisms/rabbit/editService/ServiceUsers/tables/struct";
-import { RabbitUserTableRow } from "src/components/organisms/rabbit/editService/ServiceUsers/tables/RabbitUserTableRow";
-import { AddRabbitUserDialog } from "src/components/organisms/rabbit/editService/ServiceUsers/dialogs/AddRabbitUserDialog";
+import { EditRabbitContext } from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
+import { rabbitUserTableStruct } from "src/components/organisms/rabbit/edit/users/tables/struct";
+import { RabbitUserTableRow } from "src/components/organisms/rabbit/edit/users/tables/RabbitUserTableRow";
+import { AddRabbitUserDialog } from "src/components/organisms/rabbit/edit/users/dialogs/AddRabbitUserDialog";
 import { useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery } from "src/app/services/api";
 import { GetPortalRabbitRabbitUserListByRabbitHostIdApiResponse } from "src/app/services/api.generated";
 

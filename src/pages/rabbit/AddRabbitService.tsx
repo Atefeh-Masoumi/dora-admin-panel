@@ -1,14 +1,14 @@
 import { FC, useContext } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { SelectDataCenter } from "src/components/organisms/rabbit/addService/addRabbitSteps/SelectDataCenter";
-import { AddRabbitStepper } from "src/components/organisms/rabbit/addService/AddRabbitStepper";
+import { SelectDataCenter } from "src/components/organisms/rabbit/add/addRabbitSteps/SelectDataCenter";
+import { AddRabbitStepper } from "src/components/organisms/rabbit/add/AddRabbitStepper";
 import { useNavigate } from "react-router";
 import {
   AddRabbitContext,
   addRabbitStepsType,
-} from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
-import { SelectConfig } from "src/components/organisms/rabbit/addService/addRabbitSteps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/rabbit/addService/addRabbitSteps/ServerInfo";
+} from "src/components/organisms/rabbit/add/context/AddRabbitContext";
+import { SelectConfig } from "src/components/organisms/rabbit/add/addRabbitSteps/SelectConfig";
+import { ServerInfo } from "src/components/organisms/rabbit/add/addRabbitSteps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { usePostPortalRabbitRabbitHostCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";

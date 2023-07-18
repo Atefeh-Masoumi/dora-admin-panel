@@ -6,6 +6,7 @@ import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 import { StorageOutlined } from "@mui/icons-material";
+import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 
 export const homeProductsConstantListItems = [
   {
@@ -22,6 +23,14 @@ export const homeProductsConstantListItems = [
     bgcolor: "rgba(211, 237, 224, 1)",
     link: "/vm",
   },
+  {
+    title: "Kubernetes",
+    text: "سرویس کوبرنتیز ابری",
+    Icon: DnsOutlinedIcon,
+    bgcolor: "rgba(211, 250, 240, 1)",
+    link: "/kubernetes",
+  },
+
   {
     title: "Object Storage",
     text: "فضای ابری",

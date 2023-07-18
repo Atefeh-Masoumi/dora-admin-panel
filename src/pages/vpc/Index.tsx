@@ -3,7 +3,7 @@ import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import { DomainCard } from "src/components/organisms/cdn/editZone/DomainCard";
+import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";

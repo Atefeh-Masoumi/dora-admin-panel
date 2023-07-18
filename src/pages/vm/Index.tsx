@@ -39,7 +39,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/vm/addVm");
+  const createCloudOnClick = () => navigate("/vm/add-vm");
 
   return (
     <Stack

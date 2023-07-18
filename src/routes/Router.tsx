@@ -6,25 +6,25 @@ import {
 } from "src/components/templates/MainTemplate";
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
-import { DomainSelect } from "src/components/organisms/cdn/editZone/DomainSelect";
-import AddZoneContextProvider from "src/components/organisms/cdn/addZone/context/AddZoneContext";
-import AddServerContextProvider from "src/components/organisms/vm/addVm/contexts/AddServerContext";
-import EditServerContextProvider from "src/components/organisms/vm/editVm/contexts/EditServerContext";
-import AddRabbitContextProvider from "src/components/organisms/rabbit/addService/context/AddRabbitContext";
-import EditRabbitContextProvider from "src/components/organisms/rabbit/editService/context/EditRabbitContext";
+import { DomainSelect } from "src/components/organisms/cdn/edit/DomainSelect";
+import AddZoneContextProvider from "src/components/organisms/cdn/add/context/AddZoneContext";
+import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
+import EditServerContextProvider from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import AddRabbitContextProvider from "src/components/organisms/rabbit/add/context/AddRabbitContext";
+import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
 import AddWebHostContextProvider from "src/components/organisms/web/addService/context/AddWebHostContext";
-import AddDomainContextProvider from "src/components/organisms/domain/addDomain/context/AddDomainContext";
-import EditDomainContextProvider from "src/components/organisms/domain/editDomain/context/EditDomainContext";
+import AddDomainContextProvider from "src/components/organisms/domain/add/context/AddDomainContext";
+import EditDomainContextProvider from "src/components/organisms/domain/edit/context/EditDomainContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/context/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/context/EditStorageContext";
-import AddNamespaceContext from "src/components/organisms/kuber/addNamespace/context/AddNamespaceContext";
-import EditNamespaceContext from "src/components/organisms/kuber/editNamespace/context/EditNamespaceContext";
+import AddWorkspaceContext from "src/components/organisms/kubernetes/add/context/AddWorkspaceContext";
+import EditWorkspaceContext from "src/components/organisms/kubernetes/edit/context/EditWorkspaceContext";
 
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
-import { ServiceUsers } from "src/pages/kube/ServiceUsers";
+import { ServiceUsers } from "src/pages/kubernetes/Users";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -87,9 +87,9 @@ const EditStorageService = lazy(
   () => import("src/pages/storage/EditStorageService")
 );
 
-const KubeIndex = lazy(() => import("src/pages/kube/Index"));
-const AddNamespace = lazy(() => import("src/pages/kube/AddNamespace"));
-const EditNamespace = lazy(() => import("src/pages/kube/EditNamespace"));
+const KubeIndex = lazy(() => import("src/pages/kubernetes/Index"));
+const AddWorkspace = lazy(() => import("src/pages/kubernetes/AddWorkspace"));
+const EditWorkspace = lazy(() => import("src/pages/kubernetes/EditWorkspace"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -168,7 +168,7 @@ const Router: FC = () => {
                 text: "بازگشت به داشبورد",
                 url: "/",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           <Route
@@ -191,7 +191,7 @@ const Router: FC = () => {
                 text: "بازگشت به سبد خرید",
                 url: "/portal/orders",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
@@ -208,17 +208,17 @@ const Router: FC = () => {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           <Route
-            path="/portal/support/AddSupport"
+            path="/portal/support/add-ticket"
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
@@ -242,7 +242,7 @@ const Router: FC = () => {
                 text: "بازگشت به فاکتور‌های فروش",
                 url: "/portal/invoices",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           <Route
@@ -270,7 +270,7 @@ const Router: FC = () => {
                 text: "بازگشت به گزارش محاسبات",
                 url: "/portal/bills",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           {/* ======================================= CDN ======================================= */}
@@ -281,12 +281,12 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/addDomain"
+            path="/cdn/add-domain"
             element={mainTemplate(
               AddZone,
               {
                 link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddZoneContextProvider
             )}
@@ -306,38 +306,38 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/dnsRecordSettings"
+            path="/cdn/dns-record-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/sslTslSettings"
+            path="/cdn/ssl-tls-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/loadBalanceSettings"
+            path="/cdn/load-balance-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات Load Balance",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/apiGatewaySettings"
+            path="/cdn/api-gateway-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات API Gateway",
               RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/addDomain"
+            path="/cdn/add-domain"
             element={mainTemplate(AddZone, {
               link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           {/* ======================================= VM ======================================= */}
@@ -348,7 +348,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/vm/addVm"
+            path="/vm/add-vm"
             element={mainTemplate(
               AddVm,
               {
@@ -356,7 +356,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرور ابری",
                   url: "/vm",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddServerContextProvider
             )}
@@ -370,7 +370,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرور ابری",
                   url: "/vm",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               EditServerContextProvider
             )}
@@ -391,7 +391,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس RabbitMQ",
                   url: "/rabbit",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddRabbitContextProvider
             )}
@@ -405,50 +405,50 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس RabbitMQ",
                   url: "/rabbit",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               EditRabbitContextProvider
             )}
           />
-          {/* ======================================= Kube ======================================= */}
+          {/* ======================================= Kubernetes ======================================= */}
           <Route
-            path="/kube"
+            path="/kubernetes"
             element={mainTemplate(KubeIndex, {
               pageTitle: "مدیریت سرویس کوبرنتیز",
             })}
           />
           <Route
-            path="kube/service-users"
+            path="/kubernetes/users"
             element={mainTemplate(ServiceUsers, {
               pageTitle: "شناسه های کاربری",
             })}
           />
           <Route
-            path="/kube/addKubernetes"
+            path="/kubernetes/add-kubernetes"
             element={mainTemplate(
-              AddNamespace,
+              AddWorkspace,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/kube",
+                  url: "/kubernetes",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
-              AddNamespaceContext
+              AddWorkspaceContext
             )}
           />
           <Route
-            path="/kube/:id"
+            path="/kubernetes/:id"
             element={mainTemplate(
-              EditNamespace,
+              EditWorkspace,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/kube",
+                  url: "/kubernetes",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
-              EditNamespaceContext
+              EditWorkspaceContext
             )}
           />
           {/* ======================================= WEB ======================================= */}
@@ -467,7 +467,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت هاستینگ ابری",
                   url: "/web",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddWebHostContextProvider
             )}
@@ -488,7 +488,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
                   url: "/domain",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddDomainContextProvider
             )}
@@ -502,7 +502,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
                   url: "/domain",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               EditDomainContextProvider
             )}
@@ -523,7 +523,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس فضای ابری",
                   url: "/storage",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddStorageContextProvider
             )}
@@ -537,7 +537,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس فضای ابری",
                   url: "/storage",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               EditStorageContextProvider
             )}

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import { AddServerContext, addServerStepsType } from "src/components/organisms/vm/addVm/contexts/AddServerContext";
-import { AddVmStepper } from "src/components/organisms/vm/addVm/AddVmStepper";
-import { SelectDataCenter } from "src/components/organisms/vm/addVm/addVmSteps/SelectDataCenter";
-import { SelectOS } from "src/components/organisms/vm/addVm/addVmSteps/SelectOS";
-import { SelectConfig } from "src/components/organisms/vm/addVm/addVmSteps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/vm/addVm/addVmSteps/ServerInfo";
+import { AddServerContext, addServerStepsType } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { AddVmStepper } from "src/components/organisms/vm/add/AddVmStepper";
+import { SelectDataCenter } from "src/components/organisms/vm/add/addVmSteps/SelectDataCenter";
+import { SelectOS } from "src/components/organisms/vm/add/addVmSteps/SelectOS";
+import { SelectConfig } from "src/components/organisms/vm/add/addVmSteps/SelectConfig";
+import { ServerInfo } from "src/components/organisms/vm/add/addVmSteps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { usePostPortalVmVmCreateMutation } from "src/app/services/api.generated";
 

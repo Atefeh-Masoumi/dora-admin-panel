@@ -6,10 +6,10 @@ import { useNavigate } from "react-router";
 import {
   AddDomainContext,
   addDomainStepsType,
-} from "src/components/organisms/domain/addDomain/context/AddDomainContext";
-import { AddDomainStepper } from "src/components/organisms/domain/addDomain/AddDomainStepper";
-import { SelectDomain } from "src/components/organisms/domain/addDomain/addDomainSteps/SelectDomain";
-import { DomainInfo } from "src/components/organisms/domain/addDomain/addDomainSteps/DomainInfo";
+} from "src/components/organisms/domain/add/context/AddDomainContext";
+import { AddDomainStepper } from "src/components/organisms/domain/add/AddDomainStepper";
+import { SelectDomain } from "src/components/organisms/domain/add/addDomainSteps/SelectDomain";
+import { DomainInfo } from "src/components/organisms/domain/add/addDomainSteps/DomainInfo";
 import {
   usePostPortalDomainGetPriceMutation,
   usePostPortalDomainRegisterMutation,

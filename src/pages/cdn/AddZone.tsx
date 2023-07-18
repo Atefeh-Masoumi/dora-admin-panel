@@ -3,9 +3,9 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router";
-import { SelectDomain } from "src/components/organisms/cdn/addZone/AddZoneSteps/SelectDomain";
-import { RecordsList } from "src/components/organisms/cdn/addZone/AddZoneSteps/RecordsList";
-import { AddZoneStepper } from "src/components/organisms/cdn/addZone/AddZoneStepper";
+import { SelectDomain } from "src/components/organisms/cdn/add/AddZoneSteps/SelectDomain";
+import { RecordsList } from "src/components/organisms/cdn/add/AddZoneSteps/RecordsList";
+import { AddZoneStepper } from "src/components/organisms/cdn/add/AddZoneStepper";
 import {
   usePostPortalCdnCdnCheckZoneMutation,
   usePostPortalCdnCdnCreateMutation,
@@ -13,7 +13,7 @@ import {
 import {
   AddZoneContext,
   addZoneStepsType,
-} from "src/components/organisms/cdn/addZone/context/AddZoneContext";
+} from "src/components/organisms/cdn/add/context/AddZoneContext";
 
 const AddZone: FC = () => {
   const { step, setStep, domainName, term } = useContext(AddZoneContext);
