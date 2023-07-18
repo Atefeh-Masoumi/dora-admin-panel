@@ -14,6 +14,7 @@ import { EditWorkspaceContext } from "src/components/organisms/kubernetes/edit/c
 import { ServiceInfo } from "src/components/organisms/kubernetes/edit/ServiceInfo";
 import { UserRoleManagement } from "src/components/organisms/kubernetes/edit/UserRole";
 import { SelectConfig } from "src/components/organisms/kubernetes/edit/SelectConfig";
+import { VolumeManagement } from "src/components/organisms/kubernetes/edit/VolumeManagement";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -65,9 +66,19 @@ const EditWorkspaceService: FC<EditWorkspacePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "مدیریت دسترسی ها", "تغییر مشخصات سرویس"];
+  const tabArray = [
+    "مشخصات سرویس",
+    "مدیریت دسترسی ها",
+    "مدیریت حجم",
+    "تغییر مشخصات سرویس",
+  ];
 
-  const tabPanelArray = [ServiceInfo, UserRoleManagement, SelectConfig];
+  const tabPanelArray = [
+    ServiceInfo,
+    UserRoleManagement,
+    VolumeManagement,
+    SelectConfig,
+  ];
 
   if (!id) return <Navigate to="/kubernetes" />;
 
