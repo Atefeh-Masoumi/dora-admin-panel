@@ -41,7 +41,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
     return result;
   }, [paymentInfo.paymentStatusId]);
 
-  const closeHandler = () => navigate("/portal/payments");
+  const closeHandler = () => navigate("/portal/wallet/payments");
 
   if (!id) return <></>;
 
@@ -88,15 +88,21 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">کد پیگیری</Typography>
-            <Typography variant="text14" dir="ltr">{paymentInfo.id || ""}</Typography>
+            <Typography variant="text14" dir="ltr">
+              {paymentInfo.id || ""}
+            </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">کد مرجع (بانک)</Typography>
-            <Typography variant="text14" dir="ltr">{paymentInfo.rrn || ""}</Typography>
+            <Typography variant="text14" dir="ltr">
+              {paymentInfo.rrn || ""}
+            </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">شماره کارت</Typography>
-            <Typography variant="text14" dir="ltr">{paymentInfo.hashCardNumber || ""}</Typography>
+            <Typography variant="text14" dir="ltr">
+              {paymentInfo.hashCardNumber || ""}
+            </Typography>
           </Stack>
         </Stack>
         <Button

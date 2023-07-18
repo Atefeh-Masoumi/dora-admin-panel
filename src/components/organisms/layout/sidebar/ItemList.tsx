@@ -37,6 +37,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
 
   const goToCalculator = () => {
     let a = document.createElement("a");
+    a.target = "_blank";
     a.href = "https://dorsacloud.com/calculator";
     a.click();
   };
@@ -97,9 +98,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                   borderRadius: BORDER_RADIUS_1,
                 }}
               >
-                <CategorySvg
-                  mode={pathname === "/" ? "selected" : "default"}
-                />
+                <CategorySvg mode={pathname === "/" ? "selected" : "default"} />
               </Stack>
             </ListItemIcon>
             <ListItemText
@@ -156,7 +155,10 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                         borderRadius: BORDER_RADIUS_1,
                       }}
                     >
-                      <Icon mode={isSelected ? "selected" : "default"} />
+                      <Icon
+                        color={isSelected ? "primary" : "secondary"}
+                        mode={isSelected ? "selected" : "default"}
+                      />
                     </Stack>
                   </ListItemIcon>
                   <ListItemText

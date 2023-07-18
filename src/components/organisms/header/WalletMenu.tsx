@@ -71,19 +71,19 @@ const items = [
     value: "invoices",
     label: "فاکتور های فروش",
     icon: InvoiceSvg,
-    link: "/portal/invoices",
+    link: "/portal/wallet/invoices",
   },
   {
     value: "payments",
     label: "گزارش پرداخت ها",
     icon: TransactionSvg,
-    link: "/portal/payments",
+    link: "/portal/wallet/payments",
   },
   {
     value: "user-bill",
     label: "گزارش محاسبات",
     icon: CalculateSvg,
-    link: "/portal/bills",
+    link: "/portal/wallet/bill",
   },
 ];
 

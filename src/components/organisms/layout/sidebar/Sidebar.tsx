@@ -133,18 +133,18 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
     {
       Icon: EmptyWalletSvg,
-      link: "/portal",
+      link: "/portal/wallet",
       subList: [
         { title: "گزارش کیف پول", link: "/portal/wallet" },
-        { title: "فاکتور های فروش", link: "/portal/invoices" },
-        { title: "گزارش پرداخت ها", link: "/portal/payments" },
-        { title: "گزارش محاسبات", link: "/portal/bills" },
+        { title: "فاکتور های فروش", link: "/portal/wallet/invoices" },
+        { title: "گزارش پرداخت ها", link: "/portal/wallet/payments" },
+        { title: "گزارش محاسبات", link: "/portal/wallet/bill" },
       ],
     },
     {
       Icon: HeadphoneSvg,
-      link: "/portal/supports",
-      subList: [{ title: "مرکز پشتیبانی", link: "/portal/supports" }],
+      link: "/portal/support",
+      subList: [{ title: "مرکز پشتیبانی", link: "/portal/support" }],
     },
     {
       Icon: CalculatorSvg,

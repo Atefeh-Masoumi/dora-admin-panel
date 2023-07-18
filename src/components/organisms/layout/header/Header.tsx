@@ -82,7 +82,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/portal/supports");
+          navigate("/portal/support");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
@@ -93,7 +93,7 @@ const Header: FC<HeaderPropsType> = ({
           vertical: "top",
           horizontal: "left",
         }}
-        overlap='circular'
+        overlap="circular"
         color="primary"
       >
         <IconButton

@@ -50,7 +50,7 @@ export const LanguageSwitcher: FC = () => {
         }}
         onClick={openMenuHandler}
       >
-        <GlobalSvg />
+        <GlobalSvg mode="default" />
       </IconButton>
       <Popover
         id={id}

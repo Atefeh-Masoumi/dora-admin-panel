@@ -196,7 +196,7 @@ const Router: FC = () => {
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/portal/supports"
+            path="/portal/support"
             element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
@@ -206,7 +206,7 @@ const Router: FC = () => {
             element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: "/portal/support",
               },
               hideSidebar: false,
             })}
@@ -216,7 +216,7 @@ const Router: FC = () => {
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: "/portal/support",
               },
               hideSidebar: false,
             })}
@@ -230,23 +230,23 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/invoices"
+            path="/portal/wallet/invoices"
             element={mainTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
           />
           <Route
-            path="/portal/invoice/:id"
+            path="/portal/wallet/invoice/:id"
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/portal/invoices",
+                url: "/portal/wallet/invoices",
               },
               hideSidebar: false,
             })}
           />
           <Route
-            path="/portal/payments"
+            path="/portal/wallet/payments"
             element={mainTemplate(Payments, {
               pageTitle: "گزارش پرداخت ها",
             })}
@@ -258,17 +258,17 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/bills"
+            path="/portal/wallet/bill"
             element={mainTemplate(Bills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
-            path="/portal/bill/:id"
+            path="/portal/wallet/bill/:id"
             element={mainTemplate(Bill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/portal/bills",
+                url: "/portal/wallet/bill",
               },
               hideSidebar: false,
             })}
