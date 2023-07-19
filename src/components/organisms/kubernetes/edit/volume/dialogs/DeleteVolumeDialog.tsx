@@ -26,7 +26,7 @@ export const DeleteVolumeDialog: FC<DeleteVolumeDialogPropsType> = ({
   const submit = () =>
     deleteVolume({ id })
       .then(() => {
-        toast.success(" حجم با موفقیت حذف شد");
+        toast.success(" والیوم با موفقیت حذف شد");
         refetchVolumes();
         handleClose();
       })
@@ -63,7 +63,7 @@ export const DeleteVolumeDialog: FC<DeleteVolumeDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف حجم
+            حذف والیوم
           </LoadingButton>
         </Stack>
       </Stack>

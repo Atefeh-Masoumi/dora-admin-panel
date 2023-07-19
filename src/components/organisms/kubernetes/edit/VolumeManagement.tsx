@@ -47,7 +47,7 @@ export const VolumeManagement: FC<VolumeManagementPropsType> = ({ row }) => {
               alignItems="center"
             >
               <Typography fontSize={18} color="secondary">
-                لیست حجم ها
+                لیست والیوم ها
               </Typography>
               <Button
                 onClick={openDialog}
@@ -58,7 +58,7 @@ export const VolumeManagement: FC<VolumeManagementPropsType> = ({ row }) => {
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                تخصیص حجم جدید
+                ایجاد والیوم جدید
               </Button>
             </Stack>
             <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -97,24 +97,14 @@ export const VolumeManagement: FC<VolumeManagementPropsType> = ({ row }) => {
                 struct={voluemMangementTableStruct}
                 RowComponent={VolumeMangementTableRow}
                 rows={data || []}
-                text="در حال حاضر حجم اختصاص داده شده ای وجود ندارد"
+                text="در حال حاضر والیومی داده شده ای وجود ندارد"
                 isLoading={isLoading}
               />
             </Box>
           </Stack>
         </Grid2>
       </Grid2>
-      {showDialog && (
-        <AddVolumeDialog
-          usedVolume={
-            data?.reduce((accumulator, currentObject) => {
-              return accumulator + (currentObject.capacity || 0);
-            }, 0) || 0
-          }
-          hostId={row}
-          onClose={closeDialog}
-        />
-      )}
+      {showDialog && <AddVolumeDialog hostId={row} onClose={closeDialog} />}
     </VolumeContext.Provider>
   );
 };

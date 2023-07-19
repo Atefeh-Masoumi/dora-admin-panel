@@ -69,7 +69,7 @@ const EditWorkspaceService: FC<EditWorkspacePropsType> = () => {
   const tabArray = [
     "مشخصات سرویس",
     "مدیریت دسترسی ها",
-    "مدیریت حجم",
+    "مدیریت والیوم ها",
     "تغییر مشخصات سرویس",
   ];
 
