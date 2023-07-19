@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogTitle,
   Stack,
+  Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { toast } from "react-toastify";
@@ -13,12 +14,10 @@ import { LoadingButton } from "@mui/lab";
 import { Form, Formik } from "formik";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import {
-  useGetPortalKubeWorkspaceGetByIdQuery,
-  usePostPortalKubeVolumeCreateMutation,
-} from "src/app/services/api.generated";
+import { usePostPortalKubeVolumeCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { VolumeContext } from "../../VolumeManagement";
+import ReverseSlider from "src/components/atoms/ReverseSlider";
 
 const formInitialValues = {
   volume: 0,
@@ -28,43 +27,22 @@ const formInitialValues = {
 type AddVolumeDialogPropsType = {
   onClose: () => void;
   hostId: number;
-  usedVolume: number;
 };
+
+const formValidation = yup.object().shape({
+  name: yup.string().required("عنوان الزامیست"),
+  volume: yup
+    .number()
+    .required("والیوم الزامی است")
+    .positive("والیوم نمی تواند صفر یا منفی باشد")
+    .max(2000, "والیوم نمی تواند بیشتر از 2000 باشد"),
+});
 
 export const AddVolumeDialog: FC<AddVolumeDialogPropsType> = ({
   onClose,
   hostId,
-  usedVolume,
 }) => {
-  const [formValidation, setFormValidation] = useState(
-    yup.object().shape({
-      name: yup.string().required("عنوان الزامیست"),
-    })
-  );
-
   const { refetchVolumes } = useContext(VolumeContext);
-
-  const { data: hostInfo } = useGetPortalKubeWorkspaceGetByIdQuery({
-    id: hostId,
-  });
-
-  useEffect(() => {
-    if (hostInfo) {
-      setFormValidation(
-        yup.object().shape({
-          name: yup.string().required("عنوان الزامیست"),
-          volume: yup
-            .number()
-            .required("حجم الزامی است")
-            .min(0, "حجم نمی تواند منفی باشد")
-            .max(
-              (hostInfo?.disk || 0) - usedVolume,
-              "حجم اختصاص داده شده بیشتر از ظرفیت موجود ااست"
-            ),
-        })
-      );
-    }
-  }, [hostInfo]);
 
   const [createVolume, { isLoading: createVolumeLoading }] =
     usePostPortalKubeVolumeCreateMutation();
@@ -83,7 +61,7 @@ export const AddVolumeDialog: FC<AddVolumeDialogPropsType> = ({
       .unwrap()
       .then(() => {
         refetchVolumes();
-        toast.success("حجم مورد نظر با موفقیت اختصاص داده شد");
+        toast.success("والیوم مورد نظر با موفقیت ایجاد شد");
         onClose();
       });
   };
@@ -100,7 +78,7 @@ export const AddVolumeDialog: FC<AddVolumeDialogPropsType> = ({
           sx: { borderRadius: 2.5 },
         }}
       >
-        <DialogTitle>ایجاد دسترسی به کاربر </DialogTitle>
+        <DialogTitle>ایجاد والیوم</DialogTitle>
         <Formik
           initialValues={{
             volume: 0,
@@ -123,24 +101,36 @@ export const AddVolumeDialog: FC<AddVolumeDialogPropsType> = ({
                       {...getFieldProps("name")}
                     />
                   </Grid2>
-                  <Grid2 xs={12}>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      fullWidth
-                      type="number"
-                      label="حجم دیسک"
-                      error={Boolean(errors.volume && touched.volume)}
-                      helperText={errors.volume}
-                      {...getFieldProps("volume")}
-                    />
+                  <Grid2 sx={{ pb: 0, pt: 2 }} xs={12}>
+                    <Stack
+                      sx={{ pt: 2 }}
+                      direction={{ xs: "row", md: "row" }}
+                      rowGap={5}
+                      columnGap={4}
+                      alignItems="end"
+                    >
+                      <ReverseSlider
+                        sx={{ mr: 1 }}
+                        valueLabelDisplay="on"
+                        min={0}
+                        max={2000}
+                        {...getFieldProps("volume")}
+                      />
+                    </Stack>
                   </Grid2>
                   <Grid2 xs={12}>
                     <DorsaTextField
-                      disabled
-                      inputProps={{ fontSize: "20px !important" }}
+                      inputProps={{
+                        fontSize: "16px !important",
+                        min: 0,
+                        max: 2000,
+                        step: 1,
+                      }}
                       fullWidth
-                      label="مقدار حجم باقی مانده"
-                      value={hostInfo?.disk ? hostInfo?.disk - usedVolume : 0}
+                      label="والیوم مورد نظر"
+                      error={Boolean(errors.volume && touched.volume)}
+                      helperText={errors.volume}
+                      {...getFieldProps("volume")}
                     />
                   </Grid2>
                 </Grid2>
