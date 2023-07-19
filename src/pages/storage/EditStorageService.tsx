@@ -12,8 +12,10 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditStorageContext } from "src/components/organisms/storage/edit/context/EditStorageContext";
 import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
+
 // import { ServiceUser } from "src/components/organisms/storage/edit/ServiceUsers";
 import { SelectConfig } from "src/components/organisms/storage/edit/SelectConfig";
+import { CreateAccessKey } from "src/components/organisms/storage/edit/CreateAccessKey";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -65,9 +67,9 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "تغییر سرویس"];
+  const tabArray = ["مشخصات سرویس", "تغییر سرویس", "ایجاد کلید دسترسی"];
 
-  const tabPanelArray = [ServiceInfo, SelectConfig];
+  const tabPanelArray = [ServiceInfo, SelectConfig, CreateAccessKey];
 
   if (!id) return <Navigate to="/storage" />;
 
