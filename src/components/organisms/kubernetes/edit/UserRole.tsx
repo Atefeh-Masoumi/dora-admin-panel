@@ -15,10 +15,9 @@ type UserRoleContextValueType = {
   refetchUsersData: () => any;
 };
 
-export const UserRoleContext =
-  createContext<UserRoleContextValueType>({
-    refetchUsersData: () => null,
-  });
+export const UserRoleContext = createContext<UserRoleContextValueType>({
+  refetchUsersData: () => null,
+});
 
 export const UserRoleManagement: FC<UserRoleManagementPropsType> = ({
   row,
@@ -32,11 +31,9 @@ export const UserRoleManagement: FC<UserRoleManagementPropsType> = ({
     useGetPortalKubeUserRoleListByKubeHostIdQuery({ kubeHostId: row });
 
   return (
-    <UserRoleContext.Provider
-      value={{ refetchUsersData: () => refetch() }}
-    >
+    <UserRoleContext.Provider value={{ refetchUsersData: () => refetch() }}>
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12} md={8}>
+        <Grid2 xs={12}>
           <Stack
             bgcolor="white"
             py={3}
@@ -51,7 +48,7 @@ export const UserRoleManagement: FC<UserRoleManagementPropsType> = ({
               alignItems="center"
             >
               <Typography fontSize={18} color="secondary">
-                لیست کاربران
+                لیست دسترسی کاربران
               </Typography>
               <Button
                 onClick={openDialog}
@@ -62,7 +59,7 @@ export const UserRoleManagement: FC<UserRoleManagementPropsType> = ({
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                افزودن کاربر جدید
+                افزودن دسترسی کاربر جدید
               </Button>
             </Stack>
             <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

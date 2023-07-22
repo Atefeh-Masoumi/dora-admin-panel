@@ -11,6 +11,10 @@ export const userRoleTableStruct: columnType[] = [
     label: "نام کاربری",
   },
   {
+    id: "email",
+    label: "ایمیل",
+  },
+  {
     id: "createDate",
     label: "تاریخ ایجاد",
   },

@@ -28,7 +28,7 @@ export const ServiceUsers: FC<void> = () => {
   return (
     <ServiceUsersContext.Provider value={{ refetchUsersData: () => refetch() }}>
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12} md={8}>
+        <Grid2 xs={12}>
           <Stack
             bgcolor="white"
             py={3}
