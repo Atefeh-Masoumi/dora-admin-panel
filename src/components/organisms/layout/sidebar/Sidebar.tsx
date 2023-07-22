@@ -148,7 +148,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       Icon: CalculatorSvg,
-      link: "/calculator",
+      link: "/portal/calculator",
     },
   ];
 

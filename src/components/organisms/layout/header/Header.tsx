@@ -44,12 +44,7 @@ const Header: FC<HeaderPropsType> = ({
 
   const navigate = useNavigate();
 
-  const goToCalculator = () => {
-    closeMenuHandler();
-    let a = document.createElement("a");
-    a.href = "https://dorsacloud.com/calculator";
-    a.click();
-  };
+  const goToCalculator = () => navigate("/portal/calculator");
 
   const closeMenuHandler = () => setAnchorEl(null);
   const openMenuHandler = ({

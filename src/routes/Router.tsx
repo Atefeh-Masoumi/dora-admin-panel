@@ -45,6 +45,7 @@ const Orders = lazy(() => import("src/pages/portal/order/Index"));
 const Order = lazy(() => import("src/pages/portal/order/Order"));
 const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
 const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
+const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
 const Wallet = lazy(() => import("src/pages/portal/wallet/Index"));
 const Payments = lazy(() => import("src/pages/portal/walletPayment/Index"));
@@ -131,6 +132,12 @@ const Router: FC = () => {
           <Route
             path="/"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
+          />
+          <Route
+            path="/portal/calculator"
+            element={mainTemplate(Calculator, {
+              pageTitle: "ماشین حساب",
+            })}
           />
           <Route
             path="/portal/profile"

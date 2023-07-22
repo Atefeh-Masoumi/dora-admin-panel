@@ -35,12 +35,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
     [pathname]
   );
 
-  const goToCalculator = () => {
-    let a = document.createElement("a");
-    a.target = "_blank";
-    a.href = "https://dorsacloud.com/calculator";
-    a.click();
-  };
+  const goToCalculator = () => navigate("/portal/calculator");
 
   const [LocalStorageData, setLocalStorageData] = useState<any>();
   useEffect(() => {
@@ -208,7 +203,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
             if (!text && !title) {
               return (
                 <ListItem disablePadding key={index} sx={{ mt: 3 }}>
-                  {link === "/calculator" ? (
+                  {link === "/portal/calculator" ? (
                     <ListItemIcon onClick={goToCalculator}>
                       <Stack
                         alignItems="center"
