@@ -8,7 +8,10 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditRabbitTableRow } from "./tables/EditRabbitTableRow";
 import { editRabbitTableStruct } from "./tables/struct";
-import { useGetPortalPanelProductBundleListByProductCategoryIdQuery, usePutPortalRabbitRabbitHostChangeServiceMutation } from "src/app/services/api.generated";
+import {
+  useGetPortalPanelProductBundleListByProductCategoryIdQuery,
+  usePutPortalRabbitRabbitHostChangeServiceMutation,
+} from "src/app/services/api.generated";
 import { EditRabbitContext } from "./context/EditRabbitContext";
 
 type SelectConfigPropsType = {};
@@ -35,16 +38,16 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const navigate = useNavigate();
 
   const { serverId, serverConfig } = useContext(EditRabbitContext);
-  const [editRabbitHostModel, { isLoading: updateLoading }] = usePutPortalRabbitRabbitHostChangeServiceMutation();
+  const [editRabbitHostModel, { isLoading: updateLoading }] =
+    usePutPortalRabbitRabbitHostChangeServiceMutation();
 
   const submitHandler = () => {
-    if (!serverId || !serverConfig)
-      return;
+    if (!serverId || !serverConfig) return;
 
     editRabbitHostModel({
       editRabbitHostModel: {
         id: serverId,
-        productBundleId: serverConfig.id || 0
+        productBundleId: serverConfig.id || 0,
       },
     })
       .unwrap()
@@ -57,13 +60,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   return (
     <>
-      <Grid2
-        container
-        spacing={3}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Grid2 xs={12} md={10}>
+      <Grid2 container spacing={3} alignItems="center" justifyContent="center">
+        <Grid2 xs={12}>
           <Stack
             bgcolor="white"
             py={3}
@@ -90,16 +88,16 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
             </Stack>
             <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
             <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
-            <Stack
-              py={3}
-              px={3}
-              alignItems="center"
-              justifyContent="center">
+            <Stack py={3} px={3} alignItems="center" justifyContent="center">
               <LoadingButton
                 loading={updateLoading}
                 variant="contained"
                 onClick={submitHandler}
-                sx={{ width: { xs: "100%", sm: "auto" }, px: { sm: 8 }, py: 2.1 }}
+                sx={{
+                  width: { xs: "100%", sm: "auto" },
+                  px: { sm: 8 },
+                  py: 2.1,
+                }}
               >
                 تغییر سرویس
               </LoadingButton>
