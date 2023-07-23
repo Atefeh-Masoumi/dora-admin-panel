@@ -3,7 +3,6 @@ import {
   Box,
   Dialog,
   DialogTitle,
-  Divider,
   IconButton,
   Skeleton,
   Stack,
@@ -123,10 +122,6 @@ export const AddAccessKeyDialog: FC<AddAccessKeyDialogPropsType> = ({
           justifyContent="center"
         >
           <Grid2 xs={12} md={8}>
-            <Typography align="center" fontWeight={700} fontSize={18}>
-              کلید دسترسی (Access Key)
-            </Typography>
-            <Divider />
             <BoxRow
               title="Access Key"
               clipBoardText={accessKeyProp}

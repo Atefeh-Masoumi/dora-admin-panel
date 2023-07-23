@@ -156,7 +156,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           elevation={0}
           sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
         >
-          <Typography align="right" fontWeight={700} fontSize={18}>
+          <Typography align="center" fontWeight={700} fontSize={18}>
             Hardware
           </Typography>
           <Divider />

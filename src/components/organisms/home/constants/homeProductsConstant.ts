@@ -39,13 +39,6 @@ export const homeProductsConstantListItems = [
     link: "/storage",
   },
   {
-    title: "RabbitMQ",
-    text: "سرویس RabbitMQ ابری",
-    Icon: DeviceMessageSvg,
-    bgcolor: "rgba(255, 233, 218, 1)",
-    link: "/rabbit",
-  },
-  {
     title: "Web Hosting",
     text: "سرویس هاستینگ ابری",
     Icon: CoinSvg,
@@ -73,4 +66,11 @@ export const homeProductsConstantListItems = [
   //   bgcolor: "rgba(255, 69, 242, 0.2)",
   //   link: "/apis",
   // },
+  {
+    title: "RabbitMQ",
+    text: "سرویس RabbitMQ ابری",
+    Icon: DeviceMessageSvg,
+    bgcolor: "rgba(255, 233, 218, 1)",
+    link: "/rabbit",
+  },
 ];

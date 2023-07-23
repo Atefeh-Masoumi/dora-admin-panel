@@ -67,7 +67,7 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "تغییر سرویس", "لیست کلیدهای دسترسی"];
+  const tabArray = ["مشخصات سرویس", "لیست کلیدهای دسترسی", "تغییر سرویس"];
 
   const tabPanelArray = [ServiceInfo, SelectConfig, AccessKeyList];
 

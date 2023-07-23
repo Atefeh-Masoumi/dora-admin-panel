@@ -1,4 +1,3 @@
-import { priceToPersian } from "src/utils/priceToPersian";
 import { columnType } from "src/components/organisms/tables/table.types";
 
 export const accessKeyTableStruct: columnType[] = [

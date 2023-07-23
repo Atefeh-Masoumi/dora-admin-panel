@@ -59,10 +59,10 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           title: "تنظیمات Load Balance",
           link: "/cdn/load-balance-settings",
         },
-        {
-          title: "تنظیمات API Gateway",
-          link: "/cdn/api-gateway-settings",
-        },
+        // {
+        //   title: "تنظیمات API Gateway",
+        //   link: "/cdn/api-gateway-settings",
+        // },
       ],
     },
     {
@@ -90,13 +90,6 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       subList: [{ title: "فضای ابری", link: "/storage" }],
     },
     {
-      title: "RabbitMQ",
-      text: "سرویس RabbitMQ ابری",
-      Icon: DeviceMessageSvg,
-      link: "/rabbit",
-      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
-    },
-    {
       title: "Web Hosting",
       text: "سرویس هاستینگ ابری",
       Icon: CoinSvg,
@@ -109,6 +102,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: GlobalSvg,
       link: "/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
+    },
+    {
+      title: "RabbitMQ",
+      text: "سرویس RabbitMQ ابری",
+      Icon: DeviceMessageSvg,
+      link: "/rabbit",
+      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
     },
     // {
     //   title: "SMS",

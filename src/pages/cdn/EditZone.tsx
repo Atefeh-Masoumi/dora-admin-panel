@@ -33,9 +33,9 @@ const Domains: FC = () => {
     if (pathname.includes("load-balance-settings")) {
       result = "load-balance-settings";
     }
-    if (pathname.includes("api-gateway-settings")) {
-      result = "api-gateway-settings";
-    }
+    // if (pathname.includes("api-gateway-settings")) {
+    //   result = "api-gateway-settings";
+    // }
     return result;
   }, [pathname]);
 
@@ -61,8 +61,8 @@ const Domains: FC = () => {
       case "load-balance-settings":
         result = <LoadBalance />;
         break;
-      case "api-gateway-settings":
-        result = <></>;
+        // case "api-gateway-settings":
+        //   result = <></>;
         break;
       default:
         result = <ZoneInfo />;
@@ -100,7 +100,7 @@ const Domains: FC = () => {
             value="load-balance-settings"
             label="تنظیمات Load Balance"
           />
-          <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" />
+          {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}
         </Tabs>
       </Box>
       {/* <Stack
