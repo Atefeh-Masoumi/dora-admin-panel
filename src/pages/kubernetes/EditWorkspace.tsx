@@ -66,19 +66,9 @@ const EditWorkspaceService: FC<EditWorkspacePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = [
-    "مشخصات سرویس",
-    "مدیریت دسترسی ها",
-    "مدیریت والیوم ها",
-    "تغییر مشخصات سرویس",
-  ];
+  const tabArray = ["مشخصات سرویس", "مدیریت دسترسی ها", "تغییر مشخصات سرویس"];
 
-  const tabPanelArray = [
-    ServiceInfo,
-    UserRoleManagement,
-    VolumeManagement,
-    SelectConfig,
-  ];
+  const tabPanelArray = [ServiceInfo, UserRoleManagement, SelectConfig];
 
   if (!id) return <Navigate to="/kubernetes" />;
 
