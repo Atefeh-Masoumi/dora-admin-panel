@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditStorageTableRow } from "./tables/EditStorageTableRow";
-import { editStorageTableStruct } from "./tables/struct";
+import { editStorageTableStruct } from "./tables/editStorageTableStruct";
 import {
   useGetPortalPanelProductBundleListByProductCategoryIdQuery,
   usePutPortalStorageStorageHostEditMutation,

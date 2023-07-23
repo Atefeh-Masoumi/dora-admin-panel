@@ -1,7 +1,7 @@
 import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { editStorageTableStruct } from "./struct";
+import { editStorageTableStruct } from "./editStorageTableStruct";
 import { EditStorageContext } from "../context/EditStorageContext";
 
 export const EditStorageTableRow: FC<{ row: any }> = ({ row }) => {
