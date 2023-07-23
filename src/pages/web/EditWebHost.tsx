@@ -10,12 +10,9 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditStorageContext } from "src/components/organisms/storage/edit/context/EditStorageContext";
-import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
-
-// import { ServiceUser } from "src/components/organisms/storage/edit/ServiceUsers";
-import { SelectConfig } from "src/components/organisms/storage/edit/SelectConfig";
-import AccessKeyList from "src/components/organisms/storage/edit/AccessKeyList";
+import { EditWebContext } from "src/components/organisms/web/edit/context/EditWebContext";
+import { ServiceInfo } from "src/components/organisms/web/edit/ServiceInfo";
+import { SelectConfig } from "src/components/organisms/web/edit/SelectConfig";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -50,10 +47,10 @@ const a11yProps = (index: number) => {
   };
 };
 
-type EditStoragePropsType = {};
+type EditWebPropsType = {};
 
-const EditRabbitService: FC<EditStoragePropsType> = () => {
-  const { setServerId } = useContext(EditStorageContext);
+const EditWebService: FC<EditWebPropsType> = () => {
+  const { setServerId } = useContext(EditWebContext);
   const { id } = useParams();
 
   useEffect(() => {
@@ -67,11 +64,11 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "لیست کلیدهای دسترسی", "تغییر سرویس"];
+  const tabArray = ["مشخصات سرویس", "تغییر سرویس"];
 
-  const tabPanelArray = [ServiceInfo, AccessKeyList, SelectConfig];
+  const tabPanelArray = [ServiceInfo, SelectConfig];
 
-  if (!id) return <Navigate to="/storage" />;
+  if (!id) return <Navigate to="/web" />;
 
   return (
     <Stack
@@ -112,4 +109,4 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
   );
 };
 
-export default EditRabbitService;
+export default EditWebService;

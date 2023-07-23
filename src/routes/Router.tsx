@@ -12,7 +12,8 @@ import AddServerContextProvider from "src/components/organisms/vm/add/contexts/A
 import EditServerContextProvider from "src/components/organisms/vm/edit/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/add/context/AddRabbitContext";
 import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
-import AddWebHostContextProvider from "src/components/organisms/web/addService/context/AddWebHostContext";
+import AddWebHostContextProvider from "src/components/organisms/web/add/context/AddWebHostContext";
+import EditWebHostContextProvider from "src/components/organisms/web/edit/context/EditWebContext";
 import AddDomainContextProvider from "src/components/organisms/domain/add/context/AddDomainContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/context/EditDomainContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/context/AddStorageContext";
@@ -75,6 +76,7 @@ const EditRabbitService = lazy(
 
 const WebIndex = lazy(() => import("src/pages/web/Index"));
 const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
+const EditWebHost = lazy(() => import("src/pages/web/EditWebHost"));
 
 const DomainIndex = lazy(() => import("src/pages/domain/Index"));
 const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
@@ -477,6 +479,20 @@ const Router: FC = () => {
                 hideSidebar: false,
               },
               AddWebHostContextProvider
+            )}
+          />
+          <Route
+            path="/web/:id"
+            element={mainTemplate(
+              EditWebHost,
+              {
+                link: {
+                  text: "بازگشت به مدیریت هاستینگ ابری",
+                  url: "/web",
+                },
+                hideSidebar: false,
+              },
+              EditWebHostContextProvider
             )}
           />
           {/* ======================================= Domain ======================================= */}

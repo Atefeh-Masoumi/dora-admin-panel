@@ -7,13 +7,20 @@ import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
 import { useLazyGetPortalWebWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
+import { useNavigate } from "react-router";
+import { Setting } from "src/components/atoms/svg/SettingSvg";
 
 export const WebTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const [getUrl, { isLoading: getUrlLoading }] = useLazyGetPortalWebWebHostGetLoginSessionByIdQuery();
+  const navigate = useNavigate();
+
+  const settingOnClick = () => navigate("/web/" + row["id"]);
+
+  const [getUrl, { isLoading: getUrlLoading }] =
+    useLazyGetPortalWebWebHostGetLoginSessionByIdQuery();
   const monitorOnClick = () =>
     getUrl({ id: row["id"] })
       .unwrap()
@@ -42,13 +49,7 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  {/* <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={goToOrderDetails}
-                  >
-                    <CreditCardIcon sx={{ color: "grey.700" }} />
-                  </IconButton> */}
-                  {/* <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
                         "&> path": {
@@ -56,7 +57,8 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                         },
                       }}
                     />
-                  </IconButton> */}
+                  </IconButton>
+
                   <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
                     <MonitorSvg />
                   </IconButton>
@@ -78,18 +80,18 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                            ? "فعال"
-                            : id === 3
-                              ? "غیرفعال"
-                              : id === 4
-                                ? "منقضی شده"
-                                : id === 5
-                                  ? "حذف شده"
-                                  : id === 6
-                                    ? "انتظار"
-                                    : id === 7
-                                      ? "بازسازی"
-                                      : "ناموفق"
+                          ? "فعال"
+                          : id === 3
+                          ? "غیرفعال"
+                          : id === 4
+                          ? "منقضی شده"
+                          : id === 5
+                          ? "حذف شده"
+                          : id === 6
+                          ? "انتظار"
+                          : id === 7
+                          ? "بازسازی"
+                          : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
@@ -97,14 +99,14 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                           id === 6 || id === 7
                             ? "warning.light"
                             : id === 2
-                              ? "success.light"
-                              : "error.light",
+                            ? "success.light"
+                            : "error.light",
                         color:
                           id === 6 || id === 7
                             ? "warning.main"
                             : id === 2
-                              ? "success.main"
-                              : "error.main",
+                            ? "success.main"
+                            : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

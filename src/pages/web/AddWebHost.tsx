@@ -6,11 +6,11 @@ import { useNavigate } from "react-router";
 import {
   AddWebHostContext,
   addWebHostStepsType,
-} from "src/components/organisms/web/addService/context/AddWebHostContext";
-import { AddWebHostStepper } from "src/components/organisms/web/addService/AddWebHostStepper";
-import { SelectDomain } from "src/components/organisms/web/addService/addServiceSteps/SelectDomain";
-import { SelectDataCenter } from "src/components/organisms/web/addService/addServiceSteps/SelectDataCenter";
-import { SelectConfig } from "src/components/organisms/web/addService/addServiceSteps/SelectConfig";
+} from "src/components/organisms/web/add/context/AddWebHostContext";
+import { AddWebHostStepper } from "src/components/organisms/web/add/AddWebHostStepper";
+import { SelectDomain } from "src/components/organisms/web/add/addServiceSteps/SelectDomain";
+import { SelectDataCenter } from "src/components/organisms/web/add/addServiceSteps/SelectDataCenter";
+import { SelectConfig } from "src/components/organisms/web/add/addServiceSteps/SelectConfig";
 import { usePostPortalWebWebHostCreateMutation } from "src/app/services/api.generated";
 
 const AddWebHost: FC = () => {
