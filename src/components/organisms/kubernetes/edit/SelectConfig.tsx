@@ -18,14 +18,13 @@ const ipAddress = 600000;
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-
   const { serverId, serverConfig } = useContext(EditWorkspaceContext);
-  
+
   const [memory, setMemory] = useState(1);
   const [cpu, setCpu] = useState(1);
   const [disk, setDisk] = useState(25);
 
-  const { data, isLoading } = useGetPortalKubeHostGetByIdQuery({
+  const { data, isLoading, refetch } = useGetPortalKubeHostGetByIdQuery({
     id: serverId || 0,
   });
 
@@ -85,7 +84,10 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       },
     })
       .unwrap()
-      .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"));
+      .then(() => {
+        refetch();
+        toast.success("تغییرات جدید با موفقیت اعمال شد");
+      });
   };
 
   return (

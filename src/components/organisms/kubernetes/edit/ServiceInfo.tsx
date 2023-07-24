@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import {
   Chip,
   Divider,
@@ -48,6 +48,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: rabbitData,
     isLoading: getRabbitDataLoading,
     isFetching: getRabbitDataFetching,
+    refetch,
   } = useGetPortalKubeWorkspaceGetByIdQuery({
     id: Number(id)!,
   });
@@ -61,6 +62,10 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     () => rabbitData?.statusId === 2,
     [rabbitData?.statusId]
   );
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <Grid2

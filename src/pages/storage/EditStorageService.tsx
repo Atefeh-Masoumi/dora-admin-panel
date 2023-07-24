@@ -14,8 +14,8 @@ import { EditStorageContext } from "src/components/organisms/storage/edit/contex
 import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
 
 // import { ServiceUser } from "src/components/organisms/storage/edit/ServiceUsers";
-import { SelectConfig } from "src/components/organisms/storage/edit/SelectConfig";
 import AccessKeyList from "src/components/organisms/storage/edit/AccessKeyList";
+import { SelectConfig } from "src/components/organisms/storage/edit/SelectConfig";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -67,7 +67,7 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات سرویس", "لیست کلیدهای دسترسی", "تغییر سرویس"];
+  const tabArray = ["مشخصات سرویس", "لیست کلیدهای دسترسی", "تغییر مشخصات"];
 
   const tabPanelArray = [ServiceInfo, AccessKeyList, SelectConfig];
 

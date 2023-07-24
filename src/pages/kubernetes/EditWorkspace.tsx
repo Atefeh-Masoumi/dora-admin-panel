@@ -69,14 +69,14 @@ const EditWorkspaceService: FC<EditWorkspacePropsType> = () => {
   const tabArray = [
     "مشخصات سرویس",
     "مدیریت دسترسی ها",
-    "مدیریت Volume ها",
+    // "مدیریت Volume ها",
     "تغییر مشخصات سرویس",
   ];
 
   const tabPanelArray = [
     ServiceInfo,
     UserRoleManagement,
-    VolumeManagement,
+    // VolumeManagement,
     SelectConfig,
   ];
 

@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalVmVmDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { VmManagementContext } from "src/pages/vm/Index";
 
 type DeleteVmDialogPropsType = {
   openDialog: boolean;
@@ -16,12 +17,15 @@ export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchData } = useContext(VmManagementContext);
+
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] = useDeletePortalVmVmDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
       .then(() => {
+        refetchData();
         toast.success("سرور ابری با موفقیت حذف شد");
         handleClose();
       })

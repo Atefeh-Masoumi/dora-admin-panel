@@ -1,110 +1,133 @@
-import { FC, useContext, useMemo } from "react";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { FC, useEffect, useMemo, useState } from "react";
+import { Paper, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import Grid2 from "@mui/material/Unstable_Grid2";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { EditStorageTableRow } from "./tables/EditStorageTableRow";
-import { editStorageTableStruct } from "./tables/editStorageTableStruct";
+import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  useGetPortalPanelProductBundleListByProductCategoryIdQuery,
   usePutPortalStorageHostEditMutation,
+  useGetPortalStorageHostGetByIdQuery,
 } from "src/app/services/api.generated";
-import { EditStorageContext } from "./context/EditStorageContext";
+
+import ReverseSlider from "src/components/atoms/ReverseSlider";
+import { useParams } from "react-router";
+
+const diskUnitPrice = 45000;
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data: configsList, isLoading } =
-    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
-      productCategoryId: PRODUCT_CATEGORY_ENUM.STORAGE,
-    });
+  const [disk, setDisk] = useState(25);
 
-  const table = useMemo(
-    () => (
-      <BaseTable
-        struct={editStorageTableStruct}
-        RowComponent={EditStorageTableRow}
-        rows={configsList || []}
-        text=""
-        isLoading={isLoading}
-      />
-    ),
-    [configsList, isLoading]
-  );
+  const { id: serverId } = useParams();
 
-  const navigate = useNavigate();
+  const { data, isLoading } = useGetPortalStorageHostGetByIdQuery({
+    id: serverId ? +serverId : 0,
+  });
 
-  const { serverId, serverConfig } = useContext(EditStorageContext);
-  const [editStorageHostModel, { isLoading: updateLoading }] =
+  const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
     usePutPortalStorageHostEditMutation();
 
-  const submitHandler = () => {
-    if (!serverId || !serverConfig) return;
+  useEffect(() => {
+    if (serverId && data) {
+      setDisk(data.disk || 0);
+    }
+  }, [data, serverId]);
 
-    editStorageHostModel({
+  const resourceList = [
+    {
+      name: "Disk (GB)",
+      value: disk,
+      onChange: setDisk,
+      min: 25,
+      max: 1000,
+      step: 25,
+    },
+  ];
+
+  const totalPrice = useMemo(() => {
+    const d = diskUnitPrice * disk;
+    return d;
+  }, [disk]);
+
+  const submitClickHandler = () => {
+    if (!serverId) return;
+    sendNewConfig({
       editStorageHostModel: {
-        id: serverId,
-        productBundleId: serverConfig.id || 0,
+        disk,
+        id: serverId ? +serverId : 0,
       },
     })
       .unwrap()
-      .then(() => {
-        navigate("/storage");
-        toast.success("درخواست تغییر سرویس با موفقیت انجام شد");
-      });
-    return;
+      .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"));
   };
 
   return (
     <>
-      <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12}>
-          <Stack
-            bgcolor="white"
-            py={3}
-            px={3}
-            width="100%"
-            borderRadius={3}
-            direction="column"
-          >
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              justifyContent="space-between"
-              alignItems="center"
-              rowGap={3}
-            >
+      <Typography
+        color="grey.700"
+        fontSize={24}
+        fontWeight={700}
+        sx={{ mb: 2 }}
+      >
+        تغییر مشخصات
+      </Typography>
+      <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}>
+        <Stack rowGap={{ xs: 3, md: 7.4 }} sx={{ p: 4 }}>
+          {resourceList.map(
+            ({ name, value, onChange, min, max, step }, index) => (
               <Stack
-                direction={{ xs: "column", sm: "row" }}
-                alignItems="center"
-                spacing={2}
+                key={index}
+                direction={{ xs: "column-reverse", md: "row" }}
+                rowGap={5}
+                columnGap={4}
+                alignItems="end"
               >
-                <Typography fontSize={18} color="secondary">
-                  مشخصات سرویس را انتخاب کنید
+                <ReverseSlider
+                  value={value}
+                  valueLabelDisplay="on"
+                  onChange={(_, value) => onChange(value as number)}
+                  min={min}
+                  max={max}
+                  step={step}
+                />
+                <Typography
+                  color={({ palette }) => palette.grey[700]}
+                  sx={{ width: "125px" }}
+                  align="right"
+                >
+                  {name}
                 </Typography>
               </Stack>
-            </Stack>
-            <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-            <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
-            <Stack py={3} px={3} alignItems="center" justifyContent="center">
-              <LoadingButton
-                loading={updateLoading}
-                variant="contained"
-                onClick={submitHandler}
-                sx={{
-                  width: { xs: "100%", sm: "auto" },
-                  px: { sm: 8 },
-                  py: 2.1,
-                }}
-              >
-                تغییر سرویس
-              </LoadingButton>
-            </Stack>
+            )
+          )}
+        </Stack>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          sx={{ mt: 6 }}
+          alignItems="center"
+          justifyContent="space-between"
+          rowGap={3}
+        >
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography color="grey.700">تخمین هزینه ماهیانه:</Typography>
+            <Typography color="grey.700" fontWeight={700}>
+              {priceToPersian(totalPrice)} ریال
+            </Typography>
           </Stack>
-        </Grid2>
-      </Grid2>
+          <LoadingButton
+            loading={sendNewConfigLoading}
+            onClick={submitClickHandler}
+            variant="contained"
+            sx={{
+              px: { xs: 3, sm: 7 },
+              py: 2,
+              width: { xs: "100%", sm: "auto" },
+            }}
+          >
+            تغییر فضای دیسک
+          </LoadingButton>
+        </Stack>
+      </Paper>
     </>
   );
 };

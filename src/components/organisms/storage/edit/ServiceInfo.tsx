@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import {
   Chip,
   Divider,
@@ -47,9 +47,14 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
+    refetch,
   } = useGetPortalStorageHostGetByIdQuery({
     id: Number(id)!,
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const isLoading = useMemo(
     () => getStorageDataLoading || getStorageDataFetching,
