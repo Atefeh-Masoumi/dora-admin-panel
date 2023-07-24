@@ -96,6 +96,11 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
+            title="Disk Capacity"
+            value={storageData?.disk}
+            isLoading={isLoading}
+          />
+          <BoxRow
             title="Access"
             value={storageData?.public}
             isLoading={isLoading}

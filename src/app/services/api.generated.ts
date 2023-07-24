@@ -3257,6 +3257,7 @@ export type GetStorageHostResponse = {
   name?: string | null;
   status?: string | null;
   statusId?: number;
+  disk?: number;
   isPublic?: boolean;
   public?: string | null;
   createDate?: string;
