@@ -634,12 +634,12 @@ export const api = createApi({
         body: queryArg.createKubeNamespaceModel,
       }),
     }),
-    putPortalKubeHostChangeService: build.mutation<
-      PutPortalKubeHostChangeServiceApiResponse,
-      PutPortalKubeHostChangeServiceApiArg
+    putPortalKubeHostEdit: build.mutation<
+      PutPortalKubeHostEditApiResponse,
+      PutPortalKubeHostEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/host/change-service`,
+        url: `/portal/kube/host/edit`,
         method: "PUT",
         body: queryArg.editKubeNamespaceModel,
       }),
@@ -784,14 +784,14 @@ export const api = createApi({
         body: queryArg.createKubeWorkspaceModel,
       }),
     }),
-    putPortalKubeWorkspaceChangeService: build.mutation<
-      PutPortalKubeWorkspaceChangeServiceApiResponse,
-      PutPortalKubeWorkspaceChangeServiceApiArg
+    putPortalKubeWorkspaceEdit: build.mutation<
+      PutPortalKubeWorkspaceEditApiResponse,
+      PutPortalKubeWorkspaceEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/kube/workspace/change-service`,
+        url: `/portal/kube/workspace/edit`,
         method: "PUT",
-        body: queryArg.editKubeWorkspaceModel,
+        body: queryArg.editWorkspaceModel,
       }),
     }),
     deletePortalKubeWorkspaceDeleteById: build.mutation<
@@ -934,6 +934,14 @@ export const api = createApi({
         url: `/portal/panel/order-plan/order`,
         method: "POST",
         body: queryArg.createOrderPlanModel,
+      }),
+    }),
+    getPortalPanelProductListByProductCategoryId: build.query<
+      GetPortalPanelProductListByProductCategoryIdApiResponse,
+      GetPortalPanelProductListByProductCategoryIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/portal/panel/product/list/${queryArg.productCategoryId}`,
       }),
     }),
     getPortalPanelProductBundleListByProductCategoryId: build.query<
@@ -1151,46 +1159,44 @@ export const api = createApi({
         body: queryArg.joinReferralModel,
       }),
     }),
-    getPortalStorageStorageHostList: build.query<
-      GetPortalStorageStorageHostListApiResponse,
-      GetPortalStorageStorageHostListApiArg
+    getPortalStorageHostList: build.query<
+      GetPortalStorageHostListApiResponse,
+      GetPortalStorageHostListApiArg
     >({
-      query: () => ({ url: `/portal/storage/storage-host/list` }),
+      query: () => ({ url: `/portal/storage/host/list` }),
     }),
-    getPortalStorageStorageHostGetById: build.query<
-      GetPortalStorageStorageHostGetByIdApiResponse,
-      GetPortalStorageStorageHostGetByIdApiArg
+    getPortalStorageHostGetById: build.query<
+      GetPortalStorageHostGetByIdApiResponse,
+      GetPortalStorageHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/portal/storage/host/get/${queryArg.id}` }),
+    }),
+    postPortalStorageHostCreate: build.mutation<
+      PostPortalStorageHostCreateApiResponse,
+      PostPortalStorageHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/storage/storage-host/get/${queryArg.id}`,
-      }),
-    }),
-    postPortalStorageStorageHostCreate: build.mutation<
-      PostPortalStorageStorageHostCreateApiResponse,
-      PostPortalStorageStorageHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/portal/storage/storage-host/create`,
+        url: `/portal/storage/host/create`,
         method: "POST",
         body: queryArg.createStorageHostModel,
       }),
     }),
-    putPortalStorageStorageHostEdit: build.mutation<
-      PutPortalStorageStorageHostEditApiResponse,
-      PutPortalStorageStorageHostEditApiArg
+    putPortalStorageHostEdit: build.mutation<
+      PutPortalStorageHostEditApiResponse,
+      PutPortalStorageHostEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/storage/storage-host/edit`,
+        url: `/portal/storage/host/edit`,
         method: "PUT",
         body: queryArg.editStorageHostModel,
       }),
     }),
-    deletePortalStorageStorageHostDeleteById: build.mutation<
-      DeletePortalStorageStorageHostDeleteByIdApiResponse,
-      DeletePortalStorageStorageHostDeleteByIdApiArg
+    deletePortalStorageHostDeleteById: build.mutation<
+      DeletePortalStorageHostDeleteByIdApiResponse,
+      DeletePortalStorageHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/portal/storage/storage-host/delete/${queryArg.id}`,
+        url: `/portal/storage/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1964,8 +1970,8 @@ export type PostPortalKubeHostCreateApiResponse = unknown;
 export type PostPortalKubeHostCreateApiArg = {
   createKubeNamespaceModel: CreateKubeNamespaceModel;
 };
-export type PutPortalKubeHostChangeServiceApiResponse = unknown;
-export type PutPortalKubeHostChangeServiceApiArg = {
+export type PutPortalKubeHostEditApiResponse = unknown;
+export type PutPortalKubeHostEditApiArg = {
   editKubeNamespaceModel: EditKubeNamespaceModel;
 };
 export type DeletePortalKubeHostDeleteByIdApiResponse = unknown;
@@ -2038,9 +2044,9 @@ export type PostPortalKubeWorkspaceCreateApiResponse = unknown;
 export type PostPortalKubeWorkspaceCreateApiArg = {
   createKubeWorkspaceModel: CreateKubeWorkspaceModel;
 };
-export type PutPortalKubeWorkspaceChangeServiceApiResponse = unknown;
-export type PutPortalKubeWorkspaceChangeServiceApiArg = {
-  editKubeWorkspaceModel: EditKubeWorkspaceModel;
+export type PutPortalKubeWorkspaceEditApiResponse = unknown;
+export type PutPortalKubeWorkspaceEditApiArg = {
+  editWorkspaceModel: EditWorkspaceModel;
 };
 export type DeletePortalKubeWorkspaceDeleteByIdApiResponse = unknown;
 export type DeletePortalKubeWorkspaceDeleteByIdApiArg = {
@@ -2111,6 +2117,11 @@ export type GetPortalPanelOrderPlanListApiArg = void;
 export type PostPortalPanelOrderPlanOrderApiResponse = unknown;
 export type PostPortalPanelOrderPlanOrderApiArg = {
   createOrderPlanModel: CreateOrderPlanModel;
+};
+export type GetPortalPanelProductListByProductCategoryIdApiResponse =
+  /** status 200 Success */ ProductListResponse[];
+export type GetPortalPanelProductListByProductCategoryIdApiArg = {
+  productCategoryId: number;
 };
 export type GetPortalPanelProductBundleListByProductCategoryIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
@@ -2207,24 +2218,24 @@ export type PostPortalPanelReferralJoinApiResponse =
 export type PostPortalPanelReferralJoinApiArg = {
   joinReferralModel: JoinReferralModel;
 };
-export type GetPortalStorageStorageHostListApiResponse =
+export type GetPortalStorageHostListApiResponse =
   /** status 200 Success */ StorageHostListResponse[];
-export type GetPortalStorageStorageHostListApiArg = void;
-export type GetPortalStorageStorageHostGetByIdApiResponse =
+export type GetPortalStorageHostListApiArg = void;
+export type GetPortalStorageHostGetByIdApiResponse =
   /** status 200 Success */ GetStorageHostResponse;
-export type GetPortalStorageStorageHostGetByIdApiArg = {
+export type GetPortalStorageHostGetByIdApiArg = {
   id: number;
 };
-export type PostPortalStorageStorageHostCreateApiResponse = unknown;
-export type PostPortalStorageStorageHostCreateApiArg = {
+export type PostPortalStorageHostCreateApiResponse = unknown;
+export type PostPortalStorageHostCreateApiArg = {
   createStorageHostModel: CreateStorageHostModel;
 };
-export type PutPortalStorageStorageHostEditApiResponse = unknown;
-export type PutPortalStorageStorageHostEditApiArg = {
+export type PutPortalStorageHostEditApiResponse = unknown;
+export type PutPortalStorageHostEditApiArg = {
   editStorageHostModel: EditStorageHostModel;
 };
-export type DeletePortalStorageStorageHostDeleteByIdApiResponse = unknown;
-export type DeletePortalStorageStorageHostDeleteByIdApiArg = {
+export type DeletePortalStorageHostDeleteByIdApiResponse = unknown;
+export type DeletePortalStorageHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetPortalStorageUserListByStorageHostIdApiResponse =
@@ -3004,9 +3015,11 @@ export type CreateKubeWorkspaceModel = {
   datacenterId?: number;
   productBundleId?: number;
 };
-export type EditKubeWorkspaceModel = {
+export type EditWorkspaceModel = {
   id?: number;
-  productBundleId?: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
 };
 export type LoadBalanceListResponse = {
   id?: number;
@@ -3106,6 +3119,11 @@ export type OrderPlanListResponse = {
 export type CreateOrderPlanModel = {
   id?: number;
   paymentProviderId?: number;
+};
+export type ProductListResponse = {
+  id?: number;
+  name?: string | null;
+  price?: number;
 };
 export type ProductBundleListResponse = {
   id?: number;
@@ -3252,7 +3270,7 @@ export type CreateStorageHostModel = {
 };
 export type EditStorageHostModel = {
   id?: number;
-  productBundleId?: number;
+  disk?: number;
 };
 export type StorageUserListResponse = {
   id?: number;
@@ -3551,7 +3569,7 @@ export const {
   useGetPortalKubeHostGetByIdQuery,
   useGetPortalKubeHostGetLoginSessionByIdQuery,
   usePostPortalKubeHostCreateMutation,
-  usePutPortalKubeHostChangeServiceMutation,
+  usePutPortalKubeHostEditMutation,
   useDeletePortalKubeHostDeleteByIdMutation,
   useGetPortalKubeUserListQuery,
   useGetPortalKubeUserShortListQuery,
@@ -3569,7 +3587,7 @@ export const {
   useGetPortalKubeWorkspaceGetByIdQuery,
   useGetPortalKubeWorkspaceGetLoginSessionByIdQuery,
   usePostPortalKubeWorkspaceCreateMutation,
-  usePutPortalKubeWorkspaceChangeServiceMutation,
+  usePutPortalKubeWorkspaceEditMutation,
   useDeletePortalKubeWorkspaceDeleteByIdMutation,
   useGetPortalCdnLoadBalanceListByZoneNameQuery,
   useGetPortalCdnLoadBalanceGetByIdQuery,
@@ -3587,6 +3605,7 @@ export const {
   usePostPortalPanelOrderPayMutation,
   useGetPortalPanelOrderPlanListQuery,
   usePostPortalPanelOrderPlanOrderMutation,
+  useGetPortalPanelProductListByProductCategoryIdQuery,
   useGetPortalPanelProductBundleListByProductCategoryIdQuery,
   useGetPortalPanelProductCategoryListQuery,
   useGetPortalPanelProfileGetQuery,
@@ -3611,11 +3630,11 @@ export const {
   usePostPortalRabbitRabbitUserChangePasswordMutation,
   useGetPortalPanelReferralGetQuery,
   usePostPortalPanelReferralJoinMutation,
-  useGetPortalStorageStorageHostListQuery,
-  useGetPortalStorageStorageHostGetByIdQuery,
-  usePostPortalStorageStorageHostCreateMutation,
-  usePutPortalStorageStorageHostEditMutation,
-  useDeletePortalStorageStorageHostDeleteByIdMutation,
+  useGetPortalStorageHostListQuery,
+  useGetPortalStorageHostGetByIdQuery,
+  usePostPortalStorageHostCreateMutation,
+  usePutPortalStorageHostEditMutation,
+  useDeletePortalStorageHostDeleteByIdMutation,
   useGetPortalStorageUserListByStorageHostIdQuery,
   usePostPortalStorageUserCreateMutation,
   useDeletePortalStorageUserDeleteByIdMutation,

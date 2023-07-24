@@ -76,8 +76,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const tabPanelArray = [
     ServerInfo,
     ServerIpAddress,
-    ServerConfig,
     ServerRebuild,
+    ServerConfig,
   ];
 
   if (!id) return <Navigate to="/vm" />;

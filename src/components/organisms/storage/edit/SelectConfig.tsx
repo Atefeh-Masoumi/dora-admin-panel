@@ -10,7 +10,7 @@ import { EditStorageTableRow } from "./tables/EditStorageTableRow";
 import { editStorageTableStruct } from "./tables/editStorageTableStruct";
 import {
   useGetPortalPanelProductBundleListByProductCategoryIdQuery,
-  usePutPortalStorageStorageHostEditMutation,
+  usePutPortalStorageHostEditMutation,
 } from "src/app/services/api.generated";
 import { EditStorageContext } from "./context/EditStorageContext";
 
@@ -39,7 +39,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { serverId, serverConfig } = useContext(EditStorageContext);
   const [editStorageHostModel, { isLoading: updateLoading }] =
-    usePutPortalStorageStorageHostEditMutation();
+    usePutPortalStorageHostEditMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;

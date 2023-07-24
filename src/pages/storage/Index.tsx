@@ -3,13 +3,12 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useNavigate } from "react-router";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
-import { useGetPortalStorageStorageHostListQuery } from "src/app/services/api.generated";
+import { useGetPortalStorageHostListQuery } from "src/app/services/api.generated";
 
 type StorageManagementPropsType = {};
 
@@ -21,7 +20,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalStorageStorageHostListQuery();
+  } = useGetPortalStorageHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -116,31 +115,6 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
         </Stack>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-      <Stack
-        py={3}
-        px={3}
-        pt={3}
-        bgcolor="rgba(244, 95, 80, 1)"
-        direction="row"
-        spacing={3}
-        borderRadius={2}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineOutlinedIcon />
-        <Typography>توجه:</Typography>
-        <Typography
-          fontSize={14}
-          sx={{
-            opacity: 0.9,
-          }}
-        >
-          این سرویس نسخه آزمایشی می باشد.
-          <br />
-        </Typography>
-      </Stack>
-
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
           struct={storageTableStruct}

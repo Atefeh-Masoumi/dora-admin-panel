@@ -62,36 +62,6 @@ export const VolumeManagement: FC<VolumeManagementPropsType> = ({ row }) => {
               </Button>
             </Stack>
             <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-            <Stack
-              py={3}
-              px={3}
-              bgcolor="rgba(244, 95, 80, 1)"
-              direction="row"
-              spacing={3}
-              borderRadius={2}
-              width="100%"
-              color="white"
-              alignItems={{ xs: "start", md: "center" }}
-            >
-              <ErrorOutlineOutlinedIcon />
-              <Typography>توجه:</Typography>
-              <Typography
-                fontSize={14}
-                sx={{
-                  opacity: 0.9,
-                }}
-              >
-                این سرویس نسخه آزمایشی می باشد.
-                <br />
-                به منظور مدیریت و استفاده از سرویس از
-                https://s1-k1.dorsacloud.com استفاده نمایید.
-                <br />
-                برای استفاده از سرویس از نام کاربری و رمز عبور ارسال شده استفاده
-                نمایید.
-              </Typography>
-            </Stack>
-            <Divider />
-
             <Box width="100%" sx={{ pt: 1.5 }}>
               <BaseTable
                 struct={voluemMangementTableStruct}

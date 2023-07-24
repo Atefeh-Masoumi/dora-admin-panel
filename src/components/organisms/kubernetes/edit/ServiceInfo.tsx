@@ -69,42 +69,6 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
       justifyContent="space-between"
       alignItems="stretch"
     >
-      <Divider />
-      <Grid2 xs={12}>
-        <Stack
-          py={3}
-          px={3}
-          bgcolor="rgba(244, 95, 80, 1)"
-          direction="row"
-          spacing={3}
-          borderRadius={2}
-          width="100%"
-          color="white"
-          alignItems={{ xs: "start", md: "center" }}
-        >
-          <ErrorOutlineOutlinedIcon />
-          <Typography>توجه:</Typography>
-          <Typography
-            fontSize={14}
-            sx={{
-              opacity: 0.9,
-            }}
-          >
-            این سرویس نسخه آزمایشی می باشد.
-            <br />
-            به منظور مدیریت و استفاده از سرویس از https://s1-k1.dorsacloud.com
-            استفاده نمایید.
-            <br />
-            برای استفاده از سرویس از نام کاربری و رمز عبور ارسال شده استفاده
-            نمایید.
-            <br />
-            درصورتیکه نام کاربری را فراموش کرده اید از گزینه شناسه کاربری
-            استفاده نمایید.
-          </Typography>
-        </Stack>
-      </Grid2>
-      <Divider />
-
       <Grid2 xs={12} md={6}>
         <Paper
           component={Stack}
