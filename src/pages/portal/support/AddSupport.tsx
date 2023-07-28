@@ -32,7 +32,7 @@ const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 const AddTicket: FC = () => {
   const navigate = useNavigate();
 
-  const [unit, setUnit] = useState<number>();
+  const [businessUnit, setUnit] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetPortalPanelBusinessUnitListQuery();
 
@@ -63,7 +63,7 @@ const AddTicket: FC = () => {
     selectList({
       supportSubjectSelectListModel: {
         productCategoryId: category,
-        businessUnitId: unit,
+        businessUnitId: businessUnit,
       },
     })
       .unwrap()
@@ -77,7 +77,7 @@ const AddTicket: FC = () => {
           setPortalPanelHostProductList(res);
         });
     }
-  }, [unit, category, selectList]);
+  }, [businessUnit, category, callGetPortalPanelHostProductList, selectList]);
 
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File>();
@@ -105,13 +105,13 @@ const AddTicket: FC = () => {
   abortController.current = new AbortController();
 
   const submit = () => {
-    if (!unit || !content || !title || !category) {
+    if (!businessUnit || !content || !title || !category) {
       toast.error("لطفا تمام فیلد ها را پر کنید");
       return;
     }
     let formData = new FormData();
     formData.append("content", content);
-    formData.append("businessUnitId", "" + unit);
+    formData.append("businessUnitId", "" + businessUnit);
     formData.append("supportSubjectId", "" + title);
     formData.append("productCategoryId", "" + category);
     if (selectedPortalPanelHostProduct !== 0) {
@@ -181,7 +181,7 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="واحد *"
-                value={unit || ""}
+                value={businessUnit || ""}
                 onChange={(e) => setUnit(+e.target.value)}
               >
                 {businessUnits.map((option) => (
