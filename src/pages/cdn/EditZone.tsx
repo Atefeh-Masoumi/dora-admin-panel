@@ -61,9 +61,9 @@ const Domains: FC = () => {
       case "load-balance-settings":
         result = <LoadBalance />;
         break;
-        // case "api-gateway-settings":
-        //   result = <></>;
-        break;
+      // case "api-gateway-settings":
+      //   result = <></>;
+      //break;
       default:
         result = <ZoneInfo />;
         break;

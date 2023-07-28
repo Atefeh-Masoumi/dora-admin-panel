@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalKubeWorkspaceDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DomainContext } from "src/pages/kubernetes/Index";
+import { DataContext } from "src/pages/kubernetes/Index";
 
 type DeleteWorkspaceDialogPropsType = {
   openDialog: boolean;
@@ -21,7 +21,7 @@ export const DeleteWorkspaceDialog: FC<DeleteWorkspaceDialogPropsType> = ({
   const [deleteLoadBalance, { isLoading }] =
     useDeletePortalKubeWorkspaceDeleteByIdMutation();
 
-  const { refetchOnClick } = useContext(DomainContext);
+  const { refetchOnClick } = useContext(DataContext);
 
   const submit = () =>
     deleteLoadBalance({ id })

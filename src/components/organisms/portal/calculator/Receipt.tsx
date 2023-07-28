@@ -317,8 +317,7 @@ const Receipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          href="https://portal.dorsacloud.com"
-          target="_blank"
+          href="/vm/add-vm"
           size="large"
           sx={{ py: 2 }}
           fullWidth

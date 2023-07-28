@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalWebWebHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { DataContext } from "src/pages/web/Index";
 
 type DeleteWebDialogPropsType = {
   openDialog: boolean;
@@ -16,6 +17,8 @@ export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchOnClick } = useContext(DataContext);
+
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
     useDeletePortalWebWebHostDeleteByIdMutation();
@@ -23,6 +26,7 @@ export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
   const submit = () =>
     deleteItem({ id })
       .then(() => {
+        refetchOnClick();
         toast.success("سرویس هاست ابری با موفقیت حذف شد");
         handleClose();
       })

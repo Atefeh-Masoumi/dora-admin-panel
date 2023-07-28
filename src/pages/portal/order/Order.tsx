@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
   useEffect,
+  useContext,
 } from "react";
 import {
   Paper,
@@ -37,6 +38,7 @@ import {
   useGetPortalPanelOrderGetByIdQuery,
   GetOrderResponse,
 } from "src/app/services/api.generated";
+import { DataContext } from "src/pages/portal/order/Index";
 
 const useDurationArray = [
   { name: "یک ماه", value: "1" },
@@ -51,6 +53,8 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const [orderPaymentTypeId, setOrderPaymentTypeId] = useState(1);
   const [paymentProviderId, setPaymentGateway] = useState(2);
   const [discountCode, setDiscountCode] = useState("");
+
+  const { refetchOnClick } = useContext(DataContext);
 
   const navigate = useNavigate();
 
@@ -185,6 +189,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
         if (!res || !res.location || !res.status) return;
 
         if (res.orderPaymentTypeId === 2) {
+          refetchOnClick();
           navigate("/");
           toast.success("پرداخت با موفقیت انجام شد");
         } else {
@@ -202,14 +207,6 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
         changePaymentMethodLoading ||
         changeOrderDurationLoading ||
         applyDiscountCodeLoading) && <PageLoading />}
-      <Typography
-        variant="title6"
-        color="secondary"
-        fontWeight="700"
-        sx={{ my: 3 }}
-      >
-        پرداخت سفارش
-      </Typography>
       <Paper elevation={0} sx={{ overflow: "hidden" }}>
         <Grid2
           container

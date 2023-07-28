@@ -10,15 +10,17 @@ import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 
-type VmManagementPropsType = {};
-
-type VmManagementContextType = {
-  refetchData: () => any;
+// Define the type for your context value
+type DataContextValueType = {
+  refetchOnClick: () => any;
 };
 
-export const VmManagementContext = createContext<VmManagementContextType>({
-  refetchData: () => null,
+// Create the context
+export const DataContext = createContext<DataContextValueType>({
+  refetchOnClick: () => null,
 });
+
+type VmManagementPropsType = {};
 
 const VmManagement: FC<VmManagementPropsType> = () => {
   const [search, setSearch] = useState("");
@@ -50,7 +52,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   const createCloudOnClick = () => navigate("/vm/add-vm");
 
   return (
-    <VmManagementContext.Provider value={{ refetchData: () => refetch() }}>
+    <DataContext.Provider value={{ refetchOnClick }}>
       <Stack
         bgcolor="white"
         py={3}
@@ -136,7 +138,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
           />
         </Box>
       </Stack>
-    </VmManagementContext.Provider>
+    </DataContext.Provider>
   );
 };
 

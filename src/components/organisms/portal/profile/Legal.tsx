@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, createContext, useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -22,6 +22,16 @@ const formValidation = yup.object().shape({
   phone: yup.number().required("تلفن را به عدد وارد کنید"),
   address: yup.string().required("آدرس وارد کنید"),
   postalCode: yup.number().required("کد پستی را به عدد وارد کنید"),
+});
+
+// Define the type for your context value
+type DataContextValueType = {
+  refetchOnClick: () => any;
+};
+
+// Create the context
+export const DataContext = createContext<DataContextValueType>({
+  refetchOnClick: () => null,
 });
 
 type LegalPersonalityPropsType = { isLegal: boolean };
@@ -81,7 +91,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   };
 
   return (
-    <>
+    <DataContext.Provider value={{ refetchOnClick }}>
       {isLoading && <PageLoading />}
       <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
         <Stack direction="row" alignItems="center" spacing={1} py={1}>
@@ -163,6 +173,6 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
           </Formik>
         </Stack>
       </Stack>
-    </>
+    </DataContext.Provider>
   );
 };

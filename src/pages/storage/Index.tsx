@@ -10,16 +10,18 @@ import { StorageTableRow } from "src/components/organisms/storage/tables/Storage
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
 import { useGetPortalStorageHostListQuery } from "src/app/services/api.generated";
 
-type StorageManagementPropsType = {};
-
-type StorageManagementContextType = {
-  refetchData: () => any;
+// Define the type for your context value
+type DataContextValueType = {
+  refetchOnClick: () => any;
 };
 
-export const StorageManagementContext =
-  createContext<StorageManagementContextType>({
-    refetchData: () => null,
-  });
+// Create the context
+export const DataContext = createContext<DataContextValueType>({
+  refetchOnClick: () => null,
+});
+
+type StorageManagementPropsType = {};
+
 const StorageManagement: FC<StorageManagementPropsType> = () => {
   const [search, setSearch] = useState("");
 
@@ -50,7 +52,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   const createCloudOnClick = () => navigate("/storage/addStorageService");
 
   return (
-    <StorageManagementContext.Provider value={{ refetchData: () => refetch() }}>
+    <DataContext.Provider value={{ refetchOnClick }}>
       <Stack
         bgcolor="white"
         py={3}
@@ -136,7 +138,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
           />
         </Box>
       </Stack>
-    </StorageManagementContext.Provider>
+    </DataContext.Provider>
   );
 };
 

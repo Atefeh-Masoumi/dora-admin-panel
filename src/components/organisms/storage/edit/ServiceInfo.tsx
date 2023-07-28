@@ -52,10 +52,6 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     id: Number(id)!,
   });
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   const isLoading = useMemo(
     () => getStorageDataLoading || getStorageDataFetching,
     [getStorageDataFetching, getStorageDataLoading]

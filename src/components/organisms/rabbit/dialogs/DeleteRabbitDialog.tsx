@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalRabbitRabbitHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { DataContext } from "src/pages/rabbit/Index";
 
 type DeleteRabbitDialogPropsType = {
   openDialog: boolean;
@@ -16,6 +17,8 @@ export const DeleteRabbitDialog: FC<DeleteRabbitDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchOnClick } = useContext(DataContext);
+
   const onClose = () => handleClose();
   const [deleteLoadBalance, { isLoading }] =
     useDeletePortalRabbitRabbitHostDeleteByIdMutation();
@@ -23,6 +26,7 @@ export const DeleteRabbitDialog: FC<DeleteRabbitDialogPropsType> = ({
   const submit = () =>
     deleteLoadBalance({ id })
       .then(() => {
+        refetchOnClick();
         toast.success("سرویس ابری با موفقیت حذف شد");
         handleClose();
       })

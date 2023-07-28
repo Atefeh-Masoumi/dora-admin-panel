@@ -3,7 +3,6 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { useGetPortalKubeUserListQuery } from "src/app/services/api.generated";
 import { AddKubeUserDialog } from "src/components/organisms/kubernetes/users/dialogs/AddKubeUserDialog";
 import { kubeUserTableStruct } from "src/components/organisms/kubernetes/users/tables/struct";

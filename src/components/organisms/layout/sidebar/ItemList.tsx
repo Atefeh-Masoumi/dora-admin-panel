@@ -26,6 +26,9 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
   const isCollapsed = useMemo(
     () =>
       pathname !== "/" &&
+      pathname !== "/portal/calculator" &&
+      pathname !== "/portal/supports" &&
+      pathname !== "/portal/support/:id" &&
       pathname !== "/portal/profile" &&
       pathname !== "/portal/setting" &&
       pathname !== "/portal/host-products" &&
@@ -34,8 +37,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       pathname !== "/portal/notifications",
     [pathname]
   );
-
-  const goToCalculator = () => navigate("/portal/calculator");
 
   const [LocalStorageData, setLocalStorageData] = useState<any>();
   useEffect(() => {
@@ -203,8 +204,11 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
             if (!text && !title) {
               return (
                 <ListItem disablePadding key={index} sx={{ mt: 3 }}>
-                  {link === "/portal/calculator" ? (
-                    <ListItemIcon onClick={goToCalculator}>
+                  <CustomListItemButton
+                    to={link}
+                    sx={{ p: 0, "&:hover": { bgcolor: "transparent" } }}
+                  >
+                    <ListItemIcon>
                       <Stack
                         alignItems="center"
                         justifyContent="center"
@@ -218,27 +222,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                         <Icon mode={isSelected ? "selected" : "default"} />
                       </Stack>
                     </ListItemIcon>
-                  ) : (
-                    <CustomListItemButton
-                      to={link}
-                      sx={{ p: 0, "&:hover": { bgcolor: "transparent" } }}
-                    >
-                      <ListItemIcon>
-                        <Stack
-                          alignItems="center"
-                          justifyContent="center"
-                          sx={{
-                            width: 40,
-                            height: 40,
-                            bgcolor: isSelected ? "#0560FD14" : "#6E768A14",
-                            borderRadius: BORDER_RADIUS_1,
-                          }}
-                        >
-                          <Icon mode={isSelected ? "selected" : "default"} />
-                        </Stack>
-                      </ListItemIcon>
-                    </CustomListItemButton>
-                  )}
+                  </CustomListItemButton>
                 </ListItem>
               );
             } else {

@@ -143,8 +143,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       Icon: HeadphoneSvg,
-      link: "/portal/support",
-      subList: [{ title: "مرکز پشتیبانی", link: "/portal/support" }],
+      link: "/portal/supports",
     },
     {
       Icon: CalculatorSvg,
@@ -170,6 +169,8 @@ export const Sidebar: FC<SidebarPropsType> = () => {
   const hideSubLists = useMemo(
     () =>
       pathname === "/" ||
+      pathname === "/portal/calculator" ||
+      pathname === "/portal/supports" ||
       pathname === "/portal/profile" ||
       pathname === "/portal/setting" ||
       pathname === "/portal/host-products" ||

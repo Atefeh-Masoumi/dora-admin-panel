@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { createContext, type FC } from "react";
 import { Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { toast } from "react-toastify";
@@ -9,27 +9,46 @@ import {
   usePutPortalPanelProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 
-export const SecuritySetting: FC = () => {
-  const { data: notifyData, isLoading } = useGetPortalPanelProfileGetNotificationStatusQuery();
+// Define the type for your context value
+type DataContextValueType = {
+  refetchOnClick: () => any;
+};
 
-  const [editPhoneNotify, { isLoading: loadingPhone }] = usePutPortalPanelProfileEditPhoneNotificationMutation();
+// Create the context
+export const DataContext = createContext<DataContextValueType>({
+  refetchOnClick: () => null,
+});
+
+export const SecuritySetting: FC = () => {
+  const { data, refetch, isLoading } =
+    useGetPortalPanelProfileGetNotificationStatusQuery();
+
+  const refetchOnClick = () => refetch();
+
+  const [editPhoneNotify, { isLoading: loadingPhone }] =
+    usePutPortalPanelProfileEditPhoneNotificationMutation();
+
   const submitPhone = () => {
-    if (notifyData?.phoneNotify === undefined) return;
+    if (data?.phoneNotify === undefined) return;
+
     editPhoneNotify({
-      editPhoneNotifyModel: { phoneNotify: !notifyData.phoneNotify },
+      editPhoneNotifyModel: { phoneNotify: !data.phoneNotify },
     }).then(() => toast.success("بروزرسانی پیامک انجام شد"));
   };
 
-  const [editEmailNotify, { isLoading: loadingEmail }] = usePutPortalPanelProfileEditEmailNotificationMutation();
+  const [editEmailNotify, { isLoading: loadingEmail }] =
+    usePutPortalPanelProfileEditEmailNotificationMutation();
+
   const submitEmail = () => {
-    if (notifyData?.emailNotify === undefined) return;
+    if (data?.emailNotify === undefined) return;
+
     editEmailNotify({
-      editEmailNotifyModel: { emailNotify: !notifyData.emailNotify },
+      editEmailNotifyModel: { emailNotify: !data.emailNotify },
     }).then(() => toast.success("بروزرسانی ایمیل انجام شد"));
   };
 
   return (
-    <>
+    <DataContext.Provider value={{ refetchOnClick }}>
       {(loadingPhone || loadingEmail) && <PageLoading />}
       <Stack
         sx={{
@@ -62,7 +81,7 @@ export const SecuritySetting: FC = () => {
               </Stack>
             ) : (
               <DorsaSwitch
-                checked={notifyData?.phoneNotify}
+                checked={data?.phoneNotify}
                 onChange={submitPhone}
                 sx={{ mx: { xs: 0, md: 2 } }}
               />
@@ -86,7 +105,7 @@ export const SecuritySetting: FC = () => {
               </Stack>
             ) : (
               <DorsaSwitch
-                checked={notifyData?.emailNotify}
+                checked={data?.emailNotify}
                 onChange={submitEmail}
                 sx={{ mx: { xs: 0, md: 2 } }}
               />
@@ -94,6 +113,6 @@ export const SecuritySetting: FC = () => {
           </Stack>
         </Stack>
       </Stack>
-    </>
+    </DataContext.Provider>
   );
 };

@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalStorageHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { StorageManagementContext } from "src/pages/storage/Index";
+import { DataContext } from "src/pages/storage/Index";
 
 type DeleteStorageDialogPropsType = {
   openDialog: boolean;
@@ -17,7 +17,7 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
   handleClose,
   id,
 }) => {
-  const { refetchData } = useContext(StorageManagementContext);
+  const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
   const [deleteStorage, { isLoading }] =
@@ -26,7 +26,7 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
   const submit = () =>
     deleteStorage({ id })
       .then(() => {
-        refetchData();
+        refetchOnClick();
         toast.success("سرویس ابری با موفقیت حذف شد");
         handleClose();
       })

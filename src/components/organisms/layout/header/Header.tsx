@@ -77,7 +77,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/portal/support");
+          navigate("/portal/supports");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />

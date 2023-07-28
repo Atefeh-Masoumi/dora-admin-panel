@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
@@ -6,6 +6,7 @@ import { Success } from "src/components/atoms/svg/SuccessSvg";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalCdnCdnDeleteByIdMutation } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
+import { DataContext } from "src/pages/cdn/Index";
 
 type DeleteZoneDialogPropsType = {
   id: number;
@@ -18,6 +19,8 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
   openDialog,
   handleClose,
 }) => {
+  const { refetchOnClick } = useContext(DataContext);
+
   const onClose = () => handleClose();
   const [DeleteZone, { isLoading }] = useDeletePortalCdnCdnDeleteByIdMutation();
 
@@ -28,6 +31,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
       .unwrap()
       .then(() => {
         navigate("/cdn");
+        refetchOnClick();
         toast.error("دامنه مورد نظر حذف شد", { icon: Success });
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));

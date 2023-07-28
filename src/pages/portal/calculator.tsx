@@ -6,16 +6,17 @@ import Receipt from "src/components/organisms/portal/calculator/Receipt";
 import ServiceSpecifications from "src/components/organisms/portal/calculator/ServiceSpecifications";
 
 const servicesList = [
-  "Cloud Server",
-  "Cloud Storage",
+  "Server",
+  "Storage",
   "Kubernetes",
-  "Load Balance",
-  "API Gateway",
   "DNS",
+  "CDN",
+  "Domain",
+  "Web Host",
 ];
 
 const Calculator: FC = () => {
-  const [selectedService, setSelectedService] = useState("Cloud Server");
+  const [selectedService, setSelectedService] = useState("Server");
   const [serverCount, setServerCount] = useState(1);
   const [cpuCount, setCpuCount] = useState(1);
   const [memoryCount, setMemoryCount] = useState(1);
@@ -28,8 +29,8 @@ const Calculator: FC = () => {
   return (
     <Stack
       bgcolor="white"
-      py={3}
-      px={3}
+      py={1}
+      px={1}
       width="100%"
       borderRadius={3}
       direction="column"
@@ -108,7 +109,7 @@ const Calculator: FC = () => {
       </Box>
       <Stack
         direction={{ xs: "column", md: "row" }}
-        gap={3}
+        gap={1}
         justifyContent="space-between"
         sx={{
           maxWidth: "1045px",

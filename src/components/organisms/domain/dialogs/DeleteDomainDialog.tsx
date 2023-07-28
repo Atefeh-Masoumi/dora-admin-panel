@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeletePortalDomainDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { DataContext } from "src/pages/domain/Index";
 
 type DeleteDomainDialogPropsType = {
   openDialog: boolean;
@@ -16,13 +17,15 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
   handleClose,
   id,
 }) => {
+  const { refetchOnClick } = useContext(DataContext);
+
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] =
-    useDeletePortalDomainDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeletePortalDomainDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
       .then(() => {
+        refetchOnClick();
         toast.success("دامنه با موفقیت حذف شد");
         handleClose();
       })

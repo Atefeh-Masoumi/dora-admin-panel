@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { LoadingButton, getLoadingButtonUtilityClass } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AxiosProgressEvent } from "axios";
@@ -58,6 +58,7 @@ const AddTicket: FC = () => {
   const [content, setContent] = useState("");
 
   const [selectList] = usePostPortalPanelSupportSubjectSelectListMutation();
+
   useEffect(() => {
     selectList({
       supportSubjectSelectListModel: {
@@ -129,7 +130,7 @@ const AddTicket: FC = () => {
       .unwrap()
       .then(() => {
         toast.success("تیکت با موفقیت اضافه شد");
-        navigate("/portal/support");
+        navigate("/portal/supports");
       })
       .catch((res: any) => {
         if (res.status === 401 || res.status === 404) {
@@ -421,7 +422,7 @@ const AddTicket: FC = () => {
               fullWidth
               color="secondary"
               sx={{ px: 4, py: { xs: 0, md: 1.5 } }}
-              href="/portal/support"
+              href="/portal/supports"
             >
               انصراف
             </Button>

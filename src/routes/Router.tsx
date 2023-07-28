@@ -200,12 +200,12 @@ const Router: FC = () => {
                 text: "بازگشت به سبد خرید",
                 url: "/portal/orders",
               },
-              hideSidebar: false,
+              hideSidebar: true,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/portal/support"
+            path="/portal/supports"
             element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
@@ -215,9 +215,9 @@ const Router: FC = () => {
             element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/support",
+                url: "/portal/supports",
               },
-              hideSidebar: false,
+              hideSidebar: true,
             })}
           />
           <Route
@@ -225,9 +225,9 @@ const Router: FC = () => {
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/support",
+                url: "/portal/supports",
               },
-              hideSidebar: false,
+              hideSidebar: true,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
