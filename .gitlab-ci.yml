@@ -1,0 +1,43 @@
+workflow:
+  # This specifies the valid branches for this workflow
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "testing"'
+      when: always
+    - when: never
+
+stages:
+  - package
+  - deploy
+
+variables:
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+
+before_script:
+  - export TIMESTAMP=$(date +%Y%m%d%H%M%S)
+
+## Stage 1 : BUILD
+
+package_main:
+  stage: package
+  tags: [production]
+  script:
+    - docker build -t $DOCKER_REGISTRY/portal-main:$TIMESTAMP--$IMAGE_TAG -t $DOCKER_REGISTRY/portal-main:latest .
+    - docker push $DOCKER_REGISTRY/portal-main:$TIMESTAMP--$IMAGE_TAG
+    - docker push $DOCKER_REGISTRY/portal-main:latest
+  only:
+    - main
+
+# Stage 2 : DEPLOY
+
+deploy_admin_main:
+  stage: deploy
+  tags: [production]
+  needs: [package_main]
+  script:
+    - docker pull $DOCKER_REGISTRY/portal-main:latest
+    - docker stop admin && docker rm admin
+    - docker run --restart always --name admin -d -p 3000:80 $DOCKER_REGISTRY/portal-main:latest
+    - chmod +x cleanup_docker_tags.sh && ./cleanup_docker_tags.sh $DOCKER_REGISTRY/portal-main &
+  when: manual
+  only:
+    - main
