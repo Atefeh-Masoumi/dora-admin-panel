@@ -36,7 +36,7 @@ deploy_admin_main:
   script:
     - docker pull $DOCKER_REGISTRY/portal-main:latest
     - docker stop admin && docker rm admin
-    - docker run --restart always --name admin -d -p 3000:80 $DOCKER_REGISTRY/portal-main:latest
+    - docker run --restart always --name admin -d -p 3030:80 $DOCKER_REGISTRY/portal-main:latest
     - chmod +x cleanup_docker_tags.sh && ./cleanup_docker_tags.sh $DOCKER_REGISTRY/portal-main &
   when: manual
   only:
