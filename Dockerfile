@@ -1,14 +1,29 @@
 # Stage 1
 FROM node:18.16-alpine as build
-WORKDIR /app
 RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
 COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
+#or
+# In order to run `yarn build` we need access to the Nest CLI.
+# Nest CLI is a dev dependency.
+#COPY --chown=node:node --from=builder /app/node_modules ./node_modules
 
+# Copy source code
+#COPY --chown=node:node . .
+
+# Generate the production build. The build script runs "nest build" to compile the application.
+#RUN yarn build
+
+# Install only the production dependencies and clean cache to optimize image size.
+#RUN yarn --frozen-lockfile --production && yarn cache clean
+
+# Set Docker as a non-root user
+#USER node
 
 # Stage 2
 FROM nginx:1.25-alpine
