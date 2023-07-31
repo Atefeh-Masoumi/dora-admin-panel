@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:18.16-alpine as build
+FROM node:18-alpine
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
