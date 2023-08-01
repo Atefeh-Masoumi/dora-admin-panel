@@ -1,6 +1,5 @@
 # Stage 1
-FROM node:18-bullseye-slim
-RUN apt install libc6
+FROM node:18-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
