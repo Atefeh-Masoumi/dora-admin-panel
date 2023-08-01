@@ -1,6 +1,6 @@
 # Stage 1
-FROM node:18-alpine
-RUN apk add --no-cache libc6-compat
+FROM node:18-bullseye-slim
+RUN apt install libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
