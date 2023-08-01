@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "testing"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
       when: always
     - when: never
 
@@ -21,9 +21,9 @@ package_main:
   stage: package
   tags: [production]
   script:
-    - docker build -t $DOCKER_REGISTRY/portal-main:$TIMESTAMP--$IMAGE_TAG -t $DOCKER_REGISTRY/portal-main:latest .
-    - docker push $DOCKER_REGISTRY/portal-main:$TIMESTAMP--$IMAGE_TAG
-    - docker push $DOCKER_REGISTRY/portal-main:latest
+    - docker build -t $DOCKER_REGISTRY/front-portal-main:$TIMESTAMP--$IMAGE_TAG -t $DOCKER_REGISTRY/front-portal-main:latest .
+    - docker push $DOCKER_REGISTRY/front-portal-main:$TIMESTAMP--$IMAGE_TAG
+    - docker push $DOCKER_REGISTRY/front-portal-main:latest
   only:
     - main
 
@@ -34,10 +34,10 @@ deploy_admin_main:
   tags: [production]
   needs: [package_main]
   script:
-    - docker pull $DOCKER_REGISTRY/portal-main:latest
-    - docker stop admin && docker rm admin
-    - docker run --restart always --name admin -d -p 3030:80 $DOCKER_REGISTRY/portal-main:latest
-    - chmod +x cleanup_docker_tags.sh && ./cleanup_docker_tags.sh $DOCKER_REGISTRY/portal-main &
+    - docker pull $DOCKER_REGISTRY/front-portal-main:latest
+    - docker stop front-portal && docker rm front-portal
+    - docker run --restart always --name front-portal -d -p 5032:80 $DOCKER_REGISTRY/front-portal-main:latest
+    - chmod +x cleanup_docker_tags.sh && ./cleanup_docker_tags.sh $DOCKER_REGISTRY/front-portal-main &
   when: manual
   only:
     - main
