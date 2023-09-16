@@ -15,16 +15,17 @@ import {
 } from "@mui/icons-material";
 import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
 import {
-  GetPortalVmVmIpListByVmIdApiResponse,
-  useDeletePortalVmVmIpDeleteByIdMutation,
-  VmIpListResponse,
+  GetApiDatacenterIpListByProductCategoryIdAndIdApiResponse,
+  useDeleteApiDatacenterIpDeleteByIdMutation,
+  DatacenterIpListResponse,
 } from "src/app/services/api.generated";
-import { useLazyGetPortalVmVmIpListByVmIdQuery } from "src/app/services/api";
+import { useLazyGetApiDatacenterIpListByProductCategoryIdAndIdQuery } from "src/app/services/api";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
 import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
 
-const IpRow: FC<VmIpListResponse> = ({ ip, isPrimary, id }) => {
-  const [deleteIp, { isLoading }] = useDeletePortalVmVmIpDeleteByIdMutation();
+const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
+  const [deleteIp, { isLoading }] =
+    useDeleteApiDatacenterIpDeleteByIdMutation();
 
   const onClick = () => id && deleteIp({ id });
 
@@ -89,10 +90,22 @@ const LoadingSkeleton: FC = () => (
     <Grid2 xs={6} sm={4} container alignItems="center" justifyContent="center">
       <Skeleton width={120} />
     </Grid2>
-    <Grid2 xs={2.9} sm={4} container alignItems="center" justifyContent="center">
+    <Grid2
+      xs={2.9}
+      sm={4}
+      container
+      alignItems="center"
+      justifyContent="center"
+    >
       <Skeleton variant="circular" width={25} height={25} />
     </Grid2>
-    <Grid2 xs={2.9} sm={3.9} container alignItems="center" justifyContent="center">
+    <Grid2
+      xs={2.9}
+      sm={3.9}
+      container
+      alignItems="center"
+      justifyContent="center"
+    >
       <Skeleton variant="circular" width={25} height={25} />
     </Grid2>
   </Grid2>
@@ -102,14 +115,16 @@ type ServerIpAddressPropsType = {};
 
 export const ServerIpAddress: FC<ServerIpAddressPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const [getData, { isLoading }] = useLazyGetPortalVmVmIpListByVmIdQuery();
-  const [data, setData] = useState<GetPortalVmVmIpListByVmIdApiResponse | null>(
-    null
-  );
+  const [getData, { isLoading }] =
+    useLazyGetApiDatacenterIpListByProductCategoryIdAndIdQuery();
+  const [data, setData] =
+    useState<GetApiDatacenterIpListByProductCategoryIdAndIdApiResponse | null>(
+      null
+    );
 
   useEffect(() => {
     if (serverId) {
-      getData({ vmId: serverId })
+      getData({ productCategoryId: 0, id: serverId })
         .unwrap()
         .then((res) => {
           res && setData(res);

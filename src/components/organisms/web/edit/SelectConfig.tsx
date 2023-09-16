@@ -9,16 +9,16 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditWebTableRow } from "./tables/EditWebTableRow";
 import { editWebTableStruct } from "./tables/editWebTableStruct";
 import {
-  useGetPortalPanelProductBundleListByProductCategoryIdQuery,
-  usePutPortalWebWebHostEditMutation,
+  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  usePutApiWebEditMutation,
 } from "src/app/services/api.generated";
-import { EditWebContext } from "./context/EditWebContext";
+import { EditWebContext } from "./contexts/EditWebContext";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
+    useGetApiCloudProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.WEB,
     });
 
@@ -38,13 +38,13 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const navigate = useNavigate();
 
   const { serverId, serverConfig } = useContext(EditWebContext);
-  const [editWebHostModel, { isLoading: updateLoading }] =
-    usePutPortalWebWebHostEditMutation();
+  const [editWebModel, { isLoading: updateLoading }] =
+    usePutApiWebEditMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;
 
-    editWebHostModel({
+    editWebModel({
       editWebHostModel: {
         id: serverId,
         productBundleId: serverConfig.id || 0,

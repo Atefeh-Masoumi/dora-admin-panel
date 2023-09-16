@@ -4,7 +4,7 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { DeleteDomainDialog } from "../dialogs/DeleteDomainDialog";
+import { DeleteDomainDialog } from "../dialogs/DeleteDialog";
 import { useNavigate } from "react-router";
 
 export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
@@ -63,18 +63,18 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                            ? "فعال"
-                            : id === 3
-                              ? "غیرفعال"
-                              : id === 4
-                                ? "منقضی شده"
-                                : id === 5
-                                  ? "حذف شده"
-                                  : id === 6
-                                    ? "انتظار"
-                                    : id === 7
-                                      ? "بازسازی"
-                                      : "ناموفق"
+                          ? "فعال"
+                          : id === 3
+                          ? "غیرفعال"
+                          : id === 4
+                          ? "منقضی شده"
+                          : id === 5
+                          ? "حذف شده"
+                          : id === 6
+                          ? "انتظار"
+                          : id === 7
+                          ? "بازسازی"
+                          : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
@@ -82,14 +82,14 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
                           id === 6 || id === 7
                             ? "warning.light"
                             : id === 2
-                              ? "success.light"
-                              : "error.light",
+                            ? "success.light"
+                            : "error.light",
                         color:
                           id === 6 || id === 7
                             ? "warning.main"
                             : id === 2
-                              ? "success.main"
-                              : "error.main",
+                            ? "success.main"
+                            : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Container, Stack, SwipeableDrawer } from "@mui/material";
 import { Box } from "@mui/material";
 import Header from "src/components/organisms/layout/header/Header";
-import { Sidebar } from "src/components/organisms/layout/sidebar/Sidebar";
+import { Sidebar } from "src/components/organisms/layout/sidebar/SidebarMenu";
 
 export const sidebarWidth = 280;
 

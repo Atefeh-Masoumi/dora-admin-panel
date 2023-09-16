@@ -2,7 +2,7 @@ import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { editRabbitTableStruct } from "./struct";
-import { EditRabbitContext } from "../context/EditRabbitContext";
+import { EditRabbitContext } from "../contexts/EditRabbitContext";
 
 export const EditRabbitTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(EditRabbitContext);

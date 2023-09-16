@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { Products } from "src/components/organisms/home/Products";
 import { Wallet } from "src/components/organisms/home/Wallet";
-import { ShortUserBill } from "src/components/organisms/home/ShortUserBill";
+import { ShortUserBill } from "src/components/organisms/home/BillShortList";
 import { Stack } from "@mui/material";
-import { ShortTickets } from "src/components/organisms/home/ShortTickets";
+import { ShortTickets } from "src/components/organisms/home/SupportShortList";
 
 const Home: FC = () => {
   return (

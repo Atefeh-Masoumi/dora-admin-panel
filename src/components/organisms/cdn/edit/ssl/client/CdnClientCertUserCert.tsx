@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
-import { useGetPortalCdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
@@ -11,7 +11,7 @@ export const CdnClientCertUserCert: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
 
   const { data: userCert, isLoading } =
-    useGetPortalCdnClientCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetApiCdnClientCertGetUserCertByZoneNameQuery({ zoneName });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);

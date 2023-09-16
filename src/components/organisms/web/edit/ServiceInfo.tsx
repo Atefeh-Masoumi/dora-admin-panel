@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
-import { useGetPortalWebWebHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiWebGetByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -47,7 +47,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
-  } = useGetPortalWebWebHostGetByIdQuery({
+  } = useGetApiWebGetByIdQuery({
     id: Number(id)!,
   });
 

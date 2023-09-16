@@ -24,7 +24,7 @@ import {
 } from "src/configs/theme";
 import { FC, Fragment, useMemo, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
-import { useGetPortalCdnAnalyticGetByZoneNameAndPeriodIdQuery } from "src/app/services/api.generated";
+import { useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery } from "src/app/services/api.generated";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -52,7 +52,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     data: userAnalytics,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetPortalCdnAnalyticGetByZoneNameAndPeriodIdQuery({
+  } = useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery({
     zoneName: selectedDomain?.zoneName || "",
     periodId: categoryId + 1,
   });

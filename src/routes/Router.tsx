@@ -7,25 +7,25 @@ import {
 import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
 import { DomainSelect } from "src/components/organisms/cdn/edit/DomainSelect";
-import AddZoneContextProvider from "src/components/organisms/cdn/add/context/AddZoneContext";
+import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
 import EditServerContextProvider from "src/components/organisms/vm/edit/contexts/EditServerContext";
-import AddRabbitContextProvider from "src/components/organisms/rabbit/add/context/AddRabbitContext";
-import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
-import AddWebHostContextProvider from "src/components/organisms/web/add/context/AddWebHostContext";
-import EditWebHostContextProvider from "src/components/organisms/web/edit/context/EditWebContext";
-import AddDomainContextProvider from "src/components/organisms/domain/add/context/AddDomainContext";
-import EditDomainContextProvider from "src/components/organisms/domain/edit/context/EditDomainContext";
-import AddStorageContextProvider from "src/components/organisms/storage/add/context/AddStorageContext";
-import EditStorageContextProvider from "src/components/organisms/storage/edit/context/EditStorageContext";
-import AddWorkspaceContext from "src/components/organisms/kubernetes/add/context/AddWorkspaceContext";
-import EditWorkspaceContext from "src/components/organisms/kubernetes/edit/context/EditWorkspaceContext";
+import AddRabbitContextProvider from "src/components/organisms/rabbit/add/contexts/AddRabbitContext";
+import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
+import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
+import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
+import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
+import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
+import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
+import AddWorkspaceContext from "src/components/organisms/platform/add/contexts/AddContext";
+import EditWorkspaceContext from "src/components/organisms/platform/edit/context/EditContext";
 
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
-import { ServiceUsers } from "src/pages/kubernetes/Users";
+import { ServiceUsers } from "src/pages/platform/Users";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -34,32 +34,30 @@ const Login = lazy(() => import("src/pages/account/Login"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
-const Sales = lazy(() => import("src/pages/portal/sales/Index"));
-const Profile = lazy(() => import("src/pages/portal/profile/Index"));
-const Setting = lazy(() => import("src/pages/portal/setting/Index"));
-const Notification = lazy(() => import("src/pages/portal/notification/Index"));
-const HostProducts = lazy(() => import("src/pages/portal/hostProduct/Index"));
-const Supports = lazy(() => import("src/pages/portal/support/Index"));
-const Support = lazy(() => import("src/pages/portal/support/Support"));
-const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
-const Orders = lazy(() => import("src/pages/portal/order/Index"));
-const Order = lazy(() => import("src/pages/portal/order/Order"));
-const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
-const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
-const Calculator = lazy(() => import("src/pages/portal/calculator"));
+const Sales = lazy(() => import("src/pages/cloud/sales/Index"));
+const Profile = lazy(() => import("src/pages/cloud/profile/Index"));
+const Setting = lazy(() => import("src/pages/cloud/setting/Index"));
+const Notification = lazy(() => import("src/pages/cloud/notification/Index"));
+const HostProducts = lazy(() => import("src/pages/cloud/hostProduct/Index"));
+const Supports = lazy(() => import("src/pages/cloud/support/Index"));
+const Support = lazy(() => import("src/pages/cloud/support/Support"));
+const AddSupport = lazy(() => import("src/pages/cloud/support/AddSupport"));
+const Orders = lazy(() => import("src/pages/cloud/order/Index"));
+const Order = lazy(() => import("src/pages/cloud/order/Order"));
+const Referrals = lazy(() => import("src/pages/cloud/referral/Index"));
+const Referral = lazy(() => import("src/pages/cloud/referral/Referral"));
+const Calculator = lazy(() => import("src/pages/cloud/calculator"));
 
-const Wallet = lazy(() => import("src/pages/portal/wallet/Index"));
-const Payments = lazy(() => import("src/pages/portal/walletPayment/Index"));
-const Payment = lazy(
-  () => import("src/pages/portal/walletPayment/PaymentCallBack")
-);
-const Bills = lazy(() => import("src/pages/portal/bill/Index"));
-const Bill = lazy(() => import("src/pages/portal/bill/Bill"));
-const Invoices = lazy(() => import("src/pages/portal/invoice/Index"));
-const Invoice = lazy(() => import("src/pages/portal/invoice/Invoice"));
+const Wallet = lazy(() => import("src/pages/cloud/wallet/Index"));
+const Payments = lazy(() => import("src/pages/cloud/payment/Index"));
+const Payment = lazy(() => import("src/pages/cloud/payment/PaymentCallBack"));
+const Bills = lazy(() => import("src/pages/cloud/bill/Index"));
+const Bill = lazy(() => import("src/pages/cloud/bill/Bill"));
+const Invoices = lazy(() => import("src/pages/cloud/invoice/Index"));
+const Invoice = lazy(() => import("src/pages/cloud/invoice/Invoice"));
 
 const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
-const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
+const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
 const VmIndex = lazy(() => import("src/pages/vm/Index"));
@@ -67,32 +65,24 @@ const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
 const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
-const AddRabbitService = lazy(
-  () => import("src/pages/rabbit/AddRabbitService")
-);
-const EditRabbitService = lazy(
-  () => import("src/pages/rabbit/EditRabbitService")
-);
+const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbit"));
+const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbit"));
 
 const WebIndex = lazy(() => import("src/pages/web/Index"));
-const AddWebHost = lazy(() => import("src/pages/web/AddWebHost"));
-const EditWebHost = lazy(() => import("src/pages/web/EditWebHost"));
+const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
+const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
 
 const DomainIndex = lazy(() => import("src/pages/domain/Index"));
 const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
 const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
 
 const StorageIndex = lazy(() => import("src/pages/storage/Index"));
-const AddStorageService = lazy(
-  () => import("src/pages/storage/AddStorageService")
-);
-const EditStorageService = lazy(
-  () => import("src/pages/storage/EditStorageService")
-);
+const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
+const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
-const KubeIndex = lazy(() => import("src/pages/kubernetes/Index"));
-const AddWorkspace = lazy(() => import("src/pages/kubernetes/AddWorkspace"));
-const EditWorkspace = lazy(() => import("src/pages/kubernetes/EditWorkspace"));
+const PlatformIndex = lazy(() => import("src/pages/platform/Index"));
+const AddWorkspace = lazy(() => import("src/pages/platform/AddNamespace"));
+const EditWorkspace = lazy(() => import("src/pages/platform/EditNamespace"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -421,25 +411,25 @@ const Router: FC = () => {
           />
           {/* ======================================= Kubernetes ======================================= */}
           <Route
-            path="/kubernetes"
-            element={mainTemplate(KubeIndex, {
+            path="/platform"
+            element={mainTemplate(PlatformIndex, {
               pageTitle: "مدیریت سرویس کوبرنتیز",
             })}
           />
           <Route
-            path="/kubernetes/users"
+            path="/platform/users"
             element={mainTemplate(ServiceUsers, {
               pageTitle: "شناسه های کاربری",
             })}
           />
           <Route
-            path="/kubernetes/add-kubernetes"
+            path="/platform/add-Kubernetes"
             element={mainTemplate(
               AddWorkspace,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/kubernetes",
+                  url: "/platform",
                 },
                 hideSidebar: false,
               },
@@ -447,13 +437,13 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/kubernetes/:id"
+            path="/platform/:id"
             element={mainTemplate(
               EditWorkspace,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/kubernetes",
+                  url: "/platform",
                 },
                 hideSidebar: false,
               },
@@ -468,9 +458,9 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/web/addWebHost"
+            path="/web/addWeb"
             element={mainTemplate(
-              AddWebHost,
+              AddWeb,
               {
                 link: {
                   text: "بازگشت به مدیریت هاستینگ ابری",
@@ -478,13 +468,13 @@ const Router: FC = () => {
                 },
                 hideSidebar: false,
               },
-              AddWebHostContextProvider
+              AddWebContextProvider
             )}
           />
           <Route
             path="/web/:id"
             element={mainTemplate(
-              EditWebHost,
+              EditWeb,
               {
                 link: {
                   text: "بازگشت به مدیریت هاستینگ ابری",
@@ -492,7 +482,7 @@ const Router: FC = () => {
                 },
                 hideSidebar: false,
               },
-              EditWebHostContextProvider
+              EditWebContextProvider
             )}
           />
           {/* ======================================= Domain ======================================= */}

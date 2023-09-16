@@ -9,16 +9,16 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditRabbitTableRow } from "./tables/EditRabbitTableRow";
 import { editRabbitTableStruct } from "./tables/struct";
 import {
-  useGetPortalPanelProductBundleListByProductCategoryIdQuery,
-  usePutPortalRabbitRabbitHostChangeServiceMutation,
+  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  usePutApiRabbitHostChangeServiceMutation,
 } from "src/app/services/api.generated";
-import { EditRabbitContext } from "./context/EditRabbitContext";
+import { EditRabbitContext } from "./contexts/EditRabbitContext";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetPortalPanelProductBundleListByProductCategoryIdQuery({
+    useGetApiCloudProductBundleListByProductCategoryIdQuery({
       productCategoryId: PRODUCT_CATEGORY_ENUM.RABBIT_MQ,
     });
 
@@ -39,7 +39,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { serverId, serverConfig } = useContext(EditRabbitContext);
   const [editRabbitHostModel, { isLoading: updateLoading }] =
-    usePutPortalRabbitRabbitHostChangeServiceMutation();
+    usePutApiRabbitHostChangeServiceMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;

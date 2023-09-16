@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { useGetPortalCdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
@@ -11,7 +11,7 @@ export const CdnEdgeCertUserCert: FC = () => {
   const zoneName = selectedDomain?.zoneName || "";
 
   const { data: userCert, isLoading } =
-    useGetPortalCdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetApiCdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);

@@ -4,8 +4,8 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePutPortalStorageHostEditMutation,
-  useGetPortalStorageHostGetByIdQuery,
+  usePutApiStorageHostEditMutation,
+  useGetApiStorageHostGetByIdQuery,
 } from "src/app/services/api.generated";
 
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -20,12 +20,12 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { id: serverId } = useParams();
 
-  const { data, isLoading } = useGetPortalStorageHostGetByIdQuery({
+  const { data, isLoading } = useGetApiStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutPortalStorageHostEditMutation();
+    usePutApiStorageHostEditMutation();
 
   useEffect(() => {
     if (serverId && data) {

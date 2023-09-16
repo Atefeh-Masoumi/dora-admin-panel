@@ -6,13 +6,13 @@ import { useNavigate } from "react-router";
 import {
   AddDomainContext,
   addDomainStepsType,
-} from "src/components/organisms/domain/add/context/AddDomainContext";
-import { AddDomainStepper } from "src/components/organisms/domain/add/AddDomainStepper";
-import { SelectDomain } from "src/components/organisms/domain/add/addDomainSteps/SelectDomain";
-import { DomainInfo } from "src/components/organisms/domain/add/addDomainSteps/DomainInfo";
+} from "src/components/organisms/domain/add/contexts/AddContext";
+import { AddDomainStepper } from "src/components/organisms/domain/add/AddStepper";
+import { SelectDomain } from "src/components/organisms/domain/add/steps/SelectDomain";
+import { DomainInfo } from "src/components/organisms/domain/add/steps/DomainInfo";
 import {
-  usePostPortalDomainGetPriceMutation,
-  usePostPortalDomainRegisterMutation,
+  usePostApiDomainGetPriceMutation,
+  usePostApiDomainRegisterMutation,
 } from "src/app/services/api.generated";
 
 const AddDomain: FC = () => {
@@ -48,7 +48,7 @@ const AddDomain: FC = () => {
   };
 
   const [getPriceModel, { isLoading: checkLoading }] =
-    usePostPortalDomainGetPriceMutation();
+    usePostApiDomainGetPriceMutation();
 
   const CheckDomain = () => {
     if (domainName === "") return;
@@ -62,7 +62,7 @@ const AddDomain: FC = () => {
   };
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
-    usePostPortalDomainRegisterMutation();
+    usePostApiDomainRegisterMutation();
 
   const submitHandler = () => {
     if (term !== true) {

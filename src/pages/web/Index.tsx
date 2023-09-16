@@ -8,7 +8,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { WebTableRow } from "src/components/organisms/web/tables/WebTableRow";
 import { webTableStruct } from "src/components/organisms/web/tables/struct";
-import { useGetPortalWebWebHostListQuery } from "src/app/services/api.generated";
+import { useGetApiWebListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -30,7 +30,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalWebWebHostListQuery();
+  } = useGetApiWebListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -49,7 +49,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/web/addWebHost");
+  const createCloudOnClick = () => navigate("/web/addWeb");
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>

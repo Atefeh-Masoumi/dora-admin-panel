@@ -1,7 +1,7 @@
 import { FC, createContext, useMemo, useState } from "react";
 import {
-  useGetPortalStorageUserListByStorageHostIdQuery,
-  usePostPortalStorageUserCreateMutation,
+  useGetApiStorageUserListByStorageHostIdQuery,
+  usePostApiStorageUserCreateMutation,
 } from "src/app/services/api.generated";
 import {
   Box,
@@ -38,12 +38,12 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalStorageUserListByStorageHostIdQuery({
+  } = useGetApiStorageUserListByStorageHostIdQuery({
     storageHostId: id ? +id : 0,
   });
 
   const [callCreateAccessKey, { isLoading: createAccessKeyIsLoading }] =
-    usePostPortalStorageUserCreateMutation();
+    usePostApiStorageUserCreateMutation();
 
   const [showDialog, setShowDialog] = useState(false);
 

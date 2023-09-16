@@ -26,10 +26,10 @@ import {
   dnsTypeValueLabelObject,
 } from "src/components/organisms/cdn/edit/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetPortalCdnDnsRecordGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiCdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
-  usePostPortalCdnDnsRecordCreateMutation,
-  usePutPortalCdnDnsRecordEditMutation,
+  usePostApiCdnDnsRecordCreateMutation,
+  usePutApiCdnDnsRecordEditMutation,
 } from "src/app/services/api.generated";
 
 type CreateRecordDialogPropsType = {
@@ -44,7 +44,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   openDialog,
 }) => {
   const [getInfo, { isLoading: getDetailsLoading }] =
-    useLazyGetPortalCdnDnsRecordGetByIdQuery();
+    useLazyGetApiCdnDnsRecordGetByIdQuery();
 
   const [type, setType] = useState<dnsType>("A");
 
@@ -94,10 +94,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
 
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
-    usePostPortalCdnDnsRecordCreateMutation();
+    usePostApiCdnDnsRecordCreateMutation();
 
   const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutPortalCdnDnsRecordEditMutation();
+    usePutApiCdnDnsRecordEditMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference, useProxy },

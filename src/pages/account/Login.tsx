@@ -14,7 +14,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { emailValidator, passwordValidator } from "src/utils/formValidator";
 import { useNavigate } from "react-router";
-import { usePostPortalAccountLoginMutation } from "src/app/services/api.generated";
+import { usePostApiAccountLoginMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -26,7 +26,7 @@ const formValidation = yup.object().shape({
 });
 
 const Login: FC = () => {
-  const [loginUser, { isLoading }] = usePostPortalAccountLoginMutation();
+  const [loginUser, { isLoading }] = usePostApiAccountLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();

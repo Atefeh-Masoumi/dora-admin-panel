@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
-import { useGetPortalCdnCdnOverviewByZoneNameQuery } from "src/app/services/api.generated";
-import { DeleteZoneDialog } from "./dialogs/DeleteZoneDialog";
+import { useGetApiCdnHostOverviewByZoneNameQuery } from "src/app/services/api.generated";
+import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 
@@ -57,7 +57,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetPortalCdnCdnOverviewByZoneNameQuery({
+  } = useGetApiCdnHostOverviewByZoneNameQuery({
     zoneName: selectedDomain?.zoneName || "",
   });
 

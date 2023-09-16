@@ -9,7 +9,7 @@ import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
-import { usePostPortalVmVmKmsGetMutation } from "src/app/services/api.generated";
+import { usePostApiVmKmsGetMutation } from "src/app/services/api.generated";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -19,7 +19,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
   const settingOnClick = () => navigate("/vm/" + row["id"]);
 
-  const [getUrl, { isLoading: getUrlLoading }] = usePostPortalVmVmKmsGetMutation();
+  const [getUrl, { isLoading: getUrlLoading }] = usePostApiVmKmsGetMutation();
   const monitorOnClick = () =>
     getUrl({
       getKmsModel: {
@@ -88,18 +88,18 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                            ? "فعال"
-                            : id === 3
-                              ? "غیرفعال"
-                              : id === 4
-                                ? "منقضی شده"
-                                : id === 5
-                                  ? "حذف شده"
-                                  : id === 6
-                                    ? "در انتظار انجام عملیات"
-                                    : id === 7
-                                      ? "بازسازی"
-                                      : "ناموفق"
+                          ? "فعال"
+                          : id === 3
+                          ? "غیرفعال"
+                          : id === 4
+                          ? "منقضی شده"
+                          : id === 5
+                          ? "حذف شده"
+                          : id === 6
+                          ? "در انتظار انجام عملیات"
+                          : id === 7
+                          ? "بازسازی"
+                          : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
@@ -107,14 +107,14 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                           id === 6 || id === 7
                             ? "warning.light"
                             : id === 2
-                              ? "success.light"
-                              : "error.light",
+                            ? "success.light"
+                            : "error.light",
                         color:
                           id === 6 || id === 7
                             ? "warning.main"
                             : id === 2
-                              ? "success.main"
-                              : "error.main",
+                            ? "success.main"
+                            : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

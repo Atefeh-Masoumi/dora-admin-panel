@@ -7,9 +7,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useGetPortalPanelWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
-import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
+import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/AddDialog";
 
 export const Balance: FC = () => {
   const handleDeposit = () => setOpenDeposit(true);
@@ -17,7 +17,7 @@ export const Balance: FC = () => {
   const closeDeposit = () => setOpenDeposit(false);
 
   const { data: balance, isLoading: loadingBalance } =
-    useGetPortalPanelWalletGetBalanceQuery();
+    useGetApiCloudWalletGetBalanceQuery();
   const separateBalance = balance
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -2,7 +2,7 @@ import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addStorageTableStruct } from "./struct";
-import { AddStorageContext } from "../context/AddStorageContext";
+import { AddStorageContext } from "../contexts/AddStorageContext";
 
 export const AddStorageTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddStorageContext);

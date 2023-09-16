@@ -8,8 +8,8 @@ import { LinearProgress, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
-import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
-import { useGetPortalPanelWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/AddDialog";
+import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
 import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
@@ -96,7 +96,7 @@ export const WalletMenu: FC = () => {
   };
   const handleClose = () => setAnchorEl(null);
 
-  const { data: balance, isLoading } = useGetPortalPanelWalletGetBalanceQuery(
+  const { data: balance, isLoading } = useGetApiCloudWalletGetBalanceQuery(
     null as any,
     { refetchOnMountOrArgChange: true }
   );

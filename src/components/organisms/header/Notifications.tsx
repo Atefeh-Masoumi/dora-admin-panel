@@ -15,13 +15,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useGetPortalPanelNotificationShortListQuery } from "src/app/services/api.generated";
+import { useGetApiCloudNotificationShortListQuery } from "src/app/services/api.generated";
 import { EmptyNotificationSvg } from "src/components/atoms/svg/EmptyNotifSvg";
 import NotificationSvg from "src/components/atoms/svg/NotificationSvg";
 
 export const Notifications: FC = () => {
   const { data: notifications, isLoading } =
-    useGetPortalPanelNotificationShortListQuery();
+    useGetApiCloudNotificationShortListQuery();
 
   const [open, setOpen] = useState(false);
 

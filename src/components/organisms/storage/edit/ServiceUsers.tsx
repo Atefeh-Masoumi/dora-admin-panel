@@ -3,12 +3,12 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { EditRabbitContext } from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
+import { EditRabbitContext } from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
 import { rabbitUserTableStruct } from "src/components/organisms/rabbit/edit/users/tables/struct";
 import { RabbitUserTableRow } from "src/components/organisms/rabbit/edit/users/tables/RabbitUserTableRow";
 import { AddRabbitUserDialog } from "src/components/organisms/rabbit/edit/users/dialogs/AddRabbitUserDialog";
-import { useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery } from "src/app/services/api";
-import { GetPortalRabbitRabbitUserListByRabbitHostIdApiResponse } from "src/app/services/api.generated";
+import { useLazyGetApiRabbitUserListByRabbitHostIdQuery } from "src/app/services/api";
+import { GetApiRabbitUserListByRabbitHostIdApiResponse } from "src/app/services/api.generated";
 
 type ServiceUserPropsType = { row: any };
 
@@ -19,10 +19,10 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
   const closeDialog = () => setShowDialog(false);
 
   const { serverId } = useContext(EditRabbitContext);
-  const [getData, { isLoading }] = useLazyGetPortalRabbitRabbitUserListByRabbitHostIdQuery();
-  const [data, setData] = useState<GetPortalRabbitRabbitUserListByRabbitHostIdApiResponse | null>(
-    null
-  );
+  const [getData, { isLoading }] =
+    useLazyGetApiRabbitUserListByRabbitHostIdQuery();
+  const [data, setData] =
+    useState<GetApiRabbitUserListByRabbitHostIdApiResponse | null>(null);
 
   useEffect(() => {
     if (serverId) {
@@ -36,12 +36,7 @@ export const ServiceUser: FC<ServiceUserPropsType> = ({ row }) => {
 
   return (
     <>
-      <Grid2
-        container
-        spacing={3}
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Grid2 container spacing={3} alignItems="center" justifyContent="center">
         <Grid2 xs={12} md={8}>
           <Stack
             bgcolor="white"

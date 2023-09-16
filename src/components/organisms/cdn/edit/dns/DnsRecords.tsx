@@ -7,12 +7,12 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
 import { ZoneTableRow } from "./tables/DnsTableRow";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
-import { useGetPortalCdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnDnsRecordListByZoneNameQuery } from "src/app/services/api.generated";
 
 export const DnsRecord: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
   const { data: zoneList, isLoading } =
-    useGetPortalCdnDnsRecordListByZoneNameQuery({
+    useGetApiCdnDnsRecordListByZoneNameQuery({
       zoneName: selectedDomain?.zoneName || "",
     });
 

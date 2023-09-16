@@ -10,7 +10,7 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditDomainContext } from "src/components/organisms/domain/edit/context/EditDomainContext";
+import { EditDomainContext } from "src/components/organisms/domain/edit/contexts/EditContext";
 import { DomainInfo } from "src/components/organisms/domain/edit/DomainInfo";
 import { EditDomainInfo } from "src/components/organisms/domain/edit/EditDomainInfo";
 import { EditDomainNs } from "src/components/organisms/domain/edit/EditDomainNs";
@@ -62,19 +62,12 @@ const EditDomain: FC<EditDomainPropsType> = () => {
 
   const [section, setSection] = useState(0);
 
-  const handleChange = (_: SyntheticEvent, newValue: number) => setSection(newValue);
+  const handleChange = (_: SyntheticEvent, newValue: number) =>
+    setSection(newValue);
 
-  const tabArray = [
-    "مشخصات دامنه",
-    "تغییر اطلاعات",
-    "تغییر NS"
-  ];
+  const tabArray = ["مشخصات دامنه", "تغییر اطلاعات", "تغییر NS"];
 
-  const tabPanelArray = [
-    DomainInfo,
-    EditDomainInfo,
-    EditDomainNs
-  ];
+  const tabPanelArray = [DomainInfo, EditDomainInfo, EditDomainNs];
 
   if (!id) return <Navigate to="/domain" />;
 

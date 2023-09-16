@@ -2,7 +2,7 @@ import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { editWebTableStruct } from "./editWebTableStruct";
-import { EditWebContext } from "../context/EditWebContext";
+import { EditWebContext } from "../contexts/EditWebContext";
 
 export const EditWebTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(EditWebContext);

@@ -4,8 +4,8 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { IconButton, Stack } from "@mui/material";
 import { Edit } from "src/components/atoms/svg/EditSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { DeleteLoadBalanceDialog } from "../dialogs/DeleteLoadBalanceDialog";
-import { AddLoadBalanceDialog } from "../dialogs/AddLoadBalanceDialog";
+import { DeleteLoadBalanceDialog } from "../dialogs/DeleteDialog";
+import { AddLoadBalanceDialog } from "../dialogs/AddDialog";
 
 export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const handleOpenDelete = () => setOpenDelete(true);

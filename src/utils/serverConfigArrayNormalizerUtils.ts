@@ -1,4 +1,4 @@
-import { GetPortalPanelHostProductListByProductCategoryIdApiResponse } from "src/app/services/api.generated";
+import { GetApiCloudHostProductListByProductCategoryIdApiResponse } from "src/app/services/api.generated";
 
 export type normalizedServerConfigArray = {
   productBundleId: number;
@@ -11,7 +11,7 @@ export type normalizedServerConfigArray = {
 
 export const serverConfigArrayNormalizerUtils = (
   originalArray:
-    | GetPortalPanelHostProductListByProductCategoryIdApiResponse
+    | GetApiCloudHostProductListByProductCategoryIdApiResponse
     | undefined
 ) => {
   if (!originalArray || originalArray.length === 0) return [];

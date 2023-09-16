@@ -10,7 +10,7 @@ import {
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useParams } from "react-router";
-import { useGetPortalDomainGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiDomainGetByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -47,7 +47,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetPortalDomainGetByIdQuery({
+  } = useGetApiDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -56,15 +56,13 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     [getDataFetching, getDataLoading]
   );
 
-  const isActive = useMemo(() => domainData?.statusId === 2, [domainData?.statusId]);
+  const isActive = useMemo(
+    () => domainData?.statusId === 2,
+    [domainData?.statusId]
+  );
 
   return (
-    <Grid2
-      container
-      spacing={3}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Grid2 container spacing={3} alignItems="center" justifyContent="center">
       <Grid2 xs={12} md={8}>
         <Paper
           component={Stack}

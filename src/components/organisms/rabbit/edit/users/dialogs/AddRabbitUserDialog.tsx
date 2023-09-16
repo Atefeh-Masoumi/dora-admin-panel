@@ -13,8 +13,8 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { EditRabbitContext } from "src/components/organisms/rabbit/edit/context/EditRabbitContext";
-import { usePostPortalRabbitRabbitUserCreateMutation } from "src/app/services/api.generated";
+import { EditRabbitContext } from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
+import { usePostApiRabbitUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 
 const formInitialValues = {
@@ -35,7 +35,7 @@ export const AddRabbitUserDialog: FC<AddRabbitUserDialogPropsType> = ({
   onClose,
 }) => {
   const [createRabbitUserCreate, { isLoading: createRabbitUserLoading }] =
-    usePostPortalRabbitRabbitUserCreateMutation();
+    usePostApiRabbitUserCreateMutation();
 
   const { serverId } = useContext(EditRabbitContext);
 

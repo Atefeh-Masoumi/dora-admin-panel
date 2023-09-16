@@ -3,14 +3,17 @@ import { useNavigate } from "react-router";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import { AddServerContext, addServerStepsType } from "src/components/organisms/vm/add/contexts/AddVmContext";
-import { AddVmStepper } from "src/components/organisms/vm/add/AddVmStepper";
-import { SelectDataCenter } from "src/components/organisms/vm/add/addVmSteps/SelectDataCenter";
-import { SelectOS } from "src/components/organisms/vm/add/addVmSteps/SelectOS";
-import { SelectConfig } from "src/components/organisms/vm/add/addVmSteps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/vm/add/addVmSteps/ServerInfo";
+import {
+  AddServerContext,
+  addServerStepsType,
+} from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { AddVmStepper } from "src/components/organisms/vm/add/AddStepper";
+import { SelectDataCenter } from "src/components/organisms/vm/add/steps/SelectDataCenter";
+import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
+import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
+import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostPortalVmVmCreateMutation } from "src/app/services/api.generated";
+import { usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
 
 const AddVm: FC = () => {
   const {
@@ -33,7 +36,7 @@ const AddVm: FC = () => {
     setStep((step - 1) as addServerStepsType);
   };
 
-  const [createCloudServer, { isLoading }] = usePostPortalVmVmCreateMutation();
+  const [createCloudServer, { isLoading }] = usePostApiVmHostCreateMutation();
 
   const submitHandler = () => {
     if (
@@ -86,7 +89,12 @@ const AddVm: FC = () => {
         dataCenter && osVersion && serverConfig && setStep(4);
         break;
       case 4:
-        dataCenter && osVersion && serverConfig && serverName && serverPassword && submitHandler();
+        dataCenter &&
+          osVersion &&
+          serverConfig &&
+          serverName &&
+          serverPassword &&
+          submitHandler();
         break;
       default:
         break;

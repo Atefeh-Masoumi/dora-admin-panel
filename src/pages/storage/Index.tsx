@@ -8,7 +8,7 @@ import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
-import { useGetPortalStorageHostListQuery } from "src/app/services/api.generated";
+import { useGetApiStorageHostListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -30,7 +30,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalStorageHostListQuery();
+  } = useGetApiStorageHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

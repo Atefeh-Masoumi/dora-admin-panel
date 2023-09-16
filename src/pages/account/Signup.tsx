@@ -14,7 +14,7 @@ import {
   passwordValidatorRegex,
   phoneNumberValidator,
 } from "src/utils/formValidator";
-import { usePostPortalAccountRegisterMutation } from "src/app/services/api.generated";
+import { usePostApiAccountRegisterMutation } from "src/app/services/api.generated";
 import { useNavigate } from "react-router-dom";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -50,7 +50,7 @@ const formValidation = yup.object().shape({
 const Signup: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const [registerUser, { isLoading }] = usePostPortalAccountRegisterMutation();
+  const [registerUser, { isLoading }] = usePostApiAccountRegisterMutation();
 
   const navigate = useNavigate();
 

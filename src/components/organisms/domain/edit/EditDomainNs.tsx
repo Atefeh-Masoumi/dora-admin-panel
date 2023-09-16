@@ -6,7 +6,10 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
-import { useGetPortalDomainGetByIdQuery, usePutPortalDomainChangeNsMutation } from "src/app/services/api.generated";
+import {
+  useGetApiDomainGetByIdQuery,
+  usePutApiDomainChangeNsMutation,
+} from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 
 type EditDomainNsPropsType = {};
@@ -18,7 +21,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetPortalDomainGetByIdQuery({
+  } = useGetApiDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -29,20 +32,17 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
 
   const navigate = useNavigate();
 
-  const [changeNsModel, { isLoading: loadEdit }] = usePutPortalDomainChangeNsMutation();
+  const [changeNsModel, { isLoading: loadEdit }] =
+    usePutApiDomainChangeNsMutation();
 
   const submitHandler = () => {
-    if (
-      !id ||
-      !domainData?.ns1 ||
-      !domainData?.ns2
-    ) return;
+    if (!id || !domainData?.ns1 || !domainData?.ns2) return;
 
     changeNsModel({
       changeNsModel: {
         id: parseInt(id),
         ns1: domainData?.ns1,
-        ns2: domainData?.ns2
+        ns2: domainData?.ns2,
       },
     })
       .unwrap()
@@ -54,12 +54,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
   };
 
   return (
-    <Grid2
-      container
-      spacing={3}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Grid2 container spacing={3} alignItems="center" justifyContent="center">
       <Grid2 xs={12} md={8}>
         <Paper
           component={Stack}
@@ -133,7 +128,11 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
                   loading={isLoading || loadEdit}
                   variant="contained"
                   onClick={submitHandler}
-                  sx={{ width: { xs: "100%", sm: "auto" }, px: { sm: 8 }, py: 2.1 }}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    px: { sm: 8 },
+                    py: 2.1,
+                  }}
                 >
                   ذخیره اطلاعات
                 </LoadingButton>

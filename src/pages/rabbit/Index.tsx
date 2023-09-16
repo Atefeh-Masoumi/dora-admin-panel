@@ -1,5 +1,5 @@
 import { FC, useState, useMemo, createContext } from "react";
-import { useGetPortalRabbitRabbitHostListQuery } from "src/app/services/api.generated";
+import { useGetApiRabbitHostListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -30,7 +30,7 @@ const RabbitManagement: FC<RabbitManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetPortalRabbitRabbitHostListQuery();
+  } = useGetApiRabbitHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

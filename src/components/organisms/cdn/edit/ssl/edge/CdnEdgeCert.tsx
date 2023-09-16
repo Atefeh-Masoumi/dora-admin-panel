@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
-  usePostPortalCdnEdgeCertCreateMutation,
-  useGetPortalCdnEdgeCertGetByZoneNameQuery,
+  usePostApiCdnEdgeCertCreateMutation,
+  useGetApiCdnEdgeCertGetByZoneNameQuery,
 } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -13,12 +13,11 @@ import { LoadingButton } from "@mui/lab";
 export const CdnEdgeCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const [createLicense, { isLoading: loadingCreate }] =
-    usePostPortalCdnEdgeCertCreateMutation();
+    usePostApiCdnEdgeCertCreateMutation();
 
-  const { data: edgeCert, isLoading } =
-    useGetPortalCdnEdgeCertGetByZoneNameQuery({
-      zoneName: selectedDomain?.zoneName || "",
-    });
+  const { data: edgeCert, isLoading } = useGetApiCdnEdgeCertGetByZoneNameQuery({
+    zoneName: selectedDomain?.zoneName || "",
+  });
 
   const submit = () => {
     createLicense({
