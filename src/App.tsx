@@ -25,7 +25,7 @@ export const App: FC = () => {
           rtl
           autoClose={10000}
           theme="colored"
-          position="bottom-center"
+          position="top-center"
         />
       </ThemeProvider>
     </CacheProvider>

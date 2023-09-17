@@ -65,25 +65,25 @@ const items = [
     value: "wallets",
     label: "گزارش کیف پول",
     icon: WalletSvg,
-    link: "/portal/wallet",
+    link: "/cloud/wallet",
   },
   {
     value: "invoices",
     label: "فاکتور های فروش",
     icon: InvoiceSvg,
-    link: "/portal/wallet/invoices",
+    link: "/cloud/wallet/invoice",
   },
   {
     value: "payments",
     label: "گزارش پرداخت ها",
     icon: TransactionSvg,
-    link: "/portal/wallet/payments",
+    link: "/cloud/wallet/payment",
   },
   {
     value: "user-bill",
     label: "گزارش محاسبات",
     icon: CalculateSvg,
-    link: "/portal/wallet/bill",
+    link: "/cloud/wallet/bill",
   },
 ];
 

@@ -39,7 +39,7 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش محاسبات
         </Typography>
-        <Button color="secondary" href="/portal/wallet/bill">
+        <Button color="secondary" href="/cloud/wallet/bill">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -125,7 +125,7 @@ export const ShortUserBill: FC = () => {
                           {totalPrice && priceToPersian(totalPrice)}
                         </Typography>
                         <IconButton
-                          onClick={() => navigate(`/portal/wallet/bill/${id}`)}
+                          onClick={() => navigate(`/cloud/wallet/bill/${id}`)}
                         >
                           <KeyboardArrowLeftIcon color="secondary" />
                         </IconButton>

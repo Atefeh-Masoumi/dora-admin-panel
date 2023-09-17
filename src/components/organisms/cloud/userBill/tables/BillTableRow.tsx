@@ -13,7 +13,7 @@ export const BillsTableRow: FC<{ row: any }> = ({ row }) => {
       tabIndex={-1}
       key={row.id}
       sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/portal/wallet/bill/${row.id}`)}
+      onClick={() => navigate(`/cloud/wallet/bill/${row.id}`)}
     >
       {billsTableStruct.map((column) => {
         const value = row[column.id];
@@ -88,7 +88,7 @@ export const BillTableRow: FC<{ row: any }> = ({ row }) => {
             align="center"
             sx={{ px: 10, border: 1, whiteSpace: "nowrap" }}
           >
-            {column.id === "price"? (
+            {column.id === "price" ? (
               <Stack>{text} ریال</Stack>
             ) : (
               <Stack>{text}</Stack>

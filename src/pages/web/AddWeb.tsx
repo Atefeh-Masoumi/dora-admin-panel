@@ -59,7 +59,7 @@ const AddWeb: FC = () => {
         toast.success("سرویس هاست وب با موفقیت ایجاد شد");
         if (res) {
           let a = document.createElement("a");
-          a.href = "/portal/order/" + res;
+          a.href = "/cloud/order/" + res;
           a.click();
         }
       });

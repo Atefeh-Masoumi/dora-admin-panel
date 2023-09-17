@@ -44,7 +44,7 @@ const Header: FC<HeaderPropsType> = ({
 
   const navigate = useNavigate();
 
-  const goToCalculator = () => navigate("/portal/calculator");
+  const goToCalculator = () => navigate("/cloud/calculator");
 
   const closeMenuHandler = () => setAnchorEl(null);
   const openMenuHandler = ({
@@ -77,7 +77,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/portal/supports");
+          navigate("/cloud/supports");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
@@ -99,7 +99,7 @@ const Header: FC<HeaderPropsType> = ({
           }}
           onClick={() => {
             closeMenuHandler();
-            navigate("/portal/orders");
+            navigate("/cloud/orders");
           }}
         >
           <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />

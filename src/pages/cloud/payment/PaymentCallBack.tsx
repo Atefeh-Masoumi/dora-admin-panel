@@ -40,7 +40,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
     return result;
   }, [paymentInfo.paymentStatusId]);
 
-  const closeHandler = () => navigate("/portal/wallet/payments");
+  const closeHandler = () => navigate("/cloud/wallet/payment");
 
   if (!id) return <></>;
 

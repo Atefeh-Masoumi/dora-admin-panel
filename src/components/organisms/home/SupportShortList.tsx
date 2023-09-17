@@ -38,7 +38,7 @@ export const ShortTickets: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           تیکت های من
         </Typography>
-        <Button color="secondary" href="/portal/supports">
+        <Button color="secondary" href="/cloud/supports">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -116,7 +116,7 @@ export const ShortTickets: FC = () => {
                         </Typography>
                       </CustomTooltip>
                       <IconButton
-                        onClick={() => navigate(`/portal/support/${id}`)}
+                        onClick={() => navigate(`/cloud/support/${id}`)}
                       >
                         <KeyboardArrowLeftIcon color="secondary" />
                       </IconButton>

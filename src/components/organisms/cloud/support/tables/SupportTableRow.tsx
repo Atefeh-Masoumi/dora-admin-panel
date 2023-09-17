@@ -13,7 +13,7 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
       tabIndex={-1}
       key={row.usedCode}
       sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/portal/support/${row.id}`)}
+      onClick={() => navigate(`/cloud/support/${row.id}`)}
     >
       {supportTableStruct.map((column) => {
         const value = row[column.id];

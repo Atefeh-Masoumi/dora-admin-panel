@@ -133,21 +133,21 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
     {
       Icon: EmptyWalletSvg,
-      link: "/portal/wallet",
+      link: "/cloud/wallet",
       subList: [
-        { title: "گزارش کیف پول", link: "/portal/wallet" },
-        { title: "فاکتور های فروش", link: "/portal/wallet/invoices" },
-        { title: "گزارش پرداخت ها", link: "/portal/wallet/payments" },
-        { title: "گزارش محاسبات", link: "/portal/wallet/bill" },
+        { title: "گزارش کیف پول", link: "/cloud/wallet" },
+        { title: "فاکتور های فروش", link: "/cloud/wallet/invoice" },
+        { title: "گزارش پرداخت ها", link: "/cloud/wallet/payment" },
+        { title: "گزارش محاسبات", link: "/cloud/wallet/bill" },
       ],
     },
     {
       Icon: HeadphoneSvg,
-      link: "/portal/supports",
+      link: "/cloud/supports",
     },
     {
       Icon: CalculatorSvg,
-      link: "/portal/calculator",
+      link: "/cloud/calculator",
     },
   ];
 
@@ -169,14 +169,14 @@ export const Sidebar: FC<SidebarPropsType> = () => {
   const hideSubLists = useMemo(
     () =>
       pathname === "/" ||
-      pathname === "/portal/calculator" ||
-      pathname === "/portal/supports" ||
-      pathname === "/portal/profile" ||
-      pathname === "/portal/setting" ||
-      pathname === "/portal/host-products" ||
-      pathname === "/portal/orders" ||
-      pathname === "/portal/referral" ||
-      pathname === "/portal/notifications",
+      pathname === "/cloud/calculator" ||
+      pathname === "/cloud/supports" ||
+      pathname === "/cloud/profile" ||
+      pathname === "/cloud/setting" ||
+      pathname === "/cloud/host-products" ||
+      pathname === "/cloud/orders" ||
+      pathname === "/cloud/referral" ||
+      pathname === "/cloud/notifications",
     [pathname]
   );
 

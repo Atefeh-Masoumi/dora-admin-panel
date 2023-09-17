@@ -126,42 +126,42 @@ const Router: FC = () => {
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
-            path="/portal/calculator"
+            path="/cloud/calculator"
             element={mainTemplate(Calculator, {
               pageTitle: "ماشین حساب",
             })}
           />
           <Route
-            path="/portal/profile"
+            path="/cloud/profile"
             element={mainTemplate(Profile, {
               pageTitle: "حساب کاربری",
             })}
           />
           <Route
-            path="/portal/setting"
+            path="/cloud/setting"
             element={mainTemplate(Setting, {
               pageTitle: "تنظیمات",
             })}
           />
           <Route
-            path="/portal/referral"
+            path="/cloud/referral"
             element={mainTemplate(Referrals, {
               pageTitle: "کد معرف",
             })}
           />
           <Route
-            path="/portal/referral/:id"
+            path="/cloud/referral/:id"
             element={callbackTemplate(Referral)}
           />
           <Route path="/referral/:id" element={callbackTemplate(Referral)} />
           <Route
-            path="/portal/host-products"
+            path="/cloud/host-products"
             element={mainTemplate(HostProducts, {
               pageTitle: "سرویس های من",
             })}
           />
           <Route
-            path="/portal/sales"
+            path="/cloud/sales"
             element={mainTemplate(Sales, {
               link: {
                 text: "بازگشت به داشبورد",
@@ -171,103 +171,103 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/notifications"
+            path="/cloud/notifications"
             element={mainTemplate(Notification, {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
           {/* ======================================= Order ======================================= */}
           <Route
-            path="/portal/orders"
+            path="/cloud/orders"
             element={mainTemplate(Orders, {
               pageTitle: "سبد خرید",
             })}
           />
           <Route
-            path="/portal/order/:id"
+            path="/cloud/order/:id"
             element={mainTemplate(Order, {
               link: {
                 text: "بازگشت به سبد خرید",
-                url: "/portal/orders",
+                url: "/cloud/orders",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/portal/supports"
+            path="/cloud/supports"
             element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
-            path="/portal/support/:id"
+            path="/cloud/support/:id"
             element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: "/cloud/supports",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/portal/support/add-ticket"
+            path="/cloud/support/add-ticket"
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: "/cloud/supports",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
-          <Route path="/portal" element={<Navigate to="/portal/wallet" />} />
+          <Route path="/portal" element={<Navigate to="/cloud/wallet" />} />
           <Route
-            path="/portal/wallet"
+            path="/cloud/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
           <Route
-            path="/portal/wallet/invoices"
+            path="/cloud/wallet/invoice"
             element={mainTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
           />
           <Route
-            path="/portal/wallet/invoice/:id"
+            path="/cloud/wallet/invoice/:id"
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/portal/wallet/invoices",
+                url: "/cloud/wallet/invoice",
               },
               hideSidebar: false,
             })}
           />
           <Route
-            path="/portal/wallet/payments"
+            path="/cloud/wallet/payment"
             element={mainTemplate(Payments, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/portal/payment/:id"
+            path="/cloud/wallet/payment/:id"
             element={mainTemplate(Payment, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/portal/wallet/bill"
+            path="/cloud/wallet/bill"
             element={mainTemplate(Bills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
-            path="/portal/wallet/bill/:id"
+            path="/cloud/wallet/bill/:id"
             element={mainTemplate(Bill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/portal/wallet/bill",
+                url: "/cloud/wallet/bill",
               },
               hideSidebar: false,
             })}
