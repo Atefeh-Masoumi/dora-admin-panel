@@ -12,10 +12,10 @@ import AddServerContextProvider from "src/components/organisms/vm/add/contexts/A
 import EditServerContextProvider from "src/components/organisms/vm/edit/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/add/contexts/AddRabbitContext";
 import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
-import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
-import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
-import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
-import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
+import AddWebContextProvider from "src/components/organisms/web/web/add/contexts/AddWebContext";
+import EditWebContextProvider from "src/components/organisms/web/web/edit/contexts/EditWebContext";
+import AddDomainContextProvider from "src/components/organisms/web/domain/add/contexts/AddContext";
+import EditDomainContextProvider from "src/components/organisms/web/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddWorkspaceContext from "src/components/organisms/platform/add/contexts/AddContext";
@@ -68,13 +68,13 @@ const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbit"));
 const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbit"));
 
-const WebIndex = lazy(() => import("src/pages/web/Index"));
-const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
-const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
+const WebIndex = lazy(() => import("src/pages/web/web/Index"));
+const AddWeb = lazy(() => import("src/pages/web/web/AddWeb"));
+const EditWeb = lazy(() => import("src/pages/web/web/EditWeb"));
 
-const DomainIndex = lazy(() => import("src/pages/domain/Index"));
-const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
-const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
+const DomainIndex = lazy(() => import("src/pages/web/domain/Index"));
+const AddDomain = lazy(() => import("src/pages/web/domain/AddDomain"));
+const EditDomain = lazy(() => import("src/pages/web/domain/EditDomain"));
 
 const StorageIndex = lazy(() => import("src/pages/storage/Index"));
 const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));

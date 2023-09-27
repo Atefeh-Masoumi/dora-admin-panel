@@ -10,9 +10,9 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditWebContext } from "src/components/organisms/web/edit/contexts/EditWebContext";
-import { ServiceInfo } from "src/components/organisms/web/edit/ServiceInfo";
-import { SelectConfig } from "src/components/organisms/web/edit/SelectConfig";
+import { EditWebContext } from "src/components/organisms/web/web/edit/contexts/EditWebContext";
+import { ServiceInfo } from "src/components/organisms/web/web/edit/ServiceInfo";
+import { SelectConfig } from "src/components/organisms/web/web/edit/SelectConfig";
 
 type TabPanelProps = {
   children?: ReactNode;

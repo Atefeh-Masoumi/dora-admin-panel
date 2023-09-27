@@ -199,4 +199,5 @@ export const {
   useLazyGetApiWebGetLoginSessionByIdQuery,
   useLazyGetApiPlatformNamespaceGetLoginByIdQuery,
   useLazyGetApiRabbitUserListByRabbitHostIdQuery,
+  useLazyGetApiDomainGetByIdQuery,
 } = api;

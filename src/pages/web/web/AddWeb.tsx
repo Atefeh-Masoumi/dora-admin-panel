@@ -6,11 +6,11 @@ import { useNavigate } from "react-router";
 import {
   AddWebContext,
   addWebStepsType,
-} from "src/components/organisms/web/add/contexts/AddWebContext";
-import { AddWebStepper } from "src/components/organisms/web/add/AddStepper";
-import { SelectDomain } from "src/components/organisms/web/add/steps/SelectDomain";
-import { SelectDataCenter } from "src/components/organisms/web/add/steps/SelectDataCenter";
-import { SelectConfig } from "src/components/organisms/web/add/steps/SelectConfig";
+} from "src/components/organisms/web/web/add/contexts/AddWebContext";
+import { AddWebStepper } from "src/components/organisms/web/web/add/AddStepper";
+import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectDomain";
+import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
+import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
 import { usePostApiWebCreateMutation } from "src/app/services/api.generated";
 
 const AddWeb: FC = () => {

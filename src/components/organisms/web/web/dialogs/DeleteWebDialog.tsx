@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiWebDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/web/Index";
+import { DataContext } from "src/pages/web/web/Index";
 
 type DeleteWebDialogPropsType = {
   openDialog: boolean;

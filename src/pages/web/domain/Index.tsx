@@ -6,8 +6,8 @@ import { useNavigate } from "react-router";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
-import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
+import { DomainTableRow } from "src/components/organisms/web/domain/tables/DomainTableRow";
+import { domainTableStruct } from "src/components/organisms/web/domain/tables/struct";
 import { useGetApiDomainListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { WebTableRow } from "src/components/organisms/web/tables/WebTableRow";
-import { webTableStruct } from "src/components/organisms/web/tables/struct";
+import { WebTableRow } from "src/components/organisms/web/web/tables/WebTableRow";
+import { webTableStruct } from "src/components/organisms/web/web/tables/struct";
 import { useGetApiWebListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
