@@ -6,12 +6,12 @@ import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 import moment from "jalali-moment";
-import { billTableStruct } from "src/components/organisms/cloud/userBill/tables/struct";
-import { BillTableRow } from "src/components/organisms/cloud/userBill/tables/BillTableRow";
+import { billTableStruct } from "src/components/organisms/cloud/customerBill/tables/billTableStruct";
+import { BillTableRow } from "src/components/organisms/cloud/customerBill/tables/BillTableRow";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiCloudBillGetByIdQuery } from "src/app/services/api.generated";
 
-const downloadFileUrl = baseUrl + "/cloud/bill/download/";
+const downloadFileUrl = baseUrl + "/api/cloud/bill/download/";
 
 const Bill: FC = () => {
   const [downloadFileLoading, setDownloadFileLoading] = useState(false);
@@ -55,7 +55,7 @@ const Bill: FC = () => {
         let objectUrl = window.URL.createObjectURL(blobby);
 
         anchor.href = objectUrl;
-        anchor.download = "report bill " + id;
+        anchor.download = "Customer_Product_Bill_Report_" + id;
         anchor.click();
 
         window.URL.revokeObjectURL(objectUrl);
@@ -138,7 +138,7 @@ const Bill: FC = () => {
           <BaseTable
             struct={billTableStruct}
             RowComponent={BillTableRow}
-            rows={bill?.billItems || []}
+            rows={bill?.customerProductBills || []}
             text="گزارش موجود نیست"
             isLoading={isLoading}
           />

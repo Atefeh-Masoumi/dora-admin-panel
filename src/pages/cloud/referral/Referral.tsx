@@ -24,7 +24,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
         .then((res) => {
           if (!res) return;
           setIsSuccess(res.status || false);
-          setMessage(res.messages || "");
+          // setMessage(res.messages || "");
         });
     } else {
       navigate(-1);

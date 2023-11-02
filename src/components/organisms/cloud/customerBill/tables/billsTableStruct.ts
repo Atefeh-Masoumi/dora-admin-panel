@@ -30,28 +30,3 @@ export const billsTableStruct: columnType[] = [
     format: priceToPersian,
   },
 ];
-
-export const billTableStruct: columnType[] = [
-  {
-    id: "productCategory",
-    label: "گروه محصول",
-  },
-  {
-    id: "userProduct",
-    label: "نام محصول",
-  },
-  {
-    id: "createDate",
-    label: "تاریخ ایجاد",
-  },
-  {
-    id: "duration",
-    label: "میزان مصرف (دقیقه)",
-    format: priceToPersian,
-  },
-  {
-    id: "price",
-    label: "مبلغ",
-    format: priceToPersian,
-  },
-];

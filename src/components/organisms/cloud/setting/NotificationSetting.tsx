@@ -19,7 +19,7 @@ export const DataContext = createContext<DataContextValueType>({
   refetchOnClick: () => null,
 });
 
-export const SecuritySetting: FC = () => {
+export const NotificationSetting: FC = () => {
   const { data, refetch, isLoading } =
     useGetApiAccountProfileGetNotificationStatusQuery();
 

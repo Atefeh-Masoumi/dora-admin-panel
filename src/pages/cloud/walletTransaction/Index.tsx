@@ -1,19 +1,18 @@
 import { FC, useState } from "react";
-import { Divider, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Divider, Stack, Typography } from "@mui/material";
 import moment from "jalali-moment";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { BillsTableRow } from "src/components/organisms/cloud/userBill/tables/BillTableRow";
-import { billsTableStruct } from "src/components/organisms/cloud/userBill/tables/struct";
+import { walletTableStruct } from "src/components/organisms/cloud/walletTransaction/tables/struct";
+import { WalletTableRow } from "src/components/organisms/cloud/walletTransaction/tables/WalletTableRow";
 import {
-  useGetApiCloudBillListQuery,
-  BillListResponse,
+  useGetApiCloudWalletListQuery,
+  WalletTransactionListResponse,
 } from "src/app/services/api.generated";
 
-const UserBills: FC = () => {
-  const { data: userBill, isLoading } = useGetApiCloudBillListQuery();
+const Wallet: FC = () => {
+  const { data: walletList, isLoading } = useGetApiCloudWalletListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
@@ -23,12 +22,15 @@ const UserBills: FC = () => {
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
 
   const filteredList =
-    userBill?.filter(
-      (bill: BillListResponse) =>
-        bill.id?.toString().includes(search) &&
+    walletList?.filter(
+      (report: WalletTransactionListResponse) =>
+        report.id?.toString().includes(search) &&
         (!dateFrom ||
-          (bill.billDate && timeStringToDate(bill.billDate) > dateFrom)) &&
-        (!dateTo || (bill.billDate && timeStringToDate(bill.billDate) < dateTo))
+          (report.transactionDate &&
+            timeStringToDate(report.transactionDate) > dateFrom)) &&
+        (!dateTo ||
+          (report.transactionDate &&
+            timeStringToDate(report.transactionDate) < dateTo))
     ) || [];
 
   return (
@@ -46,18 +48,18 @@ const UserBills: FC = () => {
           width="100%"
         >
           <Typography variant="text1" color="secondary" whiteSpace="nowrap">
-            لیست محاسبات
+            لیست گزارش ها
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
-              placeholder="جستجو در شماره گزارش"
+              placeholder="جستجو در شماره تراکنش"
               onChange={(text) => setSearch(text)}
               fullWidth
             />
           </Stack>
           <Stack display={{ xs: "none", md: "flex" }}>
             <SearchBox
-              placeholder="جستجو در شماره گزارش"
+              placeholder="جستجو در شماره تراکنش"
               onChange={(text) => setSearch(text)}
             />
           </Stack>
@@ -69,7 +71,7 @@ const UserBills: FC = () => {
             setValue={setDateFrom}
           />
           <CustomDatePicker
-            placeholder="از تاریخ"
+            placeholder="تا تاریخ"
             value={dateTo}
             setValue={setDateTo}
           />
@@ -78,10 +80,10 @@ const UserBills: FC = () => {
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>
         <BaseTable
-          struct={billsTableStruct}
-          RowComponent={BillsTableRow}
-          rows={filteredList}
-          text="در حال حاضر گزارش ندارید"
+          struct={walletTableStruct}
+          RowComponent={WalletTableRow}
+          rows={filteredList || []}
+          text="در حال حاضر تراکنشی ندارید"
           isLoading={isLoading}
           initialOrder={1}
         />
@@ -90,4 +92,4 @@ const UserBills: FC = () => {
   );
 };
 
-export default UserBills;
+export default Wallet;

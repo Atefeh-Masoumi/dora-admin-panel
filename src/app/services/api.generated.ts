@@ -107,30 +107,6 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/datacenter/bare-metal/list` }),
     }),
-    getApiCloudBillList: build.query<
-      GetApiCloudBillListApiResponse,
-      GetApiCloudBillListApiArg
-    >({
-      query: () => ({ url: `/api/cloud/bill/list` }),
-    }),
-    getApiCloudBillBillShortList: build.query<
-      GetApiCloudBillBillShortListApiResponse,
-      GetApiCloudBillBillShortListApiArg
-    >({
-      query: () => ({ url: `/api/cloud/bill/bill-short-list` }),
-    }),
-    getApiCloudBillGetById: build.query<
-      GetApiCloudBillGetByIdApiResponse,
-      GetApiCloudBillGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/bill/get/${queryArg.id}` }),
-    }),
-    getApiCloudBillDownloadById: build.query<
-      GetApiCloudBillDownloadByIdApiResponse,
-      GetApiCloudBillDownloadByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/bill/download/${queryArg.id}` }),
-    }),
     getApiCloudBusinessUnitList: build.query<
       GetApiCloudBusinessUnitListApiResponse,
       GetApiCloudBusinessUnitListApiArg
@@ -360,6 +336,38 @@ export const api = createApi({
         body: queryArg.editCustomerTypeModel,
       }),
     }),
+    getApiCloudBillList: build.query<
+      GetApiCloudBillListApiResponse,
+      GetApiCloudBillListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/bill/list` }),
+    }),
+    getApiCloudBillBillShortList: build.query<
+      GetApiCloudBillBillShortListApiResponse,
+      GetApiCloudBillBillShortListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/bill/bill-short-list` }),
+    }),
+    getApiCloudBillGetById: build.query<
+      GetApiCloudBillGetByIdApiResponse,
+      GetApiCloudBillGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/cloud/bill/get/${queryArg.id}` }),
+    }),
+    getApiCloudBillDownloadById: build.query<
+      GetApiCloudBillDownloadByIdApiResponse,
+      GetApiCloudBillDownloadByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/cloud/bill/download/${queryArg.id}` }),
+    }),
+    getApiCloudHostProductListByProductCategoryId: build.query<
+      GetApiCloudHostProductListByProductCategoryIdApiResponse,
+      GetApiCloudHostProductListByProductCategoryIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cloud/host-product/list/${queryArg.productCategoryId}`,
+      }),
+    }),
     getApiCloudDashboardUsageByCategoryId: build.query<
       GetApiCloudDashboardUsageByCategoryIdApiResponse,
       GetApiCloudDashboardUsageByCategoryIdApiArg
@@ -524,14 +532,6 @@ export const api = createApi({
       GetPortalIndexApiArg
     >({
       query: () => ({ url: `/portal/index` }),
-    }),
-    getApiCloudHostProductListByProductCategoryId: build.query<
-      GetApiCloudHostProductListByProductCategoryIdApiResponse,
-      GetApiCloudHostProductListByProductCategoryIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/host-product/list/${queryArg.productCategoryId}`,
-      }),
     }),
     getApiCloudInvoiceList: build.query<
       GetApiCloudInvoiceListApiResponse,
@@ -932,13 +932,11 @@ export const api = createApi({
         body: queryArg.body,
       }),
     }),
-    getApiCloudProductListByProductCategoryId: build.query<
-      GetApiCloudProductListByProductCategoryIdApiResponse,
-      GetApiCloudProductListByProductCategoryIdApiArg
+    getApiCloudProductCategoryList: build.query<
+      GetApiCloudProductCategoryListApiResponse,
+      GetApiCloudProductCategoryListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/cloud/product/list/${queryArg.productCategoryId}`,
-      }),
+      query: () => ({ url: `/api/cloud/product-category/list` }),
     }),
     getApiCloudProductBundleListByProductCategoryId: build.query<
       GetApiCloudProductBundleListByProductCategoryIdApiResponse,
@@ -948,11 +946,13 @@ export const api = createApi({
         url: `/api/cloud/product-bundle/list/${queryArg.productCategoryId}`,
       }),
     }),
-    getApiCloudProductCategoryList: build.query<
-      GetApiCloudProductCategoryListApiResponse,
-      GetApiCloudProductCategoryListApiArg
+    getApiCloudProductListByProductCategoryId: build.query<
+      GetApiCloudProductListByProductCategoryIdApiResponse,
+      GetApiCloudProductListByProductCategoryIdApiArg
     >({
-      query: () => ({ url: `/api/cloud/product-category/list` }),
+      query: (queryArg) => ({
+        url: `/api/cloud/product/list/${queryArg.productCategoryId}`,
+      }),
     }),
     getApiAccountProfileGet: build.query<
       GetApiAccountProfileGetApiResponse,
@@ -1476,17 +1476,17 @@ export const api = createApi({
         body: queryArg.createVpcNetworkModel,
       }),
     }),
-    getApiCloudWalletList: build.query<
-      GetApiCloudWalletListApiResponse,
-      GetApiCloudWalletListApiArg
-    >({
-      query: () => ({ url: `/api/cloud/wallet/list` }),
-    }),
     getApiCloudWalletGetBalance: build.query<
       GetApiCloudWalletGetBalanceApiResponse,
       GetApiCloudWalletGetBalanceApiArg
     >({
       query: () => ({ url: `/api/cloud/wallet/get-balance` }),
+    }),
+    getApiCloudWalletList: build.query<
+      GetApiCloudWalletListApiResponse,
+      GetApiCloudWalletListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/wallet/list` }),
     }),
     getApiWebList: build.query<GetApiWebListApiResponse, GetApiWebListApiArg>({
       query: () => ({ url: `/api/web/list` }),
@@ -1606,21 +1606,6 @@ export type DeleteApiCdnApiGatewayDeleteByIdApiArg = {
 export type GetApiDatacenterBareMetalListApiResponse =
   /** status 200 Success */ BareMetalListResponse[];
 export type GetApiDatacenterBareMetalListApiArg = void;
-export type GetApiCloudBillListApiResponse =
-  /** status 200 Success */ BillListResponse[];
-export type GetApiCloudBillListApiArg = void;
-export type GetApiCloudBillBillShortListApiResponse =
-  /** status 200 Success */ BillShortListResponse[];
-export type GetApiCloudBillBillShortListApiArg = void;
-export type GetApiCloudBillGetByIdApiResponse =
-  /** status 200 Success */ GetBillResponse;
-export type GetApiCloudBillGetByIdApiArg = {
-  id: number;
-};
-export type GetApiCloudBillDownloadByIdApiResponse = unknown;
-export type GetApiCloudBillDownloadByIdApiArg = {
-  id: number;
-};
 export type GetApiCloudBusinessUnitListApiResponse =
   /** status 200 Success */ BusinessUnitListResponse[];
 export type GetApiCloudBusinessUnitListApiArg = void;
@@ -1730,6 +1715,26 @@ export type PutApiCloudCustomerEditCustomerTypeApiResponse = unknown;
 export type PutApiCloudCustomerEditCustomerTypeApiArg = {
   editCustomerTypeModel: EditCustomerTypeModel;
 };
+export type GetApiCloudBillListApiResponse =
+  /** status 200 Success */ BillListResponse[];
+export type GetApiCloudBillListApiArg = void;
+export type GetApiCloudBillBillShortListApiResponse =
+  /** status 200 Success */ BillShortListResponse[];
+export type GetApiCloudBillBillShortListApiArg = void;
+export type GetApiCloudBillGetByIdApiResponse =
+  /** status 200 Success */ GetBillResponse;
+export type GetApiCloudBillGetByIdApiArg = {
+  id: number;
+};
+export type GetApiCloudBillDownloadByIdApiResponse = unknown;
+export type GetApiCloudBillDownloadByIdApiArg = {
+  id: number;
+};
+export type GetApiCloudHostProductListByProductCategoryIdApiResponse =
+  /** status 200 Success */ HostProductListResponse[];
+export type GetApiCloudHostProductListByProductCategoryIdApiArg = {
+  productCategoryId: number;
+};
 export type GetApiCloudDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
 export type GetApiCloudDashboardUsageByCategoryIdApiArg = {
@@ -1814,11 +1819,6 @@ export type PostApiDomainResendVerificationByIdApiArg = {
 };
 export type GetPortalIndexApiResponse = unknown;
 export type GetPortalIndexApiArg = void;
-export type GetApiCloudHostProductListByProductCategoryIdApiResponse =
-  /** status 200 Success */ HostProductListResponse[];
-export type GetApiCloudHostProductListByProductCategoryIdApiArg = {
-  productCategoryId: number;
-};
 export type GetApiCloudInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiCloudInvoiceListApiArg = void;
@@ -2040,19 +2040,19 @@ export type PostApiCloudPaymentSepCallBackApiArg = {
     HashedCardNumber?: string;
   };
 };
-export type GetApiCloudProductListByProductCategoryIdApiResponse =
+export type GetApiCloudProductCategoryListApiResponse =
   /** status 200 Success */ ProductListResponse[];
-export type GetApiCloudProductListByProductCategoryIdApiArg = {
-  productCategoryId: number;
-};
+export type GetApiCloudProductCategoryListApiArg = void;
 export type GetApiCloudProductBundleListByProductCategoryIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
 export type GetApiCloudProductBundleListByProductCategoryIdApiArg = {
   productCategoryId: number;
 };
-export type GetApiCloudProductCategoryListApiResponse =
-  /** status 200 Success */ ProductCategoryListResponse[];
-export type GetApiCloudProductCategoryListApiArg = void;
+export type GetApiCloudProductListByProductCategoryIdApiResponse =
+  /** status 200 Success */ ProductItemListResponse[];
+export type GetApiCloudProductListByProductCategoryIdApiArg = {
+  productCategoryId: number;
+};
 export type GetApiAccountProfileGetApiResponse =
   /** status 200 Success */ GetProfileResponse;
 export type GetApiAccountProfileGetApiArg = void;
@@ -2306,12 +2306,12 @@ export type PostApiVpcNetworkCreateApiResponse = unknown;
 export type PostApiVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
 };
-export type GetApiCloudWalletListApiResponse =
-  /** status 200 Success */ WalletListResponse[];
-export type GetApiCloudWalletListApiArg = void;
 export type GetApiCloudWalletGetBalanceApiResponse =
   /** status 200 Success */ number;
 export type GetApiCloudWalletGetBalanceApiArg = void;
+export type GetApiCloudWalletListApiResponse =
+  /** status 200 Success */ WalletTransactionListResponse[];
+export type GetApiCloudWalletListApiArg = void;
 export type GetApiWebListApiResponse =
   /** status 200 Success */ WebHostListResponse[];
 export type GetApiWebListApiArg = void;
@@ -2360,7 +2360,6 @@ export type RegisterModel = {
   phoneNumber: string;
   email: string;
   password: string;
-  referralCode?: string | null;
 };
 export type ForgotModel = {
   email: string;
@@ -2418,36 +2417,8 @@ export type BareMetalListResponse = {
   id?: number;
   name?: string | null;
   datacenter?: string | null;
-  rackId?: number;
-  rack?: string | null;
-};
-export type BillListResponse = {
-  id?: number;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
-};
-export type BillShortListResponse = {
-  id?: number;
-  billDate?: string;
-  totalPrice?: number;
-};
-export type BillItemsModel = {
-  productCategory?: string | null;
-  userProduct?: string | null;
-  createDate?: string;
-  price?: number;
-  duration?: number;
-};
-export type GetBillResponse = {
-  id?: number;
-  name?: string | null;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
-  billItems?: BillItemsModel[] | null;
+  datacenterRackId?: number;
+  datacenterRack?: string | null;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2539,8 +2510,8 @@ export type CoLocationListResponse = {
   id?: number;
   name?: string | null;
   datacenter?: string | null;
-  rackId?: number;
-  rack?: string | null;
+  datacenterRackId?: number;
+  datacenterRack?: string | null;
 };
 export type CommissionListResponse = {
   id?: number;
@@ -2565,6 +2536,49 @@ export type EditCustomerModel = {
 };
 export type EditCustomerTypeModel = {
   isLegal?: boolean;
+};
+export type BillListResponse = {
+  id?: number;
+  billDate?: string;
+  netPrice?: number;
+  vat?: number;
+  totalPrice?: number;
+};
+export type BillShortListResponse = {
+  id?: number;
+  billDate?: string;
+  totalPrice?: number;
+};
+export type CustomerProductBillItemModel = {
+  customerProductItem?: string | null;
+  duration?: number;
+  price?: number;
+  fromDate?: string;
+  toDate?: string;
+};
+export type CustomerProductBillModel = {
+  product?: string | null;
+  customerProduct?: string | null;
+  customerProductPrice?: number;
+  fromDate?: string;
+  toDate?: string;
+  customerProductBillItems?: CustomerProductBillItemModel[] | null;
+};
+export type GetBillResponse = {
+  id?: number;
+  name?: string | null;
+  billDate?: string;
+  netPrice?: number;
+  vat?: number;
+  totalPrice?: number;
+  customerProductBills?: CustomerProductBillModel[] | null;
+};
+export type HostProductListResponse = {
+  id?: number;
+  name?: string | null;
+  productName?: string | null;
+  status?: string | null;
+  createDate?: string;
 };
 export type DashboardUsageResponse = {
   data?: number[] | null;
@@ -2715,13 +2729,6 @@ export type ChangeNsModel = {
   id?: number;
   ns1: string;
   ns2: string;
-};
-export type HostProductListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  status?: string | null;
-  createDate?: string;
 };
 export type InvoiceListResponse = {
   id?: number;
@@ -2995,7 +3002,6 @@ export type CreatePaymentModel = {
 export type ProductListResponse = {
   id?: number;
   name?: string | null;
-  price?: number;
 };
 export type ProductBundleListResponse = {
   id?: number;
@@ -3003,9 +3009,10 @@ export type ProductBundleListResponse = {
   description?: string | null;
   price?: number;
 };
-export type ProductCategoryListResponse = {
+export type ProductItemListResponse = {
   id?: number;
   name?: string | null;
+  price?: number;
 };
 export type GetProfileResponse = {
   id?: string;
@@ -3107,7 +3114,7 @@ export type GetReferralResponse = {
 };
 export type JoinReferralResponse = {
   status?: boolean;
-  messages?: string | null;
+  message?: string | null;
 };
 export type JoinReferralModel = {
   referralCode: string;
@@ -3207,7 +3214,6 @@ export type VmListResponse = {
 };
 export type GetVmResponse = {
   id?: number;
-  hostProductId?: number;
   datacenterId?: number;
   name?: string | null;
   status?: string | null;
@@ -3289,7 +3295,7 @@ export type CreateVpcNetworkModel = {
   vpcHostId?: number;
   cidr?: string | null;
 };
-export type WalletListResponse = {
+export type WalletTransactionListResponse = {
   id?: number;
   transactionDate?: string;
   credit?: number;
@@ -3347,10 +3353,6 @@ export const {
   usePutApiCdnApiGatewayEditMutation,
   useDeleteApiCdnApiGatewayDeleteByIdMutation,
   useGetApiDatacenterBareMetalListQuery,
-  useGetApiCloudBillListQuery,
-  useGetApiCloudBillBillShortListQuery,
-  useGetApiCloudBillGetByIdQuery,
-  useGetApiCloudBillDownloadByIdQuery,
   useGetApiCloudBusinessUnitListQuery,
   useGetApiCloudCalculateMonthListQuery,
   useGetApiCdnHostListQuery,
@@ -3378,6 +3380,11 @@ export const {
   useGetApiCloudCustomerGetQuery,
   usePutApiCloudCustomerEditMutation,
   usePutApiCloudCustomerEditCustomerTypeMutation,
+  useGetApiCloudBillListQuery,
+  useGetApiCloudBillBillShortListQuery,
+  useGetApiCloudBillGetByIdQuery,
+  useGetApiCloudBillDownloadByIdQuery,
+  useGetApiCloudHostProductListByProductCategoryIdQuery,
   useGetApiCloudDashboardUsageByCategoryIdQuery,
   useGetApiDatacenterListQuery,
   useGetApiDatacenterIpListByProductCategoryIdAndIdQuery,
@@ -3398,7 +3405,6 @@ export const {
   usePutApiDomainChangeNsMutation,
   usePostApiDomainResendVerificationByIdMutation,
   useGetPortalIndexQuery,
-  useGetApiCloudHostProductListByProductCategoryIdQuery,
   useGetApiCloudInvoiceListQuery,
   useGetApiCloudInvoiceGetByIdQuery,
   useGetApiPlatformDevopsListByIdQuery,
@@ -3447,9 +3453,9 @@ export const {
   usePostApiCloudPaymentCreateMutation,
   usePostApiCloudPaymentPecCallBackMutation,
   usePostApiCloudPaymentSepCallBackMutation,
-  useGetApiCloudProductListByProductCategoryIdQuery,
-  useGetApiCloudProductBundleListByProductCategoryIdQuery,
   useGetApiCloudProductCategoryListQuery,
+  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  useGetApiCloudProductListByProductCategoryIdQuery,
   useGetApiAccountProfileGetQuery,
   useGetApiAccountProfileGetNotificationStatusQuery,
   usePutApiAccountProfileEditMutation,
@@ -3510,8 +3516,8 @@ export const {
   usePostApiVpcHostCreateMutation,
   useGetApiVpcNetworkListByVpcHostIdQuery,
   usePostApiVpcNetworkCreateMutation,
-  useGetApiCloudWalletListQuery,
   useGetApiCloudWalletGetBalanceQuery,
+  useGetApiCloudWalletListQuery,
   useGetApiWebListQuery,
   useGetApiWebGetByIdQuery,
   useGetApiWebGetLoginSessionByIdQuery,

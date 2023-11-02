@@ -38,7 +38,7 @@ const Sales = lazy(() => import("src/pages/cloud/sales/Index"));
 const Profile = lazy(() => import("src/pages/cloud/profile/Index"));
 const Setting = lazy(() => import("src/pages/cloud/setting/Index"));
 const Notification = lazy(() => import("src/pages/cloud/notification/Index"));
-const HostProducts = lazy(() => import("src/pages/cloud/hostProduct/Index"));
+const HostProducts = lazy(() => import("src/pages/cloud/customerProduct/Index"));
 const Supports = lazy(() => import("src/pages/cloud/support/Index"));
 const Support = lazy(() => import("src/pages/cloud/support/Support"));
 const AddSupport = lazy(() => import("src/pages/cloud/support/AddSupport"));
@@ -48,11 +48,11 @@ const Referrals = lazy(() => import("src/pages/cloud/referral/Index"));
 const Referral = lazy(() => import("src/pages/cloud/referral/Referral"));
 const Calculator = lazy(() => import("src/pages/cloud/calculator"));
 
-const Wallet = lazy(() => import("src/pages/cloud/wallet/Index"));
+const Wallet = lazy(() => import("src/pages/cloud/walletTransaction/Index"));
 const Payments = lazy(() => import("src/pages/cloud/payment/Index"));
 const Payment = lazy(() => import("src/pages/cloud/payment/PaymentCallBack"));
-const Bills = lazy(() => import("src/pages/cloud/bill/Index"));
-const Bill = lazy(() => import("src/pages/cloud/bill/Bill"));
+const Bills = lazy(() => import("src/pages/cloud/customerBill/Index"));
+const Bill = lazy(() => import("src/pages/cloud/customerBill/Bill"));
 const Invoices = lazy(() => import("src/pages/cloud/invoice/Index"));
 const Invoice = lazy(() => import("src/pages/cloud/invoice/Invoice"));
 

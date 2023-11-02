@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useState } from "react";
 import { Divider, Stack, Typography, MenuItem } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { serviceTableStruct } from "src/components/organisms/cloud/userService/tables/struct";
-import { ServiceTableRow } from "src/components/organisms/cloud/userService/tables/ServiceTableRow";
+import { serviceTableStruct } from "src/components/organisms/cloud/customerProduct/tables/struct";
+import { ServiceTableRow } from "src/components/organisms/cloud/customerProduct/tables/ServiceTableRow";
 import {
   useGetApiCloudProductCategoryListQuery,
   useGetApiCloudHostProductListByProductCategoryIdQuery,
