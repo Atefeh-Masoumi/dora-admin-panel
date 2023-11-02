@@ -24,7 +24,7 @@ export const DorsaTableCell = styled(TableCell)(() => ({
     color: "secondary",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 12,
   },
   borderRadius: "0 !important",
 }));

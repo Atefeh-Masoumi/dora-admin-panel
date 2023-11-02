@@ -195,7 +195,7 @@ export const {
   useLazyGetApiCloudSupportItemDownloadByIdQuery,
   useLazyGetApiCloudPaymentGetByIdQuery,
   useLazyGetApiCloudBillDownloadByIdQuery,
-  useLazyGetApiCloudHostProductListByProductCategoryIdQuery,
+  useLazyGetApiCloudCustomerProductListByProductIdQuery,
   useLazyGetApiWebGetLoginSessionByIdQuery,
   useLazyGetApiPlatformNamespaceGetLoginByIdQuery,
   useLazyGetApiRabbitUserListByRabbitHostIdQuery,

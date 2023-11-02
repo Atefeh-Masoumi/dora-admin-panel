@@ -9,11 +9,11 @@ import { BillsTableRow } from "src/components/organisms/cloud/customerBill/table
 import { billsTableStruct } from "src/components/organisms/cloud/customerBill/tables/billsTableStruct";
 import {
   useGetApiCloudBillListQuery,
-  BillListResponse,
+  CustomerBillListResponse,
 } from "src/app/services/api.generated";
 
-const UserBills: FC = () => {
-  const { data: userBill, isLoading } = useGetApiCloudBillListQuery();
+const CustomerBills: FC = () => {
+  const { data: customerBill, isLoading } = useGetApiCloudBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
@@ -23,8 +23,8 @@ const UserBills: FC = () => {
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
 
   const filteredList =
-    userBill?.filter(
-      (bill: BillListResponse) =>
+    customerBill?.filter(
+      (bill: CustomerBillListResponse) =>
         bill.id?.toString().includes(search) &&
         (!dateFrom ||
           (bill.billDate && timeStringToDate(bill.billDate) > dateFrom)) &&
@@ -90,4 +90,4 @@ const UserBills: FC = () => {
   );
 };
 
-export default UserBills;
+export default CustomerBills;

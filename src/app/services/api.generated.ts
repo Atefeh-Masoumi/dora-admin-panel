@@ -360,12 +360,12 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/api/cloud/bill/download/${queryArg.id}` }),
     }),
-    getApiCloudHostProductListByProductCategoryId: build.query<
-      GetApiCloudHostProductListByProductCategoryIdApiResponse,
-      GetApiCloudHostProductListByProductCategoryIdApiArg
+    getApiCloudCustomerProductListByProductId: build.query<
+      GetApiCloudCustomerProductListByProductIdApiResponse,
+      GetApiCloudCustomerProductListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/host-product/list/${queryArg.productCategoryId}`,
+        url: `/api/cloud/customer-product/list/${queryArg.productId}`,
       }),
     }),
     getApiCloudDashboardUsageByCategoryId: build.query<
@@ -932,11 +932,11 @@ export const api = createApi({
         body: queryArg.body,
       }),
     }),
-    getApiCloudProductCategoryList: build.query<
-      GetApiCloudProductCategoryListApiResponse,
-      GetApiCloudProductCategoryListApiArg
+    getApiCloudProductList: build.query<
+      GetApiCloudProductListApiResponse,
+      GetApiCloudProductListApiArg
     >({
-      query: () => ({ url: `/api/cloud/product-category/list` }),
+      query: () => ({ url: `/api/cloud/product/list` }),
     }),
     getApiCloudProductBundleListByProductCategoryId: build.query<
       GetApiCloudProductBundleListByProductCategoryIdApiResponse,
@@ -946,12 +946,12 @@ export const api = createApi({
         url: `/api/cloud/product-bundle/list/${queryArg.productCategoryId}`,
       }),
     }),
-    getApiCloudProductListByProductCategoryId: build.query<
-      GetApiCloudProductListByProductCategoryIdApiResponse,
-      GetApiCloudProductListByProductCategoryIdApiArg
+    getApiCloudProductItemListByProductId: build.query<
+      GetApiCloudProductItemListByProductIdApiResponse,
+      GetApiCloudProductItemListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/product/list/${queryArg.productCategoryId}`,
+        url: `/api/cloud/product-item/list/${queryArg.productId}`,
       }),
     }),
     getApiAccountProfileGet: build.query<
@@ -1716,13 +1716,13 @@ export type PutApiCloudCustomerEditCustomerTypeApiArg = {
   editCustomerTypeModel: EditCustomerTypeModel;
 };
 export type GetApiCloudBillListApiResponse =
-  /** status 200 Success */ BillListResponse[];
+  /** status 200 Success */ CustomerBillListResponse[];
 export type GetApiCloudBillListApiArg = void;
 export type GetApiCloudBillBillShortListApiResponse =
-  /** status 200 Success */ BillShortListResponse[];
+  /** status 200 Success */ CustomerBillShortListResponse[];
 export type GetApiCloudBillBillShortListApiArg = void;
 export type GetApiCloudBillGetByIdApiResponse =
-  /** status 200 Success */ GetBillResponse;
+  /** status 200 Success */ GetCustomerBillResponse;
 export type GetApiCloudBillGetByIdApiArg = {
   id: number;
 };
@@ -1730,10 +1730,10 @@ export type GetApiCloudBillDownloadByIdApiResponse = unknown;
 export type GetApiCloudBillDownloadByIdApiArg = {
   id: number;
 };
-export type GetApiCloudHostProductListByProductCategoryIdApiResponse =
-  /** status 200 Success */ HostProductListResponse[];
-export type GetApiCloudHostProductListByProductCategoryIdApiArg = {
-  productCategoryId: number;
+export type GetApiCloudCustomerProductListByProductIdApiResponse =
+  /** status 200 Success */ CustomerProductListResponse[];
+export type GetApiCloudCustomerProductListByProductIdApiArg = {
+  productId: number;
 };
 export type GetApiCloudDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
@@ -2040,18 +2040,18 @@ export type PostApiCloudPaymentSepCallBackApiArg = {
     HashedCardNumber?: string;
   };
 };
-export type GetApiCloudProductCategoryListApiResponse =
+export type GetApiCloudProductListApiResponse =
   /** status 200 Success */ ProductListResponse[];
-export type GetApiCloudProductCategoryListApiArg = void;
+export type GetApiCloudProductListApiArg = void;
 export type GetApiCloudProductBundleListByProductCategoryIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
 export type GetApiCloudProductBundleListByProductCategoryIdApiArg = {
   productCategoryId: number;
 };
-export type GetApiCloudProductListByProductCategoryIdApiResponse =
+export type GetApiCloudProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
-export type GetApiCloudProductListByProductCategoryIdApiArg = {
-  productCategoryId: number;
+export type GetApiCloudProductItemListByProductIdApiArg = {
+  productId: number;
 };
 export type GetApiAccountProfileGetApiResponse =
   /** status 200 Success */ GetProfileResponse;
@@ -2186,8 +2186,8 @@ export type PostApiCloudSupportCreateApiArg = {
     Content: string;
     BusinessUnitId: number;
     SupportSubjectId: number;
-    HostProductId?: number;
-    ProductCategoryId?: number;
+    CustomerProductId?: number;
+    ProductId?: number;
     Attachment?: Blob;
   };
 };
@@ -2537,14 +2537,14 @@ export type EditCustomerModel = {
 export type EditCustomerTypeModel = {
   isLegal?: boolean;
 };
-export type BillListResponse = {
+export type CustomerBillListResponse = {
   id?: number;
   billDate?: string;
   netPrice?: number;
   vat?: number;
   totalPrice?: number;
 };
-export type BillShortListResponse = {
+export type CustomerBillShortListResponse = {
   id?: number;
   billDate?: string;
   totalPrice?: number;
@@ -2564,7 +2564,7 @@ export type CustomerProductBillModel = {
   toDate?: string;
   customerProductBillItems?: CustomerProductBillItemModel[] | null;
 };
-export type GetBillResponse = {
+export type GetCustomerBillResponse = {
   id?: number;
   name?: string | null;
   billDate?: string;
@@ -2573,10 +2573,10 @@ export type GetBillResponse = {
   totalPrice?: number;
   customerProductBills?: CustomerProductBillModel[] | null;
 };
-export type HostProductListResponse = {
+export type CustomerProductListResponse = {
   id?: number;
   name?: string | null;
-  productName?: string | null;
+  product?: string | null;
   status?: string | null;
   createDate?: string;
 };
@@ -3199,7 +3199,7 @@ export type SupportSubjectListResponse = {
   name?: string | null;
 };
 export type SupportSubjectSelectListModel = {
-  productCategoryId?: number;
+  productId?: number;
   businessUnitId?: number;
 };
 export type VmListResponse = {
@@ -3384,7 +3384,7 @@ export const {
   useGetApiCloudBillBillShortListQuery,
   useGetApiCloudBillGetByIdQuery,
   useGetApiCloudBillDownloadByIdQuery,
-  useGetApiCloudHostProductListByProductCategoryIdQuery,
+  useGetApiCloudCustomerProductListByProductIdQuery,
   useGetApiCloudDashboardUsageByCategoryIdQuery,
   useGetApiDatacenterListQuery,
   useGetApiDatacenterIpListByProductCategoryIdAndIdQuery,
@@ -3453,9 +3453,9 @@ export const {
   usePostApiCloudPaymentCreateMutation,
   usePostApiCloudPaymentPecCallBackMutation,
   usePostApiCloudPaymentSepCallBackMutation,
-  useGetApiCloudProductCategoryListQuery,
+  useGetApiCloudProductListQuery,
   useGetApiCloudProductBundleListByProductCategoryIdQuery,
-  useGetApiCloudProductListByProductCategoryIdQuery,
+  useGetApiCloudProductItemListByProductIdQuery,
   useGetApiAccountProfileGetQuery,
   useGetApiAccountProfileGetNotificationStatusQuery,
   usePutApiAccountProfileEditMutation,
