@@ -9,7 +9,7 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditRabbitTableRow } from "./tables/EditRabbitTableRow";
 import { editRabbitTableStruct } from "./tables/struct";
 import {
-  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  useGetApiCloudProductBundleListByProductIdQuery,
   usePutApiRabbitHostChangeServiceMutation,
 } from "src/app/services/api.generated";
 import { EditRabbitContext } from "./contexts/EditRabbitContext";
@@ -18,8 +18,8 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductCategoryIdQuery({
-      productCategoryId: PRODUCT_CATEGORY_ENUM.RABBIT_MQ,
+    useGetApiCloudProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.RABBIT_MQ,
     });
 
   const table = useMemo(

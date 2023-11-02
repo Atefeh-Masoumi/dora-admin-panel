@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { useGetApiCloudProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetApiCloudProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import { AddWorkspaceTableRow } from "../tables/AddTableRow";
 import { addNamespaceTableStruct } from "../tables/struct";
 
@@ -10,8 +10,8 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductCategoryIdQuery({
-      productCategoryId: PRODUCT_CATEGORY_ENUM.Platform,
+    useGetApiCloudProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.Platform,
     });
 
   const table = useMemo(

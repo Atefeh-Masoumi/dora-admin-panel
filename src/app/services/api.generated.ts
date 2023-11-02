@@ -382,12 +382,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/datacenter/list` }),
     }),
-    getApiDatacenterIpListByProductCategoryIdAndId: build.query<
-      GetApiDatacenterIpListByProductCategoryIdAndIdApiResponse,
-      GetApiDatacenterIpListByProductCategoryIdAndIdApiArg
+    getApiDatacenterIpListByProductIdAndId: build.query<
+      GetApiDatacenterIpListByProductIdAndIdApiResponse,
+      GetApiDatacenterIpListByProductIdAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/datacenter/ip/list/${queryArg.productCategoryId}/${queryArg.id}`,
+        url: `/api/datacenter/ip/list/${queryArg.productId}/${queryArg.id}`,
       }),
     }),
     deleteApiDatacenterIpDeleteById: build.mutation<
@@ -938,12 +938,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cloud/product/list` }),
     }),
-    getApiCloudProductBundleListByProductCategoryId: build.query<
-      GetApiCloudProductBundleListByProductCategoryIdApiResponse,
-      GetApiCloudProductBundleListByProductCategoryIdApiArg
+    getApiCloudProductBundleListByProductId: build.query<
+      GetApiCloudProductBundleListByProductIdApiResponse,
+      GetApiCloudProductBundleListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/product-bundle/list/${queryArg.productCategoryId}`,
+        url: `/api/cloud/product-bundle/list/${queryArg.productId}`,
       }),
     }),
     getApiCloudProductItemListByProductId: build.query<
@@ -1743,10 +1743,10 @@ export type GetApiCloudDashboardUsageByCategoryIdApiArg = {
 export type GetApiDatacenterListApiResponse =
   /** status 200 Success */ DatacenterListResponse[];
 export type GetApiDatacenterListApiArg = void;
-export type GetApiDatacenterIpListByProductCategoryIdAndIdApiResponse =
+export type GetApiDatacenterIpListByProductIdAndIdApiResponse =
   /** status 200 Success */ DatacenterIpListResponse[];
-export type GetApiDatacenterIpListByProductCategoryIdAndIdApiArg = {
-  productCategoryId: number;
+export type GetApiDatacenterIpListByProductIdAndIdApiArg = {
+  productId: number;
   id: number;
 };
 export type DeleteApiDatacenterIpDeleteByIdApiResponse = unknown;
@@ -2043,10 +2043,10 @@ export type PostApiCloudPaymentSepCallBackApiArg = {
 export type GetApiCloudProductListApiResponse =
   /** status 200 Success */ ProductListResponse[];
 export type GetApiCloudProductListApiArg = void;
-export type GetApiCloudProductBundleListByProductCategoryIdApiResponse =
+export type GetApiCloudProductBundleListByProductIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
-export type GetApiCloudProductBundleListByProductCategoryIdApiArg = {
-  productCategoryId: number;
+export type GetApiCloudProductBundleListByProductIdApiArg = {
+  productId: number;
 };
 export type GetApiCloudProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
@@ -2915,7 +2915,7 @@ export type OrderListResponse = {
 export type GetOrderResponse = {
   id?: number;
   orderPaymentTypeId?: number;
-  productCategory?: string | null;
+  product?: string | null;
   name?: string | null;
   prepaidStatus?: string | null;
   isPrepaid?: boolean;
@@ -3387,7 +3387,7 @@ export const {
   useGetApiCloudCustomerProductListByProductIdQuery,
   useGetApiCloudDashboardUsageByCategoryIdQuery,
   useGetApiDatacenterListQuery,
-  useGetApiDatacenterIpListByProductCategoryIdAndIdQuery,
+  useGetApiDatacenterIpListByProductIdAndIdQuery,
   useDeleteApiDatacenterIpDeleteByIdMutation,
   useGetApiCdnDnsRecordListByZoneNameQuery,
   useGetApiCdnDnsRecordGetByIdQuery,
@@ -3454,7 +3454,7 @@ export const {
   usePostApiCloudPaymentPecCallBackMutation,
   usePostApiCloudPaymentSepCallBackMutation,
   useGetApiCloudProductListQuery,
-  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  useGetApiCloudProductBundleListByProductIdQuery,
   useGetApiCloudProductItemListByProductIdQuery,
   useGetApiAccountProfileGetQuery,
   useGetApiAccountProfileGetNotificationStatusQuery,

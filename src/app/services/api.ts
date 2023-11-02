@@ -186,7 +186,7 @@ export const api = generatedApi
 export const {
   useCustomCreateSupportMutation,
   useLazyGetApiAccountProfileGetNotificationStatusQuery,
-  useLazyGetApiDatacenterIpListByProductCategoryIdAndIdQuery,
+  useLazyGetApiDatacenterIpListByProductIdAndIdQuery,
   useLazyGetApiVmImageListByDatacenterIdQuery,
   useLazyGetApiVmHostGetByIdQuery,
   useLazyGetApiCdnLoadBalanceGetByIdQuery,

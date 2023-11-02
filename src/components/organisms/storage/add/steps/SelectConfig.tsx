@@ -4,14 +4,14 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetApiCloudProductBundleListByProductCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetApiCloudProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductCategoryIdQuery({
-      productCategoryId: PRODUCT_CATEGORY_ENUM.STORAGE,
+    useGetApiCloudProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
   const table = useMemo(

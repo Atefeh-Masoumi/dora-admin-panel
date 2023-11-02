@@ -9,7 +9,7 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditWebTableRow } from "./tables/EditWebTableRow";
 import { editWebTableStruct } from "./tables/editWebTableStruct";
 import {
-  useGetApiCloudProductBundleListByProductCategoryIdQuery,
+  useGetApiCloudProductBundleListByProductIdQuery,
   usePutApiWebEditMutation,
 } from "src/app/services/api.generated";
 import { EditWebContext } from "./contexts/EditWebContext";
@@ -18,8 +18,8 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductCategoryIdQuery({
-      productCategoryId: PRODUCT_CATEGORY_ENUM.WEB,
+    useGetApiCloudProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.WEB,
     });
 
   const table = useMemo(

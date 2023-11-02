@@ -86,7 +86,7 @@ const OrderDetails: FC<OrderDetailsPropsType> = () => {
   const generalInfo = [
     {
       name: "گروه محصول",
-      value: orderInfo.productCategory,
+      value: orderInfo.product,
     },
     {
       name: "نام محصول کاربر",
