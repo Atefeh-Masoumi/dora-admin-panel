@@ -36,10 +36,8 @@ const AddTicket: FC = () => {
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetApiCloudBusinessUnitListQuery();
 
-  const [ApiCloudCustomerProductList, setApiCloudCustomerProductList] =
-    useState<GetApiCloudCustomerProductListByProductIdApiResponse | null>(
-      null
-    );
+  const [apiCloudCustomerProductList, setApiCloudCustomerProductList] =
+    useState<GetApiCloudCustomerProductListByProductIdApiResponse | null>(null);
 
   const [selectedApiCloudCustomerProduct, setSelectedApiCloudCustomerProduct] =
     useState<number>(0);
@@ -50,7 +48,7 @@ const AddTicket: FC = () => {
   ] = useLazyGetApiCloudCustomerProductListByProductIdQuery();
 
   const [productId, setProductId] = useState<number>();
-  const { data: categories, isLoading: loadingCategories } =
+  const { data: products, isLoading: loadingProducts } =
     useGetApiCloudProductListQuery();
 
   const [title, setTitle] = useState<number>();
@@ -70,14 +68,24 @@ const AddTicket: FC = () => {
       .then((res: SetStateAction<SupportSubjectListResponse[]>) =>
         setList(res)
       );
+
     if (productId) {
       callGetApiCloudCustomerProductList({ productId: Number(productId) })
         .unwrap()
-        .then((res: SetStateAction<GetApiCloudCustomerProductListByProductIdApiResponse | null>) => {
-          setApiCloudCustomerProductList(res);
-        });
+        .then(
+          (
+            res: SetStateAction<GetApiCloudCustomerProductListByProductIdApiResponse | null>
+          ) => {
+            setApiCloudCustomerProductList(res);
+          }
+        );
     }
-  }, [businessUnitId, productId, callGetApiCloudCustomerProductList, selectList]);
+  }, [
+    businessUnitId,
+    productId,
+    callGetApiCloudCustomerProductList,
+    selectList,
+  ]);
 
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File>();
@@ -115,7 +123,10 @@ const AddTicket: FC = () => {
     formData.append("supportSubjectId", "" + title);
     formData.append("productId", "" + productId);
     if (selectedApiCloudCustomerProduct !== 0) {
-      formData.append("CustomerProductId", "" + selectedApiCloudCustomerProduct);
+      formData.append(
+        "customerProductId",
+        "" + selectedApiCloudCustomerProduct
+      );
     }
     formData.append("attachment", file as Blob);
     upload({
@@ -208,7 +219,7 @@ const AddTicket: FC = () => {
           </Box>
           {/* Product */}
           <Box component="form" width="100%">
-            {loadingCategories || !categories ? (
+            {loadingProducts || !products ? (
               <Stack>
                 <Skeleton
                   variant="rectangular"
@@ -222,13 +233,13 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="محصول *"
-                value={businessUnitId || ""}
-                onChange={(e) => setBusinessUnitId(+e.target.value)}
+                value={productId || ""}
+                onChange={(e) => setProductId(+e.target.value)}
               >
-                {categories.map((category) => (
+                {products.map((product) => (
                   <MenuItem
-                    key={category.id}
-                    value={category.id}
+                    key={product.id}
+                    value={product.id}
                     sx={{
                       borderRadius: 1,
                       backgroundColor: "#F3F4F6",
@@ -241,7 +252,7 @@ const AddTicket: FC = () => {
                       },
                     }}
                   >
-                    {category.name}
+                    {product.name}
                   </MenuItem>
                 ))}
               </DorsaTextField>
@@ -268,15 +279,15 @@ const AddTicket: FC = () => {
                   setSelectedApiCloudCustomerProduct(+e.target.value)
                 }
               >
-                {(!ApiCloudCustomerProductList ||
-                  ApiCloudCustomerProductList?.length === 0) && (
-                    <ListSubheader>
-                      <Typography sx={{ py: 1.6 }}>
-                        داده ای موجودی نیست
-                      </Typography>
-                    </ListSubheader>
-                  )}
-                {ApiCloudCustomerProductList?.map((option) => (
+                {(!apiCloudCustomerProductList ||
+                  apiCloudCustomerProductList?.length === 0) && (
+                  <ListSubheader>
+                    <Typography sx={{ py: 1.6 }}>
+                      داده ای موجودی نیست
+                    </Typography>
+                  </ListSubheader>
+                )}
+                {apiCloudCustomerProductList?.map((option) => (
                   <MenuItem
                     key={option.id}
                     value={option.id}

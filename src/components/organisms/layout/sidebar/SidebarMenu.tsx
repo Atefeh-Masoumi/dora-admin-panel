@@ -72,16 +72,16 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       link: "/vm",
       subList: [{ title: "سرویس سرور‌های ابری", link: "/vm" }],
     },
-    {
-      title: "Kubernetes",
-      text: "سرویس کوبرنتیز ابری",
-      Icon: DnsOutlinedIcon,
-      link: "/platform",
-      subList: [
-        { title: "سرویس کوبرنتیز  ابری", link: "/platform" },
-        { title: "شناسه های کاربری", link: "/platform/users" },
-      ],
-    },
+    // {
+    //   title: "Kubernetes",
+    //   text: "سرویس کوبرنتیز ابری",
+    //   Icon: DnsOutlinedIcon,
+    //   link: "/platform",
+    //   subList: [
+    //     { title: "سرویس کوبرنتیز  ابری", link: "/platform" },
+    //     { title: "شناسه های کاربری", link: "/platform/users" },
+    //   ],
+    // },
     {
       title: "Object Storage",
       text: "فضای ابری",
@@ -103,13 +103,13 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       link: "/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
     },
-    {
-      title: "RabbitMQ",
-      text: "سرویس RabbitMQ ابری",
-      Icon: DeviceMessageSvg,
-      link: "/rabbit",
-      subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
-    },
+    // {
+    //   title: "RabbitMQ",
+    //   text: "سرویس RabbitMQ ابری",
+    //   Icon: DeviceMessageSvg,
+    //   link: "/rabbit",
+    //   subList: [{ title: "مدیریت RabbitMQ ابری", link: "/rabbit" }],
+    // },
     // {
     //   title: "SMS",
     //   text: "سرویس پیامک ابری",

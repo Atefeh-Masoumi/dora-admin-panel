@@ -23,14 +23,13 @@ export const homeProductsConstantListItems = [
     bgcolor: "rgba(211, 237, 224, 1)",
     link: "/vm",
   },
-  {
-    title: "Kubernetes",
-    text: "سرویس کوبرنتیز ابری",
-    Icon: DnsOutlinedIcon,
-    bgcolor: "rgba(211, 250, 240, 1)",
-    link: "/platform",
-  },
-
+  // {
+  //   title: "Kubernetes",
+  //   text: "سرویس کوبرنتیز ابری",
+  //   Icon: DnsOutlinedIcon,
+  //   bgcolor: "rgba(211, 250, 240, 1)",
+  //   link: "/platform",
+  // },
   {
     title: "Object Storage",
     text: "فضای ابری",
@@ -66,11 +65,11 @@ export const homeProductsConstantListItems = [
   //   bgcolor: "rgba(255, 69, 242, 0.2)",
   //   link: "/apis",
   // },
-  {
-    title: "RabbitMQ",
-    text: "سرویس RabbitMQ ابری",
-    Icon: DeviceMessageSvg,
-    bgcolor: "rgba(255, 233, 218, 1)",
-    link: "/rabbit",
-  },
+  // {
+  //   title: "RabbitMQ",
+  //   text: "سرویس RabbitMQ ابری",
+  //   Icon: DeviceMessageSvg,
+  //   bgcolor: "rgba(255, 233, 218, 1)",
+  //   link: "/rabbit",
+  // },
 ];
