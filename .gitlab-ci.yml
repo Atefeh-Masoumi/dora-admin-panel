@@ -10,34 +10,27 @@ stages:
   - deploy
 
 variables:
-  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+  KUBE_CONTEXT: dorsacloud/frontend/dorsa-portal:portal-front-agent
 
-before_script:
-  - export TIMESTAMP=$(date +%Y%m%d%H%M%S)
 
-## Stage 1 : BUILD
+## Stage 1 : PACKAGE
 
 package_main:
   stage: package
-  tags: [production]
+  tags: [main-gitlab-runner]
   script:
-    - docker build -t $DOCKER_REGISTRY/front-portal-main:$TIMESTAMP--$IMAGE_TAG -t $DOCKER_REGISTRY/front-portal-main:latest .
-    - docker push $DOCKER_REGISTRY/front-portal-main:$TIMESTAMP--$IMAGE_TAG
+    - docker build -t $DOCKER_REGISTRY/front-portal-main:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-main:latest .
+    - docker push $DOCKER_REGISTRY/front-portal-main:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-portal-main:latest
-  only:
-    - main
 
 # Stage 2 : DEPLOY
 
 deploy_admin_main:
   stage: deploy
-  tags: [production]
+  tags: [main-gitlab-runner]
   needs: [package_main]
   script:
-    - docker pull $DOCKER_REGISTRY/front-portal-main:latest
-    - docker stop front-portal && docker rm front-portal
-    - docker run --restart always --name front-portal -d -p 5032:80 $DOCKER_REGISTRY/front-portal-main:latest
-    - chmod +x cleanup_docker_tags.sh && ./cleanup_docker_tags.sh $DOCKER_REGISTRY/front-portal-main &
-  when: manual
-  only:
-    - main
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/.
+    - kubectl -n stage rollout restart deployment portal-front-v1
