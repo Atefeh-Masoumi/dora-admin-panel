@@ -22,7 +22,7 @@ variables:
 package_stage:
   stage: package
   script:
-    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-portal-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-stage:latest
+    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-portal-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-stage:latest .
     - docker push $DOCKER_REGISTRY/front-portal-stage:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-portal-stage:latest
 
