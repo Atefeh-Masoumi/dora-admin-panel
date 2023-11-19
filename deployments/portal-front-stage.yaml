@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: portal-front-v1
+  labels:
+    app: portal-front
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal-front
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: portal-front
+        version: v1
+    spec:
+      containers:
+        - name: portal-front
+          image: git.dorsacloud.com:5050/dorsacloud/frontend/dorsa-portal/front-portal-stage:latest
+          ports:
+            - name: http-0
+              containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: dorsa-registry
