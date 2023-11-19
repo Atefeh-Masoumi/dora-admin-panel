@@ -29,7 +29,7 @@ package_stage:
 package_production:
   stage: package
   script:
-    - docker build -t $DOCKER_REGISTRY/front-portal-prodution:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-production:latest .
+    - docker build -t $DOCKER_REGISTRY/front-portal-production:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-production:latest .
     - docker push $DOCKER_REGISTRY/front-portal-production:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-portal-production:latest
 
