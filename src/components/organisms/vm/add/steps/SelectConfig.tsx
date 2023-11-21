@@ -1,10 +1,11 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useContext } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useGetApiCloudProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { AddServerContext } from "../contexts/AddVmContext";
 
 type SelectConfigPropsType = {};
 
@@ -13,6 +14,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     useGetApiCloudProductBundleListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
+
+  const { step, setStep } = useContext(AddServerContext);
 
   const table = useMemo(
     () => (
@@ -41,7 +44,16 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
           بعد از ایجاد سرور می توانید سخت افزار مورد نیاز خود را تغییر دهید.
         </Typography>
       </Stack>
-      <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
+      <Box
+        onClick={() => {
+          if (step === 3) {
+            setStep(4);
+          }
+        }}
+        sx={{ px: { lg: 5 }, pt: 5 }}
+      >
+        {table}
+      </Box>
     </>
   );
 };

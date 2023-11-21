@@ -14,7 +14,8 @@ import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
 type SelectOSPropsType = {};
 
 export const SelectOS: FC<SelectOSPropsType> = () => {
-  const { dataCenter, osVersion, setOsVersion } = useContext(AddServerContext);
+  const { dataCenter, osVersion, setOsVersion, step, setStep } =
+    useContext(AddServerContext);
 
   const { data: osVersionsList, isLoading } =
     useGetApiVmImageListByDatacenterIdQuery({
@@ -175,7 +176,12 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                     minHeight: 65,
                     cursor: "pointer",
                   }}
-                  onClick={() => osVersionClickHandler(osVersionItem)}
+                  onClick={() => {
+                    osVersionClickHandler(osVersionItem);
+                    if (step === 2) {
+                      setStep(3);
+                    }
+                  }}
                 >
                   <Typography
                     align="center"

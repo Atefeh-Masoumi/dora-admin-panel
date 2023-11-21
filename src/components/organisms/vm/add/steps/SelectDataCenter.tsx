@@ -12,7 +12,8 @@ import mobinNetImage from "src/assets/images/mobinnet.png";
 type SelectDataCenterPropsType = {};
 
 export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
-  const { dataCenter, setDataCenter } = useContext(AddServerContext);
+  const { dataCenter, setDataCenter, step, setStep } =
+    useContext(AddServerContext);
 
   const { data: dataCenterList, isLoading } = useGetApiDatacenterListQuery();
 
@@ -79,7 +80,12 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                 alignItems="center"
                 justifyContent="center"
                 spacing={1}
-                onClick={() => dataCenterOnClick(dataCenterItem)}
+                onClick={() => {
+                  dataCenterOnClick(dataCenterItem);
+                  if (step === 1) {
+                    setStep(2);
+                  }
+                }}
               >
                 <Stack
                   alignItems="center"

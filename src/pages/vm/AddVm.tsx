@@ -1,6 +1,14 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import {
@@ -14,6 +22,7 @@ import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
+import useResize from "src/utils/useResize";
 
 const AddVm: FC = () => {
   const {
@@ -25,6 +34,14 @@ const AddVm: FC = () => {
     serverName,
     serverPassword,
   } = useContext(AddServerContext);
+
+  const { screenHeight, screenWidth } = useResize();
+  const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
+
+  useEffect(() => {
+    const factorCol = document.getElementById("relative-left-col-factor");
+    setFactorFixedContentWidth(factorCol?.offsetWidth || 0);
+  }, [screenHeight, screenWidth]);
 
   const navigate = useNavigate();
 
@@ -101,25 +118,29 @@ const AddVm: FC = () => {
     }
   };
 
-  const renderStepHandler = () => {
-    let result = <></>;
-    switch (step) {
-      case 1:
-        result = <SelectDataCenter />;
-        break;
-      case 2:
-        result = <SelectOS />;
-        break;
-      case 3:
-        result = <SelectConfig />;
-        break;
-      case 4:
-        result = <ServerInfo />;
-        break;
-      default:
-        break;
-    }
-    return result;
+  // const renderStepHandler = () => {
+  //   let result = <></>;
+  //   switch (step) {
+  //     case 1:
+  //       result = <SelectDataCenter />;
+  //       break;
+  //     case 2:
+  //       result = <SelectOS />;
+  //       break;
+  //     case 3:
+  //       result = <SelectConfig />;
+  //       break;
+  //     case 4:
+  //       result = <ServerInfo />;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   return result;
+  // };
+
+  const isStepDisabled = (stepId: number) => {
+    return stepId > step;
   };
 
   return (
@@ -132,19 +153,177 @@ const AddVm: FC = () => {
       >
         ایجاد سرور مجازی جدید
       </Typography>
-      <Box
-        sx={{
-          borderRadius: 3,
-          bgcolor: "white",
-          py: 6,
-          px: 2,
-          overflow: "overlay",
-        }}
-      >
-        <Box sx={{ overflow: "overlay" }}>
-          <AddVmStepper step={step} />
-        </Box>
-        <Box sx={{ my: 6 }}>{renderStepHandler()}</Box>
+      <Box sx={{ my: 6 }}>
+        <Grid container>
+          <Grid xs={12} md={7} item>
+            <Grid container gap={2}>
+              <Grid xs={12} item>
+                <Stack
+                  className="blurrable-step"
+                  component={Paper}
+                  sx={{
+                    position: "relative",
+                    width: { xs: "100%" },
+                    px: { xs: 1.8, lg: 2 },
+                    py: { xs: 1.8, lg: 2.25 },
+                  }}
+                >
+                  <Chip
+                    label="۱"
+                    sx={{
+                      position: "absolute",
+                      top: "15px",
+                      left: "10px",
+                      border: "none",
+                      fontWeight: "bolder",
+                    }}
+                    variant="outlined"
+                    size="medium"
+                  />
+                  <SelectDataCenter />
+                </Stack>
+              </Grid>
+              <Grid xs={12} item>
+                <Stack
+                  component={Paper}
+                  className={
+                    isStepDisabled(2)
+                      ? "blurred-step blurrable-step"
+                      : "blurrable-step"
+                  }
+                  sx={{
+                    position: "relative",
+                    width: { xs: "100%" },
+                    px: { xs: 1.8, lg: 2 },
+                    py: { xs: 1.8, lg: 2.25 },
+                  }}
+                >
+                  <Chip
+                    label="۲"
+                    sx={{
+                      position: "absolute",
+                      top: "15px",
+                      left: "10px",
+                      border: "none",
+                      fontWeight: "bolder",
+                    }}
+                    variant="outlined"
+                    size="medium"
+                  />
+                  <SelectOS />
+                </Stack>
+              </Grid>
+              <Grid xs={12} item>
+                <Stack
+                  component={Paper}
+                  className={
+                    isStepDisabled(3)
+                      ? "blurred-step blurrable-step"
+                      : "blurrable-step"
+                  }
+                  sx={{
+                    position: "relative",
+                    width: { xs: "100%" },
+                    px: { xs: 1.8, lg: 2 },
+                    py: { xs: 1.8, lg: 2.25 },
+                  }}
+                >
+                  <Chip
+                    label="۳"
+                    sx={{
+                      position: "absolute",
+                      top: "15px",
+                      left: "10px",
+                      border: "none",
+                      fontWeight: "bolder",
+                    }}
+                    variant="outlined"
+                    size="medium"
+                  />
+                  <SelectConfig />
+                </Stack>
+              </Grid>
+              <Grid xs={12} item>
+                <Stack
+                  component={Paper}
+                  className={
+                    isStepDisabled(4)
+                      ? "blurred-step blurrable-step"
+                      : "blurrable-step"
+                  }
+                  sx={{
+                    position: "relative",
+                    width: { xs: "100%" },
+                    px: { xs: 1.8, lg: 2 },
+                    py: { xs: 1.8, lg: 2.25 },
+                  }}
+                >
+                  <Chip
+                    label="۴"
+                    sx={{
+                      position: "absolute",
+                      top: "15px",
+                      left: "10px",
+                      border: "none",
+                      fontWeight: "bolder",
+                    }}
+                    variant="outlined"
+                    size="medium"
+                  />
+                  <ServerInfo />
+                </Stack>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid
+            id="relative-left-col-factor"
+            px={{ md: 2, xs: 0 }}
+            py={{ md: 0, xs: 2 }}
+            xs={12}
+            md={5}
+            item
+            style={{ position: "relative", textAlign: "center" }}
+          >
+            <Stack
+              position={{ xs: "static", md: "fixed" }}
+              maxHeight={{ md: "400px", xs: "auto" }}
+              component={Paper}
+              className="fixed-paper-factor"
+              sx={{
+                overflow: "scroll",
+                width: factorFixedContentWidth,
+                px: 1,
+                py: 1,
+              }}
+            >
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
+              dolorem ab vitae asperiores magnam fugit tempore maiores tempora
+              inventore! Libero totam aliquam tempora voluptatibus voluptates
+              minus vel rerum fugiat repudiandae necessitatibus, harum ea quasi
+              eveniet distinctio quisquam autem corrupti, nemo porro sed
+              Voluptates, nobis hic perferendis atque fugit nam perspiciatis? Et
+              est aliquam placeat optio sint velit exercitationem ut, dolores
+              perferendis, nihil eveniet quibusdam deserunt, quia sequi
+              perspiciatis nesciunt ab dolorem nisi facilis atque veniam? Iure
+              totam dicta fugiat, unde, voluptatibus provident error culpa minus
+              explicabo, eveniet pariatur. Nihil quasi eveniet distinctio
+              quisquam autem corrupti, nemo porro sed quos. Lorem ipsum dolor
+              sit, amet consectetur adipisicing elit. In dolorem ab vitae
+              asperiores magnam fugit tempore maiores tempora inventore! Libero
+              totam aliquam tempora voluptatibus voluptates minus vel rerum
+              fugiat repudiandae necessitatibus, harum ea quasi eveniet
+              distinctio quisquam autem corrupti, nemo porro sed Voluptates,
+              nobis hic perferendis atque fugit nam perspiciatis? Et est aliquam
+              placeat optio sint velit exercitationem ut, dolores perferendis,
+              nihil eveniet quibusdam deserunt, quia sequi perspiciatis nesciunt
+              ab dolorem nisi facilis atque veniam? Iure totam dicta fugiat,
+              unde, voluptatibus provident error culpa minus explicabo, eveniet
+              pariatur. Nihil quasi eveniet distinctio quisquam autem corrupti,
+              nemo porro sed quos.
+            </Stack>
+          </Grid>
+        </Grid>
+
         <Stack
           direction="row"
           justifyContent="center"
@@ -152,7 +331,7 @@ const AddVm: FC = () => {
           spacing={1}
           px={1.7}
         >
-          <Button
+          {/* <Button
             fullWidth
             disableElevation
             sx={{
@@ -181,7 +360,7 @@ const AddVm: FC = () => {
             onClick={goNextStep}
           >
             {step === 4 ? "ایجاد ماشین" : "ادامه"}
-          </LoadingButton>
+          </LoadingButton> */}
         </Stack>
       </Box>
     </>
