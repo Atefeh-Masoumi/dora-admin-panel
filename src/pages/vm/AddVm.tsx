@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Chip,
+  Divider,
   Grid,
   Paper,
   Stack,
@@ -23,6 +24,7 @@ import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
 import useResize from "src/utils/useResize";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 const AddVm: FC = () => {
   const {
@@ -37,6 +39,7 @@ const AddVm: FC = () => {
 
   const { screenHeight, screenWidth } = useResize();
   const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
+  const [paymentType, setPaymentType] = useState<number | null>(null);
 
   useEffect(() => {
     const factorCol = document.getElementById("relative-left-col-factor");
@@ -142,6 +145,8 @@ const AddVm: FC = () => {
   const isStepDisabled = (stepId: number) => {
     return stepId > step;
   };
+
+  const myNumber = 45654654;
 
   return (
     <>
@@ -296,34 +301,265 @@ const AddVm: FC = () => {
                 py: 1,
               }}
             >
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-              dolorem ab vitae asperiores magnam fugit tempore maiores tempora
-              inventore! Libero totam aliquam tempora voluptatibus voluptates
-              minus vel rerum fugiat repudiandae necessitatibus, harum ea quasi
-              eveniet distinctio quisquam autem corrupti, nemo porro sed
-              Voluptates, nobis hic perferendis atque fugit nam perspiciatis? Et
-              est aliquam placeat optio sint velit exercitationem ut, dolores
-              perferendis, nihil eveniet quibusdam deserunt, quia sequi
-              perspiciatis nesciunt ab dolorem nisi facilis atque veniam? Iure
-              totam dicta fugiat, unde, voluptatibus provident error culpa minus
-              explicabo, eveniet pariatur. Nihil quasi eveniet distinctio
-              quisquam autem corrupti, nemo porro sed quos. Lorem ipsum dolor
-              sit, amet consectetur adipisicing elit. In dolorem ab vitae
-              asperiores magnam fugit tempore maiores tempora inventore! Libero
-              totam aliquam tempora voluptatibus voluptates minus vel rerum
-              fugiat repudiandae necessitatibus, harum ea quasi eveniet
-              distinctio quisquam autem corrupti, nemo porro sed Voluptates,
-              nobis hic perferendis atque fugit nam perspiciatis? Et est aliquam
-              placeat optio sint velit exercitationem ut, dolores perferendis,
-              nihil eveniet quibusdam deserunt, quia sequi perspiciatis nesciunt
-              ab dolorem nisi facilis atque veniam? Iure totam dicta fugiat,
-              unde, voluptatibus provident error culpa minus explicabo, eveniet
-              pariatur. Nihil quasi eveniet distinctio quisquam autem corrupti,
-              nemo porro sed quos.
+              <Stack spacing={2}>
+                <Typography fontSize={24} fontWeight="bold" align="center">
+                  صورتحساب
+                </Typography>
+                <Divider
+                  sx={{ margin: "10px 20px !important", borderBottomWidth: 3 }}
+                />
+                <Grid
+                  container
+                  sx={{
+                    marginTop: "16px !important",
+                    marginBottom: "16px !important",
+                  }}
+                >
+                  <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                    <Typography
+                      fontSize={14}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      موارد فاکتور
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                    <Typography
+                      fontSize={14}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      تعداد منابع
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                    <Typography
+                      fontSize={14}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      مبلغ (ریال)
+                    </Typography>
+                  </Grid>
+                </Grid>
+
+                <Grid
+                  container
+                  sx={{
+                    marginTop: "5px !important",
+                    marginBottom: "0px !important",
+                  }}
+                >
+                  <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      سرور
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      ۱
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      {myNumber.toLocaleString("fa-IR")}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Divider
+                  sx={{ margin: "5px 20px !important", borderBottomWidth: 1 }}
+                />
+
+                <Grid
+                  container
+                  sx={{
+                    marginTop: "5px !important",
+                    marginBottom: "0px !important",
+                  }}
+                >
+                  <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      سرور
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      ۱
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      {myNumber.toLocaleString("fa-IR")}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Divider
+                  sx={{ margin: "5px 20px !important", borderBottomWidth: 1 }}
+                />
+
+                <Grid
+                  container
+                  sx={{
+                    marginTop: "5px !important",
+                    marginBottom: "0px !important",
+                  }}
+                >
+                  <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      سرور
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      ۱
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                    <Typography
+                      fontSize={12}
+                      sx={{ color: ({ palette }) => palette.grey[700] }}
+                    >
+                      {myNumber.toLocaleString("fa-IR")}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Divider
+                  sx={{ margin: "5px 20px !important", borderBottomWidth: 1 }}
+                />
+
+                <Grid
+                  container
+                  sx={{
+                    padding: "5px 0px",
+                    width: "95% !important",
+                    margin: "0px auto !important",
+                    marginTop: "5px !important",
+                    backgroundColor: "rgba(240, 247, 255, 1)",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ textAlign: "left", paddingLeft: "4px !important" }}
+                  >
+                    <Typography fontSize={14}>
+                      <strong>جمع کل</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ textAlign: "right", paddingRight: "4px !important" }}
+                  >
+                    <Typography fontSize={14}>
+                      <strong>{myNumber.toLocaleString("fa-IR")}</strong>
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{
+                    width: "95% !important",
+                    margin: "10px auto !important",
+                  }}
+                >
+                  <Grid item xs={12}>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems="center"
+                      whiteSpace="nowrap"
+                    >
+                      <Button
+                        onClick={() => setPaymentType(1)}
+                        variant="outlined"
+                        color={paymentType === 1 ? "primary" : "secondary"}
+                        sx={{
+                          border:
+                            paymentType === 1
+                              ? "2px solid #3C8AFF !important"
+                              : 1,
+                          py: 1,
+                        }}
+                        fullWidth
+                      >
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          alignItems={{ xs: "start", md: "end" }}
+                        >
+                          <Typography variant="text14">
+                            پراخت بر اساس مصرف
+                          </Typography>
+                        </Stack>
+                      </Button>
+                      <Button
+                        onClick={() => setPaymentType(2)}
+                        variant="outlined"
+                        color={paymentType === 2 ? "primary" : "secondary"}
+                        sx={{
+                          border:
+                            paymentType === 2
+                              ? "2px solid #3C8AFF !important"
+                              : 1,
+                          py: 1,
+                        }}
+                        fullWidth
+                      >
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          alignItems={{ xs: "start", md: "end" }}
+                        >
+                          <Typography variant="text14">پیش پرداخت</Typography>
+                        </Stack>
+                      </Button>
+                    </Stack>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{
+                    marginTop: "5px !important",
+                    marginBottom: "10px !important",
+                  }}
+                >
+                  <Grid item xs={12}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ width: "95%" }}
+                    >
+                      ایجاد سرویس
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Stack>
             </Stack>
           </Grid>
         </Grid>
-
         <Stack
           direction="row"
           justifyContent="center"
