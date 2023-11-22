@@ -58,24 +58,24 @@ const AddRabbitService: FC = () => {
       return;
     }
 
-    createRabbitService({
-      createRabbitHostModel: {
-        name: name,
-        username: serverUsername,
-        password: serverPassword,
-        datacenterId: dataCenter.id,
-        productBundleId: serverConfig.id || 0,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("سرویس RabbitMQ  با موفقیت ایجاد شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createRabbitService({
+    //   createRabbitHostModel: {
+    //     name: name,
+    //     username: serverUsername,
+    //     password: serverPassword,
+    //     datacenterId: dataCenter.id,
+    //     productBundleId: serverConfig.id || 0,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("سرویس RabbitMQ  با موفقیت ایجاد شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {

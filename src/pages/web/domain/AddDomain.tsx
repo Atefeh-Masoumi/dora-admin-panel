@@ -98,34 +98,34 @@ const AddDomain: FC = () => {
       toast.error("خطا در تکمیل اطلاعات");
       return;
     }
-    RegisterDomainModel({
-      registerDomainModel: {
-        domainName: domainName,
-        ext: ext,
-        typeId: typeId,
-        authCode: authCode,
-        name: name,
-        country: country,
-        province: province,
-        city: city,
-        street: street,
-        postalCode: postalCode,
-        voice: voice,
-        ns1: ns1,
-        ns2: ns2,
-        autoRenewal: autoRenewal,
-        activeCdn: activeCdn,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("اطلاعات دامنه با موفقیت ثبت شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // RegisterDomainModel({
+    //   registerDomainModel: {
+    //     domainName: domainName,
+    //     ext: ext,
+    //     typeId: typeId,
+    //     authCode: authCode,
+    //     name: name,
+    //     country: country,
+    //     province: province,
+    //     city: city,
+    //     street: street,
+    //     postalCode: postalCode,
+    //     voice: voice,
+    //     ns1: ns1,
+    //     ns2: ns2,
+    //     autoRenewal: autoRenewal,
+    //     activeCdn: activeCdn,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("اطلاعات دامنه با موفقیت ثبت شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {

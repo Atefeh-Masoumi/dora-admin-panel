@@ -22,9 +22,8 @@ import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
+import { useGetApiCloudCustomerGetQuery, usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
 import useResize from "src/utils/useResize";
-import { priceToPersian } from "src/utils/priceToPersian";
 
 const AddVm: FC = () => {
   const {
@@ -40,6 +39,11 @@ const AddVm: FC = () => {
   const { screenHeight, screenWidth } = useResize();
   const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
   const [paymentType, setPaymentType] = useState<number | null>(null);
+
+  const {data:customerTypes, isLoading:customerTypeIsLoading} = useGetApiCloudCustomerGetQuery();
+
+  console.log(customerTypes);
+
 
   useEffect(() => {
     const factorCol = document.getElementById("relative-left-col-factor");
@@ -77,49 +81,49 @@ const AddVm: FC = () => {
       toast.error("رمز عبور نامعتبر است.");
       return;
     }
-    createCloudServer({
-      createVmModel: {
-        name: serverName,
-        password: serverPassword,
-        imageId: osVersion.id,
-        productBundleId: serverConfig.id || 0,
-        datacenterId: dataCenter.id,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createCloudServer({
+    //   createVmModel: {
+    //     name: serverName,
+    //     password: serverPassword,
+    //     imageId: osVersion.id,
+    //     productBundleId: serverConfig.id || 0,
+    //     datacenterId: dataCenter.id,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
-  const goNextStep = () => {
-    switch (step) {
-      case 1:
-        dataCenter && setStep(2);
-        break;
-      case 2:
-        dataCenter && osVersion && setStep(3);
-        break;
-      case 3:
-        dataCenter && osVersion && serverConfig && setStep(4);
-        break;
-      case 4:
-        dataCenter &&
-          osVersion &&
-          serverConfig &&
-          serverName &&
-          serverPassword &&
-          submitHandler();
-        break;
-      default:
-        break;
-    }
-  };
+  // const goNextStep = () => {
+  //   switch (step) {
+  //     case 1:
+  //       dataCenter && setStep(2);
+  //       break;
+  //     case 2:
+  //       dataCenter && osVersion && setStep(3);
+  //       break;
+  //     case 3:
+  //       dataCenter && osVersion && serverConfig && setStep(4);
+  //       break;
+  //     case 4:
+  //       dataCenter &&
+  //         osVersion &&
+  //         serverConfig &&
+  //         serverName &&
+  //         serverPassword &&
+  //         submitHandler();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   // const renderStepHandler = () => {
   //   let result = <></>;
@@ -341,41 +345,7 @@ const AddVm: FC = () => {
                   </Grid>
                 </Grid>
 
-                <Grid
-                  container
-                  sx={{
-                    marginTop: "5px !important",
-                    marginBottom: "0px !important",
-                  }}
-                >
-                  <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
-                    <Typography
-                      fontSize={12}
-                      sx={{ color: ({ palette }) => palette.grey[700] }}
-                    >
-                      سرور
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
-                    <Typography
-                      fontSize={12}
-                      sx={{ color: ({ palette }) => palette.grey[700] }}
-                    >
-                      ۱
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
-                    <Typography
-                      fontSize={12}
-                      sx={{ color: ({ palette }) => palette.grey[700] }}
-                    >
-                      {myNumber.toLocaleString("fa-IR")}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Divider
-                  sx={{ margin: "5px 20px !important", borderBottomWidth: 1 }}
-                />
+                
 
                 <Grid
                   container
@@ -551,6 +521,7 @@ const AddVm: FC = () => {
                       variant="contained"
                       color="primary"
                       sx={{ width: "95%" }}
+                      onClick={submitHandler}
                     >
                       ایجاد سرویس
                     </Button>

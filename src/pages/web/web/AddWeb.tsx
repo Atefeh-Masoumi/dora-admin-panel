@@ -47,22 +47,22 @@ const AddWeb: FC = () => {
       return;
     }
 
-    createWeb({
-      createWebHostModel: {
-        domainName: domainName,
-        datacenterId: dataCenter.id,
-        productBundleId: serverConfig.id || 0,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("سرویس هاست وب با موفقیت ایجاد شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createWeb({
+    //   createWebHostModel: {
+    //     domainName: domainName,
+    //     datacenterId: dataCenter.id,
+    //     productBundleId: serverConfig.id || 0,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("سرویس هاست وب با موفقیت ایجاد شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {

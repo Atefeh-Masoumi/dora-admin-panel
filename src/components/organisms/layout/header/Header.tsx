@@ -21,7 +21,6 @@ import {
   ArrowForward as ArrowForwardIcon,
   ShoppingCartOutlined as ShoppingCartOutlinedIcon,
 } from "@mui/icons-material";
-import { useGetApiCloudOrderListQuery } from "src/app/services/api.generated";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -55,7 +54,7 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
-  const { data: notPaidList } = useGetApiCloudOrderListQuery();
+  const notPaidList:any = [];
   const desktopHeaderIcon = (
     <>
       <Notifications />

@@ -42,8 +42,7 @@ const CustomerProducts = lazy(() => import("src/pages/cloud/customerProduct/Inde
 const Supports = lazy(() => import("src/pages/cloud/support/Index"));
 const Support = lazy(() => import("src/pages/cloud/support/Support"));
 const AddSupport = lazy(() => import("src/pages/cloud/support/AddSupport"));
-const Orders = lazy(() => import("src/pages/cloud/order/Index"));
-const Order = lazy(() => import("src/pages/cloud/order/Order"));
+
 const Referrals = lazy(() => import("src/pages/cloud/referral/Index"));
 const Referral = lazy(() => import("src/pages/cloud/referral/Referral"));
 const Calculator = lazy(() => import("src/pages/cloud/calculator"));
@@ -176,23 +175,7 @@ const Router: FC = () => {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
-          {/* ======================================= Order ======================================= */}
-          <Route
-            path="/cloud/orders"
-            element={mainTemplate(Orders, {
-              pageTitle: "سبد خرید",
-            })}
-          />
-          <Route
-            path="/cloud/order/:id"
-            element={mainTemplate(Order, {
-              link: {
-                text: "بازگشت به سبد خرید",
-                url: "/cloud/orders",
-              },
-              hideSidebar: true,
-            })}
-          />
+          
           {/* ======================================= SUPPORT ======================================= */}
           <Route
             path="/cloud/supports"

@@ -62,18 +62,18 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
   const refetchOnClick = () => refetch();
 
   const createAccessKey = () => {
-    callCreateAccessKey({
-      createStorageUserModel: { storageHostId: id ? +id : 0 },
-    })
-      .unwrap()
-      .then((res) => {
-        setGeneratedKeys({
-          accessKey: res.accessKey || "",
-          secretKey: res.secretKey || "",
-        });
-        refetch();
-        setShowDialog(true);
-      });
+    // callCreateAccessKey({
+    //   createStorageUserModel: { storageHostId: id ? +id : 0 },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     setGeneratedKeys({
+    //       accessKey: res.accessKey || "",
+    //       secretKey: res.secretKey || "",
+    //     });
+    //     refetch();
+    //     setShowDialog(true);
+    //   });
   };
 
   return (

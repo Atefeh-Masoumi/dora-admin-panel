@@ -43,22 +43,22 @@ const AddWorkspaceService: FC = () => {
       return;
     }
 
-    createWorkspaceService({
-      createKubeHostModel: {
-        name: name,
-        datacenterId: dataCenter.id,
-        productBundleId: serverConfig.id || 0,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("سرویس  با موفقیت ایجاد شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createWorkspaceService({
+    //   createKubeHostModel: {
+    //     name: name,
+    //     datacenterId: dataCenter.id,
+    //     productBundleId: serverConfig.id || 0,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("سرویس  با موفقیت ایجاد شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {

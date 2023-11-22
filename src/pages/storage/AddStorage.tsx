@@ -41,23 +41,23 @@ const AddStorageService: FC = () => {
       return;
     }
 
-    createStorageService({
-      createStorageHostModel: {
-        name: name,
-        isPublic: isPublic,
-        datacenterId: dataCenter.id,
-        productBundleId: serverConfig.id || 0,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createStorageService({
+    //   createStorageHostModel: {
+    //     name: name,
+    //     isPublic: isPublic,
+    //     datacenterId: dataCenter.id,
+    //     productBundleId: serverConfig.id || 0,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {
