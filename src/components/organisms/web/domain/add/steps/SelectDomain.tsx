@@ -73,7 +73,6 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
       sx={{
         p: { xs: 0, md: 2 },
         mx: "auto",
-        maxWidth: "600px",
         textAlign: "center",
       }}
     >
@@ -160,8 +159,9 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
           justifyContent="space-between"
           spacing={{ xs: 1, md: 0 }}
           width="100%"
+          sx={{ textAlign: "left" }}
         >
-          <Grid direction="row" alignItems="center" spacing={0.5}>
+          <Grid pt={3} direction="row" alignItems="right" spacing={0.5}>
             <FormControlLabel
               color="secondary.main"
               label="با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم"
