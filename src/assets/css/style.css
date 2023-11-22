@@ -7,21 +7,21 @@
 }
 
 .blured-step {
-  -webkit-filter: blur(5px);
+  /* -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
-  filter: blur(5px);
+  filter: blur(5px); */
 }
 
 .blurred-step {
-  -webkit-filter: blur(5px);
+  /* -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
-  filter: blur(5px);
-  pointer-events: none !important;
+  filter: blur(5px); */
+  /* pointer-events: none !important; */
 }
 .blurrable-step {
-  transition: filter 1s linear !important;
+  /* transition: filter 1s linear !important; */
 }

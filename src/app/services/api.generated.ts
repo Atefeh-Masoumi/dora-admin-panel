@@ -334,6 +334,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cloud/customer/get` }),
     }),
+    getApiCloudCustomerGetCustomerType: build.query<
+      GetApiCloudCustomerGetCustomerTypeApiResponse,
+      GetApiCloudCustomerGetCustomerTypeApiArg
+    >({
+      query: () => ({ url: `/api/cloud/customer/get-customer-type` }),
+    }),
     putApiCloudCustomerEdit: build.mutation<
       PutApiCloudCustomerEditApiResponse,
       PutApiCloudCustomerEditApiArg
@@ -1735,6 +1741,9 @@ export type GetApiCloudCommissionListApiArg = void;
 export type GetApiCloudCustomerGetApiResponse =
   /** status 200 Success */ GetCustomerResponse;
 export type GetApiCloudCustomerGetApiArg = void;
+export type GetApiCloudCustomerGetCustomerTypeApiResponse =
+  /** status 200 Success */ number;
+export type GetApiCloudCustomerGetCustomerTypeApiArg = void;
 export type PutApiCloudCustomerEditApiResponse = unknown;
 export type PutApiCloudCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
@@ -2467,10 +2476,17 @@ export type CreateBareMetalModel = {
   password: string;
   imageId: number;
   publicKey?: string | null;
-  productBundleId: number;
+  productBundleId?: number | null;
+  isPredefined: boolean;
   customerProductTypeId: number;
   datacenterRackId: number;
   bareMetalMachineId: number;
+  physicalCpu?: number | null;
+  physicalMemory?: number | null;
+  hdd600Sas10K?: number | null;
+  hdd1200Sas10K?: number | null;
+  networkPort1G?: number | null;
+  networkPort10G?: number | null;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2860,8 +2876,9 @@ export type GetKubeLoginResponse = {
 export type CreateKubeHostModel = {
   name: string;
   datacenterId?: number;
-  productBundleId?: number;
   customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
 };
 export type EditKubeHostModel = {
   id?: number;
@@ -3193,8 +3210,10 @@ export type CreateStorageHostModel = {
   name: string;
   isPublic?: boolean;
   datacenterId?: number;
-  productBundleId?: number;
   customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  storageDisk?: number | null;
 };
 export type EditStorageHostModel = {
   id?: number;
@@ -3386,8 +3405,13 @@ export type CheckWebHostDomainModel = {
 export type CreateWebHostModel = {
   domainName: string;
   datacenterId?: number;
-  productBundleId?: number;
   customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  basicPackage?: boolean | null;
+  startupPackage?: boolean | null;
+  advancedPackage?: boolean | null;
+  companyPackage?: boolean | null;
 };
 export type EditWebHostModel = {
   id?: number;
@@ -3437,6 +3461,7 @@ export const {
   useGetApiDatacenterCoLocationListQuery,
   useGetApiCloudCommissionListQuery,
   useGetApiCloudCustomerGetQuery,
+  useGetApiCloudCustomerGetCustomerTypeQuery,
   usePutApiCloudCustomerEditMutation,
   usePutApiCloudCustomerEditCustomerTypeMutation,
   useGetApiCloudBillListQuery,
