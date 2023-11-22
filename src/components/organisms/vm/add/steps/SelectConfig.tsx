@@ -44,16 +44,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
           بعد از ایجاد سرور می توانید سخت افزار مورد نیاز خود را تغییر دهید.
         </Typography>
       </Stack>
-      <Box
-        onClick={() => {
-          if (step === 3) {
-            setStep(4);
-          }
-        }}
-        sx={{ px: { lg: 5 }, pt: 5 }}
-      >
-        {table}
-      </Box>
+      <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
     </>
   );
 };

@@ -100,41 +100,92 @@ const AddDomain: FC = () => {
     usePostApiDomainRegisterMutation();
 
   const submitHandler = () => {
+    let validationErrorMessage = "";
+
     if (term !== true) {
-      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
-      return;
+      validationErrorMessage = "به علت عدم تائید قوانین امکان ثبت وجود ندارد.";
+    } else if (!domainName) {
+      validationErrorMessage = "لطفا نام دامنه را وارد کنید";
+    } else if (domainName.length < 3) {
+      validationErrorMessage = "نام دامنه نمی تواند کمتر از سه حرف باشد";
+    } else if (!ext) {
+      validationErrorMessage = "لطفا دامنه را انتخاب کنید";
+    } else if (ext.length < 3) {
+      validationErrorMessage = "دامنه نمی تواند کمتر از سه حرف باشد";
+    } else if (!name) {
+      validationErrorMessage = "لطفا نام و نام خانوادگی را وارد کنید";
+    } else if (name.length < 3) {
+      validationErrorMessage =
+        "نام و نام خانوادگی نمی تواند کمتر از سه حرف باشد";
+    } else if (!country) {
+      validationErrorMessage = "لطفا نام کشور را وارد کنید";
+    } else if (country.length < 3) {
+      validationErrorMessage = "نام  کشور تواند کمتر از سه حرف باشد";
+    } else if (!province) {
+      validationErrorMessage = "لطفا نام استان را وارد کنید";
+    } else if (province.length < 3) {
+      validationErrorMessage = "نام استان نمی تواند کمتر از سه حرف باشد";
+    } else if (!city) {
+      validationErrorMessage = "لطفا نام شهر را وارد کنید";
+    } else if (city.length < 3) {
+      validationErrorMessage = "نام شهر نمی تواند کمتر از سه حرف باشد";
+    } else if (!street) {
+      validationErrorMessage = "لطفا آدرس را وارد کنید";
+    } else if (street.length < 3) {
+      validationErrorMessage = "آدرس نمی تواند کمتر از سه حرف باشد";
+    } else if (!postalCode) {
+      validationErrorMessage = "لطفا کد پستی را وارد کنید";
+    } else if (postalCode.length < 3) {
+      validationErrorMessage = "کد پستی نمی تواند کمتر از سه حرف باشد";
+    } else if (!voice) {
+      validationErrorMessage = "لطفا شماره تلفن را وارد کنید";
+    } else if (voice.length < 3) {
+      validationErrorMessage = "شماره تلفن نمی تواند کمتر از سه حرف باشد";
+    } else if (!ns1) {
+      validationErrorMessage = "لطفا ns1 را وارد کنید";
+    } else if (ns1.length < 3) {
+      validationErrorMessage = "ns1 نمی تواند کمتر از سه حرف باشد";
+    } else if (!ns2) {
+      validationErrorMessage = "لطفا ns2 را وارد کنید";
+    } else if (ns2.length < 3) {
+      validationErrorMessage = "ns2 نمی تواند کمتر از سه حرف باشد";
+    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
-    if (
-      step !== 2 ||
-      !domainName ||
-      domainName.length < 3 ||
-      !ext ||
-      ext.length < 3 ||
-      !name ||
-      name.length < 3 ||
-      !country ||
-      country.length < 3 ||
-      !province ||
-      province.length < 3 ||
-      !city ||
-      city.length < 3 ||
-      !street ||
-      street.length < 3 ||
-      !postalCode ||
-      postalCode.length < 3 ||
-      !voice ||
-      voice.length < 3 ||
-      !ns1 ||
-      ns1.length < 3 ||
-      !ns2 ||
-      ns2.length < 3
-    ) {
-      toast.error("خطا در تکمیل اطلاعات");
-      return;
+    if (validationErrorMessage !== "") {
+      toast.error(validationErrorMessage);
+    } else {
+      RegisterDomainModel({
+        registerDomainModel: {
+          domainName,
+          ext,
+          typeId,
+          authCode,
+          name,
+          country,
+          province,
+          city,
+          street,
+          postalCode,
+          voice,
+          fax: null,
+          ns1,
+          ns2,
+          autoRenewal,
+          activeCdn,
+          customerProductTypeId:
+            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
+              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
+              : paymentType || 0,
+        },
+      })
+        .unwrap()
+        .then((res) => {
+          toast.success("دامنه با موفقیت ایجاد/منتقل گردید");
+          navigate("/domain");
+        });
     }
-
-    // RegisterDomainModel
   };
 
   return (
@@ -207,14 +258,21 @@ const AddDomain: FC = () => {
                       height={50}
                       sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
                     />
-                    <Stack direction="row" justifyContent="end">
-                      <Skeleton
-                        variant="rectangular"
-                        height={80}
-                        width={200}
-                        sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                      />
-                    </Stack>
+                    <Skeleton
+                      variant="rectangular"
+                      height={50}
+                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                    />
+                    <Skeleton
+                      variant="rectangular"
+                      height={50}
+                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                    />
+                    <Skeleton
+                      variant="rectangular"
+                      height={50}
+                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                    />
                   </Stack>
                 </Stack>
               ) : (

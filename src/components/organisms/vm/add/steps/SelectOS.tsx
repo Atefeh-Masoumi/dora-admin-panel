@@ -176,12 +176,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                     minHeight: 65,
                     cursor: "pointer",
                   }}
-                  onClick={() => {
-                    osVersionClickHandler(osVersionItem);
-                    if (step === 2) {
-                      setStep(3);
-                    }
-                  }}
+                  onClick={() => osVersionClickHandler(osVersionItem)}
                 >
                   <Typography
                     align="center"

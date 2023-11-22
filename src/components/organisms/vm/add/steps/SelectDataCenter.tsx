@@ -80,12 +80,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                 alignItems="center"
                 justifyContent="center"
                 spacing={1}
-                onClick={() => {
-                  dataCenterOnClick(dataCenterItem);
-                  if (step === 1) {
-                    setStep(2);
-                  }
-                }}
+                onClick={() => dataCenterOnClick(dataCenterItem)}
               >
                 <Stack
                   alignItems="center"
