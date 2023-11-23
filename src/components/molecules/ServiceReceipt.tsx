@@ -11,6 +11,8 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
+import { InvoiceSvg } from "../atoms/svg/InvoiceSvg";
+import { CalculateSvg } from "../atoms/svg/CalculateSvg";
 
 type ServiceReceiptPropsType = {
   factorFixedContentWidth?: number;
@@ -91,13 +93,13 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           صورتحساب
         </Typography>
         <Divider
-          sx={{ margin: "20px 20px !important", borderBottomWidth: 3 }}
+          sx={{ margin: "10px 20px !important", borderBottomWidth: 3 }}
         />
         <Grid
           container
           sx={{
-            marginTop: "20px !important",
-            marginBottom: "20px !important",
+            marginTop: "10px !important",
+            marginBottom: "10px !important",
           }}
         >
           <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
@@ -129,7 +131,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
         <Grid
           container
           sx={{
-            marginTop: "10px !important",
+            marginTop: "5px !important",
             marginBottom: "5px !important",
           }}
         >
@@ -159,68 +161,170 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           </Grid>
         </Grid>
         <Divider
-          sx={{ margin: "15px 20px !important", borderBottomWidth: 1 }}
+          sx={{ margin: "10px 20px !important", borderBottomWidth: 1 }}
         />
-
         <Grid
           container
           sx={{
-            marginTop: "10px !important",
-            marginBottom: "5px !important",
+            padding: "10px 0px",
+            width: "95% !important",
+            margin: "0px auto !important",
+            marginTop: "5px !important",
+            backgroundColor: "rgba(240, 247, 255, 1)",
+            borderRadius: "5px",
           }}
         >
-          <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "left",
+              paddingLeft: "4px !important",
+            }}
+          >
             <Typography
-              fontSize={12}
               sx={{ color: ({ palette }) => palette.grey[700] }}
+              fontSize={14}
+            >
+              جمع کل
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "right",
+              paddingRight: "4px !important",
+            }}
+          >
+            <Typography
+              fontSize={14}
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
+              {reciptItemPrice}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            padding: "10px 0px",
+            width: "95% !important",
+            margin: "0px auto !important",
+            marginTop: "5px !important",
+          }}
+        >
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "left",
+              paddingLeft: "4px !important",
+            }}
+          >
+            <Typography
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+              fontSize={14}
+            >
+              تخفیف
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "right",
+              paddingRight: "4px !important",
+            }}
+          >
+            <Typography
+              fontSize={14}
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
+              ۰
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            padding: "10px 0px",
+            width: "95% !important",
+            margin: "0px auto !important",
+            marginTop: "5px !important",
+            backgroundColor: "rgba(240, 247, 255, 1)",
+            borderRadius: "5px",
+          }}
+        >
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "left",
+              paddingLeft: "4px !important",
+            }}
+          >
+            <Typography
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+              fontSize={14}
             >
               مالیات بر ارزش افزوده
             </Typography>
           </Grid>
-          <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              textAlign: "right",
+              paddingRight: "4px !important",
+            }}
+          >
             <Typography
-              fontSize={12}
-              sx={{ color: ({ palette }) => palette.grey[700] }}
-            >{`  `}</Typography>
-          </Grid>
-          <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
-            <Typography
-              fontSize={12}
+              fontSize={14}
               sx={{ color: ({ palette }) => palette.grey[700] }}
             >
               {vat}
             </Typography>
           </Grid>
         </Grid>
-        <Divider
-          sx={{ margin: "15px 20px !important", borderBottomWidth: 1 }}
-        />
-
+        <Divider />
         <Grid
           container
           sx={{
-            padding: "5px 0px",
+            padding: "10px 0px",
             width: "95% !important",
             margin: "0px auto !important",
-            marginTop: "10px !important",
-            backgroundColor: "rgba(240, 247, 255, 1)",
+            marginTop: "5px !important",
+            borderRadius: "5px",
           }}
         >
           <Grid
             item
             xs={6}
-            sx={{ textAlign: "left", paddingLeft: "4px !important" }}
+            sx={{
+              textAlign: "left",
+              paddingLeft: "4px !important",
+            }}
           >
-            <Typography fontSize={14}>
-              <strong>جمع کل</strong>
+            <Typography
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+              fontSize={14}
+            >
+              <strong>مبلغ قابل پرداخت</strong>
             </Typography>
           </Grid>
           <Grid
             item
             xs={6}
-            sx={{ textAlign: "right", paddingRight: "4px !important" }}
+            sx={{
+              textAlign: "right",
+              paddingRight: "4px !important",
+            }}
           >
-            <Typography fontSize={14}>
+            <Typography
+              fontSize={14}
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
               <strong>{totalPrice}</strong>
             </Typography>
           </Grid>
@@ -229,7 +333,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           container
           sx={{
             width: "95% !important",
-            margin: "15px auto !important",
+            margin: "10px auto !important",
           }}
         >
           {customerType === CUSTOMER_TYPE_ENUM.POST_PAID ? (
@@ -242,6 +346,41 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 alignItems="center"
                 whiteSpace="nowrap"
               >
+                <Button
+                  variant="outlined"
+                  onClick={() =>
+                    setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID)
+                  }
+                  color={
+                    paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
+                      ? "primary"
+                      : "secondary"
+                  }
+                  sx={{
+                    border:
+                      paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
+                        ? "2px solid #3C8AFF !important"
+                        : 1,
+                    py: 1,
+                  }}
+                  fullWidth
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems={{ xs: "start", md: "end" }}
+                  >
+                    <InvoiceSvg
+                      stroke={
+                        paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
+                          ? "#3C8AFF"
+                          : undefined
+                      }
+                      sx={{ fontSize: { xs: 20, md: 30 } }}
+                    />
+                    <Typography variant="text14">پیش پرداخت</Typography>
+                  </Stack>
+                </Button>
                 <Button
                   onClick={() =>
                     setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO)
@@ -266,36 +405,17 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                     spacing={1}
                     alignItems={{ xs: "start", md: "end" }}
                   >
+                    <CalculateSvg
+                      stroke={
+                        paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
+                          ? "#3C8AFF"
+                          : undefined
+                      }
+                      sx={{ fontSize: { xs: 20, md: 30 } }}
+                    />
                     <Typography variant="text14">
                       پرداخت بر اساس مصرف
                     </Typography>
-                  </Stack>
-                </Button>
-                <Button
-                  onClick={() =>
-                    setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID)
-                  }
-                  variant="outlined"
-                  color={
-                    paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                      ? "primary"
-                      : "secondary"
-                  }
-                  sx={{
-                    border:
-                      paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                        ? "2px solid #3C8AFF !important"
-                        : 1,
-                    py: 1,
-                  }}
-                  fullWidth
-                >
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    alignItems={{ xs: "start", md: "end" }}
-                  >
-                    <Typography variant="text14">پیش پرداخت</Typography>
                   </Stack>
                 </Button>
               </Stack>
@@ -306,7 +426,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           container
           sx={{
             marginTop: "5px !important",
-            marginBottom: "10px !important",
+            marginBottom: "5px !important",
           }}
         >
           <Grid item xs={12}>
