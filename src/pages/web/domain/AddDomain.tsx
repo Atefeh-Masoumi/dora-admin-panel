@@ -35,19 +35,12 @@ const AddDomain: FC = () => {
     term,
   } = useContext(AddDomainContext);
 
-  const { screenHeight, screenWidth } = useResize();
-  const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const [domainPrice, setDomainPrice] = useState(0);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const factorCol = document.getElementById("relative-left-col-factor");
-    setFactorFixedContentWidth(factorCol?.offsetWidth || 0);
-  }, [screenHeight, screenWidth]);
 
   useEffect(() => {
     let timer: any = null;
@@ -216,7 +209,6 @@ const AddDomain: FC = () => {
             style={{ position: "relative", textAlign: "center" }}
           >
             <ServiceReceipt
-              factorFixedContentWidth={factorFixedContentWidth}
               submitHandler={() => submitHandler()}
               submitButtonIsLoading={registerLoading}
               paymentType={paymentType}

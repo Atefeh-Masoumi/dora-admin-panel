@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, FC } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  FC,
+  useEffect,
+  useState,
+} from "react";
 import {
   Button,
   Divider,
@@ -13,9 +19,9 @@ import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import { InvoiceSvg } from "../atoms/svg/InvoiceSvg";
 import { CalculateSvg } from "../atoms/svg/CalculateSvg";
+import useResize from "src/utils/useResize";
 
 type ServiceReceiptPropsType = {
-  factorFixedContentWidth?: number;
   receiptItemNumber: string;
   reciptItemPrice: string;
   receiptItemName: string | null | undefined;
@@ -30,7 +36,6 @@ type ServiceReceiptPropsType = {
 };
 
 const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
-  factorFixedContentWidth,
   submitHandler,
   submitButtonIsLoading,
   paymentType,
@@ -43,6 +48,24 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
   vat,
   priceIsLoading,
 }) => {
+  const { screenHeight, screenWidth } = useResize();
+  const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
+  const [factorFixedContentMaxHeight, setFactorFixedContentMaxHeight] =
+    useState(0);
+
+  useEffect(() => {
+    const factorCol = document.getElementById("relative-left-col-factor");
+    const recieptCard = document.querySelector(
+      "#relative-left-col-factor > div"
+    );
+    setFactorFixedContentMaxHeight(
+      Math.floor(
+        screenHeight - (recieptCard?.getBoundingClientRect()?.y || 0) - 5
+      )
+    );
+    setFactorFixedContentWidth(factorCol?.offsetWidth || 0);
+  }, [screenHeight, screenWidth]);
+
   return priceIsLoading ? (
     <Stack maxHeight="550px" justifyContent="space-between">
       <Stack
@@ -78,7 +101,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
   ) : (
     <Stack
       position={{ xs: "static", md: "fixed" }}
-      maxHeight={{ md: "550px", xs: "auto" }}
+      maxHeight={{ md: `${factorFixedContentMaxHeight}px`, xs: "auto" }}
       component={Paper}
       className="fixed-paper-factor"
       sx={{

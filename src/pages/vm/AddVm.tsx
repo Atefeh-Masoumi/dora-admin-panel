@@ -21,19 +21,12 @@ const AddVm: FC = () => {
   const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =
     useContext(AddServerContext);
 
-  const { screenHeight, screenWidth } = useResize();
-  const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
 
   const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
-
-  useEffect(() => {
-    const factorCol = document.getElementById("relative-left-col-factor");
-    setFactorFixedContentWidth(factorCol?.offsetWidth || 0);
-  }, [screenHeight, screenWidth]);
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
     usePostApiVmHostCreateMutation();
@@ -137,7 +130,6 @@ const AddVm: FC = () => {
             style={{ position: "relative", textAlign: "center" }}
           >
             <ServiceReceipt
-              factorFixedContentWidth={factorFixedContentWidth}
               submitHandler={() => submitHandler()}
               submitButtonIsLoading={createHostIsLoading}
               paymentType={paymentType}

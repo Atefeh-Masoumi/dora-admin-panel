@@ -19,8 +19,6 @@ const AddWeb: FC = () => {
   const { domainName, dataCenter, serverConfig, term } =
     useContext(AddWebContext);
 
-  const { screenHeight, screenWidth } = useResize();
-  const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
@@ -29,11 +27,6 @@ const AddWeb: FC = () => {
   const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   const [createWeb, { isLoading }] = usePostApiWebCreateMutation();
-
-  useEffect(() => {
-    const factorCol = document.getElementById("relative-left-col-factor");
-    setFactorFixedContentWidth(factorCol?.offsetWidth || 0);
-  }, [screenHeight, screenWidth]);
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -122,7 +115,6 @@ const AddWeb: FC = () => {
             style={{ position: "relative", textAlign: "center" }}
           >
             <ServiceReceipt
-              factorFixedContentWidth={factorFixedContentWidth}
               submitHandler={() => submitHandler()}
               submitButtonIsLoading={isLoading}
               paymentType={paymentType}
