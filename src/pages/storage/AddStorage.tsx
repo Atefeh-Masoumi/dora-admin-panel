@@ -5,10 +5,7 @@ import { useNavigate } from "react-router";
 import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
-import {
-  AddStorageContext,
-  addStorageStepsType,
-} from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import {
   useGetApiCloudCustomerGetCustomerTypeQuery,
   usePostApiStorageHostCreateMutation,
@@ -19,7 +16,7 @@ import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddStorageService: FC = () => {
-  const { step, setStep, dataCenter, serverConfig, name, isPublic } =
+  const { dataCenter, serverConfig, name, isPublic } =
     useContext(AddStorageContext);
 
   const { screenHeight, screenWidth } = useResize();
@@ -29,8 +26,7 @@ const AddStorageService: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType, isLoading: customerTypeIsLoading } =
-    useGetApiCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   useEffect(() => {
     const factorCol = document.getElementById("relative-left-col-factor");
@@ -74,11 +70,7 @@ const AddStorageService: FC = () => {
         .unwrap()
         .then((res) => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
-          if (res) {
-            let a = document.createElement("a");
-            a.href = "/cloud/order/" + res;
-            a.click();
-          }
+          navigate("/storage");
         });
     }
   };

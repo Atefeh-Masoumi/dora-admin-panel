@@ -1,20 +1,8 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-
+import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import {
-  AddServerContext,
-  addServerStepsType,
-} from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { SelectDataCenter } from "src/components/organisms/vm/add/steps/SelectDataCenter";
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
@@ -25,21 +13,13 @@ import {
   usePostApiVmHostCreateMutation,
 } from "src/app/services/api.generated";
 import useResize from "src/utils/useResize";
-import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddVm: FC = () => {
-  const {
-    step,
-    setStep,
-    dataCenter,
-    osVersion,
-    serverConfig,
-    serverName,
-    serverPassword,
-  } = useContext(AddServerContext);
+  const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =
+    useContext(AddServerContext);
 
   const { screenHeight, screenWidth } = useResize();
   const [factorFixedContentWidth, setFactorFixedContentWidth] = useState(0);
@@ -48,8 +28,7 @@ const AddVm: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType, isLoading: customerTypeIsLoading } =
-    useGetApiCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   useEffect(() => {
     const factorCol = document.getElementById("relative-left-col-factor");

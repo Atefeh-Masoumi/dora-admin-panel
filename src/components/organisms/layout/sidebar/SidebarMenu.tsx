@@ -173,7 +173,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       pathname === "/cloud/supports" ||
       pathname === "/cloud/profile" ||
       pathname === "/cloud/setting" ||
-      pathname === "/cloud/host-products" ||
+      pathname === "/cloud/customer-products" ||
       pathname === "/cloud/orders" ||
       pathname === "/cloud/referral" ||
       pathname === "/cloud/notifications",

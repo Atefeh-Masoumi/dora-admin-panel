@@ -2,11 +2,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import { Box, Grid, Paper, Stack, Typography, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import {
-  AddWebContext,
-  addWebStepsType,
-} from "src/components/organisms/web/web/add/contexts/AddWebContext";
-import { AddWebStepper } from "src/components/organisms/web/web/add/AddStepper";
+import { AddWebContext } from "src/components/organisms/web/web/add/contexts/AddWebContext";
 import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectDomain";
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
@@ -20,7 +16,7 @@ import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 
 const AddWeb: FC = () => {
-  const { step, setStep, domainName, dataCenter, serverConfig, term } =
+  const { domainName, dataCenter, serverConfig, term } =
     useContext(AddWebContext);
 
   const { screenHeight, screenWidth } = useResize();
@@ -30,8 +26,7 @@ const AddWeb: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType, isLoading: customerTypeIsLoading } =
-    useGetApiCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   const [createWeb, { isLoading }] = usePostApiWebCreateMutation();
 
@@ -75,11 +70,7 @@ const AddWeb: FC = () => {
         .unwrap()
         .then((res) => {
           toast.success("سرویس هاست وب با موفقیت ایجاد شد");
-          if (res) {
-            let a = document.createElement("a");
-            a.href = "/cloud/order/" + res;
-            a.click();
-          }
+          navigate("/web");
         });
     }
   };

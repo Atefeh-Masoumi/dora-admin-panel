@@ -38,7 +38,9 @@ const Sales = lazy(() => import("src/pages/cloud/sales/Index"));
 const Profile = lazy(() => import("src/pages/cloud/profile/Index"));
 const Setting = lazy(() => import("src/pages/cloud/setting/Index"));
 const Notification = lazy(() => import("src/pages/cloud/notification/Index"));
-const CustomerProducts = lazy(() => import("src/pages/cloud/customerProduct/Index"));
+const CustomerProducts = lazy(
+  () => import("src/pages/cloud/customerProduct/Index")
+);
 const Supports = lazy(() => import("src/pages/cloud/support/Index"));
 const Support = lazy(() => import("src/pages/cloud/support/Support"));
 const AddSupport = lazy(() => import("src/pages/cloud/support/AddSupport"));
@@ -154,7 +156,7 @@ const Router: FC = () => {
           />
           <Route path="/referral/:id" element={callbackTemplate(Referral)} />
           <Route
-            path="/cloud/host-products"
+            path="/cloud/customer-products"
             element={mainTemplate(CustomerProducts, {
               pageTitle: "سرویس های من",
             })}
@@ -175,7 +177,7 @@ const Router: FC = () => {
               pageTitle: "مرکز اطلاع رسانی",
             })}
           />
-          
+
           {/* ======================================= SUPPORT ======================================= */}
           <Route
             path="/cloud/supports"
@@ -338,7 +340,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرور ابری",
                   url: "/vm",
                 },
-                hideSidebar: false,
+                hideSidebar: true,
               },
               AddServerContextProvider
             )}
@@ -449,7 +451,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت هاستینگ ابری",
                   url: "/web",
                 },
-                hideSidebar: false,
+                hideSidebar: true,
               },
               AddWebContextProvider
             )}
@@ -484,7 +486,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
                   url: "/domain",
                 },
-                hideSidebar: false,
+                hideSidebar: true,
               },
               AddDomainContextProvider
             )}
@@ -519,7 +521,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس فضای ابری",
                   url: "/storage",
                 },
-                hideSidebar: false,
+                hideSidebar: true,
               },
               AddStorageContextProvider
             )}

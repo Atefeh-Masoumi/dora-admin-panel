@@ -17,8 +17,6 @@ import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddDomain: FC = () => {
   const {
-    step,
-    setStep,
     domainName,
     ext,
     typeId,
@@ -80,8 +78,7 @@ const AddDomain: FC = () => {
   const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
     usePostApiDomainGetPriceMutation();
 
-  const { data: customerType, isLoading: customerTypeIsLoading } =
-    useGetApiCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
     usePostApiDomainRegisterMutation();

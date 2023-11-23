@@ -6,7 +6,7 @@ export const serviceTableStruct: columnType[] = [
     label: "شماره سرویس",
   },
   {
-    id: "productName",
+    id: "product",
     label: "نام محصول",
   },
   {
