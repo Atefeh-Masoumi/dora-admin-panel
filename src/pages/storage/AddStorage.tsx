@@ -95,7 +95,7 @@ const AddStorageService: FC = () => {
       </Typography>
       <Box sx={{ my: 0 }}>
         <Grid container>
-          <Grid xs={12} md={8} item>
+          <Grid xs={12} md={7} item>
             <Stack
               component={Paper}
               sx={{
@@ -125,7 +125,7 @@ const AddStorageService: FC = () => {
             px={{ md: 2, xs: 0 }}
             py={{ md: 0, xs: 2 }}
             xs={12}
-            md={4}
+            md={5}
             item
             style={{ position: "relative", textAlign: "center" }}
           >
