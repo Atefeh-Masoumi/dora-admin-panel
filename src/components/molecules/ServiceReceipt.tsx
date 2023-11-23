@@ -287,9 +287,12 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
             </Typography>
           </Grid>
         </Grid>
+<<<<<<< HEAD
         <Divider
           sx={{ margin: "15px 20px !important", borderBottomWidth: 1 }}
         />
+=======
+>>>>>>> a1ef3a0 (update)
         <Grid
           container
           sx={{
@@ -415,9 +418,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                       }
                       sx={{ fontSize: { xs: 20, md: 30 } }}
                     />
-                    <Typography variant="text14">
-                      پرداخت بر اساس مصرف
-                    </Typography>
+                    <Typography variant="text14">براساس مصرف</Typography>
                   </Stack>
                 </Button>
               </Stack>
@@ -434,9 +435,11 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           <Grid item xs={12}>
             <LoadingButton
               loading={submitButtonIsLoading}
+              fullWidth
+              size="large"
               variant="contained"
+              sx={{ py: 1.5 }}
               color="primary"
-              sx={{ width: "95%" }}
               onClick={submitHandler}
             >
               ایجاد سرویس
