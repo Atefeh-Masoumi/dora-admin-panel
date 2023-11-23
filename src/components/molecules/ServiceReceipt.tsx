@@ -266,7 +266,9 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                     spacing={1}
                     alignItems={{ xs: "start", md: "end" }}
                   >
-                    <Typography variant="text14">پراخت بر اساس مصرف</Typography>
+                    <Typography variant="text14">
+                      پرداخت بر اساس مصرف
+                    </Typography>
                   </Stack>
                 </Button>
                 <Button
