@@ -198,7 +198,7 @@ const AddDomain: FC = () => {
       >
         ثبت/انتقال دامنه
       </Typography>
-      <Box sx={{ my: 6 }}>
+      <Box sx={{ my: 0 }}>
         <Grid container>
           <Grid xs={12} md={8} item>
             <Stack
