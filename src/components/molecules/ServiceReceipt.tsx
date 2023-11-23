@@ -287,12 +287,9 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
             </Typography>
           </Grid>
         </Grid>
-<<<<<<< HEAD
         <Divider
           sx={{ margin: "15px 20px !important", borderBottomWidth: 1 }}
         />
-=======
->>>>>>> a1ef3a0 (update)
         <Grid
           container
           sx={{
