@@ -11,14 +11,14 @@ import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
 import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
-import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
+//import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
 //import { SpecialOffer } from "./SpecialOffer";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
 //import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 import { StorageOutlined } from "@mui/icons-material";
-import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
+//import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 
 type SidebarPropsType = {};
 
@@ -173,7 +173,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       pathname === "/cloud/supports" ||
       pathname === "/cloud/profile" ||
       pathname === "/cloud/setting" ||
-      pathname === "/cloud/host-products" ||
+      pathname === "/cloud/customer-products" ||
       pathname === "/cloud/orders" ||
       pathname === "/cloud/referral" ||
       pathname === "/cloud/notifications",

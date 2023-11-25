@@ -63,18 +63,6 @@ export const api = generatedApi
       getApiCdnLoadBalanceListByZoneName: {
         providesTags: () => ["LoadBalance"],
       },
-      getApiCloudOrderList: {
-        providesTags: () => ["Orders"],
-      },
-      getApiCloudOrderGetById: {
-        providesTags: () => ["Order"],
-      },
-      putApiCloudOrderPaymentType: {
-        invalidatesTags: () => ["Order"],
-      },
-      putApiCloudOrderDuration: {
-        invalidatesTags: () => ["Order"],
-      },
       putApiCloudCustomerEditCustomerType: {
         invalidatesTags: () => ["Profile"],
       },

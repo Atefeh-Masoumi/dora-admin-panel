@@ -68,6 +68,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
           >
             <Stack direction="row" alignItems="center" spacing={0.5}>
               <FormControlLabel
+                sx={{ margin: "0" }}
                 color="secondary.main"
                 label="با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم"
                 control={

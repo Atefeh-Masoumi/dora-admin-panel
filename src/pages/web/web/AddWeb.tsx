@@ -1,106 +1,71 @@
-import { FC, useContext } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { FC, useContext, useEffect, useState } from "react";
+import { Box, Grid, Paper, Stack, Typography, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import {
-  AddWebContext,
-  addWebStepsType,
-} from "src/components/organisms/web/web/add/contexts/AddWebContext";
-import { AddWebStepper } from "src/components/organisms/web/web/add/AddStepper";
+import { AddWebContext } from "src/components/organisms/web/web/add/contexts/AddWebContext";
 import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectDomain";
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
-import { usePostApiWebCreateMutation } from "src/app/services/api.generated";
+import {
+  useGetApiCloudCustomerGetCustomerTypeQuery,
+  usePostApiWebCreateMutation,
+} from "src/app/services/api.generated";
+import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import useResize from "src/utils/useResize";
+import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
+import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 
 const AddWeb: FC = () => {
-  const { step, setStep, domainName, dataCenter, serverConfig, term } =
+  const { domainName, dataCenter, serverConfig, term } =
     useContext(AddWebContext);
+
+  const [paymentType, setPaymentType] =
+    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
 
-  const goPreviousStep = () => {
-    if (step === 1) {
-      navigate("/web");
-      return;
-    }
-    setStep((step - 1) as addWebStepsType);
-  };
+  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
 
   const [createWeb, { isLoading }] = usePostApiWebCreateMutation();
 
   const submitHandler = () => {
+    let validationErrorMessage = "";
+
     if (term !== true) {
-      toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
-      return;
+      validationErrorMessage = "به علت عدم تائید قوانین امکان ثبت وجود ندارد.";
+    } else if (!dataCenter || !dataCenter.id) {
+      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
+    } else if (!serverConfig || !serverConfig.id) {
+      validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
+    } else if (!domainName) {
+      validationErrorMessage = "لطفا نام دامنه را انتخاب کنید";
+    } else if (domainName.length < 3) {
+      validationErrorMessage = "نام دامنه نباید کمتر از سه حرف باشد";
+    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
-    if (
-      step !== 3 ||
-      !domainName ||
-      domainName.length < 3 ||
-      !dataCenter ||
-      !dataCenter.id ||
-      !serverConfig
-    ) {
-      toast.error("خطا در تکمیل اطلاعات");
-      return;
+    if (validationErrorMessage !== "") {
+      toast.error(validationErrorMessage);
+    } else {
+      createWeb({
+        createWebHostModel: {
+          domainName: domainName,
+          datacenterId: dataCenter?.id || 0,
+          productBundleId: serverConfig?.id || 0,
+          customerProductTypeId:
+            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
+              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
+              : paymentType || 0,
+          isPredefined: true,
+        },
+      })
+        .unwrap()
+        .then((res) => {
+          toast.success("سرویس هاست وب با موفقیت ایجاد شد");
+          navigate("/web");
+        });
     }
-
-    createWeb({
-      createWebHostModel: {
-        domainName: domainName,
-        datacenterId: dataCenter.id,
-        productBundleId: serverConfig.id || 0,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("سرویس هاست وب با موفقیت ایجاد شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
-  };
-
-  const goNextStep = () => {
-    switch (step) {
-      case 1:
-        if (term !== true) {
-          toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
-          return;
-        }
-        domainName && setStep(2);
-        break;
-      case 2:
-        domainName && dataCenter && setStep(3);
-        break;
-      case 3:
-        domainName && dataCenter && serverConfig && submitHandler();
-        break;
-      default:
-        break;
-    }
-  };
-
-  const renderStepHandler = () => {
-    let result = <></>;
-    switch (step) {
-      case 1:
-        result = <SelectDomain />;
-        break;
-      case 2:
-        result = <SelectDataCenter />;
-        break;
-      case 3:
-        result = <SelectConfig />;
-        break;
-      default:
-        break;
-    }
-    return result;
   };
 
   return (
@@ -113,57 +78,69 @@ const AddWeb: FC = () => {
       >
         ایجاد هاست وب جدید
       </Typography>
-      <Box
-        sx={{
-          borderRadius: 3,
-          bgcolor: "white",
-          py: 6,
-          px: 2,
-          overflow: "overlay",
-        }}
-      >
-        <Box sx={{ overflow: "overlay" }}>
-          <AddWebStepper step={step} />
-        </Box>
-        <Box sx={{ my: 6 }}>{renderStepHandler()}</Box>
+      <Box sx={{ my: 0 }}>
+        <Grid container>
+          <Grid xs={12} md={8} item>
+            <Stack
+              component={Paper}
+              sx={{
+                position: "relative",
+                width: { xs: "100%" },
+                px: { xs: 1.8, lg: 2 },
+                py: { xs: 1.8, lg: 2.25 },
+              }}
+            >
+              <Grid container gap={2}>
+                <Grid xs={12} item>
+                  <SelectDomain />
+                  <Divider sx={{ margin: "50px 10px" }} />
+                </Grid>
+                <Grid xs={12} item>
+                  <SelectDataCenter />
+                  <Divider sx={{ margin: "50px 10px" }} />
+                </Grid>
+                <Grid xs={12} item>
+                  <SelectConfig />
+                </Grid>
+              </Grid>
+            </Stack>
+          </Grid>
+          <Grid
+            id="relative-left-col-factor"
+            px={{ md: 2, xs: 0 }}
+            py={{ md: 0, xs: 2 }}
+            xs={12}
+            md={4}
+            item
+            style={{ position: "relative", textAlign: "center" }}
+          >
+            <ServiceReceipt
+              submitHandler={() => submitHandler()}
+              submitButtonIsLoading={isLoading}
+              paymentType={paymentType}
+              setPaymentType={setPaymentType}
+              customerType={customerType}
+              receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
+              receiptItemNumber={serverConfig?.id ? "۱" : "---"}
+              reciptItemPrice={Math.floor(
+                serverConfig?.price || 0
+              ).toLocaleString("fa-IR")}
+              totalPrice={Math.floor(
+                (serverConfig?.price || 0) * 1.09
+              ).toLocaleString("fa-IR")}
+              vat={Math.floor((serverConfig?.price || 0) * 0.09).toLocaleString(
+                "fa-IR"
+              )}
+            />
+          </Grid>
+        </Grid>
         <Stack
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={1}
           px={1.7}
-        >
-          <Button
-            fullWidth
-            disableElevation
-            sx={{
-              height: 58,
-              maxWidth: { xs: "50%", sm: 200 },
-              borderRadius: "10px",
-              border: "1px solid rgba(110, 118, 138, 0.32)",
-              color: "rgba(110, 118, 138, 1)",
-              fontSize: "16px !important",
-            }}
-            onClick={goPreviousStep}
-          >
-            {step === 1 ? "انصراف" : "مرحله قبل"}
-          </Button>
-          <LoadingButton
-            loading={isLoading}
-            fullWidth
-            disableElevation
-            variant="contained"
-            sx={{
-              height: 58,
-              maxWidth: { xs: "50%", sm: 200 },
-              borderRadius: "10px",
-              fontSize: "16px !important",
-            }}
-            onClick={goNextStep}
-          >
-            {step === 3 ? "ایجاد سرویس" : "ادامه"}
-          </LoadingButton>
-        </Stack>
+        ></Stack>
       </Box>
     </>
   );

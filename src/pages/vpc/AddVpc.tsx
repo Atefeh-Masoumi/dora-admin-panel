@@ -57,24 +57,24 @@ const AddVm: FC = () => {
       toast.error("رمز عبور نامعتبر است.");
       return;
     }
-    createCloudServer({
-      createVmModel: {
-        name: serverName,
-        password: serverPassword,
-        imageId: osVersion.id,
-        productBundleId: serverConfig.id || 0,
-        datacenterId: dataCenter.id,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
-        if (res) {
-          let a = document.createElement("a");
-          a.href = "/cloud/order/" + res;
-          a.click();
-        }
-      });
+    // createCloudServer({
+    //   createVmModel: {
+    //     name: serverName,
+    //     password: serverPassword,
+    //     imageId: osVersion.id,
+    //     productBundleId: serverConfig.id || 0,
+    //     datacenterId: dataCenter.id,
+    //   },
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
+    //     if (res) {
+    //       let a = document.createElement("a");
+    //       a.href = "/cloud/order/" + res;
+    //       a.click();
+    //     }
+    //   });
   };
 
   const goNextStep = () => {

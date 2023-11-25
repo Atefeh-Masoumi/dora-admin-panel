@@ -107,6 +107,24 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/datacenter/bare-metal/list` }),
     }),
+    getApiDatacenterBareMetalGetById: build.query<
+      GetApiDatacenterBareMetalGetByIdApiResponse,
+      GetApiDatacenterBareMetalGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/datacenter/bare-metal/get/${queryArg.id}`,
+      }),
+    }),
+    postApiDatacenterBareMetalCreate: build.mutation<
+      PostApiDatacenterBareMetalCreateApiResponse,
+      PostApiDatacenterBareMetalCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/datacenter/bare-metal/create`,
+        method: "POST",
+        body: queryArg.createBareMetalModel,
+      }),
+    }),
     getApiCloudBusinessUnitList: build.query<
       GetApiCloudBusinessUnitListApiResponse,
       GetApiCloudBusinessUnitListApiArg
@@ -316,6 +334,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cloud/customer/get` }),
     }),
+    getApiCloudCustomerGetCustomerType: build.query<
+      GetApiCloudCustomerGetCustomerTypeApiResponse,
+      GetApiCloudCustomerGetCustomerTypeApiArg
+    >({
+      query: () => ({ url: `/api/cloud/customer/get-customer-type` }),
+    }),
     putApiCloudCustomerEdit: build.mutation<
       PutApiCloudCustomerEditApiResponse,
       PutApiCloudCustomerEditApiArg
@@ -366,6 +390,16 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/cloud/customer-product/list/${queryArg.productId}`,
+      }),
+    }),
+    postApiCloudCustomerProductTransfer: build.mutation<
+      PostApiCloudCustomerProductTransferApiResponse,
+      PostApiCloudCustomerProductTransferApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cloud/customer-product/transfer`,
+        method: "POST",
+        body: queryArg.customerProductTransferModel,
       }),
     }),
     getApiCloudDashboardUsageByCategoryId: build.query<
@@ -527,11 +561,11 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    getPortalIndex: build.query<
-      GetPortalIndexApiResponse,
-      GetPortalIndexApiArg
+    getApiHomeIndex: build.query<
+      GetApiHomeIndexApiResponse,
+      GetApiHomeIndexApiArg
     >({
-      query: () => ({ url: `/portal/index` }),
+      query: () => ({ url: `/api/home/index` }),
     }),
     getApiCloudInvoiceList: build.query<
       GetApiCloudInvoiceListApiResponse,
@@ -661,6 +695,49 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/platform/service/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getApiPlatformKubernetesList: build.query<
+      GetApiPlatformKubernetesListApiResponse,
+      GetApiPlatformKubernetesListApiArg
+    >({
+      query: () => ({ url: `/api/platform/kubernetes/list` }),
+    }),
+    getApiPlatformKubernetesGetById: build.query<
+      GetApiPlatformKubernetesGetByIdApiResponse,
+      GetApiPlatformKubernetesGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/platform/kubernetes/get/${queryArg.id}`,
+      }),
+    }),
+    postApiPlatformKubernetesCreate: build.mutation<
+      PostApiPlatformKubernetesCreateApiResponse,
+      PostApiPlatformKubernetesCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/platform/kubernetes/create`,
+        method: "POST",
+        body: queryArg.createClusterModel,
+      }),
+    }),
+    putApiPlatformKubernetesEdit: build.mutation<
+      PutApiPlatformKubernetesEditApiResponse,
+      PutApiPlatformKubernetesEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/platform/kubernetes/edit`,
+        method: "PUT",
+        body: queryArg.editClusterModel,
+      }),
+    }),
+    deleteApiPlatformKubernetesDeleteById: build.mutation<
+      DeleteApiPlatformKubernetesDeleteByIdApiResponse,
+      DeleteApiPlatformKubernetesDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/platform/kubernetes/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -821,58 +898,6 @@ export const api = createApi({
       GetApiCloudNotificationShortListApiArg
     >({
       query: () => ({ url: `/api/cloud/notification/short-list` }),
-    }),
-    getApiCloudOrderList: build.query<
-      GetApiCloudOrderListApiResponse,
-      GetApiCloudOrderListApiArg
-    >({
-      query: () => ({ url: `/api/cloud/order/list` }),
-    }),
-    getApiCloudOrderGetById: build.query<
-      GetApiCloudOrderGetByIdApiResponse,
-      GetApiCloudOrderGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/order/get/${queryArg.id}` }),
-    }),
-    putApiCloudOrderPaymentType: build.mutation<
-      PutApiCloudOrderPaymentTypeApiResponse,
-      PutApiCloudOrderPaymentTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/order/payment-type`,
-        method: "PUT",
-        body: queryArg.orderPaymentTypeModel,
-      }),
-    }),
-    putApiCloudOrderDuration: build.mutation<
-      PutApiCloudOrderDurationApiResponse,
-      PutApiCloudOrderDurationApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/order/duration`,
-        method: "PUT",
-        body: queryArg.orderDurationModel,
-      }),
-    }),
-    putApiCloudOrderVoucher: build.mutation<
-      PutApiCloudOrderVoucherApiResponse,
-      PutApiCloudOrderVoucherApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/order/voucher`,
-        method: "PUT",
-        body: queryArg.orderVoucherModel,
-      }),
-    }),
-    postApiCloudOrderPay: build.mutation<
-      PostApiCloudOrderPayApiResponse,
-      PostApiCloudOrderPayApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/order/pay`,
-        method: "POST",
-        body: queryArg.orderPayModel,
-      }),
     }),
     getApiCloudOrderPlanList: build.query<
       GetApiCloudOrderPlanListApiResponse,
@@ -1606,6 +1631,15 @@ export type DeleteApiCdnApiGatewayDeleteByIdApiArg = {
 export type GetApiDatacenterBareMetalListApiResponse =
   /** status 200 Success */ BareMetalListResponse[];
 export type GetApiDatacenterBareMetalListApiArg = void;
+export type GetApiDatacenterBareMetalGetByIdApiResponse =
+  /** status 200 Success */ BareMetalResponse;
+export type GetApiDatacenterBareMetalGetByIdApiArg = {
+  id: number;
+};
+export type PostApiDatacenterBareMetalCreateApiResponse = unknown;
+export type PostApiDatacenterBareMetalCreateApiArg = {
+  createBareMetalModel: CreateBareMetalModel;
+};
 export type GetApiCloudBusinessUnitListApiResponse =
   /** status 200 Success */ BusinessUnitListResponse[];
 export type GetApiCloudBusinessUnitListApiArg = void;
@@ -1707,6 +1741,9 @@ export type GetApiCloudCommissionListApiArg = void;
 export type GetApiCloudCustomerGetApiResponse =
   /** status 200 Success */ GetCustomerResponse;
 export type GetApiCloudCustomerGetApiArg = void;
+export type GetApiCloudCustomerGetCustomerTypeApiResponse =
+  /** status 200 Success */ number;
+export type GetApiCloudCustomerGetCustomerTypeApiArg = void;
 export type PutApiCloudCustomerEditApiResponse = unknown;
 export type PutApiCloudCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
@@ -1734,6 +1771,10 @@ export type GetApiCloudCustomerProductListByProductIdApiResponse =
   /** status 200 Success */ CustomerProductListResponse[];
 export type GetApiCloudCustomerProductListByProductIdApiArg = {
   productId: number;
+};
+export type PostApiCloudCustomerProductTransferApiResponse = unknown;
+export type PostApiCloudCustomerProductTransferApiArg = {
+  customerProductTransferModel: CustomerProductTransferModel;
 };
 export type GetApiCloudDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
@@ -1817,8 +1858,8 @@ export type PostApiDomainResendVerificationByIdApiResponse = unknown;
 export type PostApiDomainResendVerificationByIdApiArg = {
   id: number;
 };
-export type GetPortalIndexApiResponse = unknown;
-export type GetPortalIndexApiArg = void;
+export type GetApiHomeIndexApiResponse = unknown;
+export type GetApiHomeIndexApiArg = void;
 export type GetApiCloudInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiCloudInvoiceListApiArg = void;
@@ -1886,6 +1927,26 @@ export type PostApiPlatformServiceCreateApiArg = {
 };
 export type DeleteApiPlatformServiceDeleteByIdApiResponse = unknown;
 export type DeleteApiPlatformServiceDeleteByIdApiArg = {
+  id: number;
+};
+export type GetApiPlatformKubernetesListApiResponse =
+  /** status 200 Success */ GetKubernetesHostResponse[];
+export type GetApiPlatformKubernetesListApiArg = void;
+export type GetApiPlatformKubernetesGetByIdApiResponse =
+  /** status 200 Success */ GetKubernetesHostResponse;
+export type GetApiPlatformKubernetesGetByIdApiArg = {
+  id: number;
+};
+export type PostApiPlatformKubernetesCreateApiResponse = unknown;
+export type PostApiPlatformKubernetesCreateApiArg = {
+  createClusterModel: CreateClusterModel;
+};
+export type PutApiPlatformKubernetesEditApiResponse = unknown;
+export type PutApiPlatformKubernetesEditApiArg = {
+  editClusterModel: EditClusterModel;
+};
+export type DeleteApiPlatformKubernetesDeleteByIdApiResponse = unknown;
+export type DeleteApiPlatformKubernetesDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiPlatformUserListApiResponse =
@@ -1965,31 +2026,6 @@ export type GetApiCloudNotificationListApiArg = void;
 export type GetApiCloudNotificationShortListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
 export type GetApiCloudNotificationShortListApiArg = void;
-export type GetApiCloudOrderListApiResponse =
-  /** status 200 Success */ OrderListResponse[];
-export type GetApiCloudOrderListApiArg = void;
-export type GetApiCloudOrderGetByIdApiResponse =
-  /** status 200 Success */ GetOrderResponse;
-export type GetApiCloudOrderGetByIdApiArg = {
-  id: number;
-};
-export type PutApiCloudOrderPaymentTypeApiResponse = unknown;
-export type PutApiCloudOrderPaymentTypeApiArg = {
-  orderPaymentTypeModel: OrderPaymentTypeModel;
-};
-export type PutApiCloudOrderDurationApiResponse = unknown;
-export type PutApiCloudOrderDurationApiArg = {
-  orderDurationModel: OrderDurationModel;
-};
-export type PutApiCloudOrderVoucherApiResponse = unknown;
-export type PutApiCloudOrderVoucherApiArg = {
-  orderVoucherModel: OrderVoucherModel;
-};
-export type PostApiCloudOrderPayApiResponse =
-  /** status 200 Success */ OrderPayResponse;
-export type PostApiCloudOrderPayApiArg = {
-  orderPayModel: OrderPayModel;
-};
 export type GetApiCloudOrderPlanListApiResponse =
   /** status 200 Success */ OrderPlanListResponse[];
 export type GetApiCloudOrderPlanListApiArg = void;
@@ -2416,9 +2452,41 @@ export type EditApiGatewayModel = {
 export type BareMetalListResponse = {
   id?: number;
   name?: string | null;
+  bareMetalImage?: string | null;
+  bareMetalMachine?: string | null;
   datacenter?: string | null;
-  datacenterRackId?: number;
   datacenterRack?: string | null;
+};
+export type BareMetalResponse = {
+  id?: number;
+  name?: string | null;
+  bareMetalImage?: string | null;
+  bareMetalMachine?: string | null;
+  datacenter?: string | null;
+  datacenterRack?: string | null;
+  physicalCpu?: number;
+  physicalMemory?: number;
+  hdd600GSas10K?: number;
+  hdd1200GSas10K?: number;
+  networkPort1G?: number;
+  networkPort10G?: number;
+};
+export type CreateBareMetalModel = {
+  name: string;
+  password: string;
+  imageId: number;
+  publicKey?: string | null;
+  productBundleId?: number | null;
+  isPredefined: boolean;
+  customerProductTypeId: number;
+  datacenterRackId: number;
+  bareMetalMachineId: number;
+  physicalCpu?: number | null;
+  physicalMemory?: number | null;
+  hdd600Sas10K?: number | null;
+  hdd1200Sas10K?: number | null;
+  networkPort1G?: number | null;
+  networkPort10G?: number | null;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2462,6 +2530,7 @@ export type CheckCdnModel = {
 };
 export type CreateCdnModel = {
   zoneName: string;
+  customerProductTypeId: number;
 };
 export type ChangeCdnTypeModel = {
   id?: number;
@@ -2579,6 +2648,10 @@ export type CustomerProductListResponse = {
   product?: string | null;
   status?: string | null;
   createDate?: string;
+};
+export type CustomerProductTransferModel = {
+  customerProductId?: number;
+  customerId?: number;
 };
 export type DashboardUsageResponse = {
   data?: number[] | null;
@@ -2712,6 +2785,7 @@ export type RegisterDomainModel = {
   ns2: string;
   autoRenewal: boolean;
   activeCdn: boolean;
+  customerProductTypeId: number;
 };
 export type ChangeContactModel = {
   id: number;
@@ -2802,7 +2876,9 @@ export type GetKubeLoginResponse = {
 export type CreateKubeHostModel = {
   name: string;
   datacenterId?: number;
-  productBundleId?: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
 };
 export type EditKubeHostModel = {
   id?: number;
@@ -2825,6 +2901,41 @@ export type CreateKubeServiceModel = {
   cpu?: number;
   memory?: number;
   autoScale?: boolean;
+};
+export type VmProductItemModel = {
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+};
+export type GetKubernetesHostResponse = {
+  id?: number;
+  datacenter?: string | null;
+  name?: string | null;
+  status?: string | null;
+  statusId?: number;
+  createDate?: string;
+  expireDate?: string | null;
+  nodes?: VmProductItemModel[] | null;
+};
+export type NodeSpecs = {
+  quantity?: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+};
+export type CreateClusterModel = {
+  clusterName: string;
+  datacenterId?: number;
+  customerProductTypeId?: number;
+  imageId?: number;
+  vmPassword: string;
+  workerNodes?: NodeSpecs;
+  masterNodes?: NodeSpecs;
+};
+export type EditClusterModel = {
+  id?: number;
+  masterNodeCount?: number;
+  workerNodeCount?: number;
 };
 export type KubeUserListResponse = {
   id?: number;
@@ -2902,56 +3013,6 @@ export type NotificationListResponse = {
   content?: string | null;
   subject?: string | null;
   notificationDate?: string;
-};
-export type OrderListResponse = {
-  id?: number;
-  name?: string | null;
-  productName?: string | null;
-  orderType?: string | null;
-  orderStatus?: string | null;
-  orderStatusId?: number;
-  orderDate?: string;
-};
-export type GetOrderResponse = {
-  id?: number;
-  orderPaymentTypeId?: number;
-  product?: string | null;
-  name?: string | null;
-  prepaidStatus?: string | null;
-  isPrepaid?: boolean;
-  orderDurationId?: number | null;
-  orderStatus?: string | null;
-  orderStatusId?: number;
-  orderDate?: string;
-  createDate?: string;
-  netPrice?: number;
-  discount?: number;
-  totalPrice?: number;
-  vat?: number;
-  orderPrice?: number;
-  minPrice?: number;
-};
-export type OrderPaymentTypeModel = {
-  id?: number;
-  isPrepaid?: boolean;
-};
-export type OrderDurationModel = {
-  id?: number;
-  orderDurationId?: number;
-};
-export type OrderVoucherModel = {
-  id?: number;
-  voucherCode?: string | null;
-};
-export type OrderPayResponse = {
-  orderPaymentTypeId?: number;
-  status?: boolean;
-  location?: string | null;
-};
-export type OrderPayModel = {
-  id?: number;
-  orderPaymentTypeId?: number;
-  paymentProviderId?: number;
 };
 export type OrderPlanListResponse = {
   id?: number;
@@ -3084,7 +3145,10 @@ export type CreateRabbitHostModel = {
   username: string;
   password: string;
   datacenterId?: number;
-  productBundleId?: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  per1000Request?: number | null;
 };
 export type EditRabbitHostModel = {
   id?: number;
@@ -3146,7 +3210,10 @@ export type CreateStorageHostModel = {
   name: string;
   isPublic?: boolean;
   datacenterId?: number;
-  productBundleId?: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  storageDisk?: number | null;
 };
 export type EditStorageHostModel = {
   id?: number;
@@ -3163,6 +3230,7 @@ export type CreateStorageUserResponse = {
 };
 export type CreateStorageUserModel = {
   storageHostId?: number;
+  customerProductTypeId: number;
 };
 export type SupportListResponse = {
   id?: number;
@@ -3230,9 +3298,15 @@ export type GetVmResponse = {
 export type CreateVmModel = {
   name: string;
   password: string;
-  imageId: number;
-  productBundleId: number;
+  publicKey?: string | null;
   datacenterId: number;
+  imageId: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
 };
 export type EditVmModel = {
   id?: number;
@@ -3279,12 +3353,13 @@ export type VpcListResponse = {
 };
 export type CreateVpcHostModel = {
   name: string;
-  productBundleId: number;
   datacenterId: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-  ip?: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  cup?: number | null;
+  memory?: number | null;
+  disk?: number | null;
 };
 export type VpcNetworkListResponse = {
   id?: number;
@@ -3330,7 +3405,13 @@ export type CheckWebHostDomainModel = {
 export type CreateWebHostModel = {
   domainName: string;
   datacenterId?: number;
-  productBundleId?: number;
+  customerProductTypeId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  basicPackage?: boolean | null;
+  startupPackage?: boolean | null;
+  advancedPackage?: boolean | null;
+  companyPackage?: boolean | null;
 };
 export type EditWebHostModel = {
   id?: number;
@@ -3353,6 +3434,8 @@ export const {
   usePutApiCdnApiGatewayEditMutation,
   useDeleteApiCdnApiGatewayDeleteByIdMutation,
   useGetApiDatacenterBareMetalListQuery,
+  useGetApiDatacenterBareMetalGetByIdQuery,
+  usePostApiDatacenterBareMetalCreateMutation,
   useGetApiCloudBusinessUnitListQuery,
   useGetApiCloudCalculateMonthListQuery,
   useGetApiCdnHostListQuery,
@@ -3378,6 +3461,7 @@ export const {
   useGetApiDatacenterCoLocationListQuery,
   useGetApiCloudCommissionListQuery,
   useGetApiCloudCustomerGetQuery,
+  useGetApiCloudCustomerGetCustomerTypeQuery,
   usePutApiCloudCustomerEditMutation,
   usePutApiCloudCustomerEditCustomerTypeMutation,
   useGetApiCloudBillListQuery,
@@ -3385,6 +3469,7 @@ export const {
   useGetApiCloudBillGetByIdQuery,
   useGetApiCloudBillDownloadByIdQuery,
   useGetApiCloudCustomerProductListByProductIdQuery,
+  usePostApiCloudCustomerProductTransferMutation,
   useGetApiCloudDashboardUsageByCategoryIdQuery,
   useGetApiDatacenterListQuery,
   useGetApiDatacenterIpListByProductIdAndIdQuery,
@@ -3404,7 +3489,7 @@ export const {
   usePutApiDomainChangeContactMutation,
   usePutApiDomainChangeNsMutation,
   usePostApiDomainResendVerificationByIdMutation,
-  useGetPortalIndexQuery,
+  useGetApiHomeIndexQuery,
   useGetApiCloudInvoiceListQuery,
   useGetApiCloudInvoiceGetByIdQuery,
   useGetApiPlatformDevopsListByIdQuery,
@@ -3421,6 +3506,11 @@ export const {
   useGetApiPlatformServiceGetByIdQuery,
   usePostApiPlatformServiceCreateMutation,
   useDeleteApiPlatformServiceDeleteByIdMutation,
+  useGetApiPlatformKubernetesListQuery,
+  useGetApiPlatformKubernetesGetByIdQuery,
+  usePostApiPlatformKubernetesCreateMutation,
+  usePutApiPlatformKubernetesEditMutation,
+  useDeleteApiPlatformKubernetesDeleteByIdMutation,
   useGetApiPlatformUserListQuery,
   useGetApiPlatformUserShortListQuery,
   usePostApiPlatformUserCreateMutation,
@@ -3440,12 +3530,6 @@ export const {
   useDeleteApiCdnLoadBalanceDeleteByIdMutation,
   useGetApiCloudNotificationListQuery,
   useGetApiCloudNotificationShortListQuery,
-  useGetApiCloudOrderListQuery,
-  useGetApiCloudOrderGetByIdQuery,
-  usePutApiCloudOrderPaymentTypeMutation,
-  usePutApiCloudOrderDurationMutation,
-  usePutApiCloudOrderVoucherMutation,
-  usePostApiCloudOrderPayMutation,
   useGetApiCloudOrderPlanListQuery,
   usePostApiCloudOrderPlanOrderMutation,
   useGetApiCloudPaymentListQuery,

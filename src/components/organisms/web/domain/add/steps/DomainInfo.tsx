@@ -89,7 +89,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid xs={12} lg={6} item sx={{ m: 2 }} spacing={1}>
+        <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={2}
@@ -161,12 +161,11 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           </Stack>
         </Grid>
 
-        <Grid xs={12} lg={6} container item sx={{ m: 2 }} spacing={1}>
+        <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
           <Grid item xs={12} lg={6}>
             <DorsaTextField
               value={name}
               onChange={nameInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="نام و نام خانوادگی"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -176,7 +175,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={country}
               onChange={countryInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="نام کشور"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -187,7 +185,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={province}
               onChange={provinceInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="نام استان"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -198,7 +195,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={city}
               onChange={cityInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="نام شهر"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -209,7 +205,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={street}
               onChange={streetInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="آدرس"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -219,7 +214,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={postalCode}
               onChange={postalCodeInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="کد پستی"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -229,7 +223,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={voice}
               onChange={voiceInputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="تلفن"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -238,12 +231,11 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           </Grid>
         </Grid>
 
-        <Grid xs={12} lg={6} container item sx={{ m: 2 }} spacing={1}>
+        <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
           <Grid item xs={12} lg={6}>
             <DorsaTextField
               value={ns1}
               onChange={ns1InputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="Name Server 1"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -253,7 +245,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
             <DorsaTextField
               value={ns2}
               onChange={ns2InputChangeHandler}
-              sx={{ minWidth: 300 }}
               label="Name Server 2"
               fullWidth
               inputProps={{ dir: "ltr" }}
@@ -261,7 +252,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           </Grid>
         </Grid>
 
-        <Grid xs={12} lg={6} container item sx={{ m: 2 }} spacing={1}>
+        <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
           <Grid item xs={12}>
             <FormControlLabel
               color="secondary.main"

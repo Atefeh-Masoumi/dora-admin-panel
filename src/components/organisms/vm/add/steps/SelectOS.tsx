@@ -14,7 +14,8 @@ import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
 type SelectOSPropsType = {};
 
 export const SelectOS: FC<SelectOSPropsType> = () => {
-  const { dataCenter, osVersion, setOsVersion } = useContext(AddServerContext);
+  const { dataCenter, osVersion, setOsVersion, step, setStep } =
+    useContext(AddServerContext);
 
   const { data: osVersionsList, isLoading } =
     useGetApiVmImageListByDatacenterIdQuery({

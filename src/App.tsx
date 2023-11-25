@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import createEmotionCache from "src/createEmotionCache";
 import "react-toastify/dist/ReactToastify.css";
+import "./assets/css/style.css";
 import Router from "src/routes/Router";
 import { ToastContainer } from "react-toastify";
 import theme from "src/configs/theme";

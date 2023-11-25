@@ -12,7 +12,8 @@ import mobinNetImage from "src/assets/images/mobinnet.png";
 type SelectDataCenterPropsType = {};
 
 export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
-  const { dataCenter, setDataCenter } = useContext(AddServerContext);
+  const { dataCenter, setDataCenter, step, setStep } =
+    useContext(AddServerContext);
 
   const { data: dataCenterList, isLoading } = useGetApiDatacenterListQuery();
 
