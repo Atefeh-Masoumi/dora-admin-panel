@@ -14,7 +14,6 @@ import { invoiceTableRow } from "src/components/organisms/cloud/invoices/tables/
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiCloudInvoiceGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
-// import moment from "jalali-moment";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 const Invoice: FC = () => {
@@ -25,12 +24,16 @@ const Invoice: FC = () => {
 
   const payInvoice = [
     {
-      label: "جمع کل",
-      value: priceToPersian(invoiceItem?.totalPrice as number),
+      label: "مبلغ",
+      value: priceToPersian(invoiceItem?.netPrice as number),
     },
     {
       label: "تخفیف",
       value: priceToPersian(invoiceItem?.discount as number),
+    },
+    {
+      label: "جمع کل",
+      value: priceToPersian(invoiceItem?.totalPrice as number),
     },
     {
       label: "مالیات بر ارزش افزوده",
