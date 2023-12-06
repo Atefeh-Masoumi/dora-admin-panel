@@ -14,7 +14,6 @@ import { invoiceTableRow } from "src/components/organisms/cloud/invoices/tables/
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiCloudInvoiceGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
-// import moment from "jalali-moment";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 const Invoice: FC = () => {
