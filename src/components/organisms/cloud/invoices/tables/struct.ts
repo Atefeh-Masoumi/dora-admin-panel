@@ -9,7 +9,19 @@ export const invoicesTableStruct: columnType[] = [
   {
     id: "invoiceDate",
     label: "تاریخ",
-    type: "date"
+    type: "date",
+  },
+  {
+    id: "netPrice",
+    label: "جمع",
+    isPrice: true,
+    format: priceToPersian,
+  },
+  {
+    id: "discount",
+    label: "تخفیف",
+    isPrice: true,
+    format: priceToPersian,
   },
   {
     id: "totalPrice",
@@ -20,12 +32,6 @@ export const invoicesTableStruct: columnType[] = [
   {
     id: "vat",
     label: "ارزش افزوده",
-    isPrice: true,
-    format: priceToPersian,
-  },
-  {
-    id: "discount",
-    label: "تخفیف",
     isPrice: true,
     format: priceToPersian,
   },

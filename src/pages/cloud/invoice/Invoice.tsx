@@ -25,12 +25,16 @@ const Invoice: FC = () => {
 
   const payInvoice = [
     {
-      label: "جمع کل",
-      value: priceToPersian(invoiceItem?.totalPrice as number),
+      label: "مبلغ",
+      value: priceToPersian(invoiceItem?.netPrice as number),
     },
     {
       label: "تخفیف",
       value: priceToPersian(invoiceItem?.discount as number),
+    },
+    {
+      label: "جمع کل",
+      value: priceToPersian(invoiceItem?.totalPrice as number),
     },
     {
       label: "مالیات بر ارزش افزوده",
