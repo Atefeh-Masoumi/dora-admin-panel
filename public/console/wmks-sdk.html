@@ -1,83 +1,83 @@
 <!DOCTYPE html>
 <html dir="rtl">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Dorsa Cloud</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="white" name="apple-mobile-web-app-status-bar-style" />
+    <meta
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+      name="viewport"
+    />
+    <link href="css/css/wmks-all.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="js/wmks.min.js" type="text/javascript"></script>
+    <script src="js/wmks-sdk.js" type="text/javascript"></script>
+    <style>
+      #mainCanvas {
+        left: 0 !important;
+        margin: 0px auto !important;
+        display: block !important;
+      }
+    </style>
+    <script>
+      var wmksHeightPercent = 0.6;
+      function updateSize() {
+        var winW = window.innerWidth,
+          winH = window.innerHeight;
+        var floatW = winW - $("#control").width() - 30;
+        $("#wmksContainer").width(winW);
+        $("#wmksContainer").height(winH);
+      }
+      function initStatus() {
+        $("#rescale").attr("checked", true);
+        $("#changeResolution").attr("checked", true);
+      }
+      $(function () {
+        updateSize();
+        initStatus();
+        createWMKS();
+        connect();
+        $("#wmksContainer").css("width", "100%");
+        $("#wmksContainer").css("height", window.innerHeight);
+        $("#wmksContainer").css("position", "fixed");
+        $("#wmksContainer").css("top", "0");
+        $("#wmksContainer").css("margin", "0");
+      });
+      $(window).on("resize", function (e) {
+        updateSize();
+        updateScreen();
+      });
+    </script>
+  </head>
 
-<head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-  <title>Dorsa Cloud</title>
-  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <meta content="yes" name="apple-mobile-web-app-capable" />
-  <meta content="white" name="apple-mobile-web-app-status-bar-style" />
-  <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
-    name="viewport" />
-  <link href="css/css/wmks-all.css" rel="stylesheet" type="text/css" />
-  <script src="https://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
-  <script src="https://code.jquery.com/ui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-  <script src="wmks.min.js" type="text/javascript"></script>
-  <script src="wmks-sdk.js" type="text/javascript"></script>
-  <style>
-    #mainCanvas {
-      left: 0 !important;
-      margin: 0px auto !important;
-      display: block !important;
-    }
-  </style>
-  <script>
-    var wmksHeightPercent = 0.6;
-    function updateSize() {
-      var winW = window.innerWidth,
-        winH = window.innerHeight;
-      var floatW = winW - $("#control").width() - 30;
-      $("#wmksContainer").width(winW);
-      $("#wmksContainer").height(winH);
-    }
-    function initStatus() {
-      $("#rescale").attr("checked", true);
-      $("#changeResolution").attr("checked", true);
-    }
-    $(function () {
-      updateSize();
-      initStatus();
-      createWMKS();
-      connect();
-      $("#wmksContainer").css("width", "100%");
-      $("#wmksContainer").css("height", window.innerHeight);
-      $("#wmksContainer").css("position", "fixed");
-      $("#wmksContainer").css("top", "0");
-      $("#wmksContainer").css("margin", "0");
-    });
-    $(window).on("resize", function (e) {
-      updateSize();
-      updateScreen();
-    });
-  </script>
-</head>
-
-<body>
-  <div id="control" style="width: 420px">
-    <div id="createOptions" style="display: none">
-      <table>
-        <tr>
-          <td>
-            <input id="changeResolution" type="checkbox" checked />
-          </td>
-          <td><input id="rescale" type="checkbox" checked /></td>
-        </tr>
-        <tr>
-          <td>
-            <select id="position">
-              <option>center</option>
-              <option>left top</option>
-            </select>
-          </td>
-        </tr>
-      </table>
+  <body>
+    <div id="control" style="width: 420px">
+      <div id="createOptions" style="display: none">
+        <table>
+          <tr>
+            <td>
+              <input id="changeResolution" type="checkbox" checked />
+            </td>
+            <td><input id="rescale" type="checkbox" checked /></td>
+          </tr>
+          <tr>
+            <td>
+              <select id="position">
+                <option>center</option>
+                <option>left top</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-  <div style="z-index: 50; position: fixed; margin: 15px">
-    <input onclick="sendCAD()" type="button" value="CtrlAltDel" />
-    <input onclick="enterFullScreen()" type="button" value="FullScreen" />
-  </div>
-  <div id="wmksContainer" style="width: 100%"></div>
-</body>
-
+    <div style="z-index: 50; position: fixed; margin: 15px">
+      <input onclick="sendCAD()" type="button" value="CtrlAltDel" />
+      <input onclick="enterFullScreen()" type="button" value="FullScreen" />
+    </div>
+    <div id="wmksContainer" style="width: 100%"></div>
+  </body>
 </html>
