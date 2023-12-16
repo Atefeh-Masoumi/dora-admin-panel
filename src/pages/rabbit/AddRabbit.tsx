@@ -35,8 +35,7 @@ const AddRabbitService: FC = () => {
     setStep((step - 1) as addRabbitStepsType);
   };
 
-  const [createRabbitService, { isLoading }] =
-    usePostApiRabbitHostCreateMutation();
+  const [, { isLoading }] = usePostApiRabbitHostCreateMutation();
 
   const submitHandler = () => {
     if (

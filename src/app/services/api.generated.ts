@@ -50,14 +50,6 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/account/logout`, method: "POST" }),
     }),
-    getApiCdnAnalyticGetByZoneNameAndPeriodId: build.query<
-      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse,
-      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/analytic/get/${queryArg.zoneName}/${queryArg.periodId}`,
-      }),
-    }),
     getApiCdnApiGatewayListByZoneName: build.query<
       GetApiCdnApiGatewayListByZoneNameApiResponse,
       GetApiCdnApiGatewayListByZoneNameApiArg
@@ -101,28 +93,36 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiDatacenterBareMetalList: build.query<
-      GetApiDatacenterBareMetalListApiResponse,
-      GetApiDatacenterBareMetalListApiArg
+    getApiBareMetalList: build.query<
+      GetApiBareMetalListApiResponse,
+      GetApiBareMetalListApiArg
     >({
-      query: () => ({ url: `/api/datacenter/bare-metal/list` }),
+      query: () => ({ url: `/api/bare-metal/list` }),
     }),
-    getApiDatacenterBareMetalGetById: build.query<
-      GetApiDatacenterBareMetalGetByIdApiResponse,
-      GetApiDatacenterBareMetalGetByIdApiArg
+    getApiBareMetalGetById: build.query<
+      GetApiBareMetalGetByIdApiResponse,
+      GetApiBareMetalGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/bare-metal/get/${queryArg.id}` }),
+    }),
+    postApiBareMetalCreate: build.mutation<
+      PostApiBareMetalCreateApiResponse,
+      PostApiBareMetalCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/datacenter/bare-metal/get/${queryArg.id}`,
-      }),
-    }),
-    postApiDatacenterBareMetalCreate: build.mutation<
-      PostApiDatacenterBareMetalCreateApiResponse,
-      PostApiDatacenterBareMetalCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/datacenter/bare-metal/create`,
+        url: `/api/bare-metal/create`,
         method: "POST",
         body: queryArg.createBareMetalModel,
+      }),
+    }),
+    deleteApiBareMetalDelete: build.mutation<
+      DeleteApiBareMetalDeleteApiResponse,
+      DeleteApiBareMetalDeleteApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/bare-metal/delete`,
+        method: "DELETE",
+        params: { id: queryArg.id },
       }),
     }),
     getApiCloudBusinessUnitList: build.query<
@@ -136,6 +136,68 @@ export const api = createApi({
       GetApiCloudCalculateMonthListApiArg
     >({
       query: () => ({ url: `/api/cloud/calculate-month/list` }),
+    }),
+    getApiCdnClientCertGetByZoneName: build.query<
+      GetApiCdnClientCertGetByZoneNameApiResponse,
+      GetApiCdnClientCertGetByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/client-cert/get/${queryArg.zoneName}`,
+      }),
+    }),
+    getApiCdnClientCertGetUserCertByZoneName: build.query<
+      GetApiCdnClientCertGetUserCertByZoneNameApiResponse,
+      GetApiCdnClientCertGetUserCertByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/client-cert/get-user-cert/${queryArg.zoneName}`,
+      }),
+    }),
+    postApiCdnClientCertCreateUserCert: build.mutation<
+      PostApiCdnClientCertCreateUserCertApiResponse,
+      PostApiCdnClientCertCreateUserCertApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/client-cert/create-user-cert`,
+        method: "POST",
+        body: queryArg.createCdnClientUserCertModel,
+      }),
+    }),
+    getApiCdnEdgeCertGetByZoneName: build.query<
+      GetApiCdnEdgeCertGetByZoneNameApiResponse,
+      GetApiCdnEdgeCertGetByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/edge-cert/get/${queryArg.zoneName}`,
+      }),
+    }),
+    getApiCdnEdgeCertGetUserCertByZoneName: build.query<
+      GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse,
+      GetApiCdnEdgeCertGetUserCertByZoneNameApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/edge-cert/get-user-cert/${queryArg.zoneName}`,
+      }),
+    }),
+    postApiCdnEdgeCertCreate: build.mutation<
+      PostApiCdnEdgeCertCreateApiResponse,
+      PostApiCdnEdgeCertCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/edge-cert/create`,
+        method: "POST",
+        body: queryArg.createCdnEdgeCertModel,
+      }),
+    }),
+    postApiCdnEdgeCertCreateUserCert: build.mutation<
+      PostApiCdnEdgeCertCreateUserCertApiResponse,
+      PostApiCdnEdgeCertCreateUserCertApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/edge-cert/create-user-cert`,
+        method: "POST",
+        body: queryArg.createCdnEdgeUserCertModel,
+      }),
     }),
     getApiCdnHostList: build.query<
       GetApiCdnHostListApiResponse,
@@ -254,73 +316,30 @@ export const api = createApi({
         body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
-    getApiCdnClientCertGetByZoneName: build.query<
-      GetApiCdnClientCertGetByZoneNameApiResponse,
-      GetApiCdnClientCertGetByZoneNameApiArg
+    getApiColocationList: build.query<
+      GetApiColocationListApiResponse,
+      GetApiColocationListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get/${queryArg.zoneName}`,
-      }),
+      query: () => ({ url: `/api/colocation/list` }),
     }),
-    getApiCdnClientCertGetUserCertByZoneName: build.query<
-      GetApiCdnClientCertGetUserCertByZoneNameApiResponse,
-      GetApiCdnClientCertGetUserCertByZoneNameApiArg
+    postApiColocationCreate: build.mutation<
+      PostApiColocationCreateApiResponse,
+      PostApiColocationCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get-user-cert/${queryArg.zoneName}`,
-      }),
-    }),
-    postApiCdnClientCertCreateUserCert: build.mutation<
-      PostApiCdnClientCertCreateUserCertApiResponse,
-      PostApiCdnClientCertCreateUserCertApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/client-cert/create-user-cert`,
+        url: `/api/colocation/create`,
         method: "POST",
-        body: queryArg.createCdnClientUserCertModel,
+        body: queryArg.createColocationModel,
       }),
     }),
-    getApiCdnEdgeCertGetByZoneName: build.query<
-      GetApiCdnEdgeCertGetByZoneNameApiResponse,
-      GetApiCdnEdgeCertGetByZoneNameApiArg
+    deleteApiColocationDeleteById: build.mutation<
+      DeleteApiColocationDeleteByIdApiResponse,
+      DeleteApiColocationDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get/${queryArg.zoneName}`,
+        url: `/api/colocation/delete/${queryArg.id}`,
+        method: "DELETE",
       }),
-    }),
-    getApiCdnEdgeCertGetUserCertByZoneName: build.query<
-      GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse,
-      GetApiCdnEdgeCertGetUserCertByZoneNameApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get-user-cert/${queryArg.zoneName}`,
-      }),
-    }),
-    postApiCdnEdgeCertCreate: build.mutation<
-      PostApiCdnEdgeCertCreateApiResponse,
-      PostApiCdnEdgeCertCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/create`,
-        method: "POST",
-        body: queryArg.createCdnEdgeCertModel,
-      }),
-    }),
-    postApiCdnEdgeCertCreateUserCert: build.mutation<
-      PostApiCdnEdgeCertCreateUserCertApiResponse,
-      PostApiCdnEdgeCertCreateUserCertApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/create-user-cert`,
-        method: "POST",
-        body: queryArg.createCdnEdgeUserCertModel,
-      }),
-    }),
-    getApiDatacenterCoLocationList: build.query<
-      GetApiDatacenterCoLocationListApiResponse,
-      GetApiDatacenterCoLocationListApiArg
-    >({
-      query: () => ({ url: `/api/datacenter/co-location/list` }),
     }),
     getApiCloudCommissionList: build.query<
       GetApiCloudCommissionListApiResponse,
@@ -400,6 +419,16 @@ export const api = createApi({
         url: `/api/cloud/customer-product/transfer`,
         method: "POST",
         body: queryArg.customerProductTransferModel,
+      }),
+    }),
+    postApiCloudCustomerUserChangeUserCustomer: build.mutation<
+      PostApiCloudCustomerUserChangeUserCustomerApiResponse,
+      PostApiCloudCustomerUserChangeUserCustomerApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cloud/customer-user/change-user-customer`,
+        method: "POST",
+        body: queryArg.changeUserCustomerModel,
       }),
     }),
     getApiCloudDashboardUsageByCategoryId: build.query<
@@ -899,22 +928,6 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cloud/notification/short-list` }),
     }),
-    getApiCloudOrderPlanList: build.query<
-      GetApiCloudOrderPlanListApiResponse,
-      GetApiCloudOrderPlanListApiArg
-    >({
-      query: () => ({ url: `/api/cloud/order-plan/list` }),
-    }),
-    postApiCloudOrderPlanOrder: build.mutation<
-      PostApiCloudOrderPlanOrderApiResponse,
-      PostApiCloudOrderPlanOrderApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cloud/order-plan/order`,
-        method: "POST",
-        body: queryArg.createOrderPlanModel,
-      }),
-    }),
     getApiCloudPaymentList: build.query<
       GetApiCloudPaymentListApiResponse,
       GetApiCloudPaymentListApiArg
@@ -1175,6 +1188,58 @@ export const api = createApi({
         body: queryArg.joinReferralModel,
       }),
     }),
+    getApiAccountRoleRoleAccessTypes: build.query<
+      GetApiAccountRoleRoleAccessTypesApiResponse,
+      GetApiAccountRoleRoleAccessTypesApiArg
+    >({
+      query: () => ({ url: `/api/account/role/role-access-types` }),
+    }),
+    getApiAccountRoleRoles: build.query<
+      GetApiAccountRoleRolesApiResponse,
+      GetApiAccountRoleRolesApiArg
+    >({
+      query: () => ({ url: `/api/account/role/roles` }),
+    }),
+    postApiAccountRoleGetUserAccessEntities: build.mutation<
+      PostApiAccountRoleGetUserAccessEntitiesApiResponse,
+      PostApiAccountRoleGetUserAccessEntitiesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/account/role/get-user-access-entities`,
+        method: "POST",
+        body: queryArg.getUserAccessEntityModel,
+      }),
+    }),
+    postApiAccountRoleCreateUserAccess: build.mutation<
+      PostApiAccountRoleCreateUserAccessApiResponse,
+      PostApiAccountRoleCreateUserAccessApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/account/role/create-user-access`,
+        method: "POST",
+        body: queryArg.setUserAccessModel,
+      }),
+    }),
+    putApiAccountRoleEditUserAccess: build.mutation<
+      PutApiAccountRoleEditUserAccessApiResponse,
+      PutApiAccountRoleEditUserAccessApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/account/role/edit-user-access`,
+        method: "PUT",
+        body: queryArg.setUserAccessModel,
+      }),
+    }),
+    deleteApiAccountRoleRemoveCustomerUser: build.mutation<
+      DeleteApiAccountRoleRemoveCustomerUserApiResponse,
+      DeleteApiAccountRoleRemoveCustomerUserApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/account/role/remove-customer-user`,
+        method: "DELETE",
+        body: queryArg.removeCustomerUserModel,
+      }),
+    }),
     getApiStorageHostList: build.query<
       GetApiStorageHostListApiResponse,
       GetApiStorageHostListApiArg
@@ -1305,6 +1370,14 @@ export const api = createApi({
         url: `/api/cloud/support-subject/select-list`,
         method: "POST",
         body: queryArg.supportSubjectSelectListModel,
+      }),
+    }),
+    getApiCdnAnalyticGetByZoneNameAndPeriodId: build.query<
+      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse,
+      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/analytic/get/${queryArg.zoneName}/${queryArg.periodId}`,
       }),
     }),
     getApiVmHostList: build.query<
@@ -1600,12 +1673,6 @@ export type PostApiAccountForgotConfirmApiArg = {
 };
 export type PostApiAccountLogoutApiResponse = unknown;
 export type PostApiAccountLogoutApiArg = void;
-export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse =
-  /** status 200 Success */ GetAnalyticResponse;
-export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg = {
-  zoneName: string;
-  periodId: number;
-};
 export type GetApiCdnApiGatewayListByZoneNameApiResponse =
   /** status 200 Success */ ApiGatewayListResponse[];
 export type GetApiCdnApiGatewayListByZoneNameApiArg = {
@@ -1628,17 +1695,21 @@ export type DeleteApiCdnApiGatewayDeleteByIdApiResponse = unknown;
 export type DeleteApiCdnApiGatewayDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiDatacenterBareMetalListApiResponse =
+export type GetApiBareMetalListApiResponse =
   /** status 200 Success */ BareMetalListResponse[];
-export type GetApiDatacenterBareMetalListApiArg = void;
-export type GetApiDatacenterBareMetalGetByIdApiResponse =
+export type GetApiBareMetalListApiArg = void;
+export type GetApiBareMetalGetByIdApiResponse =
   /** status 200 Success */ BareMetalResponse;
-export type GetApiDatacenterBareMetalGetByIdApiArg = {
+export type GetApiBareMetalGetByIdApiArg = {
   id: number;
 };
-export type PostApiDatacenterBareMetalCreateApiResponse = unknown;
-export type PostApiDatacenterBareMetalCreateApiArg = {
+export type PostApiBareMetalCreateApiResponse = unknown;
+export type PostApiBareMetalCreateApiArg = {
   createBareMetalModel: CreateBareMetalModel;
+};
+export type DeleteApiBareMetalDeleteApiResponse = unknown;
+export type DeleteApiBareMetalDeleteApiArg = {
+  id?: number;
 };
 export type GetApiCloudBusinessUnitListApiResponse =
   /** status 200 Success */ BusinessUnitListResponse[];
@@ -1646,6 +1717,38 @@ export type GetApiCloudBusinessUnitListApiArg = void;
 export type GetApiCloudCalculateMonthListApiResponse =
   /** status 200 Success */ CalculateMonthListResponse[];
 export type GetApiCloudCalculateMonthListApiArg = void;
+export type GetApiCdnClientCertGetByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiCdnClientCertGetByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetApiCdnClientCertGetUserCertByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiCdnClientCertGetUserCertByZoneNameApiArg = {
+  zoneName: string;
+};
+export type PostApiCdnClientCertCreateUserCertApiResponse = unknown;
+export type PostApiCdnClientCertCreateUserCertApiArg = {
+  createCdnClientUserCertModel: CreateCdnClientUserCertModel;
+};
+export type GetApiCdnEdgeCertGetByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiCdnEdgeCertGetByZoneNameApiArg = {
+  zoneName: string;
+};
+export type GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiCdnEdgeCertGetUserCertByZoneNameApiArg = {
+  zoneName: string;
+};
+export type PostApiCdnEdgeCertCreateApiResponse = unknown;
+export type PostApiCdnEdgeCertCreateApiArg = {
+  createCdnEdgeCertModel: CreateCdnEdgeCertModel;
+};
+export type PostApiCdnEdgeCertCreateUserCertApiResponse = unknown;
+export type PostApiCdnEdgeCertCreateUserCertApiArg = {
+  createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
+};
 export type GetApiCdnHostListApiResponse =
   /** status 200 Success */ CdnListResponse[];
 export type GetApiCdnHostListApiArg = void;
@@ -1700,41 +1803,18 @@ export type PutApiCdnHostChangeNonWwwRedirectApiResponse = unknown;
 export type PutApiCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
-export type GetApiCdnClientCertGetByZoneNameApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetApiCdnClientCertGetUserCertByZoneNameApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
-};
-export type PostApiCdnClientCertCreateUserCertApiResponse = unknown;
-export type PostApiCdnClientCertCreateUserCertApiArg = {
-  createCdnClientUserCertModel: CreateCdnClientUserCertModel;
-};
-export type GetApiCdnEdgeCertGetByZoneNameApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetByZoneNameApiArg = {
-  zoneName: string;
-};
-export type GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
-};
-export type PostApiCdnEdgeCertCreateApiResponse = unknown;
-export type PostApiCdnEdgeCertCreateApiArg = {
-  createCdnEdgeCertModel: CreateCdnEdgeCertModel;
-};
-export type PostApiCdnEdgeCertCreateUserCertApiResponse = unknown;
-export type PostApiCdnEdgeCertCreateUserCertApiArg = {
-  createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
-};
-export type GetApiDatacenterCoLocationListApiResponse =
+export type GetApiColocationListApiResponse =
   /** status 200 Success */ CoLocationListResponse[];
-export type GetApiDatacenterCoLocationListApiArg = void;
+export type GetApiColocationListApiArg = void;
+export type PostApiColocationCreateApiResponse =
+  /** status 200 Success */ number;
+export type PostApiColocationCreateApiArg = {
+  createColocationModel: CreateColocationModel;
+};
+export type DeleteApiColocationDeleteByIdApiResponse = unknown;
+export type DeleteApiColocationDeleteByIdApiArg = {
+  id: number;
+};
 export type GetApiCloudCommissionListApiResponse =
   /** status 200 Success */ CommissionListResponse;
 export type GetApiCloudCommissionListApiArg = void;
@@ -1775,6 +1855,11 @@ export type GetApiCloudCustomerProductListByProductIdApiArg = {
 export type PostApiCloudCustomerProductTransferApiResponse = unknown;
 export type PostApiCloudCustomerProductTransferApiArg = {
   customerProductTransferModel: CustomerProductTransferModel;
+};
+export type PostApiCloudCustomerUserChangeUserCustomerApiResponse =
+  /** status 200 Success */ ChangeUserCustomerResponse;
+export type PostApiCloudCustomerUserChangeUserCustomerApiArg = {
+  changeUserCustomerModel: ChangeUserCustomerModel;
 };
 export type GetApiCloudDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
@@ -2026,13 +2111,6 @@ export type GetApiCloudNotificationListApiArg = void;
 export type GetApiCloudNotificationShortListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
 export type GetApiCloudNotificationShortListApiArg = void;
-export type GetApiCloudOrderPlanListApiResponse =
-  /** status 200 Success */ OrderPlanListResponse[];
-export type GetApiCloudOrderPlanListApiArg = void;
-export type PostApiCloudOrderPlanOrderApiResponse = unknown;
-export type PostApiCloudOrderPlanOrderApiArg = {
-  createOrderPlanModel: CreateOrderPlanModel;
-};
 export type GetApiCloudPaymentListApiResponse =
   /** status 200 Success */ PaymentListResponse[];
 export type GetApiCloudPaymentListApiArg = void;
@@ -2176,6 +2254,31 @@ export type PostApiAccountReferralJoinApiResponse =
 export type PostApiAccountReferralJoinApiArg = {
   joinReferralModel: JoinReferralModel;
 };
+export type GetApiAccountRoleRoleAccessTypesApiResponse =
+  /** status 200 Success */ GetAccessTypeResponse[];
+export type GetApiAccountRoleRoleAccessTypesApiArg = void;
+export type GetApiAccountRoleRolesApiResponse =
+  /** status 200 Success */ GetAccessTypeResponse[];
+export type GetApiAccountRoleRolesApiArg = void;
+export type PostApiAccountRoleGetUserAccessEntitiesApiResponse =
+  /** status 200 Success */ UserEntityAccessResponse[];
+export type PostApiAccountRoleGetUserAccessEntitiesApiArg = {
+  getUserAccessEntityModel: GetUserAccessEntityModel;
+};
+export type PostApiAccountRoleCreateUserAccessApiResponse =
+  /** status 200 Success */ BaseResponse;
+export type PostApiAccountRoleCreateUserAccessApiArg = {
+  setUserAccessModel: SetUserAccessModel;
+};
+export type PutApiAccountRoleEditUserAccessApiResponse = unknown;
+export type PutApiAccountRoleEditUserAccessApiArg = {
+  setUserAccessModel: SetUserAccessModel;
+};
+export type DeleteApiAccountRoleRemoveCustomerUserApiResponse =
+  /** status 200 Success */ BaseResponse;
+export type DeleteApiAccountRoleRemoveCustomerUserApiArg = {
+  removeCustomerUserModel: RemoveCustomerUserModel;
+};
 export type GetApiStorageHostListApiResponse =
   /** status 200 Success */ StorageHostListResponse[];
 export type GetApiStorageHostListApiArg = void;
@@ -2251,6 +2354,12 @@ export type PostApiCloudSupportSubjectSelectListApiResponse =
   /** status 200 Success */ SupportSubjectListResponse[];
 export type PostApiCloudSupportSubjectSelectListApiArg = {
   supportSubjectSelectListModel: SupportSubjectSelectListModel;
+};
+export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse =
+  /** status 200 Success */ GetAnalyticResponse;
+export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg = {
+  zoneName: string;
+  periodId: number;
 };
 export type GetApiVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
@@ -2385,6 +2494,10 @@ export type LoginResponse = {
   accessToken?: string | null;
   expiration?: string;
   userTitle?: string | null;
+  roles?: number[] | null;
+  isSuperUser?: boolean;
+  isFinancialManager?: boolean;
+  isAccountManager?: boolean;
 };
 export type LoginModel = {
   email: string;
@@ -2404,14 +2517,6 @@ export type ForgotConfirmModel = {
   email: string;
   confirmCode: string;
   password: string;
-};
-export type SeriesModel = {
-  name?: string | null;
-  data?: number[] | null;
-};
-export type GetAnalyticResponse = {
-  categories?: string[] | null;
-  series?: SeriesModel[] | null;
 };
 export type ApiGatewayListResponse = {
   id?: number;
@@ -2487,6 +2592,7 @@ export type CreateBareMetalModel = {
   hdd1200Sas10K?: number | null;
   networkPort1G?: number | null;
   networkPort10G?: number | null;
+  datacenterId?: number;
 };
 export type BusinessUnitListResponse = {
   id?: number;
@@ -2495,6 +2601,25 @@ export type BusinessUnitListResponse = {
 export type CalculateMonthListResponse = {
   id?: number;
   name?: string | null;
+};
+export type GetCdnCertResponse = {
+  issuer?: string | null;
+  commonName?: string | null;
+  expirationDate?: string | null;
+};
+export type CreateCdnClientUserCertModel = {
+  zoneName: string;
+  keyPem: string;
+  certPem: string;
+};
+export type CreateCdnEdgeCertModel = {
+  zoneName: string;
+};
+export type CreateCdnEdgeUserCertModel = {
+  zoneName: string;
+  keyPem: string;
+  certPem: string;
+  bundleCertPem?: string | null;
 };
 export type CdnListResponse = {
   id?: number;
@@ -2556,31 +2681,25 @@ export type ChangeNonWwwRedirectModel = {
   id?: number;
   isNonWwwRedirect?: boolean;
 };
-export type GetCdnCertResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type CreateCdnClientUserCertModel = {
-  zoneName: string;
-  keyPem: string;
-  certPem: string;
-};
-export type CreateCdnEdgeCertModel = {
-  zoneName: string;
-};
-export type CreateCdnEdgeUserCertModel = {
-  zoneName: string;
-  keyPem: string;
-  certPem: string;
-  bundleCertPem?: string | null;
-};
 export type CoLocationListResponse = {
   id?: number;
   name?: string | null;
   datacenter?: string | null;
   datacenterRackId?: number;
   datacenterRack?: string | null;
+};
+export type CreateColocationModel = {
+  datacenterId: number;
+  name: string;
+  customerProductTypeId: number;
+  equipmentIds: number[];
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  rackUnitSpace?: number | null;
+  networkPort1G?: number | null;
+  networkPort10G?: number | null;
+  powerAmp?: number | null;
+  ipv4Count?: number | null;
 };
 export type CommissionListResponse = {
   id?: number;
@@ -2651,6 +2770,15 @@ export type CustomerProductListResponse = {
 };
 export type CustomerProductTransferModel = {
   customerProductId?: number;
+  customerId?: number;
+};
+export type ChangeUserCustomerResponse = {
+  roles?: number[] | null;
+  isSuperUser?: boolean;
+  isFinancialManager?: boolean;
+  isAccountManager?: boolean;
+};
+export type ChangeUserCustomerModel = {
   customerId?: number;
 };
 export type DashboardUsageResponse = {
@@ -2925,10 +3053,10 @@ export type NodeSpecs = {
 };
 export type CreateClusterModel = {
   clusterName: string;
-  datacenterId?: number;
-  customerProductTypeId?: number;
-  imageId?: number;
+  datacenterId: number;
+  imageId: number;
   vmPassword: string;
+  customerProductTypeId: number;
   workerNodes?: NodeSpecs;
   masterNodes?: NodeSpecs;
 };
@@ -3013,18 +3141,6 @@ export type NotificationListResponse = {
   content?: string | null;
   subject?: string | null;
   notificationDate?: string;
-};
-export type OrderPlanListResponse = {
-  id?: number;
-  listOrder?: number;
-  title?: string | null;
-  price?: number;
-  discount?: number;
-  totalCredit?: number;
-};
-export type CreateOrderPlanModel = {
-  id?: number;
-  paymentProviderId?: number;
 };
 export type PaymentListResponse = {
   id?: number;
@@ -3183,6 +3299,43 @@ export type JoinReferralResponse = {
 export type JoinReferralModel = {
   referralCode: string;
 };
+export type GetAccessTypeResponse = {
+  id?: number;
+  name?: string | null;
+};
+export type AccessTuple = {
+  accessId?: number;
+  hasAccess?: boolean;
+};
+export type UserEntityAccessResponse = {
+  id?: number;
+  title?: string | null;
+  description?: string | null;
+  hasAccess?: boolean;
+  accesses?: AccessTuple[] | null;
+};
+export type GetUserAccessEntityModel = {
+  userId?: string | null;
+};
+export type BaseResponse = {
+  status?: boolean;
+  message?: string | null;
+};
+export type EntityAccess = {
+  accessType?: number;
+  entityId?: number;
+  accessTuples?: AccessTuple[] | null;
+};
+export type SetUserAccessModel = {
+  userEmail: string;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
+  entityAccesses?: EntityAccess[] | null;
+};
+export type RemoveCustomerUserModel = {
+  userId?: string;
+};
 export type StorageHostListResponse = {
   id?: number;
   datacenter?: string | null;
@@ -3211,13 +3364,15 @@ export type CreateStorageHostModel = {
   isPublic?: boolean;
   datacenterId?: number;
   customerProductTypeId: number;
+  storageHostTypeId?: number;
   isPredefined: boolean;
   productBundleId?: number | null;
-  storageDisk?: number | null;
+  disk?: number | null;
 };
 export type EditStorageHostModel = {
   id?: number;
   disk?: number;
+  storageHostTypeId?: number;
 };
 export type StorageUserListResponse = {
   id?: number;
@@ -3230,7 +3385,6 @@ export type CreateStorageUserResponse = {
 };
 export type CreateStorageUserModel = {
   storageHostId?: number;
-  customerProductTypeId: number;
 };
 export type SupportListResponse = {
   id?: number;
@@ -3269,6 +3423,14 @@ export type SupportSubjectListResponse = {
 export type SupportSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
+};
+export type SeriesModel = {
+  name?: string | null;
+  data?: number[] | null;
+};
+export type GetAnalyticResponse = {
+  categories?: string[] | null;
+  series?: SeriesModel[] | null;
 };
 export type VmListResponse = {
   id?: number;
@@ -3427,17 +3589,24 @@ export const {
   usePostApiAccountForgotMutation,
   usePostApiAccountForgotConfirmMutation,
   usePostApiAccountLogoutMutation,
-  useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery,
   useGetApiCdnApiGatewayListByZoneNameQuery,
   useGetApiCdnApiGatewayGetByIdQuery,
   usePostApiCdnApiGatewayCreateMutation,
   usePutApiCdnApiGatewayEditMutation,
   useDeleteApiCdnApiGatewayDeleteByIdMutation,
-  useGetApiDatacenterBareMetalListQuery,
-  useGetApiDatacenterBareMetalGetByIdQuery,
-  usePostApiDatacenterBareMetalCreateMutation,
+  useGetApiBareMetalListQuery,
+  useGetApiBareMetalGetByIdQuery,
+  usePostApiBareMetalCreateMutation,
+  useDeleteApiBareMetalDeleteMutation,
   useGetApiCloudBusinessUnitListQuery,
   useGetApiCloudCalculateMonthListQuery,
+  useGetApiCdnClientCertGetByZoneNameQuery,
+  useGetApiCdnClientCertGetUserCertByZoneNameQuery,
+  usePostApiCdnClientCertCreateUserCertMutation,
+  useGetApiCdnEdgeCertGetByZoneNameQuery,
+  useGetApiCdnEdgeCertGetUserCertByZoneNameQuery,
+  usePostApiCdnEdgeCertCreateMutation,
+  usePostApiCdnEdgeCertCreateUserCertMutation,
   useGetApiCdnHostListQuery,
   useGetApiCdnHostGetByZoneNameQuery,
   useGetApiCdnHostGetNsStatusByZoneNameQuery,
@@ -3451,14 +3620,9 @@ export const {
   usePutApiCdnHostChangeHstsMutation,
   usePutApiCdnHostChangeHttpsRedirectMutation,
   usePutApiCdnHostChangeNonWwwRedirectMutation,
-  useGetApiCdnClientCertGetByZoneNameQuery,
-  useGetApiCdnClientCertGetUserCertByZoneNameQuery,
-  usePostApiCdnClientCertCreateUserCertMutation,
-  useGetApiCdnEdgeCertGetByZoneNameQuery,
-  useGetApiCdnEdgeCertGetUserCertByZoneNameQuery,
-  usePostApiCdnEdgeCertCreateMutation,
-  usePostApiCdnEdgeCertCreateUserCertMutation,
-  useGetApiDatacenterCoLocationListQuery,
+  useGetApiColocationListQuery,
+  usePostApiColocationCreateMutation,
+  useDeleteApiColocationDeleteByIdMutation,
   useGetApiCloudCommissionListQuery,
   useGetApiCloudCustomerGetQuery,
   useGetApiCloudCustomerGetCustomerTypeQuery,
@@ -3470,6 +3634,7 @@ export const {
   useGetApiCloudBillDownloadByIdQuery,
   useGetApiCloudCustomerProductListByProductIdQuery,
   usePostApiCloudCustomerProductTransferMutation,
+  usePostApiCloudCustomerUserChangeUserCustomerMutation,
   useGetApiCloudDashboardUsageByCategoryIdQuery,
   useGetApiDatacenterListQuery,
   useGetApiDatacenterIpListByProductIdAndIdQuery,
@@ -3530,8 +3695,6 @@ export const {
   useDeleteApiCdnLoadBalanceDeleteByIdMutation,
   useGetApiCloudNotificationListQuery,
   useGetApiCloudNotificationShortListQuery,
-  useGetApiCloudOrderPlanListQuery,
-  usePostApiCloudOrderPlanOrderMutation,
   useGetApiCloudPaymentListQuery,
   useGetApiCloudPaymentGetByIdQuery,
   usePostApiCloudPaymentCreateMutation,
@@ -3562,6 +3725,12 @@ export const {
   usePostApiRabbitUserChangePasswordMutation,
   useGetApiAccountReferralGetQuery,
   usePostApiAccountReferralJoinMutation,
+  useGetApiAccountRoleRoleAccessTypesQuery,
+  useGetApiAccountRoleRolesQuery,
+  usePostApiAccountRoleGetUserAccessEntitiesMutation,
+  usePostApiAccountRoleCreateUserAccessMutation,
+  usePutApiAccountRoleEditUserAccessMutation,
+  useDeleteApiAccountRoleRemoveCustomerUserMutation,
   useGetApiStorageHostListQuery,
   useGetApiStorageHostGetByIdQuery,
   usePostApiStorageHostCreateMutation,
@@ -3578,6 +3747,7 @@ export const {
   useGetApiCloudSupportItemDownloadByIdQuery,
   useGetApiCloudSupportSubjectListQuery,
   usePostApiCloudSupportSubjectSelectListMutation,
+  useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery,
   useGetApiVmHostListQuery,
   useGetApiVmHostGetByIdQuery,
   usePostApiVmHostCreateMutation,
@@ -3611,4 +3781,3 @@ export const {
   useDeleteApiWebDeleteByIdMutation,
   usePostApiDomainWhoisGetMutation,
 } = api;
-

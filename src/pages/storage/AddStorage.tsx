@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Box, Divider, Stack, Typography, Grid, Paper } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -10,7 +10,6 @@ import {
   useGetApiCloudCustomerGetCustomerTypeQuery,
   usePostApiStorageHostCreateMutation,
 } from "src/app/services/api.generated";
-import useResize from "src/utils/useResize";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";

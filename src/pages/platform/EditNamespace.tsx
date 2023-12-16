@@ -14,7 +14,6 @@ import { EditWorkspaceContext } from "src/components/organisms/platform/edit/con
 import { ServiceInfo } from "src/components/organisms/platform/edit/ServiceInfo";
 import { UserRoleManagement } from "src/components/organisms/platform/edit/UserRole";
 import { SelectConfig } from "src/components/organisms/platform/edit/SelectConfig";
-import { VolumeManagement } from "src/components/organisms/platform/edit/VolumeManagement";
 
 type TabPanelProps = {
   children?: ReactNode;

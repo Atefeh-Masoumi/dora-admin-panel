@@ -54,7 +54,7 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
-  const notPaidList:any = [];
+  const notPaidList: any = [];
   const desktopHeaderIcon = (
     <>
       <Notifications />
@@ -81,29 +81,6 @@ const Header: FC<HeaderPropsType> = ({
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
       </IconButton>
-      <Badge
-        badgeContent={notPaidList?.length}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        overlap="circular"
-        color="primary"
-      >
-        <IconButton
-          sx={{
-            border: 1,
-            borderRadius: { xs: 62, lg: 8 },
-            borderColor: "rgba(110, 118, 138, 0.16)",
-          }}
-          onClick={() => {
-            closeMenuHandler();
-            navigate("/cloud/orders");
-          }}
-        >
-          <ShoppingCartOutlinedIcon sx={{ color: "grey.700" }} />
-        </IconButton>
-      </Badge>
     </>
   );
 

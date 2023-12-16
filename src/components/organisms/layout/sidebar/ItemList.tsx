@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { UserMenu } from "./UserMenu";
-import CategorySvg from "src/components/atoms/svg/CategorySvg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sidebarItemType } from "src/types/itemsList.type";
+import CategorySvg from "src/components/atoms/svg/CategorySvg";
 import CustomListItemButton from "src/components/atoms/CustomListItemButton";
 
 type ItemListPropsType = {
@@ -31,7 +31,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       pathname !== "/cloud/profile" &&
       pathname !== "/cloud/setting" &&
       pathname !== "/cloud/customer-products" &&
-      pathname !== "/cloud/orders" &&
       pathname !== "/cloud/referral" &&
       pathname !== "/cloud/notifications",
     [pathname]

@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Box, Grid, Paper, Stack, Typography, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -11,7 +11,6 @@ import {
   usePostApiWebCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
-import useResize from "src/utils/useResize";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 

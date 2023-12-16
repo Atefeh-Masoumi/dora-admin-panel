@@ -24,7 +24,7 @@ type SidebarPropsType = {};
 
 export const Sidebar: FC<SidebarPropsType> = () => {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const [showSpecialOffer, setShowSpecialOffer] = useState(false);
+  // const [showSpecialOffer, setShowSpecialOffer] = useState(false);
 
   const { pathname } = useLocation();
 
@@ -141,14 +141,14 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         { title: "گزارش محاسبات", link: "/cloud/wallet/bill" },
       ],
     },
-    {
-      Icon: HeadphoneSvg,
-      link: "/cloud/supports",
-    },
-    {
-      Icon: CalculatorSvg,
-      link: "/cloud/calculator",
-    },
+    // {
+    //   Icon: HeadphoneSvg,
+    //   link: "/cloud/supports",
+    // },
+    // {
+    //   Icon: CalculatorSvg,
+    //   link: "/cloud/calculator",
+    // },
   ];
 
   const windowHeightWatcher = () => {
@@ -162,9 +162,9 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setShowSpecialOffer(windowHeight > 920);
-  }, [windowHeight]);
+  // useEffect(() => {
+  //   setShowSpecialOffer(windowHeight > 920);
+  // }, [windowHeight]);
 
   const hideSubLists = useMemo(
     () =>
@@ -174,7 +174,6 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       pathname === "/cloud/profile" ||
       pathname === "/cloud/setting" ||
       pathname === "/cloud/customer-products" ||
-      pathname === "/cloud/orders" ||
       pathname === "/cloud/referral" ||
       pathname === "/cloud/notifications",
     [pathname]

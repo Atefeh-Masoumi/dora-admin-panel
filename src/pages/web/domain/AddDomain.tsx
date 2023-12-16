@@ -10,7 +10,6 @@ import {
   usePostApiDomainGetPriceMutation,
   usePostApiDomainRegisterMutation,
 } from "src/app/services/api.generated";
-import useResize from "src/utils/useResize";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
