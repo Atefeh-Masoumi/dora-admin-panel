@@ -43,16 +43,16 @@ const AddZone: FC = () => {
       return;
     }
 
-    // createCdn({
-    //   createCdnModel: {
-    //     zoneName: domainName,
-    //   },
-    // })
-    //   .unwrap()
-    //   .then((res) => {
-    //     toast.success("زون با موفقیت ایجاد شد");
-    //     navigate("/cdn");
-    //   });
+    createCdn({
+      createCdnModel: {
+        zoneName: domainName,
+      },
+    })
+      .unwrap()
+      .then((res) => {
+        toast.success("زون با موفقیت ایجاد شد");
+        navigate("/cdn");
+      });
   };
 
   const goNextStep = () => {
