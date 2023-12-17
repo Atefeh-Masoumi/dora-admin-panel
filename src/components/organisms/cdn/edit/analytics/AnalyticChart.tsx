@@ -24,7 +24,7 @@ import {
 } from "src/configs/theme";
 import { FC, Fragment, useMemo, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery } from "src/app/services/api.generated";
+import { useGetApiCdnAnalyticGetByCdnIdAndPeriodIdQuery } from "src/app/services/api.generated";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -41,7 +41,9 @@ export const analyticsCategories = [
 type AnalyticChartPropsType = {};
 
 export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
+
   const [categoryId, setCategoryId] = useState(0);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -52,8 +54,8 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     data: userAnalytics,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery({
-    zoneName: selectedDomain?.zoneName || "",
+  } = useGetApiCdnAnalyticGetByCdnIdAndPeriodIdQuery({
+    cdnId,
     periodId: categoryId + 1,
   });
 

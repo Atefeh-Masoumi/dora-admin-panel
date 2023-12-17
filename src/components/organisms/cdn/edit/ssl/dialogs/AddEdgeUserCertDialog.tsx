@@ -15,15 +15,15 @@ import { toast } from "react-toastify";
 type AddEdgeUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  zoneName: string;
+  cdnId: number;
 };
 
 export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
-  zoneName,
+  cdnId,
 }) => {
-  const formInitialValues = { zoneName, keyPem: "", certPem: "" };
+  const formInitialValues = { cdnId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiCdnEdgeCertCreateUserCertMutation();
@@ -31,19 +31,18 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   const onClose = () => handleClose();
 
   const formValidation = yup.object().shape({
-    zoneName: yup.string().required(""),
     keyPem: yup.string().required("این فیلد الزامیست"),
     certPem: yup.string().required("این فیلد الزامیست"),
     bundleCertPem: yup.string(),
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
-    { zoneName, keyPem, certPem },
+    { cdnId, keyPem, certPem },
     { setSubmitting }
   ) => {
-    if (!zoneName || !keyPem || !certPem) return;
+    if (!cdnId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnEdgeUserCertModel: { zoneName, keyPem, certPem },
+      createCdnEdgeUserCertModel: { cdnId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

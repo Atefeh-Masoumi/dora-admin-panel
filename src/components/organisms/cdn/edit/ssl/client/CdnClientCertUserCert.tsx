@@ -1,17 +1,17 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiCdnClientCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnClientCertGetUserCertByCdnIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
 
 export const CdnClientCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const zoneName = selectedDomain?.zoneName || "";
+  const cdnId = selectedDomain?.id || 0;
 
   const { data: userCert, isLoading } =
-    useGetApiCdnClientCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetApiCdnClientCertGetUserCertByCdnIdQuery({ cdnId });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
@@ -63,7 +63,7 @@ export const CdnClientCertUserCert: FC = () => {
       <AddClientUserCertDialog
         openDialog={open}
         handleClose={handleClose}
-        zoneName={zoneName}
+        cdnId={cdnId}
       />
     </Stack>
   );

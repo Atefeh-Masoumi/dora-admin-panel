@@ -15,15 +15,15 @@ import { toast } from "react-toastify";
 type AddClientUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  zoneName: string;
+  cdnId: number;
 };
 
 export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
-  zoneName,
+  cdnId,
 }) => {
-  const formInitialValues = { zoneName, keyPem: "", certPem: "" };
+  const formInitialValues = { cdnId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiCdnClientCertCreateUserCertMutation();
@@ -38,12 +38,12 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnClientUserCertModel> = (
-    { zoneName, keyPem, certPem },
+    { cdnId, keyPem, certPem },
     { setSubmitting }
   ) => {
-    if (!zoneName || !keyPem || !certPem) return;
+    if (!cdnId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnClientUserCertModel: { zoneName, keyPem, certPem },
+      createCdnClientUserCertModel: { cdnId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

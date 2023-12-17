@@ -1,18 +1,18 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
-import { useGetApiCdnClientCertGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnClientCertGetByCdnIdQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 
 export const CdnClientCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
 
-  const { data: edgeCert, isLoading } =
-    useGetApiCdnClientCertGetByZoneNameQuery({
-      zoneName: selectedDomain?.zoneName || "",
-    });
+  const { data: edgeCert, isLoading } = useGetApiCdnClientCertGetByCdnIdQuery({
+    cdnId,
+  });
 
   return (
     <Stack bgcolor="white" borderRadius={2} p={2} width="100%">

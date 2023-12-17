@@ -50,12 +50,20 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/account/logout`, method: "POST" }),
     }),
-    getApiCdnApiGatewayListByZoneName: build.query<
-      GetApiCdnApiGatewayListByZoneNameApiResponse,
-      GetApiCdnApiGatewayListByZoneNameApiArg
+    getApiCdnAnalyticGetByCdnIdAndPeriodId: build.query<
+      GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiResponse,
+      GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/api-gateway/list/${queryArg.zoneName}`,
+        url: `/api/cdn/analytic/get/${queryArg.cdnId}/${queryArg.periodId}`,
+      }),
+    }),
+    getApiCdnApiGatewayListByCdnId: build.query<
+      GetApiCdnApiGatewayListByCdnIdApiResponse,
+      GetApiCdnApiGatewayListByCdnIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/api-gateway/list/${queryArg.cdnId}`,
       }),
     }),
     getApiCdnApiGatewayGetById: build.query<
@@ -137,20 +145,20 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cloud/calculate-month/list` }),
     }),
-    getApiCdnClientCertGetByZoneName: build.query<
-      GetApiCdnClientCertGetByZoneNameApiResponse,
-      GetApiCdnClientCertGetByZoneNameApiArg
+    getApiCdnClientCertGetByCdnId: build.query<
+      GetApiCdnClientCertGetByCdnIdApiResponse,
+      GetApiCdnClientCertGetByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get/${queryArg.zoneName}`,
+        url: `/api/cdn/client-cert/get/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnClientCertGetUserCertByZoneName: build.query<
-      GetApiCdnClientCertGetUserCertByZoneNameApiResponse,
-      GetApiCdnClientCertGetUserCertByZoneNameApiArg
+    getApiCdnClientCertGetUserCertByCdnId: build.query<
+      GetApiCdnClientCertGetUserCertByCdnIdApiResponse,
+      GetApiCdnClientCertGetUserCertByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get-user-cert/${queryArg.zoneName}`,
+        url: `/api/cdn/client-cert/get-user-cert/${queryArg.cdnId}`,
       }),
     }),
     postApiCdnClientCertCreateUserCert: build.mutation<
@@ -163,20 +171,20 @@ export const api = createApi({
         body: queryArg.createCdnClientUserCertModel,
       }),
     }),
-    getApiCdnEdgeCertGetByZoneName: build.query<
-      GetApiCdnEdgeCertGetByZoneNameApiResponse,
-      GetApiCdnEdgeCertGetByZoneNameApiArg
+    getApiCdnEdgeCertGetByCdnId: build.query<
+      GetApiCdnEdgeCertGetByCdnIdApiResponse,
+      GetApiCdnEdgeCertGetByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get/${queryArg.zoneName}`,
+        url: `/api/cdn/edge-cert/get/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnEdgeCertGetUserCertByZoneName: build.query<
-      GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse,
-      GetApiCdnEdgeCertGetUserCertByZoneNameApiArg
+    getApiCdnEdgeCertGetUserCertByCdnId: build.query<
+      GetApiCdnEdgeCertGetUserCertByCdnIdApiResponse,
+      GetApiCdnEdgeCertGetUserCertByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get-user-cert/${queryArg.zoneName}`,
+        url: `/api/cdn/edge-cert/get-user-cert/${queryArg.cdnId}`,
       }),
     }),
     postApiCdnEdgeCertCreate: build.mutation<
@@ -205,27 +213,25 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/cdn/host/list` }),
     }),
-    getApiCdnHostGetByZoneName: build.query<
-      GetApiCdnHostGetByZoneNameApiResponse,
-      GetApiCdnHostGetByZoneNameApiArg
+    getApiCdnHostGetById: build.query<
+      GetApiCdnHostGetByIdApiResponse,
+      GetApiCdnHostGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/cdn/host/get/${queryArg.zoneName}` }),
+      query: (queryArg) => ({ url: `/api/cdn/host/get/${queryArg.id}` }),
     }),
-    getApiCdnHostGetNsStatusByZoneName: build.query<
-      GetApiCdnHostGetNsStatusByZoneNameApiResponse,
-      GetApiCdnHostGetNsStatusByZoneNameApiArg
+    getApiCdnHostGetNsStatusById: build.query<
+      GetApiCdnHostGetNsStatusByIdApiResponse,
+      GetApiCdnHostGetNsStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/get-ns-status/${queryArg.zoneName}`,
+        url: `/api/cdn/host/get-ns-status/${queryArg.id}`,
       }),
     }),
-    getApiCdnHostOverviewByZoneName: build.query<
-      GetApiCdnHostOverviewByZoneNameApiResponse,
-      GetApiCdnHostOverviewByZoneNameApiArg
+    getApiCdnHostOverviewById: build.query<
+      GetApiCdnHostOverviewByIdApiResponse,
+      GetApiCdnHostOverviewByIdApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/cdn/host/overview/${queryArg.zoneName}`,
-      }),
+      query: (queryArg) => ({ url: `/api/cdn/host/overview/${queryArg.id}` }),
     }),
     postApiCdnHostCheckZone: build.mutation<
       PostApiCdnHostCheckZoneApiResponse,
@@ -462,12 +468,12 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiCdnDnsRecordListByZoneName: build.query<
-      GetApiCdnDnsRecordListByZoneNameApiResponse,
-      GetApiCdnDnsRecordListByZoneNameApiArg
+    getApiCdnDnsRecordListByCdnId: build.query<
+      GetApiCdnDnsRecordListByCdnIdApiResponse,
+      GetApiCdnDnsRecordListByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/list/${queryArg.zoneName}`,
+        url: `/api/cdn/dns-record/list/${queryArg.cdnId}`,
       }),
     }),
     getApiCdnDnsRecordGetById: build.query<
@@ -871,12 +877,12 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiCdnLoadBalanceListByZoneName: build.query<
-      GetApiCdnLoadBalanceListByZoneNameApiResponse,
-      GetApiCdnLoadBalanceListByZoneNameApiArg
+    getApiCdnLoadBalanceListByCdnId: build.query<
+      GetApiCdnLoadBalanceListByCdnIdApiResponse,
+      GetApiCdnLoadBalanceListByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/list/${queryArg.zoneName}`,
+        url: `/api/cdn/load-balance/list/${queryArg.cdnId}`,
       }),
     }),
     getApiCdnLoadBalanceGetById: build.query<
@@ -1372,14 +1378,6 @@ export const api = createApi({
         body: queryArg.supportSubjectSelectListModel,
       }),
     }),
-    getApiCdnAnalyticGetByZoneNameAndPeriodId: build.query<
-      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse,
-      GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/cdn/analytic/get/${queryArg.zoneName}/${queryArg.periodId}`,
-      }),
-    }),
     getApiVmHostList: build.query<
       GetApiVmHostListApiResponse,
       GetApiVmHostListApiArg
@@ -1673,10 +1671,16 @@ export type PostApiAccountForgotConfirmApiArg = {
 };
 export type PostApiAccountLogoutApiResponse = unknown;
 export type PostApiAccountLogoutApiArg = void;
-export type GetApiCdnApiGatewayListByZoneNameApiResponse =
+export type GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiResponse =
+  /** status 200 Success */ GetAnalyticResponse;
+export type GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiArg = {
+  cdnId: number;
+  periodId: number;
+};
+export type GetApiCdnApiGatewayListByCdnIdApiResponse =
   /** status 200 Success */ ApiGatewayListResponse[];
-export type GetApiCdnApiGatewayListByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnApiGatewayListByCdnIdApiArg = {
+  cdnId: number;
 };
 export type GetApiCdnApiGatewayGetByIdApiResponse =
   /** status 200 Success */ GetApiGatewayResponse;
@@ -1717,29 +1721,29 @@ export type GetApiCloudBusinessUnitListApiArg = void;
 export type GetApiCloudCalculateMonthListApiResponse =
   /** status 200 Success */ CalculateMonthListResponse[];
 export type GetApiCloudCalculateMonthListApiArg = void;
-export type GetApiCdnClientCertGetByZoneNameApiResponse =
+export type GetApiCdnClientCertGetByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnClientCertGetByCdnIdApiArg = {
+  cdnId: number;
 };
-export type GetApiCdnClientCertGetUserCertByZoneNameApiResponse =
+export type GetApiCdnClientCertGetUserCertByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnClientCertGetUserCertByCdnIdApiArg = {
+  cdnId: number;
 };
 export type PostApiCdnClientCertCreateUserCertApiResponse = unknown;
 export type PostApiCdnClientCertCreateUserCertApiArg = {
   createCdnClientUserCertModel: CreateCdnClientUserCertModel;
 };
-export type GetApiCdnEdgeCertGetByZoneNameApiResponse =
+export type GetApiCdnEdgeCertGetByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnEdgeCertGetByCdnIdApiArg = {
+  cdnId: number;
 };
-export type GetApiCdnEdgeCertGetUserCertByZoneNameApiResponse =
+export type GetApiCdnEdgeCertGetUserCertByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetUserCertByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnEdgeCertGetUserCertByCdnIdApiArg = {
+  cdnId: number;
 };
 export type PostApiCdnEdgeCertCreateApiResponse = unknown;
 export type PostApiCdnEdgeCertCreateApiArg = {
@@ -1752,20 +1756,20 @@ export type PostApiCdnEdgeCertCreateUserCertApiArg = {
 export type GetApiCdnHostListApiResponse =
   /** status 200 Success */ CdnListResponse[];
 export type GetApiCdnHostListApiArg = void;
-export type GetApiCdnHostGetByZoneNameApiResponse =
+export type GetApiCdnHostGetByIdApiResponse =
   /** status 200 Success */ GetCdnResponse;
-export type GetApiCdnHostGetByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnHostGetByIdApiArg = {
+  id: number;
 };
-export type GetApiCdnHostGetNsStatusByZoneNameApiResponse =
+export type GetApiCdnHostGetNsStatusByIdApiResponse =
   /** status 200 Success */ GetCdnNsStatusResponse;
-export type GetApiCdnHostGetNsStatusByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnHostGetNsStatusByIdApiArg = {
+  id: number;
 };
-export type GetApiCdnHostOverviewByZoneNameApiResponse =
+export type GetApiCdnHostOverviewByIdApiResponse =
   /** status 200 Success */ CdnOverviewResponse;
-export type GetApiCdnHostOverviewByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnHostOverviewByIdApiArg = {
+  id: number;
 };
 export type PostApiCdnHostCheckZoneApiResponse = unknown;
 export type PostApiCdnHostCheckZoneApiArg = {
@@ -1879,10 +1883,10 @@ export type DeleteApiDatacenterIpDeleteByIdApiResponse = unknown;
 export type DeleteApiDatacenterIpDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCdnDnsRecordListByZoneNameApiResponse =
+export type GetApiCdnDnsRecordListByCdnIdApiResponse =
   /** status 200 Success */ DnsRecordListResponse[];
-export type GetApiCdnDnsRecordListByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnDnsRecordListByCdnIdApiArg = {
+  cdnId: number;
 };
 export type GetApiCdnDnsRecordGetByIdApiResponse =
   /** status 200 Success */ GetDnsRecordResponse;
@@ -2083,10 +2087,10 @@ export type DeleteApiPlatformVolumeDeleteByIdApiResponse = unknown;
 export type DeleteApiPlatformVolumeDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCdnLoadBalanceListByZoneNameApiResponse =
+export type GetApiCdnLoadBalanceListByCdnIdApiResponse =
   /** status 200 Success */ LoadBalanceListResponse[];
-export type GetApiCdnLoadBalanceListByZoneNameApiArg = {
-  zoneName: string;
+export type GetApiCdnLoadBalanceListByCdnIdApiArg = {
+  cdnId: number;
 };
 export type GetApiCdnLoadBalanceGetByIdApiResponse =
   /** status 200 Success */ GetLoadBalanceResponse;
@@ -2355,12 +2359,6 @@ export type PostApiCloudSupportSubjectSelectListApiResponse =
 export type PostApiCloudSupportSubjectSelectListApiArg = {
   supportSubjectSelectListModel: SupportSubjectSelectListModel;
 };
-export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiResponse =
-  /** status 200 Success */ GetAnalyticResponse;
-export type GetApiCdnAnalyticGetByZoneNameAndPeriodIdApiArg = {
-  zoneName: string;
-  periodId: number;
-};
 export type GetApiVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
 export type GetApiVmHostListApiArg = void;
@@ -2518,6 +2516,14 @@ export type ForgotConfirmModel = {
   confirmCode: string;
   password: string;
 };
+export type SeriesModel = {
+  name?: string | null;
+  data?: number[] | null;
+};
+export type GetAnalyticResponse = {
+  categories?: string[] | null;
+  series?: SeriesModel[] | null;
+};
 export type ApiGatewayListResponse = {
   id?: number;
   host?: string | null;
@@ -2538,7 +2544,7 @@ export type GetApiGatewayResponse = {
   destinations?: DestinationModel[] | null;
 };
 export type CreateApiGatewayModel = {
-  zoneName: string;
+  cdnId: number;
   host: string;
   path: string;
   destinations: DestinationModel[];
@@ -2608,15 +2614,15 @@ export type GetCdnCertResponse = {
   expirationDate?: string | null;
 };
 export type CreateCdnClientUserCertModel = {
-  zoneName: string;
+  cdnId: number;
   keyPem: string;
   certPem: string;
 };
 export type CreateCdnEdgeCertModel = {
-  zoneName: string;
+  cdnId: number;
 };
 export type CreateCdnEdgeUserCertModel = {
-  zoneName: string;
+  cdnId: number;
   keyPem: string;
   certPem: string;
   bundleCertPem?: string | null;
@@ -2655,7 +2661,6 @@ export type CheckCdnModel = {
 };
 export type CreateCdnModel = {
   zoneName: string;
-  customerProductTypeId: number;
 };
 export type ChangeCdnTypeModel = {
   id?: number;
@@ -2821,7 +2826,7 @@ export type GetDnsRecordResponse = {
   isSystemRecord?: boolean;
 };
 export type CreateDnsRecordModel = {
-  zoneName: string;
+  cdnId: number;
   name: string;
   type: string;
   ttl: string;
@@ -2837,7 +2842,7 @@ export type CreateDnsRecordModel = {
   authority?: string | null;
 };
 export type EditDnsRecordModel = {
-  zoneName: string;
+  cdnId: number;
   name: string;
   type: string;
   ttl: string;
@@ -3121,7 +3126,7 @@ export type GetLoadBalanceResponse = {
   destinations?: DestinationModel[] | null;
 };
 export type CreateLoadBalanceModel = {
-  zoneName: string;
+  cdnId: number;
   host: string;
   destinations?: DestinationModel[] | null;
   loadBalancingPolicyId: number;
@@ -3424,14 +3429,6 @@ export type SupportSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
 };
-export type SeriesModel = {
-  name?: string | null;
-  data?: number[] | null;
-};
-export type GetAnalyticResponse = {
-  categories?: string[] | null;
-  series?: SeriesModel[] | null;
-};
 export type VmListResponse = {
   id?: number;
   name?: string | null;
@@ -3589,7 +3586,8 @@ export const {
   usePostApiAccountForgotMutation,
   usePostApiAccountForgotConfirmMutation,
   usePostApiAccountLogoutMutation,
-  useGetApiCdnApiGatewayListByZoneNameQuery,
+  useGetApiCdnAnalyticGetByCdnIdAndPeriodIdQuery,
+  useGetApiCdnApiGatewayListByCdnIdQuery,
   useGetApiCdnApiGatewayGetByIdQuery,
   usePostApiCdnApiGatewayCreateMutation,
   usePutApiCdnApiGatewayEditMutation,
@@ -3600,17 +3598,17 @@ export const {
   useDeleteApiBareMetalDeleteMutation,
   useGetApiCloudBusinessUnitListQuery,
   useGetApiCloudCalculateMonthListQuery,
-  useGetApiCdnClientCertGetByZoneNameQuery,
-  useGetApiCdnClientCertGetUserCertByZoneNameQuery,
+  useGetApiCdnClientCertGetByCdnIdQuery,
+  useGetApiCdnClientCertGetUserCertByCdnIdQuery,
   usePostApiCdnClientCertCreateUserCertMutation,
-  useGetApiCdnEdgeCertGetByZoneNameQuery,
-  useGetApiCdnEdgeCertGetUserCertByZoneNameQuery,
+  useGetApiCdnEdgeCertGetByCdnIdQuery,
+  useGetApiCdnEdgeCertGetUserCertByCdnIdQuery,
   usePostApiCdnEdgeCertCreateMutation,
   usePostApiCdnEdgeCertCreateUserCertMutation,
   useGetApiCdnHostListQuery,
-  useGetApiCdnHostGetByZoneNameQuery,
-  useGetApiCdnHostGetNsStatusByZoneNameQuery,
-  useGetApiCdnHostOverviewByZoneNameQuery,
+  useGetApiCdnHostGetByIdQuery,
+  useGetApiCdnHostGetNsStatusByIdQuery,
+  useGetApiCdnHostOverviewByIdQuery,
   usePostApiCdnHostCheckZoneMutation,
   usePostApiCdnHostCreateMutation,
   useDeleteApiCdnHostDeleteByIdMutation,
@@ -3639,7 +3637,7 @@ export const {
   useGetApiDatacenterListQuery,
   useGetApiDatacenterIpListByProductIdAndIdQuery,
   useDeleteApiDatacenterIpDeleteByIdMutation,
-  useGetApiCdnDnsRecordListByZoneNameQuery,
+  useGetApiCdnDnsRecordListByCdnIdQuery,
   useGetApiCdnDnsRecordGetByIdQuery,
   usePostApiCdnDnsRecordCreateMutation,
   usePutApiCdnDnsRecordEditMutation,
@@ -3688,7 +3686,7 @@ export const {
   useGetApiPlatformVolumeGetByIdQuery,
   usePostApiPlatformVolumeCreateMutation,
   useDeleteApiPlatformVolumeDeleteByIdMutation,
-  useGetApiCdnLoadBalanceListByZoneNameQuery,
+  useGetApiCdnLoadBalanceListByCdnIdQuery,
   useGetApiCdnLoadBalanceGetByIdQuery,
   usePostApiCdnLoadBalanceCreateMutation,
   usePutApiCdnLoadBalanceEditMutation,
@@ -3747,7 +3745,6 @@ export const {
   useGetApiCloudSupportItemDownloadByIdQuery,
   useGetApiCloudSupportSubjectListQuery,
   usePostApiCloudSupportSubjectSelectListMutation,
-  useGetApiCdnAnalyticGetByZoneNameAndPeriodIdQuery,
   useGetApiVmHostListQuery,
   useGetApiVmHostGetByIdQuery,
   usePostApiVmHostCreateMutation,
@@ -3781,3 +3778,4 @@ export const {
   useDeleteApiWebDeleteByIdMutation,
   usePostApiDomainWhoisGetMutation,
 } = api;
+

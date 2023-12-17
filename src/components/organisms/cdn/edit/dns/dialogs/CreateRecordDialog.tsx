@@ -46,6 +46,9 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   const [getInfo, { isLoading: getDetailsLoading }] =
     useLazyGetApiCdnDnsRecordGetByIdQuery();
 
+  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
+
   const [type, setType] = useState<dnsType>("A");
 
   const [initialValues, setInitialValues] = useState<createDnsRecordType>({
@@ -91,8 +94,6 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       });
   }, [getInfo, id]);
 
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
     usePostApiCdnDnsRecordCreateMutation();
 
@@ -108,7 +109,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       editDnsRecord({
         editDnsRecordModel: {
           id: id,
-          zoneName: selectedDomain?.zoneName!,
+          cdnId,
           name,
           type,
           ttl,
@@ -128,7 +129,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     } else {
       createDnsRecord({
         createDnsRecordModel: {
-          zoneName: selectedDomain?.zoneName!,
+          cdnId,
           name,
           type,
           ttl,

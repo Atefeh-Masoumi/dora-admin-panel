@@ -51,16 +51,16 @@ export const api = generatedApi
       getApiCdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
       },
-      getApiCdnDnsRecordListByZoneName: {
+      getApiCdnDnsRecordListByCdnId: {
         providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
       },
-      getApiCdnHostGetByZoneName: {
+      getApiCdnHostGetById: {
         providesTags: () => ["ZoneData"],
       },
       getApiCloudSupportItemListBySupportId: {
         providesTags: () => ["SupportItems"],
       },
-      getApiCdnLoadBalanceListByZoneName: {
+      getApiCdnLoadBalanceListByCdnId: {
         providesTags: () => ["LoadBalance"],
       },
       putApiCloudCustomerEditCustomerType: {
@@ -117,13 +117,13 @@ export const api = generatedApi
       putApiCdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      getApiCdnEdgeCertGetByZoneName: {
+      getApiCdnEdgeCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiCdnEdgeCertGetUserCertByZoneName: {
+      getApiCdnEdgeCertGetUserCertByCdnId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiCdnClientCertGetByZoneName: {
+      getApiCdnClientCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
       postApiCdnEdgeCertCreate: {

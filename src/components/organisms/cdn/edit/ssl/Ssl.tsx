@@ -5,16 +5,14 @@ import { CdnTypeSetting } from "src/components/organisms/cdn/edit/ssl/CdnTypeSet
 import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/ssl/CdnSecuritySetting";
 import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edge/CdnChangeEdgeCertType";
 import { CdnChangeClientCertType } from "src/components/organisms/cdn/edit/ssl/client/CdnChangeClientCertType";
-import { useGetApiCdnHostGetByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnHostGetByIdQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
 
-  const zoneName = selectedDomain?.zoneName || "";
-  const id = selectedDomain?.id || 0;
-
-  const { data: zoneData, isLoading } = useGetApiCdnHostGetByZoneNameQuery({
-    zoneName,
+  const { data: zoneData, isLoading } = useGetApiCdnHostGetByIdQuery({
+    id: cdnId,
   });
   return (
     <Stack width="100%" spacing={4}>
@@ -25,10 +23,10 @@ export const SSLSetting: FC = () => {
         <CdnTypeSetting
           zoneTypeId={zoneData?.zoneTypeId as number}
           loading={isLoading}
-          id={id}
+          id={cdnId}
         />
         <CdnSecuritySetting
-          id={id}
+          id={cdnId}
           isHSTS={zoneData?.isHsts}
           isHttpsRedirect={zoneData?.isHttpsRedirect}
           isNonWwwRedirect={zoneData?.isNonWwwRedirect}
@@ -40,7 +38,7 @@ export const SSLSetting: FC = () => {
           گواهی های لبه (EDGE)
         </Typography>
         <CdnChangeEdgeCertType
-          id={id}
+          id={cdnId}
           loading={isLoading}
           certTypeId={zoneData?.zoneEdgeCertTypeId}
         />
@@ -50,7 +48,7 @@ export const SSLSetting: FC = () => {
           گواهی های سرور (ORIGIN)
         </Typography>
         <CdnChangeClientCertType
-          id={id}
+          id={cdnId}
           loading={isLoading}
           certTypeId={zoneData?.zoneClientCertTypeId}
         />

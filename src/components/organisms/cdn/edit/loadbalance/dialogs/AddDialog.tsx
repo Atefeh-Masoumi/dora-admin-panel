@@ -87,7 +87,8 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     maxConnectionsPerServer: 0,
     dangerousAcceptAnyServerCertificate: false,
   });
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
 
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
@@ -163,7 +164,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     } else {
       createLoadBalance({
         createLoadBalanceModel: {
-          zoneName: selectedDomain?.zoneName!,
+          cdnId,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),

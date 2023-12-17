@@ -3,7 +3,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   usePostApiCdnEdgeCertCreateMutation,
-  useGetApiCdnEdgeCertGetByZoneNameQuery,
+  useGetApiCdnEdgeCertGetByCdnIdQuery,
 } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -12,17 +12,19 @@ import { LoadingButton } from "@mui/lab";
 
 export const CdnEdgeCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
+
   const [createLicense, { isLoading: loadingCreate }] =
     usePostApiCdnEdgeCertCreateMutation();
 
-  const { data: edgeCert, isLoading } = useGetApiCdnEdgeCertGetByZoneNameQuery({
-    zoneName: selectedDomain?.zoneName || "",
+  const { data: edgeCert, isLoading } = useGetApiCdnEdgeCertGetByCdnIdQuery({
+    cdnId,
   });
 
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
-        zoneName: selectedDomain?.zoneName || "",
+        cdnId,
       },
     })
       .unwrap()
@@ -60,6 +62,7 @@ export const CdnEdgeCert: FC = () => {
             <Typography variant="text15">{edgeCert?.issuer}</Typography>
           )}
         </Stack>
+
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="text14">پایان اعتبار:</Typography>
           {isLoading ? (
@@ -68,6 +71,7 @@ export const CdnEdgeCert: FC = () => {
             <Typography variant="text15">{edgeCert?.expirationDate}</Typography>
           )}
         </Stack>
+
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="text14">دامنه‌ها:</Typography>
           {isLoading ? (

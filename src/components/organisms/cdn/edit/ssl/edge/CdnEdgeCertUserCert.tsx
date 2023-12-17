@@ -1,17 +1,17 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiCdnEdgeCertGetUserCertByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnEdgeCertGetUserCertByCdnIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
 
 export const CdnEdgeCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const zoneName = selectedDomain?.zoneName || "";
+  const cdnId = selectedDomain?.id || 0;
 
   const { data: userCert, isLoading } =
-    useGetApiCdnEdgeCertGetUserCertByZoneNameQuery({ zoneName });
+    useGetApiCdnEdgeCertGetUserCertByCdnIdQuery({ cdnId });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
@@ -63,7 +63,7 @@ export const CdnEdgeCertUserCert: FC = () => {
       <AddEdgeUserCertDialog
         openDialog={open}
         handleClose={handleClose}
-        zoneName={zoneName}
+        cdnId={cdnId}
       />
     </Stack>
   );

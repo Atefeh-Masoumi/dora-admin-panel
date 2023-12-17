@@ -6,16 +6,17 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
-import { useGetApiCdnLoadBalanceListByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnLoadBalanceListByCdnIdQuery } from "src/app/services/api.generated";
 
 type LoadBalancePropsType = {};
 
 const LoadBalance: FC<LoadBalancePropsType> = () => {
   const [showDialog, setShowDialog] = useState(false);
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
 
-  const { data, isLoading } = useGetApiCdnLoadBalanceListByZoneNameQuery({
-    zoneName: selectedDomain?.zoneName || "",
+  const { data, isLoading } = useGetApiCdnLoadBalanceListByCdnIdQuery({
+    cdnId,
   });
 
   const openDialog = () => setShowDialog(true);

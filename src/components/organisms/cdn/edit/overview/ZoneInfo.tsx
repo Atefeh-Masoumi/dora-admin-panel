@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiCdnHostOverviewByZoneNameQuery } from "src/app/services/api.generated";
+import { useGetApiCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
 import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
@@ -44,7 +44,8 @@ const BoxRow: FC<boxRowType> = ({ title, value, component, isLoading }) => (
 type ZoneInfoPropsType = {};
 
 export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
+  const cdnId = selectedDomain?.id || 0;
 
   const handleOpenDelete = () => setOpenDelete(true);
   const [openDelete, setOpenDelete] = useState(false);
@@ -57,9 +58,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiCdnHostOverviewByZoneNameQuery({
-    zoneName: selectedDomain?.zoneName || "",
-  });
+  } = useGetApiCdnHostOverviewByIdQuery({ id: cdnId });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
