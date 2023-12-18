@@ -3,13 +3,11 @@ import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
-import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 
 type ServerInfoPropsType = {};
 
 export const ServerInfo: FC<ServerInfoPropsType> = () => {
-  const { name, setName, isPublic, setIsPublic } =
-    useContext(AddStorageContext);
+  const { name, setName } = useContext(AddStorageContext);
 
   const nameInputChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,34 +47,6 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         label="نام سرویس (Bucket Name)"
         inputProps={{ dir: "ltr" }}
       />
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        border={1}
-        borderColor={isPublic === true ? "primary.light" : "secondary.light"}
-        borderRadius={2}
-        alignItems="center"
-        p={1.5}
-        boxShadow={
-          isPublic === true ? "0px 2px 11px rgba(60, 138, 255, 0.44)" : "none"
-        }
-      >
-        <Stack color="secondary.main">
-          <Typography
-            color={isPublic === true ? "primary.main" : "secondary.main"}
-            fontSize={16}
-          >
-            استفاده در فضای عمومی (Public)
-          </Typography>
-          <Typography variant="text8" color="secondary">
-            با انتخاب این گزینه دسترسی بدون احراز می باشد.
-          </Typography>
-        </Stack>
-        <DorsaSwitch
-          checked={isPublic}
-          onChange={() => setIsPublic(!isPublic)}
-        />
-      </Stack>
       <Stack justifyContent="center" spacing={1}>
         <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
           توجه:
@@ -89,9 +59,7 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
           <br />
           اطلاعات دسترسی بعد از پرداخت ارسال میگردد.
           <br />
-          برای استفاده مستندات min.io را مطالعه نمایید.
-          <br />
-          برای استفاده SDK را از سایت min.io دانلود نمایید.
+          بعد از ایجاد میتوانید کلید های خود را مجدد ایجاد نمایید.
         </Typography>
       </Stack>
     </Stack>

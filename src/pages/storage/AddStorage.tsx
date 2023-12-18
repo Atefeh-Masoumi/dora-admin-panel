@@ -15,8 +15,7 @@ import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddStorageService: FC = () => {
-  const { dataCenter, serverConfig, name, isPublic } =
-    useContext(AddStorageContext);
+  const { dataCenter, serverConfig, name } = useContext(AddStorageContext);
 
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
@@ -49,7 +48,7 @@ const AddStorageService: FC = () => {
       createStorageService({
         createStorageHostModel: {
           name: name,
-          isPublic: isPublic,
+          isPublic: false,
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
           customerProductTypeId:

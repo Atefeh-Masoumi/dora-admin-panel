@@ -1,18 +1,15 @@
 import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetApiCloudProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import { useGetApiCloudProductBundleStorageListQuery } from "src/app/services/api.generated";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
-    });
+    useGetApiCloudProductBundleStorageListQuery();
 
   const table = useMemo(
     () => (

@@ -990,6 +990,24 @@ export const api = createApi({
         url: `/api/cloud/product-bundle/list/${queryArg.productId}`,
       }),
     }),
+    getApiCloudProductBundleVmList: build.query<
+      GetApiCloudProductBundleVmListApiResponse,
+      GetApiCloudProductBundleVmListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/product-bundle/vm-list` }),
+    }),
+    getApiCloudProductBundleStorageList: build.query<
+      GetApiCloudProductBundleStorageListApiResponse,
+      GetApiCloudProductBundleStorageListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/product-bundle/storage-list` }),
+    }),
+    getApiCloudProductBundleWebHostList: build.query<
+      GetApiCloudProductBundleWebHostListApiResponse,
+      GetApiCloudProductBundleWebHostListApiArg
+    >({
+      query: () => ({ url: `/api/cloud/product-bundle/web-host-list` }),
+    }),
     getApiCloudProductItemListByProductId: build.query<
       GetApiCloudProductItemListByProductIdApiResponse,
       GetApiCloudProductItemListByProductIdApiArg
@@ -1536,6 +1554,41 @@ export const api = createApi({
         url: `/api/vm/iso/unmount`,
         method: "PUT",
         body: queryArg.unmountModel,
+      }),
+    }),
+    getApiVmProjectList: build.query<
+      GetApiVmProjectListApiResponse,
+      GetApiVmProjectListApiArg
+    >({
+      query: () => ({ url: `/api/vm/project/list` }),
+    }),
+    postApiVmProjectCreate: build.mutation<
+      PostApiVmProjectCreateApiResponse,
+      PostApiVmProjectCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/vm/project/create`,
+        method: "POST",
+        body: queryArg.createVmProject,
+      }),
+    }),
+    putApiVmProjectEdit: build.mutation<
+      PutApiVmProjectEditApiResponse,
+      PutApiVmProjectEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/vm/project/edit`,
+        method: "PUT",
+        body: queryArg.editVmProject,
+      }),
+    }),
+    deleteApiVmProjectDeleteById: build.mutation<
+      DeleteApiVmProjectDeleteByIdApiResponse,
+      DeleteApiVmProjectDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/vm/project/delete/${queryArg.id}`,
+        method: "DELETE",
       }),
     }),
     getApiVpcHostList: build.query<
@@ -2166,6 +2219,15 @@ export type GetApiCloudProductBundleListByProductIdApiResponse =
 export type GetApiCloudProductBundleListByProductIdApiArg = {
   productId: number;
 };
+export type GetApiCloudProductBundleVmListApiResponse =
+  /** status 200 Success */ VmSpecListResponse[];
+export type GetApiCloudProductBundleVmListApiArg = void;
+export type GetApiCloudProductBundleStorageListApiResponse =
+  /** status 200 Success */ StorageSpecResponse[];
+export type GetApiCloudProductBundleStorageListApiArg = void;
+export type GetApiCloudProductBundleWebHostListApiResponse =
+  /** status 200 Success */ WebHostSpecResponse[];
+export type GetApiCloudProductBundleWebHostListApiArg = void;
 export type GetApiCloudProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
 export type GetApiCloudProductItemListByProductIdApiArg = {
@@ -2432,6 +2494,21 @@ export type PutApiVmIsoMountApiArg = {
 export type PutApiVmIsoUnmountApiResponse = unknown;
 export type PutApiVmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
+};
+export type GetApiVmProjectListApiResponse =
+  /** status 200 Success */ VmProjectList[];
+export type GetApiVmProjectListApiArg = void;
+export type PostApiVmProjectCreateApiResponse = unknown;
+export type PostApiVmProjectCreateApiArg = {
+  createVmProject: CreateVmProject;
+};
+export type PutApiVmProjectEditApiResponse = unknown;
+export type PutApiVmProjectEditApiArg = {
+  editVmProject: EditVmProject;
+};
+export type DeleteApiVmProjectDeleteByIdApiResponse = unknown;
+export type DeleteApiVmProjectDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiVpcHostListApiResponse =
   /** status 200 Success */ VpcListResponse[];
@@ -3191,6 +3268,27 @@ export type ProductBundleListResponse = {
   description?: string | null;
   price?: number;
 };
+export type VmSpecListResponse = {
+  id?: number;
+  name?: string | null;
+  price?: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+  ipv4?: number;
+};
+export type StorageSpecResponse = {
+  id?: number;
+  name?: string | null;
+  price?: number;
+  disk?: number;
+};
+export type WebHostSpecResponse = {
+  id?: number;
+  name?: string | null;
+  price?: number;
+  quantity?: number;
+};
 export type ProductItemListResponse = {
   id?: number;
   name?: string | null;
@@ -3437,6 +3535,8 @@ export type VmListResponse = {
   datacenter?: string | null;
   operatingSystem?: string | null;
   ipv4?: string | null;
+  vmProjectId?: number | null;
+  vmProjectName?: string | null;
   createDate?: string;
 };
 export type GetVmResponse = {
@@ -3462,6 +3562,7 @@ export type CreateVmModel = {
   imageId: number;
   customerProductTypeId: number;
   isPredefined: boolean;
+  vmProjectId?: number | null;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -3500,6 +3601,19 @@ export type MountModel = {
 export type UnmountModel = {
   id?: number;
   vmId?: number;
+};
+export type VmProjectList = {
+  id?: number;
+  name?: string | null;
+  vmCount?: number;
+  createDate?: string;
+};
+export type CreateVmProject = {
+  name?: string | null;
+};
+export type EditVmProject = {
+  name?: string | null;
+  id?: number;
 };
 export type VpcListResponse = {
   id?: number;
@@ -3700,6 +3814,9 @@ export const {
   usePostApiCloudPaymentSepCallBackMutation,
   useGetApiCloudProductListQuery,
   useGetApiCloudProductBundleListByProductIdQuery,
+  useGetApiCloudProductBundleVmListQuery,
+  useGetApiCloudProductBundleStorageListQuery,
+  useGetApiCloudProductBundleWebHostListQuery,
   useGetApiCloudProductItemListByProductIdQuery,
   useGetApiAccountProfileGetQuery,
   useGetApiAccountProfileGetNotificationStatusQuery,
@@ -3763,6 +3880,10 @@ export const {
   useGetApiVmIsoListByDatacenterIdQuery,
   usePutApiVmIsoMountMutation,
   usePutApiVmIsoUnmountMutation,
+  useGetApiVmProjectListQuery,
+  usePostApiVmProjectCreateMutation,
+  usePutApiVmProjectEditMutation,
+  useDeleteApiVmProjectDeleteByIdMutation,
   useGetApiVpcHostListQuery,
   usePostApiVpcHostCreateMutation,
   useGetApiVpcNetworkListByVpcHostIdQuery,

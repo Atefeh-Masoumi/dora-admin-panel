@@ -1,21 +1,15 @@
-import { FC, useMemo, useContext } from "react";
+import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetApiCloudProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import { useGetApiCloudProductBundleVmListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { AddServerContext } from "../contexts/AddVmContext";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiCloudProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.VM,
-    });
-
-  const { step, setStep } = useContext(AddServerContext);
+    useGetApiCloudProductBundleVmListQuery();
 
   const table = useMemo(
     () => (

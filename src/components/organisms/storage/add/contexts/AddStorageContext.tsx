@@ -15,8 +15,6 @@ type AddStorageContextType = {
   setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
   name: string;
   setName: (name: string) => void;
-  isPublic: boolean;
-  setIsPublic: (isPublic: boolean) => void;
 };
 
 export const AddStorageContext = createContext<AddStorageContextType>({
@@ -28,8 +26,6 @@ export const AddStorageContext = createContext<AddStorageContextType>({
   setServerConfig: (productBundle) => {},
   name: "",
   setName: (name) => {},
-  isPublic: true,
-  setIsPublic: (isPublic) => {},
 });
 
 type AddStorageContextProviderPropsType = {
@@ -46,7 +42,6 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
   const [serverConfig, setServerConfig] =
     useState<ProductBundleListResponse | null>(null);
   const [name, setName] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
 
   return (
     <AddStorageContext.Provider
@@ -59,8 +54,6 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
         setServerConfig,
         name,
         setName,
-        isPublic,
-        setIsPublic,
       }}
     >
       {children}
