@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "src/app/services/baseQuery";
 export const api = createApi({
   baseQuery: baseQuery,
+  refetchOnMountOrArgChange:true,
   tagTypes: [],
   endpoints: (build) => ({
     postApiAccountLogin: build.mutation<
