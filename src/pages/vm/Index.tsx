@@ -27,8 +27,18 @@ export const DataContext = createContext<DataContextValueType>({
 type VmManagementPropsType = {};
 
 const VmManagement: FC<VmManagementPropsType> = () => {
-  const selectVmProjects = useAppSelector((store) => store.vm.selectVmProjects);
-  const vmProjectId = selectVmProjects?.id || 0;
+  const selectVmProjects = useAppSelector(
+    (store) => store.vmProject.selectedVmProject
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selectVmProjects) return;
+    navigate('/vm');
+  }, [navigate, selectVmProjects]);
+
+  const vmProjectId = selectVmProjects?.id;
 
   const [search, setSearch] = useState("");
 
@@ -54,8 +64,6 @@ const VmManagement: FC<VmManagementPropsType> = () => {
       }
       return result;
     }) || [];
-
-  const navigate = useNavigate();
 
   const refetchOnClick = () => null;
   const createCloudOnClick = () => navigate("/vm/add-vm");
