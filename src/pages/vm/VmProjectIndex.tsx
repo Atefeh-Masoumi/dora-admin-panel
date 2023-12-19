@@ -7,7 +7,6 @@ import {
   createContext,
 } from "react";
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
@@ -15,6 +14,8 @@ import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { VmProjectCard } from "src/components/organisms/vm/edit/ProjectCard";
 import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
+import { AddProjectDialog } from "src/components/organisms/vm/projects/AddProjectDialog";
+import { EditProjectDialog } from "src/components/organisms/vm/projects/EditProjectDialog";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -27,6 +28,8 @@ export const DataContext = createContext<DataContextValueType>({
 });
 
 const VmManagement: FC = () => {
+  const [openAddProjectDialog, setOpenAddProjectDialog] = useState(false);
+
   const {
     data: zoneList,
     isLoading: getDataLoading,
@@ -39,10 +42,7 @@ const VmManagement: FC = () => {
     [getDataLoading, isFetching]
   );
 
-  const navigate = useNavigate();
-
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/cdn/add-domain");
 
   const [search, setSearch] = useState("");
 
@@ -67,6 +67,13 @@ const VmManagement: FC = () => {
       window.removeEventListener("resize", detectSize);
     };
   }, [windowDimenion]);
+
+  const openAddProjectDialogHandler = () => {
+    setOpenAddProjectDialog(true);
+  };
+  const closeAddProjectDialogHandler = () => {
+    setOpenAddProjectDialog(false);
+  };
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
@@ -115,7 +122,7 @@ const VmManagement: FC = () => {
               </Button>
               <Button
                 variant="outlined"
-                onClick={createCloudOnClick}
+                onClick={openAddProjectDialogHandler}
                 size="large"
                 sx={{
                   whiteSpace: "nowrap",
@@ -166,6 +173,10 @@ const VmManagement: FC = () => {
             </Fragment>
           )}
         </Grid>
+        <AddProjectDialog
+          open={openAddProjectDialog}
+          onClose={closeAddProjectDialogHandler}
+        />
       </Fragment>
     </DataContext.Provider>
   );
