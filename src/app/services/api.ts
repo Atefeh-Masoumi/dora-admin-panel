@@ -138,6 +138,15 @@ export const api = generatedApi
       getApiVmProjectList: {
         providesTags: () => ["VmHosts"],
       },
+      postApiVmProjectCreate: {
+        invalidatesTags: () => ["VmHosts"],
+      },
+      deleteApiVmProjectDeleteById: {
+        invalidatesTags: () => ["VmHosts"],
+      },
+      putApiVmProjectEdit: {
+        invalidatesTags: () => ["VmHosts"],
+      },
       postApiVmHostCreate: {
         invalidatesTags: () => ["VmHosts"],
       },
