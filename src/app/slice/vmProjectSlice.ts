@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { VmProjectList } from "../services/api.generated";
 import { logoutAction } from "./authSlice";
 
-type vmProjectSliceType = { selectVmProjects: VmProjectList | null };
+type vmProjectSliceType = { selectedVmProject: VmProjectList | null };
 
 const initialState: vmProjectSliceType = {
-  selectVmProjects: null,
+  selectedVmProject: null,
 };
 
 const vmProjectSlice = createSlice({
   name: "vmProject",
   initialState,
   reducers: {
-    setSelectVmProjects: (
+    setSelectVmProject: (
       state,
       { payload }: { payload: VmProjectList | null }
     ) => {
-      state.selectVmProjects = payload;
+      state.selectedVmProject = payload;
     },
   },
   extraReducers: ({ addMatcher, addCase }) => {
@@ -26,7 +26,7 @@ const vmProjectSlice = createSlice({
   },
 });
 
-export const { setSelectVmProjects: setSelectVmProjectsAction } =
+export const { setSelectVmProject: setSelectVmProjectAction } =
   vmProjectSlice.actions;
 
 export default vmProjectSlice.reducer;

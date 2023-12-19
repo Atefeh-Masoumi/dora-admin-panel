@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import auth from "./slice/authSlice";
 import cdn from "./slice/cdnSlice";
-import vm from "./slice/vmProjectSlice";
+import vmProject from "./slice/vmProjectSlice";
 import forgetPassword from "./slice/forgetPasswordSlice";
 import { api } from "./services/api";
 
@@ -10,7 +10,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     auth,
     cdn,
-    vm,
+    vmProject,
     forgetPassword,
   },
   middleware: (getDefaultMiddleware) =>
