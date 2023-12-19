@@ -3,13 +3,15 @@ import { MenuItem, Skeleton } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { setSelectVmProjectsAction } from "src/app/slice/vmProjectSlice";
+import { setSelectVmProjectAction } from "src/app/slice/vmProjectSlice";
 import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
 
 export const ProjectSelect: FC = () => {
   const { data: vmProjects, isLoading } = useGetApiVmProjectListQuery();
 
-  const selectVmProjects = useAppSelector((state) => state.vm.selectVmProjects);
+  const selectVmProjects = useAppSelector(
+    (state) => state.vmProject.selectedVmProject
+  );
 
   const dispatch = useAppDispatch();
 
@@ -17,7 +19,7 @@ export const ProjectSelect: FC = () => {
     if (!vmProjects || vmProjects.length === 0) return;
     const newValue = Number(event.target.value);
     const selectedItem = vmProjects?.find((item) => item.id === newValue);
-    dispatch(setSelectVmProjectsAction(selectedItem || null));
+    dispatch(setSelectVmProjectAction(selectedItem || null));
   };
 
   if (isLoading) {

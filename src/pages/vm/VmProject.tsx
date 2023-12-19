@@ -10,7 +10,9 @@ import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
 
 const VmProjects: FC = () => {
-  const selectVmProjects = useAppSelector((state) => state.vm.selectVmProjects);
+  const selectVmProjects = useAppSelector(
+    (state) => state.vmProject.selectedVmProject
+  );
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
