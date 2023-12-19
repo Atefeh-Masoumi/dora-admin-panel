@@ -70,7 +70,10 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       text: "سرویس سرور های ابری",
       Icon: DriverSvg,
       link: "/vm",
-      subList: [{ title: "سرویس سرور‌های ابری", link: "/vm" }],
+      subList: [
+        { title: "مدیریت پروژه ها", link: "/vm" },
+        { title: "مدیریت سرورها", link: "/vm/list" },
+      ],
     },
     // {
     //   title: "Kubernetes",

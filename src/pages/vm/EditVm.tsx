@@ -10,11 +10,11 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
-import { ServerInfo } from "src/components/organisms/vm/edit/ServerInfo";
-import { ServerIpAddress } from "src/components/organisms/vm/edit/ServerIpAddress";
-import { ServerConfig } from "src/components/organisms/vm/edit/ServerConfig";
-import { ServerRebuild } from "src/components/organisms/vm/edit/ServerRebuild";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
+import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
+import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
+import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
+import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -73,14 +73,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "تغییر مشخصات سخت افزاری",
   ];
 
-  const tabPanelArray = [
-    ServerInfo,
-    ServerIpAddress,
-    ServerRebuild,
-    ServerConfig,
-  ];
+  const tabPanelArray = [VmInfo, VmIpAddress, VmRebuild, ServerConfig];
 
-  if (!id) return <Navigate to="/vm" />;
+  if (!id) return <Navigate to="/vm/list" />;
 
   return (
     <Stack

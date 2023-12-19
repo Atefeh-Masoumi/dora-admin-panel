@@ -1,26 +1,23 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { Chip, Divider, Stack, Typography } from "@mui/material";
 import CircleTickSvg from "src/components/atoms/svg/CircleTickSvg";
-import ClockSvg from "src/components/atoms/svg/ClockSvg";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
-import { CdnListResponse } from "src/app/services/api.generated";
-import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
+import { VmProjectList } from "src/app/services/api.generated";
+import { setSelectVmProjectsAction } from "src/app/slice/vmProjectSlice";
 
-type DomainCardPropsType = { zoneItem: CdnListResponse };
+type VmProjectCardPropsType = { vmItem: VmProjectList };
 
-export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
-  const { zoneName, zoneStatusId } = zoneItem;
+export const VmProjectCard: FC<VmProjectCardPropsType> = ({ vmItem }) => {
+  const { name, vmCount, createDate } = vmItem;
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
   const cardClickHandler = () => {
-    dispatch(setSelectedDomainAction(zoneItem));
-    navigate("/cdn/overview");
+    dispatch(setSelectVmProjectsAction(vmItem));
+    navigate("/vm/list");
   };
-
-  const isActive = useMemo(() => zoneStatusId === 2, [zoneStatusId]);
 
   return (
     <Stack
@@ -48,18 +45,18 @@ export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
       >
         <Chip
           sx={{
-            color: isActive ? "#40BF6A" : "#FB9D05",
-            backgroundColor: isActive ? "rgba(64, 191, 106, 0.08)" : "#FCEDD5",
+            color: "#40BF6A",
+            backgroundColor: "rgba(64, 191, 106, 0.08)",
             borderRadius: "8px",
           }}
-          label={isActive ? "Active" : "Pending"}
+          label="فعال"
         />
         <Typography
           fontSize={18}
           color="rgba(110, 118, 138, 1)"
           whiteSpace="nowrap"
         >
-          {zoneName}
+          {name}
         </Typography>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14" }} />
@@ -76,13 +73,9 @@ export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
           whiteSpace="nowrap"
           sx={{ pt: "4px" }}
         >
-          {isActive ? `${zoneName} is Active` : "Pending Name Server Update"}
+          "فعال"
         </Typography>
-        {isActive ? (
-          <CircleTickSvg sx={{ color: "white" }} />
-        ) : (
-          <ClockSvg sx={{ color: "white" }} />
-        )}
+        <CircleTickSvg sx={{ color: "white" }} />
       </Stack>
     </Stack>
   );

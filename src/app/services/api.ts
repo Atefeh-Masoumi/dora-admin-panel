@@ -135,7 +135,7 @@ export const api = generatedApi
       postApiCloudSupportItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
-      getApiVmHostList: {
+      getApiVmProjectList: {
         providesTags: () => ["VmHosts"],
       },
       postApiVmHostCreate: {

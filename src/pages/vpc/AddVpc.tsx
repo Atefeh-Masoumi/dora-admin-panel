@@ -30,7 +30,7 @@ const AddVm: FC = () => {
 
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/vm");
+      navigate("/vm/list");
       return;
     }
     setStep((step - 1) as addServerStepsType);

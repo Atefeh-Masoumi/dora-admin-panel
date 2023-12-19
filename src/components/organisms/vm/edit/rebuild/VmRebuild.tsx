@@ -4,17 +4,17 @@ import { ChooseOS } from "./serverRebuildSections/ChooseOS";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { LoadingButton } from "@mui/lab";
 import { usePutApiVmHostRebuildMutation } from "src/app/services/api.generated";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
-type ServerRebuildSteps = 1 | 2;
+type VmRebuildSteps = 1 | 2;
 
-type ServerRebuildPropsType = {};
+type VmRebuildPropsType = {};
 
-export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
+export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const [step, setStep] = useState<ServerRebuildSteps>(1);
+  const [step, setStep] = useState<VmRebuildSteps>(1);
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ export const ServerRebuild: FC<ServerRebuildPropsType> = () => {
         .unwrap()
         .then(() => {
           toast.success("درخواست با موفقیت انجام شد");
-          navigate("/vm");
+          navigate("/vm/list");
         });
       return;
     }

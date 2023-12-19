@@ -3,21 +3,21 @@ import { MenuItem, Skeleton } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { setSelectedVmAction } from "src/app/slice/vmSlice";
-import { useGetApiVmHostListQuery } from "src/app/services/api.generated";
+import { setSelectVmProjectsAction } from "src/app/slice/vmProjectSlice";
+import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
 
-export const VmSelect: FC = () => {
-  const { data: vms, isLoading } = useGetApiVmHostListQuery();
+export const ProjectSelect: FC = () => {
+  const { data: vmProjects, isLoading } = useGetApiVmProjectListQuery();
 
-  const selectedVm = useAppSelector((state) => state.vm.selectedVm);
+  const selectVmProjects = useAppSelector((state) => state.vm.selectVmProjects);
 
   const dispatch = useAppDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!vms || vms.length === 0) return;
+    if (!vmProjects || vmProjects.length === 0) return;
     const newValue = Number(event.target.value);
-    const selectedItem = vms?.find((item) => item.id === newValue);
-    dispatch(setSelectedVmAction(selectedItem || null));
+    const selectedItem = vmProjects?.find((item) => item.id === newValue);
+    dispatch(setSelectVmProjectsAction(selectedItem || null));
   };
 
   if (isLoading) {
@@ -34,7 +34,7 @@ export const VmSelect: FC = () => {
       <DorsaTextField
         inputProps={{ fontSize: "20px !important" }}
         select
-        value={selectedVm?.id?.toString() || ""}
+        value={selectVmProjects?.id?.toString() || ""}
         onChange={handleChange}
         sx={{
           minWidth: 150,
@@ -43,8 +43,8 @@ export const VmSelect: FC = () => {
         }}
         size="small"
       >
-        {vms &&
-          vms.map(({ id, name }, index) => (
+        {vmProjects &&
+          vmProjects.map(({ id, name }, index) => (
             <MenuItem
               key={index}
               value={id}

@@ -21,7 +21,7 @@ import {
 } from "src/app/services/api.generated";
 import { useLazyGetApiDatacenterIpListByProductIdAndIdQuery } from "src/app/services/api";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 
 const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
   const [deleteIp, { isLoading }] =
@@ -111,16 +111,14 @@ const LoadingSkeleton: FC = () => (
   </Grid2>
 );
 
-type ServerIpAddressPropsType = {};
+type VmIpAddressPropsType = {};
 
-export const ServerIpAddress: FC<ServerIpAddressPropsType> = () => {
+export const VmIpAddress: FC<VmIpAddressPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [getData, { isLoading }] =
     useLazyGetApiDatacenterIpListByProductIdAndIdQuery();
   const [data, setData] =
-    useState<GetApiDatacenterIpListByProductIdAndIdApiResponse | null>(
-      null
-    );
+    useState<GetApiDatacenterIpListByProductIdAndIdApiResponse | null>(null);
 
   useEffect(() => {
     if (serverId) {

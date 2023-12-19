@@ -2,9 +2,9 @@ import { FC } from "react";
 import { ServerInfoActions } from "./serverInfoSections/ServerInfoActions";
 import { ServerInfoBoxes } from "./serverInfoSections/ServerInfoBoxes";
 
-type ServerInfoPropsType = {};
+type VmInfoPropsType = {};
 
-export const ServerInfo: FC<ServerInfoPropsType> = () => {
+export const VmInfo: FC<VmInfoPropsType> = () => {
   return (
     <>
       <ServerInfoActions />

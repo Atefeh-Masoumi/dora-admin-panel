@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import auth from "./slice/authSlice";
 import cdn from "./slice/cdnSlice";
-import vm from "./slice/vmSlice";
+import vm from "./slice/vmProjectSlice";
 import forgetPassword from "./slice/forgetPasswordSlice";
 import { api } from "./services/api";
 

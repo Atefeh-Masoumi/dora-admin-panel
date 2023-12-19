@@ -15,8 +15,12 @@ import {
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import { useAppSelector } from "src/app/hooks";
 
 const AddVm: FC = () => {
+  const selectVmProjects = useAppSelector((store) => store.vm.selectVmProjects);
+  const vmProjectId = selectVmProjects?.id || 0;
+
   const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =
     useContext(AddServerContext);
 
@@ -64,6 +68,7 @@ const AddVm: FC = () => {
               ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
               : paymentType || 0,
           isPredefined: true,
+          vmProjectId: vmProjectId,
           productBundleId: serverConfig?.id || 0,
           cpu: null,
           memory: null,
@@ -73,7 +78,7 @@ const AddVm: FC = () => {
         .unwrap()
         .then((res) => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
-          navigate("/vm");
+          navigate("/vm/list");
         });
     }
   };

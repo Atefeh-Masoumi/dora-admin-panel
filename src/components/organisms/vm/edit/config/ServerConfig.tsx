@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState, useMemo } from "react";
 import { Stack, Typography, Paper } from "@mui/material";
 import { useLazyGetApiVmHostGetByIdQuery } from "src/app/services/api";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";

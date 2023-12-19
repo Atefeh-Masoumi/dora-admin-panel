@@ -1,5 +1,8 @@
-import { FC, useState, useMemo, createContext } from "react";
-import { useGetApiVmHostListQuery } from "src/app/services/api.generated";
+import { FC, useState, createContext, useEffect, SetStateAction } from "react";
+import {
+  VmListResponse,
+  usePostApiVmHostListMutation,
+} from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -9,6 +12,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
+import { useAppSelector } from "src/app/hooks";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -23,22 +27,27 @@ export const DataContext = createContext<DataContextValueType>({
 type VmManagementPropsType = {};
 
 const VmManagement: FC<VmManagementPropsType> = () => {
+  const selectVmProjects = useAppSelector((store) => store.vm.selectVmProjects);
+  const vmProjectId = selectVmProjects?.id || 0;
+
   const [search, setSearch] = useState("");
 
-  const {
-    data,
-    isLoading: getDataLoading,
-    refetch,
-    isFetching,
-  } = useGetApiVmHostListQuery();
+  const [vmList, setVmList] = useState<VmListResponse[]>([]);
 
-  const isLoading = useMemo(
-    () => getDataLoading || isFetching,
-    [getDataLoading, isFetching]
-  );
+  const [selectList, { isLoading: vmListLoading }] =
+    usePostApiVmHostListMutation();
+  useEffect(() => {
+    selectList({
+      vmListModel: {
+        vmProjectId: vmProjectId,
+      },
+    })
+      .unwrap()
+      .then((res: SetStateAction<VmListResponse[]>) => setVmList(res));
+  }, [selectList, selectVmProjects]);
 
   const filteredList =
-    data?.filter((item) => {
+    vmList?.filter((item) => {
       let result = null;
       if (item?.name) {
         result = item?.name.includes(search);
@@ -48,7 +57,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
 
   const navigate = useNavigate();
 
-  const refetchOnClick = () => refetch();
+  const refetchOnClick = () => null;
   const createCloudOnClick = () => navigate("/vm/add-vm");
 
   return (
@@ -133,7 +142,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
             RowComponent={AddVmTableRow}
             rows={filteredList}
             text="در حال حاضر سروری وجود ندارد"
-            isLoading={isLoading}
+            isLoading={vmListLoading}
             initialOrder={9}
           />
         </Box>

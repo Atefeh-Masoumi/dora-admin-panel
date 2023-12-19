@@ -8,8 +8,9 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { PrivateRoute } from "./PrivateRoute";
 import { DomainSelect } from "src/components/organisms/cdn/edit/DomainSelect";
 import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
+import { ProjectSelect } from "src/components/organisms/vm/edit/ProjectSelect";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
-import EditServerContextProvider from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import AddRabbitContextProvider from "src/components/organisms/rabbit/add/contexts/AddRabbitContext";
 import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
 import AddWebContextProvider from "src/components/organisms/web/web/add/contexts/AddWebContext";
@@ -64,6 +65,8 @@ const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
+const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectIndex"));
+const VmProject = lazy(() => import("src/pages/vm/VmProject"));
 
 const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbit"));
@@ -327,8 +330,21 @@ const Router: FC = () => {
           {/* ======================================= VM ======================================= */}
           <Route
             path="/vm"
+            element={mainTemplate(VmProjectIndex, {
+              pageTitle: "مدیریت پروژه ها",
+            })}
+          />
+          {/* <Route
+            path="/vm"
             element={mainTemplate(VmIndex, {
               pageTitle: "مدیریت سرور ابری",
+            })}
+          /> */}
+          <Route
+            path="/vm/list"
+            element={mainTemplate(VmIndex, {
+              pageTitle: "مدیریت سرور ابری",
+              RightComponent: ProjectSelect,
             })}
           />
           <Route
@@ -338,7 +354,7 @@ const Router: FC = () => {
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm",
+                  url: "/vm-project",
                 },
                 hideSidebar: true,
               },
@@ -359,6 +375,36 @@ const Router: FC = () => {
               EditServerContextProvider
             )}
           />
+
+          <Route
+            path="/vm/overview"
+            element={mainTemplate(VmProject, {
+              pageTitle: "مشخصات دامنه",
+              RightComponent: ProjectSelect,
+            })}
+          />
+          <Route
+            path="/vm/vm-ip-address"
+            element={mainTemplate(VmProject, {
+              pageTitle: "vm-ip-address",
+              RightComponent: ProjectSelect,
+            })}
+          />
+          <Route
+            path="/vm/vm-rebuild"
+            element={mainTemplate(VmProject, {
+              pageTitle: "بازسازی سیستم عامل",
+              RightComponent: ProjectSelect,
+            })}
+          />
+          <Route
+            path="/vm/server-config"
+            element={mainTemplate(VmProject, {
+              pageTitle: "تغییر مشخصات سخت افزاری",
+              RightComponent: ProjectSelect,
+            })}
+          />
+
           {/* ======================================= RabbitMQ ======================================= */}
           <Route
             path="/rabbit"

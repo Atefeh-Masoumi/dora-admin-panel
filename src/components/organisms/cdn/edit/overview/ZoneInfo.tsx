@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
-import { useGetApiCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
 import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { useGetApiCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;

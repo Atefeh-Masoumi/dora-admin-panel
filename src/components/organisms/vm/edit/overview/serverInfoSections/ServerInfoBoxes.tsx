@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useGetApiVmHostGetByIdQuery } from "src/app/services/api.generated";

@@ -1396,11 +1396,15 @@ export const api = createApi({
         body: queryArg.supportSubjectSelectListModel,
       }),
     }),
-    getApiVmHostList: build.query<
-      GetApiVmHostListApiResponse,
-      GetApiVmHostListApiArg
+    postApiVmHostList: build.mutation<
+      PostApiVmHostListApiResponse,
+      PostApiVmHostListApiArg
     >({
-      query: () => ({ url: `/api/vm/host/list` }),
+      query: (queryArg) => ({
+        url: `/api/vm/host/list`,
+        method: "POST",
+        body: queryArg.vmListModel,
+      }),
     }),
     getApiVmHostGetById: build.query<
       GetApiVmHostGetByIdApiResponse,
@@ -2421,9 +2425,11 @@ export type PostApiCloudSupportSubjectSelectListApiResponse =
 export type PostApiCloudSupportSubjectSelectListApiArg = {
   supportSubjectSelectListModel: SupportSubjectSelectListModel;
 };
-export type GetApiVmHostListApiResponse =
+export type PostApiVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
-export type GetApiVmHostListApiArg = void;
+export type PostApiVmHostListApiArg = {
+  vmListModel: VmListModel;
+};
 export type GetApiVmHostGetByIdApiResponse =
   /** status 200 Success */ GetVmResponse;
 export type GetApiVmHostGetByIdApiArg = {
@@ -3539,6 +3545,9 @@ export type VmListResponse = {
   vmProjectName?: string | null;
   createDate?: string;
 };
+export type VmListModel = {
+  vmProjectId?: number;
+};
 export type GetVmResponse = {
   id?: number;
   datacenterId?: number;
@@ -3862,7 +3871,7 @@ export const {
   useGetApiCloudSupportItemDownloadByIdQuery,
   useGetApiCloudSupportSubjectListQuery,
   usePostApiCloudSupportSubjectSelectListMutation,
-  useGetApiVmHostListQuery,
+  usePostApiVmHostListMutation,
   useGetApiVmHostGetByIdQuery,
   usePostApiVmHostCreateMutation,
   usePutApiVmHostEditMutation,

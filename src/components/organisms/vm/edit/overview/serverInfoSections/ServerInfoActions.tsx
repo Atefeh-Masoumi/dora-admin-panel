@@ -18,7 +18,7 @@ import {
   usePutApiVmHostRebootByIdMutation,
   usePutApiVmHostShutdownByIdMutation,
 } from "src/app/services/api.generated";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 
 type ServerInfoActionsPropsType = {};

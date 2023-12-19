@@ -10,7 +10,7 @@ import {
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { GetApiVmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
-import { EditServerContext } from "src/components/organisms/vm/edit/contexts/EditServerContext";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
