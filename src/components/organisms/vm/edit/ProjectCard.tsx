@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { VmProjectList } from "src/app/services/api.generated";
 import { Delete, Edit } from "@mui/icons-material";
-import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
+import { DeleteVmProjectDialog } from "../projects/dialogs/DeleteVmProjectDialog";
 import { EditProjectDialog } from "../projects/EditProjectDialog";
 import { setSelectVmProjectAction } from "src/app/slice/vmProjectSlice";
 
@@ -134,7 +134,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({ vmItem }) => {
           </Button>
         </Stack>
       </Stack>
-      <DeleteVmDialog
+      <DeleteVmProjectDialog
         openDialog={openDeleteProjectDialog && !!id}
         handleClose={closeDeleteProjectDialogHandler}
         id={id!}

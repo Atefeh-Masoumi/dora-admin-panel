@@ -66,7 +66,6 @@ const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectIndex"));
-const VmProject = lazy(() => import("src/pages/vm/VmProject"));
 
 const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
 const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbit"));
@@ -334,12 +333,6 @@ const Router: FC = () => {
               pageTitle: "مدیریت پروژه ها",
             })}
           />
-          {/* <Route
-            path="/vm"
-            element={mainTemplate(VmIndex, {
-              pageTitle: "مدیریت سرور ابری",
-            })}
-          /> */}
           <Route
             path="/vm/list"
             element={mainTemplate(VmIndex, {
@@ -375,36 +368,6 @@ const Router: FC = () => {
               EditServerContextProvider
             )}
           />
-
-          <Route
-            path="/vm/overview"
-            element={mainTemplate(VmProject, {
-              pageTitle: "مشخصات دامنه",
-              RightComponent: ProjectSelect,
-            })}
-          />
-          <Route
-            path="/vm/vm-ip-address"
-            element={mainTemplate(VmProject, {
-              pageTitle: "vm-ip-address",
-              RightComponent: ProjectSelect,
-            })}
-          />
-          <Route
-            path="/vm/vm-rebuild"
-            element={mainTemplate(VmProject, {
-              pageTitle: "بازسازی سیستم عامل",
-              RightComponent: ProjectSelect,
-            })}
-          />
-          <Route
-            path="/vm/server-config"
-            element={mainTemplate(VmProject, {
-              pageTitle: "تغییر مشخصات سخت افزاری",
-              RightComponent: ProjectSelect,
-            })}
-          />
-
           {/* ======================================= RabbitMQ ======================================= */}
           <Route
             path="/rabbit"

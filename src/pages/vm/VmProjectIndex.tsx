@@ -15,7 +15,6 @@ import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { VmProjectCard } from "src/components/organisms/vm/edit/ProjectCard";
 import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
 import { AddProjectDialog } from "src/components/organisms/vm/projects/AddProjectDialog";
-import { EditProjectDialog } from "src/components/organisms/vm/projects/EditProjectDialog";
 
 // Define the type for your context value
 type DataContextValueType = {

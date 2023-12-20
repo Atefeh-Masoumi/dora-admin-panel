@@ -1,18 +1,18 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiVmHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/vm/Index";
+import { useDeleteApiVmProjectDeleteByIdMutation } from "src/app/services/api.generated";
 
-type DeleteVmDialogPropsType = {
+type DeleteVmProjectDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
+export const DeleteVmProjectDialog: FC<DeleteVmProjectDialogPropsType> = ({
   openDialog,
   handleClose,
   id,
@@ -20,14 +20,14 @@ export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeleteApiVmHostDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteApiVmProjectDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
       .unwrap()
       .then(() => {
         refetchOnClick();
-        toast.success("سرور ابری با موفقیت حذف شد");
+        toast.success("پروژه سرور ابری با موفقیت حذف شد");
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
@@ -44,7 +44,7 @@ export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف سرور ابری مطمئن هستید؟
+            از حذف پروژه سرور ابری مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد
@@ -66,7 +66,7 @@ export const DeleteVmDialog: FC<DeleteVmDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف سرور ابری
+            حذف پروژه سرور ابری
           </LoadingButton>
         </Stack>
       </Stack>
