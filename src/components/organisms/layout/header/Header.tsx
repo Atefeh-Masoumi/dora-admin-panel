@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import {
   AppBar,
-  Badge,
   Button,
   IconButton,
   Popover,
@@ -17,10 +16,7 @@ import MoreSvg from "src/components/atoms/svg/MoreSvg";
 import { WalletMenu } from "src/components/organisms/header/WalletMenu";
 import { Notifications } from "../../header/Notifications";
 import { useNavigate } from "react-router";
-import {
-  ArrowForward as ArrowForwardIcon,
-  ShoppingCartOutlined as ShoppingCartOutlinedIcon,
-} from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -54,7 +50,7 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
-  const notPaidList: any = [];
+  // const notPaidList: any = [];
   const desktopHeaderIcon = (
     <>
       <Notifications />
