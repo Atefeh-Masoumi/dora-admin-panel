@@ -46,6 +46,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
 
   const [selectList, { isLoading: vmListLoading }] =
     usePostApiVmHostListMutation();
+
   useEffect(() => {
     selectList({
       vmListModel: {
@@ -65,7 +66,15 @@ const VmManagement: FC<VmManagementPropsType> = () => {
       return result;
     }) || [];
 
-  const refetchOnClick = () => null;
+  const refetchOnClick = () => {
+    selectList({
+      vmListModel: {
+        vmProjectId: vmProjectId,
+      },
+    })
+      .unwrap()
+      .then((res: SetStateAction<VmListResponse[]>) => setVmList(res));
+  };
   const createCloudOnClick = () => navigate("/vm/add-vm");
 
   return (
