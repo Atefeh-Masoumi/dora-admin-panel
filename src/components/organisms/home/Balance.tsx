@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
-import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/AddDialog";
+import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/DepositDialog";
 
 export const Balance: FC = () => {
   const handleDeposit = () => setOpenDeposit(true);
