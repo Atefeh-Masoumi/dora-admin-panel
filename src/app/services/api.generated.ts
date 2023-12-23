@@ -1605,6 +1605,16 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    postApiAccountVoucherUse: build.mutation<
+      PostApiAccountVoucherUseApiResponse,
+      PostApiAccountVoucherUseApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/account/voucher/use`,
+        method: "POST",
+        body: queryArg.useVoucherModel,
+      }),
+    }),
     getApiVpcHostList: build.query<
       GetApiVpcHostListApiResponse,
       GetApiVpcHostListApiArg
@@ -2530,6 +2540,11 @@ export type DeleteApiVmProjectDeleteByIdApiResponse = unknown;
 export type DeleteApiVmProjectDeleteByIdApiArg = {
   id: number;
 };
+export type PostApiAccountVoucherUseApiResponse =
+  /** status 200 Success */ string;
+export type PostApiAccountVoucherUseApiArg = {
+  useVoucherModel: UseVoucherModel;
+};
 export type GetApiVpcHostListApiResponse =
   /** status 200 Success */ VpcListResponse[];
 export type GetApiVpcHostListApiArg = void;
@@ -3277,8 +3292,6 @@ export type CreatePaymentResponse = {
 export type CreatePaymentModel = {
   paymentProviderId?: number;
   amount: number;
-  orderPlanId?: number | null;
-  voucherCode?: string | null;
 };
 export type ProductListResponse = {
   id?: number;
@@ -3640,6 +3653,9 @@ export type EditVmProject = {
   name?: string | null;
   id?: number;
 };
+export type UseVoucherModel = {
+  voucherCode: string;
+};
 export type VpcListResponse = {
   id?: number;
   name?: string | null;
@@ -3905,6 +3921,7 @@ export const {
   usePostApiVmProjectCreateMutation,
   usePutApiVmProjectEditMutation,
   useDeleteApiVmProjectDeleteByIdMutation,
+  usePostApiAccountVoucherUseMutation,
   useGetApiVpcHostListQuery,
   usePostApiVpcHostCreateMutation,
   useGetApiVpcNetworkListByVpcHostIdQuery,
@@ -3920,3 +3937,4 @@ export const {
   useDeleteApiWebDeleteByIdMutation,
   usePostApiDomainWhoisGetMutation,
 } = api;
+
