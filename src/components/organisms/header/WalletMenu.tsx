@@ -1,18 +1,22 @@
-import React, { FC, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+  ExpandMore as ExpandMoreIcon,
+  Add as AddIcon,
+  Redeem as RedeemIcon,
+} from "@mui/icons-material";
 import { LinearProgress, Stack, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
-import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/AddDialog";
+import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/DepositDialog";
 import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
 import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
+import { GiftDialog } from "../cloud/payment/dialog/GiftDialog";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -54,44 +58,14 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-const items = [
-  {
-    value: "deposit",
-    label: "افزایش موجودی",
-    icon: AddIcon,
-    function: true,
-  },
-  {
-    value: "wallets",
-    label: "گزارش کیف پول",
-    icon: WalletSvg,
-    link: "/cloud/wallet",
-  },
-  {
-    value: "invoices",
-    label: "فاکتور های فروش",
-    icon: InvoiceSvg,
-    link: "/cloud/wallet/invoice",
-  },
-  {
-    value: "payments",
-    label: "گزارش پرداخت ها",
-    icon: TransactionSvg,
-    link: "/cloud/wallet/payment",
-  },
-  {
-    value: "user-bill",
-    label: "گزارش محاسبات",
-    icon: CalculateSvg,
-    link: "/cloud/wallet/bill",
-  },
-];
-
 export const WalletMenu: FC = () => {
+  const [openDepositDialog, setOpenDepositDialog] = useState(false);
+  const [openGiftDialog, setOpenGiftDialog] = useState(false);
+
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => setAnchorEl(null);
@@ -104,9 +78,50 @@ export const WalletMenu: FC = () => {
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const handleDeposit = () => setOpenDeposit(true);
-  const [openDeposit, setOpenDeposit] = useState(false);
-  const closeDeposit = () => setOpenDeposit(false);
+  const handleOpenDepositDialog = () => setOpenDepositDialog(true);
+  const handleCloseDepositDialog = () => setOpenDepositDialog(false);
+
+  const handleOpenGiftDialog = () => setOpenGiftDialog(true);
+  const handleCloseGiftDialog = () => setOpenGiftDialog(false);
+
+  const items = [
+    {
+      value: "deposit",
+      label: "افزایش موجودی",
+      icon: AddIcon,
+      function: handleOpenDepositDialog,
+    },
+    {
+      value: "gift",
+      label: "کد هدیه",
+      icon: RedeemIcon,
+      function: handleOpenGiftDialog,
+    },
+    {
+      value: "wallets",
+      label: "گزارش کیف پول",
+      icon: WalletSvg,
+      link: "/cloud/wallet",
+    },
+    {
+      value: "invoices",
+      label: "فاکتور های فروش",
+      icon: InvoiceSvg,
+      link: "/cloud/wallet/invoice",
+    },
+    {
+      value: "payments",
+      label: "گزارش پرداخت ها",
+      icon: TransactionSvg,
+      link: "/cloud/wallet/payment",
+    },
+    {
+      value: "user-bill",
+      label: "گزارش محاسبات",
+      icon: CalculateSvg,
+      link: "/cloud/wallet/bill",
+    },
+  ];
 
   return (
     <Stack>
@@ -141,7 +156,7 @@ export const WalletMenu: FC = () => {
             disableRipple
             sx={{ borderRadius: 1, m: 1, py: 2 }}
             onClick={() => {
-              item.function ? handleDeposit() : handleClose();
+              item.function ? item.function() : handleClose();
               item.link ? navigate(item.link) : handleClose();
               handleClose();
             }}
@@ -151,7 +166,14 @@ export const WalletMenu: FC = () => {
           </MenuItem>
         ))}
       </StyledMenu>
-      <DepositDialog openDialog={openDeposit} handleClose={closeDeposit} />
+      <DepositDialog
+        openDialog={openDepositDialog}
+        handleClose={handleCloseDepositDialog}
+      />
+      <GiftDialog
+        openDialog={openGiftDialog}
+        handleClose={handleCloseGiftDialog}
+      />
     </Stack>
   );
 };
