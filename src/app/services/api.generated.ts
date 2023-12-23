@@ -2,7 +2,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "src/app/services/baseQuery";
 export const api = createApi({
   baseQuery: baseQuery,
-  refetchOnMountOrArgChange: true,
   tagTypes: [],
   endpoints: (build) => ({
     postApiAccountLogin: build.mutation<
@@ -614,6 +613,16 @@ export const api = createApi({
       GetApiCloudInvoiceGetByIdApiArg
     >({
       query: (queryArg) => ({ url: `/api/cloud/invoice/get/${queryArg.id}` }),
+    }),
+    postApiCloudInvoicePay: build.mutation<
+      PostApiCloudInvoicePayApiResponse,
+      PostApiCloudInvoicePayApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cloud/invoice/pay`,
+        method: "POST",
+        body: queryArg.payInvoiceModel,
+      }),
     }),
     getApiPlatformDevopsListById: build.query<
       GetApiPlatformDevopsListByIdApiResponse,
@@ -2015,6 +2024,10 @@ export type GetApiCloudInvoiceGetByIdApiResponse =
 export type GetApiCloudInvoiceGetByIdApiArg = {
   id: number;
 };
+export type PostApiCloudInvoicePayApiResponse = unknown;
+export type PostApiCloudInvoicePayApiArg = {
+  payInvoiceModel: PayInvoiceModel;
+};
 export type GetApiPlatformDevopsListByIdApiResponse =
   /** status 200 Success */ KubeDevOpsListResponse[];
 export type GetApiPlatformDevopsListByIdApiArg = {
@@ -3001,8 +3014,7 @@ export type RegisterDomainModel = {
   ns1: string;
   ns2: string;
   autoRenewal: boolean;
-  activeCdn: boolean;
-  customerProductTypeId: number;
+  customerProductTypeId?: number;
 };
 export type ChangeContactModel = {
   id: number;
@@ -3055,6 +3067,9 @@ export type GetInvoiceResponse = {
   vat?: number;
   invoicePrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
+};
+export type PayInvoiceModel = {
+  id?: number;
 };
 export type KubeDevOpsListResponse = {
   id?: number;
@@ -3572,7 +3587,7 @@ export type CreateVmModel = {
   imageId: number;
   customerProductTypeId: number;
   isPredefined: boolean;
-  vmProjectId?: number | null;
+  vmProjectId: number;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -3689,12 +3704,7 @@ export type CreateWebHostModel = {
   domainName: string;
   datacenterId?: number;
   customerProductTypeId: number;
-  isPredefined: boolean;
-  productBundleId?: number | null;
-  basicPackage?: boolean | null;
-  startupPackage?: boolean | null;
-  advancedPackage?: boolean | null;
-  companyPackage?: boolean | null;
+  productBundleId?: number;
 };
 export type EditWebHostModel = {
   id?: number;
@@ -3779,6 +3789,7 @@ export const {
   useGetApiHomeIndexQuery,
   useGetApiCloudInvoiceListQuery,
   useGetApiCloudInvoiceGetByIdQuery,
+  usePostApiCloudInvoicePayMutation,
   useGetApiPlatformDevopsListByIdQuery,
   useGetApiPlatformDevopsGetByIdQuery,
   usePostApiPlatformDevopsCreateMutation,
@@ -3909,3 +3920,4 @@ export const {
   useDeleteApiWebDeleteByIdMutation,
   usePostApiDomainWhoisGetMutation,
 } = api;
+
