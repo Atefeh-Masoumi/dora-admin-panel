@@ -7,7 +7,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "syncApis": "sh ./sync_apis.sh"
+    "syncApis": "sh ./sync_apis.sh",
+    "prettify": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,scss,json}\""
   },
   "dependencies": {
     "@date-io/date-fns-jalali": "^2.15.0",
