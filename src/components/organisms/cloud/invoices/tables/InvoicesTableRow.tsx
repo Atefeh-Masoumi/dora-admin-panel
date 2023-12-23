@@ -46,7 +46,7 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
           <DorsaTableCell
             key={column.id}
             align="center"
-            sx={{ px: 0, whiteSpace: "nowrap" }}
+            sx={{ px: 1, whiteSpace: "nowrap" }}
           >
             {column.id === "title" ? (
               <Stack

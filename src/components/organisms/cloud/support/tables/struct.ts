@@ -15,4 +15,5 @@ export const supportTableStruct: columnType[] = [
     id: "supportStatus",
     label: "وضعیت",
   },
+  { id: "control", label: "", disableSort: true },
 ];

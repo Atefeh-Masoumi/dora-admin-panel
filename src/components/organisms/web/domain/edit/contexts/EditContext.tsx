@@ -7,7 +7,7 @@ type EditDomainContextType = {
 
 export const EditDomainContext = createContext<EditDomainContextType>({
   domainId: null,
-  setDomainId: (id) => { },
+  setDomainId: (id) => {},
 });
 
 type EditDomainContextProviderPropsType = {

@@ -35,7 +35,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
 
   useEffect(() => {
     if (selectVmProjects) return;
-    navigate('/vm');
+    navigate("/vm");
   }, [navigate, selectVmProjects]);
 
   const vmProjectId = selectVmProjects?.id;

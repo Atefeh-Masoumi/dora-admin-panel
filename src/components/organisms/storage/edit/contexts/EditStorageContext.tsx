@@ -10,9 +10,9 @@ type editStorageContextType = {
 
 export const EditStorageContext = createContext<editStorageContextType>({
   serverId: null,
-  setServerId: (id) => { },
+  setServerId: (id) => {},
   serverConfig: null,
-  setServerConfig: (productBundle) => { },
+  setServerConfig: (productBundle) => {},
 });
 
 type EditStorageContextProviderPropsType = {
@@ -23,7 +23,8 @@ const EditStorageContextProvider: FC<EditStorageContextProviderPropsType> = ({
   children,
 }) => {
   const [serverId, setServerId] = useState<number | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
 
   return (
     <EditStorageContext.Provider

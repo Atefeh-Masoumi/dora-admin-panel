@@ -10,9 +10,9 @@ type editRabbitContextType = {
 
 export const EditRabbitContext = createContext<editRabbitContextType>({
   serverId: null,
-  setServerId: (id) => { },
+  setServerId: (id) => {},
   serverConfig: null,
-  setServerConfig: (productBundle) => { },
+  setServerConfig: (productBundle) => {},
 });
 
 type EditRabbitContextProviderPropsType = {
@@ -23,7 +23,8 @@ const EditRabbitContextProvider: FC<EditRabbitContextProviderPropsType> = ({
   children,
 }) => {
   const [serverId, setServerId] = useState<number | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
 
   return (
     <EditRabbitContext.Provider

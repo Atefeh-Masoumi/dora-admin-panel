@@ -32,7 +32,7 @@ export const SubItemList: FC<SubItemListPropsType> = ({ listItems }) => {
   if (!selectedMainItem) {
     return <></>;
   }
-  
+
   return (
     <Stack
       direction="column"

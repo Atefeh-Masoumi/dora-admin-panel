@@ -49,7 +49,8 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
     null
   );
   const [osVersion, setOsVersion] = useState<ImageListResponse | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
 

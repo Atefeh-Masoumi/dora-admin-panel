@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-type CloudConnectionProps = {mode: "default" | "selected" | "fill"};
+type CloudConnectionProps = { mode: "default" | "selected" | "fill" };
 
 const CategorySvg: FC<SvgIconProps & CloudConnectionProps> = ({
   mode,

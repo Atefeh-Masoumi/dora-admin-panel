@@ -23,17 +23,17 @@ type AddRabbitContextType = {
 
 export const AddRabbitContext = createContext<AddRabbitContextType>({
   step: 1,
-  setStep: (step) => { },
+  setStep: (step) => {},
   dataCenter: null,
-  setDataCenter: (dataCenter) => { },
+  setDataCenter: (dataCenter) => {},
   serverConfig: null,
-  setServerConfig: (productBundle) => { },
+  setServerConfig: (productBundle) => {},
   name: "",
-  setName: (name) => { },
+  setName: (name) => {},
   serverUsername: "",
-  setServerUsername: (username) => { },
+  setServerUsername: (username) => {},
   serverPassword: "",
-  setServerPassword: (password) => { },
+  setServerPassword: (password) => {},
 });
 
 type AddRabbitContextProviderPropsType = {
@@ -44,8 +44,11 @@ const AddRabbitContextProvider: FC<AddRabbitContextProviderPropsType> = ({
   children,
 }) => {
   const [step, setStep] = useState<addRabbitStepsType>(1);
-  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
+    null
+  );
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
   const [name, setName] = useState("");
   const [serverUsername, setServerUsername] = useState("");
   const [serverPassword, setServerPassword] = useState("");

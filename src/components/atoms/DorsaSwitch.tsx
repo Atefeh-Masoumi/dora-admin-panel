@@ -14,7 +14,8 @@ export const DorsaSwitch = styled((props: SwitchProps) => (
       transform: "translateX(24px)",
       color: "#fff",
       "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : theme.palette.primary,
+        backgroundColor:
+          theme.palette.mode === "dark" ? "#2ECA45" : theme.palette.primary,
         opacity: 1,
         border: 0,
       },

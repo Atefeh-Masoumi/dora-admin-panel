@@ -10,20 +10,21 @@ type editWorkspaceContextType = {
 
 export const EditWorkspaceContext = createContext<editWorkspaceContextType>({
   serverId: null,
-  setServerId: (id) => { },
+  setServerId: (id) => {},
   serverConfig: null,
-  setServerConfig: (productBundle) => { },
+  setServerConfig: (productBundle) => {},
 });
 
 type EditWorkspaceContextProviderPropsType = {
   children?: ReactNode;
 };
 
-const EditWorkspaceContextProvider: FC<EditWorkspaceContextProviderPropsType> = ({
-  children,
-}) => {
+const EditWorkspaceContextProvider: FC<
+  EditWorkspaceContextProviderPropsType
+> = ({ children }) => {
   const [serverId, setServerId] = useState<number | null>(null);
-  const [serverConfig, setServerConfig] = useState<ProductBundleListResponse | null>(null);
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleListResponse | null>(null);
 
   return (
     <EditWorkspaceContext.Provider

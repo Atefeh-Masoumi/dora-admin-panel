@@ -16,7 +16,7 @@ export const WalletTableRow: FC<{ row: any }> = ({ row }) => {
           <DorsaTableCell
             key={column.id}
             align="center"
-            sx={{ px: 5, whiteSpace: "nowrap" }}
+            sx={{ px: 1, whiteSpace: "nowrap" }}
           >
             {column.id === "description" ? (
               <Typography

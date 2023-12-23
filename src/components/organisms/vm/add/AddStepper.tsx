@@ -4,7 +4,9 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
@@ -122,9 +124,7 @@ type AddVmStepperPropsType = {
   step: addServerStepsType;
 };
 
-export const AddVmStepper: FC<AddVmStepperPropsType> = ({
-  step,
-}) => {
+export const AddVmStepper: FC<AddVmStepperPropsType> = ({ step }) => {
   return (
     <Stepper
       alternativeLabel

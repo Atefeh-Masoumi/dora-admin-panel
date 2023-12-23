@@ -168,11 +168,7 @@ export const SuccessfulPayment: FC<SvgIconProps> = (props) => {
           gradientTransform="translate(10.4089 17.6804) rotate(-90) scale(4.10722 42.8958)"
         >
           <stop stopColor="#EBEDF0" stopOpacity="0.24" />
-          <stop
-            offset="0.536775"
-            stopColor="#EBEDF0"
-            stopOpacity="0.845525"
-          />
+          <stop offset="0.536775" stopColor="#EBEDF0" stopOpacity="0.845525" />
           <stop offset="1" stopColor="#E0E4E7" stopOpacity="0.01" />
         </radialGradient>
         <linearGradient

@@ -33,7 +33,11 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
             justifyContent="space-between"
           >
             <Stack direction="row" justifyContent="start" width="100%">
-              <Button startIcon={<EastIcon />} color="secondary" href="https://dorsacloud.com">
+              <Button
+                startIcon={<EastIcon />}
+                color="secondary"
+                href="https://dorsacloud.com"
+              >
                 بازگشت به خانه
               </Button>
             </Stack>

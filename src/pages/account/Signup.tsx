@@ -30,7 +30,7 @@ const formInitialValues = {
   lastName: "",
   phoneNumber: "",
   email: "",
-  password: ""
+  password: "",
 };
 
 const formValidation = yup.object().shape({
@@ -63,7 +63,7 @@ const Signup: FC = () => {
         lastName,
         phoneNumber,
         email,
-        password
+        password,
       },
     })
       .unwrap()

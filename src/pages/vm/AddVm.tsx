@@ -18,7 +18,9 @@ import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 import { useAppSelector } from "src/app/hooks";
 
 const AddVm: FC = () => {
-  const selectVmProjects = useAppSelector((store) => store.vmProject.selectedVmProject);
+  const selectVmProjects = useAppSelector(
+    (store) => store.vmProject.selectedVmProject
+  );
   const vmProjectId = selectVmProjects?.id || 0;
 
   const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =

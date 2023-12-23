@@ -87,7 +87,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
                             key={column.id}
                             align="center"
                             sx={{
-                              px: 4,
+                              px: 1,
                               py: 2,
                               whiteSpace: "nowrap",
                               cursor: !column?.disableSort
@@ -174,7 +174,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               />
               <Typography color="rgba(110, 118, 138, 0.8)">
                 {rows.length} نتیجه ، صفحه {page} از
-                {Math.ceil(rows.length /10)}
+                {Math.ceil(rows.length / 10)}
               </Typography>
             </Stack>
           </Stack>

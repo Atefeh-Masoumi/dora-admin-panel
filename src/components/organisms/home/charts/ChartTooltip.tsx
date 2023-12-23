@@ -14,8 +14,8 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
   return (
     <Paper
       component={Stack}
-      alignItems='center'
-      justifyContent='center'
+      alignItems="center"
+      justifyContent="center"
       rowGap={1}
       sx={{ bgcolor: "#202020", borderRadius: BORDER_RADIUS_5, p: 1 }}
     >
