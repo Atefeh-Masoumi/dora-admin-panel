@@ -19,8 +19,6 @@ import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
 import { usePostApiCloudPaymentCreateMutation } from "src/app/services/api.generated";
 
-type HeaderPropsType = { openDialog: boolean; handleClose: () => void };
-
 const selectedStyle: SxProps<Theme> = {
   border: 1,
   borderColor: "primary.main",
@@ -31,18 +29,16 @@ const selectedStyle: SxProps<Theme> = {
 const formInitialValues = {
   paymentProviderId: 1,
   amount: undefined,
-  orderPlanId: 0,
-  voucherCode: "",
 };
 
 const formValidation = yup.object().shape({
   paymentProviderId: yup.number(),
   amount: yup.number().min(1).required("فیلد الزامیست"),
-  orderPlanId: yup.number(),
-  voucherCode: yup.string(),
 });
 
-export const DepositDialog: FC<HeaderPropsType> = ({
+type DepositDialogPropsType = { openDialog: boolean; handleClose: () => void };
+
+export const DepositDialog: FC<DepositDialogPropsType> = ({
   openDialog,
   handleClose,
 }) => {
@@ -53,7 +49,7 @@ export const DepositDialog: FC<HeaderPropsType> = ({
   const formRedirectURL = useRef(null);
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { paymentProviderId, amount, orderPlanId, voucherCode },
+    { paymentProviderId, amount },
     { setSubmitting }
   ) => {
     if (amount === undefined) return;
@@ -62,8 +58,6 @@ export const DepositDialog: FC<HeaderPropsType> = ({
       createPaymentModel: {
         paymentProviderId,
         amount,
-        orderPlanId,
-        voucherCode,
       },
     })
       .unwrap()
