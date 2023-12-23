@@ -12,15 +12,27 @@ import {
 import { invoiceTableStruct } from "src/components/organisms/cloud/invoices/tables/struct";
 import { invoiceTableRow } from "src/components/organisms/cloud/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiCloudInvoiceGetByIdQuery } from "src/app/services/api.generated";
-import { useParams } from "react-router-dom";
+import {
+  useGetApiCloudInvoiceGetByIdQuery,
+  usePostApiCloudInvoicePayMutation,
+} from "src/app/services/api.generated";
+import { useNavigate, useParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
+import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
 
 const Invoice: FC = () => {
   const { id } = useParams();
-  const { data: invoiceItem, isLoading } = useGetApiCloudInvoiceGetByIdQuery({
-    id: parseInt(id as string),
-  });
+
+  const navigate = useNavigate();
+
+  const { data: invoiceItem, isLoading: getInvoiceItemLoading } =
+    useGetApiCloudInvoiceGetByIdQuery({
+      id: parseInt(id as string),
+    });
+
+  const [invoicePayment, { isLoading: invoicePaymentLoading }] =
+    usePostApiCloudInvoicePayMutation();
 
   const payInvoice = [
     {
@@ -40,6 +52,17 @@ const Invoice: FC = () => {
       value: priceToPersian(invoiceItem?.vat as number),
     },
   ];
+
+  const invoicePaymentHandler = () => {
+    if (invoiceItem?.invoiceStatusId !== 3 || !invoiceItem.id) return;
+
+    invoicePayment({ payInvoiceModel: { id: invoiceItem.id } })
+      .unwrap()
+      .then(() => {
+        toast.success(".پرداخت با موفقیت انجام شد");
+        navigate("/cloud/wallet/invoice");
+      });
+  };
 
   // const [date, setDate] = useState("");
   // const [createDate, setCreateDate] = useState("");
@@ -72,7 +95,7 @@ const Invoice: FC = () => {
           justifyContent="space-between"
         >
           <Stack direction="row" spacing={2} alignItems="center">
-            {isLoading ? (
+            {getInvoiceItemLoading ? (
               <Stack width={100}>
                 <LinearProgress />
               </Stack>
@@ -99,7 +122,7 @@ const Invoice: FC = () => {
             )}
           </Stack>
           <Stack direction="row" spacing={2} alignItems="center">
-            {isLoading ? (
+            {getInvoiceItemLoading ? (
               <Stack width={200}>
                 <LinearProgress />
               </Stack>
@@ -115,7 +138,7 @@ const Invoice: FC = () => {
                 </Typography>
               </Stack>
             )}
-            {isLoading ? (
+            {getInvoiceItemLoading ? (
               <Skeleton
                 variant="rectangular"
                 height={40}
@@ -176,7 +199,7 @@ const Invoice: FC = () => {
           <Grid item width="100%">
             <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
               <Grid item md={2}>
-                {isLoading ? (
+                {getInvoiceItemLoading ? (
                   <Stack width={120} py={1}>
                     <LinearProgress />
                   </Stack>
@@ -187,7 +210,7 @@ const Invoice: FC = () => {
                 )}
               </Grid>
               <Grid item md={4}>
-                {isLoading ? (
+                {getInvoiceItemLoading ? (
                   <Stack width={120} py={1}>
                     <LinearProgress />
                   </Stack>
@@ -198,7 +221,7 @@ const Invoice: FC = () => {
                 )}
               </Grid>
               <Grid item md>
-                {isLoading ? (
+                {getInvoiceItemLoading ? (
                   <Stack width={320} py={1}>
                     <LinearProgress />
                   </Stack>
@@ -219,7 +242,7 @@ const Invoice: FC = () => {
             RowComponent={invoiceTableRow}
             rows={invoiceItem?.invoiceItems || []}
             text="فاکتور موجود نیست"
-            isLoading={isLoading}
+            isLoading={getInvoiceItemLoading}
           />
         </Stack>
       </Stack>
@@ -240,7 +263,7 @@ const Invoice: FC = () => {
                   direction="row"
                   justifyContent="space-between"
                   p={2}
-                  bgcolor={index === 1 ? "white" : "#F0F7FF"}
+                  bgcolor={index === 0 ? "#F0F7FF" : "white"}
                   fontSize={14}
                   color="#6E768A"
                 >
@@ -264,9 +287,18 @@ const Invoice: FC = () => {
                 {priceToPersian(invoiceItem?.invoicePrice as number)} ریال
               </Typography>
             </Stack>
-            {/* <Button fullWidth size="large" variant="contained" sx={{ py: 1.5 }}>
-              پرداخت آنلاین فاکتور
-            </Button> */}
+            {invoiceItem?.invoiceStatusId === 3 && (
+              <LoadingButton
+                loading={invoicePaymentLoading}
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ py: 1.5 }}
+                onClick={invoicePaymentHandler}
+              >
+                پرداخت آنلاین فاکتور
+              </LoadingButton>
+            )}
           </Stack>
         </Stack>
       </Stack>
