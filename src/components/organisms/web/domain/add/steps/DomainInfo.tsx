@@ -267,20 +267,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
               }
             />
           </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              color="secondary.main"
-              label="ایجاد سرویس CDN و DNS"
-              control={
-                <Checkbox
-                  value={activeCdn}
-                  checked={activeCdn}
-                  sx={{ p: 0, borderRadius: 0 }}
-                  onChange={activeCdnInputChangeHandler}
-                />
-              }
-            />
-          </Grid>
         </Grid>
       </Grid>
     </Box>

@@ -30,7 +30,6 @@ const AddDomain: FC = () => {
     ns1,
     ns2,
     autoRenewal,
-    activeCdn,
     term,
   } = useContext(AddDomainContext);
 
@@ -149,7 +148,6 @@ const AddDomain: FC = () => {
           ns1,
           ns2,
           autoRenewal,
-          activeCdn,
           customerProductTypeId:
             customerType === CUSTOMER_TYPE_ENUM.POST_PAID
               ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO

@@ -56,7 +56,6 @@ const AddWeb: FC = () => {
             customerType === CUSTOMER_TYPE_ENUM.POST_PAID
               ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
               : paymentType || 0,
-          isPredefined: true,
         },
       })
         .unwrap()
