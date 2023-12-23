@@ -1,11 +1,32 @@
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { Chip, Stack } from "@mui/material";
 import { invoicesTableStruct, invoiceTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
+import { usePostApiCloudInvoicePayMutation } from "src/app/services/api.generated";
+import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
 
 export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
+
+  const [invoicePayment, { isLoading: invoicePaymentLoading }] =
+    usePostApiCloudInvoicePayMutation();
+
+  const payInvoice: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (row["invoiceStatusId"] !== 3 || !row["id"]) return;
+
+    invoicePayment({ payInvoiceModel: { id: row["id"] } })
+      .unwrap()
+      .then(() => {
+        toast.success(".پرداخت با موفقیت انجام شد");
+        navigate("/cloud/wallet/invoice");
+      });
+  };
+
   return (
     <DorsaTableRow
       hover
@@ -25,7 +46,7 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
           <DorsaTableCell
             key={column.id}
             align="center"
-            sx={{ px: 5, whiteSpace: "nowrap" }}
+            sx={{ px: 0, whiteSpace: "nowrap" }}
           >
             {column.id === "title" ? (
               <Stack
@@ -40,23 +61,35 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
             ) : (
               <Stack>
                 {column.id === "invoiceStatus" ? (
-                  <Chip
-                    label={text}
-                    sx={{
-                      cursor: "pointer",
-                      backgroundColor:
-                        row["invoiceStatusId"] === 1
-                          ? "success.light"
-                          : "error.light",
-                      color:
-                        row["invoiceStatusId"] === 1
-                          ? "success.main"
-                          : "error.main",
-                      py: 2.2,
-                      borderRadius: 1,
-                      fontSize: "14px",
-                    }}
-                  />
+                  <>
+                    {row["invoiceStatusId"] === 3 ? (
+                      <LoadingButton
+                        variant="outlined"
+                        loading={invoicePaymentLoading}
+                        onClick={payInvoice}
+                      >
+                        پرداخت
+                      </LoadingButton>
+                    ) : (
+                      <Chip
+                        label={text}
+                        sx={{
+                          cursor: "pointer",
+                          backgroundColor:
+                            row["invoiceStatusId"] === 1
+                              ? "success.light"
+                              : "error.light",
+                          color:
+                            row["invoiceStatusId"] === 1
+                              ? "success.main"
+                              : "error.main",
+                          py: 2.2,
+                          borderRadius: 1,
+                          fontSize: "14px",
+                        }}
+                      />
+                    )}
+                  </>
                 ) : column.id === "totalPrice" ||
                   column.id === "vat" ||
                   column.id === "discount" ||
