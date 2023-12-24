@@ -1,14 +1,23 @@
-import type { FC } from "react";
+import { useMemo, type FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
+type VmPlayerSvgPropsType = {
+  props?: SvgIconProps;
+  isBlue?: boolean;
+};
+
+export const VmPlayerSvg: FC<VmPlayerSvgPropsType> = ({ props, isBlue }) => {
+  const color = useMemo(() => {
+    return isBlue ? "#5188F7" : "rgb(110, 118, 138)";
+  }, [isBlue]);
+
   return (
     <SvgIcon
       viewBox="0 0 48 48"
       width="48px"
       height="48px"
       {...props}
-      sx={{ fill: "none", ...props.sx }}
+      sx={{ fill: "none", ...props?.sx }}
     >
       <linearGradient
         id="bhDvmaH~2kjfRzl_whoYXa"
@@ -18,8 +27,8 @@ export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
         y2="43.847"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor="#ffda1c" />
-        <stop offset="1" stopColor="#feb705" />
+        <stop offset="0" stopColor={color} />
+        <stop offset="1" stopColor={color} />
       </linearGradient>
       <path
         fill="url(#bhDvmaH~2kjfRzl_whoYXa)"
@@ -33,8 +42,8 @@ export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
         y2="42.619"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor="#ffda1c" />
-        <stop offset="1" stopColor="#feb705" />
+        <stop offset="0" stopColor={color} />
+        <stop offset="1" stopColor={color} />
       </linearGradient>
       <path
         fill="url(#bhDvmaH~2kjfRzl_whoYXb)"
@@ -48,8 +57,8 @@ export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
         y2="47.328"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor="#ffda1c" />
-        <stop offset="1" stopColor="#feb705" />
+        <stop offset="0" stopColor={color} />
+        <stop offset="1" stopColor={color} />
       </linearGradient>
       <path
         fill="url(#bhDvmaH~2kjfRzl_whoYXc)"
