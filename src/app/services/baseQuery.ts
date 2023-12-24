@@ -69,10 +69,12 @@ export const baseQuery: BaseQueryFn<
     if (error?.data === "canceled") {
       return { error };
     }
-    if (error.status === 401) {
+    if (error.status === 400) {
+      toast.error((e.response?.data as any).message || defaultErrorMessage);
+    } else if (error.status === 401) {
       dispatch(logoutAction());
     } else if (error.status !== 404) {
-      toast.error((e.response?.data as any)[""][0] || defaultErrorMessage);
+      toast.error((e.response?.data as any)[""][0]);
     }
 
     return { error };
