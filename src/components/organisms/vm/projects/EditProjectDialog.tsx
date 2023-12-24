@@ -26,8 +26,6 @@ export const EditProjectDialog: FC<EditProjectDialogPropsType> = ({
     (store) => store.vmProject.selectedVmProject
   );
 
-  console.log({ selectedVmProject });
-
   const [name, setName] = useState(selectedVmProject?.name || "");
 
   useEffect(() => {
