@@ -20,12 +20,15 @@ import {
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
+import { VmPlayerSvg } from "src/components/atoms/svg/VmPlayerSvg";
 
 type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [getUrl, { isLoading: getUrlIsLoading }] = usePostApiVmKmsGetMutation();
+  const [getVmUrl, { isLoading: getVmUrlIsLoading }] =
+    usePostApiVmKmsGetMutation();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -41,7 +44,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
 
   const actionsArray = [
     {
-      label: "Console to VM",
+      label: "Web Console",
       Icon: MonitorSvg,
       onClick: () => {
         if (!serverId) return;
@@ -54,15 +57,34 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         })
           .unwrap()
           .then((res) => {
-            if (res) {
-              let a = document.createElement("a");
-              a.href = "/console/wmks-sdk.html?url=" + res;
-              a.target = "_blank";
-              a.click();
-            }
+            if (!res) return;
+            let a = document.createElement("a");
+            a.href = "/console/wmks-sdk.html?url=" + res;
+            a.target = "_blank";
+            a.click();
           });
       },
       isLoading: getUrlIsLoading,
+    },
+    {
+      label: "VMRC Console",
+      Icon: VmPlayerSvg,
+      onClick: () => {
+        if (!serverId) return;
+
+        getVmUrl({
+          getKmsModel: {
+            id: serverId,
+            typeId: 1,
+          },
+        })
+          .unwrap()
+          .then((res) => {
+            if (!res) return;
+            window.open(res, "_blank");
+          });
+      },
+      isLoading: getVmUrlIsLoading,
     },
     {
       label: "Disconnect Network",
@@ -149,30 +171,49 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         spacing={1}
         sx={{
           mx: "auto",
-          py: 3,
-          width: { xs: 900, md: 930, lg: 995, xl: 1010 },
+          p: 3,
+          width: "fit-content",
         }}
       >
-        {actionsArray.map(({ label, Icon, onClick, isLoading }, index) => (
-          <LoadingButton
-            loading={isLoading}
-            variant="outlined"
-            key={index}
-            endIcon={<Icon sx={{ "&>path": { stroke: "#3C8AFF" } }} />}
-            onClick={onClick}
-            sx={{
-              pt: "9px !important",
-              "&>span:first-of-type": {
-                marginTop: "-5px",
-              },
-              borderRadius: BORDER_RADIUS_5,
-              border: "1px solid #3C8AFF",
-              color: "#3C8AFF",
-            }}
-          >
-            {label}
-          </LoadingButton>
-        ))}
+        {actionsArray.map(({ label, Icon, onClick, isLoading }, index) => {
+          const isVMRC = label === "VMRC Console";
+
+          return (
+            <LoadingButton
+              loading={isLoading}
+              variant="outlined"
+              key={index}
+              endIcon={
+                isVMRC ? (
+                  <Icon
+                    isBlue={true}
+                    props={{ sx: { opacity: isLoading ? "0" : "1" } }}
+                  />
+                ) : (
+                  <Icon
+                    sx={{
+                      "&>path": { stroke: "#3C8AFF" },
+                      opacity: isLoading ? "0" : "1",
+                    }}
+                  />
+                )
+              }
+              onClick={onClick}
+              sx={{
+                pt: "9px !important",
+                "&>span:first-of-type": {
+                  marginTop: "-5px",
+                },
+                borderRadius: BORDER_RADIUS_5,
+                border: "1px solid #3C8AFF",
+                color: "#3C8AFF",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {label}
+            </LoadingButton>
+          );
+        })}
       </Stack>
     </Paper>
   );
