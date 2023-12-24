@@ -72,3 +72,7 @@ code {
 .MuiList-root {
   padding: 0 !important;
 }
+
+.Toastify__toast-body {
+  white-space: pre-line;
+}
