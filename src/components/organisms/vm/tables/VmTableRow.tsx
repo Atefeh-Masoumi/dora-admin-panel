@@ -10,6 +10,7 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
 import { usePostApiVmKmsGetMutation } from "src/app/services/api.generated";
+import { VmPlayerSvg } from "src/components/atoms/svg/VmPlayerSvg";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -20,22 +21,26 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const settingOnClick = () => navigate("/vm/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] = usePostApiVmKmsGetMutation();
-  const monitorOnClick = () =>
+  const monitorOnClick = (isVmPlayer?: boolean) => {
     getUrl({
       getKmsModel: {
         id: row["id"],
-        typeId: 2,
+        typeId: isVmPlayer ? 1 : 2,
       },
     })
       .unwrap()
       .then((res) => {
-        if (res) {
+        if (!res) return;
+        if (isVmPlayer) {
+          window.open(res, "_blank");
+        } else {
           let a = document.createElement("a");
           a.href = "/console/wmks-sdk.html?url=" + res;
           a.target = "_blank";
           a.click();
         }
       });
+  };
 
   return (
     <Fragment>
@@ -53,12 +58,6 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  {/* <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={goToOrderDetails}
-                  >
-                    <CreditCardIcon sx={{ color: "grey.700" }} />
-                  </IconButton> */}
                   <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
@@ -68,8 +67,17 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                       }}
                     />
                   </IconButton>
-                  <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    onClick={() => monitorOnClick(false)}
+                  >
                     <MonitorSvg />
+                  </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    onClick={() => monitorOnClick(true)}
+                  >
+                    <VmPlayerSvg />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
