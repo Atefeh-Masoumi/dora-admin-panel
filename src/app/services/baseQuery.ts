@@ -70,11 +70,13 @@ export const baseQuery: BaseQueryFn<
       return { error };
     }
     if (error.status === 400) {
-      toast.error(
-        (e.response?.data as any).errorMessage.map(
-          (item: string) => `${item}.\n`
-        ) || defaultErrorMessage
+      let message = "";
+
+      (e.response?.data as any).errorMessage.map(
+        (item: string) => (message += `${item}\n`)
       );
+
+      toast.error(message || defaultErrorMessage);
     } else if (error.status === 401) {
       dispatch(logoutAction());
     } else if (error.status !== 404) {
