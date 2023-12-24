@@ -33,8 +33,8 @@ export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
         y2="42.619"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#ffda1c" />
-        <stop offset="1" stop-color="#feb705" />
+        <stop offset="0" stopColor="#ffda1c" />
+        <stop offset="1" stopColor="#feb705" />
       </linearGradient>
       <path
         fill="url(#bhDvmaH~2kjfRzl_whoYXb)"
@@ -48,8 +48,8 @@ export const VmPlayerSvg: FC<SvgIconProps> = (props) => {
         y2="47.328"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#ffda1c" />
-        <stop offset="1" stop-color="#feb705" />
+        <stop offset="0" stopColor="#ffda1c" />
+        <stop offset="1" stopColor="#feb705" />
       </linearGradient>
       <path
         fill="url(#bhDvmaH~2kjfRzl_whoYXc)"
