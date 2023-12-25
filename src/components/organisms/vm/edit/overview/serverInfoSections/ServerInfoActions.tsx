@@ -20,15 +20,12 @@ import {
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
-import { VmPlayerSvg } from "src/components/atoms/svg/VmPlayerSvg";
 
 type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [getUrl, { isLoading: getUrlIsLoading }] = usePostApiVmKmsGetMutation();
-  const [getVmUrl, { isLoading: getVmUrlIsLoading }] =
-    usePostApiVmKmsGetMutation();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -65,26 +62,6 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           });
       },
       isLoading: getUrlIsLoading,
-    },
-    {
-      label: "VMRC Console",
-      Icon: VmPlayerSvg,
-      onClick: () => {
-        if (!serverId) return;
-
-        getVmUrl({
-          getKmsModel: {
-            id: serverId,
-            typeId: 1,
-          },
-        })
-          .unwrap()
-          .then((res) => {
-            if (!res) return;
-            window.open(res, "_blank");
-          });
-      },
-      isLoading: getVmUrlIsLoading,
     },
     {
       label: "Disconnect Network",
@@ -184,19 +161,12 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
               variant="outlined"
               key={index}
               endIcon={
-                isVMRC ? (
-                  <Icon
-                    isBlue={true}
-                    props={{ sx: { opacity: isLoading ? "0" : "1" } }}
-                  />
-                ) : (
-                  <Icon
-                    sx={{
-                      "&>path": { stroke: "#3C8AFF" },
-                      opacity: isLoading ? "0" : "1",
-                    }}
-                  />
-                )
+                <Icon
+                  sx={{
+                    "&>path": { stroke: "#3C8AFF" },
+                    opacity: isLoading ? "0" : "1",
+                  }}
+                />
               }
               onClick={onClick}
               sx={{

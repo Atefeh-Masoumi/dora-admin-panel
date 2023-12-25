@@ -10,7 +10,6 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
 import { usePostApiVmKmsGetMutation } from "src/app/services/api.generated";
-import { VmPlayerSvg } from "src/components/atoms/svg/VmPlayerSvg";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -72,12 +71,6 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                     onClick={() => monitorOnClick(false)}
                   >
                     <MonitorSvg />
-                  </IconButton>
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={() => monitorOnClick(true)}
-                  >
-                    <VmPlayerSvg />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
