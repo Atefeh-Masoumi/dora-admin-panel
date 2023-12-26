@@ -69,6 +69,7 @@ export const baseQuery: BaseQueryFn<
     if (error?.data === "canceled") {
       return { error };
     }
+
     if (error.status === 400) {
       let message = "";
 
@@ -79,6 +80,14 @@ export const baseQuery: BaseQueryFn<
       toast.error(message || defaultErrorMessage);
     } else if (error.status === 401) {
       dispatch(logoutAction());
+    } else if (error.status && error.status >= 500) {
+      let message = "";
+
+      (e.response?.data as any).ErrorMessage.map(
+        (item: string) => (message += `${item}\n`)
+      );
+
+      toast.error(message || defaultErrorMessage);
     } else if (error.status !== 404) {
       toast.error((e.response?.data as any)[""][0]);
     }
