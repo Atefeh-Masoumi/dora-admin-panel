@@ -36,9 +36,8 @@ export const baseQuery: BaseQueryFn<
   },
   { getState, dispatch }
 ) => {
+  const { auth } = getState() as RootStateType;
   try {
-    const { auth } = getState() as RootStateType;
-
     type AuthorizedRequest = Express.Request & { authorization: string };
 
     const axiosHeader = () => {
@@ -60,37 +59,54 @@ export const baseQuery: BaseQueryFn<
     });
     return { data: result.data };
   } catch (axiosError) {
-    const e = axiosError as AxiosError;
+    const e = axiosError as AxiosError<
+      {
+        Code: number;
+        ErrorMessage: string[];
+      },
+      any
+    >;
+
+    if (!e.response?.status) {
+      toast.error(defaultErrorMessage);
+      return { e };
+    }
+
     const error = {
-      status: e.response?.status,
-      data: e.message,
+      status: e.response.status,
+      errorMessage: e.response?.data.ErrorMessage,
     };
-    console.log("rtk query error handler => ", error);
-    if (error?.data === "canceled") {
+
+    let message = "";
+    error.errorMessage.map((item) => (message += `${item}\n`));
+
+    if (error.status >= 500) {
+      toast.error(message || defaultErrorMessage);
+      return { error };
+    }
+    if (error.status === 404) {
+      return { error };
+    }
+    if (error.status === 401) {
+      auth?.accessToken && dispatch(logoutAction());
+      return { error };
+    }
+    if (error.status === 400) {
+      toast.error(message || defaultErrorMessage);
       return { error };
     }
 
-    if (error.status === 400) {
-      let message = "";
-
-      (e.response?.data as any).errorMessage.map(
-        (item: string) => (message += `${item}\n`)
-      );
-
-      toast.error(message || defaultErrorMessage);
-    } else if (error.status === 401) {
-      dispatch(logoutAction());
-    } else if (error.status && error.status >= 500) {
-      let message = "";
-
-      (e.response?.data as any).ErrorMessage.map(
-        (item: string) => (message += `${item}\n`)
-      );
-
-      toast.error(message || defaultErrorMessage);
-    } else if (error.status !== 404) {
-      toast.error((e.response?.data as any)[""][0]);
-    }
+    toast.error(
+      message + `\n (status code: ${error.status})` ||
+        `\n ${defaultErrorMessage}`
+    );
+    console.log(
+      message
+        ? error.status
+          ? message + ` (status code: ${error.status})`
+          : message
+        : defaultErrorMessage
+    );
 
     return { error };
   }
