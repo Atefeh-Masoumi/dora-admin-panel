@@ -14,7 +14,7 @@ stages:
   - deploy
 
 variables:
-  KUBE_CONTEXT: dorsacloud/frontend/dorsa-portal:portal-front-agent
+  KUBE_CONTEXT: dorsacloud/frontend/front-my:portal-front-agent
   DOCKER_REGISTRY: git.dorsacloud.com:5050/dorsacloud/frontend/front-my
 
 
