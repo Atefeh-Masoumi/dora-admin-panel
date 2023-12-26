@@ -36,7 +36,7 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
               <Button
                 startIcon={<EastIcon />}
                 color="secondary"
-                href="https://dorsacloud.com"
+                href="https://dorsa.cloud"
               >
                 بازگشت به خانه
               </Button>
