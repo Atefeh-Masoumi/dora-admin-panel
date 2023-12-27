@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
-import { useGetApiCloudCommissionListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudCommissionListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "../../tables/BaseTable";
 import { ReferralTableRow } from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
 
 export const InviteList: FC = () => {
-  const { data: billList, isLoading } = useGetApiCloudCommissionListQuery();
+  const { data: billList, isLoading } = useGetApiMyCloudCommissionListQuery();
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>

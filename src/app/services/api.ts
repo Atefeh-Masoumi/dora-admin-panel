@@ -1,7 +1,7 @@
 import {
   api as generatedApi,
-  PostApiCloudSupportItemCreateApiResponse,
-  PostApiCloudSupportCreateApiArg,
+  PostApiMyCloudSupportItemCreateApiResponse,
+  PostApiMyCloudSupportCreateApiArg,
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
@@ -9,8 +9,8 @@ export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
       customCreateSupport: build.mutation<
-        PostApiCloudSupportItemCreateApiResponse,
-        PostApiCloudSupportCreateApiArg & {
+        PostApiMyCloudSupportItemCreateApiResponse,
+        PostApiMyCloudSupportCreateApiArg & {
           abortController?: AbortController;
           onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
@@ -42,139 +42,139 @@ export const api = generatedApi
       "VmHost",
     ],
     endpoints: {
-      getApiAccountProfileGet: {
+      getApiMyAccountProfileGet: {
         providesTags: () => ["Profile"],
       },
-      getApiAccountProfileGetNotificationStatus: {
+      getApiMyAccountProfileGetNotificationStatus: {
         providesTags: () => ["Notification"],
       },
-      getApiCdnDnsRecordGetById: {
+      getApiMyCdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
       },
-      getApiCdnDnsRecordListByCdnId: {
+      getApiMyCdnDnsRecordListByCdnId: {
         providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
       },
-      getApiCdnHostGetById: {
+      getApiMyCdnHostGetById: {
         providesTags: () => ["ZoneData"],
       },
-      getApiCloudSupportItemListBySupportId: {
+      getApiMyCloudSupportItemListBySupportId: {
         providesTags: () => ["SupportItems"],
       },
-      getApiCdnLoadBalanceListByCdnId: {
+      getApiMyCdnLoadBalanceListByCdnId: {
         providesTags: () => ["LoadBalance"],
       },
-      putApiCloudCustomerEditCustomerType: {
+      putApiMyCloudCustomerEditCustomerType: {
         invalidatesTags: () => ["Profile"],
       },
-      getApiCloudCustomerGet: {
+      getApiMyCloudCustomerGet: {
         providesTags: () => ["Profile"],
       },
-      postApiAccountProfileConfirmPhoneNumber: {
+      postApiMyAccountProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiAccountProfileEditPhoneNotification: {
+      putApiMyAccountProfileEditPhoneNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putApiAccountProfileEditEmailNotification: {
+      putApiMyAccountProfileEditEmailNotification: {
         invalidatesTags: () => ["Notification"],
       },
-      putApiCdnDnsRecordChangeProxyStatusById: {
+      putApiMyCdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
       },
-      deleteApiCdnDnsRecordDeleteById: {
+      deleteApiMyCdnDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putApiCdnDnsRecordEdit: {
+      putApiMyCdnDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      postApiCdnDnsRecordCreate: {
+      postApiMyCdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putApiCdnHostChangeCdnType: {
+      putApiMyCdnHostChangeCdnType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiCdnHostChangeHsts: {
+      putApiMyCdnHostChangeHsts: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiCdnHostChangeHttpsRedirect: {
+      putApiMyCdnHostChangeHttpsRedirect: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiCdnHostChangeNonWwwRedirect: {
+      putApiMyCdnHostChangeNonWwwRedirect: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiCdnHostChangeEdgeCertType: {
+      putApiMyCdnHostChangeEdgeCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      putApiCdnHostChangeClientCertType: {
+      putApiMyCdnHostChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      deleteApiCdnLoadBalanceDeleteById: {
+      deleteApiMyCdnLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      postApiCdnLoadBalanceCreate: {
+      postApiMyCdnLoadBalanceCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      putApiCdnLoadBalanceEdit: {
+      putApiMyCdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      getApiCdnEdgeCertGetByCdnId: {
+      getApiMyCdnEdgeCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiCdnEdgeCertGetUserCertByCdnId: {
+      getApiMyCdnEdgeCertGetUserCertByCdnId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiCdnClientCertGetByCdnId: {
+      getApiMyCdnClientCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
-      postApiCdnEdgeCertCreate: {
+      postApiMyCdnEdgeCertCreate: {
         invalidatesTags: () => ["SslSetting"],
       },
-      postApiCdnEdgeCertCreateUserCert: {
+      postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      postApiCloudSupportItemCreate: {
+      postApiMyCloudSupportItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
-      getApiVmProjectList: {
+      getApiMyVmProjectList: {
         providesTags: () => ["VmHosts"],
       },
-      postApiVmProjectCreate: {
+      postApiMyVmProjectCreate: {
         invalidatesTags: () => ["VmHosts"],
       },
-      deleteApiVmProjectDeleteById: {
+      deleteApiMyVmProjectDeleteById: {
         invalidatesTags: () => ["VmHosts"],
       },
-      putApiVmProjectEdit: {
+      putApiMyVmProjectEdit: {
         invalidatesTags: () => ["VmHosts"],
       },
-      postApiVmHostCreate: {
+      postApiMyVmHostCreate: {
         invalidatesTags: () => ["VmHosts"],
       },
-      deleteApiVmHostDeleteById: {
+      deleteApiMyVmHostDeleteById: {
         invalidatesTags: () => ["VmHosts"],
       },
-      putApiVmHostEdit: {
+      putApiMyVmHostEdit: {
         invalidatesTags: () => ["VmHosts"],
       },
-      getApiVmHostGetById: {
+      getApiMyVmHostGetById: {
         providesTags: () => ["VmHost"],
       },
-      putApiVmHostConnectById: {
+      putApiMyVmHostConnectById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiVmHostDisconnectById: {
+      putApiMyVmHostDisconnectById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiVmHostShutdownById: {
+      putApiMyVmHostShutdownById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiVmHostStartById: {
+      putApiMyVmHostStartById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiVmHostStopById: {
+      putApiMyVmHostStopById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiVmHostRebootById: {
+      putApiMyVmHostRebootById: {
         invalidatesTags: () => ["VmHost"],
       },
     },
@@ -182,19 +182,19 @@ export const api = generatedApi
 
 export const {
   useCustomCreateSupportMutation,
-  useLazyGetApiAccountProfileGetNotificationStatusQuery,
-  useLazyGetApiDatacenterIpListByProductIdAndIdQuery,
-  useLazyGetApiVmImageListByDatacenterIdQuery,
-  useLazyGetApiVmHostGetByIdQuery,
-  useLazyGetApiCdnLoadBalanceGetByIdQuery,
-  useLazyGetApiCdnDnsRecordGetByIdQuery,
-  useLazyGetApiCloudInvoiceGetByIdQuery,
-  useLazyGetApiCloudSupportItemDownloadByIdQuery,
-  useLazyGetApiCloudPaymentGetByIdQuery,
-  useLazyGetApiCloudBillDownloadByIdQuery,
-  useLazyGetApiCloudCustomerProductListByProductIdQuery,
-  useLazyGetApiWebGetLoginSessionByIdQuery,
-  useLazyGetApiPlatformNamespaceGetLoginByIdQuery,
-  useLazyGetApiRabbitUserListByRabbitHostIdQuery,
-  useLazyGetApiDomainGetByIdQuery,
+  useLazyGetApiMyAccountProfileGetNotificationStatusQuery,
+  useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
+  useLazyGetApiMyVmImageListByDatacenterIdQuery,
+  useLazyGetApiMyVmHostGetByIdQuery,
+  useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
+  useLazyGetApiMyCdnDnsRecordGetByIdQuery,
+  useLazyGetApiMyCloudInvoiceGetByIdQuery,
+  useLazyGetApiMyCloudSupportItemDownloadByIdQuery,
+  useLazyGetApiMyCloudPaymentGetByIdQuery,
+  useLazyGetApiMyCloudBillDownloadByIdQuery,
+  useLazyGetApiMyCloudCustomerProductListByProductIdQuery,
+  useLazyGetApiMyWebGetLoginSessionByIdQuery,
+  useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery,
+  useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
+  useLazyGetApiMyDomainGetByIdQuery,
 } = api;

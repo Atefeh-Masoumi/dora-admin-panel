@@ -14,7 +14,7 @@ import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { useGetApiCdnHostListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnHostListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -32,7 +32,7 @@ const VdcManagement: FC = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiCdnHostListQuery();
+  } = useGetApiMyCdnHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  usePutApiCdnHostChangeHstsMutation,
-  usePutApiCdnHostChangeHttpsRedirectMutation,
-  usePutApiCdnHostChangeNonWwwRedirectMutation,
+  usePutApiMyCdnHostChangeHstsMutation,
+  usePutApiMyCdnHostChangeHttpsRedirectMutation,
+  usePutApiMyCdnHostChangeNonWwwRedirectMutation,
 } from "src/app/services/api.generated";
 
 type CdnSecuritySettingPropsType = {
@@ -24,7 +24,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   loading,
 }) => {
   const [changeHttpsRedirect, { isLoading: loadingRedirect }] =
-    usePutApiCdnHostChangeHttpsRedirectMutation();
+    usePutApiMyCdnHostChangeHttpsRedirectMutation();
 
   const onChangeHttpsRedirect = () => {
     if (isHttpsRedirect === undefined) return;
@@ -34,7 +34,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   };
 
   const [changeNonWwwRedirect, { isLoading: loadingNonWwwRedirect }] =
-    usePutApiCdnHostChangeNonWwwRedirectMutation();
+    usePutApiMyCdnHostChangeNonWwwRedirectMutation();
 
   const onChangeNonWwwRedirect = () => {
     if (isNonWwwRedirect === undefined) return;
@@ -44,7 +44,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
-    usePutApiCdnHostChangeHstsMutation();
+    usePutApiMyCdnHostChangeHstsMutation();
 
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;

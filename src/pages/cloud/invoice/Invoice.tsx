@@ -13,8 +13,8 @@ import { invoiceTableStruct } from "src/components/organisms/cloud/invoices/tabl
 import { invoiceTableRow } from "src/components/organisms/cloud/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import {
-  useGetApiCloudInvoiceGetByIdQuery,
-  usePostApiCloudInvoicePayMutation,
+  useGetApiMyCloudInvoiceGetByIdQuery,
+  usePostApiMyCloudInvoicePayMutation,
 } from "src/app/services/api.generated";
 import { useNavigate, useParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -27,12 +27,12 @@ const Invoice: FC = () => {
   const navigate = useNavigate();
 
   const { data: invoiceItem, isLoading: getInvoiceItemLoading } =
-    useGetApiCloudInvoiceGetByIdQuery({
+    useGetApiMyCloudInvoiceGetByIdQuery({
       id: parseInt(id as string),
     });
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-    usePostApiCloudInvoicePayMutation();
+    usePostApiMyCloudInvoicePayMutation();
 
   const payInvoice = [
     {

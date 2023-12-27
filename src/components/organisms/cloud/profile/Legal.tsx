@@ -11,9 +11,9 @@ import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
   GetCustomerResponse,
-  useGetApiCloudCustomerGetQuery,
-  usePutApiCloudCustomerEditMutation,
-  usePutApiCloudCustomerEditCustomerTypeMutation,
+  useGetApiMyCloudCustomerGetQuery,
+  usePutApiMyCloudCustomerEditMutation,
+  usePutApiMyCloudCustomerEditCustomerTypeMutation,
 } from "src/app/services/api.generated";
 
 const formValidation = yup.object().shape({
@@ -39,7 +39,7 @@ type LegalPersonalityPropsType = { isLegal: boolean };
 export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   isLegal,
 }) => {
-  const { data, refetch } = useGetApiCloudCustomerGetQuery();
+  const { data, refetch } = useGetApiMyCloudCustomerGetQuery();
 
   const refetchOnClick = () => {
     refetch().then(() => {
@@ -55,7 +55,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
   }, [data]);
 
   const [editCustomer, { isLoading: loadingEdit }] =
-    usePutApiCloudCustomerEditMutation();
+    usePutApiMyCloudCustomerEditMutation();
 
   const submitHandler: formikOnSubmitType<GetCustomerResponse> = (
     { name, nationalId, phone, address, postalCode },
@@ -83,7 +83,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = ({
 
   // Customer Type
   const [editType, { isLoading }] =
-    usePutApiCloudCustomerEditCustomerTypeMutation();
+    usePutApiMyCloudCustomerEditCustomerTypeMutation();
   const handleChange = () => {
     editType({ editCustomerTypeModel: { isLegal: !isLegal } }).then(() =>
       refetchOnClick()

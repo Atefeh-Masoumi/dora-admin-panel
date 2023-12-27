@@ -8,7 +8,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { WebTableRow } from "src/components/organisms/web/web/tables/WebTableRow";
 import { webTableStruct } from "src/components/organisms/web/web/tables/struct";
-import { useGetApiWebListQuery } from "src/app/services/api.generated";
+import { useGetApiMyWebListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -30,7 +30,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiWebListQuery();
+  } = useGetApiMyWebListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

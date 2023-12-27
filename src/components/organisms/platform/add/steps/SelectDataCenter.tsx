@@ -3,7 +3,7 @@ import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import {
   DatacenterListResponse,
-  useGetApiDatacenterListQuery,
+  useGetApiMyDatacenterListQuery,
 } from "src/app/services/api.generated";
 import { AddWorkspaceContext } from "../contexts/AddContext";
 import asiatechImage from "src/assets/images/asiatech.png";
@@ -14,7 +14,7 @@ type SelectDataCenterPropsType = {};
 export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
   const { dataCenter, setDataCenter } = useContext(AddWorkspaceContext);
 
-  const { data: dataCenterList, isLoading } = useGetApiDatacenterListQuery();
+  const { data: dataCenterList, isLoading } = useGetApiMyDatacenterListQuery();
 
   const dataCenterOnClick = (dataCenter: DatacenterListResponse) =>
     setDataCenter(dataCenter);

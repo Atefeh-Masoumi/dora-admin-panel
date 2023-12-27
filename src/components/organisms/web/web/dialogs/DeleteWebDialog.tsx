@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiWebDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyWebDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/web/web/Index";
@@ -20,7 +20,7 @@ export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeleteApiWebDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteApiMyWebDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

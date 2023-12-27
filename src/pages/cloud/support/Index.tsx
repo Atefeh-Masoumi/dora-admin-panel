@@ -17,7 +17,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { supportTableStruct } from "src/components/organisms/cloud/support/tables/struct";
 import { SupportTableRow } from "src/components/organisms/cloud/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/cloud/support/constant";
-import { useGetApiCloudSupportListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudSupportListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -34,7 +34,7 @@ const Support: FC = () => {
     data: supportList,
     refetch,
     isLoading,
-  } = useGetApiCloudSupportListQuery();
+  } = useGetApiMyCloudSupportListQuery();
 
   const navigate = useNavigate();
 

@@ -17,14 +17,14 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
   SupportSubjectListResponse,
-  useGetApiCloudBusinessUnitListQuery,
-  useGetApiCloudProductListQuery,
-  usePostApiCloudSupportSubjectSelectListMutation,
-  GetApiCloudCustomerProductListByProductIdApiResponse,
+  useGetApiMyCloudBusinessUnitListQuery,
+  useGetApiMyCloudProductListQuery,
+  usePostApiMyCloudSupportSubjectSelectListMutation,
+  GetApiMyCloudCustomerProductListByProductIdApiResponse,
 } from "src/app/services/api.generated";
 import {
   useCustomCreateSupportMutation,
-  useLazyGetApiCloudCustomerProductListByProductIdQuery,
+  useLazyGetApiMyCloudCustomerProductListByProductIdQuery,
 } from "src/app/services/api";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
@@ -34,10 +34,12 @@ const AddTicket: FC = () => {
 
   const [businessUnitId, setBusinessUnitId] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
-    useGetApiCloudBusinessUnitListQuery();
+    useGetApiMyCloudBusinessUnitListQuery();
 
   const [apiCloudCustomerProductList, setApiCloudCustomerProductList] =
-    useState<GetApiCloudCustomerProductListByProductIdApiResponse | null>(null);
+    useState<GetApiMyCloudCustomerProductListByProductIdApiResponse | null>(
+      null
+    );
 
   const [selectedApiCloudCustomerProduct, setSelectedApiCloudCustomerProduct] =
     useState<number>(0);
@@ -45,17 +47,17 @@ const AddTicket: FC = () => {
   const [
     callGetApiCloudCustomerProductList,
     { isLoading: getApiCloudHostLoading },
-  ] = useLazyGetApiCloudCustomerProductListByProductIdQuery();
+  ] = useLazyGetApiMyCloudCustomerProductListByProductIdQuery();
 
   const [productId, setProductId] = useState<number>();
   const { data: products, isLoading: loadingProducts } =
-    useGetApiCloudProductListQuery();
+    useGetApiMyCloudProductListQuery();
 
   const [title, setTitle] = useState<number>();
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostApiCloudSupportSubjectSelectListMutation();
+  const [selectList] = usePostApiMyCloudSupportSubjectSelectListMutation();
 
   useEffect(() => {
     selectList({
@@ -74,7 +76,7 @@ const AddTicket: FC = () => {
         .unwrap()
         .then(
           (
-            res: SetStateAction<GetApiCloudCustomerProductListByProductIdApiResponse | null>
+            res: SetStateAction<GetApiMyCloudCustomerProductListByProductIdApiResponse | null>
           ) => {
             setApiCloudCustomerProductList(res);
           }

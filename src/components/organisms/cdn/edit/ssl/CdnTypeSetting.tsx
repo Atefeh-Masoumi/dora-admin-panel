@@ -11,7 +11,7 @@ import {
 import CloudSvg from "src/components/atoms/svg/CloudSvg.svg";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
-import { usePutApiCdnHostChangeCdnTypeMutation } from "src/app/services/api.generated";
+import { usePutApiMyCdnHostChangeCdnTypeMutation } from "src/app/services/api.generated";
 
 const radioItems = [
   {
@@ -43,7 +43,7 @@ export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
   id,
 }) => {
   const [changeCdnType, { isLoading: loadingChange }] =
-    usePutApiCdnHostChangeCdnTypeMutation();
+    usePutApiMyCdnHostChangeCdnTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
     changeCdnType({ changeCdnTypeModel: { id, zoneTypeId } }).then(() => {

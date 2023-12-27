@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { useGetApiPlatformNamespaceGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyPlatformNamespaceGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
 type boxRowType = {
@@ -48,7 +48,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     isLoading: getRabbitDataLoading,
     isFetching: getRabbitDataFetching,
     refetch,
-  } = useGetApiPlatformNamespaceGetByIdQuery({
+  } = useGetApiMyPlatformNamespaceGetByIdQuery({
     id: Number(id)!,
   });
 

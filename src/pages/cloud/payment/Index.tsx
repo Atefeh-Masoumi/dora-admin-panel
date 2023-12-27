@@ -7,12 +7,12 @@ import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePi
 import { paymentTableStruct } from "src/components/organisms/cloud/payment/tables/struct";
 import { PaymentTableRow } from "src/components/organisms/cloud/payment/tables/PaymentTableRow";
 import {
-  useGetApiCloudPaymentListQuery,
+  useGetApiMyCloudPaymentListQuery,
   PaymentListResponse,
 } from "src/app/services/api.generated";
 
 const Payments: FC = () => {
-  const { data: payments, isLoading } = useGetApiCloudPaymentListQuery();
+  const { data: payments, isLoading } = useGetApiMyCloudPaymentListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);

@@ -14,8 +14,8 @@ import { Form, Formik } from "formik";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
-  usePostApiPlatformUserRoleCreateMutation,
-  useGetApiPlatformUserShortListQuery,
+  usePostApiMyPlatformUserRoleCreateMutation,
+  useGetApiMyPlatformUserShortListQuery,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { UserRoleContext } from "../../UserRole";
@@ -35,10 +35,10 @@ export const AddUserRoleDialog: FC<AddUserRoleDialogPropsType> = ({
 }) => {
   const { refetchUsersData } = useContext(UserRoleContext);
 
-  const { data: userList } = useGetApiPlatformUserShortListQuery();
+  const { data: userList } = useGetApiMyPlatformUserShortListQuery();
 
   const [createUserUserRoleCreate, { isLoading: createUserUserRoleLoading }] =
-    usePostApiPlatformUserRoleCreateMutation();
+    usePostApiMyPlatformUserRoleCreateMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     selectedUser,

@@ -1,12 +1,12 @@
 // import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 // import SmsSvg from "src/components/atoms/svg/SmsSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
-import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
+// import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
 import { StorageOutlined } from "@mui/icons-material";
-import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
+// import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 
 export const homeProductsConstantListItems = [
   {

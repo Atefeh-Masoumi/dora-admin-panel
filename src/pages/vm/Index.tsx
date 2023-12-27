@@ -1,7 +1,7 @@
 import { FC, useState, createContext, useEffect, SetStateAction } from "react";
 import {
   VmListResponse,
-  usePostApiVmHostListMutation,
+  usePostApiMyVmHostListMutation,
 } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -45,7 +45,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   const [vmList, setVmList] = useState<VmListResponse[]>([]);
 
   const [selectList, { isLoading: vmListLoading }] =
-    usePostApiVmHostListMutation();
+    usePostApiMyVmHostListMutation();
 
   useEffect(() => {
     selectList({

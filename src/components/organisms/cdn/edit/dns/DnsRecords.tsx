@@ -7,15 +7,17 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
 import { ZoneTableRow } from "./tables/DnsTableRow";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
-import { useGetApiCdnDnsRecordListByCdnIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnDnsRecordListByCdnIdQuery } from "src/app/services/api.generated";
 
 export const DnsRecord: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
-  const { data: zoneList, isLoading } = useGetApiCdnDnsRecordListByCdnIdQuery({
-    cdnId,
-  });
+  const { data: zoneList, isLoading } = useGetApiMyCdnDnsRecordListByCdnIdQuery(
+    {
+      cdnId,
+    }
+  );
 
   const [search, setSearch] = useState("");
 

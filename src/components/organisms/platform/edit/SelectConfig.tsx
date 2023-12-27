@@ -4,8 +4,8 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePutApiPlatformNamespaceEditMutation,
-  useGetApiPlatformNamespaceGetByIdQuery,
+  usePutApiMyPlatformNamespaceEditMutation,
+  useGetApiMyPlatformNamespaceGetByIdQuery,
 } from "src/app/services/api.generated";
 import { EditWorkspaceContext } from "./context/EditContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -24,12 +24,14 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const [cpu, setCpu] = useState(1);
   const [disk, setDisk] = useState(25);
 
-  const { data, isLoading, refetch } = useGetApiPlatformNamespaceGetByIdQuery({
-    id: serverId || 0,
-  });
+  const { data, isLoading, refetch } = useGetApiMyPlatformNamespaceGetByIdQuery(
+    {
+      id: serverId || 0,
+    }
+  );
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiPlatformNamespaceEditMutation();
+    usePutApiMyPlatformNamespaceEditMutation();
 
   useEffect(() => {
     if (serverId && data) {

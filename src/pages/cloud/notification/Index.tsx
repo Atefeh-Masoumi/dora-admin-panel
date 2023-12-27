@@ -3,11 +3,11 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { notificationTableStruct } from "src/components/organisms/cloud/notification/tables/struct";
 import { NotificationTableRow } from "src/components/organisms/cloud/notification/tables/NotificationTableRow";
-import { useGetApiCloudNotificationListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudNotificationListQuery } from "src/app/services/api.generated";
 
 const Notification: FC = () => {
   const { data: notifications, isLoading } =
-    useGetApiCloudNotificationListQuery();
+    useGetApiMyCloudNotificationListQuery();
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>

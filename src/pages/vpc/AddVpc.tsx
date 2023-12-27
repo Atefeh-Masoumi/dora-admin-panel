@@ -13,7 +13,7 @@ import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiVmHostCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmHostCreateMutation } from "src/app/services/api.generated";
 
 const AddVm: FC = () => {
   const {
@@ -36,7 +36,7 @@ const AddVm: FC = () => {
     setStep((step - 1) as addServerStepsType);
   };
 
-  const [createCloudServer, { isLoading }] = usePostApiVmHostCreateMutation();
+  const [createCloudServer, { isLoading }] = usePostApiMyVmHostCreateMutation();
 
   const submitHandler = () => {
     if (

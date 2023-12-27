@@ -3,7 +3,7 @@ import { Paper, Stack, Typography } from "@mui/material";
 import { ChooseOS } from "./serverRebuildSections/ChooseOS";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { LoadingButton } from "@mui/lab";
-import { usePutApiVmHostRebuildMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmHostRebuildMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -20,7 +20,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [rebuild, { isLoading }] = usePutApiVmHostRebuildMutation();
+  const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildMutation();
 
   const submitHandler = () => {
     if (step === 2) {

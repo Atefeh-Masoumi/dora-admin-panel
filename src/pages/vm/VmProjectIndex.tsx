@@ -13,7 +13,7 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { VmProjectCard } from "src/components/organisms/vm/edit/ProjectCard";
-import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmProjectListQuery } from "src/app/services/api.generated";
 import { AddProjectDialog } from "src/components/organisms/vm/projects/AddProjectDialog";
 
 // Define the type for your context value
@@ -34,7 +34,7 @@ const VmManagement: FC = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiVmProjectListQuery();
+  } = useGetApiMyVmProjectListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

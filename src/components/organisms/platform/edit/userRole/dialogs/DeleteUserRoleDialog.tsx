@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiPlatformUserRoleDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyPlatformUserRoleDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { UserRoleContext } from "../../UserRole";
@@ -19,7 +19,7 @@ export const DeleteUserRoleDialog: FC<DeleteUserRoleDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteUserUserRole, { isLoading }] =
-    useDeleteApiPlatformUserRoleDeleteByIdMutation();
+    useDeleteApiMyPlatformUserRoleDeleteByIdMutation();
 
   const { refetchUsersData } = useContext(UserRoleContext);
 

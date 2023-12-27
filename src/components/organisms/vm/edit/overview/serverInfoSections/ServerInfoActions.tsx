@@ -10,13 +10,13 @@ import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
 import {
-  usePostApiVmKmsGetMutation,
-  usePutApiVmHostDisconnectByIdMutation,
-  usePutApiVmHostConnectByIdMutation,
-  usePutApiVmHostStartByIdMutation,
-  usePutApiVmHostStopByIdMutation,
-  usePutApiVmHostRebootByIdMutation,
-  usePutApiVmHostShutdownByIdMutation,
+  usePostApiMyVmKmsGetMutation,
+  usePutApiMyVmHostDisconnectByIdMutation,
+  usePutApiMyVmHostConnectByIdMutation,
+  usePutApiMyVmHostStartByIdMutation,
+  usePutApiMyVmHostStopByIdMutation,
+  usePutApiMyVmHostRebootByIdMutation,
+  usePutApiMyVmHostShutdownByIdMutation,
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
@@ -25,19 +25,20 @@ type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const [getUrl, { isLoading: getUrlIsLoading }] = usePostApiVmKmsGetMutation();
+  const [getUrl, { isLoading: getUrlIsLoading }] =
+    usePostApiMyVmKmsGetMutation();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
-    usePutApiVmHostDisconnectByIdMutation();
+    usePutApiMyVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
-    usePutApiVmHostConnectByIdMutation();
+    usePutApiMyVmHostConnectByIdMutation();
   const [startServer, { isLoading: startServerIsLoading }] =
-    usePutApiVmHostStartByIdMutation();
+    usePutApiMyVmHostStartByIdMutation();
   const [stopServer, { isLoading: stopServerIsLoading }] =
-    usePutApiVmHostStopByIdMutation();
+    usePutApiMyVmHostStopByIdMutation();
   const [shutdownServer, { isLoading: shutdownServerIsLoading }] =
-    usePutApiVmHostShutdownByIdMutation();
+    usePutApiMyVmHostShutdownByIdMutation();
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
-    usePutApiVmHostRebootByIdMutation();
+    usePutApiMyVmHostRebootByIdMutation();
 
   const actionsArray = [
     {

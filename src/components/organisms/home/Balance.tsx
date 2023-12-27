@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
 import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/DepositDialog";
 
@@ -17,7 +17,7 @@ export const Balance: FC = () => {
   const closeDeposit = () => setOpenDeposit(false);
 
   const { data: balance, isLoading: loadingBalance } =
-    useGetApiCloudWalletGetBalanceQuery();
+    useGetApiMyCloudWalletGetBalanceQuery();
   const separateBalance = balance
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -1,25 +1,25 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: portal-front-v1
+  name: front-my-v1
   labels:
-    app: portal-front
+    app: front-my
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: portal-front
+      app: front-my
       version: v1
   template:
     metadata:
       labels:
-        app: portal-front
+        app: front-my
         version: v1
     spec:
       containers:
-        - name: portal-front
-          image: git.dorsacloud.com:5050/dorsacloud/frontend/dorsa-portal/front-portal-production:latest
+        - name: front-my
+          image: git.dorsacloud.com:5050/dorsacloud/frontend/front-my/front-my-stage:latest
           ports:
             - name: http-0
               containerPort: 80
@@ -27,4 +27,4 @@ spec:
           imagePullPolicy: Always
       restartPolicy: Always
       imagePullSecrets:
-        - name: dorsa-registry
+        - name: dorsa-git

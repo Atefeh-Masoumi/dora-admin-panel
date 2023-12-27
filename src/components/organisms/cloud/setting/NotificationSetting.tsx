@@ -4,9 +4,9 @@ import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  useGetApiAccountProfileGetNotificationStatusQuery,
-  usePutApiAccountProfileEditEmailNotificationMutation,
-  usePutApiAccountProfileEditPhoneNotificationMutation,
+  useGetApiMyAccountProfileGetNotificationStatusQuery,
+  usePutApiMyAccountProfileEditEmailNotificationMutation,
+  usePutApiMyAccountProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 
 // Define the type for your context value
@@ -21,12 +21,12 @@ export const DataContext = createContext<DataContextValueType>({
 
 export const NotificationSetting: FC = () => {
   const { data, refetch, isLoading } =
-    useGetApiAccountProfileGetNotificationStatusQuery();
+    useGetApiMyAccountProfileGetNotificationStatusQuery();
 
   const refetchOnClick = () => refetch();
 
   const [editPhoneNotify, { isLoading: loadingPhone }] =
-    usePutApiAccountProfileEditPhoneNotificationMutation();
+    usePutApiMyAccountProfileEditPhoneNotificationMutation();
 
   const submitPhone = () => {
     if (data?.phoneNotify === undefined) return;
@@ -37,7 +37,7 @@ export const NotificationSetting: FC = () => {
   };
 
   const [editEmailNotify, { isLoading: loadingEmail }] =
-    usePutApiAccountProfileEditEmailNotificationMutation();
+    usePutApiMyAccountProfileEditEmailNotificationMutation();
 
   const submitEmail = () => {
     if (data?.emailNotify === undefined) return;

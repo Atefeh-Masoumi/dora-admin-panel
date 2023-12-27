@@ -4,2213 +4,2235 @@ export const api = createApi({
   baseQuery: baseQuery,
   tagTypes: [],
   endpoints: (build) => ({
-    postApiAccountLogin: build.mutation<
-      PostApiAccountLoginApiResponse,
-      PostApiAccountLoginApiArg
+    postApiMyAccountLogin: build.mutation<
+      PostApiMyAccountLoginApiResponse,
+      PostApiMyAccountLoginApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/login`,
+        url: `/api/my/account/login`,
         method: "POST",
         body: queryArg.loginModel,
       }),
     }),
-    postApiAccountRegister: build.mutation<
-      PostApiAccountRegisterApiResponse,
-      PostApiAccountRegisterApiArg
+    postApiMyAccountRegister: build.mutation<
+      PostApiMyAccountRegisterApiResponse,
+      PostApiMyAccountRegisterApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/register`,
+        url: `/api/my/account/register`,
         method: "POST",
         body: queryArg.registerModel,
       }),
     }),
-    postApiAccountForgot: build.mutation<
-      PostApiAccountForgotApiResponse,
-      PostApiAccountForgotApiArg
+    postApiMyAccountForgot: build.mutation<
+      PostApiMyAccountForgotApiResponse,
+      PostApiMyAccountForgotApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/forgot`,
+        url: `/api/my/account/forgot`,
         method: "POST",
         body: queryArg.forgotModel,
       }),
     }),
-    postApiAccountForgotConfirm: build.mutation<
-      PostApiAccountForgotConfirmApiResponse,
-      PostApiAccountForgotConfirmApiArg
+    postApiMyAccountForgotConfirm: build.mutation<
+      PostApiMyAccountForgotConfirmApiResponse,
+      PostApiMyAccountForgotConfirmApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/forgot-confirm`,
+        url: `/api/my/account/forgot-confirm`,
         method: "POST",
         body: queryArg.forgotConfirmModel,
       }),
     }),
-    postApiAccountLogout: build.mutation<
-      PostApiAccountLogoutApiResponse,
-      PostApiAccountLogoutApiArg
+    postApiMyAccountLogout: build.mutation<
+      PostApiMyAccountLogoutApiResponse,
+      PostApiMyAccountLogoutApiArg
     >({
-      query: () => ({ url: `/api/account/logout`, method: "POST" }),
+      query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
-    getApiCdnAnalyticGetByCdnIdAndPeriodId: build.query<
-      GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiResponse,
-      GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiArg
+    getApiMyCdnAnalyticGetByCdnIdAndPeriodId: build.query<
+      GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse,
+      GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/analytic/get/${queryArg.cdnId}/${queryArg.periodId}`,
+        url: `/api/my/cdn/analytic/get/${queryArg.cdnId}/${queryArg.periodId}`,
       }),
     }),
-    getApiCdnApiGatewayListByCdnId: build.query<
-      GetApiCdnApiGatewayListByCdnIdApiResponse,
-      GetApiCdnApiGatewayListByCdnIdApiArg
+    getApiMyCdnApiGatewayListByCdnId: build.query<
+      GetApiMyCdnApiGatewayListByCdnIdApiResponse,
+      GetApiMyCdnApiGatewayListByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/api-gateway/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/api-gateway/list/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnApiGatewayGetById: build.query<
-      GetApiCdnApiGatewayGetByIdApiResponse,
-      GetApiCdnApiGatewayGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cdn/api-gateway/get/${queryArg.id}` }),
-    }),
-    postApiCdnApiGatewayCreate: build.mutation<
-      PostApiCdnApiGatewayCreateApiResponse,
-      PostApiCdnApiGatewayCreateApiArg
+    getApiMyCdnApiGatewayGetById: build.query<
+      GetApiMyCdnApiGatewayGetByIdApiResponse,
+      GetApiMyCdnApiGatewayGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/api-gateway/create`,
+        url: `/api/my/cdn/api-gateway/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCdnApiGatewayCreate: build.mutation<
+      PostApiMyCdnApiGatewayCreateApiResponse,
+      PostApiMyCdnApiGatewayCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/api-gateway/create`,
         method: "POST",
         body: queryArg.createApiGatewayModel,
       }),
     }),
-    putApiCdnApiGatewayEdit: build.mutation<
-      PutApiCdnApiGatewayEditApiResponse,
-      PutApiCdnApiGatewayEditApiArg
+    putApiMyCdnApiGatewayEdit: build.mutation<
+      PutApiMyCdnApiGatewayEditApiResponse,
+      PutApiMyCdnApiGatewayEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/api-gateway/edit`,
+        url: `/api/my/cdn/api-gateway/edit`,
         method: "PUT",
         body: queryArg.editApiGatewayModel,
       }),
     }),
-    deleteApiCdnApiGatewayDeleteById: build.mutation<
-      DeleteApiCdnApiGatewayDeleteByIdApiResponse,
-      DeleteApiCdnApiGatewayDeleteByIdApiArg
+    deleteApiMyCdnApiGatewayDeleteById: build.mutation<
+      DeleteApiMyCdnApiGatewayDeleteByIdApiResponse,
+      DeleteApiMyCdnApiGatewayDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/api-gateway/delete/${queryArg.id}`,
+        url: `/api/my/cdn/api-gateway/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiBareMetalList: build.query<
-      GetApiBareMetalListApiResponse,
-      GetApiBareMetalListApiArg
+    getApiMyBareMetalList: build.query<
+      GetApiMyBareMetalListApiResponse,
+      GetApiMyBareMetalListApiArg
     >({
-      query: () => ({ url: `/api/bare-metal/list` }),
+      query: () => ({ url: `/api/my/bare-metal/list` }),
     }),
-    getApiBareMetalGetById: build.query<
-      GetApiBareMetalGetByIdApiResponse,
-      GetApiBareMetalGetByIdApiArg
+    getApiMyBareMetalGetById: build.query<
+      GetApiMyBareMetalGetByIdApiResponse,
+      GetApiMyBareMetalGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/bare-metal/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/bare-metal/get/${queryArg.id}` }),
     }),
-    postApiBareMetalCreate: build.mutation<
-      PostApiBareMetalCreateApiResponse,
-      PostApiBareMetalCreateApiArg
+    postApiMyBareMetalCreate: build.mutation<
+      PostApiMyBareMetalCreateApiResponse,
+      PostApiMyBareMetalCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/bare-metal/create`,
+        url: `/api/my/bare-metal/create`,
         method: "POST",
         body: queryArg.createBareMetalModel,
       }),
     }),
-    deleteApiBareMetalDelete: build.mutation<
-      DeleteApiBareMetalDeleteApiResponse,
-      DeleteApiBareMetalDeleteApiArg
+    deleteApiMyBareMetalDelete: build.mutation<
+      DeleteApiMyBareMetalDeleteApiResponse,
+      DeleteApiMyBareMetalDeleteApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/bare-metal/delete`,
+        url: `/api/my/bare-metal/delete`,
         method: "DELETE",
         params: { id: queryArg.id },
       }),
     }),
-    getApiCloudBusinessUnitList: build.query<
-      GetApiCloudBusinessUnitListApiResponse,
-      GetApiCloudBusinessUnitListApiArg
+    getApiMyCloudBusinessUnitList: build.query<
+      GetApiMyCloudBusinessUnitListApiResponse,
+      GetApiMyCloudBusinessUnitListApiArg
     >({
-      query: () => ({ url: `/api/cloud/business-unit/list` }),
+      query: () => ({ url: `/api/my/cloud/business-unit/list` }),
     }),
-    getApiCloudCalculateMonthList: build.query<
-      GetApiCloudCalculateMonthListApiResponse,
-      GetApiCloudCalculateMonthListApiArg
+    getApiMyCloudCalculateMonthList: build.query<
+      GetApiMyCloudCalculateMonthListApiResponse,
+      GetApiMyCloudCalculateMonthListApiArg
     >({
-      query: () => ({ url: `/api/cloud/calculate-month/list` }),
+      query: () => ({ url: `/api/my/cloud/calculate-month/list` }),
     }),
-    getApiCdnClientCertGetByCdnId: build.query<
-      GetApiCdnClientCertGetByCdnIdApiResponse,
-      GetApiCdnClientCertGetByCdnIdApiArg
+    getApiMyCdnClientCertGetByCdnId: build.query<
+      GetApiMyCdnClientCertGetByCdnIdApiResponse,
+      GetApiMyCdnClientCertGetByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get/${queryArg.cdnId}`,
+        url: `/api/my/cdn/client-cert/get/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnClientCertGetUserCertByCdnId: build.query<
-      GetApiCdnClientCertGetUserCertByCdnIdApiResponse,
-      GetApiCdnClientCertGetUserCertByCdnIdApiArg
+    getApiMyCdnClientCertGetUserCertByCdnId: build.query<
+      GetApiMyCdnClientCertGetUserCertByCdnIdApiResponse,
+      GetApiMyCdnClientCertGetUserCertByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/get-user-cert/${queryArg.cdnId}`,
+        url: `/api/my/cdn/client-cert/get-user-cert/${queryArg.cdnId}`,
       }),
     }),
-    postApiCdnClientCertCreateUserCert: build.mutation<
-      PostApiCdnClientCertCreateUserCertApiResponse,
-      PostApiCdnClientCertCreateUserCertApiArg
+    postApiMyCdnClientCertCreateUserCert: build.mutation<
+      PostApiMyCdnClientCertCreateUserCertApiResponse,
+      PostApiMyCdnClientCertCreateUserCertApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/client-cert/create-user-cert`,
+        url: `/api/my/cdn/client-cert/create-user-cert`,
         method: "POST",
         body: queryArg.createCdnClientUserCertModel,
       }),
     }),
-    getApiCdnEdgeCertGetByCdnId: build.query<
-      GetApiCdnEdgeCertGetByCdnIdApiResponse,
-      GetApiCdnEdgeCertGetByCdnIdApiArg
+    getApiMyCdnEdgeCertGetByCdnId: build.query<
+      GetApiMyCdnEdgeCertGetByCdnIdApiResponse,
+      GetApiMyCdnEdgeCertGetByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get/${queryArg.cdnId}`,
+        url: `/api/my/cdn/edge-cert/get/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnEdgeCertGetUserCertByCdnId: build.query<
-      GetApiCdnEdgeCertGetUserCertByCdnIdApiResponse,
-      GetApiCdnEdgeCertGetUserCertByCdnIdApiArg
+    getApiMyCdnEdgeCertGetUserCertByCdnId: build.query<
+      GetApiMyCdnEdgeCertGetUserCertByCdnIdApiResponse,
+      GetApiMyCdnEdgeCertGetUserCertByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/get-user-cert/${queryArg.cdnId}`,
+        url: `/api/my/cdn/edge-cert/get-user-cert/${queryArg.cdnId}`,
       }),
     }),
-    postApiCdnEdgeCertCreate: build.mutation<
-      PostApiCdnEdgeCertCreateApiResponse,
-      PostApiCdnEdgeCertCreateApiArg
+    postApiMyCdnEdgeCertCreate: build.mutation<
+      PostApiMyCdnEdgeCertCreateApiResponse,
+      PostApiMyCdnEdgeCertCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/create`,
+        url: `/api/my/cdn/edge-cert/create`,
         method: "POST",
         body: queryArg.createCdnEdgeCertModel,
       }),
     }),
-    postApiCdnEdgeCertCreateUserCert: build.mutation<
-      PostApiCdnEdgeCertCreateUserCertApiResponse,
-      PostApiCdnEdgeCertCreateUserCertApiArg
+    postApiMyCdnEdgeCertCreateUserCert: build.mutation<
+      PostApiMyCdnEdgeCertCreateUserCertApiResponse,
+      PostApiMyCdnEdgeCertCreateUserCertApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/edge-cert/create-user-cert`,
+        url: `/api/my/cdn/edge-cert/create-user-cert`,
         method: "POST",
         body: queryArg.createCdnEdgeUserCertModel,
       }),
     }),
-    getApiCdnHostList: build.query<
-      GetApiCdnHostListApiResponse,
-      GetApiCdnHostListApiArg
+    getApiMyCdnHostList: build.query<
+      GetApiMyCdnHostListApiResponse,
+      GetApiMyCdnHostListApiArg
     >({
-      query: () => ({ url: `/api/cdn/host/list` }),
+      query: () => ({ url: `/api/my/cdn/host/list` }),
     }),
-    getApiCdnHostGetById: build.query<
-      GetApiCdnHostGetByIdApiResponse,
-      GetApiCdnHostGetByIdApiArg
+    getApiMyCdnHostGetById: build.query<
+      GetApiMyCdnHostGetByIdApiResponse,
+      GetApiMyCdnHostGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/cdn/host/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/cdn/host/get/${queryArg.id}` }),
     }),
-    getApiCdnHostGetNsStatusById: build.query<
-      GetApiCdnHostGetNsStatusByIdApiResponse,
-      GetApiCdnHostGetNsStatusByIdApiArg
+    getApiMyCdnHostGetNsStatusById: build.query<
+      GetApiMyCdnHostGetNsStatusByIdApiResponse,
+      GetApiMyCdnHostGetNsStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/get-ns-status/${queryArg.id}`,
+        url: `/api/my/cdn/host/get-ns-status/${queryArg.id}`,
       }),
     }),
-    getApiCdnHostOverviewById: build.query<
-      GetApiCdnHostOverviewByIdApiResponse,
-      GetApiCdnHostOverviewByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cdn/host/overview/${queryArg.id}` }),
-    }),
-    postApiCdnHostCheckZone: build.mutation<
-      PostApiCdnHostCheckZoneApiResponse,
-      PostApiCdnHostCheckZoneApiArg
+    getApiMyCdnHostOverviewById: build.query<
+      GetApiMyCdnHostOverviewByIdApiResponse,
+      GetApiMyCdnHostOverviewByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/check-zone`,
+        url: `/api/my/cdn/host/overview/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCdnHostCheckZone: build.mutation<
+      PostApiMyCdnHostCheckZoneApiResponse,
+      PostApiMyCdnHostCheckZoneApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/host/check-zone`,
         method: "POST",
         body: queryArg.checkCdnModel,
       }),
     }),
-    postApiCdnHostCreate: build.mutation<
-      PostApiCdnHostCreateApiResponse,
-      PostApiCdnHostCreateApiArg
+    postApiMyCdnHostCreate: build.mutation<
+      PostApiMyCdnHostCreateApiResponse,
+      PostApiMyCdnHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/create`,
+        url: `/api/my/cdn/host/create`,
         method: "POST",
         body: queryArg.createCdnModel,
       }),
     }),
-    deleteApiCdnHostDeleteById: build.mutation<
-      DeleteApiCdnHostDeleteByIdApiResponse,
-      DeleteApiCdnHostDeleteByIdApiArg
+    deleteApiMyCdnHostDeleteById: build.mutation<
+      DeleteApiMyCdnHostDeleteByIdApiResponse,
+      DeleteApiMyCdnHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/delete/${queryArg.id}`,
+        url: `/api/my/cdn/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiCdnHostChangeCdnType: build.mutation<
-      PutApiCdnHostChangeCdnTypeApiResponse,
-      PutApiCdnHostChangeCdnTypeApiArg
+    putApiMyCdnHostChangeCdnType: build.mutation<
+      PutApiMyCdnHostChangeCdnTypeApiResponse,
+      PutApiMyCdnHostChangeCdnTypeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-Cdn-type`,
+        url: `/api/my/cdn/host/change-Cdn-type`,
         method: "PUT",
         body: queryArg.changeCdnTypeModel,
       }),
     }),
-    putApiCdnHostChangeClientCertType: build.mutation<
-      PutApiCdnHostChangeClientCertTypeApiResponse,
-      PutApiCdnHostChangeClientCertTypeApiArg
+    putApiMyCdnHostChangeClientCertType: build.mutation<
+      PutApiMyCdnHostChangeClientCertTypeApiResponse,
+      PutApiMyCdnHostChangeClientCertTypeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-client-cert-type`,
+        url: `/api/my/cdn/host/change-client-cert-type`,
         method: "PUT",
         body: queryArg.changeClientCertTypeModel,
       }),
     }),
-    putApiCdnHostChangeEdgeCertType: build.mutation<
-      PutApiCdnHostChangeEdgeCertTypeApiResponse,
-      PutApiCdnHostChangeEdgeCertTypeApiArg
+    putApiMyCdnHostChangeEdgeCertType: build.mutation<
+      PutApiMyCdnHostChangeEdgeCertTypeApiResponse,
+      PutApiMyCdnHostChangeEdgeCertTypeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-edge-cert-type`,
+        url: `/api/my/cdn/host/change-edge-cert-type`,
         method: "PUT",
         body: queryArg.changeEdgeCertTypeModel,
       }),
     }),
-    putApiCdnHostChangeHsts: build.mutation<
-      PutApiCdnHostChangeHstsApiResponse,
-      PutApiCdnHostChangeHstsApiArg
+    putApiMyCdnHostChangeHsts: build.mutation<
+      PutApiMyCdnHostChangeHstsApiResponse,
+      PutApiMyCdnHostChangeHstsApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-hsts`,
+        url: `/api/my/cdn/host/change-hsts`,
         method: "PUT",
         body: queryArg.changeHstsModel,
       }),
     }),
-    putApiCdnHostChangeHttpsRedirect: build.mutation<
-      PutApiCdnHostChangeHttpsRedirectApiResponse,
-      PutApiCdnHostChangeHttpsRedirectApiArg
+    putApiMyCdnHostChangeHttpsRedirect: build.mutation<
+      PutApiMyCdnHostChangeHttpsRedirectApiResponse,
+      PutApiMyCdnHostChangeHttpsRedirectApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-https-redirect`,
+        url: `/api/my/cdn/host/change-https-redirect`,
         method: "PUT",
         body: queryArg.changeHttpsRedirectModel,
       }),
     }),
-    putApiCdnHostChangeNonWwwRedirect: build.mutation<
-      PutApiCdnHostChangeNonWwwRedirectApiResponse,
-      PutApiCdnHostChangeNonWwwRedirectApiArg
+    putApiMyCdnHostChangeNonWwwRedirect: build.mutation<
+      PutApiMyCdnHostChangeNonWwwRedirectApiResponse,
+      PutApiMyCdnHostChangeNonWwwRedirectApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/host/change-non-www-redirect`,
+        url: `/api/my/cdn/host/change-non-www-redirect`,
         method: "PUT",
         body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
-    getApiColocationList: build.query<
-      GetApiColocationListApiResponse,
-      GetApiColocationListApiArg
+    getApiMyColocationList: build.query<
+      GetApiMyColocationListApiResponse,
+      GetApiMyColocationListApiArg
     >({
-      query: () => ({ url: `/api/colocation/list` }),
+      query: () => ({ url: `/api/my/colocation/list` }),
     }),
-    postApiColocationCreate: build.mutation<
-      PostApiColocationCreateApiResponse,
-      PostApiColocationCreateApiArg
+    postApiMyColocationCreate: build.mutation<
+      PostApiMyColocationCreateApiResponse,
+      PostApiMyColocationCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/colocation/create`,
+        url: `/api/my/colocation/create`,
         method: "POST",
         body: queryArg.createColocationModel,
       }),
     }),
-    deleteApiColocationDeleteById: build.mutation<
-      DeleteApiColocationDeleteByIdApiResponse,
-      DeleteApiColocationDeleteByIdApiArg
+    deleteApiMyColocationDeleteById: build.mutation<
+      DeleteApiMyColocationDeleteByIdApiResponse,
+      DeleteApiMyColocationDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/colocation/delete/${queryArg.id}`,
+        url: `/api/my/colocation/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiCloudCommissionList: build.query<
-      GetApiCloudCommissionListApiResponse,
-      GetApiCloudCommissionListApiArg
+    getApiMyCloudCommissionList: build.query<
+      GetApiMyCloudCommissionListApiResponse,
+      GetApiMyCloudCommissionListApiArg
     >({
-      query: () => ({ url: `/api/cloud/commission/list` }),
+      query: () => ({ url: `/api/my/cloud/commission/list` }),
     }),
-    getApiCloudCustomerGet: build.query<
-      GetApiCloudCustomerGetApiResponse,
-      GetApiCloudCustomerGetApiArg
+    getApiMyCloudCustomerGet: build.query<
+      GetApiMyCloudCustomerGetApiResponse,
+      GetApiMyCloudCustomerGetApiArg
     >({
-      query: () => ({ url: `/api/cloud/customer/get` }),
+      query: () => ({ url: `/api/my/cloud/customer/get` }),
     }),
-    getApiCloudCustomerGetCustomerType: build.query<
-      GetApiCloudCustomerGetCustomerTypeApiResponse,
-      GetApiCloudCustomerGetCustomerTypeApiArg
+    getApiMyCloudCustomerGetCustomerType: build.query<
+      GetApiMyCloudCustomerGetCustomerTypeApiResponse,
+      GetApiMyCloudCustomerGetCustomerTypeApiArg
     >({
-      query: () => ({ url: `/api/cloud/customer/get-customer-type` }),
+      query: () => ({ url: `/api/my/cloud/customer/get-customer-type` }),
     }),
-    putApiCloudCustomerEdit: build.mutation<
-      PutApiCloudCustomerEditApiResponse,
-      PutApiCloudCustomerEditApiArg
+    putApiMyCloudCustomerEdit: build.mutation<
+      PutApiMyCloudCustomerEditApiResponse,
+      PutApiMyCloudCustomerEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/customer/edit`,
+        url: `/api/my/cloud/customer/edit`,
         method: "PUT",
         body: queryArg.editCustomerModel,
       }),
     }),
-    putApiCloudCustomerEditCustomerType: build.mutation<
-      PutApiCloudCustomerEditCustomerTypeApiResponse,
-      PutApiCloudCustomerEditCustomerTypeApiArg
+    putApiMyCloudCustomerEditCustomerType: build.mutation<
+      PutApiMyCloudCustomerEditCustomerTypeApiResponse,
+      PutApiMyCloudCustomerEditCustomerTypeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/customer/edit-customer-type`,
+        url: `/api/my/cloud/customer/edit-customer-type`,
         method: "PUT",
         body: queryArg.editCustomerTypeModel,
       }),
     }),
-    getApiCloudBillList: build.query<
-      GetApiCloudBillListApiResponse,
-      GetApiCloudBillListApiArg
+    getApiMyCloudBillList: build.query<
+      GetApiMyCloudBillListApiResponse,
+      GetApiMyCloudBillListApiArg
     >({
-      query: () => ({ url: `/api/cloud/bill/list` }),
+      query: () => ({ url: `/api/my/cloud/bill/list` }),
     }),
-    getApiCloudBillBillShortList: build.query<
-      GetApiCloudBillBillShortListApiResponse,
-      GetApiCloudBillBillShortListApiArg
+    getApiMyCloudBillBillShortList: build.query<
+      GetApiMyCloudBillBillShortListApiResponse,
+      GetApiMyCloudBillBillShortListApiArg
     >({
-      query: () => ({ url: `/api/cloud/bill/bill-short-list` }),
+      query: () => ({ url: `/api/my/cloud/bill/bill-short-list` }),
     }),
-    getApiCloudBillGetById: build.query<
-      GetApiCloudBillGetByIdApiResponse,
-      GetApiCloudBillGetByIdApiArg
+    getApiMyCloudBillGetById: build.query<
+      GetApiMyCloudBillGetByIdApiResponse,
+      GetApiMyCloudBillGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/cloud/bill/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/cloud/bill/get/${queryArg.id}` }),
     }),
-    getApiCloudBillDownloadById: build.query<
-      GetApiCloudBillDownloadByIdApiResponse,
-      GetApiCloudBillDownloadByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/bill/download/${queryArg.id}` }),
-    }),
-    getApiCloudCustomerProductListByProductId: build.query<
-      GetApiCloudCustomerProductListByProductIdApiResponse,
-      GetApiCloudCustomerProductListByProductIdApiArg
+    getApiMyCloudBillDownloadById: build.query<
+      GetApiMyCloudBillDownloadByIdApiResponse,
+      GetApiMyCloudBillDownloadByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/customer-product/list/${queryArg.productId}`,
+        url: `/api/my/cloud/bill/download/${queryArg.id}`,
       }),
     }),
-    postApiCloudCustomerProductTransfer: build.mutation<
-      PostApiCloudCustomerProductTransferApiResponse,
-      PostApiCloudCustomerProductTransferApiArg
+    getApiMyCloudCustomerProductListByProductId: build.query<
+      GetApiMyCloudCustomerProductListByProductIdApiResponse,
+      GetApiMyCloudCustomerProductListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/customer-product/transfer`,
+        url: `/api/my/cloud/customer-product/list/${queryArg.productId}`,
+      }),
+    }),
+    postApiMyCloudCustomerProductTransfer: build.mutation<
+      PostApiMyCloudCustomerProductTransferApiResponse,
+      PostApiMyCloudCustomerProductTransferApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/customer-product/transfer`,
         method: "POST",
         body: queryArg.customerProductTransferModel,
       }),
     }),
-    postApiCloudCustomerUserChangeUserCustomer: build.mutation<
-      PostApiCloudCustomerUserChangeUserCustomerApiResponse,
-      PostApiCloudCustomerUserChangeUserCustomerApiArg
+    postApiMyCloudCustomerUserChangeUserCustomer: build.mutation<
+      PostApiMyCloudCustomerUserChangeUserCustomerApiResponse,
+      PostApiMyCloudCustomerUserChangeUserCustomerApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/customer-user/change-user-customer`,
+        url: `/api/my/cloud/customer-user/change-user-customer`,
         method: "POST",
         body: queryArg.changeUserCustomerModel,
       }),
     }),
-    getApiCloudDashboardUsageByCategoryId: build.query<
-      GetApiCloudDashboardUsageByCategoryIdApiResponse,
-      GetApiCloudDashboardUsageByCategoryIdApiArg
+    getApiMyCloudDashboardUsageByCategoryId: build.query<
+      GetApiMyCloudDashboardUsageByCategoryIdApiResponse,
+      GetApiMyCloudDashboardUsageByCategoryIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/dashboard/usage/${queryArg.categoryId}`,
+        url: `/api/my/cloud/dashboard/usage/${queryArg.categoryId}`,
       }),
     }),
-    getApiDatacenterList: build.query<
-      GetApiDatacenterListApiResponse,
-      GetApiDatacenterListApiArg
+    getApiMyDatacenterList: build.query<
+      GetApiMyDatacenterListApiResponse,
+      GetApiMyDatacenterListApiArg
     >({
-      query: () => ({ url: `/api/datacenter/list` }),
+      query: () => ({ url: `/api/my/datacenter/list` }),
     }),
-    getApiDatacenterIpListByProductIdAndId: build.query<
-      GetApiDatacenterIpListByProductIdAndIdApiResponse,
-      GetApiDatacenterIpListByProductIdAndIdApiArg
+    getApiMyDatacenterIpListByProductIdAndId: build.query<
+      GetApiMyDatacenterIpListByProductIdAndIdApiResponse,
+      GetApiMyDatacenterIpListByProductIdAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/datacenter/ip/list/${queryArg.productId}/${queryArg.id}`,
+        url: `/api/my/datacenter/ip/list/${queryArg.productId}/${queryArg.id}`,
       }),
     }),
-    deleteApiDatacenterIpDeleteById: build.mutation<
-      DeleteApiDatacenterIpDeleteByIdApiResponse,
-      DeleteApiDatacenterIpDeleteByIdApiArg
+    deleteApiMyDatacenterIpDeleteById: build.mutation<
+      DeleteApiMyDatacenterIpDeleteByIdApiResponse,
+      DeleteApiMyDatacenterIpDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/datacenter/ip/delete/${queryArg.id}`,
+        url: `/api/my/datacenter/ip/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiCdnDnsRecordListByCdnId: build.query<
-      GetApiCdnDnsRecordListByCdnIdApiResponse,
-      GetApiCdnDnsRecordListByCdnIdApiArg
+    getApiMyCdnDnsRecordListByCdnId: build.query<
+      GetApiMyCdnDnsRecordListByCdnIdApiResponse,
+      GetApiMyCdnDnsRecordListByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/dns-record/list/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnDnsRecordGetById: build.query<
-      GetApiCdnDnsRecordGetByIdApiResponse,
-      GetApiCdnDnsRecordGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cdn/dns-record/get/${queryArg.id}` }),
-    }),
-    postApiCdnDnsRecordCreate: build.mutation<
-      PostApiCdnDnsRecordCreateApiResponse,
-      PostApiCdnDnsRecordCreateApiArg
+    getApiMyCdnDnsRecordGetById: build.query<
+      GetApiMyCdnDnsRecordGetByIdApiResponse,
+      GetApiMyCdnDnsRecordGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/create`,
+        url: `/api/my/cdn/dns-record/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCdnDnsRecordCreate: build.mutation<
+      PostApiMyCdnDnsRecordCreateApiResponse,
+      PostApiMyCdnDnsRecordCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/dns-record/create`,
         method: "POST",
         body: queryArg.createDnsRecordModel,
       }),
     }),
-    putApiCdnDnsRecordEdit: build.mutation<
-      PutApiCdnDnsRecordEditApiResponse,
-      PutApiCdnDnsRecordEditApiArg
+    putApiMyCdnDnsRecordEdit: build.mutation<
+      PutApiMyCdnDnsRecordEditApiResponse,
+      PutApiMyCdnDnsRecordEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/edit`,
+        url: `/api/my/cdn/dns-record/edit`,
         method: "PUT",
         body: queryArg.editDnsRecordModel,
       }),
     }),
-    deleteApiCdnDnsRecordDeleteById: build.mutation<
-      DeleteApiCdnDnsRecordDeleteByIdApiResponse,
-      DeleteApiCdnDnsRecordDeleteByIdApiArg
+    deleteApiMyCdnDnsRecordDeleteById: build.mutation<
+      DeleteApiMyCdnDnsRecordDeleteByIdApiResponse,
+      DeleteApiMyCdnDnsRecordDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/delete/${queryArg.id}`,
+        url: `/api/my/cdn/dns-record/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiCdnDnsRecordChangeProxyStatusById: build.mutation<
-      PutApiCdnDnsRecordChangeProxyStatusByIdApiResponse,
-      PutApiCdnDnsRecordChangeProxyStatusByIdApiArg
+    putApiMyCdnDnsRecordChangeProxyStatusById: build.mutation<
+      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse,
+      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/dns-record/change-proxy-status/${queryArg.id}`,
+        url: `/api/my/cdn/dns-record/change-proxy-status/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    getApiDomainList: build.query<
-      GetApiDomainListApiResponse,
-      GetApiDomainListApiArg
+    getApiMyDomainList: build.query<
+      GetApiMyDomainListApiResponse,
+      GetApiMyDomainListApiArg
     >({
-      query: () => ({ url: `/api/domain/list` }),
+      query: () => ({ url: `/api/my/domain/list` }),
     }),
-    getApiDomainGetById: build.query<
-      GetApiDomainGetByIdApiResponse,
-      GetApiDomainGetByIdApiArg
+    getApiMyDomainGetById: build.query<
+      GetApiMyDomainGetByIdApiResponse,
+      GetApiMyDomainGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/domain/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/domain/get/${queryArg.id}` }),
     }),
-    getApiDomainGetStatusById: build.query<
-      GetApiDomainGetStatusByIdApiResponse,
-      GetApiDomainGetStatusByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/domain/get-status/${queryArg.id}` }),
-    }),
-    postApiDomainGetPrice: build.mutation<
-      PostApiDomainGetPriceApiResponse,
-      PostApiDomainGetPriceApiArg
+    getApiMyDomainGetStatusById: build.query<
+      GetApiMyDomainGetStatusByIdApiResponse,
+      GetApiMyDomainGetStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/get-price`,
+        url: `/api/my/domain/get-status/${queryArg.id}`,
+      }),
+    }),
+    postApiMyDomainGetPrice: build.mutation<
+      PostApiMyDomainGetPriceApiResponse,
+      PostApiMyDomainGetPriceApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/domain/get-price`,
         method: "POST",
         body: queryArg.getPriceModel,
       }),
     }),
-    postApiDomainRegister: build.mutation<
-      PostApiDomainRegisterApiResponse,
-      PostApiDomainRegisterApiArg
+    postApiMyDomainRegister: build.mutation<
+      PostApiMyDomainRegisterApiResponse,
+      PostApiMyDomainRegisterApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/register`,
+        url: `/api/my/domain/register`,
         method: "POST",
         body: queryArg.registerDomainModel,
       }),
     }),
-    deleteApiDomainDeleteById: build.mutation<
-      DeleteApiDomainDeleteByIdApiResponse,
-      DeleteApiDomainDeleteByIdApiArg
+    deleteApiMyDomainDeleteById: build.mutation<
+      DeleteApiMyDomainDeleteByIdApiResponse,
+      DeleteApiMyDomainDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/delete/${queryArg.id}`,
+        url: `/api/my/domain/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiDomainChangeContact: build.mutation<
-      PutApiDomainChangeContactApiResponse,
-      PutApiDomainChangeContactApiArg
+    putApiMyDomainChangeContact: build.mutation<
+      PutApiMyDomainChangeContactApiResponse,
+      PutApiMyDomainChangeContactApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/change-contact`,
+        url: `/api/my/domain/change-contact`,
         method: "PUT",
         body: queryArg.changeContactModel,
       }),
     }),
-    putApiDomainChangeNs: build.mutation<
-      PutApiDomainChangeNsApiResponse,
-      PutApiDomainChangeNsApiArg
+    putApiMyDomainChangeNs: build.mutation<
+      PutApiMyDomainChangeNsApiResponse,
+      PutApiMyDomainChangeNsApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/change-ns`,
+        url: `/api/my/domain/change-ns`,
         method: "PUT",
         body: queryArg.changeNsModel,
       }),
     }),
-    postApiDomainResendVerificationById: build.mutation<
-      PostApiDomainResendVerificationByIdApiResponse,
-      PostApiDomainResendVerificationByIdApiArg
+    postApiMyDomainResendVerificationById: build.mutation<
+      PostApiMyDomainResendVerificationByIdApiResponse,
+      PostApiMyDomainResendVerificationByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/resend-verification/${queryArg.id}`,
+        url: `/api/my/domain/resend-verification/${queryArg.id}`,
         method: "POST",
       }),
     }),
-    getApiHomeIndex: build.query<
-      GetApiHomeIndexApiResponse,
-      GetApiHomeIndexApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/home/index` }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
-    getApiCloudInvoiceList: build.query<
-      GetApiCloudInvoiceListApiResponse,
-      GetApiCloudInvoiceListApiArg
+    getApiMyCloudInvoiceList: build.query<
+      GetApiMyCloudInvoiceListApiResponse,
+      GetApiMyCloudInvoiceListApiArg
     >({
-      query: () => ({ url: `/api/cloud/invoice/list` }),
+      query: () => ({ url: `/api/my/cloud/invoice/list` }),
     }),
-    getApiCloudInvoiceGetById: build.query<
-      GetApiCloudInvoiceGetByIdApiResponse,
-      GetApiCloudInvoiceGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/invoice/get/${queryArg.id}` }),
-    }),
-    postApiCloudInvoicePay: build.mutation<
-      PostApiCloudInvoicePayApiResponse,
-      PostApiCloudInvoicePayApiArg
+    getApiMyCloudInvoiceGetById: build.query<
+      GetApiMyCloudInvoiceGetByIdApiResponse,
+      GetApiMyCloudInvoiceGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/invoice/pay`,
+        url: `/api/my/cloud/invoice/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCloudInvoicePay: build.mutation<
+      PostApiMyCloudInvoicePayApiResponse,
+      PostApiMyCloudInvoicePayApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/invoice/pay`,
         method: "POST",
         body: queryArg.payInvoiceModel,
       }),
     }),
-    getApiPlatformDevopsListById: build.query<
-      GetApiPlatformDevopsListByIdApiResponse,
-      GetApiPlatformDevopsListByIdApiArg
+    getApiMyPlatformDevopsListById: build.query<
+      GetApiMyPlatformDevopsListByIdApiResponse,
+      GetApiMyPlatformDevopsListByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/devops/list/${queryArg.id}`,
+        url: `/api/my/platform/devops/list/${queryArg.id}`,
       }),
     }),
-    getApiPlatformDevopsGetById: build.query<
-      GetApiPlatformDevopsGetByIdApiResponse,
-      GetApiPlatformDevopsGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/platform/devops/get/${queryArg.id}` }),
-    }),
-    postApiPlatformDevopsCreate: build.mutation<
-      PostApiPlatformDevopsCreateApiResponse,
-      PostApiPlatformDevopsCreateApiArg
+    getApiMyPlatformDevopsGetById: build.query<
+      GetApiMyPlatformDevopsGetByIdApiResponse,
+      GetApiMyPlatformDevopsGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/devops/create`,
+        url: `/api/my/platform/devops/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyPlatformDevopsCreate: build.mutation<
+      PostApiMyPlatformDevopsCreateApiResponse,
+      PostApiMyPlatformDevopsCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/platform/devops/create`,
         method: "POST",
         body: queryArg.createKubeDevOpsModel,
       }),
     }),
-    deleteApiPlatformDevopsDeleteById: build.mutation<
-      DeleteApiPlatformDevopsDeleteByIdApiResponse,
-      DeleteApiPlatformDevopsDeleteByIdApiArg
+    deleteApiMyPlatformDevopsDeleteById: build.mutation<
+      DeleteApiMyPlatformDevopsDeleteByIdApiResponse,
+      DeleteApiMyPlatformDevopsDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/devops/delete/${queryArg.id}`,
+        url: `/api/my/platform/devops/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiPlatformNamespaceList: build.query<
-      GetApiPlatformNamespaceListApiResponse,
-      GetApiPlatformNamespaceListApiArg
+    getApiMyPlatformNamespaceList: build.query<
+      GetApiMyPlatformNamespaceListApiResponse,
+      GetApiMyPlatformNamespaceListApiArg
     >({
-      query: () => ({ url: `/api/platform/namespace/list` }),
+      query: () => ({ url: `/api/my/platform/namespace/list` }),
     }),
-    getApiPlatformNamespaceGetById: build.query<
-      GetApiPlatformNamespaceGetByIdApiResponse,
-      GetApiPlatformNamespaceGetByIdApiArg
+    getApiMyPlatformNamespaceGetById: build.query<
+      GetApiMyPlatformNamespaceGetByIdApiResponse,
+      GetApiMyPlatformNamespaceGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/namespace/get/${queryArg.id}`,
+        url: `/api/my/platform/namespace/get/${queryArg.id}`,
       }),
     }),
-    getApiPlatformNamespaceGetLoginById: build.query<
-      GetApiPlatformNamespaceGetLoginByIdApiResponse,
-      GetApiPlatformNamespaceGetLoginByIdApiArg
+    getApiMyPlatformNamespaceGetLoginById: build.query<
+      GetApiMyPlatformNamespaceGetLoginByIdApiResponse,
+      GetApiMyPlatformNamespaceGetLoginByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/namespace/get-login/${queryArg.id}`,
+        url: `/api/my/platform/namespace/get-login/${queryArg.id}`,
       }),
     }),
-    postApiPlatformNamespaceCreate: build.mutation<
-      PostApiPlatformNamespaceCreateApiResponse,
-      PostApiPlatformNamespaceCreateApiArg
+    postApiMyPlatformNamespaceCreate: build.mutation<
+      PostApiMyPlatformNamespaceCreateApiResponse,
+      PostApiMyPlatformNamespaceCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/namespace/create`,
+        url: `/api/my/platform/namespace/create`,
         method: "POST",
         body: queryArg.createKubeHostModel,
       }),
     }),
-    putApiPlatformNamespaceEdit: build.mutation<
-      PutApiPlatformNamespaceEditApiResponse,
-      PutApiPlatformNamespaceEditApiArg
+    putApiMyPlatformNamespaceEdit: build.mutation<
+      PutApiMyPlatformNamespaceEditApiResponse,
+      PutApiMyPlatformNamespaceEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/namespace/edit`,
+        url: `/api/my/platform/namespace/edit`,
         method: "PUT",
         body: queryArg.editKubeHostModel,
       }),
     }),
-    deleteApiPlatformNamespaceDeleteById: build.mutation<
-      DeleteApiPlatformNamespaceDeleteByIdApiResponse,
-      DeleteApiPlatformNamespaceDeleteByIdApiArg
+    deleteApiMyPlatformNamespaceDeleteById: build.mutation<
+      DeleteApiMyPlatformNamespaceDeleteByIdApiResponse,
+      DeleteApiMyPlatformNamespaceDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/namespace/delete/${queryArg.id}`,
+        url: `/api/my/platform/namespace/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiPlatformServiceListById: build.query<
-      GetApiPlatformServiceListByIdApiResponse,
-      GetApiPlatformServiceListByIdApiArg
+    getApiMyPlatformServiceListById: build.query<
+      GetApiMyPlatformServiceListByIdApiResponse,
+      GetApiMyPlatformServiceListByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/service/list/${queryArg.id}`,
+        url: `/api/my/platform/service/list/${queryArg.id}`,
       }),
     }),
-    getApiPlatformServiceGetById: build.query<
-      GetApiPlatformServiceGetByIdApiResponse,
-      GetApiPlatformServiceGetByIdApiArg
+    getApiMyPlatformServiceGetById: build.query<
+      GetApiMyPlatformServiceGetByIdApiResponse,
+      GetApiMyPlatformServiceGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/service/get/${queryArg.id}`,
+        url: `/api/my/platform/service/get/${queryArg.id}`,
       }),
     }),
-    postApiPlatformServiceCreate: build.mutation<
-      PostApiPlatformServiceCreateApiResponse,
-      PostApiPlatformServiceCreateApiArg
+    postApiMyPlatformServiceCreate: build.mutation<
+      PostApiMyPlatformServiceCreateApiResponse,
+      PostApiMyPlatformServiceCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/service/create`,
+        url: `/api/my/platform/service/create`,
         method: "POST",
         body: queryArg.createKubeServiceModel,
       }),
     }),
-    deleteApiPlatformServiceDeleteById: build.mutation<
-      DeleteApiPlatformServiceDeleteByIdApiResponse,
-      DeleteApiPlatformServiceDeleteByIdApiArg
+    deleteApiMyPlatformServiceDeleteById: build.mutation<
+      DeleteApiMyPlatformServiceDeleteByIdApiResponse,
+      DeleteApiMyPlatformServiceDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/service/delete/${queryArg.id}`,
+        url: `/api/my/platform/service/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiPlatformKubernetesList: build.query<
-      GetApiPlatformKubernetesListApiResponse,
-      GetApiPlatformKubernetesListApiArg
+    getApiMyPlatformKubernetesList: build.query<
+      GetApiMyPlatformKubernetesListApiResponse,
+      GetApiMyPlatformKubernetesListApiArg
     >({
-      query: () => ({ url: `/api/platform/kubernetes/list` }),
+      query: () => ({ url: `/api/my/platform/kubernetes/list` }),
     }),
-    getApiPlatformKubernetesGetById: build.query<
-      GetApiPlatformKubernetesGetByIdApiResponse,
-      GetApiPlatformKubernetesGetByIdApiArg
+    getApiMyPlatformKubernetesGetById: build.query<
+      GetApiMyPlatformKubernetesGetByIdApiResponse,
+      GetApiMyPlatformKubernetesGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/kubernetes/get/${queryArg.id}`,
+        url: `/api/my/platform/kubernetes/get/${queryArg.id}`,
       }),
     }),
-    postApiPlatformKubernetesCreate: build.mutation<
-      PostApiPlatformKubernetesCreateApiResponse,
-      PostApiPlatformKubernetesCreateApiArg
+    postApiMyPlatformKubernetesCreate: build.mutation<
+      PostApiMyPlatformKubernetesCreateApiResponse,
+      PostApiMyPlatformKubernetesCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/kubernetes/create`,
+        url: `/api/my/platform/kubernetes/create`,
         method: "POST",
         body: queryArg.createClusterModel,
       }),
     }),
-    putApiPlatformKubernetesEdit: build.mutation<
-      PutApiPlatformKubernetesEditApiResponse,
-      PutApiPlatformKubernetesEditApiArg
+    putApiMyPlatformKubernetesEdit: build.mutation<
+      PutApiMyPlatformKubernetesEditApiResponse,
+      PutApiMyPlatformKubernetesEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/kubernetes/edit`,
+        url: `/api/my/platform/kubernetes/edit`,
         method: "PUT",
         body: queryArg.editClusterModel,
       }),
     }),
-    deleteApiPlatformKubernetesDeleteById: build.mutation<
-      DeleteApiPlatformKubernetesDeleteByIdApiResponse,
-      DeleteApiPlatformKubernetesDeleteByIdApiArg
+    deleteApiMyPlatformKubernetesDeleteById: build.mutation<
+      DeleteApiMyPlatformKubernetesDeleteByIdApiResponse,
+      DeleteApiMyPlatformKubernetesDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/kubernetes/delete/${queryArg.id}`,
+        url: `/api/my/platform/kubernetes/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiPlatformUserList: build.query<
-      GetApiPlatformUserListApiResponse,
-      GetApiPlatformUserListApiArg
+    getApiMyPlatformUserList: build.query<
+      GetApiMyPlatformUserListApiResponse,
+      GetApiMyPlatformUserListApiArg
     >({
-      query: () => ({ url: `/api/platform/user/list` }),
+      query: () => ({ url: `/api/my/platform/user/list` }),
     }),
-    getApiPlatformUserShortList: build.query<
-      GetApiPlatformUserShortListApiResponse,
-      GetApiPlatformUserShortListApiArg
+    getApiMyPlatformUserShortList: build.query<
+      GetApiMyPlatformUserShortListApiResponse,
+      GetApiMyPlatformUserShortListApiArg
     >({
-      query: () => ({ url: `/api/platform/user/short-list` }),
+      query: () => ({ url: `/api/my/platform/user/short-list` }),
     }),
-    postApiPlatformUserCreate: build.mutation<
-      PostApiPlatformUserCreateApiResponse,
-      PostApiPlatformUserCreateApiArg
+    postApiMyPlatformUserCreate: build.mutation<
+      PostApiMyPlatformUserCreateApiResponse,
+      PostApiMyPlatformUserCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user/create`,
+        url: `/api/my/platform/user/create`,
         method: "POST",
         body: queryArg.createKubeUserModel,
       }),
     }),
-    deleteApiPlatformUserDeleteById: build.mutation<
-      DeleteApiPlatformUserDeleteByIdApiResponse,
-      DeleteApiPlatformUserDeleteByIdApiArg
+    deleteApiMyPlatformUserDeleteById: build.mutation<
+      DeleteApiMyPlatformUserDeleteByIdApiResponse,
+      DeleteApiMyPlatformUserDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user/delete/${queryArg.id}`,
+        url: `/api/my/platform/user/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiPlatformUserChangePassword: build.mutation<
-      PostApiPlatformUserChangePasswordApiResponse,
-      PostApiPlatformUserChangePasswordApiArg
+    postApiMyPlatformUserChangePassword: build.mutation<
+      PostApiMyPlatformUserChangePasswordApiResponse,
+      PostApiMyPlatformUserChangePasswordApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user/change-password`,
+        url: `/api/my/platform/user/change-password`,
         method: "POST",
         body: queryArg.changeKubeUserPasswordModel,
       }),
     }),
-    getApiPlatformUserRoleListByKubeHostId: build.query<
-      GetApiPlatformUserRoleListByKubeHostIdApiResponse,
-      GetApiPlatformUserRoleListByKubeHostIdApiArg
+    getApiMyPlatformUserRoleListByKubeHostId: build.query<
+      GetApiMyPlatformUserRoleListByKubeHostIdApiResponse,
+      GetApiMyPlatformUserRoleListByKubeHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user-role/list/${queryArg.kubeHostId}`,
+        url: `/api/my/platform/user-role/list/${queryArg.kubeHostId}`,
       }),
     }),
-    postApiPlatformUserRoleCreate: build.mutation<
-      PostApiPlatformUserRoleCreateApiResponse,
-      PostApiPlatformUserRoleCreateApiArg
+    postApiMyPlatformUserRoleCreate: build.mutation<
+      PostApiMyPlatformUserRoleCreateApiResponse,
+      PostApiMyPlatformUserRoleCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user-role/create`,
+        url: `/api/my/platform/user-role/create`,
         method: "POST",
         body: queryArg.createKubeUserRoleModel,
       }),
     }),
-    deleteApiPlatformUserRoleDeleteById: build.mutation<
-      DeleteApiPlatformUserRoleDeleteByIdApiResponse,
-      DeleteApiPlatformUserRoleDeleteByIdApiArg
+    deleteApiMyPlatformUserRoleDeleteById: build.mutation<
+      DeleteApiMyPlatformUserRoleDeleteByIdApiResponse,
+      DeleteApiMyPlatformUserRoleDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/user-role/delete/${queryArg.id}`,
+        url: `/api/my/platform/user-role/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiPlatformVolumeListById: build.query<
-      GetApiPlatformVolumeListByIdApiResponse,
-      GetApiPlatformVolumeListByIdApiArg
+    getApiMyPlatformVolumeListById: build.query<
+      GetApiMyPlatformVolumeListByIdApiResponse,
+      GetApiMyPlatformVolumeListByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/volume/list/${queryArg.id}`,
+        url: `/api/my/platform/volume/list/${queryArg.id}`,
       }),
     }),
-    getApiPlatformVolumeGetById: build.query<
-      GetApiPlatformVolumeGetByIdApiResponse,
-      GetApiPlatformVolumeGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/platform/volume/get/${queryArg.id}` }),
-    }),
-    postApiPlatformVolumeCreate: build.mutation<
-      PostApiPlatformVolumeCreateApiResponse,
-      PostApiPlatformVolumeCreateApiArg
+    getApiMyPlatformVolumeGetById: build.query<
+      GetApiMyPlatformVolumeGetByIdApiResponse,
+      GetApiMyPlatformVolumeGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/volume/create`,
+        url: `/api/my/platform/volume/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyPlatformVolumeCreate: build.mutation<
+      PostApiMyPlatformVolumeCreateApiResponse,
+      PostApiMyPlatformVolumeCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/platform/volume/create`,
         method: "POST",
         body: queryArg.createKubeVolumeModel,
       }),
     }),
-    deleteApiPlatformVolumeDeleteById: build.mutation<
-      DeleteApiPlatformVolumeDeleteByIdApiResponse,
-      DeleteApiPlatformVolumeDeleteByIdApiArg
+    deleteApiMyPlatformVolumeDeleteById: build.mutation<
+      DeleteApiMyPlatformVolumeDeleteByIdApiResponse,
+      DeleteApiMyPlatformVolumeDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/platform/volume/delete/${queryArg.id}`,
+        url: `/api/my/platform/volume/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiCdnLoadBalanceListByCdnId: build.query<
-      GetApiCdnLoadBalanceListByCdnIdApiResponse,
-      GetApiCdnLoadBalanceListByCdnIdApiArg
+    getApiMyCdnLoadBalanceListByCdnId: build.query<
+      GetApiMyCdnLoadBalanceListByCdnIdApiResponse,
+      GetApiMyCdnLoadBalanceListByCdnIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/load-balance/list/${queryArg.cdnId}`,
       }),
     }),
-    getApiCdnLoadBalanceGetById: build.query<
-      GetApiCdnLoadBalanceGetByIdApiResponse,
-      GetApiCdnLoadBalanceGetByIdApiArg
+    getApiMyCdnLoadBalanceGetById: build.query<
+      GetApiMyCdnLoadBalanceGetByIdApiResponse,
+      GetApiMyCdnLoadBalanceGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/get/${queryArg.id}`,
+        url: `/api/my/cdn/load-balance/get/${queryArg.id}`,
       }),
     }),
-    postApiCdnLoadBalanceCreate: build.mutation<
-      PostApiCdnLoadBalanceCreateApiResponse,
-      PostApiCdnLoadBalanceCreateApiArg
+    postApiMyCdnLoadBalanceCreate: build.mutation<
+      PostApiMyCdnLoadBalanceCreateApiResponse,
+      PostApiMyCdnLoadBalanceCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/create`,
+        url: `/api/my/cdn/load-balance/create`,
         method: "POST",
         body: queryArg.createLoadBalanceModel,
       }),
     }),
-    putApiCdnLoadBalanceEdit: build.mutation<
-      PutApiCdnLoadBalanceEditApiResponse,
-      PutApiCdnLoadBalanceEditApiArg
+    putApiMyCdnLoadBalanceEdit: build.mutation<
+      PutApiMyCdnLoadBalanceEditApiResponse,
+      PutApiMyCdnLoadBalanceEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/edit`,
+        url: `/api/my/cdn/load-balance/edit`,
         method: "PUT",
         body: queryArg.editLoadBalanceModel,
       }),
     }),
-    deleteApiCdnLoadBalanceDeleteById: build.mutation<
-      DeleteApiCdnLoadBalanceDeleteByIdApiResponse,
-      DeleteApiCdnLoadBalanceDeleteByIdApiArg
+    deleteApiMyCdnLoadBalanceDeleteById: build.mutation<
+      DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse,
+      DeleteApiMyCdnLoadBalanceDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cdn/load-balance/delete/${queryArg.id}`,
+        url: `/api/my/cdn/load-balance/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiCloudNotificationList: build.query<
-      GetApiCloudNotificationListApiResponse,
-      GetApiCloudNotificationListApiArg
+    getApiMyCloudNotificationList: build.query<
+      GetApiMyCloudNotificationListApiResponse,
+      GetApiMyCloudNotificationListApiArg
     >({
-      query: () => ({ url: `/api/cloud/notification/list` }),
+      query: () => ({ url: `/api/my/cloud/notification/list` }),
     }),
-    getApiCloudNotificationShortList: build.query<
-      GetApiCloudNotificationShortListApiResponse,
-      GetApiCloudNotificationShortListApiArg
+    getApiMyCloudNotificationShortList: build.query<
+      GetApiMyCloudNotificationShortListApiResponse,
+      GetApiMyCloudNotificationShortListApiArg
     >({
-      query: () => ({ url: `/api/cloud/notification/short-list` }),
+      query: () => ({ url: `/api/my/cloud/notification/short-list` }),
     }),
-    getApiCloudPaymentList: build.query<
-      GetApiCloudPaymentListApiResponse,
-      GetApiCloudPaymentListApiArg
+    getApiMyCloudPaymentList: build.query<
+      GetApiMyCloudPaymentListApiResponse,
+      GetApiMyCloudPaymentListApiArg
     >({
-      query: () => ({ url: `/api/cloud/payment/list` }),
+      query: () => ({ url: `/api/my/cloud/payment/list` }),
     }),
-    getApiCloudPaymentGetById: build.query<
-      GetApiCloudPaymentGetByIdApiResponse,
-      GetApiCloudPaymentGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/cloud/payment/get/${queryArg.id}` }),
-    }),
-    postApiCloudPaymentCreate: build.mutation<
-      PostApiCloudPaymentCreateApiResponse,
-      PostApiCloudPaymentCreateApiArg
+    getApiMyCloudPaymentGetById: build.query<
+      GetApiMyCloudPaymentGetByIdApiResponse,
+      GetApiMyCloudPaymentGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/payment/create`,
+        url: `/api/my/cloud/payment/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCloudPaymentCreate: build.mutation<
+      PostApiMyCloudPaymentCreateApiResponse,
+      PostApiMyCloudPaymentCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/payment/create`,
         method: "POST",
         body: queryArg.createPaymentModel,
       }),
     }),
-    postApiCloudPaymentPecCallBack: build.mutation<
-      PostApiCloudPaymentPecCallBackApiResponse,
-      PostApiCloudPaymentPecCallBackApiArg
+    postApiMyCloudPaymentPecCallBack: build.mutation<
+      PostApiMyCloudPaymentPecCallBackApiResponse,
+      PostApiMyCloudPaymentPecCallBackApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/payment/pec-call-back`,
+        url: `/api/my/cloud/payment/pec-call-back`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    postApiCloudPaymentSepCallBack: build.mutation<
-      PostApiCloudPaymentSepCallBackApiResponse,
-      PostApiCloudPaymentSepCallBackApiArg
+    postApiMyCloudPaymentSepCallBack: build.mutation<
+      PostApiMyCloudPaymentSepCallBackApiResponse,
+      PostApiMyCloudPaymentSepCallBackApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/payment/sep-call-back`,
+        url: `/api/my/cloud/payment/sep-call-back`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getApiCloudProductList: build.query<
-      GetApiCloudProductListApiResponse,
-      GetApiCloudProductListApiArg
+    getApiMyCloudProductList: build.query<
+      GetApiMyCloudProductListApiResponse,
+      GetApiMyCloudProductListApiArg
     >({
-      query: () => ({ url: `/api/cloud/product/list` }),
+      query: () => ({ url: `/api/my/cloud/product/list` }),
     }),
-    getApiCloudProductBundleListByProductId: build.query<
-      GetApiCloudProductBundleListByProductIdApiResponse,
-      GetApiCloudProductBundleListByProductIdApiArg
+    getApiMyCloudProductBundleListByProductId: build.query<
+      GetApiMyCloudProductBundleListByProductIdApiResponse,
+      GetApiMyCloudProductBundleListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/product-bundle/list/${queryArg.productId}`,
+        url: `/api/my/cloud/product-bundle/list/${queryArg.productId}`,
       }),
     }),
-    getApiCloudProductBundleVmList: build.query<
-      GetApiCloudProductBundleVmListApiResponse,
-      GetApiCloudProductBundleVmListApiArg
+    getApiMyCloudProductBundleVmList: build.query<
+      GetApiMyCloudProductBundleVmListApiResponse,
+      GetApiMyCloudProductBundleVmListApiArg
     >({
-      query: () => ({ url: `/api/cloud/product-bundle/vm-list` }),
+      query: () => ({ url: `/api/my/cloud/product-bundle/vm-list` }),
     }),
-    getApiCloudProductBundleStorageList: build.query<
-      GetApiCloudProductBundleStorageListApiResponse,
-      GetApiCloudProductBundleStorageListApiArg
+    getApiMyCloudProductBundleStorageList: build.query<
+      GetApiMyCloudProductBundleStorageListApiResponse,
+      GetApiMyCloudProductBundleStorageListApiArg
     >({
-      query: () => ({ url: `/api/cloud/product-bundle/storage-list` }),
+      query: () => ({ url: `/api/my/cloud/product-bundle/storage-list` }),
     }),
-    getApiCloudProductBundleWebHostList: build.query<
-      GetApiCloudProductBundleWebHostListApiResponse,
-      GetApiCloudProductBundleWebHostListApiArg
+    getApiMyCloudProductBundleWebHostList: build.query<
+      GetApiMyCloudProductBundleWebHostListApiResponse,
+      GetApiMyCloudProductBundleWebHostListApiArg
     >({
-      query: () => ({ url: `/api/cloud/product-bundle/web-host-list` }),
+      query: () => ({ url: `/api/my/cloud/product-bundle/web-host-list` }),
     }),
-    getApiCloudProductItemListByProductId: build.query<
-      GetApiCloudProductItemListByProductIdApiResponse,
-      GetApiCloudProductItemListByProductIdApiArg
+    getApiMyCloudProductItemListByProductId: build.query<
+      GetApiMyCloudProductItemListByProductIdApiResponse,
+      GetApiMyCloudProductItemListByProductIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/product-item/list/${queryArg.productId}`,
+        url: `/api/my/cloud/product-item/list/${queryArg.productId}`,
       }),
     }),
-    getApiAccountProfileGet: build.query<
-      GetApiAccountProfileGetApiResponse,
-      GetApiAccountProfileGetApiArg
+    getApiMyAccountProfileGet: build.query<
+      GetApiMyAccountProfileGetApiResponse,
+      GetApiMyAccountProfileGetApiArg
     >({
-      query: () => ({ url: `/api/account/profile/get` }),
+      query: () => ({ url: `/api/my/account/profile/get` }),
     }),
-    getApiAccountProfileGetNotificationStatus: build.query<
-      GetApiAccountProfileGetNotificationStatusApiResponse,
-      GetApiAccountProfileGetNotificationStatusApiArg
+    getApiMyAccountProfileGetNotificationStatus: build.query<
+      GetApiMyAccountProfileGetNotificationStatusApiResponse,
+      GetApiMyAccountProfileGetNotificationStatusApiArg
     >({
-      query: () => ({ url: `/api/account/profile/get-notification-status` }),
+      query: () => ({ url: `/api/my/account/profile/get-notification-status` }),
     }),
-    putApiAccountProfileEdit: build.mutation<
-      PutApiAccountProfileEditApiResponse,
-      PutApiAccountProfileEditApiArg
+    putApiMyAccountProfileEdit: build.mutation<
+      PutApiMyAccountProfileEditApiResponse,
+      PutApiMyAccountProfileEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/edit`,
+        url: `/api/my/account/profile/edit`,
         method: "PUT",
         body: queryArg.editProfileModel,
       }),
     }),
-    putApiAccountProfileEditEmail: build.mutation<
-      PutApiAccountProfileEditEmailApiResponse,
-      PutApiAccountProfileEditEmailApiArg
+    putApiMyAccountProfileEditEmail: build.mutation<
+      PutApiMyAccountProfileEditEmailApiResponse,
+      PutApiMyAccountProfileEditEmailApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/edit-email`,
+        url: `/api/my/account/profile/edit-email`,
         method: "PUT",
         body: queryArg.editEmailModel,
       }),
     }),
-    postApiAccountProfileConfirmEmail: build.mutation<
-      PostApiAccountProfileConfirmEmailApiResponse,
-      PostApiAccountProfileConfirmEmailApiArg
+    postApiMyAccountProfileConfirmEmail: build.mutation<
+      PostApiMyAccountProfileConfirmEmailApiResponse,
+      PostApiMyAccountProfileConfirmEmailApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/confirm-email`,
+        url: `/api/my/account/profile/confirm-email`,
         method: "POST",
         body: queryArg.confirmEmailModel,
       }),
     }),
-    putApiAccountProfileEditPhoneNumber: build.mutation<
-      PutApiAccountProfileEditPhoneNumberApiResponse,
-      PutApiAccountProfileEditPhoneNumberApiArg
+    putApiMyAccountProfileEditPhoneNumber: build.mutation<
+      PutApiMyAccountProfileEditPhoneNumberApiResponse,
+      PutApiMyAccountProfileEditPhoneNumberApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/edit-phone-number`,
+        url: `/api/my/account/profile/edit-phone-number`,
         method: "PUT",
         body: queryArg.editPhoneNumberModel,
       }),
     }),
-    postApiAccountProfileConfirmPhoneNumber: build.mutation<
-      PostApiAccountProfileConfirmPhoneNumberApiResponse,
-      PostApiAccountProfileConfirmPhoneNumberApiArg
+    postApiMyAccountProfileConfirmPhoneNumber: build.mutation<
+      PostApiMyAccountProfileConfirmPhoneNumberApiResponse,
+      PostApiMyAccountProfileConfirmPhoneNumberApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/confirm-phone-number`,
+        url: `/api/my/account/profile/confirm-phone-number`,
         method: "POST",
         body: queryArg.confirmPhoneNumberModel,
       }),
     }),
-    putApiAccountProfileEditEmailNotification: build.mutation<
-      PutApiAccountProfileEditEmailNotificationApiResponse,
-      PutApiAccountProfileEditEmailNotificationApiArg
+    putApiMyAccountProfileEditEmailNotification: build.mutation<
+      PutApiMyAccountProfileEditEmailNotificationApiResponse,
+      PutApiMyAccountProfileEditEmailNotificationApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/edit-email-notification`,
+        url: `/api/my/account/profile/edit-email-notification`,
         method: "PUT",
         body: queryArg.editEmailNotifyModel,
       }),
     }),
-    putApiAccountProfileEditPhoneNotification: build.mutation<
-      PutApiAccountProfileEditPhoneNotificationApiResponse,
-      PutApiAccountProfileEditPhoneNotificationApiArg
+    putApiMyAccountProfileEditPhoneNotification: build.mutation<
+      PutApiMyAccountProfileEditPhoneNotificationApiResponse,
+      PutApiMyAccountProfileEditPhoneNotificationApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/edit-phone-notification`,
+        url: `/api/my/account/profile/edit-phone-notification`,
         method: "PUT",
         body: queryArg.editPhoneNotifyModel,
       }),
     }),
-    postApiAccountProfileChangePassword: build.mutation<
-      PostApiAccountProfileChangePasswordApiResponse,
-      PostApiAccountProfileChangePasswordApiArg
+    postApiMyAccountProfileChangePassword: build.mutation<
+      PostApiMyAccountProfileChangePasswordApiResponse,
+      PostApiMyAccountProfileChangePasswordApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/profile/change-password`,
+        url: `/api/my/account/profile/change-password`,
         method: "POST",
         body: queryArg.changePasswordModel,
       }),
     }),
-    getApiRabbitHostList: build.query<
-      GetApiRabbitHostListApiResponse,
-      GetApiRabbitHostListApiArg
+    getApiMyRabbitHostList: build.query<
+      GetApiMyRabbitHostListApiResponse,
+      GetApiMyRabbitHostListApiArg
     >({
-      query: () => ({ url: `/api/rabbit/host/list` }),
+      query: () => ({ url: `/api/my/rabbit/host/list` }),
     }),
-    getApiRabbitHostGetById: build.query<
-      GetApiRabbitHostGetByIdApiResponse,
-      GetApiRabbitHostGetByIdApiArg
+    getApiMyRabbitHostGetById: build.query<
+      GetApiMyRabbitHostGetByIdApiResponse,
+      GetApiMyRabbitHostGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/rabbit/host/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/rabbit/host/get/${queryArg.id}` }),
     }),
-    postApiRabbitHostCreate: build.mutation<
-      PostApiRabbitHostCreateApiResponse,
-      PostApiRabbitHostCreateApiArg
+    postApiMyRabbitHostCreate: build.mutation<
+      PostApiMyRabbitHostCreateApiResponse,
+      PostApiMyRabbitHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/host/create`,
+        url: `/api/my/rabbit/host/create`,
         method: "POST",
         body: queryArg.createRabbitHostModel,
       }),
     }),
-    putApiRabbitHostChangeService: build.mutation<
-      PutApiRabbitHostChangeServiceApiResponse,
-      PutApiRabbitHostChangeServiceApiArg
+    putApiMyRabbitHostChangeService: build.mutation<
+      PutApiMyRabbitHostChangeServiceApiResponse,
+      PutApiMyRabbitHostChangeServiceApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/host/change-service`,
+        url: `/api/my/rabbit/host/change-service`,
         method: "PUT",
         body: queryArg.editRabbitHostModel,
       }),
     }),
-    deleteApiRabbitHostDeleteById: build.mutation<
-      DeleteApiRabbitHostDeleteByIdApiResponse,
-      DeleteApiRabbitHostDeleteByIdApiArg
+    deleteApiMyRabbitHostDeleteById: build.mutation<
+      DeleteApiMyRabbitHostDeleteByIdApiResponse,
+      DeleteApiMyRabbitHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/host/delete/${queryArg.id}`,
+        url: `/api/my/rabbit/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiRabbitHostChangeExchange: build.mutation<
-      PostApiRabbitHostChangeExchangeApiResponse,
-      PostApiRabbitHostChangeExchangeApiArg
+    postApiMyRabbitHostChangeExchange: build.mutation<
+      PostApiMyRabbitHostChangeExchangeApiResponse,
+      PostApiMyRabbitHostChangeExchangeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/host/change-exchange`,
+        url: `/api/my/rabbit/host/change-exchange`,
         method: "POST",
         body: queryArg.changeExchangeModel,
       }),
     }),
-    getApiRabbitUserListByRabbitHostId: build.query<
-      GetApiRabbitUserListByRabbitHostIdApiResponse,
-      GetApiRabbitUserListByRabbitHostIdApiArg
+    getApiMyRabbitUserListByRabbitHostId: build.query<
+      GetApiMyRabbitUserListByRabbitHostIdApiResponse,
+      GetApiMyRabbitUserListByRabbitHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/user/list/${queryArg.rabbitHostId}`,
+        url: `/api/my/rabbit/user/list/${queryArg.rabbitHostId}`,
       }),
     }),
-    postApiRabbitUserCreate: build.mutation<
-      PostApiRabbitUserCreateApiResponse,
-      PostApiRabbitUserCreateApiArg
+    postApiMyRabbitUserCreate: build.mutation<
+      PostApiMyRabbitUserCreateApiResponse,
+      PostApiMyRabbitUserCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/user/create`,
+        url: `/api/my/rabbit/user/create`,
         method: "POST",
         body: queryArg.createRabbitUserModel,
       }),
     }),
-    deleteApiRabbitUserDeleteById: build.mutation<
-      DeleteApiRabbitUserDeleteByIdApiResponse,
-      DeleteApiRabbitUserDeleteByIdApiArg
+    deleteApiMyRabbitUserDeleteById: build.mutation<
+      DeleteApiMyRabbitUserDeleteByIdApiResponse,
+      DeleteApiMyRabbitUserDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/user/delete/${queryArg.id}`,
+        url: `/api/my/rabbit/user/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiRabbitUserChangePassword: build.mutation<
-      PostApiRabbitUserChangePasswordApiResponse,
-      PostApiRabbitUserChangePasswordApiArg
+    postApiMyRabbitUserChangePassword: build.mutation<
+      PostApiMyRabbitUserChangePasswordApiResponse,
+      PostApiMyRabbitUserChangePasswordApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/rabbit/user/change-password`,
+        url: `/api/my/rabbit/user/change-password`,
         method: "POST",
         body: queryArg.changeRabbitPasswordModel,
       }),
     }),
-    getApiAccountReferralGet: build.query<
-      GetApiAccountReferralGetApiResponse,
-      GetApiAccountReferralGetApiArg
+    getApiMyAccountReferralGet: build.query<
+      GetApiMyAccountReferralGetApiResponse,
+      GetApiMyAccountReferralGetApiArg
     >({
-      query: () => ({ url: `/api/account/referral/get` }),
+      query: () => ({ url: `/api/my/account/referral/get` }),
     }),
-    postApiAccountReferralJoin: build.mutation<
-      PostApiAccountReferralJoinApiResponse,
-      PostApiAccountReferralJoinApiArg
+    postApiMyAccountReferralJoin: build.mutation<
+      PostApiMyAccountReferralJoinApiResponse,
+      PostApiMyAccountReferralJoinApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/referral/join`,
+        url: `/api/my/account/referral/join`,
         method: "POST",
         body: queryArg.joinReferralModel,
       }),
     }),
-    getApiAccountRoleRoleAccessTypes: build.query<
-      GetApiAccountRoleRoleAccessTypesApiResponse,
-      GetApiAccountRoleRoleAccessTypesApiArg
+    getApiMyAccountRoleRoleAccessTypes: build.query<
+      GetApiMyAccountRoleRoleAccessTypesApiResponse,
+      GetApiMyAccountRoleRoleAccessTypesApiArg
     >({
-      query: () => ({ url: `/api/account/role/role-access-types` }),
+      query: () => ({ url: `/api/my/account/role/role-access-types` }),
     }),
-    getApiAccountRoleRoles: build.query<
-      GetApiAccountRoleRolesApiResponse,
-      GetApiAccountRoleRolesApiArg
+    getApiMyAccountRoleRoles: build.query<
+      GetApiMyAccountRoleRolesApiResponse,
+      GetApiMyAccountRoleRolesApiArg
     >({
-      query: () => ({ url: `/api/account/role/roles` }),
+      query: () => ({ url: `/api/my/account/role/roles` }),
     }),
-    postApiAccountRoleGetUserAccessEntities: build.mutation<
-      PostApiAccountRoleGetUserAccessEntitiesApiResponse,
-      PostApiAccountRoleGetUserAccessEntitiesApiArg
+    postApiMyAccountRoleGetUserAccessEntities: build.mutation<
+      PostApiMyAccountRoleGetUserAccessEntitiesApiResponse,
+      PostApiMyAccountRoleGetUserAccessEntitiesApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/role/get-user-access-entities`,
+        url: `/api/my/account/role/get-user-access-entities`,
         method: "POST",
         body: queryArg.getUserAccessEntityModel,
       }),
     }),
-    postApiAccountRoleCreateUserAccess: build.mutation<
-      PostApiAccountRoleCreateUserAccessApiResponse,
-      PostApiAccountRoleCreateUserAccessApiArg
+    postApiMyAccountRoleCreateUserAccess: build.mutation<
+      PostApiMyAccountRoleCreateUserAccessApiResponse,
+      PostApiMyAccountRoleCreateUserAccessApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/role/create-user-access`,
+        url: `/api/my/account/role/create-user-access`,
         method: "POST",
         body: queryArg.setUserAccessModel,
       }),
     }),
-    putApiAccountRoleEditUserAccess: build.mutation<
-      PutApiAccountRoleEditUserAccessApiResponse,
-      PutApiAccountRoleEditUserAccessApiArg
+    putApiMyAccountRoleEditUserAccess: build.mutation<
+      PutApiMyAccountRoleEditUserAccessApiResponse,
+      PutApiMyAccountRoleEditUserAccessApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/role/edit-user-access`,
+        url: `/api/my/account/role/edit-user-access`,
         method: "PUT",
         body: queryArg.setUserAccessModel,
       }),
     }),
-    deleteApiAccountRoleRemoveCustomerUser: build.mutation<
-      DeleteApiAccountRoleRemoveCustomerUserApiResponse,
-      DeleteApiAccountRoleRemoveCustomerUserApiArg
+    deleteApiMyAccountRoleRemoveCustomerUser: build.mutation<
+      DeleteApiMyAccountRoleRemoveCustomerUserApiResponse,
+      DeleteApiMyAccountRoleRemoveCustomerUserApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/role/remove-customer-user`,
+        url: `/api/my/account/role/remove-customer-user`,
         method: "DELETE",
         body: queryArg.removeCustomerUserModel,
       }),
     }),
-    getApiStorageHostList: build.query<
-      GetApiStorageHostListApiResponse,
-      GetApiStorageHostListApiArg
+    getApiMyStorageHostList: build.query<
+      GetApiMyStorageHostListApiResponse,
+      GetApiMyStorageHostListApiArg
     >({
-      query: () => ({ url: `/api/storage/host/list` }),
+      query: () => ({ url: `/api/my/storage/host/list` }),
     }),
-    getApiStorageHostGetById: build.query<
-      GetApiStorageHostGetByIdApiResponse,
-      GetApiStorageHostGetByIdApiArg
+    getApiMyStorageHostGetById: build.query<
+      GetApiMyStorageHostGetByIdApiResponse,
+      GetApiMyStorageHostGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/storage/host/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/storage/host/get/${queryArg.id}` }),
     }),
-    postApiStorageHostCreate: build.mutation<
-      PostApiStorageHostCreateApiResponse,
-      PostApiStorageHostCreateApiArg
+    postApiMyStorageHostCreate: build.mutation<
+      PostApiMyStorageHostCreateApiResponse,
+      PostApiMyStorageHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/host/create`,
+        url: `/api/my/storage/host/create`,
         method: "POST",
         body: queryArg.createStorageHostModel,
       }),
     }),
-    putApiStorageHostEdit: build.mutation<
-      PutApiStorageHostEditApiResponse,
-      PutApiStorageHostEditApiArg
+    putApiMyStorageHostEdit: build.mutation<
+      PutApiMyStorageHostEditApiResponse,
+      PutApiMyStorageHostEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/host/edit`,
+        url: `/api/my/storage/host/edit`,
         method: "PUT",
         body: queryArg.editStorageHostModel,
       }),
     }),
-    deleteApiStorageHostDeleteById: build.mutation<
-      DeleteApiStorageHostDeleteByIdApiResponse,
-      DeleteApiStorageHostDeleteByIdApiArg
+    deleteApiMyStorageHostDeleteById: build.mutation<
+      DeleteApiMyStorageHostDeleteByIdApiResponse,
+      DeleteApiMyStorageHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/host/delete/${queryArg.id}`,
+        url: `/api/my/storage/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiStorageUserListByStorageHostId: build.query<
-      GetApiStorageUserListByStorageHostIdApiResponse,
-      GetApiStorageUserListByStorageHostIdApiArg
+    getApiMyStorageUserListByStorageHostId: build.query<
+      GetApiMyStorageUserListByStorageHostIdApiResponse,
+      GetApiMyStorageUserListByStorageHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/user/list/${queryArg.storageHostId}`,
+        url: `/api/my/storage/user/list/${queryArg.storageHostId}`,
       }),
     }),
-    postApiStorageUserCreate: build.mutation<
-      PostApiStorageUserCreateApiResponse,
-      PostApiStorageUserCreateApiArg
+    postApiMyStorageUserCreate: build.mutation<
+      PostApiMyStorageUserCreateApiResponse,
+      PostApiMyStorageUserCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/user/create`,
+        url: `/api/my/storage/user/create`,
         method: "POST",
         body: queryArg.createStorageUserModel,
       }),
     }),
-    deleteApiStorageUserDeleteById: build.mutation<
-      DeleteApiStorageUserDeleteByIdApiResponse,
-      DeleteApiStorageUserDeleteByIdApiArg
+    deleteApiMyStorageUserDeleteById: build.mutation<
+      DeleteApiMyStorageUserDeleteByIdApiResponse,
+      DeleteApiMyStorageUserDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/storage/user/delete/${queryArg.id}`,
+        url: `/api/my/storage/user/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    getApiCloudSupportList: build.query<
-      GetApiCloudSupportListApiResponse,
-      GetApiCloudSupportListApiArg
+    getApiMyCloudSupportList: build.query<
+      GetApiMyCloudSupportListApiResponse,
+      GetApiMyCloudSupportListApiArg
     >({
-      query: () => ({ url: `/api/cloud/support/list` }),
+      query: () => ({ url: `/api/my/cloud/support/list` }),
     }),
-    getApiCloudSupportShortList: build.query<
-      GetApiCloudSupportShortListApiResponse,
-      GetApiCloudSupportShortListApiArg
+    getApiMyCloudSupportShortList: build.query<
+      GetApiMyCloudSupportShortListApiResponse,
+      GetApiMyCloudSupportShortListApiArg
     >({
-      query: () => ({ url: `/api/cloud/support/short-list` }),
+      query: () => ({ url: `/api/my/cloud/support/short-list` }),
     }),
-    postApiCloudSupportCreate: build.mutation<
-      PostApiCloudSupportCreateApiResponse,
-      PostApiCloudSupportCreateApiArg
+    postApiMyCloudSupportCreate: build.mutation<
+      PostApiMyCloudSupportCreateApiResponse,
+      PostApiMyCloudSupportCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/support/create`,
+        url: `/api/my/cloud/support/create`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getApiCloudSupportItemListBySupportId: build.query<
-      GetApiCloudSupportItemListBySupportIdApiResponse,
-      GetApiCloudSupportItemListBySupportIdApiArg
+    getApiMyCloudSupportItemListBySupportId: build.query<
+      GetApiMyCloudSupportItemListBySupportIdApiResponse,
+      GetApiMyCloudSupportItemListBySupportIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/support-item/list/${queryArg.supportId}`,
+        url: `/api/my/cloud/support-item/list/${queryArg.supportId}`,
       }),
     }),
-    postApiCloudSupportItemCreate: build.mutation<
-      PostApiCloudSupportItemCreateApiResponse,
-      PostApiCloudSupportItemCreateApiArg
+    postApiMyCloudSupportItemCreate: build.mutation<
+      PostApiMyCloudSupportItemCreateApiResponse,
+      PostApiMyCloudSupportItemCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/support-item/create`,
+        url: `/api/my/cloud/support-item/create`,
         method: "POST",
         body: queryArg.body,
       }),
     }),
-    getApiCloudSupportItemDownloadById: build.query<
-      GetApiCloudSupportItemDownloadByIdApiResponse,
-      GetApiCloudSupportItemDownloadByIdApiArg
+    getApiMyCloudSupportItemDownloadById: build.query<
+      GetApiMyCloudSupportItemDownloadByIdApiResponse,
+      GetApiMyCloudSupportItemDownloadByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/support-item/download/${queryArg.id}`,
+        url: `/api/my/cloud/support-item/download/${queryArg.id}`,
       }),
     }),
-    getApiCloudSupportSubjectList: build.query<
-      GetApiCloudSupportSubjectListApiResponse,
-      GetApiCloudSupportSubjectListApiArg
+    getApiMyCloudSupportSubjectList: build.query<
+      GetApiMyCloudSupportSubjectListApiResponse,
+      GetApiMyCloudSupportSubjectListApiArg
     >({
-      query: () => ({ url: `/api/cloud/support-subject/list` }),
+      query: () => ({ url: `/api/my/cloud/support-subject/list` }),
     }),
-    postApiCloudSupportSubjectSelectList: build.mutation<
-      PostApiCloudSupportSubjectSelectListApiResponse,
-      PostApiCloudSupportSubjectSelectListApiArg
+    postApiMyCloudSupportSubjectSelectList: build.mutation<
+      PostApiMyCloudSupportSubjectSelectListApiResponse,
+      PostApiMyCloudSupportSubjectSelectListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/cloud/support-subject/select-list`,
+        url: `/api/my/cloud/support-subject/select-list`,
         method: "POST",
         body: queryArg.supportSubjectSelectListModel,
       }),
     }),
-    postApiVmHostList: build.mutation<
-      PostApiVmHostListApiResponse,
-      PostApiVmHostListApiArg
+    postApiMyVmHostList: build.mutation<
+      PostApiMyVmHostListApiResponse,
+      PostApiMyVmHostListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/list`,
+        url: `/api/my/vm/host/list`,
         method: "POST",
         body: queryArg.vmListModel,
       }),
     }),
-    getApiVmHostGetById: build.query<
-      GetApiVmHostGetByIdApiResponse,
-      GetApiVmHostGetByIdApiArg
+    getApiMyVmHostGetById: build.query<
+      GetApiMyVmHostGetByIdApiResponse,
+      GetApiMyVmHostGetByIdApiArg
     >({
-      query: (queryArg) => ({ url: `/api/vm/host/get/${queryArg.id}` }),
+      query: (queryArg) => ({ url: `/api/my/vm/host/get/${queryArg.id}` }),
     }),
-    postApiVmHostCreate: build.mutation<
-      PostApiVmHostCreateApiResponse,
-      PostApiVmHostCreateApiArg
+    postApiMyVmHostCreate: build.mutation<
+      PostApiMyVmHostCreateApiResponse,
+      PostApiMyVmHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/create`,
+        url: `/api/my/vm/host/create`,
         method: "POST",
         body: queryArg.createVmModel,
       }),
     }),
-    putApiVmHostEdit: build.mutation<
-      PutApiVmHostEditApiResponse,
-      PutApiVmHostEditApiArg
+    putApiMyVmHostEdit: build.mutation<
+      PutApiMyVmHostEditApiResponse,
+      PutApiMyVmHostEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/edit`,
+        url: `/api/my/vm/host/edit`,
         method: "PUT",
         body: queryArg.editVmModel,
       }),
     }),
-    deleteApiVmHostDeleteById: build.mutation<
-      DeleteApiVmHostDeleteByIdApiResponse,
-      DeleteApiVmHostDeleteByIdApiArg
+    deleteApiMyVmHostDeleteById: build.mutation<
+      DeleteApiMyVmHostDeleteByIdApiResponse,
+      DeleteApiMyVmHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/delete/${queryArg.id}`,
+        url: `/api/my/vm/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiVmHostRebuild: build.mutation<
-      PutApiVmHostRebuildApiResponse,
-      PutApiVmHostRebuildApiArg
+    putApiMyVmHostRebuild: build.mutation<
+      PutApiMyVmHostRebuildApiResponse,
+      PutApiMyVmHostRebuildApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/rebuild`,
+        url: `/api/my/vm/host/rebuild`,
         method: "PUT",
         body: queryArg.rebuildVmModel,
       }),
     }),
-    putApiVmHostConnectById: build.mutation<
-      PutApiVmHostConnectByIdApiResponse,
-      PutApiVmHostConnectByIdApiArg
+    putApiMyVmHostConnectById: build.mutation<
+      PutApiMyVmHostConnectByIdApiResponse,
+      PutApiMyVmHostConnectByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/connect/${queryArg.id}`,
+        url: `/api/my/vm/host/connect/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostDisconnectById: build.mutation<
-      PutApiVmHostDisconnectByIdApiResponse,
-      PutApiVmHostDisconnectByIdApiArg
+    putApiMyVmHostDisconnectById: build.mutation<
+      PutApiMyVmHostDisconnectByIdApiResponse,
+      PutApiMyVmHostDisconnectByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/disconnect/${queryArg.id}`,
+        url: `/api/my/vm/host/disconnect/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostRebootById: build.mutation<
-      PutApiVmHostRebootByIdApiResponse,
-      PutApiVmHostRebootByIdApiArg
+    putApiMyVmHostRebootById: build.mutation<
+      PutApiMyVmHostRebootByIdApiResponse,
+      PutApiMyVmHostRebootByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/reboot/${queryArg.id}`,
+        url: `/api/my/vm/host/reboot/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostShutdownById: build.mutation<
-      PutApiVmHostShutdownByIdApiResponse,
-      PutApiVmHostShutdownByIdApiArg
+    putApiMyVmHostShutdownById: build.mutation<
+      PutApiMyVmHostShutdownByIdApiResponse,
+      PutApiMyVmHostShutdownByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/shutdown/${queryArg.id}`,
+        url: `/api/my/vm/host/shutdown/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostResetById: build.mutation<
-      PutApiVmHostResetByIdApiResponse,
-      PutApiVmHostResetByIdApiArg
+    putApiMyVmHostResetById: build.mutation<
+      PutApiMyVmHostResetByIdApiResponse,
+      PutApiMyVmHostResetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/reset/${queryArg.id}`,
+        url: `/api/my/vm/host/reset/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostStartById: build.mutation<
-      PutApiVmHostStartByIdApiResponse,
-      PutApiVmHostStartByIdApiArg
+    putApiMyVmHostStartById: build.mutation<
+      PutApiMyVmHostStartByIdApiResponse,
+      PutApiMyVmHostStartByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/start/${queryArg.id}`,
+        url: `/api/my/vm/host/start/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    putApiVmHostStopById: build.mutation<
-      PutApiVmHostStopByIdApiResponse,
-      PutApiVmHostStopByIdApiArg
+    putApiMyVmHostStopById: build.mutation<
+      PutApiMyVmHostStopByIdApiResponse,
+      PutApiMyVmHostStopByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/host/stop/${queryArg.id}`,
+        url: `/api/my/vm/host/stop/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    postApiVmKmsGet: build.mutation<
-      PostApiVmKmsGetApiResponse,
-      PostApiVmKmsGetApiArg
+    postApiMyVmKmsGet: build.mutation<
+      PostApiMyVmKmsGetApiResponse,
+      PostApiMyVmKmsGetApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/kms/get`,
+        url: `/api/my/vm/kms/get`,
         method: "POST",
         body: queryArg.getKmsModel,
       }),
     }),
-    getApiVmImageListByDatacenterId: build.query<
-      GetApiVmImageListByDatacenterIdApiResponse,
-      GetApiVmImageListByDatacenterIdApiArg
+    getApiMyVmImageListByDatacenterId: build.query<
+      GetApiMyVmImageListByDatacenterIdApiResponse,
+      GetApiMyVmImageListByDatacenterIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/image/list/${queryArg.datacenterId}`,
+        url: `/api/my/vm/image/list/${queryArg.datacenterId}`,
       }),
     }),
-    getApiVmIsoListByDatacenterId: build.query<
-      GetApiVmIsoListByDatacenterIdApiResponse,
-      GetApiVmIsoListByDatacenterIdApiArg
+    getApiMyVmIsoListByDatacenterId: build.query<
+      GetApiMyVmIsoListByDatacenterIdApiResponse,
+      GetApiMyVmIsoListByDatacenterIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/iso/list/${queryArg.datacenterId}`,
+        url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
       }),
     }),
-    putApiVmIsoMount: build.mutation<
-      PutApiVmIsoMountApiResponse,
-      PutApiVmIsoMountApiArg
+    putApiMyVmIsoMount: build.mutation<
+      PutApiMyVmIsoMountApiResponse,
+      PutApiMyVmIsoMountApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/iso/mount`,
+        url: `/api/my/vm/iso/mount`,
         method: "PUT",
         body: queryArg.mountModel,
       }),
     }),
-    putApiVmIsoUnmount: build.mutation<
-      PutApiVmIsoUnmountApiResponse,
-      PutApiVmIsoUnmountApiArg
+    putApiMyVmIsoUnmount: build.mutation<
+      PutApiMyVmIsoUnmountApiResponse,
+      PutApiMyVmIsoUnmountApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/iso/unmount`,
+        url: `/api/my/vm/iso/unmount`,
         method: "PUT",
         body: queryArg.unmountModel,
       }),
     }),
-    getApiVmProjectList: build.query<
-      GetApiVmProjectListApiResponse,
-      GetApiVmProjectListApiArg
+    getApiMyVmProjectList: build.query<
+      GetApiMyVmProjectListApiResponse,
+      GetApiMyVmProjectListApiArg
     >({
-      query: () => ({ url: `/api/vm/project/list` }),
+      query: () => ({ url: `/api/my/vm/project/list` }),
     }),
-    postApiVmProjectCreate: build.mutation<
-      PostApiVmProjectCreateApiResponse,
-      PostApiVmProjectCreateApiArg
+    postApiMyVmProjectCreate: build.mutation<
+      PostApiMyVmProjectCreateApiResponse,
+      PostApiMyVmProjectCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/project/create`,
+        url: `/api/my/vm/project/create`,
         method: "POST",
         body: queryArg.createVmProject,
       }),
     }),
-    putApiVmProjectEdit: build.mutation<
-      PutApiVmProjectEditApiResponse,
-      PutApiVmProjectEditApiArg
+    putApiMyVmProjectEdit: build.mutation<
+      PutApiMyVmProjectEditApiResponse,
+      PutApiMyVmProjectEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/project/edit`,
+        url: `/api/my/vm/project/edit`,
         method: "PUT",
         body: queryArg.editVmProject,
       }),
     }),
-    deleteApiVmProjectDeleteById: build.mutation<
-      DeleteApiVmProjectDeleteByIdApiResponse,
-      DeleteApiVmProjectDeleteByIdApiArg
+    deleteApiMyVmProjectDeleteById: build.mutation<
+      DeleteApiMyVmProjectDeleteByIdApiResponse,
+      DeleteApiMyVmProjectDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vm/project/delete/${queryArg.id}`,
+        url: `/api/my/vm/project/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiAccountVoucherUse: build.mutation<
-      PostApiAccountVoucherUseApiResponse,
-      PostApiAccountVoucherUseApiArg
+    postApiMyAccountVoucherUse: build.mutation<
+      PostApiMyAccountVoucherUseApiResponse,
+      PostApiMyAccountVoucherUseApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/account/voucher/use`,
+        url: `/api/my/account/voucher/use`,
         method: "POST",
         body: queryArg.useVoucherModel,
       }),
     }),
-    getApiVpcHostList: build.query<
-      GetApiVpcHostListApiResponse,
-      GetApiVpcHostListApiArg
+    getApiMyVpcHostList: build.query<
+      GetApiMyVpcHostListApiResponse,
+      GetApiMyVpcHostListApiArg
     >({
-      query: () => ({ url: `/api/vpc/host/list` }),
+      query: () => ({ url: `/api/my/vpc/host/list` }),
     }),
-    postApiVpcHostCreate: build.mutation<
-      PostApiVpcHostCreateApiResponse,
-      PostApiVpcHostCreateApiArg
+    postApiMyVpcHostCreate: build.mutation<
+      PostApiMyVpcHostCreateApiResponse,
+      PostApiMyVpcHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vpc/host/create`,
+        url: `/api/my/vpc/host/create`,
         method: "POST",
         body: queryArg.createVpcHostModel,
       }),
     }),
-    getApiVpcNetworkListByVpcHostId: build.query<
-      GetApiVpcNetworkListByVpcHostIdApiResponse,
-      GetApiVpcNetworkListByVpcHostIdApiArg
+    getApiMyVpcNetworkListByVpcHostId: build.query<
+      GetApiMyVpcNetworkListByVpcHostIdApiResponse,
+      GetApiMyVpcNetworkListByVpcHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vpc/network/list/${queryArg.vpcHostId}`,
+        url: `/api/my/vpc/network/list/${queryArg.vpcHostId}`,
       }),
     }),
-    postApiVpcNetworkCreate: build.mutation<
-      PostApiVpcNetworkCreateApiResponse,
-      PostApiVpcNetworkCreateApiArg
+    postApiMyVpcNetworkCreate: build.mutation<
+      PostApiMyVpcNetworkCreateApiResponse,
+      PostApiMyVpcNetworkCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/vpc/network/create`,
+        url: `/api/my/vpc/network/create`,
         method: "POST",
         body: queryArg.createVpcNetworkModel,
       }),
     }),
-    getApiCloudWalletGetBalance: build.query<
-      GetApiCloudWalletGetBalanceApiResponse,
-      GetApiCloudWalletGetBalanceApiArg
+    getApiMyCloudWalletGetBalance: build.query<
+      GetApiMyCloudWalletGetBalanceApiResponse,
+      GetApiMyCloudWalletGetBalanceApiArg
     >({
-      query: () => ({ url: `/api/cloud/wallet/get-balance` }),
+      query: () => ({ url: `/api/my/cloud/wallet/get-balance` }),
     }),
-    getApiCloudWalletList: build.query<
-      GetApiCloudWalletListApiResponse,
-      GetApiCloudWalletListApiArg
+    getApiMyCloudWalletList: build.query<
+      GetApiMyCloudWalletListApiResponse,
+      GetApiMyCloudWalletListApiArg
     >({
-      query: () => ({ url: `/api/cloud/wallet/list` }),
+      query: () => ({ url: `/api/my/cloud/wallet/list` }),
     }),
-    getApiWebList: build.query<GetApiWebListApiResponse, GetApiWebListApiArg>({
-      query: () => ({ url: `/api/web/list` }),
-    }),
-    getApiWebGetById: build.query<
-      GetApiWebGetByIdApiResponse,
-      GetApiWebGetByIdApiArg
+    getApiMyWebList: build.query<
+      GetApiMyWebListApiResponse,
+      GetApiMyWebListApiArg
     >({
-      query: (queryArg) => ({ url: `/api/web/get/${queryArg.id}` }),
+      query: () => ({ url: `/api/my/web/list` }),
     }),
-    getApiWebGetLoginSessionById: build.query<
-      GetApiWebGetLoginSessionByIdApiResponse,
-      GetApiWebGetLoginSessionByIdApiArg
+    getApiMyWebGetById: build.query<
+      GetApiMyWebGetByIdApiResponse,
+      GetApiMyWebGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/web/get/${queryArg.id}` }),
+    }),
+    getApiMyWebGetLoginSessionById: build.query<
+      GetApiMyWebGetLoginSessionByIdApiResponse,
+      GetApiMyWebGetLoginSessionByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/web/get-login-session/${queryArg.id}`,
+        url: `/api/my/web/get-login-session/${queryArg.id}`,
       }),
     }),
-    postApiWebCheckDomain: build.mutation<
-      PostApiWebCheckDomainApiResponse,
-      PostApiWebCheckDomainApiArg
+    postApiMyWebCheckDomain: build.mutation<
+      PostApiMyWebCheckDomainApiResponse,
+      PostApiMyWebCheckDomainApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/web/check-domain`,
+        url: `/api/my/web/check-domain`,
         method: "POST",
         body: queryArg.checkWebHostDomainModel,
       }),
     }),
-    postApiWebCreate: build.mutation<
-      PostApiWebCreateApiResponse,
-      PostApiWebCreateApiArg
+    postApiMyWebCreate: build.mutation<
+      PostApiMyWebCreateApiResponse,
+      PostApiMyWebCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/web/create`,
+        url: `/api/my/web/create`,
         method: "POST",
         body: queryArg.createWebHostModel,
       }),
     }),
-    putApiWebEdit: build.mutation<
-      PutApiWebEditApiResponse,
-      PutApiWebEditApiArg
+    putApiMyWebEdit: build.mutation<
+      PutApiMyWebEditApiResponse,
+      PutApiMyWebEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/web/edit`,
+        url: `/api/my/web/edit`,
         method: "PUT",
         body: queryArg.editWebHostModel,
       }),
     }),
-    deleteApiWebDeleteById: build.mutation<
-      DeleteApiWebDeleteByIdApiResponse,
-      DeleteApiWebDeleteByIdApiArg
+    deleteApiMyWebDeleteById: build.mutation<
+      DeleteApiMyWebDeleteByIdApiResponse,
+      DeleteApiMyWebDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/web/delete/${queryArg.id}`,
+        url: `/api/my/web/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiDomainWhoisGet: build.mutation<
-      PostApiDomainWhoisGetApiResponse,
-      PostApiDomainWhoisGetApiArg
+    postApiMyDomainWhoisGet: build.mutation<
+      PostApiMyDomainWhoisGetApiResponse,
+      PostApiMyDomainWhoisGetApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/domain/whois/get`,
+        url: `/api/my/domain/whois/get`,
         method: "POST",
         body: queryArg.getDomainWhoisModel,
       }),
     }),
   }),
 });
-export type PostApiAccountLoginApiResponse =
+export type PostApiMyAccountLoginApiResponse =
   /** status 200 Success */ LoginResponse;
-export type PostApiAccountLoginApiArg = {
+export type PostApiMyAccountLoginApiArg = {
   loginModel: LoginModel;
 };
-export type PostApiAccountRegisterApiResponse = unknown;
-export type PostApiAccountRegisterApiArg = {
+export type PostApiMyAccountRegisterApiResponse = unknown;
+export type PostApiMyAccountRegisterApiArg = {
   registerModel: RegisterModel;
 };
-export type PostApiAccountForgotApiResponse = unknown;
-export type PostApiAccountForgotApiArg = {
+export type PostApiMyAccountForgotApiResponse = unknown;
+export type PostApiMyAccountForgotApiArg = {
   forgotModel: ForgotModel;
 };
-export type PostApiAccountForgotConfirmApiResponse = unknown;
-export type PostApiAccountForgotConfirmApiArg = {
+export type PostApiMyAccountForgotConfirmApiResponse = unknown;
+export type PostApiMyAccountForgotConfirmApiArg = {
   forgotConfirmModel: ForgotConfirmModel;
 };
-export type PostApiAccountLogoutApiResponse = unknown;
-export type PostApiAccountLogoutApiArg = void;
-export type GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiResponse =
+export type PostApiMyAccountLogoutApiResponse = unknown;
+export type PostApiMyAccountLogoutApiArg = void;
+export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse =
   /** status 200 Success */ GetAnalyticResponse;
-export type GetApiCdnAnalyticGetByCdnIdAndPeriodIdApiArg = {
+export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg = {
   cdnId: number;
   periodId: number;
 };
-export type GetApiCdnApiGatewayListByCdnIdApiResponse =
+export type GetApiMyCdnApiGatewayListByCdnIdApiResponse =
   /** status 200 Success */ ApiGatewayListResponse[];
-export type GetApiCdnApiGatewayListByCdnIdApiArg = {
+export type GetApiMyCdnApiGatewayListByCdnIdApiArg = {
   cdnId: number;
 };
-export type GetApiCdnApiGatewayGetByIdApiResponse =
+export type GetApiMyCdnApiGatewayGetByIdApiResponse =
   /** status 200 Success */ GetApiGatewayResponse;
-export type GetApiCdnApiGatewayGetByIdApiArg = {
+export type GetApiMyCdnApiGatewayGetByIdApiArg = {
   id: number;
 };
-export type PostApiCdnApiGatewayCreateApiResponse = unknown;
-export type PostApiCdnApiGatewayCreateApiArg = {
+export type PostApiMyCdnApiGatewayCreateApiResponse = unknown;
+export type PostApiMyCdnApiGatewayCreateApiArg = {
   createApiGatewayModel: CreateApiGatewayModel;
 };
-export type PutApiCdnApiGatewayEditApiResponse = unknown;
-export type PutApiCdnApiGatewayEditApiArg = {
+export type PutApiMyCdnApiGatewayEditApiResponse = unknown;
+export type PutApiMyCdnApiGatewayEditApiArg = {
   editApiGatewayModel: EditApiGatewayModel;
 };
-export type DeleteApiCdnApiGatewayDeleteByIdApiResponse = unknown;
-export type DeleteApiCdnApiGatewayDeleteByIdApiArg = {
+export type DeleteApiMyCdnApiGatewayDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnApiGatewayDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiBareMetalListApiResponse =
+export type GetApiMyBareMetalListApiResponse =
   /** status 200 Success */ BareMetalListResponse[];
-export type GetApiBareMetalListApiArg = void;
-export type GetApiBareMetalGetByIdApiResponse =
+export type GetApiMyBareMetalListApiArg = void;
+export type GetApiMyBareMetalGetByIdApiResponse =
   /** status 200 Success */ BareMetalResponse;
-export type GetApiBareMetalGetByIdApiArg = {
+export type GetApiMyBareMetalGetByIdApiArg = {
   id: number;
 };
-export type PostApiBareMetalCreateApiResponse = unknown;
-export type PostApiBareMetalCreateApiArg = {
+export type PostApiMyBareMetalCreateApiResponse = unknown;
+export type PostApiMyBareMetalCreateApiArg = {
   createBareMetalModel: CreateBareMetalModel;
 };
-export type DeleteApiBareMetalDeleteApiResponse = unknown;
-export type DeleteApiBareMetalDeleteApiArg = {
+export type DeleteApiMyBareMetalDeleteApiResponse = unknown;
+export type DeleteApiMyBareMetalDeleteApiArg = {
   id?: number;
 };
-export type GetApiCloudBusinessUnitListApiResponse =
+export type GetApiMyCloudBusinessUnitListApiResponse =
   /** status 200 Success */ BusinessUnitListResponse[];
-export type GetApiCloudBusinessUnitListApiArg = void;
-export type GetApiCloudCalculateMonthListApiResponse =
+export type GetApiMyCloudBusinessUnitListApiArg = void;
+export type GetApiMyCloudCalculateMonthListApiResponse =
   /** status 200 Success */ CalculateMonthListResponse[];
-export type GetApiCloudCalculateMonthListApiArg = void;
-export type GetApiCdnClientCertGetByCdnIdApiResponse =
+export type GetApiMyCloudCalculateMonthListApiArg = void;
+export type GetApiMyCdnClientCertGetByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetByCdnIdApiArg = {
+export type GetApiMyCdnClientCertGetByCdnIdApiArg = {
   cdnId: number;
 };
-export type GetApiCdnClientCertGetUserCertByCdnIdApiResponse =
+export type GetApiMyCdnClientCertGetUserCertByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnClientCertGetUserCertByCdnIdApiArg = {
+export type GetApiMyCdnClientCertGetUserCertByCdnIdApiArg = {
   cdnId: number;
 };
-export type PostApiCdnClientCertCreateUserCertApiResponse = unknown;
-export type PostApiCdnClientCertCreateUserCertApiArg = {
+export type PostApiMyCdnClientCertCreateUserCertApiResponse = unknown;
+export type PostApiMyCdnClientCertCreateUserCertApiArg = {
   createCdnClientUserCertModel: CreateCdnClientUserCertModel;
 };
-export type GetApiCdnEdgeCertGetByCdnIdApiResponse =
+export type GetApiMyCdnEdgeCertGetByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetByCdnIdApiArg = {
+export type GetApiMyCdnEdgeCertGetByCdnIdApiArg = {
   cdnId: number;
 };
-export type GetApiCdnEdgeCertGetUserCertByCdnIdApiResponse =
+export type GetApiMyCdnEdgeCertGetUserCertByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiCdnEdgeCertGetUserCertByCdnIdApiArg = {
+export type GetApiMyCdnEdgeCertGetUserCertByCdnIdApiArg = {
   cdnId: number;
 };
-export type PostApiCdnEdgeCertCreateApiResponse = unknown;
-export type PostApiCdnEdgeCertCreateApiArg = {
+export type PostApiMyCdnEdgeCertCreateApiResponse = unknown;
+export type PostApiMyCdnEdgeCertCreateApiArg = {
   createCdnEdgeCertModel: CreateCdnEdgeCertModel;
 };
-export type PostApiCdnEdgeCertCreateUserCertApiResponse = unknown;
-export type PostApiCdnEdgeCertCreateUserCertApiArg = {
+export type PostApiMyCdnEdgeCertCreateUserCertApiResponse = unknown;
+export type PostApiMyCdnEdgeCertCreateUserCertApiArg = {
   createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
 };
-export type GetApiCdnHostListApiResponse =
+export type GetApiMyCdnHostListApiResponse =
   /** status 200 Success */ CdnListResponse[];
-export type GetApiCdnHostListApiArg = void;
-export type GetApiCdnHostGetByIdApiResponse =
+export type GetApiMyCdnHostListApiArg = void;
+export type GetApiMyCdnHostGetByIdApiResponse =
   /** status 200 Success */ GetCdnResponse;
-export type GetApiCdnHostGetByIdApiArg = {
+export type GetApiMyCdnHostGetByIdApiArg = {
   id: number;
 };
-export type GetApiCdnHostGetNsStatusByIdApiResponse =
+export type GetApiMyCdnHostGetNsStatusByIdApiResponse =
   /** status 200 Success */ GetCdnNsStatusResponse;
-export type GetApiCdnHostGetNsStatusByIdApiArg = {
+export type GetApiMyCdnHostGetNsStatusByIdApiArg = {
   id: number;
 };
-export type GetApiCdnHostOverviewByIdApiResponse =
+export type GetApiMyCdnHostOverviewByIdApiResponse =
   /** status 200 Success */ CdnOverviewResponse;
-export type GetApiCdnHostOverviewByIdApiArg = {
+export type GetApiMyCdnHostOverviewByIdApiArg = {
   id: number;
 };
-export type PostApiCdnHostCheckZoneApiResponse = unknown;
-export type PostApiCdnHostCheckZoneApiArg = {
+export type PostApiMyCdnHostCheckZoneApiResponse = unknown;
+export type PostApiMyCdnHostCheckZoneApiArg = {
   checkCdnModel: CheckCdnModel;
 };
-export type PostApiCdnHostCreateApiResponse = unknown;
-export type PostApiCdnHostCreateApiArg = {
+export type PostApiMyCdnHostCreateApiResponse = unknown;
+export type PostApiMyCdnHostCreateApiArg = {
   createCdnModel: CreateCdnModel;
 };
-export type DeleteApiCdnHostDeleteByIdApiResponse = unknown;
-export type DeleteApiCdnHostDeleteByIdApiArg = {
+export type DeleteApiMyCdnHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnHostDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiCdnHostChangeCdnTypeApiResponse = unknown;
-export type PutApiCdnHostChangeCdnTypeApiArg = {
+export type PutApiMyCdnHostChangeCdnTypeApiResponse = unknown;
+export type PutApiMyCdnHostChangeCdnTypeApiArg = {
   changeCdnTypeModel: ChangeCdnTypeModel;
 };
-export type PutApiCdnHostChangeClientCertTypeApiResponse = unknown;
-export type PutApiCdnHostChangeClientCertTypeApiArg = {
+export type PutApiMyCdnHostChangeClientCertTypeApiResponse = unknown;
+export type PutApiMyCdnHostChangeClientCertTypeApiArg = {
   changeClientCertTypeModel: ChangeClientCertTypeModel;
 };
-export type PutApiCdnHostChangeEdgeCertTypeApiResponse = unknown;
-export type PutApiCdnHostChangeEdgeCertTypeApiArg = {
+export type PutApiMyCdnHostChangeEdgeCertTypeApiResponse = unknown;
+export type PutApiMyCdnHostChangeEdgeCertTypeApiArg = {
   changeEdgeCertTypeModel: ChangeEdgeCertTypeModel;
 };
-export type PutApiCdnHostChangeHstsApiResponse = unknown;
-export type PutApiCdnHostChangeHstsApiArg = {
+export type PutApiMyCdnHostChangeHstsApiResponse = unknown;
+export type PutApiMyCdnHostChangeHstsApiArg = {
   changeHstsModel: ChangeHstsModel;
 };
-export type PutApiCdnHostChangeHttpsRedirectApiResponse = unknown;
-export type PutApiCdnHostChangeHttpsRedirectApiArg = {
+export type PutApiMyCdnHostChangeHttpsRedirectApiResponse = unknown;
+export type PutApiMyCdnHostChangeHttpsRedirectApiArg = {
   changeHttpsRedirectModel: ChangeHttpsRedirectModel;
 };
-export type PutApiCdnHostChangeNonWwwRedirectApiResponse = unknown;
-export type PutApiCdnHostChangeNonWwwRedirectApiArg = {
+export type PutApiMyCdnHostChangeNonWwwRedirectApiResponse = unknown;
+export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
-export type GetApiColocationListApiResponse =
+export type GetApiMyColocationListApiResponse =
   /** status 200 Success */ CoLocationListResponse[];
-export type GetApiColocationListApiArg = void;
-export type PostApiColocationCreateApiResponse =
+export type GetApiMyColocationListApiArg = void;
+export type PostApiMyColocationCreateApiResponse =
   /** status 200 Success */ number;
-export type PostApiColocationCreateApiArg = {
+export type PostApiMyColocationCreateApiArg = {
   createColocationModel: CreateColocationModel;
 };
-export type DeleteApiColocationDeleteByIdApiResponse = unknown;
-export type DeleteApiColocationDeleteByIdApiArg = {
+export type DeleteApiMyColocationDeleteByIdApiResponse = unknown;
+export type DeleteApiMyColocationDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCloudCommissionListApiResponse =
+export type GetApiMyCloudCommissionListApiResponse =
   /** status 200 Success */ CommissionListResponse;
-export type GetApiCloudCommissionListApiArg = void;
-export type GetApiCloudCustomerGetApiResponse =
+export type GetApiMyCloudCommissionListApiArg = void;
+export type GetApiMyCloudCustomerGetApiResponse =
   /** status 200 Success */ GetCustomerResponse;
-export type GetApiCloudCustomerGetApiArg = void;
-export type GetApiCloudCustomerGetCustomerTypeApiResponse =
+export type GetApiMyCloudCustomerGetApiArg = void;
+export type GetApiMyCloudCustomerGetCustomerTypeApiResponse =
   /** status 200 Success */ number;
-export type GetApiCloudCustomerGetCustomerTypeApiArg = void;
-export type PutApiCloudCustomerEditApiResponse = unknown;
-export type PutApiCloudCustomerEditApiArg = {
+export type GetApiMyCloudCustomerGetCustomerTypeApiArg = void;
+export type PutApiMyCloudCustomerEditApiResponse = unknown;
+export type PutApiMyCloudCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
 };
-export type PutApiCloudCustomerEditCustomerTypeApiResponse = unknown;
-export type PutApiCloudCustomerEditCustomerTypeApiArg = {
+export type PutApiMyCloudCustomerEditCustomerTypeApiResponse = unknown;
+export type PutApiMyCloudCustomerEditCustomerTypeApiArg = {
   editCustomerTypeModel: EditCustomerTypeModel;
 };
-export type GetApiCloudBillListApiResponse =
+export type GetApiMyCloudBillListApiResponse =
   /** status 200 Success */ CustomerBillListResponse[];
-export type GetApiCloudBillListApiArg = void;
-export type GetApiCloudBillBillShortListApiResponse =
+export type GetApiMyCloudBillListApiArg = void;
+export type GetApiMyCloudBillBillShortListApiResponse =
   /** status 200 Success */ CustomerBillShortListResponse[];
-export type GetApiCloudBillBillShortListApiArg = void;
-export type GetApiCloudBillGetByIdApiResponse =
+export type GetApiMyCloudBillBillShortListApiArg = void;
+export type GetApiMyCloudBillGetByIdApiResponse =
   /** status 200 Success */ GetCustomerBillResponse;
-export type GetApiCloudBillGetByIdApiArg = {
+export type GetApiMyCloudBillGetByIdApiArg = {
   id: number;
 };
-export type GetApiCloudBillDownloadByIdApiResponse = unknown;
-export type GetApiCloudBillDownloadByIdApiArg = {
+export type GetApiMyCloudBillDownloadByIdApiResponse = unknown;
+export type GetApiMyCloudBillDownloadByIdApiArg = {
   id: number;
 };
-export type GetApiCloudCustomerProductListByProductIdApiResponse =
+export type GetApiMyCloudCustomerProductListByProductIdApiResponse =
   /** status 200 Success */ CustomerProductListResponse[];
-export type GetApiCloudCustomerProductListByProductIdApiArg = {
+export type GetApiMyCloudCustomerProductListByProductIdApiArg = {
   productId: number;
 };
-export type PostApiCloudCustomerProductTransferApiResponse = unknown;
-export type PostApiCloudCustomerProductTransferApiArg = {
+export type PostApiMyCloudCustomerProductTransferApiResponse = unknown;
+export type PostApiMyCloudCustomerProductTransferApiArg = {
   customerProductTransferModel: CustomerProductTransferModel;
 };
-export type PostApiCloudCustomerUserChangeUserCustomerApiResponse =
+export type PostApiMyCloudCustomerUserChangeUserCustomerApiResponse =
   /** status 200 Success */ ChangeUserCustomerResponse;
-export type PostApiCloudCustomerUserChangeUserCustomerApiArg = {
+export type PostApiMyCloudCustomerUserChangeUserCustomerApiArg = {
   changeUserCustomerModel: ChangeUserCustomerModel;
 };
-export type GetApiCloudDashboardUsageByCategoryIdApiResponse =
+export type GetApiMyCloudDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
-export type GetApiCloudDashboardUsageByCategoryIdApiArg = {
+export type GetApiMyCloudDashboardUsageByCategoryIdApiArg = {
   categoryId: number;
 };
-export type GetApiDatacenterListApiResponse =
+export type GetApiMyDatacenterListApiResponse =
   /** status 200 Success */ DatacenterListResponse[];
-export type GetApiDatacenterListApiArg = void;
-export type GetApiDatacenterIpListByProductIdAndIdApiResponse =
+export type GetApiMyDatacenterListApiArg = void;
+export type GetApiMyDatacenterIpListByProductIdAndIdApiResponse =
   /** status 200 Success */ DatacenterIpListResponse[];
-export type GetApiDatacenterIpListByProductIdAndIdApiArg = {
+export type GetApiMyDatacenterIpListByProductIdAndIdApiArg = {
   productId: number;
   id: number;
 };
-export type DeleteApiDatacenterIpDeleteByIdApiResponse = unknown;
-export type DeleteApiDatacenterIpDeleteByIdApiArg = {
+export type DeleteApiMyDatacenterIpDeleteByIdApiResponse = unknown;
+export type DeleteApiMyDatacenterIpDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCdnDnsRecordListByCdnIdApiResponse =
+export type GetApiMyCdnDnsRecordListByCdnIdApiResponse =
   /** status 200 Success */ DnsRecordListResponse[];
-export type GetApiCdnDnsRecordListByCdnIdApiArg = {
+export type GetApiMyCdnDnsRecordListByCdnIdApiArg = {
   cdnId: number;
 };
-export type GetApiCdnDnsRecordGetByIdApiResponse =
+export type GetApiMyCdnDnsRecordGetByIdApiResponse =
   /** status 200 Success */ GetDnsRecordResponse;
-export type GetApiCdnDnsRecordGetByIdApiArg = {
+export type GetApiMyCdnDnsRecordGetByIdApiArg = {
   id: number;
 };
-export type PostApiCdnDnsRecordCreateApiResponse = unknown;
-export type PostApiCdnDnsRecordCreateApiArg = {
+export type PostApiMyCdnDnsRecordCreateApiResponse = unknown;
+export type PostApiMyCdnDnsRecordCreateApiArg = {
   createDnsRecordModel: CreateDnsRecordModel;
 };
-export type PutApiCdnDnsRecordEditApiResponse = unknown;
-export type PutApiCdnDnsRecordEditApiArg = {
+export type PutApiMyCdnDnsRecordEditApiResponse = unknown;
+export type PutApiMyCdnDnsRecordEditApiArg = {
   editDnsRecordModel: EditDnsRecordModel;
 };
-export type DeleteApiCdnDnsRecordDeleteByIdApiResponse = unknown;
-export type DeleteApiCdnDnsRecordDeleteByIdApiArg = {
+export type DeleteApiMyCdnDnsRecordDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnDnsRecordDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiCdnDnsRecordChangeProxyStatusByIdApiResponse = unknown;
-export type PutApiCdnDnsRecordChangeProxyStatusByIdApiArg = {
+export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse = unknown;
+export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg = {
   id: number;
 };
-export type GetApiDomainListApiResponse =
+export type GetApiMyDomainListApiResponse =
   /** status 200 Success */ DomainListResponse[];
-export type GetApiDomainListApiArg = void;
-export type GetApiDomainGetByIdApiResponse =
+export type GetApiMyDomainListApiArg = void;
+export type GetApiMyDomainGetByIdApiResponse =
   /** status 200 Success */ GetDomainResponse;
-export type GetApiDomainGetByIdApiArg = {
+export type GetApiMyDomainGetByIdApiArg = {
   id: number;
 };
-export type GetApiDomainGetStatusByIdApiResponse =
+export type GetApiMyDomainGetStatusByIdApiResponse =
   /** status 200 Success */ GetDomainResponse;
-export type GetApiDomainGetStatusByIdApiArg = {
+export type GetApiMyDomainGetStatusByIdApiArg = {
   id: number;
 };
-export type PostApiDomainGetPriceApiResponse =
+export type PostApiMyDomainGetPriceApiResponse =
   /** status 200 Success */ GetProductPriceResponse;
-export type PostApiDomainGetPriceApiArg = {
+export type PostApiMyDomainGetPriceApiArg = {
   getPriceModel: GetPriceModel;
 };
-export type PostApiDomainRegisterApiResponse = /** status 200 Success */ number;
-export type PostApiDomainRegisterApiArg = {
+export type PostApiMyDomainRegisterApiResponse =
+  /** status 200 Success */ number;
+export type PostApiMyDomainRegisterApiArg = {
   registerDomainModel: RegisterDomainModel;
 };
-export type DeleteApiDomainDeleteByIdApiResponse = unknown;
-export type DeleteApiDomainDeleteByIdApiArg = {
+export type DeleteApiMyDomainDeleteByIdApiResponse = unknown;
+export type DeleteApiMyDomainDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiDomainChangeContactApiResponse = unknown;
-export type PutApiDomainChangeContactApiArg = {
+export type PutApiMyDomainChangeContactApiResponse = unknown;
+export type PutApiMyDomainChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
-export type PutApiDomainChangeNsApiResponse = unknown;
-export type PutApiDomainChangeNsApiArg = {
+export type PutApiMyDomainChangeNsApiResponse = unknown;
+export type PutApiMyDomainChangeNsApiArg = {
   changeNsModel: ChangeNsModel;
 };
-export type PostApiDomainResendVerificationByIdApiResponse = unknown;
-export type PostApiDomainResendVerificationByIdApiArg = {
+export type PostApiMyDomainResendVerificationByIdApiResponse = unknown;
+export type PostApiMyDomainResendVerificationByIdApiArg = {
   id: number;
 };
-export type GetApiHomeIndexApiResponse = unknown;
-export type GetApiHomeIndexApiArg = void;
-export type GetApiCloudInvoiceListApiResponse =
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
+export type GetApiMyCloudInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
-export type GetApiCloudInvoiceListApiArg = void;
-export type GetApiCloudInvoiceGetByIdApiResponse =
+export type GetApiMyCloudInvoiceListApiArg = void;
+export type GetApiMyCloudInvoiceGetByIdApiResponse =
   /** status 200 Success */ GetInvoiceResponse;
-export type GetApiCloudInvoiceGetByIdApiArg = {
+export type GetApiMyCloudInvoiceGetByIdApiArg = {
   id: number;
 };
-export type PostApiCloudInvoicePayApiResponse = unknown;
-export type PostApiCloudInvoicePayApiArg = {
+export type PostApiMyCloudInvoicePayApiResponse = unknown;
+export type PostApiMyCloudInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
-export type GetApiPlatformDevopsListByIdApiResponse =
+export type GetApiMyPlatformDevopsListByIdApiResponse =
   /** status 200 Success */ KubeDevOpsListResponse[];
-export type GetApiPlatformDevopsListByIdApiArg = {
+export type GetApiMyPlatformDevopsListByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformDevopsGetByIdApiResponse =
+export type GetApiMyPlatformDevopsGetByIdApiResponse =
   /** status 200 Success */ KubeDevOpsListResponse;
-export type GetApiPlatformDevopsGetByIdApiArg = {
+export type GetApiMyPlatformDevopsGetByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformDevopsCreateApiResponse = unknown;
-export type PostApiPlatformDevopsCreateApiArg = {
+export type PostApiMyPlatformDevopsCreateApiResponse = unknown;
+export type PostApiMyPlatformDevopsCreateApiArg = {
   createKubeDevOpsModel: CreateKubeDevOpsModel;
 };
-export type DeleteApiPlatformDevopsDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformDevopsDeleteByIdApiArg = {
+export type DeleteApiMyPlatformDevopsDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformDevopsDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformNamespaceListApiResponse =
+export type GetApiMyPlatformNamespaceListApiResponse =
   /** status 200 Success */ KubeHostListResponse[];
-export type GetApiPlatformNamespaceListApiArg = void;
-export type GetApiPlatformNamespaceGetByIdApiResponse =
+export type GetApiMyPlatformNamespaceListApiArg = void;
+export type GetApiMyPlatformNamespaceGetByIdApiResponse =
   /** status 200 Success */ GetKubeHostResponse;
-export type GetApiPlatformNamespaceGetByIdApiArg = {
+export type GetApiMyPlatformNamespaceGetByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformNamespaceGetLoginByIdApiResponse =
+export type GetApiMyPlatformNamespaceGetLoginByIdApiResponse =
   /** status 200 Success */ GetKubeLoginResponse;
-export type GetApiPlatformNamespaceGetLoginByIdApiArg = {
+export type GetApiMyPlatformNamespaceGetLoginByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformNamespaceCreateApiResponse = unknown;
-export type PostApiPlatformNamespaceCreateApiArg = {
+export type PostApiMyPlatformNamespaceCreateApiResponse = unknown;
+export type PostApiMyPlatformNamespaceCreateApiArg = {
   createKubeHostModel: CreateKubeHostModel;
 };
-export type PutApiPlatformNamespaceEditApiResponse = unknown;
-export type PutApiPlatformNamespaceEditApiArg = {
+export type PutApiMyPlatformNamespaceEditApiResponse = unknown;
+export type PutApiMyPlatformNamespaceEditApiArg = {
   editKubeHostModel: EditKubeHostModel;
 };
-export type DeleteApiPlatformNamespaceDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformNamespaceDeleteByIdApiArg = {
+export type DeleteApiMyPlatformNamespaceDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformNamespaceDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformServiceListByIdApiResponse =
+export type GetApiMyPlatformServiceListByIdApiResponse =
   /** status 200 Success */ KubeServiceListResponse[];
-export type GetApiPlatformServiceListByIdApiArg = {
+export type GetApiMyPlatformServiceListByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformServiceGetByIdApiResponse =
+export type GetApiMyPlatformServiceGetByIdApiResponse =
   /** status 200 Success */ KubeServiceListResponse;
-export type GetApiPlatformServiceGetByIdApiArg = {
+export type GetApiMyPlatformServiceGetByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformServiceCreateApiResponse = unknown;
-export type PostApiPlatformServiceCreateApiArg = {
+export type PostApiMyPlatformServiceCreateApiResponse = unknown;
+export type PostApiMyPlatformServiceCreateApiArg = {
   createKubeServiceModel: CreateKubeServiceModel;
 };
-export type DeleteApiPlatformServiceDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformServiceDeleteByIdApiArg = {
+export type DeleteApiMyPlatformServiceDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformServiceDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformKubernetesListApiResponse =
+export type GetApiMyPlatformKubernetesListApiResponse =
   /** status 200 Success */ GetKubernetesHostResponse[];
-export type GetApiPlatformKubernetesListApiArg = void;
-export type GetApiPlatformKubernetesGetByIdApiResponse =
+export type GetApiMyPlatformKubernetesListApiArg = void;
+export type GetApiMyPlatformKubernetesGetByIdApiResponse =
   /** status 200 Success */ GetKubernetesHostResponse;
-export type GetApiPlatformKubernetesGetByIdApiArg = {
+export type GetApiMyPlatformKubernetesGetByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformKubernetesCreateApiResponse = unknown;
-export type PostApiPlatformKubernetesCreateApiArg = {
+export type PostApiMyPlatformKubernetesCreateApiResponse = unknown;
+export type PostApiMyPlatformKubernetesCreateApiArg = {
   createClusterModel: CreateClusterModel;
 };
-export type PutApiPlatformKubernetesEditApiResponse = unknown;
-export type PutApiPlatformKubernetesEditApiArg = {
+export type PutApiMyPlatformKubernetesEditApiResponse = unknown;
+export type PutApiMyPlatformKubernetesEditApiArg = {
   editClusterModel: EditClusterModel;
 };
-export type DeleteApiPlatformKubernetesDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformKubernetesDeleteByIdApiArg = {
+export type DeleteApiMyPlatformKubernetesDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformKubernetesDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformUserListApiResponse =
+export type GetApiMyPlatformUserListApiResponse =
   /** status 200 Success */ KubeUserListResponse[];
-export type GetApiPlatformUserListApiArg = void;
-export type GetApiPlatformUserShortListApiResponse =
+export type GetApiMyPlatformUserListApiArg = void;
+export type GetApiMyPlatformUserShortListApiResponse =
   /** status 200 Success */ KubeShortListResponse[];
-export type GetApiPlatformUserShortListApiArg = void;
-export type PostApiPlatformUserCreateApiResponse = unknown;
-export type PostApiPlatformUserCreateApiArg = {
+export type GetApiMyPlatformUserShortListApiArg = void;
+export type PostApiMyPlatformUserCreateApiResponse = unknown;
+export type PostApiMyPlatformUserCreateApiArg = {
   createKubeUserModel: CreateKubeUserModel;
 };
-export type DeleteApiPlatformUserDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformUserDeleteByIdApiArg = {
+export type DeleteApiMyPlatformUserDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformUserDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformUserChangePasswordApiResponse = unknown;
-export type PostApiPlatformUserChangePasswordApiArg = {
+export type PostApiMyPlatformUserChangePasswordApiResponse = unknown;
+export type PostApiMyPlatformUserChangePasswordApiArg = {
   changeKubeUserPasswordModel: ChangeKubeUserPasswordModel;
 };
-export type GetApiPlatformUserRoleListByKubeHostIdApiResponse =
+export type GetApiMyPlatformUserRoleListByKubeHostIdApiResponse =
   /** status 200 Success */ KubeUserRoleListResponse[];
-export type GetApiPlatformUserRoleListByKubeHostIdApiArg = {
+export type GetApiMyPlatformUserRoleListByKubeHostIdApiArg = {
   kubeHostId: number;
 };
-export type PostApiPlatformUserRoleCreateApiResponse = unknown;
-export type PostApiPlatformUserRoleCreateApiArg = {
+export type PostApiMyPlatformUserRoleCreateApiResponse = unknown;
+export type PostApiMyPlatformUserRoleCreateApiArg = {
   createKubeUserRoleModel: CreateKubeUserRoleModel;
 };
-export type DeleteApiPlatformUserRoleDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformUserRoleDeleteByIdApiArg = {
+export type DeleteApiMyPlatformUserRoleDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformUserRoleDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformVolumeListByIdApiResponse =
+export type GetApiMyPlatformVolumeListByIdApiResponse =
   /** status 200 Success */ KubeVolumeListResponse[];
-export type GetApiPlatformVolumeListByIdApiArg = {
+export type GetApiMyPlatformVolumeListByIdApiArg = {
   id: number;
 };
-export type GetApiPlatformVolumeGetByIdApiResponse =
+export type GetApiMyPlatformVolumeGetByIdApiResponse =
   /** status 200 Success */ KubeVolumeListResponse;
-export type GetApiPlatformVolumeGetByIdApiArg = {
+export type GetApiMyPlatformVolumeGetByIdApiArg = {
   id: number;
 };
-export type PostApiPlatformVolumeCreateApiResponse = unknown;
-export type PostApiPlatformVolumeCreateApiArg = {
+export type PostApiMyPlatformVolumeCreateApiResponse = unknown;
+export type PostApiMyPlatformVolumeCreateApiArg = {
   createKubeVolumeModel: CreateKubeVolumeModel;
 };
-export type DeleteApiPlatformVolumeDeleteByIdApiResponse = unknown;
-export type DeleteApiPlatformVolumeDeleteByIdApiArg = {
+export type DeleteApiMyPlatformVolumeDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPlatformVolumeDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCdnLoadBalanceListByCdnIdApiResponse =
+export type GetApiMyCdnLoadBalanceListByCdnIdApiResponse =
   /** status 200 Success */ LoadBalanceListResponse[];
-export type GetApiCdnLoadBalanceListByCdnIdApiArg = {
+export type GetApiMyCdnLoadBalanceListByCdnIdApiArg = {
   cdnId: number;
 };
-export type GetApiCdnLoadBalanceGetByIdApiResponse =
+export type GetApiMyCdnLoadBalanceGetByIdApiResponse =
   /** status 200 Success */ GetLoadBalanceResponse;
-export type GetApiCdnLoadBalanceGetByIdApiArg = {
+export type GetApiMyCdnLoadBalanceGetByIdApiArg = {
   id: number;
 };
-export type PostApiCdnLoadBalanceCreateApiResponse = unknown;
-export type PostApiCdnLoadBalanceCreateApiArg = {
+export type PostApiMyCdnLoadBalanceCreateApiResponse = unknown;
+export type PostApiMyCdnLoadBalanceCreateApiArg = {
   createLoadBalanceModel: CreateLoadBalanceModel;
 };
-export type PutApiCdnLoadBalanceEditApiResponse = unknown;
-export type PutApiCdnLoadBalanceEditApiArg = {
+export type PutApiMyCdnLoadBalanceEditApiResponse = unknown;
+export type PutApiMyCdnLoadBalanceEditApiArg = {
   editLoadBalanceModel: EditLoadBalanceModel;
 };
-export type DeleteApiCdnLoadBalanceDeleteByIdApiResponse = unknown;
-export type DeleteApiCdnLoadBalanceDeleteByIdApiArg = {
+export type DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnLoadBalanceDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCloudNotificationListApiResponse =
+export type GetApiMyCloudNotificationListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
-export type GetApiCloudNotificationListApiArg = void;
-export type GetApiCloudNotificationShortListApiResponse =
+export type GetApiMyCloudNotificationListApiArg = void;
+export type GetApiMyCloudNotificationShortListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
-export type GetApiCloudNotificationShortListApiArg = void;
-export type GetApiCloudPaymentListApiResponse =
+export type GetApiMyCloudNotificationShortListApiArg = void;
+export type GetApiMyCloudPaymentListApiResponse =
   /** status 200 Success */ PaymentListResponse[];
-export type GetApiCloudPaymentListApiArg = void;
-export type GetApiCloudPaymentGetByIdApiResponse =
+export type GetApiMyCloudPaymentListApiArg = void;
+export type GetApiMyCloudPaymentGetByIdApiResponse =
   /** status 200 Success */ GetPaymentResponse;
-export type GetApiCloudPaymentGetByIdApiArg = {
+export type GetApiMyCloudPaymentGetByIdApiArg = {
   id: number;
 };
-export type PostApiCloudPaymentCreateApiResponse =
+export type PostApiMyCloudPaymentCreateApiResponse =
   /** status 200 Success */ CreatePaymentResponse;
-export type PostApiCloudPaymentCreateApiArg = {
+export type PostApiMyCloudPaymentCreateApiArg = {
   createPaymentModel: CreatePaymentModel;
 };
-export type PostApiCloudPaymentPecCallBackApiResponse = unknown;
-export type PostApiCloudPaymentPecCallBackApiArg = {
+export type PostApiMyCloudPaymentPecCallBackApiResponse = unknown;
+export type PostApiMyCloudPaymentPecCallBackApiArg = {
   body: {
     Token?: number;
     OrderId?: number;
@@ -2223,8 +2245,8 @@ export type PostApiCloudPaymentPecCallBackApiArg = {
     STraceNo?: string;
   };
 };
-export type PostApiCloudPaymentSepCallBackApiResponse = unknown;
-export type PostApiCloudPaymentSepCallBackApiArg = {
+export type PostApiMyCloudPaymentSepCallBackApiResponse = unknown;
+export type PostApiMyCloudPaymentSepCallBackApiArg = {
   body: {
     TerminalId?: number;
     State?: string;
@@ -2239,182 +2261,182 @@ export type PostApiCloudPaymentSepCallBackApiArg = {
     HashedCardNumber?: string;
   };
 };
-export type GetApiCloudProductListApiResponse =
+export type GetApiMyCloudProductListApiResponse =
   /** status 200 Success */ ProductListResponse[];
-export type GetApiCloudProductListApiArg = void;
-export type GetApiCloudProductBundleListByProductIdApiResponse =
+export type GetApiMyCloudProductListApiArg = void;
+export type GetApiMyCloudProductBundleListByProductIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
-export type GetApiCloudProductBundleListByProductIdApiArg = {
+export type GetApiMyCloudProductBundleListByProductIdApiArg = {
   productId: number;
 };
-export type GetApiCloudProductBundleVmListApiResponse =
+export type GetApiMyCloudProductBundleVmListApiResponse =
   /** status 200 Success */ VmSpecListResponse[];
-export type GetApiCloudProductBundleVmListApiArg = void;
-export type GetApiCloudProductBundleStorageListApiResponse =
+export type GetApiMyCloudProductBundleVmListApiArg = void;
+export type GetApiMyCloudProductBundleStorageListApiResponse =
   /** status 200 Success */ StorageSpecResponse[];
-export type GetApiCloudProductBundleStorageListApiArg = void;
-export type GetApiCloudProductBundleWebHostListApiResponse =
+export type GetApiMyCloudProductBundleStorageListApiArg = void;
+export type GetApiMyCloudProductBundleWebHostListApiResponse =
   /** status 200 Success */ WebHostSpecResponse[];
-export type GetApiCloudProductBundleWebHostListApiArg = void;
-export type GetApiCloudProductItemListByProductIdApiResponse =
+export type GetApiMyCloudProductBundleWebHostListApiArg = void;
+export type GetApiMyCloudProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
-export type GetApiCloudProductItemListByProductIdApiArg = {
+export type GetApiMyCloudProductItemListByProductIdApiArg = {
   productId: number;
 };
-export type GetApiAccountProfileGetApiResponse =
+export type GetApiMyAccountProfileGetApiResponse =
   /** status 200 Success */ GetProfileResponse;
-export type GetApiAccountProfileGetApiArg = void;
-export type GetApiAccountProfileGetNotificationStatusApiResponse =
+export type GetApiMyAccountProfileGetApiArg = void;
+export type GetApiMyAccountProfileGetNotificationStatusApiResponse =
   /** status 200 Success */ GetNotificationStatusResponse;
-export type GetApiAccountProfileGetNotificationStatusApiArg = void;
-export type PutApiAccountProfileEditApiResponse = unknown;
-export type PutApiAccountProfileEditApiArg = {
+export type GetApiMyAccountProfileGetNotificationStatusApiArg = void;
+export type PutApiMyAccountProfileEditApiResponse = unknown;
+export type PutApiMyAccountProfileEditApiArg = {
   editProfileModel: EditProfileModel;
 };
-export type PutApiAccountProfileEditEmailApiResponse = unknown;
-export type PutApiAccountProfileEditEmailApiArg = {
+export type PutApiMyAccountProfileEditEmailApiResponse = unknown;
+export type PutApiMyAccountProfileEditEmailApiArg = {
   editEmailModel: EditEmailModel;
 };
-export type PostApiAccountProfileConfirmEmailApiResponse = unknown;
-export type PostApiAccountProfileConfirmEmailApiArg = {
+export type PostApiMyAccountProfileConfirmEmailApiResponse = unknown;
+export type PostApiMyAccountProfileConfirmEmailApiArg = {
   confirmEmailModel: ConfirmEmailModel;
 };
-export type PutApiAccountProfileEditPhoneNumberApiResponse = unknown;
-export type PutApiAccountProfileEditPhoneNumberApiArg = {
+export type PutApiMyAccountProfileEditPhoneNumberApiResponse = unknown;
+export type PutApiMyAccountProfileEditPhoneNumberApiArg = {
   editPhoneNumberModel: EditPhoneNumberModel;
 };
-export type PostApiAccountProfileConfirmPhoneNumberApiResponse = unknown;
-export type PostApiAccountProfileConfirmPhoneNumberApiArg = {
+export type PostApiMyAccountProfileConfirmPhoneNumberApiResponse = unknown;
+export type PostApiMyAccountProfileConfirmPhoneNumberApiArg = {
   confirmPhoneNumberModel: ConfirmPhoneNumberModel;
 };
-export type PutApiAccountProfileEditEmailNotificationApiResponse = unknown;
-export type PutApiAccountProfileEditEmailNotificationApiArg = {
+export type PutApiMyAccountProfileEditEmailNotificationApiResponse = unknown;
+export type PutApiMyAccountProfileEditEmailNotificationApiArg = {
   editEmailNotifyModel: EditEmailNotifyModel;
 };
-export type PutApiAccountProfileEditPhoneNotificationApiResponse = unknown;
-export type PutApiAccountProfileEditPhoneNotificationApiArg = {
+export type PutApiMyAccountProfileEditPhoneNotificationApiResponse = unknown;
+export type PutApiMyAccountProfileEditPhoneNotificationApiArg = {
   editPhoneNotifyModel: EditPhoneNotifyModel;
 };
-export type PostApiAccountProfileChangePasswordApiResponse = unknown;
-export type PostApiAccountProfileChangePasswordApiArg = {
+export type PostApiMyAccountProfileChangePasswordApiResponse = unknown;
+export type PostApiMyAccountProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
 };
-export type GetApiRabbitHostListApiResponse =
+export type GetApiMyRabbitHostListApiResponse =
   /** status 200 Success */ RabbitHostListResponse[];
-export type GetApiRabbitHostListApiArg = void;
-export type GetApiRabbitHostGetByIdApiResponse =
+export type GetApiMyRabbitHostListApiArg = void;
+export type GetApiMyRabbitHostGetByIdApiResponse =
   /** status 200 Success */ GetRabbitHostResponse;
-export type GetApiRabbitHostGetByIdApiArg = {
+export type GetApiMyRabbitHostGetByIdApiArg = {
   id: number;
 };
-export type PostApiRabbitHostCreateApiResponse = unknown;
-export type PostApiRabbitHostCreateApiArg = {
+export type PostApiMyRabbitHostCreateApiResponse = unknown;
+export type PostApiMyRabbitHostCreateApiArg = {
   createRabbitHostModel: CreateRabbitHostModel;
 };
-export type PutApiRabbitHostChangeServiceApiResponse = unknown;
-export type PutApiRabbitHostChangeServiceApiArg = {
+export type PutApiMyRabbitHostChangeServiceApiResponse = unknown;
+export type PutApiMyRabbitHostChangeServiceApiArg = {
   editRabbitHostModel: EditRabbitHostModel;
 };
-export type DeleteApiRabbitHostDeleteByIdApiResponse = unknown;
-export type DeleteApiRabbitHostDeleteByIdApiArg = {
+export type DeleteApiMyRabbitHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyRabbitHostDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiRabbitHostChangeExchangeApiResponse = unknown;
-export type PostApiRabbitHostChangeExchangeApiArg = {
+export type PostApiMyRabbitHostChangeExchangeApiResponse = unknown;
+export type PostApiMyRabbitHostChangeExchangeApiArg = {
   changeExchangeModel: ChangeExchangeModel;
 };
-export type GetApiRabbitUserListByRabbitHostIdApiResponse =
+export type GetApiMyRabbitUserListByRabbitHostIdApiResponse =
   /** status 200 Success */ RabbitHostUserListResponse[];
-export type GetApiRabbitUserListByRabbitHostIdApiArg = {
+export type GetApiMyRabbitUserListByRabbitHostIdApiArg = {
   rabbitHostId: number;
 };
-export type PostApiRabbitUserCreateApiResponse = unknown;
-export type PostApiRabbitUserCreateApiArg = {
+export type PostApiMyRabbitUserCreateApiResponse = unknown;
+export type PostApiMyRabbitUserCreateApiArg = {
   createRabbitUserModel: CreateRabbitUserModel;
 };
-export type DeleteApiRabbitUserDeleteByIdApiResponse = unknown;
-export type DeleteApiRabbitUserDeleteByIdApiArg = {
+export type DeleteApiMyRabbitUserDeleteByIdApiResponse = unknown;
+export type DeleteApiMyRabbitUserDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiRabbitUserChangePasswordApiResponse = unknown;
-export type PostApiRabbitUserChangePasswordApiArg = {
+export type PostApiMyRabbitUserChangePasswordApiResponse = unknown;
+export type PostApiMyRabbitUserChangePasswordApiArg = {
   changeRabbitPasswordModel: ChangeRabbitPasswordModel;
 };
-export type GetApiAccountReferralGetApiResponse =
+export type GetApiMyAccountReferralGetApiResponse =
   /** status 200 Success */ GetReferralResponse;
-export type GetApiAccountReferralGetApiArg = void;
-export type PostApiAccountReferralJoinApiResponse =
+export type GetApiMyAccountReferralGetApiArg = void;
+export type PostApiMyAccountReferralJoinApiResponse =
   /** status 200 Success */ JoinReferralResponse;
-export type PostApiAccountReferralJoinApiArg = {
+export type PostApiMyAccountReferralJoinApiArg = {
   joinReferralModel: JoinReferralModel;
 };
-export type GetApiAccountRoleRoleAccessTypesApiResponse =
+export type GetApiMyAccountRoleRoleAccessTypesApiResponse =
   /** status 200 Success */ GetAccessTypeResponse[];
-export type GetApiAccountRoleRoleAccessTypesApiArg = void;
-export type GetApiAccountRoleRolesApiResponse =
+export type GetApiMyAccountRoleRoleAccessTypesApiArg = void;
+export type GetApiMyAccountRoleRolesApiResponse =
   /** status 200 Success */ GetAccessTypeResponse[];
-export type GetApiAccountRoleRolesApiArg = void;
-export type PostApiAccountRoleGetUserAccessEntitiesApiResponse =
+export type GetApiMyAccountRoleRolesApiArg = void;
+export type PostApiMyAccountRoleGetUserAccessEntitiesApiResponse =
   /** status 200 Success */ UserEntityAccessResponse[];
-export type PostApiAccountRoleGetUserAccessEntitiesApiArg = {
+export type PostApiMyAccountRoleGetUserAccessEntitiesApiArg = {
   getUserAccessEntityModel: GetUserAccessEntityModel;
 };
-export type PostApiAccountRoleCreateUserAccessApiResponse =
+export type PostApiMyAccountRoleCreateUserAccessApiResponse =
   /** status 200 Success */ BaseResponse;
-export type PostApiAccountRoleCreateUserAccessApiArg = {
+export type PostApiMyAccountRoleCreateUserAccessApiArg = {
   setUserAccessModel: SetUserAccessModel;
 };
-export type PutApiAccountRoleEditUserAccessApiResponse = unknown;
-export type PutApiAccountRoleEditUserAccessApiArg = {
+export type PutApiMyAccountRoleEditUserAccessApiResponse = unknown;
+export type PutApiMyAccountRoleEditUserAccessApiArg = {
   setUserAccessModel: SetUserAccessModel;
 };
-export type DeleteApiAccountRoleRemoveCustomerUserApiResponse =
+export type DeleteApiMyAccountRoleRemoveCustomerUserApiResponse =
   /** status 200 Success */ BaseResponse;
-export type DeleteApiAccountRoleRemoveCustomerUserApiArg = {
+export type DeleteApiMyAccountRoleRemoveCustomerUserApiArg = {
   removeCustomerUserModel: RemoveCustomerUserModel;
 };
-export type GetApiStorageHostListApiResponse =
+export type GetApiMyStorageHostListApiResponse =
   /** status 200 Success */ StorageHostListResponse[];
-export type GetApiStorageHostListApiArg = void;
-export type GetApiStorageHostGetByIdApiResponse =
+export type GetApiMyStorageHostListApiArg = void;
+export type GetApiMyStorageHostGetByIdApiResponse =
   /** status 200 Success */ GetStorageHostResponse;
-export type GetApiStorageHostGetByIdApiArg = {
+export type GetApiMyStorageHostGetByIdApiArg = {
   id: number;
 };
-export type PostApiStorageHostCreateApiResponse = unknown;
-export type PostApiStorageHostCreateApiArg = {
+export type PostApiMyStorageHostCreateApiResponse = unknown;
+export type PostApiMyStorageHostCreateApiArg = {
   createStorageHostModel: CreateStorageHostModel;
 };
-export type PutApiStorageHostEditApiResponse = unknown;
-export type PutApiStorageHostEditApiArg = {
+export type PutApiMyStorageHostEditApiResponse = unknown;
+export type PutApiMyStorageHostEditApiArg = {
   editStorageHostModel: EditStorageHostModel;
 };
-export type DeleteApiStorageHostDeleteByIdApiResponse = unknown;
-export type DeleteApiStorageHostDeleteByIdApiArg = {
+export type DeleteApiMyStorageHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyStorageHostDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiStorageUserListByStorageHostIdApiResponse =
+export type GetApiMyStorageUserListByStorageHostIdApiResponse =
   /** status 200 Success */ StorageUserListResponse[];
-export type GetApiStorageUserListByStorageHostIdApiArg = {
+export type GetApiMyStorageUserListByStorageHostIdApiArg = {
   storageHostId: number;
 };
-export type PostApiStorageUserCreateApiResponse =
+export type PostApiMyStorageUserCreateApiResponse =
   /** status 200 Success */ CreateStorageUserResponse;
-export type PostApiStorageUserCreateApiArg = {
+export type PostApiMyStorageUserCreateApiArg = {
   createStorageUserModel: CreateStorageUserModel;
 };
-export type DeleteApiStorageUserDeleteByIdApiResponse = unknown;
-export type DeleteApiStorageUserDeleteByIdApiArg = {
+export type DeleteApiMyStorageUserDeleteByIdApiResponse = unknown;
+export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiCloudSupportListApiResponse =
+export type GetApiMyCloudSupportListApiResponse =
   /** status 200 Success */ SupportListResponse[];
-export type GetApiCloudSupportListApiArg = void;
-export type GetApiCloudSupportShortListApiResponse =
+export type GetApiMyCloudSupportListApiArg = void;
+export type GetApiMyCloudSupportShortListApiResponse =
   /** status 200 Success */ SupportShortListResponse[];
-export type GetApiCloudSupportShortListApiArg = void;
-export type PostApiCloudSupportCreateApiResponse = unknown;
-export type PostApiCloudSupportCreateApiArg = {
+export type GetApiMyCloudSupportShortListApiArg = void;
+export type PostApiMyCloudSupportCreateApiResponse = unknown;
+export type PostApiMyCloudSupportCreateApiArg = {
   body: {
     Content: string;
     BusinessUnitId: number;
@@ -2424,180 +2446,180 @@ export type PostApiCloudSupportCreateApiArg = {
     Attachment?: Blob;
   };
 };
-export type GetApiCloudSupportItemListBySupportIdApiResponse =
+export type GetApiMyCloudSupportItemListBySupportIdApiResponse =
   /** status 200 Success */ SupportItemListResponse;
-export type GetApiCloudSupportItemListBySupportIdApiArg = {
+export type GetApiMyCloudSupportItemListBySupportIdApiArg = {
   supportId: number;
 };
-export type PostApiCloudSupportItemCreateApiResponse = unknown;
-export type PostApiCloudSupportItemCreateApiArg = {
+export type PostApiMyCloudSupportItemCreateApiResponse = unknown;
+export type PostApiMyCloudSupportItemCreateApiArg = {
   body: {
     SupportId: number;
     Content: string;
     Attachment?: Blob;
   };
 };
-export type GetApiCloudSupportItemDownloadByIdApiResponse = unknown;
-export type GetApiCloudSupportItemDownloadByIdApiArg = {
+export type GetApiMyCloudSupportItemDownloadByIdApiResponse = unknown;
+export type GetApiMyCloudSupportItemDownloadByIdApiArg = {
   id: number;
 };
-export type GetApiCloudSupportSubjectListApiResponse =
+export type GetApiMyCloudSupportSubjectListApiResponse =
   /** status 200 Success */ SupportSubjectListResponse[];
-export type GetApiCloudSupportSubjectListApiArg = void;
-export type PostApiCloudSupportSubjectSelectListApiResponse =
+export type GetApiMyCloudSupportSubjectListApiArg = void;
+export type PostApiMyCloudSupportSubjectSelectListApiResponse =
   /** status 200 Success */ SupportSubjectListResponse[];
-export type PostApiCloudSupportSubjectSelectListApiArg = {
+export type PostApiMyCloudSupportSubjectSelectListApiArg = {
   supportSubjectSelectListModel: SupportSubjectSelectListModel;
 };
-export type PostApiVmHostListApiResponse =
+export type PostApiMyVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
-export type PostApiVmHostListApiArg = {
+export type PostApiMyVmHostListApiArg = {
   vmListModel: VmListModel;
 };
-export type GetApiVmHostGetByIdApiResponse =
+export type GetApiMyVmHostGetByIdApiResponse =
   /** status 200 Success */ GetVmResponse;
-export type GetApiVmHostGetByIdApiArg = {
+export type GetApiMyVmHostGetByIdApiArg = {
   id: number;
 };
-export type PostApiVmHostCreateApiResponse = /** status 200 Success */ number;
-export type PostApiVmHostCreateApiArg = {
+export type PostApiMyVmHostCreateApiResponse = /** status 200 Success */ number;
+export type PostApiMyVmHostCreateApiArg = {
   createVmModel: CreateVmModel;
 };
-export type PutApiVmHostEditApiResponse = unknown;
-export type PutApiVmHostEditApiArg = {
+export type PutApiMyVmHostEditApiResponse = unknown;
+export type PutApiMyVmHostEditApiArg = {
   editVmModel: EditVmModel;
 };
-export type DeleteApiVmHostDeleteByIdApiResponse = unknown;
-export type DeleteApiVmHostDeleteByIdApiArg = {
+export type DeleteApiMyVmHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmHostDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostRebuildApiResponse = unknown;
-export type PutApiVmHostRebuildApiArg = {
+export type PutApiMyVmHostRebuildApiResponse = unknown;
+export type PutApiMyVmHostRebuildApiArg = {
   rebuildVmModel: RebuildVmModel;
 };
-export type PutApiVmHostConnectByIdApiResponse = unknown;
-export type PutApiVmHostConnectByIdApiArg = {
+export type PutApiMyVmHostConnectByIdApiResponse = unknown;
+export type PutApiMyVmHostConnectByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostDisconnectByIdApiResponse = unknown;
-export type PutApiVmHostDisconnectByIdApiArg = {
+export type PutApiMyVmHostDisconnectByIdApiResponse = unknown;
+export type PutApiMyVmHostDisconnectByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostRebootByIdApiResponse = unknown;
-export type PutApiVmHostRebootByIdApiArg = {
+export type PutApiMyVmHostRebootByIdApiResponse = unknown;
+export type PutApiMyVmHostRebootByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostShutdownByIdApiResponse = unknown;
-export type PutApiVmHostShutdownByIdApiArg = {
+export type PutApiMyVmHostShutdownByIdApiResponse = unknown;
+export type PutApiMyVmHostShutdownByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostResetByIdApiResponse = unknown;
-export type PutApiVmHostResetByIdApiArg = {
+export type PutApiMyVmHostResetByIdApiResponse = unknown;
+export type PutApiMyVmHostResetByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostStartByIdApiResponse = unknown;
-export type PutApiVmHostStartByIdApiArg = {
+export type PutApiMyVmHostStartByIdApiResponse = unknown;
+export type PutApiMyVmHostStartByIdApiArg = {
   id: number;
 };
-export type PutApiVmHostStopByIdApiResponse = unknown;
-export type PutApiVmHostStopByIdApiArg = {
+export type PutApiMyVmHostStopByIdApiResponse = unknown;
+export type PutApiMyVmHostStopByIdApiArg = {
   id: number;
 };
-export type PostApiVmKmsGetApiResponse = /** status 200 Success */ string;
-export type PostApiVmKmsGetApiArg = {
+export type PostApiMyVmKmsGetApiResponse = /** status 200 Success */ string;
+export type PostApiMyVmKmsGetApiArg = {
   getKmsModel: GetKmsModel;
 };
-export type GetApiVmImageListByDatacenterIdApiResponse =
+export type GetApiMyVmImageListByDatacenterIdApiResponse =
   /** status 200 Success */ ImageListResponse[];
-export type GetApiVmImageListByDatacenterIdApiArg = {
+export type GetApiMyVmImageListByDatacenterIdApiArg = {
   datacenterId: number;
 };
-export type GetApiVmIsoListByDatacenterIdApiResponse =
+export type GetApiMyVmIsoListByDatacenterIdApiResponse =
   /** status 200 Success */ IsoListResponse[];
-export type GetApiVmIsoListByDatacenterIdApiArg = {
+export type GetApiMyVmIsoListByDatacenterIdApiArg = {
   datacenterId: number;
 };
-export type PutApiVmIsoMountApiResponse = unknown;
-export type PutApiVmIsoMountApiArg = {
+export type PutApiMyVmIsoMountApiResponse = unknown;
+export type PutApiMyVmIsoMountApiArg = {
   mountModel: MountModel;
 };
-export type PutApiVmIsoUnmountApiResponse = unknown;
-export type PutApiVmIsoUnmountApiArg = {
+export type PutApiMyVmIsoUnmountApiResponse = unknown;
+export type PutApiMyVmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
 };
-export type GetApiVmProjectListApiResponse =
+export type GetApiMyVmProjectListApiResponse =
   /** status 200 Success */ VmProjectList[];
-export type GetApiVmProjectListApiArg = void;
-export type PostApiVmProjectCreateApiResponse = unknown;
-export type PostApiVmProjectCreateApiArg = {
+export type GetApiMyVmProjectListApiArg = void;
+export type PostApiMyVmProjectCreateApiResponse = unknown;
+export type PostApiMyVmProjectCreateApiArg = {
   createVmProject: CreateVmProject;
 };
-export type PutApiVmProjectEditApiResponse = unknown;
-export type PutApiVmProjectEditApiArg = {
+export type PutApiMyVmProjectEditApiResponse = unknown;
+export type PutApiMyVmProjectEditApiArg = {
   editVmProject: EditVmProject;
 };
-export type DeleteApiVmProjectDeleteByIdApiResponse = unknown;
-export type DeleteApiVmProjectDeleteByIdApiArg = {
+export type DeleteApiMyVmProjectDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmProjectDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiAccountVoucherUseApiResponse =
+export type PostApiMyAccountVoucherUseApiResponse =
   /** status 200 Success */ string;
-export type PostApiAccountVoucherUseApiArg = {
+export type PostApiMyAccountVoucherUseApiArg = {
   useVoucherModel: UseVoucherModel;
 };
-export type GetApiVpcHostListApiResponse =
+export type GetApiMyVpcHostListApiResponse =
   /** status 200 Success */ VpcListResponse[];
-export type GetApiVpcHostListApiArg = void;
-export type PostApiVpcHostCreateApiResponse = unknown;
-export type PostApiVpcHostCreateApiArg = {
+export type GetApiMyVpcHostListApiArg = void;
+export type PostApiMyVpcHostCreateApiResponse = unknown;
+export type PostApiMyVpcHostCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
 };
-export type GetApiVpcNetworkListByVpcHostIdApiResponse =
+export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
   /** status 200 Success */ VpcNetworkListResponse[];
-export type GetApiVpcNetworkListByVpcHostIdApiArg = {
+export type GetApiMyVpcNetworkListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
-export type PostApiVpcNetworkCreateApiResponse = unknown;
-export type PostApiVpcNetworkCreateApiArg = {
+export type PostApiMyVpcNetworkCreateApiResponse = unknown;
+export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
 };
-export type GetApiCloudWalletGetBalanceApiResponse =
+export type GetApiMyCloudWalletGetBalanceApiResponse =
   /** status 200 Success */ number;
-export type GetApiCloudWalletGetBalanceApiArg = void;
-export type GetApiCloudWalletListApiResponse =
+export type GetApiMyCloudWalletGetBalanceApiArg = void;
+export type GetApiMyCloudWalletListApiResponse =
   /** status 200 Success */ WalletTransactionListResponse[];
-export type GetApiCloudWalletListApiArg = void;
-export type GetApiWebListApiResponse =
+export type GetApiMyCloudWalletListApiArg = void;
+export type GetApiMyWebListApiResponse =
   /** status 200 Success */ WebHostListResponse[];
-export type GetApiWebListApiArg = void;
-export type GetApiWebGetByIdApiResponse =
+export type GetApiMyWebListApiArg = void;
+export type GetApiMyWebGetByIdApiResponse =
   /** status 200 Success */ GetWebHostResponse;
-export type GetApiWebGetByIdApiArg = {
+export type GetApiMyWebGetByIdApiArg = {
   id: number;
 };
-export type GetApiWebGetLoginSessionByIdApiResponse =
+export type GetApiMyWebGetLoginSessionByIdApiResponse =
   /** status 200 Success */ GetLoginSessionResponse;
-export type GetApiWebGetLoginSessionByIdApiArg = {
+export type GetApiMyWebGetLoginSessionByIdApiArg = {
   id: number;
 };
-export type PostApiWebCheckDomainApiResponse = unknown;
-export type PostApiWebCheckDomainApiArg = {
+export type PostApiMyWebCheckDomainApiResponse = unknown;
+export type PostApiMyWebCheckDomainApiArg = {
   checkWebHostDomainModel: CheckWebHostDomainModel;
 };
-export type PostApiWebCreateApiResponse = unknown;
-export type PostApiWebCreateApiArg = {
+export type PostApiMyWebCreateApiResponse = unknown;
+export type PostApiMyWebCreateApiArg = {
   createWebHostModel: CreateWebHostModel;
 };
-export type PutApiWebEditApiResponse = unknown;
-export type PutApiWebEditApiArg = {
+export type PutApiMyWebEditApiResponse = unknown;
+export type PutApiMyWebEditApiArg = {
   editWebHostModel: EditWebHostModel;
 };
-export type DeleteApiWebDeleteByIdApiResponse = unknown;
-export type DeleteApiWebDeleteByIdApiArg = {
+export type DeleteApiMyWebDeleteByIdApiResponse = unknown;
+export type DeleteApiMyWebDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiDomainWhoisGetApiResponse = unknown;
-export type PostApiDomainWhoisGetApiArg = {
+export type PostApiMyDomainWhoisGetApiResponse = unknown;
+export type PostApiMyDomainWhoisGetApiArg = {
   getDomainWhoisModel: GetDomainWhoisModel;
 };
 export type LoginResponse = {
@@ -3731,210 +3753,210 @@ export type GetDomainWhoisModel = {
   ext: string;
 };
 export const {
-  usePostApiAccountLoginMutation,
-  usePostApiAccountRegisterMutation,
-  usePostApiAccountForgotMutation,
-  usePostApiAccountForgotConfirmMutation,
-  usePostApiAccountLogoutMutation,
-  useGetApiCdnAnalyticGetByCdnIdAndPeriodIdQuery,
-  useGetApiCdnApiGatewayListByCdnIdQuery,
-  useGetApiCdnApiGatewayGetByIdQuery,
-  usePostApiCdnApiGatewayCreateMutation,
-  usePutApiCdnApiGatewayEditMutation,
-  useDeleteApiCdnApiGatewayDeleteByIdMutation,
-  useGetApiBareMetalListQuery,
-  useGetApiBareMetalGetByIdQuery,
-  usePostApiBareMetalCreateMutation,
-  useDeleteApiBareMetalDeleteMutation,
-  useGetApiCloudBusinessUnitListQuery,
-  useGetApiCloudCalculateMonthListQuery,
-  useGetApiCdnClientCertGetByCdnIdQuery,
-  useGetApiCdnClientCertGetUserCertByCdnIdQuery,
-  usePostApiCdnClientCertCreateUserCertMutation,
-  useGetApiCdnEdgeCertGetByCdnIdQuery,
-  useGetApiCdnEdgeCertGetUserCertByCdnIdQuery,
-  usePostApiCdnEdgeCertCreateMutation,
-  usePostApiCdnEdgeCertCreateUserCertMutation,
-  useGetApiCdnHostListQuery,
-  useGetApiCdnHostGetByIdQuery,
-  useGetApiCdnHostGetNsStatusByIdQuery,
-  useGetApiCdnHostOverviewByIdQuery,
-  usePostApiCdnHostCheckZoneMutation,
-  usePostApiCdnHostCreateMutation,
-  useDeleteApiCdnHostDeleteByIdMutation,
-  usePutApiCdnHostChangeCdnTypeMutation,
-  usePutApiCdnHostChangeClientCertTypeMutation,
-  usePutApiCdnHostChangeEdgeCertTypeMutation,
-  usePutApiCdnHostChangeHstsMutation,
-  usePutApiCdnHostChangeHttpsRedirectMutation,
-  usePutApiCdnHostChangeNonWwwRedirectMutation,
-  useGetApiColocationListQuery,
-  usePostApiColocationCreateMutation,
-  useDeleteApiColocationDeleteByIdMutation,
-  useGetApiCloudCommissionListQuery,
-  useGetApiCloudCustomerGetQuery,
-  useGetApiCloudCustomerGetCustomerTypeQuery,
-  usePutApiCloudCustomerEditMutation,
-  usePutApiCloudCustomerEditCustomerTypeMutation,
-  useGetApiCloudBillListQuery,
-  useGetApiCloudBillBillShortListQuery,
-  useGetApiCloudBillGetByIdQuery,
-  useGetApiCloudBillDownloadByIdQuery,
-  useGetApiCloudCustomerProductListByProductIdQuery,
-  usePostApiCloudCustomerProductTransferMutation,
-  usePostApiCloudCustomerUserChangeUserCustomerMutation,
-  useGetApiCloudDashboardUsageByCategoryIdQuery,
-  useGetApiDatacenterListQuery,
-  useGetApiDatacenterIpListByProductIdAndIdQuery,
-  useDeleteApiDatacenterIpDeleteByIdMutation,
-  useGetApiCdnDnsRecordListByCdnIdQuery,
-  useGetApiCdnDnsRecordGetByIdQuery,
-  usePostApiCdnDnsRecordCreateMutation,
-  usePutApiCdnDnsRecordEditMutation,
-  useDeleteApiCdnDnsRecordDeleteByIdMutation,
-  usePutApiCdnDnsRecordChangeProxyStatusByIdMutation,
-  useGetApiDomainListQuery,
-  useGetApiDomainGetByIdQuery,
-  useGetApiDomainGetStatusByIdQuery,
-  usePostApiDomainGetPriceMutation,
-  usePostApiDomainRegisterMutation,
-  useDeleteApiDomainDeleteByIdMutation,
-  usePutApiDomainChangeContactMutation,
-  usePutApiDomainChangeNsMutation,
-  usePostApiDomainResendVerificationByIdMutation,
-  useGetApiHomeIndexQuery,
-  useGetApiCloudInvoiceListQuery,
-  useGetApiCloudInvoiceGetByIdQuery,
-  usePostApiCloudInvoicePayMutation,
-  useGetApiPlatformDevopsListByIdQuery,
-  useGetApiPlatformDevopsGetByIdQuery,
-  usePostApiPlatformDevopsCreateMutation,
-  useDeleteApiPlatformDevopsDeleteByIdMutation,
-  useGetApiPlatformNamespaceListQuery,
-  useGetApiPlatformNamespaceGetByIdQuery,
-  useGetApiPlatformNamespaceGetLoginByIdQuery,
-  usePostApiPlatformNamespaceCreateMutation,
-  usePutApiPlatformNamespaceEditMutation,
-  useDeleteApiPlatformNamespaceDeleteByIdMutation,
-  useGetApiPlatformServiceListByIdQuery,
-  useGetApiPlatformServiceGetByIdQuery,
-  usePostApiPlatformServiceCreateMutation,
-  useDeleteApiPlatformServiceDeleteByIdMutation,
-  useGetApiPlatformKubernetesListQuery,
-  useGetApiPlatformKubernetesGetByIdQuery,
-  usePostApiPlatformKubernetesCreateMutation,
-  usePutApiPlatformKubernetesEditMutation,
-  useDeleteApiPlatformKubernetesDeleteByIdMutation,
-  useGetApiPlatformUserListQuery,
-  useGetApiPlatformUserShortListQuery,
-  usePostApiPlatformUserCreateMutation,
-  useDeleteApiPlatformUserDeleteByIdMutation,
-  usePostApiPlatformUserChangePasswordMutation,
-  useGetApiPlatformUserRoleListByKubeHostIdQuery,
-  usePostApiPlatformUserRoleCreateMutation,
-  useDeleteApiPlatformUserRoleDeleteByIdMutation,
-  useGetApiPlatformVolumeListByIdQuery,
-  useGetApiPlatformVolumeGetByIdQuery,
-  usePostApiPlatformVolumeCreateMutation,
-  useDeleteApiPlatformVolumeDeleteByIdMutation,
-  useGetApiCdnLoadBalanceListByCdnIdQuery,
-  useGetApiCdnLoadBalanceGetByIdQuery,
-  usePostApiCdnLoadBalanceCreateMutation,
-  usePutApiCdnLoadBalanceEditMutation,
-  useDeleteApiCdnLoadBalanceDeleteByIdMutation,
-  useGetApiCloudNotificationListQuery,
-  useGetApiCloudNotificationShortListQuery,
-  useGetApiCloudPaymentListQuery,
-  useGetApiCloudPaymentGetByIdQuery,
-  usePostApiCloudPaymentCreateMutation,
-  usePostApiCloudPaymentPecCallBackMutation,
-  usePostApiCloudPaymentSepCallBackMutation,
-  useGetApiCloudProductListQuery,
-  useGetApiCloudProductBundleListByProductIdQuery,
-  useGetApiCloudProductBundleVmListQuery,
-  useGetApiCloudProductBundleStorageListQuery,
-  useGetApiCloudProductBundleWebHostListQuery,
-  useGetApiCloudProductItemListByProductIdQuery,
-  useGetApiAccountProfileGetQuery,
-  useGetApiAccountProfileGetNotificationStatusQuery,
-  usePutApiAccountProfileEditMutation,
-  usePutApiAccountProfileEditEmailMutation,
-  usePostApiAccountProfileConfirmEmailMutation,
-  usePutApiAccountProfileEditPhoneNumberMutation,
-  usePostApiAccountProfileConfirmPhoneNumberMutation,
-  usePutApiAccountProfileEditEmailNotificationMutation,
-  usePutApiAccountProfileEditPhoneNotificationMutation,
-  usePostApiAccountProfileChangePasswordMutation,
-  useGetApiRabbitHostListQuery,
-  useGetApiRabbitHostGetByIdQuery,
-  usePostApiRabbitHostCreateMutation,
-  usePutApiRabbitHostChangeServiceMutation,
-  useDeleteApiRabbitHostDeleteByIdMutation,
-  usePostApiRabbitHostChangeExchangeMutation,
-  useGetApiRabbitUserListByRabbitHostIdQuery,
-  usePostApiRabbitUserCreateMutation,
-  useDeleteApiRabbitUserDeleteByIdMutation,
-  usePostApiRabbitUserChangePasswordMutation,
-  useGetApiAccountReferralGetQuery,
-  usePostApiAccountReferralJoinMutation,
-  useGetApiAccountRoleRoleAccessTypesQuery,
-  useGetApiAccountRoleRolesQuery,
-  usePostApiAccountRoleGetUserAccessEntitiesMutation,
-  usePostApiAccountRoleCreateUserAccessMutation,
-  usePutApiAccountRoleEditUserAccessMutation,
-  useDeleteApiAccountRoleRemoveCustomerUserMutation,
-  useGetApiStorageHostListQuery,
-  useGetApiStorageHostGetByIdQuery,
-  usePostApiStorageHostCreateMutation,
-  usePutApiStorageHostEditMutation,
-  useDeleteApiStorageHostDeleteByIdMutation,
-  useGetApiStorageUserListByStorageHostIdQuery,
-  usePostApiStorageUserCreateMutation,
-  useDeleteApiStorageUserDeleteByIdMutation,
-  useGetApiCloudSupportListQuery,
-  useGetApiCloudSupportShortListQuery,
-  usePostApiCloudSupportCreateMutation,
-  useGetApiCloudSupportItemListBySupportIdQuery,
-  usePostApiCloudSupportItemCreateMutation,
-  useGetApiCloudSupportItemDownloadByIdQuery,
-  useGetApiCloudSupportSubjectListQuery,
-  usePostApiCloudSupportSubjectSelectListMutation,
-  usePostApiVmHostListMutation,
-  useGetApiVmHostGetByIdQuery,
-  usePostApiVmHostCreateMutation,
-  usePutApiVmHostEditMutation,
-  useDeleteApiVmHostDeleteByIdMutation,
-  usePutApiVmHostRebuildMutation,
-  usePutApiVmHostConnectByIdMutation,
-  usePutApiVmHostDisconnectByIdMutation,
-  usePutApiVmHostRebootByIdMutation,
-  usePutApiVmHostShutdownByIdMutation,
-  usePutApiVmHostResetByIdMutation,
-  usePutApiVmHostStartByIdMutation,
-  usePutApiVmHostStopByIdMutation,
-  usePostApiVmKmsGetMutation,
-  useGetApiVmImageListByDatacenterIdQuery,
-  useGetApiVmIsoListByDatacenterIdQuery,
-  usePutApiVmIsoMountMutation,
-  usePutApiVmIsoUnmountMutation,
-  useGetApiVmProjectListQuery,
-  usePostApiVmProjectCreateMutation,
-  usePutApiVmProjectEditMutation,
-  useDeleteApiVmProjectDeleteByIdMutation,
-  usePostApiAccountVoucherUseMutation,
-  useGetApiVpcHostListQuery,
-  usePostApiVpcHostCreateMutation,
-  useGetApiVpcNetworkListByVpcHostIdQuery,
-  usePostApiVpcNetworkCreateMutation,
-  useGetApiCloudWalletGetBalanceQuery,
-  useGetApiCloudWalletListQuery,
-  useGetApiWebListQuery,
-  useGetApiWebGetByIdQuery,
-  useGetApiWebGetLoginSessionByIdQuery,
-  usePostApiWebCheckDomainMutation,
-  usePostApiWebCreateMutation,
-  usePutApiWebEditMutation,
-  useDeleteApiWebDeleteByIdMutation,
-  usePostApiDomainWhoisGetMutation,
+  usePostApiMyAccountLoginMutation,
+  usePostApiMyAccountRegisterMutation,
+  usePostApiMyAccountForgotMutation,
+  usePostApiMyAccountForgotConfirmMutation,
+  usePostApiMyAccountLogoutMutation,
+  useGetApiMyCdnAnalyticGetByCdnIdAndPeriodIdQuery,
+  useGetApiMyCdnApiGatewayListByCdnIdQuery,
+  useGetApiMyCdnApiGatewayGetByIdQuery,
+  usePostApiMyCdnApiGatewayCreateMutation,
+  usePutApiMyCdnApiGatewayEditMutation,
+  useDeleteApiMyCdnApiGatewayDeleteByIdMutation,
+  useGetApiMyBareMetalListQuery,
+  useGetApiMyBareMetalGetByIdQuery,
+  usePostApiMyBareMetalCreateMutation,
+  useDeleteApiMyBareMetalDeleteMutation,
+  useGetApiMyCloudBusinessUnitListQuery,
+  useGetApiMyCloudCalculateMonthListQuery,
+  useGetApiMyCdnClientCertGetByCdnIdQuery,
+  useGetApiMyCdnClientCertGetUserCertByCdnIdQuery,
+  usePostApiMyCdnClientCertCreateUserCertMutation,
+  useGetApiMyCdnEdgeCertGetByCdnIdQuery,
+  useGetApiMyCdnEdgeCertGetUserCertByCdnIdQuery,
+  usePostApiMyCdnEdgeCertCreateMutation,
+  usePostApiMyCdnEdgeCertCreateUserCertMutation,
+  useGetApiMyCdnHostListQuery,
+  useGetApiMyCdnHostGetByIdQuery,
+  useGetApiMyCdnHostGetNsStatusByIdQuery,
+  useGetApiMyCdnHostOverviewByIdQuery,
+  usePostApiMyCdnHostCheckZoneMutation,
+  usePostApiMyCdnHostCreateMutation,
+  useDeleteApiMyCdnHostDeleteByIdMutation,
+  usePutApiMyCdnHostChangeCdnTypeMutation,
+  usePutApiMyCdnHostChangeClientCertTypeMutation,
+  usePutApiMyCdnHostChangeEdgeCertTypeMutation,
+  usePutApiMyCdnHostChangeHstsMutation,
+  usePutApiMyCdnHostChangeHttpsRedirectMutation,
+  usePutApiMyCdnHostChangeNonWwwRedirectMutation,
+  useGetApiMyColocationListQuery,
+  usePostApiMyColocationCreateMutation,
+  useDeleteApiMyColocationDeleteByIdMutation,
+  useGetApiMyCloudCommissionListQuery,
+  useGetApiMyCloudCustomerGetQuery,
+  useGetApiMyCloudCustomerGetCustomerTypeQuery,
+  usePutApiMyCloudCustomerEditMutation,
+  usePutApiMyCloudCustomerEditCustomerTypeMutation,
+  useGetApiMyCloudBillListQuery,
+  useGetApiMyCloudBillBillShortListQuery,
+  useGetApiMyCloudBillGetByIdQuery,
+  useGetApiMyCloudBillDownloadByIdQuery,
+  useGetApiMyCloudCustomerProductListByProductIdQuery,
+  usePostApiMyCloudCustomerProductTransferMutation,
+  usePostApiMyCloudCustomerUserChangeUserCustomerMutation,
+  useGetApiMyCloudDashboardUsageByCategoryIdQuery,
+  useGetApiMyDatacenterListQuery,
+  useGetApiMyDatacenterIpListByProductIdAndIdQuery,
+  useDeleteApiMyDatacenterIpDeleteByIdMutation,
+  useGetApiMyCdnDnsRecordListByCdnIdQuery,
+  useGetApiMyCdnDnsRecordGetByIdQuery,
+  usePostApiMyCdnDnsRecordCreateMutation,
+  usePutApiMyCdnDnsRecordEditMutation,
+  useDeleteApiMyCdnDnsRecordDeleteByIdMutation,
+  usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation,
+  useGetApiMyDomainListQuery,
+  useGetApiMyDomainGetByIdQuery,
+  useGetApiMyDomainGetStatusByIdQuery,
+  usePostApiMyDomainGetPriceMutation,
+  usePostApiMyDomainRegisterMutation,
+  useDeleteApiMyDomainDeleteByIdMutation,
+  usePutApiMyDomainChangeContactMutation,
+  usePutApiMyDomainChangeNsMutation,
+  usePostApiMyDomainResendVerificationByIdMutation,
+  useGetApiMyHomeIndexQuery,
+  useGetApiMyCloudInvoiceListQuery,
+  useGetApiMyCloudInvoiceGetByIdQuery,
+  usePostApiMyCloudInvoicePayMutation,
+  useGetApiMyPlatformDevopsListByIdQuery,
+  useGetApiMyPlatformDevopsGetByIdQuery,
+  usePostApiMyPlatformDevopsCreateMutation,
+  useDeleteApiMyPlatformDevopsDeleteByIdMutation,
+  useGetApiMyPlatformNamespaceListQuery,
+  useGetApiMyPlatformNamespaceGetByIdQuery,
+  useGetApiMyPlatformNamespaceGetLoginByIdQuery,
+  usePostApiMyPlatformNamespaceCreateMutation,
+  usePutApiMyPlatformNamespaceEditMutation,
+  useDeleteApiMyPlatformNamespaceDeleteByIdMutation,
+  useGetApiMyPlatformServiceListByIdQuery,
+  useGetApiMyPlatformServiceGetByIdQuery,
+  usePostApiMyPlatformServiceCreateMutation,
+  useDeleteApiMyPlatformServiceDeleteByIdMutation,
+  useGetApiMyPlatformKubernetesListQuery,
+  useGetApiMyPlatformKubernetesGetByIdQuery,
+  usePostApiMyPlatformKubernetesCreateMutation,
+  usePutApiMyPlatformKubernetesEditMutation,
+  useDeleteApiMyPlatformKubernetesDeleteByIdMutation,
+  useGetApiMyPlatformUserListQuery,
+  useGetApiMyPlatformUserShortListQuery,
+  usePostApiMyPlatformUserCreateMutation,
+  useDeleteApiMyPlatformUserDeleteByIdMutation,
+  usePostApiMyPlatformUserChangePasswordMutation,
+  useGetApiMyPlatformUserRoleListByKubeHostIdQuery,
+  usePostApiMyPlatformUserRoleCreateMutation,
+  useDeleteApiMyPlatformUserRoleDeleteByIdMutation,
+  useGetApiMyPlatformVolumeListByIdQuery,
+  useGetApiMyPlatformVolumeGetByIdQuery,
+  usePostApiMyPlatformVolumeCreateMutation,
+  useDeleteApiMyPlatformVolumeDeleteByIdMutation,
+  useGetApiMyCdnLoadBalanceListByCdnIdQuery,
+  useGetApiMyCdnLoadBalanceGetByIdQuery,
+  usePostApiMyCdnLoadBalanceCreateMutation,
+  usePutApiMyCdnLoadBalanceEditMutation,
+  useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
+  useGetApiMyCloudNotificationListQuery,
+  useGetApiMyCloudNotificationShortListQuery,
+  useGetApiMyCloudPaymentListQuery,
+  useGetApiMyCloudPaymentGetByIdQuery,
+  usePostApiMyCloudPaymentCreateMutation,
+  usePostApiMyCloudPaymentPecCallBackMutation,
+  usePostApiMyCloudPaymentSepCallBackMutation,
+  useGetApiMyCloudProductListQuery,
+  useGetApiMyCloudProductBundleListByProductIdQuery,
+  useGetApiMyCloudProductBundleVmListQuery,
+  useGetApiMyCloudProductBundleStorageListQuery,
+  useGetApiMyCloudProductBundleWebHostListQuery,
+  useGetApiMyCloudProductItemListByProductIdQuery,
+  useGetApiMyAccountProfileGetQuery,
+  useGetApiMyAccountProfileGetNotificationStatusQuery,
+  usePutApiMyAccountProfileEditMutation,
+  usePutApiMyAccountProfileEditEmailMutation,
+  usePostApiMyAccountProfileConfirmEmailMutation,
+  usePutApiMyAccountProfileEditPhoneNumberMutation,
+  usePostApiMyAccountProfileConfirmPhoneNumberMutation,
+  usePutApiMyAccountProfileEditEmailNotificationMutation,
+  usePutApiMyAccountProfileEditPhoneNotificationMutation,
+  usePostApiMyAccountProfileChangePasswordMutation,
+  useGetApiMyRabbitHostListQuery,
+  useGetApiMyRabbitHostGetByIdQuery,
+  usePostApiMyRabbitHostCreateMutation,
+  usePutApiMyRabbitHostChangeServiceMutation,
+  useDeleteApiMyRabbitHostDeleteByIdMutation,
+  usePostApiMyRabbitHostChangeExchangeMutation,
+  useGetApiMyRabbitUserListByRabbitHostIdQuery,
+  usePostApiMyRabbitUserCreateMutation,
+  useDeleteApiMyRabbitUserDeleteByIdMutation,
+  usePostApiMyRabbitUserChangePasswordMutation,
+  useGetApiMyAccountReferralGetQuery,
+  usePostApiMyAccountReferralJoinMutation,
+  useGetApiMyAccountRoleRoleAccessTypesQuery,
+  useGetApiMyAccountRoleRolesQuery,
+  usePostApiMyAccountRoleGetUserAccessEntitiesMutation,
+  usePostApiMyAccountRoleCreateUserAccessMutation,
+  usePutApiMyAccountRoleEditUserAccessMutation,
+  useDeleteApiMyAccountRoleRemoveCustomerUserMutation,
+  useGetApiMyStorageHostListQuery,
+  useGetApiMyStorageHostGetByIdQuery,
+  usePostApiMyStorageHostCreateMutation,
+  usePutApiMyStorageHostEditMutation,
+  useDeleteApiMyStorageHostDeleteByIdMutation,
+  useGetApiMyStorageUserListByStorageHostIdQuery,
+  usePostApiMyStorageUserCreateMutation,
+  useDeleteApiMyStorageUserDeleteByIdMutation,
+  useGetApiMyCloudSupportListQuery,
+  useGetApiMyCloudSupportShortListQuery,
+  usePostApiMyCloudSupportCreateMutation,
+  useGetApiMyCloudSupportItemListBySupportIdQuery,
+  usePostApiMyCloudSupportItemCreateMutation,
+  useGetApiMyCloudSupportItemDownloadByIdQuery,
+  useGetApiMyCloudSupportSubjectListQuery,
+  usePostApiMyCloudSupportSubjectSelectListMutation,
+  usePostApiMyVmHostListMutation,
+  useGetApiMyVmHostGetByIdQuery,
+  usePostApiMyVmHostCreateMutation,
+  usePutApiMyVmHostEditMutation,
+  useDeleteApiMyVmHostDeleteByIdMutation,
+  usePutApiMyVmHostRebuildMutation,
+  usePutApiMyVmHostConnectByIdMutation,
+  usePutApiMyVmHostDisconnectByIdMutation,
+  usePutApiMyVmHostRebootByIdMutation,
+  usePutApiMyVmHostShutdownByIdMutation,
+  usePutApiMyVmHostResetByIdMutation,
+  usePutApiMyVmHostStartByIdMutation,
+  usePutApiMyVmHostStopByIdMutation,
+  usePostApiMyVmKmsGetMutation,
+  useGetApiMyVmImageListByDatacenterIdQuery,
+  useGetApiMyVmIsoListByDatacenterIdQuery,
+  usePutApiMyVmIsoMountMutation,
+  usePutApiMyVmIsoUnmountMutation,
+  useGetApiMyVmProjectListQuery,
+  usePostApiMyVmProjectCreateMutation,
+  usePutApiMyVmProjectEditMutation,
+  useDeleteApiMyVmProjectDeleteByIdMutation,
+  usePostApiMyAccountVoucherUseMutation,
+  useGetApiMyVpcHostListQuery,
+  usePostApiMyVpcHostCreateMutation,
+  useGetApiMyVpcNetworkListByVpcHostIdQuery,
+  usePostApiMyVpcNetworkCreateMutation,
+  useGetApiMyCloudWalletGetBalanceQuery,
+  useGetApiMyCloudWalletListQuery,
+  useGetApiMyWebListQuery,
+  useGetApiMyWebGetByIdQuery,
+  useGetApiMyWebGetLoginSessionByIdQuery,
+  usePostApiMyWebCheckDomainMutation,
+  usePostApiMyWebCreateMutation,
+  usePutApiMyWebEditMutation,
+  useDeleteApiMyWebDeleteByIdMutation,
+  usePostApiMyDomainWhoisGetMutation,
 } = api;
 

@@ -3,7 +3,7 @@ import { Chip, Stack } from "@mui/material";
 import { invoicesTableStruct, invoiceTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
-import { usePostApiCloudInvoicePayMutation } from "src/app/services/api.generated";
+import { usePostApiMyCloudInvoicePayMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -11,7 +11,7 @@ export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-    usePostApiCloudInvoicePayMutation();
+    usePostApiMyCloudInvoicePayMutation();
 
   const payInvoice: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();

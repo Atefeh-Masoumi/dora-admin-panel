@@ -4,8 +4,8 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { serviceTableStruct } from "src/components/organisms/cloud/customerProduct/tables/struct";
 import { ServiceTableRow } from "src/components/organisms/cloud/customerProduct/tables/ServiceTableRow";
 import {
-  useGetApiCloudProductListQuery,
-  useGetApiCloudCustomerProductListByProductIdQuery,
+  useGetApiMyCloudProductListQuery,
+  useGetApiMyCloudCustomerProductListByProductIdQuery,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -14,7 +14,7 @@ const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
 
   const { data: services, isLoading: getServicesLoading } =
-    useGetApiCloudCustomerProductListByProductIdQuery({
+    useGetApiMyCloudCustomerProductListByProductIdQuery({
       productId: Number(selectedCategory),
     });
 
@@ -22,7 +22,7 @@ const Services: FC = () => {
     setSelectedCategory(event.target.value as string);
 
   const { data: categories = [], isLoading: getCategoriesLoading } =
-    useGetApiCloudProductListQuery();
+    useGetApiMyCloudProductListQuery();
 
   return (
     <>

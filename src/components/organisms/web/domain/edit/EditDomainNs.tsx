@@ -7,8 +7,8 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import {
-  useGetApiDomainGetByIdQuery,
-  usePutApiDomainChangeNsMutation,
+  useGetApiMyDomainGetByIdQuery,
+  usePutApiMyDomainChangeNsMutation,
 } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 
@@ -21,7 +21,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiDomainGetByIdQuery({
+  } = useGetApiMyDomainGetByIdQuery({
     id: Number(id)!,
   });
 
@@ -33,7 +33,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
   const navigate = useNavigate();
 
   const [changeNsModel, { isLoading: loadEdit }] =
-    usePutApiDomainChangeNsMutation();
+    usePutApiMyDomainChangeNsMutation();
 
   const submitHandler = () => {
     if (!id || !domainData?.ns1 || !domainData?.ns2) return;

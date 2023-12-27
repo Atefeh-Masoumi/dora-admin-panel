@@ -23,16 +23,16 @@ variables:
 package_stage:
   stage: package
   script:
-    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-portal-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-stage:latest .
-    - docker push $DOCKER_REGISTRY/front-portal-stage:$CI_PIPELINE_ID
-    - docker push $DOCKER_REGISTRY/front-portal-stage:latest
+    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
+    - docker push $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/front-my-stage:latest
 
 package_production:
   stage: package
   script:
-    - docker build -t $DOCKER_REGISTRY/front-portal-production:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-portal-production:latest .
-    - docker push $DOCKER_REGISTRY/front-portal-production:$CI_PIPELINE_ID
-    - docker push $DOCKER_REGISTRY/front-portal-production:latest
+    - docker build -t $DOCKER_REGISTRY/front-my-production:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-production:latest .
+    - docker push $DOCKER_REGISTRY/front-my-production:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/front-my-production:latest
 
 # Stage 2 : DEPLOY
 
@@ -42,8 +42,8 @@ deploy_stage:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT
-    - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/portal-front-stage.yaml
-    - kubectl -n stage rollout restart deployment portal-front-v1
+    - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
+    - kubectl -n stage rollout restart deployment front-my-v1
 
 deploy_production:
   stage: deploy
@@ -51,6 +51,6 @@ deploy_production:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT
-    - kubectl -n platform apply -f $CI_PROJECT_DIR/deployments/portal-front-v1.yaml
-    - kubectl -n platform rollout restart deployment portal-front-v1
+    - kubectl -n dorsa-cloud apply -f $CI_PROJECT_DIR/deployments/front-my-production.yaml
+    - kubectl -n dorsa-cloud rollout restart deployment front-my-v1
   when: manual

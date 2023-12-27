@@ -1,5 +1,4 @@
 import { FC, useState, useMemo, createContext } from "react";
-import { useGetApiRabbitHostListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -9,6 +8,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
+import { useGetApiMyRabbitHostListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -30,7 +30,7 @@ const RabbitManagement: FC<RabbitManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiRabbitHostListQuery();
+  } = useGetApiMyRabbitHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

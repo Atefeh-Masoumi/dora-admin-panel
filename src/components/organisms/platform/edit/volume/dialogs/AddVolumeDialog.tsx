@@ -14,7 +14,7 @@ import { LoadingButton } from "@mui/lab";
 import { Form, Formik } from "formik";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiPlatformVolumeCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyPlatformVolumeCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { VolumeContext } from "../../VolumeManagement";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -45,7 +45,7 @@ export const AddVolumeDialog: FC<AddVolumeDialogPropsType> = ({
   const { refetchVolumes } = useContext(VolumeContext);
 
   const [createVolume, { isLoading: createVolumeLoading }] =
-    usePostApiPlatformVolumeCreateMutation();
+    usePostApiMyPlatformVolumeCreateMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     volume,

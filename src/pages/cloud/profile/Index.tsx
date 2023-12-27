@@ -3,7 +3,7 @@ import { Skeleton, Stack } from "@mui/material";
 import { Specifications } from "src/components/organisms/cloud/profile/Specifications";
 import { MobileValidation } from "src/components/organisms/cloud/profile/MobileValidation";
 import { EmailValidation } from "src/components/organisms/cloud/profile/EmailValidation";
-import { useGetApiAccountProfileGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyAccountProfileGetQuery } from "src/app/services/api.generated";
 import { LegalPersonality } from "src/components/organisms/cloud/profile/Legal";
 
 // Define the type for your context value
@@ -17,7 +17,7 @@ export const DataContext = createContext<DataContextValueType>({
 });
 
 const Profile: FC = () => {
-  const { data, refetch, isLoading } = useGetApiAccountProfileGetQuery();
+  const { data, refetch, isLoading } = useGetApiMyAccountProfileGetQuery();
 
   const refetchOnClick = () => refetch();
 

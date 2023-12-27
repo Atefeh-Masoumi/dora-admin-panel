@@ -7,7 +7,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   CreateCdnEdgeUserCertModel,
-  usePostApiCdnEdgeCertCreateUserCertMutation,
+  usePostApiMyCdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -26,7 +26,7 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   const formInitialValues = { cdnId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiCdnEdgeCertCreateUserCertMutation();
+    usePostApiMyCdnEdgeCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 

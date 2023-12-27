@@ -11,9 +11,9 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { formikOnSubmitType } from "src/types/form.type";
 import {
   ChangeContactModel,
-  usePutApiDomainChangeContactMutation,
+  usePutApiMyDomainChangeContactMutation,
 } from "src/app/services/api.generated";
-import { useLazyGetApiDomainGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyDomainGetByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
 
 const commonValidation = yup.string().required("این فیلد اجباری می‌باشد");
@@ -42,7 +42,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
   });
 
   const [getInfo, { isLoading: getDetailsLoading }] =
-    useLazyGetApiDomainGetByIdQuery();
+    useLazyGetApiMyDomainGetByIdQuery();
 
   useEffect(() => {
     if (!id) return;
@@ -79,7 +79,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
   const navigate = useNavigate();
 
   const [changeContactModel, { isLoading: loadEdit }] =
-    usePutApiDomainChangeContactMutation();
+    usePutApiMyDomainChangeContactMutation();
 
   const submitHandler: formikOnSubmitType<ChangeContactModel> = (
     { name, country, province, city, street, postalCode, voice, email },

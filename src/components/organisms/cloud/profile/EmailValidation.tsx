@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { emailValidator } from "src/utils/formValidator";
 import {
-  usePostApiAccountProfileConfirmEmailMutation,
-  usePutApiAccountProfileEditEmailMutation,
+  usePostApiMyAccountProfileConfirmEmailMutation,
+  usePutApiMyAccountProfileEditEmailMutation,
 } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -27,7 +27,8 @@ export const EmailValidation: FC<EmailValidationProps> = ({
   isVerified,
   email,
 }) => {
-  const [sendEmail, { isLoading }] = usePutApiAccountProfileEditEmailMutation();
+  const [sendEmail, { isLoading }] =
+    usePutApiMyAccountProfileEditEmailMutation();
   const [isCodeField, setIsCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
 
@@ -61,7 +62,7 @@ export const EmailValidation: FC<EmailValidationProps> = ({
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
-    usePostApiAccountProfileConfirmEmailMutation();
+    usePostApiMyAccountProfileConfirmEmailMutation();
 
   const submitConfirm = () => {
     if (haveNull) return;

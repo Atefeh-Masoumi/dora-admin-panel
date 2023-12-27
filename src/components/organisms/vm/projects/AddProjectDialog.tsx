@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { usePostApiVmProjectCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmProjectCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -30,7 +30,7 @@ export const AddProjectDialog: FC<AddProjectDialogPropsType> = ({
   };
 
   const [createNewVmProject, { isLoading }] =
-    usePostApiVmProjectCreateMutation();
+    usePostApiMyVmProjectCreateMutation();
 
   const submit = () => {
     createNewVmProject({ createVmProject: { name } })
