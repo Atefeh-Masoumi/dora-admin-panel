@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiPlatformNamespaceDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyPlatformNamespaceDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/platform/Index";
@@ -19,7 +19,7 @@ export const DeleteWorkspaceDialog: FC<DeleteWorkspaceDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteLoadBalance, { isLoading }] =
-    useDeleteApiPlatformNamespaceDeleteByIdMutation();
+    useDeleteApiMyPlatformNamespaceDeleteByIdMutation();
 
   const { refetchOnClick } = useContext(DataContext);
 

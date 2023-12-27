@@ -6,7 +6,7 @@ import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DeleteWorkspaceDialog } from "../dialogs/DeleteDialog";
 import { useNavigate } from "react-router";
-import { useLazyGetApiPlatformNamespaceGetLoginByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery } from "src/app/services/api";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 
@@ -20,7 +20,7 @@ export const WorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
   const settingOnClick = () => navigate("/platform/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetApiPlatformNamespaceGetLoginByIdQuery();
+    useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery();
 
   const monitorOnClick = () =>
     getUrl({ id: row["id"] })

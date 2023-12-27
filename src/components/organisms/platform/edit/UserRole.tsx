@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { FC, createContext, useState } from "react";
-import { useGetApiPlatformUserRoleListByKubeHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyPlatformUserRoleListByKubeHostIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "../../tables/BaseTable";
 import { userRoleTableStruct } from "./userRole/tables/struct";
 import { UserRoleTableRow } from "./userRole/tables/UserRoleTableRow";
@@ -27,7 +27,7 @@ export const UserRoleManagement: FC<UserRoleManagementPropsType> = ({
   const closeDialog = () => setShowDialog(false);
 
   const { data, isLoading, refetch } =
-    useGetApiPlatformUserRoleListByKubeHostIdQuery({
+    useGetApiMyPlatformUserRoleListByKubeHostIdQuery({
       kubeHostId: row,
     });
 

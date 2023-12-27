@@ -15,17 +15,17 @@ import {
 } from "@mui/icons-material";
 import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
 import {
-  GetApiDatacenterIpListByProductIdAndIdApiResponse,
-  useDeleteApiDatacenterIpDeleteByIdMutation,
+  GetApiMyDatacenterIpListByProductIdAndIdApiResponse,
+  useDeleteApiMyDatacenterIpDeleteByIdMutation,
   DatacenterIpListResponse,
 } from "src/app/services/api.generated";
-import { useLazyGetApiDatacenterIpListByProductIdAndIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery } from "src/app/services/api";
 import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 
 const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
   const [deleteIp, { isLoading }] =
-    useDeleteApiDatacenterIpDeleteByIdMutation();
+    useDeleteApiMyDatacenterIpDeleteByIdMutation();
 
   const onClick = () => id && deleteIp({ id });
 
@@ -116,9 +116,9 @@ type VmIpAddressPropsType = {};
 export const VmIpAddress: FC<VmIpAddressPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [getData, { isLoading }] =
-    useLazyGetApiDatacenterIpListByProductIdAndIdQuery();
+    useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery();
   const [data, setData] =
-    useState<GetApiDatacenterIpListByProductIdAndIdApiResponse | null>(null);
+    useState<GetApiMyDatacenterIpListByProductIdAndIdApiResponse | null>(null);
 
   useEffect(() => {
     if (serverId) {

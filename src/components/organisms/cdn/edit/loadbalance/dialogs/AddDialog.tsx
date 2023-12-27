@@ -24,11 +24,11 @@ import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiCdnLoadBalanceGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyCdnLoadBalanceGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePostApiCdnLoadBalanceCreateMutation,
-  usePutApiCdnLoadBalanceEditMutation,
+  usePostApiMyCdnLoadBalanceCreateMutation,
+  usePutApiMyCdnLoadBalanceEditMutation,
 } from "src/app/services/api.generated";
 
 type InitialValuesType = {
@@ -93,7 +93,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
   const [getDetails, { isLoading: getDetailsLoading }] =
-    useLazyGetApiCdnLoadBalanceGetByIdQuery();
+    useLazyGetApiMyCdnLoadBalanceGetByIdQuery();
 
   useEffect(() => {
     if (!id) return;
@@ -136,10 +136,10 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     setCertificateSwitch((prevState) => !prevState);
 
   const [createLoadBalance, { isLoading: createLoadBalanceLoading }] =
-    usePostApiCdnLoadBalanceCreateMutation();
+    usePostApiMyCdnLoadBalanceCreateMutation();
 
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutApiCdnLoadBalanceEditMutation();
+    usePutApiMyCdnLoadBalanceEditMutation();
 
   const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },

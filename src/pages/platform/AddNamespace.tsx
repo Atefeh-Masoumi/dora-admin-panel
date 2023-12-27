@@ -9,7 +9,7 @@ import {
 } from "src/components/organisms/platform/add/contexts/AddContext";
 import { SelectConfig } from "src/components/organisms/platform/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/platform/add/steps/ServerInfo";
-import { usePostApiPlatformNamespaceCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyPlatformNamespaceCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -28,7 +28,7 @@ const AddWorkspaceService: FC = () => {
   };
 
   const [createWorkspaceService, { isLoading }] =
-    usePostApiPlatformNamespaceCreateMutation();
+    usePostApiMyPlatformNamespaceCreateMutation();
 
   const submitHandler = () => {
     if (

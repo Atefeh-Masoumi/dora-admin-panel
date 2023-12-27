@@ -1,5 +1,4 @@
 import { FC, useState, useMemo, Fragment, createContext } from "react";
-import { useGetApiPlatformNamespaceListQuery } from "src/app/services/api.generated";
 import {
   Button,
   Divider,
@@ -16,6 +15,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 import { DomainCard } from "src/components/organisms/platform/NamespaceCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { useGetApiMyPlatformNamespaceListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -37,7 +37,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiPlatformNamespaceListQuery();
+  } = useGetApiMyPlatformNamespaceListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiDomainDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyDomainDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/web/domain/Index";
@@ -20,7 +20,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeleteApiDomainDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteApiMyDomainDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { usePutApiCdnDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 
 type ChangeProxyStatusPropsType = {
@@ -13,7 +13,7 @@ export const ChangeProxyStatus: FC<ChangeProxyStatusPropsType> = ({
   id,
 }) => {
   const [changeProxyStatus] =
-    usePutApiCdnDnsRecordChangeProxyStatusByIdMutation();
+    usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation();
 
   const changeProxy = () => {
     if (proxyStatus === undefined) return;

@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/vm/Index";
-import { useDeleteApiVmProjectDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyVmProjectDeleteByIdMutation } from "src/app/services/api.generated";
 
 type DeleteVmProjectDialogPropsType = {
   openDialog: boolean;
@@ -20,7 +20,8 @@ export const DeleteVmProjectDialog: FC<DeleteVmProjectDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] = useDeleteApiVmProjectDeleteByIdMutation();
+  const [deleteItem, { isLoading }] =
+    useDeleteApiMyVmProjectDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

@@ -9,7 +9,7 @@ import moment from "jalali-moment";
 import { billTableStruct } from "src/components/organisms/cloud/customerBill/tables/billTableStruct";
 import { BillTableRow } from "src/components/organisms/cloud/customerBill/tables/BillTableRow";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { useGetApiCloudBillGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudBillGetByIdQuery } from "src/app/services/api.generated";
 
 const downloadFileUrl = baseUrl + "/api/cloud/bill/download/";
 
@@ -18,7 +18,7 @@ const Bill: FC = () => {
 
   const { id } = useParams();
 
-  const { data: bill, isLoading } = useGetApiCloudBillGetByIdQuery({
+  const { data: bill, isLoading } = useGetApiMyCloudBillGetByIdQuery({
     id: parseInt(id as string),
   });
 

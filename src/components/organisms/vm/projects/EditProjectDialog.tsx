@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { usePutApiVmProjectEditMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmProjectEditMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useAppSelector } from "src/app/hooks";
@@ -39,7 +39,7 @@ export const EditProjectDialog: FC<EditProjectDialogPropsType> = ({
     setName(event.target.value);
   };
 
-  const [editVmProject, { isLoading }] = usePutApiVmProjectEditMutation();
+  const [editVmProject, { isLoading }] = usePutApiMyVmProjectEditMutation();
 
   const canChange = useMemo(
     () =>

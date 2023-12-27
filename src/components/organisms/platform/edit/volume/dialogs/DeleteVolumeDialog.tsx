@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiPlatformVolumeDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyPlatformVolumeDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { VolumeContext } from "../../VolumeManagement";
@@ -19,7 +19,7 @@ export const DeleteVolumeDialog: FC<DeleteVolumeDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteVolume, { isLoading }] =
-    useDeleteApiPlatformVolumeDeleteByIdMutation();
+    useDeleteApiMyPlatformVolumeDeleteByIdMutation();
 
   const { refetchVolumes } = useContext(VolumeContext);
 

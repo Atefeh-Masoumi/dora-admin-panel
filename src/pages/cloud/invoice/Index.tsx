@@ -6,13 +6,13 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import {
   InvoiceListResponse,
-  useGetApiCloudInvoiceListQuery,
+  useGetApiMyCloudInvoiceListQuery,
 } from "src/app/services/api.generated";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import moment from "jalali-moment";
 
 const Invoices: FC = () => {
-  const { data: invoices, isLoading } = useGetApiCloudInvoiceListQuery();
+  const { data: invoices, isLoading } = useGetApiMyCloudInvoiceListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);

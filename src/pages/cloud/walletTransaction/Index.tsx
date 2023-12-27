@@ -7,12 +7,12 @@ import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePi
 import { walletTableStruct } from "src/components/organisms/cloud/walletTransaction/tables/struct";
 import { WalletTableRow } from "src/components/organisms/cloud/walletTransaction/tables/WalletTableRow";
 import {
-  useGetApiCloudWalletListQuery,
+  useGetApiMyCloudWalletListQuery,
   WalletTransactionListResponse,
 } from "src/app/services/api.generated";
 
 const Wallet: FC = () => {
-  const { data: walletList, isLoading } = useGetApiCloudWalletListQuery();
+  const { data: walletList, isLoading } = useGetApiMyCloudWalletListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);

@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { FC, createContext, useState } from "react";
-import { useGetApiPlatformVolumeListByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyPlatformVolumeListByIdQuery } from "src/app/services/api.generated";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BaseTable } from "../../tables/BaseTable";
 import { AddVolumeDialog } from "./volume/dialogs/AddVolumeDialog";
@@ -25,7 +25,7 @@ export const VolumeManagement: FC<VolumeManagementPropsType> = ({ row }) => {
   const openDialog = () => setShowDialog(true);
   const closeDialog = () => setShowDialog(false);
 
-  const { data, isLoading, refetch } = useGetApiPlatformVolumeListByIdQuery({
+  const { data, isLoading, refetch } = useGetApiMyPlatformVolumeListByIdQuery({
     id: row,
   });
 

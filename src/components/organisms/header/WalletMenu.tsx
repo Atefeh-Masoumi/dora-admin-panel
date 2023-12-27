@@ -12,7 +12,7 @@ import { LinearProgress, Stack, Typography } from "@mui/material";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
 import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/DepositDialog";
-import { useGetApiCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
 import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
@@ -70,7 +70,7 @@ export const WalletMenu: FC = () => {
   };
   const handleClose = () => setAnchorEl(null);
 
-  const { data: balance, isLoading } = useGetApiCloudWalletGetBalanceQuery(
+  const { data: balance, isLoading } = useGetApiMyCloudWalletGetBalanceQuery(
     null as any,
     { refetchOnMountOrArgChange: true }
   );

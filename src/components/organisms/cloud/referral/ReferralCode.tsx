@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiAccountReferralJoinMutation } from "src/app/services/api.generated";
+import { usePostApiMyAccountReferralJoinMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
 export const ReferralCode: FC = () => {
-  const [joinReferral, { isLoading }] = usePostApiAccountReferralJoinMutation();
+  const [joinReferral, { isLoading }] =
+    usePostApiMyAccountReferralJoinMutation();
 
   const [referralCode, setReferralCode] = useState("");
 

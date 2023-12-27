@@ -7,8 +7,8 @@ import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectC
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import {
-  useGetApiCloudCustomerGetCustomerTypeQuery,
-  usePostApiStorageHostCreateMutation,
+  useGetApiMyCloudCustomerGetCustomerTypeQuery,
+  usePostApiMyStorageHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
@@ -22,10 +22,10 @@ const AddStorageService: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType } = useGetApiCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
 
   const [createStorageService, { isLoading }] =
-    usePostApiStorageHostCreateMutation();
+    usePostApiMyStorageHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";

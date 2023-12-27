@@ -6,13 +6,13 @@ import { useNavigate } from "react-router";
 import { SelectConfig } from "src/components/organisms/rabbit/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/rabbit/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import { usePostApiRabbitHostCreateMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import {
   AddRabbitContext,
   addRabbitStepsType,
 } from "src/components/organisms/rabbit/add/contexts/AddRabbitContext";
+import { usePostApiMyRabbitHostCreateMutation } from "src/app/services/api.generated";
 
 const AddRabbitService: FC = () => {
   const {
@@ -35,7 +35,7 @@ const AddRabbitService: FC = () => {
     setStep((step - 1) as addRabbitStepsType);
   };
 
-  const [, { isLoading }] = usePostApiRabbitHostCreateMutation();
+  const [, { isLoading }] = usePostApiMyRabbitHostCreateMutation();
 
   const submitHandler = () => {
     if (

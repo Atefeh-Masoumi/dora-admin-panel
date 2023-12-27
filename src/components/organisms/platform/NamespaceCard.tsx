@@ -4,7 +4,7 @@ import { KubeHostListResponse } from "src/app/services/api.generated";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { useLazyGetApiPlatformNamespaceGetLoginByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery } from "src/app/services/api";
 import { useNavigate } from "react-router";
 import { DeleteWorkspaceDialog } from "./dialogs/DeleteDialog";
 
@@ -22,7 +22,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({ item }) => {
   const settingOnClick = () => navigate("/platform/" + id);
 
   const [getUrl, { isLoading }] =
-    useLazyGetApiPlatformNamespaceGetLoginByIdQuery();
+    useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery();
 
   const monitorOnClick = () =>
     getUrl({ id: id || 0 })

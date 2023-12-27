@@ -8,12 +8,12 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BillsTableRow } from "src/components/organisms/cloud/customerBill/tables/BillsTableRow";
 import { billsTableStruct } from "src/components/organisms/cloud/customerBill/tables/billsTableStruct";
 import {
-  useGetApiCloudBillListQuery,
+  useGetApiMyCloudBillListQuery,
   CustomerBillListResponse,
 } from "src/app/services/api.generated";
 
 const CustomerBills: FC = () => {
-  const { data: customerBill, isLoading } = useGetApiCloudBillListQuery();
+  const { data: customerBill, isLoading } = useGetApiMyCloudBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);

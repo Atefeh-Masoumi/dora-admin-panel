@@ -17,7 +17,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
-import { usePostApiCloudPaymentCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyCloudPaymentCreateMutation } from "src/app/services/api.generated";
 
 const selectedStyle: SxProps<Theme> = {
   border: 1,
@@ -42,7 +42,8 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
   openDialog,
   handleClose,
 }) => {
-  const [createDeposit, { isLoading }] = usePostApiCloudPaymentCreateMutation();
+  const [createDeposit, { isLoading }] =
+    usePostApiMyCloudPaymentCreateMutation();
 
   const formRef = useRef(null);
   const formToken = useRef(null);

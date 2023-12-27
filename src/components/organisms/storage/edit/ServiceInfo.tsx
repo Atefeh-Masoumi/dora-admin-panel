@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
-import { useGetApiStorageHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyStorageHostGetByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -48,7 +48,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
     refetch,
-  } = useGetApiStorageHostGetByIdQuery({
+  } = useGetApiMyStorageHostGetByIdQuery({
     id: Number(id)!,
   });
 

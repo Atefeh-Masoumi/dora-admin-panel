@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiStorageUserDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyStorageUserDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { AccessKeyContext } from "../AccessKeyList";
@@ -22,7 +22,7 @@ export const DeleteAccessKeyDialog: FC<DeleteAccessKeyDialogPropsType> = ({
   const { refetchUsersData } = useContext(AccessKeyContext);
 
   const [DeleteAccessKey, { isLoading }] =
-    useDeleteApiStorageUserDeleteByIdMutation();
+    useDeleteApiMyStorageUserDeleteByIdMutation();
 
   const submit = () =>
     DeleteAccessKey({ id })

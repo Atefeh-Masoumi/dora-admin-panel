@@ -13,7 +13,7 @@ import { useAppSelector } from "src/app/hooks";
 import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
-import { useGetApiCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
 
 type boxRowType = {
   title: string;
@@ -58,7 +58,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiCdnHostOverviewByIdQuery({ id: cdnId });
+  } = useGetApiMyCdnHostOverviewByIdQuery({ id: cdnId });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,

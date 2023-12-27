@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AuthTemplate } from "src/components/templates/AuthTemplate";
-import { usePostApiAccountForgotMutation } from "src/app/services/api.generated";
+import { usePostApiMyAccountForgotMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { emailValidator } from "src/utils/formValidator";
 
@@ -19,7 +19,7 @@ const formValidation = yup.object().shape({
 type ForgetPassPropsType = { goNext: () => void };
 
 export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
-  const [sendMail, { isLoading }] = usePostApiAccountForgotMutation();
+  const [sendMail, { isLoading }] = usePostApiMyAccountForgotMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { email },

@@ -4,10 +4,10 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { setSelectVmProjectAction } from "src/app/slice/vmProjectSlice";
-import { useGetApiVmProjectListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmProjectListQuery } from "src/app/services/api.generated";
 
 export const ProjectSelect: FC = () => {
-  const { data: vmProjects, isLoading } = useGetApiVmProjectListQuery();
+  const { data: vmProjects, isLoading } = useGetApiMyVmProjectListQuery();
 
   const selectVmProjects = useAppSelector(
     (state) => state.vmProject.selectedVmProject

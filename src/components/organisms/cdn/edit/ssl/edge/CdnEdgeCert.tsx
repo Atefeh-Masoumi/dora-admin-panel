@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
-  usePostApiCdnEdgeCertCreateMutation,
-  useGetApiCdnEdgeCertGetByCdnIdQuery,
+  usePostApiMyCdnEdgeCertCreateMutation,
+  useGetApiMyCdnEdgeCertGetByCdnIdQuery,
 } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -15,9 +15,9 @@ export const CdnEdgeCert: FC = () => {
   const cdnId = selectedDomain?.id || 0;
 
   const [createLicense, { isLoading: loadingCreate }] =
-    usePostApiCdnEdgeCertCreateMutation();
+    usePostApiMyCdnEdgeCertCreateMutation();
 
-  const { data: edgeCert, isLoading } = useGetApiCdnEdgeCertGetByCdnIdQuery({
+  const { data: edgeCert, isLoading } = useGetApiMyCdnEdgeCertGetByCdnIdQuery({
     cdnId,
   });
 

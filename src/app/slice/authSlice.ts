@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { api, PostApiAccountLoginApiResponse } from "../services/api.generated";
+import {
+  api,
+  PostApiMyAccountLoginApiResponse,
+} from "../services/api.generated";
 
-type authSliceType = PostApiAccountLoginApiResponse | null;
+type authSliceType = PostApiMyAccountLoginApiResponse | null;
 
 const initialState: () => authSliceType = () => {
   const localStorageUserInfo = localStorage.getItem("loginInfo");
@@ -11,7 +14,9 @@ const initialState: () => authSliceType = () => {
     if (!localStorageUserInfo) {
       return result;
     }
-    result = JSON.parse(localStorageUserInfo) as PostApiAccountLoginApiResponse;
+    result = JSON.parse(
+      localStorageUserInfo
+    ) as PostApiMyAccountLoginApiResponse;
   } catch {
     localStorage.removeItem("loginInfo");
   }
@@ -30,8 +35,8 @@ const authSlice = createSlice({
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
-      api.endpoints.postApiAccountLogin.matchFulfilled,
-      (_, { payload }: { payload: PostApiAccountLoginApiResponse }) => {
+      api.endpoints.postApiMyAccountLogin.matchFulfilled,
+      (_, { payload }: { payload: PostApiMyAccountLoginApiResponse }) => {
         localStorage.setItem("loginInfo", JSON.stringify(payload));
         return payload;
       }

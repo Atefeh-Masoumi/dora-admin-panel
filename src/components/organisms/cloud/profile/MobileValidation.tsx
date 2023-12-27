@@ -5,8 +5,8 @@ import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import {
-  usePostApiAccountProfileConfirmPhoneNumberMutation,
-  usePutApiAccountProfileEditPhoneNumberMutation,
+  usePostApiMyAccountProfileConfirmPhoneNumberMutation,
+  usePutApiMyAccountProfileEditPhoneNumberMutation,
 } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -28,7 +28,7 @@ export const MobileValidation: FC<MobileValidationProps> = ({
   phoneNumber,
 }) => {
   const [sendMessage, { isLoading }] =
-    usePutApiAccountProfileEditPhoneNumberMutation();
+    usePutApiMyAccountProfileEditPhoneNumberMutation();
   const [isCodeField, setIsCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
 
@@ -62,7 +62,7 @@ export const MobileValidation: FC<MobileValidationProps> = ({
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
-    usePostApiAccountProfileConfirmPhoneNumberMutation();
+    usePostApiMyAccountProfileConfirmPhoneNumberMutation();
 
   const submitConfirm = () => {
     if (haveNull) return;

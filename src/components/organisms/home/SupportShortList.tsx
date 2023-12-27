@@ -14,10 +14,10 @@ import moment from "jalali-moment";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import { CustomTooltip } from "../cloud/notification/tables/NotificationTableRow";
-import { useGetApiCloudSupportShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudSupportShortListQuery } from "src/app/services/api.generated";
 
 export const ShortTickets: FC = () => {
-  const { data: tickets, isLoading } = useGetApiCloudSupportShortListQuery();
+  const { data: tickets, isLoading } = useGetApiMyCloudSupportShortListQuery();
 
   const navigate = useNavigate();
   return (

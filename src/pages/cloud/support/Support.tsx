@@ -8,8 +8,8 @@ import { LoadingChat } from "src/components/organisms/cloud/support/LoadingChat"
 import { DorsaTooltip } from "src/components/organisms/cloud/referral/WelcomeTooltip";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
 import {
-  useGetApiCloudSupportItemListBySupportIdQuery,
-  usePostApiCloudSupportItemCreateMutation,
+  useGetApiMyCloudSupportItemListBySupportIdQuery,
+  usePostApiMyCloudSupportItemCreateMutation,
 } from "src/app/services/api.generated";
 
 const Detail: FC = () => {
@@ -30,7 +30,7 @@ const Detail: FC = () => {
 
   const { id } = useParams();
   const { data: supportItems, isLoading } =
-    useGetApiCloudSupportItemListBySupportIdQuery({
+    useGetApiMyCloudSupportItemListBySupportIdQuery({
       supportId: parseInt(id as string),
     });
 
@@ -51,7 +51,7 @@ const Detail: FC = () => {
   }, [supportItems]);
 
   const [itemCreate, { isLoading: LoadingSend }] =
-    usePostApiCloudSupportItemCreateMutation();
+    usePostApiMyCloudSupportItemCreateMutation();
   const submit = () => {
     if (!id || !content) return;
 

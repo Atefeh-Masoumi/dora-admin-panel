@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiRabbitHostDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyRabbitHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/rabbit/Index";
@@ -21,7 +21,7 @@ export const DeleteRabbitDialog: FC<DeleteRabbitDialogPropsType> = ({
 
   const onClose = () => handleClose();
   const [deleteLoadBalance, { isLoading }] =
-    useDeleteApiRabbitHostDeleteByIdMutation();
+    useDeleteApiMyRabbitHostDeleteByIdMutation();
 
   const submit = () =>
     deleteLoadBalance({ id })
