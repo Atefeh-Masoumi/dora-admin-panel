@@ -37,13 +37,14 @@ const Login: FC = () => {
   ) => {
     loginUser({ loginModel: { email, password } })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        if (!res) return;
         toast.success("شما با موفقیت وارد شدید");
         navigate("/");
       })
       .catch(
         ({ status }: { status: number }) =>
-          (status === 401 || status === 404) &&
+          (status === 401 || status === 404 || status === 400) &&
           toast.error("ایمیل یا گذرواژه صحیح اشتباه است")
       );
     setSubmitting(false);
