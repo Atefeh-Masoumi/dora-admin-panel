@@ -44,7 +44,7 @@ const Login: FC = () => {
       })
       .catch(
         ({ status }: { status: number }) =>
-          (status === 401 || status === 404 || status === 400) &&
+          (status === 401 || status === 404) &&
           toast.error("ایمیل یا گذرواژه صحیح اشتباه است")
       );
     setSubmitting(false);

@@ -61,7 +61,8 @@ export const baseQuery: BaseQueryFn<
   } catch (axiosError) {
     const e = axiosError as AxiosError<
       {
-        Code: number;
+        code: number;
+        errorMessage: string[];
         ErrorMessage: string[];
       },
       any
@@ -74,7 +75,8 @@ export const baseQuery: BaseQueryFn<
 
     const error = {
       status: e.response.status,
-      errorMessage: e.response?.data.ErrorMessage,
+      errorMessage:
+        e.response?.data.ErrorMessage || e.response?.data.errorMessage,
     };
 
     let message = "";
