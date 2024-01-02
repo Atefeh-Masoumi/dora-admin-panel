@@ -1364,10 +1364,7 @@ export const api = createApi({
       GetApiMyCloudSupportListApiResponse,
       GetApiMyCloudSupportListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support/list`,
-        params: { pageIndex: queryArg.pageIndex, pageSize: queryArg.pageSize },
-      }),
+      query: () => ({ url: `/api/my/cloud/support/list` }),
     }),
     getApiMyCloudSupportShortList: build.query<
       GetApiMyCloudSupportShortListApiResponse,
@@ -2434,10 +2431,7 @@ export type DeleteApiMyStorageUserDeleteByIdApiArg = {
 };
 export type GetApiMyCloudSupportListApiResponse =
   /** status 200 Success */ SupportListResponse[];
-export type GetApiMyCloudSupportListApiArg = {
-  pageIndex?: number;
-  pageSize?: number;
-};
+export type GetApiMyCloudSupportListApiArg = void;
 export type GetApiMyCloudSupportShortListApiResponse =
   /** status 200 Success */ SupportShortListResponse[];
 export type GetApiMyCloudSupportShortListApiArg = void;
@@ -3192,25 +3186,25 @@ export type GetKubernetesHostResponse = {
   expireDate?: string | null;
   nodes?: VmProductItemModel[] | null;
 };
+export type NodeSpecs = {
+  quantity?: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+};
 export type CreateClusterModel = {
   clusterName: string;
   datacenterId: number;
   imageId: number;
   vmPassword: string;
   customerProductTypeId: number;
-  isPredefined: boolean;
-  productBundleId?: number | null;
-  nodeCount?: number;
-  cpu?: number | null;
-  memory?: number | null;
-  disk?: number | null;
+  workerNodes?: NodeSpecs;
+  masterNodes?: NodeSpecs;
 };
 export type EditClusterModel = {
   id?: number;
-  nodeCount?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
+  masterNodeCount?: number;
+  workerNodeCount?: number;
 };
 export type KubeUserListResponse = {
   id?: number;
