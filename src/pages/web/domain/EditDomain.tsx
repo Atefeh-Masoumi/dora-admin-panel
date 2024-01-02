@@ -89,7 +89,7 @@ const EditDomain: FC<EditDomainPropsType> = () => {
       >
         <Tabs
           sx={{
-            minWidth: { xs: 300, md: 325 },
+            minWidth: 'fix-content',
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
