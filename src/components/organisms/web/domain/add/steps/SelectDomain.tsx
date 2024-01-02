@@ -5,7 +5,8 @@ import {
   Grid,
   Autocomplete,
   Checkbox,
-  FormControlLabel,
+  Typography,
+  Stack,
 } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
@@ -37,8 +38,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const { authCode, setAuthCode } = useContext(AddDomainContext);
   const { term, setTerm } = useContext(AddDomainContext);
 
-  const termInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setTerm(e.target.checked);
+  const termInputChangeHandler = () => setTerm(!term);
 
   const typeChangeHandler = (
     _: ChangeEvent<HTMLInputElement>,
@@ -154,28 +154,25 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
             )}
           </Grid>
         </Grid>
-        <Grid
-          direction={{ xs: "column", md: "row" }}
-          justifyContent="space-between"
-          spacing={{ xs: 1, md: 0 }}
-          width="100%"
-          sx={{ textAlign: "left" }}
+        <Stack
+          direction="row"
+          alignItems="center"
+          onClick={termInputChangeHandler}
+          columnGap={1}
+          sx={{ cursor: "pointer" }}
+          width="fit-content"
+          mt={3}
+          mr="auto"
         >
-          <Grid pt={3} direction="row" alignItems="right" spacing={0.5}>
-            <FormControlLabel
-              color="secondary.main"
-              label="با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم"
-              control={
-                <Checkbox
-                  value={term}
-                  checked={term}
-                  sx={{ p: 0, borderRadius: 0 }}
-                  onChange={termInputChangeHandler}
-                />
-              }
-            />
-          </Grid>
-        </Grid>
+          <Checkbox
+            value={term}
+            checked={term}
+            sx={{ p: 0, borderRadius: 0 }}
+          />
+          <Typography align="left">
+            با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم
+          </Typography>
+        </Stack>
       </Grid>
     </Box>
   );
