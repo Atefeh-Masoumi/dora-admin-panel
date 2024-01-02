@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Divider, Paper, Grid, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
@@ -15,6 +15,8 @@ import { LoadingButton } from "@mui/lab";
 type EditDomainNsPropsType = {};
 
 export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
+  const [nameServer1, setNameServer1] = useState("");
+  const [nameServer2, setNameServer2] = useState("");
   const { id } = useParams();
 
   const {
@@ -24,6 +26,17 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
   } = useGetApiMyDomainGetByIdQuery({
     id: Number(id)!,
   });
+
+  useEffect(() => {
+    if (!nameServer1) {
+      setNameServer1(domainData?.ns1 || "");
+    }
+  }, [domainData?.ns1, nameServer1]);
+  useEffect(() => {
+    if (!nameServer2) {
+      setNameServer2(domainData?.ns2 || "");
+    }
+  }, [domainData?.ns2, nameServer2]);
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
@@ -36,13 +49,22 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     usePutApiMyDomainChangeNsMutation();
 
   const submitHandler = () => {
-    if (!id || !domainData?.ns1 || !domainData?.ns2) return;
+    if (
+      !id ||
+      !nameServer1 ||
+      !nameServer2 ||
+      (domainData?.ns1 === nameServer1 && domainData?.ns2 === nameServer2)
+    )
+      return;
+
+    console.log({ nameServer1 });
+    console.log({ nameServer2 });
 
     changeNsModel({
       changeNsModel: {
         id: parseInt(id),
-        ns1: domainData?.ns1,
-        ns2: domainData?.ns2,
+        ns1: nameServer1,
+        ns2: nameServer2,
       },
     })
       .unwrap()
@@ -51,6 +73,13 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
         navigate("/domain");
       });
     return;
+  };
+
+  const nameServer1OnChange = (event: any) => {
+    setNameServer1(event.target.value);
+  };
+  const nameServer2OnChange = (event: any) => {
+    setNameServer2(event.target.value);
   };
 
   return (
@@ -108,7 +137,8 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
             >
               <Grid item xs={12} lg={5.5}>
                 <DorsaTextField
-                  value={domainData?.ns1}
+                  value={nameServer1}
+                  onChange={nameServer1OnChange}
                   label="Name Server 1"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
@@ -116,7 +146,8 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
               </Grid>
               <Grid item xs={12} lg={5.5}>
                 <DorsaTextField
-                  value={domainData?.ns2}
+                  value={nameServer2}
+                  onChange={nameServer2OnChange}
                   label="Name Server 2"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
