@@ -37,7 +37,8 @@ const Login: FC = () => {
   ) => {
     loginUser({ loginModel: { email, password } })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        if (!res) return;
         toast.success("شما با موفقیت وارد شدید");
         navigate("/");
       })
