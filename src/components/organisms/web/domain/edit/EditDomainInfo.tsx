@@ -123,7 +123,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <Grid2 xs={12} md={8}>
+              <Grid2 xs={12}>
                 <Paper
                   component={Stack}
                   rowGap={2}
@@ -131,7 +131,6 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                   sx={{
                     borderRadius: BORDER_RADIUS_4,
                     p: { xs: 2.5 },
-                    height: "100%",
                   }}
                 >
                   <Typography align="center" fontWeight={700} fontSize={18}>
@@ -146,11 +145,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                     alignItems="center"
                   >
                     <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
-                      <Stack
-                        direction={{ xs: "column", sm: "row" }}
-                        spacing={2}
-                        sx={{ px: 2 }}
-                      >
+                      <Stack direction="row" spacing={2} px={2} mb={1}>
                         <ExclamationMarkCircleSvg
                           sx={{
                             transform: "rotate(180deg)",
@@ -163,17 +158,12 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                           }}
                         />
                         <Typography
-                          align="center"
                           sx={{ color: ({ palette }) => palette.grey[700] }}
                         >
                           تغییر اطلاعات شاید کمی زمانبر باشد.
                         </Typography>
                       </Stack>
-                      <Stack
-                        direction={{ xs: "column", sm: "row" }}
-                        spacing={2}
-                        sx={{ px: 2 }}
-                      >
+                      <Stack direction="row" spacing={2} px={2}>
                         <ExclamationMarkCircleSvg
                           sx={{
                             transform: "rotate(180deg)",
@@ -186,7 +176,6 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                           }}
                         />
                         <Typography
-                          align="center"
                           sx={{ color: ({ palette }) => palette.grey[700] }}
                         >
                           بعد از تغییر، ایمیلی برای شما ارسال میگردد و بعد از
@@ -195,9 +184,10 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Stack>
                     </Grid>
 
-                    <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
+                    <Grid xs={12} container item sx={{ m: 2 }} spacing={2}>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.name && touched.name)}
                           helperText={errors.name}
                           {...getFieldProps("name")}
@@ -207,6 +197,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.email && touched.email)}
                           helperText={errors.email}
                           {...getFieldProps("email")}
@@ -216,6 +207,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.country && touched.country)}
                           helperText={errors.country}
                           {...getFieldProps("country")}
@@ -226,6 +218,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.province && touched.province)}
                           helperText={errors.province}
                           {...getFieldProps("province")}
@@ -236,6 +229,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.city && touched.city)}
                           helperText={errors.city}
                           {...getFieldProps("city")}
@@ -246,6 +240,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.street && touched.street)}
                           helperText={errors.street}
                           {...getFieldProps("street")}
@@ -255,6 +250,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(
                             errors.postalCode && touched.postalCode
                           )}
@@ -266,6 +262,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                       <Grid item xs={12} lg={6}>
                         <DorsaTextField
+                          fullWidth
                           error={Boolean(errors.voice && touched.voice)}
                           helperText={errors.voice}
                           {...getFieldProps("voice")}

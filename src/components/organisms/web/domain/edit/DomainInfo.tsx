@@ -63,12 +63,15 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-      <Grid2 xs={12} md={8}>
+      <Grid2 xs={12}>
         <Paper
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+          sx={{
+            borderRadius: BORDER_RADIUS_4,
+            p: { xs: 2.5 },
+          }}
         >
           <Typography align="center" fontWeight={700} fontSize={18}>
             مشخصات دامنه

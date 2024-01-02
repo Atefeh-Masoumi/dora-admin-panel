@@ -55,12 +55,12 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-      <Grid2 xs={12} md={8}>
+      <Grid2 xs={12}>
         <Paper
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 } }}
         >
           <Typography align="center" fontWeight={700} fontSize={18}>
             تغییر Name Server دامنه
@@ -98,30 +98,31 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
               </Stack>
             </Grid>
 
-            <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
-              <Grid item xs={12} lg={6}>
+            <Grid
+              xs={12}
+              container
+              item
+              sx={{ m: 2 }}
+              gap={2}
+              justifyContent="space-evenly"
+            >
+              <Grid item xs={12} lg={5.5}>
                 <DorsaTextField
                   value={domainData?.ns1}
-                  sx={{ minWidth: 300 }}
                   label="Name Server 1"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
                 />
               </Grid>
-            </Grid>
-
-            <Grid xs={12} container item sx={{ m: 2 }} spacing={1}>
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={5.5}>
                 <DorsaTextField
                   value={domainData?.ns2}
-                  sx={{ minWidth: 300 }}
                   label="Name Server 2"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
                 />
               </Grid>
             </Grid>
-
             <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
               <Stack alignItems="center" justifyContent="center">
                 <LoadingButton
@@ -130,8 +131,6 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
                   onClick={submitHandler}
                   sx={{
                     width: { xs: "100%", sm: "auto" },
-                    px: { sm: 8 },
-                    py: 2.1,
                   }}
                 >
                   ذخیره اطلاعات
