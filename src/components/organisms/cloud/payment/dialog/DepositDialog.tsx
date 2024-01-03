@@ -141,10 +141,10 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                     <Button
                       variant="outlined"
                       color="secondary"
-                      onClick={() => setFieldValue("amount", 1000000)}
-                      sx={amount === 1000000 ? selectedStyle : {}}
+                      onClick={() => setFieldValue("amount", 2000000)}
+                      sx={amount === 2000000 ? selectedStyle : {}}
                     >
-                      ۱,۰۰۰,۰۰۰ ریال
+                      ۲,۰۰۰,۰۰۰ ریال
                     </Button>
                     <Button
                       variant="outlined"
