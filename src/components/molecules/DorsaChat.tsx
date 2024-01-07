@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
 import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
-import { SupportItemModel } from "src/app/services/api.generated";
+import { IssueItemModel } from "src/app/services/api.generated";
 import { Document } from "src/components/atoms/svg/DocumentSvg";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 
-const downloadFileUrl = baseUrl + "/api/cloud/support-item/download/";
+const downloadFileUrl = baseUrl + "/api/my/cloud/issue-item/download/";
 
-export const DorsaChat: FC<{ message: SupportItemModel }> = ({ message }) => {
+export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
   const token = useAppSelector((state) => state.auth?.accessToken);
 
@@ -69,7 +69,7 @@ export const DorsaChat: FC<{ message: SupportItemModel }> = ({ message }) => {
             </Stack>
             <Stack direction="row" px={1}>
               <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-                {message.supportDate}
+                {message.issueDate}
               </Typography>
             </Stack>
           </Stack>
@@ -125,7 +125,7 @@ export const DorsaChat: FC<{ message: SupportItemModel }> = ({ message }) => {
           </Stack>
           <Stack direction="row" justifyContent="end" px={1}>
             <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-              {message.supportDate}
+              {message.issueDate}
             </Typography>
           </Stack>
         </Stack>

@@ -1,22 +1,22 @@
 import {
   api as generatedApi,
-  PostApiMyCloudSupportItemCreateApiResponse,
-  PostApiMyCloudSupportCreateApiArg,
+  PostApiMyCloudIssueItemCreateApiResponse,
+  PostApiMyCloudIssueCreateApiArg,
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
 export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
-      customCreateSupport: build.mutation<
-        PostApiMyCloudSupportItemCreateApiResponse,
-        PostApiMyCloudSupportCreateApiArg & {
+      customCreateIssue: build.mutation<
+        PostApiMyCloudIssueItemCreateApiResponse,
+        PostApiMyCloudIssueCreateApiArg & {
           abortController?: AbortController;
           onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
       >({
         query: ({ body, abortController, onUploadProgress }) => ({
-          url: `/api/cloud/support/create`,
+          url: `/api/cloud/issue/create`,
           method: "POST",
           body,
           abortController,
@@ -57,7 +57,7 @@ export const api = generatedApi
       getApiMyCdnHostGetById: {
         providesTags: () => ["ZoneData"],
       },
-      getApiMyCloudSupportItemListBySupportId: {
+      getApiMyCloudIssueItemListByIssueId: {
         providesTags: () => ["SupportItems"],
       },
       getApiMyCdnLoadBalanceListByCdnId: {
@@ -132,7 +132,7 @@ export const api = generatedApi
       postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      postApiMyCloudSupportItemCreate: {
+      postApiMyCloudIssueItemCreate: {
         invalidatesTags: () => ["SupportItems"],
       },
       getApiMyVmProjectList: {
@@ -181,7 +181,7 @@ export const api = generatedApi
   });
 
 export const {
-  useCustomCreateSupportMutation,
+  useCustomCreateIssueMutation,
   useLazyGetApiMyAccountProfileGetNotificationStatusQuery,
   useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
@@ -189,7 +189,7 @@ export const {
   useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
   useLazyGetApiMyCdnDnsRecordGetByIdQuery,
   useLazyGetApiMyCloudInvoiceGetByIdQuery,
-  useLazyGetApiMyCloudSupportItemDownloadByIdQuery,
+  useLazyGetApiMyCloudIssueItemDownloadByIdQuery,
   useLazyGetApiMyCloudPaymentGetByIdQuery,
   useLazyGetApiMyCloudBillDownloadByIdQuery,
   useLazyGetApiMyCloudCustomerProductListByProductIdQuery,

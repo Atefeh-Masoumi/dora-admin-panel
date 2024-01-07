@@ -14,10 +14,10 @@ import moment from "jalali-moment";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import { CustomTooltip } from "../cloud/notification/tables/NotificationTableRow";
-import { useGetApiMyCloudSupportShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudIssueShortListQuery } from "src/app/services/api.generated";
 
 export const ShortTickets: FC = () => {
-  const { data: tickets, isLoading } = useGetApiMyCloudSupportShortListQuery();
+  const { data: tickets, isLoading } = useGetApiMyCloudIssueShortListQuery();
 
   const navigate = useNavigate();
   return (
@@ -72,9 +72,9 @@ export const ShortTickets: FC = () => {
               </Stack>
             ) : (
               <Fragment>
-                {tickets?.map(({ id, supportDate, supportSubject }) => {
+                {tickets?.map(({ id, createDate, issueSubject }) => {
                   const date = moment
-                    .from(supportDate || "", "fa", "YYYY/MM/DD HH:mm:ss")
+                    .from(createDate || "", "fa", "YYYY/MM/DD HH:mm:ss")
                     .locale("fa")
                     .format("YYYY/MM/DD");
                   return (
@@ -100,7 +100,7 @@ export const ShortTickets: FC = () => {
                       >
                         {date}
                       </Typography>
-                      <CustomTooltip title={supportSubject as any} arrow>
+                      <CustomTooltip title={issueSubject as any} arrow>
                         <Typography
                           fontSize={14}
                           color="rgba(19, 25, 32, 1)"
@@ -112,7 +112,7 @@ export const ShortTickets: FC = () => {
                           }}
                           whiteSpace="nowrap"
                         >
-                          {supportSubject}
+                          {issueSubject}
                         </Typography>
                       </CustomTooltip>
                       <IconButton

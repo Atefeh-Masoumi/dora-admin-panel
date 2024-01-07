@@ -16,14 +16,14 @@ import { AxiosProgressEvent } from "axios";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Add } from "src/components/atoms/svg/AddSvg";
 import {
-  SupportSubjectListResponse,
+  IssueSubjectListResponse,
   useGetApiMyCloudBusinessUnitListQuery,
   useGetApiMyCloudProductListQuery,
-  usePostApiMyCloudSupportSubjectSelectListMutation,
+  usePostApiMyCloudIssueSubjectSelectListMutation,
   GetApiMyCloudCustomerProductListByProductIdApiResponse,
 } from "src/app/services/api.generated";
 import {
-  useCustomCreateSupportMutation,
+  useCustomCreateIssueMutation,
   useLazyGetApiMyCloudCustomerProductListByProductIdQuery,
 } from "src/app/services/api";
 
@@ -57,17 +57,17 @@ const AddTicket: FC = () => {
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostApiMyCloudSupportSubjectSelectListMutation();
+  const [selectList] = usePostApiMyCloudIssueSubjectSelectListMutation();
 
   useEffect(() => {
     selectList({
-      supportSubjectSelectListModel: {
+      issueSubjectSelectListModel: {
         productId: productId,
         businessUnitId: businessUnitId,
       },
     })
       .unwrap()
-      .then((res: SetStateAction<SupportSubjectListResponse[]>) =>
+      .then((res: SetStateAction<IssueSubjectListResponse[]>) =>
         setList(res)
       );
 
@@ -91,9 +91,9 @@ const AddTicket: FC = () => {
 
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File>();
-  const [list, setList] = useState<SupportSubjectListResponse[]>([]);
+  const [list, setList] = useState<IssueSubjectListResponse[]>([]);
 
-  const [upload] = useCustomCreateSupportMutation();
+  const [upload] = useCustomCreateIssueMutation();
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -275,7 +275,7 @@ const AddTicket: FC = () => {
                 inputProps={{ fontSize: "20px !important" }}
                 select
                 fullWidth
-                label="محصولات کابر"
+                label="محصولات کاربر"
                 value={selectedApiCloudCustomerProduct || ""}
                 onChange={(e) =>
                   setSelectedApiCloudCustomerProduct(+e.target.value)

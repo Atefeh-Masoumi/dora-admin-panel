@@ -8,8 +8,8 @@ import { LoadingChat } from "src/components/organisms/cloud/support/LoadingChat"
 import { DorsaTooltip } from "src/components/organisms/cloud/referral/WelcomeTooltip";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
 import {
-  useGetApiMyCloudSupportItemListBySupportIdQuery,
-  usePostApiMyCloudSupportItemCreateMutation,
+  useGetApiMyCloudIssueItemListByIssueIdQuery,
+  usePostApiMyCloudIssueItemCreateMutation,
 } from "src/app/services/api.generated";
 
 const Detail: FC = () => {
@@ -30,16 +30,16 @@ const Detail: FC = () => {
 
   const { id } = useParams();
   const { data: supportItems, isLoading } =
-    useGetApiMyCloudSupportItemListBySupportIdQuery({
-      supportId: parseInt(id as string),
+    useGetApiMyCloudIssueItemListByIssueIdQuery({
+      issueId: parseInt(id as string),
     });
 
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    if (!supportItems || !supportItems.supportDate) return;
+    if (!supportItems || !supportItems.createDate) return;
     const m = moment
-      .from(supportItems.supportDate, "fa", "YYYY/MM/DD HH:mm:ss")
+      .from(supportItems.createDate, "fa", "YYYY/MM/DD HH:mm:ss")
       .locale("fa")
       .format("YYYY/MM/DD ساعت: HH:mm");
     setDate(m);
@@ -51,7 +51,7 @@ const Detail: FC = () => {
   }, [supportItems]);
 
   const [itemCreate, { isLoading: LoadingSend }] =
-    usePostApiMyCloudSupportItemCreateMutation();
+    usePostApiMyCloudIssueItemCreateMutation();
   const submit = () => {
     if (!id || !content) return;
 
@@ -78,7 +78,7 @@ const Detail: FC = () => {
         >
           <Stack spacing={1}>
             <Typography variant="text1" fontWeight="700" whiteSpace="nowrap">
-              {id} / {supportItems?.supportSubject}
+              {id} / {supportItems?.issueSubject}
             </Typography>
             <Stack direction="row" spacing={1} color="secondary">
               <Typography variant="text9">تاریخ ایجاد: {date}</Typography>
@@ -89,19 +89,19 @@ const Detail: FC = () => {
           </Stack>
           <Chip
             label={
-              supportItems?.supportStatusId === 1
+              supportItems?.issueStatusId === 1
                 ? "در انتظار پاسخ"
-                : supportItems?.supportStatusId === 2
+                : supportItems?.issueStatusId === 2
                 ? "پاسخ داده شده"
                 : "تکمیل شده"
             }
             sx={{
               color:
-                supportItems?.supportStatusId === 1
+                supportItems?.issueStatusId === 1
                   ? "rgba(255, 147, 68, 1)"
                   : "rgba(13, 191, 102, 1)",
               backgroundColor:
-                supportItems?.supportStatusId === 1
+                supportItems?.issueStatusId === 1
                   ? "rgba(255, 233, 218, 1)"
                   : "rgba(218, 246, 232, 1)",
               borderRadius: 1,
@@ -120,7 +120,7 @@ const Detail: FC = () => {
           <LoadingChat />
         ) : (
           <Stack spacing={2} overflow="visible" id="chat">
-            {supportItems?.transaction?.map((item, index) => {
+            {supportItems?.issueItems?.map((item, index) => {
               return <DorsaChat key={index} message={item} />;
             })}
             <Stack direction={{ xs: "column", md: "row" }} spacing={2}>

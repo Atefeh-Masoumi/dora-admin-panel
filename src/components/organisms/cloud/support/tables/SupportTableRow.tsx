@@ -27,7 +27,7 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
             align="center"
             sx={{ px: 1, whiteSpace: "nowrap" }}
           >
-            {column.id === "supportSubject" ? (
+            {column.id === "issueSubject" ? (
               <Typography
                 textOverflow="ellipsis"
                 fontSize={14}
@@ -37,7 +37,7 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
               </Typography>
             ) : (
               <Stack>
-                {column.id === "supportStatus" ? (
+                {column.id === "issueStatus" ? (
                   <Chip
                     label={text}
                     sx={{

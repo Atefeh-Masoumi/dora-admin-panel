@@ -636,6 +636,70 @@ export const api = createApi({
         body: queryArg.payInvoiceModel,
       }),
     }),
+    getApiMyCloudIssueList: build.query<
+      GetApiMyCloudIssueListApiResponse,
+      GetApiMyCloudIssueListApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/issue/list` }),
+    }),
+    getApiMyCloudIssueShortList: build.query<
+      GetApiMyCloudIssueShortListApiResponse,
+      GetApiMyCloudIssueShortListApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/issue/short-list` }),
+    }),
+    postApiMyCloudIssueCreate: build.mutation<
+      PostApiMyCloudIssueCreateApiResponse,
+      PostApiMyCloudIssueCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/issue/create`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
+    getApiMyCloudIssueItemListByIssueId: build.query<
+      GetApiMyCloudIssueItemListByIssueIdApiResponse,
+      GetApiMyCloudIssueItemListByIssueIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/issue-item/list/${queryArg.issueId}`,
+      }),
+    }),
+    postApiMyCloudIssueItemCreate: build.mutation<
+      PostApiMyCloudIssueItemCreateApiResponse,
+      PostApiMyCloudIssueItemCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/issue-item/create`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
+    getApiMyCloudIssueItemDownloadById: build.query<
+      GetApiMyCloudIssueItemDownloadByIdApiResponse,
+      GetApiMyCloudIssueItemDownloadByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/issue-item/download/${queryArg.id}`,
+      }),
+    }),
+    getApiMyCloudIssueSubjectList: build.query<
+      GetApiMyCloudIssueSubjectListApiResponse,
+      GetApiMyCloudIssueSubjectListApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/issue-subject/list` }),
+    }),
+    postApiMyCloudIssueSubjectSelectList: build.mutation<
+      PostApiMyCloudIssueSubjectSelectListApiResponse,
+      PostApiMyCloudIssueSubjectSelectListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/issue-subject/select-list`,
+        method: "POST",
+        body: queryArg.issueSubjectSelectListModel,
+      }),
+    }),
     getApiMyPlatformDevopsListById: build.query<
       GetApiMyPlatformDevopsListByIdApiResponse,
       GetApiMyPlatformDevopsListByIdApiArg
@@ -770,6 +834,20 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/platform/kubernetes/get/${queryArg.id}`,
       }),
+    }),
+    getApiMyPlatformKubernetesImagesByDatacenterId: build.query<
+      GetApiMyPlatformKubernetesImagesByDatacenterIdApiResponse,
+      GetApiMyPlatformKubernetesImagesByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/platform/kubernetes/images/${queryArg.datacenterId}`,
+      }),
+    }),
+    getApiMyPlatformKubernetesVersions: build.query<
+      GetApiMyPlatformKubernetesVersionsApiResponse,
+      GetApiMyPlatformKubernetesVersionsApiArg
+    >({
+      query: () => ({ url: `/api/my/platform/kubernetes/versions` }),
     }),
     postApiMyPlatformKubernetesCreate: build.mutation<
       PostApiMyPlatformKubernetesCreateApiResponse,
@@ -1360,70 +1438,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyCloudSupportList: build.query<
-      GetApiMyCloudSupportListApiResponse,
-      GetApiMyCloudSupportListApiArg
-    >({
-      query: () => ({ url: `/api/my/cloud/support/list` }),
-    }),
-    getApiMyCloudSupportShortList: build.query<
-      GetApiMyCloudSupportShortListApiResponse,
-      GetApiMyCloudSupportShortListApiArg
-    >({
-      query: () => ({ url: `/api/my/cloud/support/short-list` }),
-    }),
-    postApiMyCloudSupportCreate: build.mutation<
-      PostApiMyCloudSupportCreateApiResponse,
-      PostApiMyCloudSupportCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support/create`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getApiMyCloudSupportItemListBySupportId: build.query<
-      GetApiMyCloudSupportItemListBySupportIdApiResponse,
-      GetApiMyCloudSupportItemListBySupportIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support-item/list/${queryArg.supportId}`,
-      }),
-    }),
-    postApiMyCloudSupportItemCreate: build.mutation<
-      PostApiMyCloudSupportItemCreateApiResponse,
-      PostApiMyCloudSupportItemCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support-item/create`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
-    getApiMyCloudSupportItemDownloadById: build.query<
-      GetApiMyCloudSupportItemDownloadByIdApiResponse,
-      GetApiMyCloudSupportItemDownloadByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support-item/download/${queryArg.id}`,
-      }),
-    }),
-    getApiMyCloudSupportSubjectList: build.query<
-      GetApiMyCloudSupportSubjectListApiResponse,
-      GetApiMyCloudSupportSubjectListApiArg
-    >({
-      query: () => ({ url: `/api/my/cloud/support-subject/list` }),
-    }),
-    postApiMyCloudSupportSubjectSelectList: build.mutation<
-      PostApiMyCloudSupportSubjectSelectListApiResponse,
-      PostApiMyCloudSupportSubjectSelectListApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cloud/support-subject/select-list`,
-        method: "POST",
-        body: queryArg.supportSubjectSelectListModel,
-      }),
-    }),
     postApiMyVmHostList: build.mutation<
       PostApiMyVmHostListApiResponse,
       PostApiMyVmHostListApiArg
@@ -1736,6 +1750,26 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/web/delete/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    postApiMyCloudContactUsCreate: build.mutation<
+      PostApiMyCloudContactUsCreateApiResponse,
+      PostApiMyCloudContactUsCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/contact-us/create`,
+        method: "POST",
+        body: queryArg.createContactUsModel,
+      }),
+    }),
+    postApiMyCloudNewsCreate: build.mutation<
+      PostApiMyCloudNewsCreateApiResponse,
+      PostApiMyCloudNewsCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/news/create`,
+        method: "POST",
+        body: queryArg.createNewsLetterModel,
       }),
     }),
     postApiMyDomainWhoisGet: build.mutation<
@@ -2060,6 +2094,48 @@ export type PostApiMyCloudInvoicePayApiResponse = unknown;
 export type PostApiMyCloudInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
+export type GetApiMyCloudIssueListApiResponse =
+  /** status 200 Success */ IssueListResponse[];
+export type GetApiMyCloudIssueListApiArg = void;
+export type GetApiMyCloudIssueShortListApiResponse =
+  /** status 200 Success */ IssueShortListResponse[];
+export type GetApiMyCloudIssueShortListApiArg = void;
+export type PostApiMyCloudIssueCreateApiResponse = unknown;
+export type PostApiMyCloudIssueCreateApiArg = {
+  body: {
+    Content: string;
+    BusinessUnitId: number;
+    IssueSubjectId: number;
+    CustomerProductId?: number;
+    ProductId?: number;
+    Attachment?: Blob;
+  };
+};
+export type GetApiMyCloudIssueItemListByIssueIdApiResponse =
+  /** status 200 Success */ IssueItemListResponse;
+export type GetApiMyCloudIssueItemListByIssueIdApiArg = {
+  issueId: number;
+};
+export type PostApiMyCloudIssueItemCreateApiResponse = unknown;
+export type PostApiMyCloudIssueItemCreateApiArg = {
+  body: {
+    IssueId: number;
+    Content: string;
+    Attachment?: Blob;
+  };
+};
+export type GetApiMyCloudIssueItemDownloadByIdApiResponse = unknown;
+export type GetApiMyCloudIssueItemDownloadByIdApiArg = {
+  id: number;
+};
+export type GetApiMyCloudIssueSubjectListApiResponse =
+  /** status 200 Success */ IssueSubjectListResponse[];
+export type GetApiMyCloudIssueSubjectListApiArg = void;
+export type PostApiMyCloudIssueSubjectSelectListApiResponse =
+  /** status 200 Success */ IssueSubjectListResponse[];
+export type PostApiMyCloudIssueSubjectSelectListApiArg = {
+  issueSubjectSelectListModel: IssueSubjectSelectListModel;
+};
 export type GetApiMyPlatformDevopsListByIdApiResponse =
   /** status 200 Success */ KubeDevOpsListResponse[];
 export type GetApiMyPlatformDevopsListByIdApiArg = {
@@ -2129,6 +2205,13 @@ export type GetApiMyPlatformKubernetesGetByIdApiResponse =
 export type GetApiMyPlatformKubernetesGetByIdApiArg = {
   id: number;
 };
+export type GetApiMyPlatformKubernetesImagesByDatacenterIdApiResponse =
+  /** status 200 Success */ ImageListResponse[];
+export type GetApiMyPlatformKubernetesImagesByDatacenterIdApiArg = {
+  datacenterId: number;
+};
+export type GetApiMyPlatformKubernetesVersionsApiResponse = unknown;
+export type GetApiMyPlatformKubernetesVersionsApiArg = void;
 export type PostApiMyPlatformKubernetesCreateApiResponse = unknown;
 export type PostApiMyPlatformKubernetesCreateApiArg = {
   createClusterModel: CreateClusterModel;
@@ -2429,48 +2512,6 @@ export type DeleteApiMyStorageUserDeleteByIdApiResponse = unknown;
 export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyCloudSupportListApiResponse =
-  /** status 200 Success */ SupportListResponse[];
-export type GetApiMyCloudSupportListApiArg = void;
-export type GetApiMyCloudSupportShortListApiResponse =
-  /** status 200 Success */ SupportShortListResponse[];
-export type GetApiMyCloudSupportShortListApiArg = void;
-export type PostApiMyCloudSupportCreateApiResponse = unknown;
-export type PostApiMyCloudSupportCreateApiArg = {
-  body: {
-    Content: string;
-    BusinessUnitId: number;
-    SupportSubjectId: number;
-    CustomerProductId?: number;
-    ProductId?: number;
-    Attachment?: Blob;
-  };
-};
-export type GetApiMyCloudSupportItemListBySupportIdApiResponse =
-  /** status 200 Success */ SupportItemListResponse;
-export type GetApiMyCloudSupportItemListBySupportIdApiArg = {
-  supportId: number;
-};
-export type PostApiMyCloudSupportItemCreateApiResponse = unknown;
-export type PostApiMyCloudSupportItemCreateApiArg = {
-  body: {
-    SupportId: number;
-    Content: string;
-    Attachment?: Blob;
-  };
-};
-export type GetApiMyCloudSupportItemDownloadByIdApiResponse = unknown;
-export type GetApiMyCloudSupportItemDownloadByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCloudSupportSubjectListApiResponse =
-  /** status 200 Success */ SupportSubjectListResponse[];
-export type GetApiMyCloudSupportSubjectListApiArg = void;
-export type PostApiMyCloudSupportSubjectSelectListApiResponse =
-  /** status 200 Success */ SupportSubjectListResponse[];
-export type PostApiMyCloudSupportSubjectSelectListApiArg = {
-  supportSubjectSelectListModel: SupportSubjectSelectListModel;
-};
 export type PostApiMyVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
 export type PostApiMyVmHostListApiArg = {
@@ -2617,6 +2658,14 @@ export type PutApiMyWebEditApiArg = {
 export type DeleteApiMyWebDeleteByIdApiResponse = unknown;
 export type DeleteApiMyWebDeleteByIdApiArg = {
   id: number;
+};
+export type PostApiMyCloudContactUsCreateApiResponse = unknown;
+export type PostApiMyCloudContactUsCreateApiArg = {
+  createContactUsModel: CreateContactUsModel;
+};
+export type PostApiMyCloudNewsCreateApiResponse = unknown;
+export type PostApiMyCloudNewsCreateApiArg = {
+  createNewsLetterModel: CreateNewsLetterModel;
 };
 export type PostApiMyDomainWhoisGetApiResponse = unknown;
 export type PostApiMyDomainWhoisGetApiArg = {
@@ -2824,6 +2873,7 @@ export type CoLocationListResponse = {
   id?: number;
   name?: string | null;
   datacenter?: string | null;
+  datacenterId?: number;
   datacenterRackId?: number;
   datacenterRack?: string | null;
 };
@@ -3108,6 +3158,49 @@ export type GetInvoiceResponse = {
 export type PayInvoiceModel = {
   id?: number;
 };
+export type IssueListResponse = {
+  id?: number;
+  issueSubject?: string | null;
+  businessUnit?: string | null;
+  issueStatus?: string | null;
+  issueStatusId?: number;
+  createDate?: string;
+  modifyDate?: string;
+};
+export type IssueShortListResponse = {
+  id?: number;
+  issueSubject?: string | null;
+  issueStatus?: string | null;
+  createDate?: string;
+  modifyDate?: string;
+};
+export type IssueItemModel = {
+  id?: number;
+  issueDate?: string;
+  content?: string | null;
+  user?: string | null;
+  roleId?: number;
+  fileName?: string | null;
+  fileSize?: number | null;
+};
+export type IssueItemListResponse = {
+  issueId?: number;
+  issueSubject?: string | null;
+  businessUnit?: string | null;
+  customerProduct?: string | null;
+  issueStatusId?: number;
+  createDate?: string;
+  modifyDate?: string;
+  issueItems?: IssueItemModel[] | null;
+};
+export type IssueSubjectListResponse = {
+  id?: number;
+  name?: string | null;
+};
+export type IssueSubjectSelectListModel = {
+  productId?: number;
+  businessUnitId?: number;
+};
 export type KubeDevOpsListResponse = {
   id?: number;
   name?: string | null;
@@ -3186,25 +3279,32 @@ export type GetKubernetesHostResponse = {
   expireDate?: string | null;
   nodes?: VmProductItemModel[] | null;
 };
-export type NodeSpecs = {
-  quantity?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
+export type ImageListResponse = {
+  id?: number;
+  name?: string | null;
+  osId?: number;
+  os?: string | null;
 };
 export type CreateClusterModel = {
   clusterName: string;
   datacenterId: number;
   imageId: number;
+  kubernetesVersionId: number;
   vmPassword: string;
   customerProductTypeId: number;
-  workerNodes?: NodeSpecs;
-  masterNodes?: NodeSpecs;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  nodeCount?: number;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
 };
 export type EditClusterModel = {
   id?: number;
-  masterNodeCount?: number;
-  workerNodeCount?: number;
+  nodeCount?: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
 };
 export type KubeUserListResponse = {
   id?: number;
@@ -3463,7 +3563,7 @@ export type GetAccessTypeResponse = {
   id?: number;
   name?: string | null;
 };
-export type AccessTuple = {
+export type AccessTupleModel = {
   accessId?: number;
   hasAccess?: boolean;
 };
@@ -3472,7 +3572,7 @@ export type UserEntityAccessResponse = {
   title?: string | null;
   description?: string | null;
   hasAccess?: boolean;
-  accesses?: AccessTuple[] | null;
+  accesses?: AccessTupleModel[] | null;
 };
 export type GetUserAccessEntityModel = {
   userId?: string | null;
@@ -3481,17 +3581,17 @@ export type BaseResponse = {
   status?: boolean;
   message?: string | null;
 };
-export type EntityAccess = {
+export type EntityAccessModel = {
   accessType?: number;
   entityId?: number;
-  accessTuples?: AccessTuple[] | null;
+  accessTuples?: AccessTupleModel[] | null;
 };
 export type SetUserAccessModel = {
   userEmail: string;
   isSuperUser: boolean;
   isFinancialManager: boolean;
   isAccountManager: boolean;
-  entityAccesses?: EntityAccess[] | null;
+  entityAccesses?: EntityAccessModel[] | null;
 };
 export type RemoveCustomerUserModel = {
   userId?: string;
@@ -3545,44 +3645,6 @@ export type CreateStorageUserResponse = {
 };
 export type CreateStorageUserModel = {
   storageHostId?: number;
-};
-export type SupportListResponse = {
-  id?: number;
-  supportDate?: string;
-  supportSubject?: string | null;
-  businessUnit?: string | null;
-  supportStatus?: string | null;
-  supportStatusId?: number;
-};
-export type SupportShortListResponse = {
-  id?: number;
-  supportDate?: string;
-  supportSubject?: string | null;
-  supportStatus?: string | null;
-};
-export type SupportItemModel = {
-  id?: number;
-  supportDate?: string;
-  content?: string | null;
-  user?: string | null;
-  roleId?: number;
-  fileName?: string | null;
-  fileSize?: number | null;
-};
-export type SupportItemListResponse = {
-  supportId?: number;
-  supportDate?: string;
-  supportSubject?: string | null;
-  supportStatusId?: number;
-  transaction?: SupportItemModel[] | null;
-};
-export type SupportSubjectListResponse = {
-  id?: number;
-  name?: string | null;
-};
-export type SupportSubjectSelectListModel = {
-  productId?: number;
-  businessUnitId?: number;
 };
 export type VmListResponse = {
   id?: number;
@@ -3643,12 +3705,6 @@ export type RebuildVmModel = {
 export type GetKmsModel = {
   id?: number;
   typeId?: number;
-};
-export type ImageListResponse = {
-  id?: number;
-  name?: string | null;
-  osId?: number;
-  os?: string | null;
 };
 export type IsoListResponse = {
   id?: number;
@@ -3748,6 +3804,15 @@ export type EditWebHostModel = {
   id?: number;
   productBundleId?: number;
 };
+export type CreateContactUsModel = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  content: string;
+};
+export type CreateNewsLetterModel = {
+  email: string;
+};
 export type GetDomainWhoisModel = {
   domainName: string;
   ext: string;
@@ -3828,6 +3893,14 @@ export const {
   useGetApiMyCloudInvoiceListQuery,
   useGetApiMyCloudInvoiceGetByIdQuery,
   usePostApiMyCloudInvoicePayMutation,
+  useGetApiMyCloudIssueListQuery,
+  useGetApiMyCloudIssueShortListQuery,
+  usePostApiMyCloudIssueCreateMutation,
+  useGetApiMyCloudIssueItemListByIssueIdQuery,
+  usePostApiMyCloudIssueItemCreateMutation,
+  useGetApiMyCloudIssueItemDownloadByIdQuery,
+  useGetApiMyCloudIssueSubjectListQuery,
+  usePostApiMyCloudIssueSubjectSelectListMutation,
   useGetApiMyPlatformDevopsListByIdQuery,
   useGetApiMyPlatformDevopsGetByIdQuery,
   usePostApiMyPlatformDevopsCreateMutation,
@@ -3844,6 +3917,8 @@ export const {
   useDeleteApiMyPlatformServiceDeleteByIdMutation,
   useGetApiMyPlatformKubernetesListQuery,
   useGetApiMyPlatformKubernetesGetByIdQuery,
+  useGetApiMyPlatformKubernetesImagesByDatacenterIdQuery,
+  useGetApiMyPlatformKubernetesVersionsQuery,
   usePostApiMyPlatformKubernetesCreateMutation,
   usePutApiMyPlatformKubernetesEditMutation,
   useDeleteApiMyPlatformKubernetesDeleteByIdMutation,
@@ -3913,14 +3988,6 @@ export const {
   useGetApiMyStorageUserListByStorageHostIdQuery,
   usePostApiMyStorageUserCreateMutation,
   useDeleteApiMyStorageUserDeleteByIdMutation,
-  useGetApiMyCloudSupportListQuery,
-  useGetApiMyCloudSupportShortListQuery,
-  usePostApiMyCloudSupportCreateMutation,
-  useGetApiMyCloudSupportItemListBySupportIdQuery,
-  usePostApiMyCloudSupportItemCreateMutation,
-  useGetApiMyCloudSupportItemDownloadByIdQuery,
-  useGetApiMyCloudSupportSubjectListQuery,
-  usePostApiMyCloudSupportSubjectSelectListMutation,
   usePostApiMyVmHostListMutation,
   useGetApiMyVmHostGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
@@ -3957,5 +4024,7 @@ export const {
   usePostApiMyWebCreateMutation,
   usePutApiMyWebEditMutation,
   useDeleteApiMyWebDeleteByIdMutation,
+  usePostApiMyCloudContactUsCreateMutation,
+  usePostApiMyCloudNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;

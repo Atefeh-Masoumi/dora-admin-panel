@@ -17,7 +17,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { supportTableStruct } from "src/components/organisms/cloud/support/tables/struct";
 import { SupportTableRow } from "src/components/organisms/cloud/support/tables/SupportTableRow";
 import { tickets } from "src/components/organisms/cloud/support/constant";
-import { useGetApiMyCloudSupportListQuery } from "src/app/services/api.generated";
+import { useGetApiMyCloudIssueListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -31,10 +31,10 @@ export const DataContext = createContext<DataContextValueType>({
 
 const Support: FC = () => {
   const {
-    data: supportList,
+    data: issueList,
     refetch,
     isLoading,
-  } = useGetApiMyCloudSupportListQuery();
+  } = useGetApiMyCloudIssueListQuery();
 
   const navigate = useNavigate();
 
@@ -43,11 +43,11 @@ const Support: FC = () => {
 
   const [search, setSearch] = useState("");
   const [ticket, setTicket] = useState("all");
-  const filteredList = supportList?.filter(
-    (supportItem) =>
-      supportItem.id?.toString().includes(search) &&
+  const filteredList = issueList?.filter(
+    (issueItem) =>
+      issueItem.id?.toString().includes(search) &&
       (ticket === "all" ||
-        supportItem.supportStatus ===
+        issueItem.issueStatus ===
           tickets.find((t) => t.value === ticket)?.label)
   );
 

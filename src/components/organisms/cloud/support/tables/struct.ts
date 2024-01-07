@@ -5,14 +5,14 @@ export const supportTableStruct: columnType[] = [
     id: "id",
     label: "شماره تیکت",
   },
-  { id: "supportDate", label: "تاریخ", type: "date" },
+  { id: "createdDate", label: "تاریخ", type: "date" },
   {
     id: "businessUnit",
     label: "واحد",
   },
-  { id: "supportSubject", label: "عنوان" },
+  { id: "issueSubject", label: "عنوان" },
   {
-    id: "supportStatus",
+    id: "issueStatus",
     label: "وضعیت",
   },
   { id: "control", label: "", disableSort: true },
