@@ -29,7 +29,7 @@ const Detail: FC = () => {
   }, [content, file]);
 
   const { id } = useParams();
-  const { data: supportItems, isLoading } =
+  const { data: issueItems, isLoading } =
     useGetApiMyCloudIssueItemListByIssueIdQuery({
       issueId: parseInt(id as string),
     });
@@ -37,18 +37,18 @@ const Detail: FC = () => {
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    if (!supportItems || !supportItems.createDate) return;
+    if (!issueItems || !issueItems.createDate) return;
     const m = moment
-      .from(supportItems.createDate, "fa", "YYYY/MM/DD HH:mm:ss")
+      .from(issueItems.createDate, "fa", "YYYY/MM/DD HH:mm:ss")
       .locale("fa")
       .format("YYYY/MM/DD ساعت: HH:mm");
     setDate(m);
-  }, [supportItems]);
+  }, [issueItems]);
 
   useEffect(() => {
     const el = document.getElementById("chat");
     if (el) el.scrollTop = el.scrollHeight;
-  }, [supportItems]);
+  }, [issueItems]);
 
   const [itemCreate, { isLoading: LoadingSend }] =
     usePostApiMyCloudIssueItemCreateMutation();
@@ -56,9 +56,9 @@ const Detail: FC = () => {
     if (!id || !content) return;
 
     let formData = new FormData();
-    formData.append("SupportId", id as string);
-    formData.append("Content", content);
-    formData.append("Attachment", file as Blob);
+    formData.append("issueId", id as string);
+    formData.append("content", content);
+    formData.append("attachment", (file as Blob) || null);
     itemCreate({ body: formData as any })
       .unwrap()
       .then(() => {
@@ -78,7 +78,7 @@ const Detail: FC = () => {
         >
           <Stack spacing={1}>
             <Typography variant="text1" fontWeight="700" whiteSpace="nowrap">
-              {id} / {supportItems?.issueSubject}
+              {id} / {issueItems?.issueSubject}
             </Typography>
             <Stack direction="row" spacing={1} color="secondary">
               <Typography variant="text9">تاریخ ایجاد: {date}</Typography>
@@ -89,19 +89,19 @@ const Detail: FC = () => {
           </Stack>
           <Chip
             label={
-              supportItems?.issueStatusId === 1
+              issueItems?.issueStatusId === 1
                 ? "در انتظار پاسخ"
-                : supportItems?.issueStatusId === 2
+                : issueItems?.issueStatusId === 2
                 ? "پاسخ داده شده"
                 : "تکمیل شده"
             }
             sx={{
               color:
-                supportItems?.issueStatusId === 1
+                issueItems?.issueStatusId === 1
                   ? "rgba(255, 147, 68, 1)"
                   : "rgba(13, 191, 102, 1)",
               backgroundColor:
-                supportItems?.issueStatusId === 1
+                issueItems?.issueStatusId === 1
                   ? "rgba(255, 233, 218, 1)"
                   : "rgba(218, 246, 232, 1)",
               borderRadius: 1,
@@ -120,7 +120,7 @@ const Detail: FC = () => {
           <LoadingChat />
         ) : (
           <Stack spacing={2} overflow="visible" id="chat">
-            {supportItems?.issueItems?.map((item, index) => {
+            {issueItems?.issueItems?.map((item, index) => {
               return <DorsaChat key={index} message={item} />;
             })}
             <Stack direction={{ xs: "column", md: "row" }} spacing={2}>

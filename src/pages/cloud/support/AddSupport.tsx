@@ -67,9 +67,7 @@ const AddTicket: FC = () => {
       },
     })
       .unwrap()
-      .then((res: SetStateAction<IssueSubjectListResponse[]>) =>
-        setList(res)
-      );
+      .then((res: SetStateAction<IssueSubjectListResponse[]>) => setList(res));
 
     if (productId) {
       callGetApiCloudCustomerProductList({ productId: Number(productId) })
@@ -115,22 +113,22 @@ const AddTicket: FC = () => {
   abortController.current = new AbortController();
 
   const submit = () => {
-    if (!businessUnitId || !content || !title || !productId) {
+    if (!businessUnitId || !content || !title) {
       toast.error("لطفا تمام فیلد ها را پر کنید");
       return;
     }
     let formData = new FormData();
     formData.append("content", content);
-    formData.append("businessUnitId", "" + businessUnitId);
-    formData.append("supportSubjectId", "" + title);
-    formData.append("productId", "" + productId);
+    formData.append("businessUnitId", businessUnitId.toString());
+    formData.append("issueSubjectId", title.toString());
+    productId && formData.append("productId", productId.toString());
     if (selectedApiCloudCustomerProduct !== 0) {
       formData.append(
         "customerProductId",
-        "" + selectedApiCloudCustomerProduct
+        selectedApiCloudCustomerProduct.toString()
       );
     }
-    formData.append("attachment", file as Blob);
+    file && formData.append("attachment", file as Blob);
     upload({
       body: formData as any,
       abortController: abortController.current,

@@ -16,7 +16,7 @@ export const api = generatedApi
         }
       >({
         query: ({ body, abortController, onUploadProgress }) => ({
-          url: `/api/cloud/issue/create`,
+          url: `/api/my/cloud/issue/create`,
           method: "POST",
           body,
           abortController,
@@ -38,6 +38,7 @@ export const api = generatedApi
       "LoadBalance",
       "SslSetting",
       "SupportItems",
+      "Support",
       "VmHosts",
       "VmHost",
     ],
@@ -58,7 +59,7 @@ export const api = generatedApi
         providesTags: () => ["ZoneData"],
       },
       getApiMyCloudIssueItemListByIssueId: {
-        providesTags: () => ["SupportItems"],
+        providesTags: () => ["Support"],
       },
       getApiMyCdnLoadBalanceListByCdnId: {
         providesTags: () => ["LoadBalance"],
@@ -132,8 +133,14 @@ export const api = generatedApi
       postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
+      getApiMyCloudIssueList: {
+        providesTags: () => ["Support"],
+      },
+      postApiMyCloudIssueCreate: {
+        invalidatesTags: () => ["Support"],
+      },
       postApiMyCloudIssueItemCreate: {
-        invalidatesTags: () => ["SupportItems"],
+        invalidatesTags: () => ["Support"],
       },
       getApiMyVmProjectList: {
         providesTags: () => ["VmHosts"],

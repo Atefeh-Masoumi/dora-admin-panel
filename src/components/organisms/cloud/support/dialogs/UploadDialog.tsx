@@ -32,9 +32,9 @@ export const UploadDialog: FC<HeaderPropsType> = ({
 
     if (!id || !content || !fileSelected) return;
     let formData = new FormData();
-    formData.append("SupportId", id as string);
-    formData.append("Content", content);
-    formData.append("Attachment", fileSelected);
+    formData.append("issueId", id as string);
+    formData.append("content", content);
+    formData.append("attachment", fileSelected);
     itemCreate({ body: formData as any })
       .unwrap()
       .then(() => {
