@@ -451,6 +451,24 @@ export const api = createApi({
         url: `/api/my/cloud/dashboard/usage/${queryArg.categoryId}`,
       }),
     }),
+    getApiMyCloudDashboardTickets: build.query<
+      GetApiMyCloudDashboardTicketsApiResponse,
+      GetApiMyCloudDashboardTicketsApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/dashboard/tickets` }),
+    }),
+    getApiMyCloudDashboardActiveServices: build.query<
+      GetApiMyCloudDashboardActiveServicesApiResponse,
+      GetApiMyCloudDashboardActiveServicesApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/dashboard/active-services` }),
+    }),
+    getApiMyCloudDashboardFinancial: build.query<
+      GetApiMyCloudDashboardFinancialApiResponse,
+      GetApiMyCloudDashboardFinancialApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/dashboard/financial` }),
+    }),
     getApiMyDatacenterList: build.query<
       GetApiMyDatacenterListApiResponse,
       GetApiMyDatacenterListApiArg
@@ -606,6 +624,12 @@ export const api = createApi({
         method: "POST",
       }),
     }),
+    getApiMyFinancial: build.query<
+      GetApiMyFinancialApiResponse,
+      GetApiMyFinancialApiArg
+    >({
+      query: () => ({ url: `/api/my/financial` }),
+    }),
     getApiMyHomeIndex: build.query<
       GetApiMyHomeIndexApiResponse,
       GetApiMyHomeIndexApiArg
@@ -635,6 +659,12 @@ export const api = createApi({
         method: "POST",
         body: queryArg.payInvoiceModel,
       }),
+    }),
+    getApiMyCloudInvoiceUnPaid: build.query<
+      GetApiMyCloudInvoiceUnPaidApiResponse,
+      GetApiMyCloudInvoiceUnPaidApiArg
+    >({
+      query: () => ({ url: `/api/my/cloud/invoice/un-paid` }),
     }),
     getApiMyCloudIssueList: build.query<
       GetApiMyCloudIssueListApiResponse,
@@ -2002,6 +2032,15 @@ export type GetApiMyCloudDashboardUsageByCategoryIdApiResponse =
 export type GetApiMyCloudDashboardUsageByCategoryIdApiArg = {
   categoryId: number;
 };
+export type GetApiMyCloudDashboardTicketsApiResponse =
+  /** status 200 Success */ IssueShortListDashboardResponse[];
+export type GetApiMyCloudDashboardTicketsApiArg = void;
+export type GetApiMyCloudDashboardActiveServicesApiResponse =
+  /** status 200 Success */ CustomerShortListResponse[];
+export type GetApiMyCloudDashboardActiveServicesApiArg = void;
+export type GetApiMyCloudDashboardFinancialApiResponse =
+  /** status 200 Success */ ReportDashboardFinancialResponse;
+export type GetApiMyCloudDashboardFinancialApiArg = void;
 export type GetApiMyDatacenterListApiResponse =
   /** status 200 Success */ DatacenterListResponse[];
 export type GetApiMyDatacenterListApiArg = void;
@@ -2080,6 +2119,9 @@ export type PostApiMyDomainResendVerificationByIdApiResponse = unknown;
 export type PostApiMyDomainResendVerificationByIdApiArg = {
   id: number;
 };
+export type GetApiMyFinancialApiResponse =
+  /** status 200 Success */ FinancialDashboardFinancialResponse;
+export type GetApiMyFinancialApiArg = void;
 export type GetApiMyHomeIndexApiResponse = unknown;
 export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyCloudInvoiceListApiResponse =
@@ -2094,6 +2136,9 @@ export type PostApiMyCloudInvoicePayApiResponse = unknown;
 export type PostApiMyCloudInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
+export type GetApiMyCloudInvoiceUnPaidApiResponse =
+  /** status 200 Success */ UnPaidInvoiceResponse[];
+export type GetApiMyCloudInvoiceUnPaidApiArg = void;
 export type GetApiMyCloudIssueListApiResponse =
   /** status 200 Success */ IssueListResponse[];
 export type GetApiMyCloudIssueListApiArg = void;
@@ -2954,6 +2999,7 @@ export type CustomerProductListResponse = {
   id?: number;
   name?: string | null;
   product?: string | null;
+  customerProduct?: string | null;
   status?: string | null;
   createDate?: string;
 };
@@ -2973,6 +3019,24 @@ export type ChangeUserCustomerModel = {
 export type DashboardUsageResponse = {
   data?: number[] | null;
   name?: string | null;
+};
+export type IssueShortListDashboardResponse = {
+  id?: number;
+  issueSubject?: string | null;
+  issueStatusId?: number;
+  createDate?: string;
+};
+export type CustomerShortListResponse = {
+  id?: number;
+  productName?: string | null;
+  serviceName?: string | null;
+  createDate?: string;
+};
+export type ReportDashboardFinancialResponse = {
+  walletBalance?: number;
+  paidInvoicePrice?: number;
+  unpaidInvoiceCount?: number;
+  activeServiceCount?: number;
 };
 export type DatacenterListResponse = {
   id?: number;
@@ -3120,6 +3184,11 @@ export type ChangeNsModel = {
   ns1: string;
   ns2: string;
 };
+export type FinancialDashboardFinancialResponse = {
+  walletDecimal?: number;
+  unPaidInvoicePrice?: number;
+  paidInvoicePrice?: number;
+};
 export type InvoiceListResponse = {
   id?: number;
   invoiceDate?: string;
@@ -3157,6 +3226,16 @@ export type GetInvoiceResponse = {
 };
 export type PayInvoiceModel = {
   id?: number;
+};
+export type UnPaidInvoiceResponse = {
+  id?: number;
+  customerName?: string | null;
+  invoiceDate?: string;
+  netPrice?: number;
+  discount?: number;
+  invoiceStatusId?: number;
+  invoicePrice?: number;
+  vat?: number;
 };
 export type IssueListResponse = {
   id?: number;
@@ -3871,6 +3950,9 @@ export const {
   usePostApiMyCloudCustomerProductTransferMutation,
   usePostApiMyCloudCustomerUserChangeUserCustomerMutation,
   useGetApiMyCloudDashboardUsageByCategoryIdQuery,
+  useGetApiMyCloudDashboardTicketsQuery,
+  useGetApiMyCloudDashboardActiveServicesQuery,
+  useGetApiMyCloudDashboardFinancialQuery,
   useGetApiMyDatacenterListQuery,
   useGetApiMyDatacenterIpListByProductIdAndIdQuery,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,
@@ -3889,10 +3971,12 @@ export const {
   usePutApiMyDomainChangeContactMutation,
   usePutApiMyDomainChangeNsMutation,
   usePostApiMyDomainResendVerificationByIdMutation,
+  useGetApiMyFinancialQuery,
   useGetApiMyHomeIndexQuery,
   useGetApiMyCloudInvoiceListQuery,
   useGetApiMyCloudInvoiceGetByIdQuery,
   usePostApiMyCloudInvoicePayMutation,
+  useGetApiMyCloudInvoiceUnPaidQuery,
   useGetApiMyCloudIssueListQuery,
   useGetApiMyCloudIssueShortListQuery,
   usePostApiMyCloudIssueCreateMutation,
