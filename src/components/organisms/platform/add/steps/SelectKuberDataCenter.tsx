@@ -5,19 +5,20 @@ import {
   DatacenterListResponse,
   useGetApiMyDatacenterListQuery,
 } from "src/app/services/api.generated";
-import { AddWorkspaceContext } from "../contexts/AddContext";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
 
-type SelectDataCenterPropsType = {};
+type SelectKuberDataCenterPropsType = {};
 
-export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
-  const { dataCenter, setDataCenter } = useContext(AddWorkspaceContext);
+export const SelectKuberDataCenter: FC<SelectKuberDataCenterPropsType> = () => {
+  const { dataCenter, setDataCenter } = useContext(AddKubernetesContext);
 
   const { data: dataCenterList, isLoading } = useGetApiMyDatacenterListQuery();
 
-  const dataCenterOnClick = (dataCenter: DatacenterListResponse) =>
+  const dataCenterOnClick = (dataCenter: DatacenterListResponse) => {
     setDataCenter(dataCenter);
+  };
 
   return (
     <Stack justifyContent="center" alignItems="center" spacing={4}>

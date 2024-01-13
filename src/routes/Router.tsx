@@ -19,14 +19,15 @@ import AddDomainContextProvider from "src/components/organisms/web/domain/add/co
 import EditDomainContextProvider from "src/components/organisms/web/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
-import AddWorkspaceContext from "src/components/organisms/platform/add/contexts/AddContext";
-import EditWorkspaceContext from "src/components/organisms/platform/edit/context/EditContext";
+// import AddWorkspaceContext from "src/components/organisms/platform/add/contexts/AddContext";
+// import EditWorkspaceContext from "src/components/organisms/platform/edit/context/EditContext";
 
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
-import { ServiceUsers } from "src/pages/platform/Users";
+import { AddKubernetesContextProvider } from "src/components/organisms/platform/add/contexts/AddKubernetesContext";
+// import { ServiceUsers } from "src/pages/platform/Users";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -84,8 +85,9 @@ const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
 const PlatformIndex = lazy(() => import("src/pages/platform/Index"));
-const AddWorkspace = lazy(() => import("src/pages/platform/AddNamespace"));
-const EditWorkspace = lazy(() => import("src/pages/platform/EditNamespace"));
+const AddKubernetes = lazy(() => import("src/pages/platform/AddKubernetes"));
+// const AddWorkspace = lazy(() => import("src/pages/platform/AddNamespace"));
+// const EditWorkspace = lazy(() => import("src/pages/platform/EditNamespace"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -411,37 +413,17 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/platform/users"
-            element={mainTemplate(ServiceUsers, {
-              pageTitle: "شناسه های کاربری",
-            })}
-          />
-          <Route
-            path="/platform/add-Kubernetes"
+            path="/platform/add-kubernetes"
             element={mainTemplate(
-              AddWorkspace,
+              AddKubernetes,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
                   url: "/platform",
                 },
-                hideSidebar: false,
+                hideSidebar: true,
               },
-              AddWorkspaceContext
-            )}
-          />
-          <Route
-            path="/platform/:id"
-            element={mainTemplate(
-              EditWorkspace,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/platform",
-                },
-                hideSidebar: false,
-              },
-              EditWorkspaceContext
+              AddKubernetesContextProvider
             )}
           />
           {/* ======================================= WEB ======================================= */}

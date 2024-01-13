@@ -1,21 +1,41 @@
 import { FC, useState, useMemo, Fragment, createContext } from "react";
-import {
-  Button,
-  Divider,
-  Grid,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
-import { DomainCard } from "src/components/organisms/platform/NamespaceCard";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { useGetApiMyPlatformNamespaceListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPlatformKubernetesListQuery } from "src/app/services/api.generated";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { kubernetesTableStruct } from "src/components/organisms/platform/tables/struct";
+import { KubernetesTableRow } from "src/components/organisms/platform/tables/KubernetesTableRow";
+
+const warningBanner = (
+  <Stack
+    p={3}
+    mb={3}
+    bgcolor="warning.main"
+    direction="row"
+    gap={1}
+    borderRadius={2}
+    width="100%"
+    color="white"
+    alignItems={{ xs: "start", md: "center" }}
+  >
+    <ErrorOutlineOutlinedIcon />
+    <Typography>توجه:</Typography>
+    <Typography
+      fontSize={14}
+      sx={{
+        opacity: 0.9,
+      }}
+    >
+      این سرویس نسخه آزمایشی می باشد.
+      <br />
+    </Typography>
+  </Stack>
+);
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -37,7 +57,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyPlatformNamespaceListQuery();
+  } = useGetApiMyPlatformKubernetesListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -56,11 +76,12 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/platform/add-Kubernetes");
+  const createCloudOnClick = () => navigate("/platform/add-kubernetes");
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
       <Fragment>
+        {warningBanner}
         <Stack
           bgcolor="white"
           py={3}
@@ -130,76 +151,21 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
                   </Stack>
                 }
               >
-                سرویس کوبرنتیز جدید
+                ایجاد سرویس کوبرنتیز
               </Button>
             </Stack>
           </Stack>
           <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-          <Stack
-            py={3}
-            px={3}
-            bgcolor="rgba(244, 95, 80, 1)"
-            direction="row"
-            spacing={3}
-            borderRadius={2}
-            width="100%"
-            color="white"
-            alignItems={{ xs: "start", md: "center" }}
-          >
-            <ErrorOutlineOutlinedIcon />
-            <Typography>توجه:</Typography>
-            <Typography
-              fontSize={14}
-              sx={{
-                opacity: 0.9,
-              }}
-            >
-              این سرویس نسخه آزمایشی می باشد.
-              <br />
-            </Typography>
-          </Stack>
-          {/* <Box width="100%" sx={{ pt: 1.5 }}>
-          <BaseTable
-            struct={namespaceTableStruct}
-            RowComponent={NamespaceTableRow}
-            rows={filteredList}
-            text="در حال حاضر سرویسی وجود ندارد"
-            isLoading={isLoading}
-            initialOrder={9}
-          />
-        </Box> */}
-        </Stack>
-        <Stack py={3} px={3} width="100%" borderRadius={3} direction="column">
-          {filteredList && filteredList?.length <= 0 && (
-            <Stack py={3}>
-              <Stack bgcolor="white" borderRadius={3}>
-                <EmptyTable text=" سرویس کوبرنتیز وجود ندارد" />
-              </Stack>
-            </Stack>
-          )}
-          <Grid container justifyContent="end" spacing={3} py={3}>
-            {isLoading ? (
-              <Fragment>
-                {[...Array(12)].map((_, index) => (
-                  <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
-                    <Skeleton
-                      variant="rectangular"
-                      height={125}
-                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                    />
-                  </Grid>
-                ))}
-              </Fragment>
-            ) : (
-              <Fragment>
-                {filteredList?.map((item, index) => (
-                  <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
-                    <DomainCard item={item} />
-                  </Grid>
-                ))}
-              </Fragment>
-            )}
-          </Grid>
+          <Box width="100%" sx={{ pt: 1.5 }}>
+            <BaseTable
+              struct={kubernetesTableStruct}
+              RowComponent={KubernetesTableRow}
+              rows={filteredList}
+              text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
+              isLoading={isLoading}
+              initialOrder={9}
+            />
+          </Box>
         </Stack>
       </Fragment>
     </DataContext.Provider>

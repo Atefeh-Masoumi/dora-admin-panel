@@ -13,10 +13,6 @@ export const ProductBundleTableRow: FC<{ row: any }> = ({ row }) => {
   );
 
   const onCheckboxClick = () => {
-    if (serverConfig?.id === row["id"]) {
-      setServerConfig(null);
-      return;
-    }
     setServerConfig(row);
   };
 

@@ -1,11 +1,11 @@
 import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { addNamespaceTableStruct } from "./struct";
-import { AddWorkspaceContext } from "../contexts/AddContext";
+import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 
-export const AddWorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
-  const { serverConfig, setServerConfig } = useContext(AddWorkspaceContext);
+export const KuberServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
+  const { serverConfig, setServerConfig } = useContext(AddKubernetesContext);
 
   const isChecked = useMemo(
     () => serverConfig?.id === row["id"],
@@ -13,10 +13,6 @@ export const AddWorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
   );
 
   const onCheckboxClick = () => {
-    if (serverConfig?.id === row["id"]) {
-      setServerConfig(null);
-      return;
-    }
     setServerConfig(row);
   };
 
@@ -30,8 +26,8 @@ export const AddWorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
           onChange={onCheckboxClick}
         />
       </DorsaTableCell>
-      {addNamespaceTableStruct
-        .slice(1, addNamespaceTableStruct.length)
+      {productBundleTableStruct
+        .slice(1, productBundleTableStruct.length)
         .map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;

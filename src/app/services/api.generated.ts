@@ -660,11 +660,11 @@ export const api = createApi({
         body: queryArg.payInvoiceModel,
       }),
     }),
-    getApiMyCloudInvoiceUnPaid: build.query<
-      GetApiMyCloudInvoiceUnPaidApiResponse,
-      GetApiMyCloudInvoiceUnPaidApiArg
+    getApiMyCloudInvoiceUnpaid: build.query<
+      GetApiMyCloudInvoiceUnpaidApiResponse,
+      GetApiMyCloudInvoiceUnpaidApiArg
     >({
-      query: () => ({ url: `/api/my/cloud/invoice/un-paid` }),
+      query: () => ({ url: `/api/my/cloud/invoice/unpaid` }),
     }),
     getApiMyCloudIssueList: build.query<
       GetApiMyCloudIssueListApiResponse,
@@ -2136,9 +2136,9 @@ export type PostApiMyCloudInvoicePayApiResponse = unknown;
 export type PostApiMyCloudInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
-export type GetApiMyCloudInvoiceUnPaidApiResponse =
+export type GetApiMyCloudInvoiceUnpaidApiResponse =
   /** status 200 Success */ UnPaidInvoiceResponse[];
-export type GetApiMyCloudInvoiceUnPaidApiArg = void;
+export type GetApiMyCloudInvoiceUnpaidApiArg = void;
 export type GetApiMyCloudIssueListApiResponse =
   /** status 200 Success */ IssueListResponse[];
 export type GetApiMyCloudIssueListApiArg = void;
@@ -3976,7 +3976,7 @@ export const {
   useGetApiMyCloudInvoiceListQuery,
   useGetApiMyCloudInvoiceGetByIdQuery,
   usePostApiMyCloudInvoicePayMutation,
-  useGetApiMyCloudInvoiceUnPaidQuery,
+  useGetApiMyCloudInvoiceUnpaidQuery,
   useGetApiMyCloudIssueListQuery,
   useGetApiMyCloudIssueShortListQuery,
   usePostApiMyCloudIssueCreateMutation,

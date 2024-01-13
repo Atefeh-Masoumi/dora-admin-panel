@@ -18,7 +18,7 @@ import CoinSvg from "src/components/atoms/svg/CoinSvg";
 //import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 import { StorageOutlined } from "@mui/icons-material";
-//import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
+import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 
 type SidebarPropsType = {};
 
@@ -75,16 +75,16 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         { title: "مدیریت سرورها", link: "/vm/list" },
       ],
     },
-    // {
-    //   title: "Kubernetes",
-    //   text: "سرویس کوبرنتیز ابری",
-    //   Icon: DnsOutlinedIcon,
-    //   link: "/platform",
-    //   subList: [
-    //     { title: "سرویس کوبرنتیز  ابری", link: "/platform" },
-    //     { title: "شناسه های کاربری", link: "/platform/users" },
-    //   ],
-    // },
+    {
+      title: "Kubernetes",
+      text: "سرویس کوبرنتیز ابری",
+      Icon: DnsOutlinedIcon,
+      link: "/platform",
+      subList: [
+        { title: "سرویس کوبرنتیز  ابری", link: "/platform" },
+        { title: "شناسه های کاربری", link: "/platform/users" },
+      ],
+    },
     {
       title: "Object Storage",
       text: "فضای ابری",

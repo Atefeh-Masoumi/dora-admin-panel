@@ -1,16 +1,13 @@
-import { FC, Fragment, useState } from "react";
-import { workspaceTableStruct } from "./struct";
+import { FC, useState } from "react";
+import { kubernetesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DeleteWorkspaceDialog } from "../dialogs/DeleteDialog";
 import { useNavigate } from "react-router";
-import { useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery } from "src/app/services/api";
-import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
-import PageLoading from "src/components/atoms/PageLoading";
 
-export const WorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
+export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
@@ -19,26 +16,10 @@ export const WorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () => navigate("/platform/" + row["id"]);
 
-  const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery();
-
-  const monitorOnClick = () =>
-    getUrl({ id: row["id"] })
-      .unwrap()
-      .then((res) => {
-        if (res.location) {
-          let a = document.createElement("a");
-          a.href = res.location.toString();
-          a.target = "_blank";
-          a.click();
-        }
-      });
-
   return (
-    <Fragment>
-      {getUrlLoading && <PageLoading />}
+    <>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {workspaceTableStruct.map((column) => {
+        {kubernetesTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
@@ -50,36 +31,6 @@ export const WorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  {/* <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={goToOrderDetails}
-                  >
-                    <CreditCardIcon sx={{ color: "grey.700" }} />
-                  </IconButton> */}
-                  <IconButton
-                    disabled={row.statusId !== 2}
-                    sx={{
-                      borderRadius: 1,
-                    }}
-                    onClick={monitorOnClick}
-                  >
-                    <MonitorSvg />
-                    {row.statusId !== 2 && (
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -40%)",
-                          fontSize: "30px",
-                          color: "red",
-                        }}
-                      >
-                        &#10005;
-                      </div>
-                    )}
-                  </IconButton>
-
                   <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
@@ -152,6 +103,6 @@ export const WorkspaceTableRow: FC<{ row: any }> = ({ row }) => {
         openDialog={openDelete}
         handleClose={handleCloseDelete}
       />
-    </Fragment>
+    </>
   );
 };
