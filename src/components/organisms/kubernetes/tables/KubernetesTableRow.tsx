@@ -4,7 +4,7 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { DeleteWorkspaceDialog } from "../dialogs/DeleteDialog";
+import { DeleteKubernetesDialog } from "../dialogs/DeleteKubernetesDialog";
 import { useNavigate } from "react-router";
 
 export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
@@ -14,7 +14,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/platform/" + row["id"]);
+  const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
 
   return (
     <>
@@ -90,7 +90,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
                       }}
                     />
                   ) : (
-                    text
+                    text || "__"
                   )}
                 </>
               )}
@@ -98,7 +98,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteWorkspaceDialog
+      <DeleteKubernetesDialog
         id={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}

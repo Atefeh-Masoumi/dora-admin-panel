@@ -8,8 +8,8 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 import { useGetApiMyPlatformKubernetesListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { kubernetesTableStruct } from "src/components/organisms/platform/tables/struct";
-import { KubernetesTableRow } from "src/components/organisms/platform/tables/KubernetesTableRow";
+import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
+import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
 
 const warningBanner = (
   <Stack
@@ -76,7 +76,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/platform/add-kubernetes");
+  const gotToAddKubernetes = () => navigate("/kubernetes/add");
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
@@ -124,7 +124,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
                 بازخوانی
               </Button>
               <Button
-                onClick={createCloudOnClick}
+                onClick={gotToAddKubernetes}
                 variant="outlined"
                 size="large"
                 sx={{

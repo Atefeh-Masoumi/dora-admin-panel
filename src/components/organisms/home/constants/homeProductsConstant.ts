@@ -28,7 +28,7 @@ export const homeProductsConstantListItems = [
   //   text: "سرویس کوبرنتیز ابری",
   //   Icon: DnsOutlinedIcon,
   //   bgcolor: "rgba(211, 250, 240, 1)",
-  //   link: "/platform",
+  //   link: "/kubernetes",
   // },
   {
     title: "Object Storage",

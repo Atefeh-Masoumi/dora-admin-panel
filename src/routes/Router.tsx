@@ -19,15 +19,15 @@ import AddDomainContextProvider from "src/components/organisms/web/domain/add/co
 import EditDomainContextProvider from "src/components/organisms/web/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
-// import AddWorkspaceContext from "src/components/organisms/platform/add/contexts/AddContext";
-// import EditWorkspaceContext from "src/components/organisms/platform/edit/context/EditContext";
+// import AddWorkspaceContext from "src/components/organisms/kubernetes/add/contexts/AddContext";
+// import EditWorkspaceContext from "src/components/organisms/kubernetes/edit/context/EditContext";
 
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
-import { AddKubernetesContextProvider } from "src/components/organisms/platform/add/contexts/AddKubernetesContext";
-// import { ServiceUsers } from "src/pages/platform/Users";
+import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+// import { ServiceUsers } from "src/pages/kubernetes/Users";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -84,10 +84,13 @@ const StorageIndex = lazy(() => import("src/pages/storage/Index"));
 const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
-const PlatformIndex = lazy(() => import("src/pages/platform/Index"));
-const AddKubernetes = lazy(() => import("src/pages/platform/AddKubernetes"));
-// const AddWorkspace = lazy(() => import("src/pages/platform/AddNamespace"));
-// const EditWorkspace = lazy(() => import("src/pages/platform/EditNamespace"));
+const PlatformIndex = lazy(() => import("src/pages/kubernetes/Index"));
+const AddKubernetes = lazy(() => import("src/pages/kubernetes/AddKubernetes"));
+const EditKubernetes = lazy(
+  () => import("src/pages/kubernetes/EditKubernetes")
+);
+// const AddWorkspace = lazy(() => import("src/pages/kubernetes/AddNamespace"));
+// const EditWorkspace = lazy(() => import("src/pages/kubernetes/EditNamespace"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -407,19 +410,33 @@ const Router: FC = () => {
           />
           {/* ======================================= Kubernetes ======================================= */}
           <Route
-            path="/platform"
+            path="/kubernetes"
             element={mainTemplate(PlatformIndex, {
               pageTitle: "مدیریت سرویس کوبرنتیز",
             })}
           />
           <Route
-            path="/platform/add-kubernetes"
+            path="/kubernetes/add"
             element={mainTemplate(
               AddKubernetes,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
-                  url: "/platform",
+                  url: "/kubernetes",
+                },
+                hideSidebar: true,
+              },
+              AddKubernetesContextProvider
+            )}
+          />
+          <Route
+            path="/kubernetes/:id"
+            element={mainTemplate(
+              EditKubernetes,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
+                  url: "/kubernetes",
                 },
                 hideSidebar: true,
               },

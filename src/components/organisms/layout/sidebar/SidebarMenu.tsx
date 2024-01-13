@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import { Box, Stack } from "@mui/material";
 import { useLocation } from "react-router";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
@@ -6,16 +6,10 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
 import { SubItemList } from "./SubItemList";
-// import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
-// import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
 import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
 import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
 import DriverSvg from "src/components/atoms/svg/DriverSvg";
-//import DeviceMessageSvg from "src/components/atoms/svg/DeviceMessageSvg";
 import CoinSvg from "src/components/atoms/svg/CoinSvg";
-//import { SpecialOffer } from "./SpecialOffer";
-// import SmsSvg from "src/components/atoms/svg/SmsSvg";
-//import CodeCircleSvg from "src/components/atoms/svg/CodeCircleSvg";
 import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
 import { StorageOutlined } from "@mui/icons-material";
 import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
@@ -23,7 +17,7 @@ import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 type SidebarPropsType = {};
 
 export const Sidebar: FC<SidebarPropsType> = () => {
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  // const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   // const [showSpecialOffer, setShowSpecialOffer] = useState(false);
 
   const { pathname } = useLocation();
@@ -79,11 +73,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       title: "Kubernetes",
       text: "سرویس کوبرنتیز ابری",
       Icon: DnsOutlinedIcon,
-      link: "/platform",
-      subList: [
-        { title: "سرویس کوبرنتیز  ابری", link: "/platform" },
-        { title: "شناسه های کاربری", link: "/platform/users" },
-      ],
+      link: "/kubernetes",
     },
     {
       title: "Object Storage",
@@ -154,16 +144,16 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
   ];
 
-  const windowHeightWatcher = () => {
-    setWindowHeight(window.innerHeight);
-  };
+  // const windowHeightWatcher = () => {
+  //   setWindowHeight(window.innerHeight);
+  // };
 
-  useEffect(() => {
-    window.addEventListener("resize", windowHeightWatcher);
-    return () => {
-      window.removeEventListener("resize", windowHeightWatcher);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("resize", windowHeightWatcher);
+  //   return () => {
+  //     window.removeEventListener("resize", windowHeightWatcher);
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   setShowSpecialOffer(windowHeight > 920);

@@ -4,9 +4,9 @@ import { Add } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiMyPlatformUserListQuery } from "src/app/services/api.generated";
-import { AddPlatformUserDialog } from "src/components/organisms/platform/users/dialogs/AddKubeUserDialog";
-import { PlatformUserTableStruct } from "src/components/organisms/platform/users/tables/struct";
-import { PlatformUserTableRow } from "src/components/organisms/platform/users/tables/KubeUserTableRow";
+import { AddPlatformUserDialog } from "src/components/organisms/kubernetes/users/dialogs/AddKubeUserDialog";
+import { PlatformUserTableStruct } from "src/components/organisms/kubernetes/users/tables/struct";
+import { PlatformUserTableRow } from "src/components/organisms/kubernetes/users/tables/KubeUserTableRow";
 
 type ServiceUsersContextValueType = {
   refetchUsersData: () => any;

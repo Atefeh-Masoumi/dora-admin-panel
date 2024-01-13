@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { SelectKuberDataCenter } from "src/components/organisms/platform/add/steps/SelectKuberDataCenter";
-import { SelectKuberSetting } from "src/components/organisms/platform/add/steps/SelectKuberSetting";
-import { ServerKuberInfo } from "src/components/organisms/platform/add/steps/ServerKuberInfo";
-import { SelectKuberConfig } from "src/components/organisms/platform/add/steps/SelectKuberConfig";
-import { KuberServiceReceipt } from "src/components/organisms/platform/add/steps/KuberServiceReceipt";
+import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/steps/SelectKuberDataCenter";
+import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
+import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
+import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
+import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/steps/KuberServiceReceipt";
 
 const AddKubernetes: FC = () => {
   return (
