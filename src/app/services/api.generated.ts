@@ -2718,6 +2718,7 @@ export type PostApiMyDomainWhoisGetApiArg = {
 };
 export type LoginResponse = {
   accessToken?: string | null;
+  userId?: string;
   expiration?: string;
   userTitle?: string | null;
   roles?: number[] | null;
@@ -3258,7 +3259,7 @@ export type IssueItemModel = {
   issueDate?: string;
   content?: string | null;
   user?: string | null;
-  roleId?: number;
+  userId?: string;
   fileName?: string | null;
   fileSize?: number | null;
 };
@@ -4112,3 +4113,4 @@ export const {
   usePostApiMyCloudNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+

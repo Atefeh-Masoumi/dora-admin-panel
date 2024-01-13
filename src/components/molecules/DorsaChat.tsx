@@ -11,6 +11,7 @@ const downloadFileUrl = baseUrl + "/api/my/cloud/issue-item/download/";
 export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
   const token = useAppSelector((state) => state.auth?.accessToken);
+  const userId = useAppSelector((state) => state.auth?.userId);
 
   const downloadFile = () => {
     if (!message || !message.id) return;
@@ -37,7 +38,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
       .finally(() => setIsLoading(false));
   };
 
-  if (message.roleId === 1) {
+  if (message.userId === userId) {
     return (
       <Stack spacing={1}>
         <Stack direction="row" spacing={1.5}>
