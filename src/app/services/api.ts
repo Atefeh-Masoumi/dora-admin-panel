@@ -41,8 +41,21 @@ export const api = generatedApi
       "Support",
       "VmHosts",
       "VmHost",
+      "Kubernetes",
     ],
     endpoints: {
+      getApiMyPlatformKubernetesList: {
+        providesTags: () => ["Kubernetes"],
+      },
+      putApiMyPlatformKubernetesEdit: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      postApiMyPlatformKubernetesCreate: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      deleteApiMyPlatformKubernetesDeleteById: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
       getApiMyAccountProfileGet: {
         providesTags: () => ["Profile"],
       },
