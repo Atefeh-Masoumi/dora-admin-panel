@@ -3,18 +3,16 @@ import { kubernetesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DeleteKubernetesDialog } from "../dialogs/DeleteKubernetesDialog";
-import { useNavigate } from "react-router";
 
 export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
+  // const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
 
   return (
     <>
@@ -31,7 +29,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                  {/* <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
                         "&> path": {
@@ -39,7 +37,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
                         },
                       }}
                     />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
