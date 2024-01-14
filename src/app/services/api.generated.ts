@@ -1068,6 +1068,15 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/cloud/notification/short-list` }),
     }),
+    putApiMyCloudNotificationSeenById: build.mutation<
+      PutApiMyCloudNotificationSeenByIdApiResponse,
+      PutApiMyCloudNotificationSeenByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cloud/notification/seen/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
     getApiMyCloudPaymentList: build.query<
       GetApiMyCloudPaymentListApiResponse,
       GetApiMyCloudPaymentListApiArg
@@ -2346,6 +2355,10 @@ export type GetApiMyCloudNotificationListApiArg = void;
 export type GetApiMyCloudNotificationShortListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
 export type GetApiMyCloudNotificationShortListApiArg = void;
+export type PutApiMyCloudNotificationSeenByIdApiResponse = unknown;
+export type PutApiMyCloudNotificationSeenByIdApiArg = {
+  id: number;
+};
 export type GetApiMyCloudPaymentListApiResponse =
   /** status 200 Success */ PaymentListResponse[];
 export type GetApiMyCloudPaymentListApiArg = void;
@@ -3461,6 +3474,7 @@ export type NotificationListResponse = {
   id?: number;
   content?: string | null;
   subject?: string | null;
+  isRead?: boolean;
   notificationDate?: string;
 };
 export type PaymentListResponse = {
@@ -4026,6 +4040,7 @@ export const {
   useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
   useGetApiMyCloudNotificationListQuery,
   useGetApiMyCloudNotificationShortListQuery,
+  usePutApiMyCloudNotificationSeenByIdMutation,
   useGetApiMyCloudPaymentListQuery,
   useGetApiMyCloudPaymentGetByIdQuery,
   usePostApiMyCloudPaymentCreateMutation,
