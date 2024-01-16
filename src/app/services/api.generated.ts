@@ -889,14 +889,14 @@ export const api = createApi({
         body: queryArg.createClusterModel,
       }),
     }),
-    putApiMyPlatformKubernetesEdit: build.mutation<
-      PutApiMyPlatformKubernetesEditApiResponse,
-      PutApiMyPlatformKubernetesEditApiArg
+    putApiMyPlatformKubernetesRemoveNode: build.mutation<
+      PutApiMyPlatformKubernetesRemoveNodeApiResponse,
+      PutApiMyPlatformKubernetesRemoveNodeApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/edit`,
+        url: `/api/my/platform/kubernetes/remove-node`,
         method: "PUT",
-        body: queryArg.editClusterModel,
+        body: queryArg.removeClusterNodeModel,
       }),
     }),
     deleteApiMyPlatformKubernetesDeleteById: build.mutation<
@@ -2270,9 +2270,9 @@ export type PostApiMyPlatformKubernetesCreateApiResponse = unknown;
 export type PostApiMyPlatformKubernetesCreateApiArg = {
   createClusterModel: CreateClusterModel;
 };
-export type PutApiMyPlatformKubernetesEditApiResponse = unknown;
-export type PutApiMyPlatformKubernetesEditApiArg = {
-  editClusterModel: EditClusterModel;
+export type PutApiMyPlatformKubernetesRemoveNodeApiResponse = unknown;
+export type PutApiMyPlatformKubernetesRemoveNodeApiArg = {
+  removeClusterNodeModel: RemoveClusterNodeModel;
 };
 export type DeleteApiMyPlatformKubernetesDeleteByIdApiResponse = unknown;
 export type DeleteApiMyPlatformKubernetesDeleteByIdApiArg = {
@@ -3258,14 +3258,14 @@ export type IssueListResponse = {
   issueStatus?: string | null;
   issueStatusId?: number;
   createDate?: string;
-  modifyDate?: string;
+  modifyDate?: string | null;
 };
 export type IssueShortListResponse = {
   id?: number;
   issueSubject?: string | null;
   issueStatus?: string | null;
   createDate?: string;
-  modifyDate?: string;
+  modifyDate?: string | null;
 };
 export type IssueItemModel = {
   id?: number;
@@ -3283,7 +3283,7 @@ export type IssueItemListResponse = {
   customerProduct?: string | null;
   issueStatusId?: number;
   createDate?: string;
-  modifyDate?: string;
+  modifyDate?: string | null;
   issueItems?: IssueItemModel[] | null;
 };
 export type IssueSubjectListResponse = {
@@ -3392,12 +3392,9 @@ export type CreateClusterModel = {
   memory?: number | null;
   disk?: number | null;
 };
-export type EditClusterModel = {
+export type RemoveClusterNodeModel = {
   id?: number;
-  nodeCount?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
+  customerProductId?: number;
 };
 export type KubeUserListResponse = {
   id?: number;
@@ -4019,7 +4016,7 @@ export const {
   useGetApiMyPlatformKubernetesImagesByDatacenterIdQuery,
   useGetApiMyPlatformKubernetesVersionsQuery,
   usePostApiMyPlatformKubernetesCreateMutation,
-  usePutApiMyPlatformKubernetesEditMutation,
+  usePutApiMyPlatformKubernetesRemoveNodeMutation,
   useDeleteApiMyPlatformKubernetesDeleteByIdMutation,
   useGetApiMyPlatformUserListQuery,
   useGetApiMyPlatformUserShortListQuery,
@@ -4128,4 +4125,3 @@ export const {
   usePostApiMyCloudNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-
