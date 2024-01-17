@@ -2941,13 +2941,12 @@ export type CreateColocationModel = {
   name: string;
   customerProductTypeId: number;
   equipmentIds: number[];
-  isPredefined: boolean;
-  productBundleId?: number | null;
-  rackUnitSpace?: number | null;
-  networkPort1G?: number | null;
-  networkPort10G?: number | null;
-  powerAmp?: number | null;
-  ipv4Count?: number | null;
+  inventoryNumber?: number;
+  rackUnitSpace?: number;
+  networkPort1G?: number;
+  networkPort10G?: number;
+  powerAmp?: number;
+  ipv4Count?: number;
 };
 export type CommissionListResponse = {
   id?: number;
