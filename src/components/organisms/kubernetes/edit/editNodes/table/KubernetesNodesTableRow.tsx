@@ -1,26 +1,26 @@
 import { FC, useState } from "react";
-import { kubernetesTableStruct } from "./struct";
+import { kubernetesNodesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { DeleteKubernetesDialog } from "../dialogs/DeleteKubernetesDialog";
 import { useNavigate } from "react-router";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
+import { DeleteKubernetesNodeDialog } from "../dialog/DeleteKubernetesNodeDialog";
 
-export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
+export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
+  const settingOnClick = () => navigate("/vm/" + row["hostId"]);
 
   return (
     <>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {kubernetesTableStruct.map((column) => {
+        {kubernetesNodesTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
@@ -73,7 +73,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteKubernetesDialog
+      <DeleteKubernetesNodeDialog
         id={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}

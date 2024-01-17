@@ -6,7 +6,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
-import { useGetApiMyPlatformKubernetesListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesHostListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
 import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
@@ -57,7 +57,7 @@ const NamespaceManagement: FC<NamespaceManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyPlatformKubernetesListQuery();
+  } = useGetApiMyKubernetesHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import {
   Button,
   Dialog,
@@ -15,7 +15,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostApiMyPlatformUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ServiceUsersContext } from "src/pages/kubernetes/Users";
+// import { ServiceUsersContext } from "src/pages/kubernetes/Users";
 
 const formInitialValues = {
   username: "",
@@ -59,7 +59,7 @@ type AddPlatformUserDialogPropsType = {
 export const AddPlatformUserDialog: FC<AddPlatformUserDialogPropsType> = ({
   onClose,
 }) => {
-  const { refetchUsersData } = useContext(ServiceUsersContext);
+  // const { refetchUsersData } = useContext(ServiceUsersContext);
 
   const [createPlatformUserCreate, { isLoading: createPlatformUserLoading }] =
     usePostApiMyPlatformUserCreateMutation();
@@ -78,7 +78,7 @@ export const AddPlatformUserDialog: FC<AddPlatformUserDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        refetchUsersData();
+        // refetchUsersData();
         toast.success("کاربر با موفقیت ایجاد شد");
         onClose();
       });

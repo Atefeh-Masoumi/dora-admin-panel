@@ -1,33 +1,31 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyPlatformUserRoleDeleteByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyKubernetesNodeDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { UserRoleContext } from "../../UserRole";
+import { DataContext } from "src/pages/kubernetes/Index";
 
-type DeleteUserRoleDialogPropsType = {
+type DeleteKubernetesNodeDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteUserRoleDialog: FC<DeleteUserRoleDialogPropsType> = ({
-  openDialog,
-  handleClose,
-  id,
-}) => {
+export const DeleteKubernetesNodeDialog: FC<
+  DeleteKubernetesNodeDialogPropsType
+> = ({ openDialog, handleClose, id }) => {
   const onClose = () => handleClose();
-  const [deleteUserUserRole, { isLoading }] =
-    useDeleteApiMyPlatformUserRoleDeleteByIdMutation();
+  const [deleteKubernetesNode, { isLoading }] =
+    usePutApiMyKubernetesNodeDeleteByIdMutation();
 
-  const { refetchUsersData } = useContext(UserRoleContext);
+  const { refetchOnClick } = useContext(DataContext);
 
   const submit = () =>
-    deleteUserUserRole({ id })
+    deleteKubernetesNode({ id })
       .then(() => {
-        toast.success(" دسترسی با موفقیت حذف شد");
-        refetchUsersData();
+        toast.success("نود سرویس کوبرنتیز شما با موفقیت حذف شد");
+        refetchOnClick();
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
@@ -44,10 +42,10 @@ export const DeleteUserRoleDialog: FC<DeleteUserRoleDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف دسترسی مطمئن هستید؟
+            از حذف این نود سرویس کوبرنتیز مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
-            در صورت تایید حذف، امکان بازگشت وجود ندارد
+            در صورت حذف نود، امکان بازگرداندن آن وجود ندارد
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="end" spacing={1}>
@@ -66,7 +64,7 @@ export const DeleteUserRoleDialog: FC<DeleteUserRoleDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف دسترسی
+            حذف
           </LoadingButton>
         </Stack>
       </Stack>

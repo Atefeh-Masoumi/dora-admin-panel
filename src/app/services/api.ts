@@ -44,16 +44,19 @@ export const api = generatedApi
       "Kubernetes",
     ],
     endpoints: {
-      getApiMyPlatformKubernetesList: {
+      getApiMyKubernetesHostList: {
         providesTags: () => ["Kubernetes"],
       },
-      putApiMyPlatformKubernetesEdit: {
+      getApiMyKubernetesHostGetById: {
+        providesTags: () => ["Kubernetes"],
+      },
+      putApiMyKubernetesNodeDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      postApiMyPlatformKubernetesCreate: {
+      postApiMyKubernetesHostCreate: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      deleteApiMyPlatformKubernetesDeleteById: {
+      deleteApiMyKubernetesHostDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
       getApiMyAccountProfileGet: {

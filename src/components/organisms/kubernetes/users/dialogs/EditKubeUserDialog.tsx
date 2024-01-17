@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import {
   Button,
   Dialog,
@@ -15,7 +15,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostApiMyPlatformUserChangePasswordMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ServiceUsersContext } from "src/pages/kubernetes/Users";
+// import { ServiceUsersContext } from "src/pages/kubernetes/Users";
 
 const formInitialValues = {
   password: "",
@@ -55,7 +55,7 @@ export const EditPlatformUserDialog: FC<EditPlatformUserDialogPropsType> = ({
   handleClose,
   id,
 }) => {
-  const { refetchUsersData } = useContext(ServiceUsersContext);
+  // const { refetchUsersData } = useContext(ServiceUsersContext);
 
   const [editPlatformUser, { isLoading: editPlatformUserLoading }] =
     usePostApiMyPlatformUserChangePasswordMutation();
@@ -76,7 +76,7 @@ export const EditPlatformUserDialog: FC<EditPlatformUserDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        refetchUsersData();
+        // refetchUsersData();
         toast.success("رمز عبور با موفقیت تغییر کرد");
         handleClose();
       });

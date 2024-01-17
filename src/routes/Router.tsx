@@ -27,6 +27,7 @@ import {
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
 import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 // import { ServiceUsers } from "src/pages/kubernetes/Users";
 
 const Home = lazy(() => import("src/pages/Home"));
@@ -89,8 +90,9 @@ const AddKubernetes = lazy(() => import("src/pages/kubernetes/AddKubernetes"));
 const EditKubernetes = lazy(
   () => import("src/pages/kubernetes/EditKubernetes")
 );
-// const AddWorkspace = lazy(() => import("src/pages/kubernetes/AddNamespace"));
-// const EditWorkspace = lazy(() => import("src/pages/kubernetes/EditNamespace"));
+const AddNodeKubernetes = lazy(
+  () => import("src/pages/kubernetes/AddNodeKubernetes")
+);
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -437,6 +439,20 @@ const Router: FC = () => {
                 link: {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
                   url: "/kubernetes",
+                },
+                hideSidebar: true,
+              },
+              AddKubernetesContextProvider
+            )}
+          />
+          <Route
+            path="/kubernetes/:id/add-node"
+            element={mainTemplate(
+              AddNodeKubernetes,
+              {
+                link: {
+                  text: "بازگشت ویرایش هاست کوبرنتیز",
+                  url: BACK_URL_HINTS_ENUM.ADD_NODE,
                 },
                 hideSidebar: true,
               },

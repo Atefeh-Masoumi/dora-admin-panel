@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyPlatformKubernetesDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyKubernetesHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/kubernetes/Index";
@@ -19,7 +19,7 @@ export const DeleteKubernetesDialog: FC<DeleteKubernetesDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteKubernetes, { isLoading }] =
-    useDeleteApiMyPlatformKubernetesDeleteByIdMutation();
+    useDeleteApiMyKubernetesHostDeleteByIdMutation();
 
   const { refetchOnClick } = useContext(DataContext);
 

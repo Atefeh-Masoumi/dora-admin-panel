@@ -851,62 +851,79 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyPlatformKubernetesList: build.query<
-      GetApiMyPlatformKubernetesListApiResponse,
-      GetApiMyPlatformKubernetesListApiArg
+    getApiMyKubernetesHostList: build.query<
+      GetApiMyKubernetesHostListApiResponse,
+      GetApiMyKubernetesHostListApiArg
     >({
-      query: () => ({ url: `/api/my/platform/kubernetes/list` }),
+      query: () => ({ url: `/api/my/kubernetes/host/list` }),
     }),
-    getApiMyPlatformKubernetesGetById: build.query<
-      GetApiMyPlatformKubernetesGetByIdApiResponse,
-      GetApiMyPlatformKubernetesGetByIdApiArg
+    getApiMyKubernetesHostGetById: build.query<
+      GetApiMyKubernetesHostGetByIdApiResponse,
+      GetApiMyKubernetesHostGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/host/get/${queryArg.id}`,
       }),
     }),
-    getApiMyPlatformKubernetesImagesByDatacenterId: build.query<
-      GetApiMyPlatformKubernetesImagesByDatacenterIdApiResponse,
-      GetApiMyPlatformKubernetesImagesByDatacenterIdApiArg
+    postApiMyKubernetesHostCreate: build.mutation<
+      PostApiMyKubernetesHostCreateApiResponse,
+      PostApiMyKubernetesHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/images/${queryArg.datacenterId}`,
-      }),
-    }),
-    getApiMyPlatformKubernetesVersions: build.query<
-      GetApiMyPlatformKubernetesVersionsApiResponse,
-      GetApiMyPlatformKubernetesVersionsApiArg
-    >({
-      query: () => ({ url: `/api/my/platform/kubernetes/versions` }),
-    }),
-    postApiMyPlatformKubernetesCreate: build.mutation<
-      PostApiMyPlatformKubernetesCreateApiResponse,
-      PostApiMyPlatformKubernetesCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/create`,
+        url: `/api/my/kubernetes/host/create`,
         method: "POST",
-        body: queryArg.createClusterModel,
+        body: queryArg.createKubernetesModel,
       }),
     }),
-    putApiMyPlatformKubernetesRemoveNode: build.mutation<
-      PutApiMyPlatformKubernetesRemoveNodeApiResponse,
-      PutApiMyPlatformKubernetesRemoveNodeApiArg
+    deleteApiMyKubernetesHostDeleteById: build.mutation<
+      DeleteApiMyKubernetesHostDeleteByIdApiResponse,
+      DeleteApiMyKubernetesHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/remove-node`,
-        method: "PUT",
-        body: queryArg.removeClusterNodeModel,
-      }),
-    }),
-    deleteApiMyPlatformKubernetesDeleteById: build.mutation<
-      DeleteApiMyPlatformKubernetesDeleteByIdApiResponse,
-      DeleteApiMyPlatformKubernetesDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/platform/kubernetes/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
+    }),
+    getApiMyKubernetesImageListByDatacenterId: build.query<
+      GetApiMyKubernetesImageListByDatacenterIdApiResponse,
+      GetApiMyKubernetesImageListByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/image/list/${queryArg.datacenterId}`,
+      }),
+    }),
+    getApiMyKubernetesNodeListByKubernetesHostId: build.query<
+      GetApiMyKubernetesNodeListByKubernetesHostIdApiResponse,
+      GetApiMyKubernetesNodeListByKubernetesHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/node/list/${queryArg.kubernetesHostId}`,
+      }),
+    }),
+    postApiMyKubernetesNodeCreate: build.mutation<
+      PostApiMyKubernetesNodeCreateApiResponse,
+      PostApiMyKubernetesNodeCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/node/create`,
+        method: "POST",
+        body: queryArg.createKubernetesNodeModel,
+      }),
+    }),
+    putApiMyKubernetesNodeDeleteById: build.mutation<
+      PutApiMyKubernetesNodeDeleteByIdApiResponse,
+      PutApiMyKubernetesNodeDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/node/delete/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyKubernetesVersionList: build.query<
+      GetApiMyKubernetesVersionListApiResponse,
+      GetApiMyKubernetesVersionListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/version/list` }),
     }),
     getApiMyPlatformUserList: build.query<
       GetApiMyPlatformUserListApiResponse,
@@ -1828,7 +1845,8 @@ export type PostApiMyAccountLoginApiResponse =
 export type PostApiMyAccountLoginApiArg = {
   loginModel: LoginModel;
 };
-export type PostApiMyAccountRegisterApiResponse = unknown;
+export type PostApiMyAccountRegisterApiResponse =
+  /** status 200 Success */ LoginResponse;
 export type PostApiMyAccountRegisterApiArg = {
   registerModel: RegisterModel;
 };
@@ -2251,33 +2269,43 @@ export type DeleteApiMyPlatformServiceDeleteByIdApiResponse = unknown;
 export type DeleteApiMyPlatformServiceDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyPlatformKubernetesListApiResponse =
-  /** status 200 Success */ GetKubernetesHostResponse[];
-export type GetApiMyPlatformKubernetesListApiArg = void;
-export type GetApiMyPlatformKubernetesGetByIdApiResponse =
-  /** status 200 Success */ GetKubernetesHostResponse;
-export type GetApiMyPlatformKubernetesGetByIdApiArg = {
+export type GetApiMyKubernetesHostListApiResponse =
+  /** status 200 Success */ KubernetesListResponse[];
+export type GetApiMyKubernetesHostListApiArg = void;
+export type GetApiMyKubernetesHostGetByIdApiResponse =
+  /** status 200 Success */ GetKubernetesResponse;
+export type GetApiMyKubernetesHostGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyPlatformKubernetesImagesByDatacenterIdApiResponse =
-  /** status 200 Success */ ImageListResponse[];
-export type GetApiMyPlatformKubernetesImagesByDatacenterIdApiArg = {
+export type PostApiMyKubernetesHostCreateApiResponse = unknown;
+export type PostApiMyKubernetesHostCreateApiArg = {
+  createKubernetesModel: CreateKubernetesModel;
+};
+export type DeleteApiMyKubernetesHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesHostDeleteByIdApiArg = {
+  id: number;
+};
+export type GetApiMyKubernetesImageListByDatacenterIdApiResponse =
+  /** status 200 Success */ KubernetesImageListResponse[];
+export type GetApiMyKubernetesImageListByDatacenterIdApiArg = {
   datacenterId: number;
 };
-export type GetApiMyPlatformKubernetesVersionsApiResponse = unknown;
-export type GetApiMyPlatformKubernetesVersionsApiArg = void;
-export type PostApiMyPlatformKubernetesCreateApiResponse = unknown;
-export type PostApiMyPlatformKubernetesCreateApiArg = {
-  createClusterModel: CreateClusterModel;
+export type GetApiMyKubernetesNodeListByKubernetesHostIdApiResponse =
+  /** status 200 Success */ KubernetesNodeListResponse[];
+export type GetApiMyKubernetesNodeListByKubernetesHostIdApiArg = {
+  kubernetesHostId: number;
 };
-export type PutApiMyPlatformKubernetesRemoveNodeApiResponse = unknown;
-export type PutApiMyPlatformKubernetesRemoveNodeApiArg = {
-  removeClusterNodeModel: RemoveClusterNodeModel;
+export type PostApiMyKubernetesNodeCreateApiResponse = unknown;
+export type PostApiMyKubernetesNodeCreateApiArg = {
+  createKubernetesNodeModel: CreateKubernetesNodeModel;
 };
-export type DeleteApiMyPlatformKubernetesDeleteByIdApiResponse = unknown;
-export type DeleteApiMyPlatformKubernetesDeleteByIdApiArg = {
+export type PutApiMyKubernetesNodeDeleteByIdApiResponse = unknown;
+export type PutApiMyKubernetesNodeDeleteByIdApiArg = {
   id: number;
 };
+export type GetApiMyKubernetesVersionListApiResponse =
+  /** status 200 Success */ KubernetesVersionListResponse[];
+export type GetApiMyKubernetesVersionListApiArg = void;
 export type GetApiMyPlatformUserListApiResponse =
   /** status 200 Success */ KubeUserListResponse[];
 export type GetApiMyPlatformUserListApiArg = void;
@@ -2936,12 +2964,15 @@ export type CoLocationListResponse = {
   datacenterRackId?: number;
   datacenterRack?: string | null;
 };
+export type EquipmentModel = {
+  equipmentModelId?: number;
+  inventoryNumber?: number;
+};
 export type CreateColocationModel = {
   datacenterId: number;
   name: string;
   customerProductTypeId: number;
-  equipmentIds: number[];
-  inventoryNumber?: number;
+  equipmentModels: EquipmentModel[];
   rackUnitSpace?: number;
   networkPort1G?: number;
   networkPort10G?: number;
@@ -3356,28 +3387,28 @@ export type CreateKubeServiceModel = {
   memory?: number;
   autoScale?: boolean;
 };
-export type VmProductItemModel = {
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-};
-export type GetKubernetesHostResponse = {
+export type KubernetesListResponse = {
   id?: number;
   datacenter?: string | null;
   name?: string | null;
   status?: string | null;
   statusId?: number;
   createDate?: string;
-  expireDate?: string | null;
-  nodes?: VmProductItemModel[] | null;
 };
-export type ImageListResponse = {
+export type GetKubernetesResponse = {
   id?: number;
+  datacenter?: string | null;
   name?: string | null;
-  osId?: number;
-  os?: string | null;
+  masterNode?: number;
+  workerNode?: number;
+  status?: string | null;
+  statusId?: number;
+  customerProductType?: string | null;
+  createDate?: string;
+  modifyDate?: string;
+  expireDate?: string | null;
 };
-export type CreateClusterModel = {
+export type CreateKubernetesModel = {
   clusterName: string;
   datacenterId: number;
   imageId: number;
@@ -3391,9 +3422,37 @@ export type CreateClusterModel = {
   memory?: number | null;
   disk?: number | null;
 };
-export type RemoveClusterNodeModel = {
+export type KubernetesImageListResponse = {
   id?: number;
-  customerProductId?: number;
+  name?: string | null;
+  osId?: number;
+  os?: string | null;
+};
+export type KubernetesNodeListResponse = {
+  id?: number;
+  datacenter?: string | null;
+  name?: string | null;
+  status?: string | null;
+  kubernetesNodeType?: string | null;
+  kubernetesNodeTypeId?: number;
+  productTypeId?: number;
+  productType?: string | null;
+  hostId?: number;
+  statusId?: number;
+  ip?: string | null;
+};
+export type CreateKubernetesNodeModel = {
+  kubernetesNodeTypeId?: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  nodeCount?: number;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
+};
+export type KubernetesVersionListResponse = {
+  id?: number;
+  name?: string | null;
 };
 export type KubeUserListResponse = {
   id?: number;
@@ -3796,6 +3855,12 @@ export type GetKmsModel = {
   id?: number;
   typeId?: number;
 };
+export type ImageListResponse = {
+  id?: number;
+  name?: string | null;
+  osId?: number;
+  os?: string | null;
+};
 export type IsoListResponse = {
   id?: number;
   name?: string | null;
@@ -4010,13 +4075,15 @@ export const {
   useGetApiMyPlatformServiceGetByIdQuery,
   usePostApiMyPlatformServiceCreateMutation,
   useDeleteApiMyPlatformServiceDeleteByIdMutation,
-  useGetApiMyPlatformKubernetesListQuery,
-  useGetApiMyPlatformKubernetesGetByIdQuery,
-  useGetApiMyPlatformKubernetesImagesByDatacenterIdQuery,
-  useGetApiMyPlatformKubernetesVersionsQuery,
-  usePostApiMyPlatformKubernetesCreateMutation,
-  usePutApiMyPlatformKubernetesRemoveNodeMutation,
-  useDeleteApiMyPlatformKubernetesDeleteByIdMutation,
+  useGetApiMyKubernetesHostListQuery,
+  useGetApiMyKubernetesHostGetByIdQuery,
+  usePostApiMyKubernetesHostCreateMutation,
+  useDeleteApiMyKubernetesHostDeleteByIdMutation,
+  useGetApiMyKubernetesImageListByDatacenterIdQuery,
+  useGetApiMyKubernetesNodeListByKubernetesHostIdQuery,
+  usePostApiMyKubernetesNodeCreateMutation,
+  usePutApiMyKubernetesNodeDeleteByIdMutation,
+  useGetApiMyKubernetesVersionListQuery,
   useGetApiMyPlatformUserListQuery,
   useGetApiMyPlatformUserShortListQuery,
   usePostApiMyPlatformUserCreateMutation,

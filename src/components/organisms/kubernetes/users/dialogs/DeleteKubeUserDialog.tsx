@@ -1,10 +1,10 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyPlatformUserDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { ServiceUsersContext } from "src/pages/kubernetes/Users";
+// import { ServiceUsersContext } from "src/pages/kubernetes/Users";
 
 type DeletePlatformUserDialogPropsType = {
   openDialog: boolean;
@@ -15,7 +15,7 @@ type DeletePlatformUserDialogPropsType = {
 export const DeletePlatformUserDialog: FC<
   DeletePlatformUserDialogPropsType
 > = ({ openDialog, handleClose, id }) => {
-  const { refetchUsersData } = useContext(ServiceUsersContext);
+  // const { refetchUsersData } = useContext(ServiceUsersContext);
 
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
@@ -24,7 +24,7 @@ export const DeletePlatformUserDialog: FC<
   const submit = () =>
     deleteItem({ id })
       .then(() => {
-        refetchUsersData();
+        // refetchUsersData();
         toast.success("کاربر سرویس با موفقیت حذف شد");
         handleClose();
       })

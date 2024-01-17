@@ -14,7 +14,7 @@ import {
   ProductBundleListResponse,
   VmSpecListResponse,
   useGetApiMyCloudCustomerGetCustomerTypeQuery,
-  usePostApiMyPlatformKubernetesCreateMutation,
+  usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
@@ -87,7 +87,7 @@ export const AddKubernetesContextProvider: FC<
   const navigate = useNavigate();
 
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyPlatformKubernetesCreateMutation();
+    usePostApiMyKubernetesHostCreateMutation();
 
   const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
 
@@ -104,7 +104,7 @@ export const AddKubernetesContextProvider: FC<
       return;
 
     createKubernetes({
-      createClusterModel: {
+      createKubernetesModel: {
         clusterName: serverName,
         datacenterId: dataCenter.id!,
         imageId: osVersion.id!,

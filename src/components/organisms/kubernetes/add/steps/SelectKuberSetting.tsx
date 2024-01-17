@@ -17,8 +17,8 @@ import {
 } from "@mui/material";
 import {
   DatacenterListResponse,
-  useGetApiMyPlatformKubernetesImagesByDatacenterIdQuery,
-  useGetApiMyPlatformKubernetesVersionsQuery,
+  useGetApiMyKubernetesImageListByDatacenterIdQuery,
+  useGetApiMyKubernetesVersionListQuery,
 } from "src/app/services/api.generated";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { Counter } from "./Counter";
@@ -36,7 +36,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
     setWorkersCount,
   } = useContext(AddKubernetesContext);
 
-  const { data } = useGetApiMyPlatformKubernetesVersionsQuery();
+  const { data } = useGetApiMyKubernetesVersionListQuery();
 
   const versionsList = useMemo(
     () => (data as DatacenterListResponse[]) || [],
@@ -58,7 +58,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   };
 
   const { data: osVersionsList = [] } =
-    useGetApiMyPlatformKubernetesImagesByDatacenterIdQuery(
+    useGetApiMyKubernetesImageListByDatacenterIdQuery(
       {
         datacenterId: dataCenter?.id || 1,
       },

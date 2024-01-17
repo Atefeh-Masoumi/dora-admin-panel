@@ -15,8 +15,9 @@ import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
 import MoreSvg from "src/components/atoms/svg/MoreSvg";
 import { WalletMenu } from "src/components/organisms/header/WalletMenu";
 import { Notifications } from "../../header/Notifications";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
+import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -38,6 +39,7 @@ const Header: FC<HeaderPropsType> = ({
   >();
 
   const navigate = useNavigate();
+  const { id: kubernetesID } = useParams();
 
   const goToCalculator = () => navigate("/cloud/calculator");
 
@@ -50,7 +52,6 @@ const Header: FC<HeaderPropsType> = ({
   const open = Boolean(anchorEl);
   const id = open ? "header menu" : undefined;
 
-  // const notPaidList: any = [];
   const desktopHeaderIcon = (
     <>
       <Notifications />
@@ -125,6 +126,19 @@ const Header: FC<HeaderPropsType> = ({
     </>
   );
 
+  const backButtonOnClick = (url: string) => {
+    let href = "";
+    switch (url) {
+      case BACK_URL_HINTS_ENUM.ADD_NODE:
+        href = `/kubernetes/${kubernetesID}` || "back";
+        break;
+      default:
+        href = url;
+        break;
+    }
+    navigate(href);
+  };
+
   return (
     <AppBar
       sx={{
@@ -169,7 +183,11 @@ const Header: FC<HeaderPropsType> = ({
 
             <Stack direction="row" alignItems="center" spacing={1}>
               {link && (
-                <Button href={link.url} color="secondary">
+                <Button
+                  onClick={() => backButtonOnClick(link.url)}
+                  // href={link.url}
+                  color="secondary"
+                >
                   <ArrowForwardIcon
                     color="secondary"
                     sx={{ width: { xs: 30, md: 40 } }}
