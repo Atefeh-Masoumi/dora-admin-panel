@@ -1,33 +1,33 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Button, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 
-type KuberServiceReceiptPropsType = {};
+type KuberServiceReceiptPropsType = {
+  serverPrice: number;
+  serverName: string;
+  workersCount: number;
+  paymentType: CUSTOMER_PRODUCT_TYPE_ENUM | null;
+  setPaymentType: (type: CUSTOMER_PRODUCT_TYPE_ENUM | null) => any;
+  submitHandler: () => any;
+  submitLoading: boolean;
+};
 
-export const KuberServiceReceipt: FC<KuberServiceReceiptPropsType> = () => {
-  const {
-    serverConfig,
-    workersCount,
-    paymentType,
-    setPaymentType,
-    submitHandler,
-    submitLoading,
-  } = useContext(AddKubernetesContext);
-
-  const receiptItemPrice = Math.floor(serverConfig?.price || 0).toLocaleString(
-    "fa-IR"
-  );
+export const KuberServiceReceipt: FC<KuberServiceReceiptPropsType> = ({
+  serverPrice,
+  serverName,
+  workersCount,
+  paymentType,
+  setPaymentType,
+  submitHandler,
+  submitLoading,
+}) => {
+  const receiptItemPrice = Math.floor(serverPrice).toLocaleString("fa-IR");
   const receiptItemInCountPrice = Math.floor(
-    (serverConfig?.price || 0) * workersCount
+    serverPrice * workersCount
   ).toLocaleString("fa-IR");
-  const totalPrice = Math.floor(
-    (serverConfig?.price || 0) * 1.09
-  ).toLocaleString("fa-IR");
-  const vat = Math.floor((serverConfig?.price || 0) * 0.09).toLocaleString(
-    "fa-IR"
-  );
+  const totalPrice = Math.floor(serverPrice * 1.09).toLocaleString("fa-IR");
+  const vat = Math.floor(serverPrice * 0.09).toLocaleString("fa-IR");
 
   return (
     <Paper sx={{ p: 2 }}>
@@ -62,7 +62,7 @@ export const KuberServiceReceipt: FC<KuberServiceReceiptPropsType> = () => {
           }}
         >
           <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
-            <Typography>{serverConfig?.name || "سرویس"}</Typography>
+            <Typography>{serverName || "سرویس"}</Typography>
           </Grid>
           <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
             <Typography>{workersCount || "---"}</Typography>
