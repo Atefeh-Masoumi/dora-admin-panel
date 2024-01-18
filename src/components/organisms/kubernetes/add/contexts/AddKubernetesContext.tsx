@@ -13,7 +13,7 @@ import {
   ImageListResponse,
   ProductBundleListResponse,
   VmSpecListResponse,
-  useGetApiMyCloudCustomerGetCustomerTypeQuery,
+  useGetApiMyPortalCustomerGetCustomerTypeQuery,
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
@@ -89,7 +89,8 @@ export const AddKubernetesContextProvider: FC<
   const [createKubernetes, { isLoading: submitLoading }] =
     usePostApiMyKubernetesHostCreateMutation();
 
-  const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } =
+    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const submitHandler = () => {
     if (

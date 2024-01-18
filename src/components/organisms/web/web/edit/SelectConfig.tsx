@@ -9,8 +9,8 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { EditWebTableRow } from "./tables/EditWebTableRow";
 import { editWebTableStruct } from "./tables/editWebTableStruct";
 import {
-  useGetApiMyCloudProductBundleListByProductIdQuery,
-  usePutApiMyWebEditMutation,
+  useGetApiMyPortalProductBundleListByProductIdQuery,
+  usePutApiMyWebHostEditMutation,
 } from "src/app/services/api.generated";
 import { EditWebContext } from "./contexts/EditWebContext";
 
@@ -18,7 +18,7 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyCloudProductBundleListByProductIdQuery({
+    useGetApiMyPortalProductBundleListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.WEB,
     });
 
@@ -39,7 +39,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { serverId, serverConfig } = useContext(EditWebContext);
   const [editWebModel, { isLoading: updateLoading }] =
-    usePutApiMyWebEditMutation();
+    usePutApiMyWebHostEditMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;

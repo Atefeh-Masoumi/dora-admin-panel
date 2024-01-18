@@ -22,10 +22,10 @@ import { useAppDispatch } from "src/app/hooks";
 import { logoutAction } from "src/app/slice/authSlice";
 
 const items = [
-  { title: "حساب کاربری", icon: Account, link: "/cloud/profile" },
-  { title: "تنظیمات", icon: Setting, link: "/cloud/setting" },
-  { title: "کد معرف و درآمد", icon: Referral, link: "/cloud/referral" },
-  { title: "سرویس های من", icon: Service, link: "/cloud/customer-products" },
+  { title: "حساب کاربری", icon: Account, link: "/portal/profile" },
+  { title: "تنظیمات", icon: Setting, link: "/portal/setting" },
+  { title: "کد معرف و درآمد", icon: Referral, link: "/portal/referral" },
+  { title: "سرویس های من", icon: Service, link: "/portal/customer-products" },
 ];
 
 export const UserMenu: FC = () => {

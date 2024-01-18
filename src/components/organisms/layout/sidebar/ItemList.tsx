@@ -26,13 +26,13 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
   const isCollapsed = useMemo(
     () =>
       pathname !== "/" &&
-      pathname !== "/cloud/calculator" &&
-      pathname !== "/cloud/supports" &&
-      pathname !== "/cloud/profile" &&
-      pathname !== "/cloud/setting" &&
-      pathname !== "/cloud/customer-products" &&
-      pathname !== "/cloud/referral" &&
-      pathname !== "/cloud/notifications",
+      pathname !== "/portal/calculator" &&
+      pathname !== "/portal/supports" &&
+      pathname !== "/portal/profile" &&
+      pathname !== "/portal/setting" &&
+      pathname !== "/portal/customer-products" &&
+      pathname !== "/portal/referral" &&
+      pathname !== "/portal/notifications",
     [pathname]
   );
 

@@ -7,8 +7,8 @@ import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectD
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
 import {
-  useGetApiMyCloudCustomerGetCustomerTypeQuery,
-  usePostApiMyWebCreateMutation,
+  useGetApiMyPortalCustomerGetCustomerTypeQuery,
+  usePostApiMyWebHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
@@ -23,9 +23,10 @@ const AddWeb: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } =
+    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
-  const [createWeb, { isLoading }] = usePostApiMyWebCreateMutation();
+  const [createWeb, { isLoading }] = usePostApiMyWebHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";

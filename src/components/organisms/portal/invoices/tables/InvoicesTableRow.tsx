@@ -1,0 +1,135 @@
+import { FC, MouseEventHandler } from "react";
+import { Chip, Stack } from "@mui/material";
+import { invoicesTableStruct, invoiceTableStruct } from "./struct";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { useNavigate } from "react-router";
+import { usePostApiMyPortalInvoicePayMutation } from "src/app/services/api.generated";
+import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
+
+export const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
+  const navigate = useNavigate();
+
+  const [invoicePayment, { isLoading: invoicePaymentLoading }] =
+    usePostApiMyPortalInvoicePayMutation();
+
+  const payInvoice: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (row["invoiceStatusId"] !== 3 || !row["id"]) return;
+
+    invoicePayment({ payInvoiceModel: { id: row["id"] } })
+      .unwrap()
+      .then(() => {
+        toast.success(".پرداخت با موفقیت انجام شد");
+        navigate("/portal/wallet/invoice");
+      });
+  };
+
+  return (
+    <DorsaTableRow
+      hover
+      role="checkbox"
+      tabIndex={-1}
+      key={row.usedCode}
+      sx={{ cursor: "pointer" }}
+      onClick={() => navigate(`/portal/wallet/invoice/${row.id}`)}
+    >
+      {invoicesTableStruct.map((column) => {
+        const value = row[column.id];
+        const text =
+          column.format && typeof value === "number"
+            ? column.format(value)
+            : value;
+        return (
+          <DorsaTableCell
+            key={column.id}
+            align="center"
+            sx={{ px: 1, whiteSpace: "nowrap" }}
+          >
+            {column.id === "title" ? (
+              <Stack
+                sx={{
+                  maxWidth: 232,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {text}
+              </Stack>
+            ) : (
+              <Stack>
+                {column.id === "invoiceStatus" ? (
+                  <>
+                    {row["invoiceStatusId"] === 3 ? (
+                      <LoadingButton
+                        variant="outlined"
+                        loading={invoicePaymentLoading}
+                        onClick={payInvoice}
+                      >
+                        پرداخت
+                      </LoadingButton>
+                    ) : (
+                      <Chip
+                        label={text}
+                        sx={{
+                          cursor: "pointer",
+                          backgroundColor:
+                            row["invoiceStatusId"] === 1
+                              ? "success.light"
+                              : "error.light",
+                          color:
+                            row["invoiceStatusId"] === 1
+                              ? "success.main"
+                              : "error.main",
+                          py: 2.2,
+                          borderRadius: 1,
+                          fontSize: "14px",
+                        }}
+                      />
+                    )}
+                  </>
+                ) : column.id === "totalPrice" ||
+                  column.id === "vat" ||
+                  column.id === "discount" ||
+                  column.id === "invoicePrice" ? (
+                  <Stack>{text} ریال</Stack>
+                ) : (
+                  text
+                )}
+              </Stack>
+            )}
+          </DorsaTableCell>
+        );
+      })}
+    </DorsaTableRow>
+  );
+};
+
+export const invoiceTableRow: FC<{ row: any }> = ({ row }) => {
+  return (
+    <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row}>
+      {invoiceTableStruct.map((column) => {
+        const value = row[column.id];
+        const text =
+          column.format && typeof value === "number"
+            ? column.format(value)
+            : value;
+        return (
+          <DorsaTableCell
+            key={column.id}
+            align="center"
+            sx={{ px: 10, border: 1, whiteSpace: "nowrap" }}
+          >
+            {column.id === "price" || column.id === "totalPrice" ? (
+              <Stack>{text} ریال</Stack>
+            ) : (
+              <Stack>{text}</Stack>
+            )}
+          </DorsaTableCell>
+        );
+      })}
+    </DorsaTableRow>
+  );
+};

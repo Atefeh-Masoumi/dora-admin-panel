@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyPlatformUserDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyKubesphereUserDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 // import { ServiceUsersContext } from "src/pages/kubernetes/Users";
@@ -19,7 +19,7 @@ export const DeletePlatformUserDialog: FC<
 
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
-    useDeleteApiMyPlatformUserDeleteByIdMutation();
+    useDeleteApiMyKubesphereUserDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })

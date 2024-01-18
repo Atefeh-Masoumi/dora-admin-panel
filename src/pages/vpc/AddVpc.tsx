@@ -71,7 +71,7 @@ const AddVm: FC = () => {
     //     toast.success("درخواست سرور ابری  با موفقیت ثبت شد");
     //     if (res) {
     //       let a = document.createElement("a");
-    //       a.href = "/cloud/order/" + res;
+    //       a.href = "/portal/order/" + res;
     //       a.click();
     //     }
     //   });

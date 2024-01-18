@@ -71,7 +71,7 @@ const AddRabbitService: FC = () => {
     //     toast.success("سرویس RabbitMQ  با موفقیت ایجاد شد");
     //     if (res) {
     //       let a = document.createElement("a");
-    //       a.href = "/cloud/order/" + res;
+    //       a.href = "/portal/order/" + res;
     //       a.click();
     //     }
     //   });
