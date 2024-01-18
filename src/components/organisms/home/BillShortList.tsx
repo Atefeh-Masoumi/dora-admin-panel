@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { useGetApiMyCloudBillBillShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPortalBillBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import moment from "jalali-moment";
@@ -19,7 +19,8 @@ import { priceToPersian } from "src/utils/priceToPersian";
 export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
 
-  const { data: reports, isLoading } = useGetApiMyCloudBillBillShortListQuery();
+  const { data: reports, isLoading } =
+    useGetApiMyPortalBillBillShortListQuery();
 
   return (
     <Stack
@@ -39,7 +40,7 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش محاسبات
         </Typography>
-        <Button color="secondary" href="/cloud/wallet/bill">
+        <Button color="secondary" href="/portal/wallet/bill">
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
@@ -125,7 +126,7 @@ export const ShortUserBill: FC = () => {
                           {totalPrice && priceToPersian(totalPrice)}
                         </Typography>
                         <IconButton
-                          onClick={() => navigate(`/cloud/wallet/bill/${id}`)}
+                          onClick={() => navigate(`/portal/wallet/bill/${id}`)}
                         >
                           <KeyboardArrowLeftIcon color="secondary" />
                         </IconButton>

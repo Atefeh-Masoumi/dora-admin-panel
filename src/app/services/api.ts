@@ -1,7 +1,7 @@
 import {
   api as generatedApi,
-  PostApiMyCloudIssueItemCreateApiResponse,
-  PostApiMyCloudIssueCreateApiArg,
+  PostApiMyPortalIssueItemCreateApiResponse,
+  PostApiMyPortalIssueCreateApiArg,
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
@@ -9,14 +9,14 @@ export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
       customCreateIssue: build.mutation<
-        PostApiMyCloudIssueItemCreateApiResponse,
-        PostApiMyCloudIssueCreateApiArg & {
+        PostApiMyPortalIssueItemCreateApiResponse,
+        PostApiMyPortalIssueCreateApiArg & {
           abortController?: AbortController;
           onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
       >({
         query: ({ body, abortController, onUploadProgress }) => ({
-          url: `/api/my/cloud/issue/create`,
+          url: `/api/my/portal/issue/create`,
           method: "POST",
           body,
           abortController,
@@ -59,11 +59,20 @@ export const api = generatedApi
       deleteApiMyKubernetesHostDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      getApiMyAccountProfileGet: {
+      getApiMyPortalProfileGet: {
         providesTags: () => ["Profile"],
       },
-      getApiMyAccountProfileGetNotificationStatus: {
+      getApiMyPortalProfileGetNotificationStatus: {
         providesTags: () => ["Notification"],
+      },
+      postApiMyPortalProfileConfirmPhoneNumber: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalProfileEditPhoneNotification: {
+        invalidatesTags: () => ["Notification"],
+      },
+      putApiMyPortalProfileEditEmailNotification: {
+        invalidatesTags: () => ["Notification"],
       },
       getApiMyCdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
@@ -74,26 +83,17 @@ export const api = generatedApi
       getApiMyCdnHostGetById: {
         providesTags: () => ["ZoneData"],
       },
-      getApiMyCloudIssueItemListByIssueId: {
+      getApiMyPortalIssueItemListByIssueId: {
         providesTags: () => ["Support"],
       },
       getApiMyCdnLoadBalanceListByCdnId: {
         providesTags: () => ["LoadBalance"],
       },
-      putApiMyCloudCustomerEditCustomerType: {
+      putApiMyPortalCustomerEditCustomerType: {
         invalidatesTags: () => ["Profile"],
       },
-      getApiMyCloudCustomerGet: {
+      getApiMyPortalCustomerGet: {
         providesTags: () => ["Profile"],
-      },
-      postApiMyAccountProfileConfirmPhoneNumber: {
-        invalidatesTags: () => ["Profile"],
-      },
-      putApiMyAccountProfileEditPhoneNotification: {
-        invalidatesTags: () => ["Notification"],
-      },
-      putApiMyAccountProfileEditEmailNotification: {
-        invalidatesTags: () => ["Notification"],
       },
       putApiMyCdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
@@ -149,13 +149,13 @@ export const api = generatedApi
       postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      getApiMyCloudIssueList: {
+      getApiMyPortalIssueList: {
         providesTags: () => ["Support"],
       },
-      postApiMyCloudIssueCreate: {
+      postApiMyPortalIssueCreate: {
         invalidatesTags: () => ["Support"],
       },
-      postApiMyCloudIssueItemCreate: {
+      postApiMyPortalIssueItemCreate: {
         invalidatesTags: () => ["Support"],
       },
       getApiMyVmProjectList: {
@@ -205,19 +205,19 @@ export const api = generatedApi
 
 export const {
   useCustomCreateIssueMutation,
-  useLazyGetApiMyAccountProfileGetNotificationStatusQuery,
+  useLazyGetApiMyPortalProfileGetNotificationStatusQuery,
   useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
   useLazyGetApiMyCdnDnsRecordGetByIdQuery,
-  useLazyGetApiMyCloudInvoiceGetByIdQuery,
-  useLazyGetApiMyCloudIssueItemDownloadByIdQuery,
-  useLazyGetApiMyCloudPaymentGetByIdQuery,
-  useLazyGetApiMyCloudBillDownloadByIdQuery,
-  useLazyGetApiMyCloudCustomerProductListByProductIdQuery,
-  useLazyGetApiMyWebGetLoginSessionByIdQuery,
-  useLazyGetApiMyPlatformNamespaceGetLoginByIdQuery,
+  useLazyGetApiMyPortalInvoiceGetByIdQuery,
+  useLazyGetApiMyPortalIssueItemDownloadByIdQuery,
+  useLazyGetApiMyPortalPaymentGetByIdQuery,
+  useLazyGetApiMyPortalBillDownloadByIdQuery,
+  useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
+  useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
+  useLazyGetApiMyKubesphereHostGetLoginByIdQuery,
   useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
-  useLazyGetApiMyDomainGetByIdQuery,
+  useLazyGetApiMyDomainHostGetByIdQuery,
 } = api;

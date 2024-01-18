@@ -15,7 +15,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
-  } = useGetApiMyWebGetByIdQuery({
+  } = useGetApiMyWebHostGetByIdQuery({
     id: Number(id)!,
   });
 

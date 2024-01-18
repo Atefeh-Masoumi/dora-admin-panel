@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: front-my
-          image: git.dorsacloud.com:5050/dorsacloud/frontend/front-my/front-my-production:latest
+          image: git.dorsa.cloud:5050/dorsacloud/frontend/front-my/front-my-production:latest
           ports:
             - name: http-0
               containerPort: 80

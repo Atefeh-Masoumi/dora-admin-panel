@@ -3,13 +3,13 @@ import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetApiMyCloudProductBundleStorageListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyCloudProductBundleStorageListQuery();
+    useGetApiMyPortalProductBundleStorageListQuery();
 
   const table = useMemo(
     () => (

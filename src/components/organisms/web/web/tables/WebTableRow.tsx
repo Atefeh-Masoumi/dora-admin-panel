@@ -6,7 +6,7 @@ import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
-import { useLazyGetApiMyWebGetLoginSessionByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
 import { useNavigate } from "react-router";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 
@@ -20,7 +20,7 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
   const settingOnClick = () => navigate("/web/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetApiMyWebGetLoginSessionByIdQuery();
+    useLazyGetApiMyWebHostGetLoginSessionByIdQuery();
   const monitorOnClick = () =>
     getUrl({ id: row["id"] })
       .unwrap()

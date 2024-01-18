@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetApiMyCloudProductBundleVmListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPortalProductBundleVmListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
@@ -9,7 +9,7 @@ type SelectKuberConfigPropsType = {};
 
 export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyCloudProductBundleVmListQuery();
+    useGetApiMyPortalProductBundleVmListQuery();
 
   const table = useMemo(
     () => (

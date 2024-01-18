@@ -11,12 +11,12 @@ import {
 import { LinearProgress, Stack, Typography } from "@mui/material";
 import WalletSvg from "../../atoms/svg/WalletSvg";
 import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
-import { DepositDialog } from "src/components/organisms/cloud/payment/dialog/DepositDialog";
-import { useGetApiMyCloudWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
+import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
 import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
-import { GiftDialog } from "../cloud/payment/dialog/GiftDialog";
+import { GiftDialog } from "../portal/payment/dialog/GiftDialog";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -70,7 +70,7 @@ export const WalletMenu: FC = () => {
   };
   const handleClose = () => setAnchorEl(null);
 
-  const { data: balance, isLoading } = useGetApiMyCloudWalletGetBalanceQuery(
+  const { data: balance, isLoading } = useGetApiMyPortalWalletGetBalanceQuery(
     null as any,
     { refetchOnMountOrArgChange: true }
   );
@@ -101,25 +101,25 @@ export const WalletMenu: FC = () => {
       value: "wallets",
       label: "گزارش کیف پول",
       icon: WalletSvg,
-      link: "/cloud/wallet",
+      link: "/portal/wallet",
     },
     {
       value: "invoices",
       label: "فاکتور های فروش",
       icon: InvoiceSvg,
-      link: "/cloud/wallet/invoice",
+      link: "/portal/wallet/invoice",
     },
     {
       value: "payments",
       label: "گزارش پرداخت ها",
       icon: TransactionSvg,
-      link: "/cloud/wallet/payment",
+      link: "/portal/wallet/payment",
     },
     {
       value: "user-bill",
       label: "گزارش محاسبات",
       icon: CalculateSvg,
-      link: "/cloud/wallet/bill",
+      link: "/portal/wallet/bill",
     },
   ];
 

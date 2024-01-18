@@ -13,7 +13,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiMyPlatformUserCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubesphereUserCreateMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 // import { ServiceUsersContext } from "src/pages/kubernetes/Users";
 
@@ -62,7 +62,7 @@ export const AddPlatformUserDialog: FC<AddPlatformUserDialogPropsType> = ({
   // const { refetchUsersData } = useContext(ServiceUsersContext);
 
   const [createPlatformUserCreate, { isLoading: createPlatformUserLoading }] =
-    usePostApiMyPlatformUserCreateMutation();
+    usePostApiMyKubesphereUserCreateMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     username,

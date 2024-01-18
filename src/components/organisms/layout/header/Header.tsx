@@ -41,7 +41,7 @@ const Header: FC<HeaderPropsType> = ({
   const navigate = useNavigate();
   const { id: kubernetesID } = useParams();
 
-  const goToCalculator = () => navigate("/cloud/calculator");
+  const goToCalculator = () => navigate("/portal/calculator");
 
   const closeMenuHandler = () => setAnchorEl(null);
   const openMenuHandler = ({
@@ -73,7 +73,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={() => {
           closeMenuHandler();
-          navigate("/cloud/supports");
+          navigate("/portal/supports");
         }}
       >
         <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />

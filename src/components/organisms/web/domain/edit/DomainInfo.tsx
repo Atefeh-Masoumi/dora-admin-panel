@@ -15,7 +15,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     data: domainData,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiMyDomainGetByIdQuery({
+  } = useGetApiMyDomainHostGetByIdQuery({
     id: Number(id)!,
   });
 

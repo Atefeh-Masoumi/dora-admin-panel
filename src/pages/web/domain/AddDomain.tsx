@@ -6,9 +6,9 @@ import { AddDomainContext } from "src/components/organisms/web/domain/add/contex
 import { SelectDomain } from "src/components/organisms/web/domain/add/steps/SelectDomain";
 import { DomainInfo } from "src/components/organisms/web/domain/add/steps/DomainInfo";
 import {
-  useGetApiMyCloudCustomerGetCustomerTypeQuery,
-  usePostApiMyDomainGetPriceMutation,
-  usePostApiMyDomainRegisterMutation,
+  useGetApiMyPortalCustomerGetCustomerTypeQuery,
+  usePostApiMyDomainHostGetPriceMutation,
+  usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
@@ -67,12 +67,13 @@ const AddDomain: FC = () => {
   }, [term, ext, typeId, domainName, authCode]);
 
   const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
-    usePostApiMyDomainGetPriceMutation();
+    usePostApiMyDomainHostGetPriceMutation();
 
-  const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } =
+    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
-    usePostApiMyDomainRegisterMutation();
+    usePostApiMyDomainHostRegisterMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";

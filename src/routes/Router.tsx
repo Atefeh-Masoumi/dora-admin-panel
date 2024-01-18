@@ -34,28 +34,28 @@ const Login = lazy(() => import("src/pages/account/Login"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
-const Sales = lazy(() => import("src/pages/cloud/sales/Index"));
-const Profile = lazy(() => import("src/pages/cloud/profile/Index"));
-const Setting = lazy(() => import("src/pages/cloud/setting/Index"));
-const Notification = lazy(() => import("src/pages/cloud/notification/Index"));
+const Sales = lazy(() => import("src/pages/portal/sales/Index"));
+const Profile = lazy(() => import("src/pages/portal/profile/Index"));
+const Setting = lazy(() => import("src/pages/portal/setting/Index"));
+const Notification = lazy(() => import("src/pages/portal/notification/Index"));
 const CustomerProducts = lazy(
-  () => import("src/pages/cloud/customerProduct/Index")
+  () => import("src/pages/portal/customerProduct/Index")
 );
-const Supports = lazy(() => import("src/pages/cloud/support/Index"));
-const Support = lazy(() => import("src/pages/cloud/support/Support"));
-const AddSupport = lazy(() => import("src/pages/cloud/support/AddSupport"));
+const Supports = lazy(() => import("src/pages/portal/support/Index"));
+const Support = lazy(() => import("src/pages/portal/support/Support"));
+const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
 
-const Referrals = lazy(() => import("src/pages/cloud/referral/Index"));
-const Referral = lazy(() => import("src/pages/cloud/referral/Referral"));
-const Calculator = lazy(() => import("src/pages/cloud/calculator"));
+const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
+const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
+const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
-const Wallet = lazy(() => import("src/pages/cloud/walletTransaction/Index"));
-const Payments = lazy(() => import("src/pages/cloud/payment/Index"));
-const Payment = lazy(() => import("src/pages/cloud/payment/PaymentCallBack"));
-const Bills = lazy(() => import("src/pages/cloud/customerBill/Index"));
-const Bill = lazy(() => import("src/pages/cloud/customerBill/Bill"));
-const Invoices = lazy(() => import("src/pages/cloud/invoice/Index"));
-const Invoice = lazy(() => import("src/pages/cloud/invoice/Invoice"));
+const Wallet = lazy(() => import("src/pages/portal/walletTransaction/Index"));
+const Payments = lazy(() => import("src/pages/portal/payment/Index"));
+const Payment = lazy(() => import("src/pages/portal/payment/PaymentCallBack"));
+const Bills = lazy(() => import("src/pages/portal/customerBill/Index"));
+const Bill = lazy(() => import("src/pages/portal/customerBill/Bill"));
+const Invoices = lazy(() => import("src/pages/portal/invoice/Index"));
+const Invoice = lazy(() => import("src/pages/portal/invoice/Invoice"));
 
 const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
 const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));
@@ -133,42 +133,42 @@ const Router: FC = () => {
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
           />
           <Route
-            path="/cloud/calculator"
+            path="/portal/calculator"
             element={mainTemplate(Calculator, {
               pageTitle: "ماشین حساب",
             })}
           />
           <Route
-            path="/cloud/profile"
+            path="/portal/profile"
             element={mainTemplate(Profile, {
               pageTitle: "حساب کاربری",
             })}
           />
           <Route
-            path="/cloud/setting"
+            path="/portal/setting"
             element={mainTemplate(Setting, {
               pageTitle: "تنظیمات",
             })}
           />
           <Route
-            path="/cloud/referral"
+            path="/portal/referral"
             element={mainTemplate(Referrals, {
               pageTitle: "کد معرف",
             })}
           />
           <Route
-            path="/cloud/referral/:id"
+            path="/portal/referral/:id"
             element={callbackTemplate(Referral)}
           />
           <Route path="/referral/:id" element={callbackTemplate(Referral)} />
           <Route
-            path="/cloud/customer-products"
+            path="/portal/customer-products"
             element={mainTemplate(CustomerProducts, {
               pageTitle: "سرویس های من",
             })}
           />
           <Route
-            path="/cloud/sales"
+            path="/portal/sales"
             element={mainTemplate(Sales, {
               link: {
                 text: "بازگشت به داشبورد",
@@ -178,7 +178,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cloud/notifications"
+            path="/portal/notifications"
             element={mainTemplate(Notification, {
               pageTitle: "مرکز اطلاع رسانی",
             })}
@@ -186,79 +186,79 @@ const Router: FC = () => {
 
           {/* ======================================= SUPPORT ======================================= */}
           <Route
-            path="/cloud/supports"
+            path="/portal/supports"
             element={mainTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
-            path="/cloud/support/:id"
+            path="/portal/support/:id"
             element={mainTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/cloud/supports",
+                url: "/portal/supports",
               },
               hideSidebar: true,
             })}
           />
           <Route
-            path="/cloud/support/add-ticket"
+            path="/portal/support/add-ticket"
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/cloud/supports",
+                url: "/portal/supports",
               },
               hideSidebar: true,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
-          <Route path="/portal" element={<Navigate to="/cloud/wallet" />} />
+          <Route path="/portal" element={<Navigate to="/portal/wallet" />} />
           <Route
-            path="/cloud/wallet"
+            path="/portal/wallet"
             element={mainTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
           <Route
-            path="/cloud/wallet/invoice"
+            path="/portal/wallet/invoice"
             element={mainTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
           />
           <Route
-            path="/cloud/wallet/invoice/:id"
+            path="/portal/wallet/invoice/:id"
             element={mainTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
-                url: "/cloud/wallet/invoice",
+                url: "/portal/wallet/invoice",
               },
               hideSidebar: false,
             })}
           />
           <Route
-            path="/cloud/wallet/payment"
+            path="/portal/wallet/payment"
             element={mainTemplate(Payments, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/cloud/wallet/payment/:id"
+            path="/portal/wallet/payment/:id"
             element={mainTemplate(Payment, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
-            path="/cloud/wallet/bill"
+            path="/portal/wallet/bill"
             element={mainTemplate(Bills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
-            path="/cloud/wallet/bill/:id"
+            path="/portal/wallet/bill/:id"
             element={mainTemplate(Bill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/cloud/wallet/bill",
+                url: "/portal/wallet/bill",
               },
               hideSidebar: false,
             })}

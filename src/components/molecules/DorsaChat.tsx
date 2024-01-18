@@ -6,7 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 
-const downloadFileUrl = baseUrl + "/api/my/cloud/issue-item/download/";
+const downloadFileUrl = baseUrl + "/api/my/portal/issue-item/download/";
 
 export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);

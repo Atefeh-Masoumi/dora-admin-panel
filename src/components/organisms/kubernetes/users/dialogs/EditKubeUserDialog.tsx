@@ -13,7 +13,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiMyPlatformUserChangePasswordMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubesphereUserChangePasswordMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 // import { ServiceUsersContext } from "src/pages/kubernetes/Users";
 
@@ -58,7 +58,7 @@ export const EditPlatformUserDialog: FC<EditPlatformUserDialogPropsType> = ({
   // const { refetchUsersData } = useContext(ServiceUsersContext);
 
   const [editPlatformUser, { isLoading: editPlatformUserLoading }] =
-    usePostApiMyPlatformUserChangePasswordMutation();
+    usePostApiMyKubesphereUserChangePasswordMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = ({
     password,

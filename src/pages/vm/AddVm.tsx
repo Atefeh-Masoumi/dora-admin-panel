@@ -9,7 +9,7 @@ import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import {
-  useGetApiMyCloudCustomerGetCustomerTypeQuery,
+  useGetApiMyPortalCustomerGetCustomerTypeQuery,
   usePostApiMyVmHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
@@ -31,7 +31,8 @@ const AddVm: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType } = useGetApiMyCloudCustomerGetCustomerTypeQuery();
+  const { data: customerType } =
+    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
     usePostApiMyVmHostCreateMutation();

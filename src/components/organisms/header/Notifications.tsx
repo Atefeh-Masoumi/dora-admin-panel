@@ -15,13 +15,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useGetApiMyCloudNotificationShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPortalNotificationShortListQuery } from "src/app/services/api.generated";
 import { EmptyNotificationSvg } from "src/components/atoms/svg/EmptyNotifSvg";
 import NotificationSvg from "src/components/atoms/svg/NotificationSvg";
 
 export const Notifications: FC = () => {
   const { data: notifications, isLoading } =
-    useGetApiMyCloudNotificationShortListQuery();
+    useGetApiMyPortalNotificationShortListQuery();
 
   const [open, setOpen] = useState(false);
 
@@ -127,7 +127,7 @@ export const Notifications: FC = () => {
                     <Button
                       fullWidth
                       sx={{ color: "white" }}
-                      href="/cloud/notifications"
+                      href="/portal/notifications"
                     >
                       نمایش تمام پیام ها
                     </Button>
