@@ -7,8 +7,8 @@ type KuberServiceReceiptPropsType = {
   serverPrice: number;
   serverName: string;
   workersCount: number;
-  paymentType: CUSTOMER_PRODUCT_TYPE_ENUM | null;
-  setPaymentType: (type: CUSTOMER_PRODUCT_TYPE_ENUM | null) => any;
+  paymentType?: CUSTOMER_PRODUCT_TYPE_ENUM | null;
+  setPaymentType?: (type: CUSTOMER_PRODUCT_TYPE_ENUM | null) => any;
   submitHandler: () => any;
   submitLoading: boolean;
 };
@@ -202,39 +202,44 @@ export const KuberServiceReceipt: FC<KuberServiceReceiptPropsType> = ({
             </Typography>
           </Grid>
         </Grid>
-        <Stack
-          direction="row"
-          columnGap={3}
-          alignItems="center"
-          whiteSpace="nowrap"
-        >
-          <Button
-            size="large"
-            variant={
-              paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                ? "contained"
-                : "outlined"
-            }
-            onClick={() => setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID)}
-            fullWidth
+        {paymentType !== undefined && !setPaymentType && (
+          <Stack
+            direction="row"
+            columnGap={3}
+            alignItems="center"
+            whiteSpace="nowrap"
           >
-            پیش پرداخت
-          </Button>
-          <Button
-            size="large"
-            onClick={() =>
-              setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO)
-            }
-            variant={
-              paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-                ? "contained"
-                : "outlined"
-            }
-            fullWidth
-          >
-            براساس مصرف
-          </Button>
-        </Stack>
+            <Button
+              size="large"
+              variant={
+                paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
+                  ? "contained"
+                  : "outlined"
+              }
+              onClick={() =>
+                setPaymentType!(CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID)
+              }
+              fullWidth
+            >
+              پیش پرداخت
+            </Button>
+            <Button
+              size="large"
+              onClick={() =>
+                setPaymentType!(CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO)
+              }
+              variant={
+                paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
+                  ? "contained"
+                  : "outlined"
+              }
+              fullWidth
+            >
+              براساس مصرف
+            </Button>
+          </Stack>
+        )}
+
         <LoadingButton
           loading={submitLoading}
           fullWidth

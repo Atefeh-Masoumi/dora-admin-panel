@@ -50,7 +50,10 @@ export const api = generatedApi
       getApiMyKubernetesHostGetById: {
         providesTags: () => ["Kubernetes"],
       },
-      putApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeId: {
+      putApiMyKubernetesNodeDeleteByKubernetesHostNodeId: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      postApiMyKubernetesNodeCreate: {
         invalidatesTags: () => ["Kubernetes"],
       },
       postApiMyKubernetesHostCreate: {

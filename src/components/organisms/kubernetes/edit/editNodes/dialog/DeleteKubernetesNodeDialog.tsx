@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/kubernetes/Index";
@@ -18,7 +18,7 @@ export const DeleteKubernetesNodeDialog: FC<
 > = ({ openDialog, handleClose, nodeId }) => {
   const onClose = () => handleClose();
   const [deleteKubernetesNode, { isLoading }] =
-    usePutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdMutation();
+    usePutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdMutation();
 
   const { id: hostId } = useParams();
 
@@ -27,7 +27,7 @@ export const DeleteKubernetesNodeDialog: FC<
   const submit = () => {
     if (!hostId || !nodeId) return;
     deleteKubernetesNode({
-      kubernetesHostId: Number(hostId),
+      // kubernetesHostId: Number(hostId),
       kubernetesHostNodeId: nodeId,
     }).then(() => {
       toast.success("نود سرویس کوبرنتیز شما با موفقیت حذف شد");

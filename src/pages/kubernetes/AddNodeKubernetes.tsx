@@ -1,35 +1,40 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/steps/KuberServiceReceipt";
 import { NodeConfig } from "src/components/organisms/kubernetes/edit/editNodes/addNode/NodeConfig";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { useAppSelector } from "src/app/hooks";
 import { usePostApiMyKubernetesNodeCreateMutation } from "src/app/services/api.generated";
+import { useParams } from "react-router";
 
 type AddNodeKubernetesPropsType = {};
 
 const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
+  const { id: hostId } = useParams();
 
-  const productBundle = useAppSelector(
-    (store) => store.createNode.productBundle
+  const { productBundle, nodeType, vmPassword } = useAppSelector(
+    (store) => store.createNode
   );
 
   const [createNode, { isLoading: createNodeLoading }] =
     usePostApiMyKubernetesNodeCreateMutation();
 
   const onSubmitClick = () => {
+    console.log({ nodeType });
+    if (!nodeType || !vmPassword) return;
+
+    const isMaster = nodeType === 1;
+
     createNode({
       createKubernetesNodeModel: {
-        // kubernetesNodeTypeId
-        // isPredefined
-        // productBundleId
-        // nodeCount
-        // cpu
-        // memory
-        // disk
-      } as any,
+        kubernetesHostId: Number(hostId),
+        kubernetesNodeTypeId: nodeType,
+        isPredefined: !isMaster,
+        productBundleId: !isMaster ? productBundle?.id : null,
+        vmPassword: vmPassword,
+        cpu: null,
+        memory: null,
+        disk: null,
+      },
     });
   };
 
@@ -43,8 +48,6 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
           serverPrice={productBundle?.price || 0}
           serverName={productBundle?.name || ""}
           workersCount={1}
-          paymentType={paymentType}
-          setPaymentType={setPaymentType}
           submitHandler={onSubmitClick}
           submitLoading={createNodeLoading}
         />

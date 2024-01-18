@@ -5,11 +5,13 @@ import { VmSpecListResponse } from "../services/api.generated";
 type createNodeSliceType = {
   nodeType: number | null;
   productBundle: VmSpecListResponse | null;
+  vmPassword: string;
 };
 
 const initialState: createNodeSliceType = {
   nodeType: null,
   productBundle: null,
+  vmPassword: "",
 };
 
 const createNodeSlice = createSlice({
@@ -28,6 +30,12 @@ const createNodeSlice = createSlice({
     ) => {
       state.productBundle = payload;
     },
+    setVmPassword: (
+      state,
+      { payload }: { payload: createNodeSliceType["vmPassword"] }
+    ) => {
+      state.vmPassword = payload;
+    },
   },
   extraReducers: ({ addCase }) => {
     addCase(logoutAction, () => {
@@ -39,6 +47,7 @@ const createNodeSlice = createSlice({
 export const {
   setNodeType: setNodeTypeAction,
   setProductBundleId: setProductBundleIdAction,
+  setVmPassword: setVmPasswordAction,
 } = createNodeSlice.actions;
 
 export default createNodeSlice.reducer;

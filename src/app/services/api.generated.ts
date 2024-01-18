@@ -900,16 +900,15 @@ export const api = createApi({
         body: queryArg.createKubernetesNodeModel,
       }),
     }),
-    putApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeId:
-      build.mutation<
-        PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiResponse,
-        PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/my/kubernetes/node/delete/${queryArg.kubernetesHostId}/${queryArg.kubernetesHostNodeId}`,
-          method: "PUT",
-        }),
+    putApiMyKubernetesNodeDeleteByKubernetesHostNodeId: build.mutation<
+      PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiResponse,
+      PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/node/delete/${queryArg.kubernetesHostNodeId}`,
+        method: "PUT",
       }),
+    }),
     getApiMyKubernetesVersionList: build.query<
       GetApiMyKubernetesVersionListApiResponse,
       GetApiMyKubernetesVersionListApiArg
@@ -2284,13 +2283,11 @@ export type PostApiMyKubernetesNodeCreateApiResponse = unknown;
 export type PostApiMyKubernetesNodeCreateApiArg = {
   createKubernetesNodeModel: CreateKubernetesNodeModel;
 };
-export type PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiResponse =
+export type PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiResponse =
   unknown;
-export type PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiArg =
-  {
-    kubernetesHostId: number;
-    kubernetesHostNodeId: number;
-  };
+export type PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiArg = {
+  kubernetesHostNodeId: number;
+};
 export type GetApiMyKubernetesVersionListApiResponse =
   /** status 200 Success */ KubernetesVersionListResponse[];
 export type GetApiMyKubernetesVersionListApiArg = void;
@@ -4058,7 +4055,7 @@ export const {
   useGetApiMyKubernetesImageListByDatacenterIdQuery,
   useGetApiMyKubernetesNodeListByKubernetesHostIdQuery,
   usePostApiMyKubernetesNodeCreateMutation,
-  usePutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdMutation,
+  usePutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdMutation,
   useGetApiMyKubernetesVersionListQuery,
   useGetApiMyKubesphereUserListQuery,
   useGetApiMyKubesphereUserShortListQuery,
@@ -4167,4 +4164,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

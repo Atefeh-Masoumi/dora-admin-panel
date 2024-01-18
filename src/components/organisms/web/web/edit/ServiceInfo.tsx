@@ -3,7 +3,7 @@ import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
-import { useGetApiMyWebGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyWebHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ServiceInfoPropsType = {};
