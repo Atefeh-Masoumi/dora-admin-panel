@@ -3,6 +3,7 @@ import auth from "./slice/authSlice";
 import cdn from "./slice/cdnSlice";
 import vmProject from "./slice/vmProjectSlice";
 import forgetPassword from "./slice/forgetPasswordSlice";
+import createNode from "./slice/createNodeSlice";
 import { api } from "./services/api";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     cdn,
     vmProject,
     forgetPassword,
+    createNode,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),

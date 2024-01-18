@@ -1,12 +1,22 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/steps/SelectKuberDataCenter";
 import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
 import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
 import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
 import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/steps/KuberServiceReceipt";
+import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
 
 const AddKubernetes: FC = () => {
+  const {
+    serverConfig,
+    workersCount,
+    paymentType,
+    setPaymentType,
+    submitHandler,
+    submitLoading,
+  } = useContext(AddKubernetesContext);
+
   return (
     <>
       <Typography
@@ -57,7 +67,15 @@ const AddKubernetes: FC = () => {
             item
             style={{ position: "relative", textAlign: "center" }}
           >
-            <KuberServiceReceipt />
+            <KuberServiceReceipt
+              serverPrice={serverConfig?.price || 0}
+              serverName={serverConfig?.name || ""}
+              workersCount={workersCount}
+              paymentType={paymentType}
+              setPaymentType={setPaymentType}
+              submitHandler={submitHandler}
+              submitLoading={submitLoading}
+            />
           </Grid>
         </Grid>
       </Box>

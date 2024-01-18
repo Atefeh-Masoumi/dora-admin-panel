@@ -1,43 +1,11 @@
 import { FC, useContext, useEffect, useMemo } from "react";
-import {
-  Chip,
-  Divider,
-  Paper,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-
-type boxRowType = {
-  title: string;
-  value?: string | number | undefined | null;
-  component?: any;
-  isLoading: boolean;
-};
-
-const BoxRow: FC<boxRowType> = ({ title, value, component, isLoading }) => (
-  <Stack direction="row" alignItems="center" justifyContent="space-between">
-    {isLoading ? (
-      <Skeleton width={150} height={24} />
-    ) : component ? (
-      component
-    ) : (
-      <Typography
-        sx={{ color: ({ palette }) => palette.grey[700], direction: "rtl" }}
-      >
-        {value || ""}
-      </Typography>
-    )}
-    <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
-      :{title}
-    </Typography>
-  </Stack>
-);
+import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ServerInfoBoxesPropsType = {};
 

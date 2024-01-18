@@ -5,7 +5,6 @@ export const kubernetesTableStruct: columnType[] = [
   { id: "datacenter", label: "مرکز داده" },
   { id: "name", label: "نام ماشین" },
   { id: "statusId", label: "وضعیت" },
-  { id: "expireDate", label: "تاریخ انقضا" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "عملیات", disableSort: true },
 ];

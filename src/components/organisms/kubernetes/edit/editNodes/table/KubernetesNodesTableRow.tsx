@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
 import { kubernetesNodesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Chip, IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { useNavigate } from "react-router";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { DeleteKubernetesNodeDialog } from "../dialog/DeleteKubernetesNodeDialog";
+import { toast } from "react-toastify";
 
 export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -64,6 +65,18 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "ip" && text ? (
+                    <Typography
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        navigator.clipboard.writeText(row[column.id]);
+                        toast.success("ip نود مورد نظر کپی شد");
+                      }}
+                    >
+                      {text}
+                    </Typography>
                   ) : (
                     text || "__"
                   )}
@@ -74,7 +87,7 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
       <DeleteKubernetesNodeDialog
-        id={row["id"]}
+        nodeId={row["hostId"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
       />

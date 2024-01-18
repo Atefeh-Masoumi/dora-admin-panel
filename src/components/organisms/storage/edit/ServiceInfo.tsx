@@ -1,42 +1,10 @@
-import { FC, useEffect, useMemo } from "react";
-import {
-  Chip,
-  Divider,
-  Paper,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { FC, useMemo } from "react";
+import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import { useGetApiMyStorageHostGetByIdQuery } from "src/app/services/api.generated";
-
-type boxRowType = {
-  title: string;
-  value?: string | number | undefined | null;
-  component?: any;
-  isLoading: boolean;
-};
-
-const BoxRow: FC<boxRowType> = ({ title, value, component, isLoading }) => (
-  <Stack direction="row" alignItems="center" justifyContent="space-between">
-    {isLoading ? (
-      <Skeleton width={150} height={24} />
-    ) : component ? (
-      component
-    ) : (
-      <Typography
-        sx={{ color: ({ palette }) => palette.grey[700], direction: "rtl" }}
-      >
-        {value || ""}
-      </Typography>
-    )}
-    <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
-      :{title}
-    </Typography>
-  </Stack>
-);
+import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ServiceInfoPropsType = {};
 
@@ -47,7 +15,6 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
-    refetch,
   } = useGetApiMyStorageHostGetByIdQuery({
     id: Number(id)!,
   });
