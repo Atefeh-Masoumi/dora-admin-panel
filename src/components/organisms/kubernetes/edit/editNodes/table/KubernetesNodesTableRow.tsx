@@ -74,7 +74,7 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
       <DeleteKubernetesNodeDialog
-        id={row["id"]}
+        nodeId={row["id"]}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
       />

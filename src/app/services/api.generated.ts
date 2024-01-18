@@ -910,15 +910,16 @@ export const api = createApi({
         body: queryArg.createKubernetesNodeModel,
       }),
     }),
-    putApiMyKubernetesNodeDeleteById: build.mutation<
-      PutApiMyKubernetesNodeDeleteByIdApiResponse,
-      PutApiMyKubernetesNodeDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubernetes/node/delete/${queryArg.id}`,
-        method: "PUT",
+    putApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeId:
+      build.mutation<
+        PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiResponse,
+        PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/my/kubernetes/node/delete/${queryArg.kubernetesHostId}/${queryArg.kubernetesHostNodeId}`,
+          method: "PUT",
+        }),
       }),
-    }),
     getApiMyKubernetesVersionList: build.query<
       GetApiMyKubernetesVersionListApiResponse,
       GetApiMyKubernetesVersionListApiArg
@@ -2299,10 +2300,13 @@ export type PostApiMyKubernetesNodeCreateApiResponse = unknown;
 export type PostApiMyKubernetesNodeCreateApiArg = {
   createKubernetesNodeModel: CreateKubernetesNodeModel;
 };
-export type PutApiMyKubernetesNodeDeleteByIdApiResponse = unknown;
-export type PutApiMyKubernetesNodeDeleteByIdApiArg = {
-  id: number;
-};
+export type PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiResponse =
+  unknown;
+export type PutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdApiArg =
+  {
+    kubernetesHostId: number;
+    kubernetesHostNodeId: number;
+  };
 export type GetApiMyKubernetesVersionListApiResponse =
   /** status 200 Success */ KubernetesVersionListResponse[];
 export type GetApiMyKubernetesVersionListApiArg = void;
@@ -3442,10 +3446,11 @@ export type KubernetesNodeListResponse = {
   ip?: string | null;
 };
 export type CreateKubernetesNodeModel = {
-  kubernetesNodeTypeId?: number;
+  kubernetesHostId: number;
+  kubernetesNodeTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
-  nodeCount?: number;
+  vmPassword: string;
   cpu?: number | null;
   memory?: number | null;
   disk?: number | null;
@@ -4082,7 +4087,7 @@ export const {
   useGetApiMyKubernetesImageListByDatacenterIdQuery,
   useGetApiMyKubernetesNodeListByKubernetesHostIdQuery,
   usePostApiMyKubernetesNodeCreateMutation,
-  usePutApiMyKubernetesNodeDeleteByIdMutation,
+  usePutApiMyKubernetesNodeDeleteByKubernetesHostIdAndKubernetesHostNodeIdMutation,
   useGetApiMyKubernetesVersionListQuery,
   useGetApiMyPlatformUserListQuery,
   useGetApiMyPlatformUserShortListQuery,

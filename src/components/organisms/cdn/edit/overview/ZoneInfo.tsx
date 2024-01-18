@@ -3,7 +3,6 @@ import {
   Chip,
   Divider,
   Button,
-  Skeleton,
   Stack,
   Typography,
   IconButton,
@@ -14,32 +13,7 @@ import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { useGetApiMyCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
-
-type boxRowType = {
-  title: string;
-  value?: string | number | undefined | null;
-  component?: any;
-  isLoading: boolean;
-};
-
-const BoxRow: FC<boxRowType> = ({ title, value, component, isLoading }) => (
-  <Stack direction="row" alignItems="center" justifyContent="space-between">
-    {isLoading ? (
-      <Skeleton width={150} height={24} />
-    ) : component ? (
-      component
-    ) : (
-      <Typography
-        sx={{ color: ({ palette }) => palette.grey[700], direction: "rtl" }}
-      >
-        {value || ""}
-      </Typography>
-    )}
-    <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
-      :{title}
-    </Typography>
-  </Stack>
-);
+import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ZoneInfoPropsType = {};
 

@@ -6,11 +6,11 @@ import {
   Paper,
   Chip,
   Divider,
-  Skeleton,
 } from "@mui/material";
 import { useGetApiMyKubernetesHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
+import { BoxRow } from "src/components/molecules/BoxRow";
 
 type KubernetesOverviewPropsType = {};
 
@@ -49,53 +49,83 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
   ];
 
   return (
-    <Container maxWidth="sm" sx={{ p: 0 }}>
+    <Container maxWidth="md" sx={{ p: 0 }}>
       <Paper sx={{ p: { xs: 2, sm: 4, md: 6 } }}>
-        <Stack rowGap={2} divider={<Divider flexItem />}>
+        <Stack rowGap={3}>
           <Typography align="center" variant="title3" fontWeight="bold">
             نگاه کلی
           </Typography>
-          {infoList.map(({ id, label, value }) => (
-            <Stack
-              direction="row"
-              key={id}
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography
-                noWrap
-                textOverflow="ellipsis"
-                maxWidth="49%"
-                fontWeight="bold"
-              >
-                {label}
-              </Typography>
-              {isLoading ? (
-                <Skeleton width={150} />
-              ) : id === "statusId" ? (
-                <Chip
-                  clickable={false}
-                  label={kubernetesStatusIdentifier(value as number).label}
-                  color={
-                    kubernetesStatusIdentifier(value as number).chipColor as any
-                  }
-                  sx={{
-                    bgcolor: kubernetesStatusIdentifier(value as number)
-                      .bgcolor,
-                    color: kubernetesStatusIdentifier(value as number)
-                      .textColor,
-                    py: 2.2,
-                    borderRadius: 1,
-                    fontSize: "14px",
-                  }}
-                />
-              ) : (
-                <Typography noWrap textOverflow="ellipsis" maxWidth="49%">
-                  {value}
-                </Typography>
-              )}
-            </Stack>
-          ))}
+          <Divider flexItem />
+          {infoList.map(({ id, label, value }) => {
+            return (
+              <BoxRow
+                key={id}
+                title={label}
+                component={
+                  id === "statusId" ? (
+                    <Chip
+                      clickable={false}
+                      label={kubernetesStatusIdentifier(value as number).label}
+                      color={
+                        kubernetesStatusIdentifier(value as number)
+                          .chipColor as any
+                      }
+                      sx={{
+                        bgcolor: kubernetesStatusIdentifier(value as number)
+                          .bgcolor,
+                        color: kubernetesStatusIdentifier(value as number)
+                          .textColor,
+                        py: 2.2,
+                        borderRadius: 1,
+                        fontSize: "14px",
+                      }}
+                    />
+                  ) : undefined
+                }
+                isLoading={isLoading}
+                value={value}
+              />
+            );
+            // <Stack
+            //   direction="row"
+            //   key={id}
+            //   alignItems="center"
+            //   justifyContent="space-between"
+            // >
+            //   <Typography
+            //     noWrap
+            //     textOverflow="ellipsis"
+            //     maxWidth="49%"
+            //     fontWeight="bold"
+            //   >
+            //     {label}
+            //   </Typography>
+            //   {isLoading ? (
+            //     <Skeleton width={150} />
+            //   ) : id === "statusId" ? (
+            //     <Chip
+            //       clickable={false}
+            //       label={kubernetesStatusIdentifier(value as number).label}
+            //       color={
+            //         kubernetesStatusIdentifier(value as number).chipColor as any
+            //       }
+            //       sx={{
+            //         bgcolor: kubernetesStatusIdentifier(value as number)
+            //           .bgcolor,
+            //         color: kubernetesStatusIdentifier(value as number)
+            //           .textColor,
+            //         py: 2.2,
+            //         borderRadius: 1,
+            //         fontSize: "14px",
+            //       }}
+            //     />
+            //   ) : (
+            //     <Typography noWrap textOverflow="ellipsis" maxWidth="49%">
+            //       {value}
+            //     </Typography>
+            //   )}
+            // </Stack>
+          })}
         </Stack>
       </Paper>
     </Container>
