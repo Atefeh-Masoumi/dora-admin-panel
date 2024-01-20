@@ -35,9 +35,6 @@ export const NodeConfig: FC<NodeConfigPropsType> = () => {
   const vmPassword = useAppSelector((store) => store.createNode.vmPassword);
 
   const nodeTypeButtonOnClick = (nodeTypeId: number) => {
-    if (nodeTypeId === 1) {
-      dispatch(setProductBundleIdAction(null));
-    }
     dispatch(setNodeTypeAction(nodeTypeId));
   };
 
@@ -80,21 +77,7 @@ export const NodeConfig: FC<NodeConfigPropsType> = () => {
           })}
         </Stack>
         <Divider flexItem />
-        <Box sx={{ overflow: "overlay", width: "100%", position: "relative" }}>
-          <Box
-            sx={{
-              display: nodeType === 1 ? "inline-block" : "none",
-              cursor: "not-allowed",
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              backdropFilter: "blur(3px)",
-              zIndex: 10,
-            }}
-          />
-          {table}
-        </Box>
+        <Box sx={{ overflow: "overlay", width: "100%" }}>{table}</Box>
         <Divider flexItem />
         <Stack spacing={2} justifyContent="center" alignItems="center">
           <Stack
@@ -140,7 +123,7 @@ export const NodeConfig: FC<NodeConfigPropsType> = () => {
             value={vmPassword}
             onChange={inputOnChange}
             sx={{ minWidth: 300 }}
-            label="رمز عبور سرویس کوبرنتیز (Password)"
+            label="رمز عبور ماشین مجازی نود کلاستر (Password)"
             inputProps={{ dir: "ltr" }}
           />
           <Stack justifyContent="center" spacing={1}>

@@ -52,7 +52,7 @@ export const ServerKuberInfo: FC<ServerKuberInfoPropsType> = () => {
         value={serverName}
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
-        label="نام سرویس کوبرنتیز (Server Name)"
+        label="نام کلاستر کوبرنتیز (Cluster Name)"
         inputProps={{ dir: "ltr" }}
         type="text"
       />
@@ -73,7 +73,7 @@ export const ServerKuberInfo: FC<ServerKuberInfoPropsType> = () => {
         value={serverPassword}
         onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
-        label="رمز عبور سرویس کوبرنتیز (Password)"
+        label="رمز عبور ماشین‌های مجازی کوبرنتیز (Password)"
         inputProps={{ dir: "ltr" }}
       />
       <Stack justifyContent="center" spacing={1}>

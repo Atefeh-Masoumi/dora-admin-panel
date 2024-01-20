@@ -68,7 +68,7 @@ export const baseQuery: BaseQueryFn<
       any
     >;
 
-    console.log({ e });
+    // console.log({ e });
 
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);

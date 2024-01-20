@@ -365,7 +365,7 @@ const Router: FC = () => {
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm",
+                  url: "/vm/list",
                 },
                 hideSidebar: false,
               },

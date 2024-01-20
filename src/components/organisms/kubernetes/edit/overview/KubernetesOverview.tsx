@@ -11,6 +11,7 @@ import { useGetApiMyKubernetesHostGetByIdQuery } from "src/app/services/api.gene
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
+import { BORDER_RADIUS_4 } from "src/configs/theme";
 
 type KubernetesOverviewPropsType = {};
 
@@ -50,10 +51,13 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
 
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
-      <Paper sx={{ p: { xs: 2, sm: 4, md: 6 } }}>
-        <Stack rowGap={3}>
-          <Typography align="center" variant="title3" fontWeight="bold">
-            نگاه کلی
+      <Paper
+        sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+        elevation={0}
+      >
+        <Stack rowGap={2}>
+          <Typography align="center" fontWeight={700} fontSize={18}>
+            اطلاعات سرویس کوبرنتیز
           </Typography>
           <Divider flexItem />
           {infoList.map(({ id, label, value }) => {
@@ -86,45 +90,6 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
                 value={value}
               />
             );
-            // <Stack
-            //   direction="row"
-            //   key={id}
-            //   alignItems="center"
-            //   justifyContent="space-between"
-            // >
-            //   <Typography
-            //     noWrap
-            //     textOverflow="ellipsis"
-            //     maxWidth="49%"
-            //     fontWeight="bold"
-            //   >
-            //     {label}
-            //   </Typography>
-            //   {isLoading ? (
-            //     <Skeleton width={150} />
-            //   ) : id === "statusId" ? (
-            //     <Chip
-            //       clickable={false}
-            //       label={kubernetesStatusIdentifier(value as number).label}
-            //       color={
-            //         kubernetesStatusIdentifier(value as number).chipColor as any
-            //       }
-            //       sx={{
-            //         bgcolor: kubernetesStatusIdentifier(value as number)
-            //           .bgcolor,
-            //         color: kubernetesStatusIdentifier(value as number)
-            //           .textColor,
-            //         py: 2.2,
-            //         borderRadius: 1,
-            //         fontSize: "14px",
-            //       }}
-            //     />
-            //   ) : (
-            //     <Typography noWrap textOverflow="ellipsis" maxWidth="49%">
-            //       {value}
-            //     </Typography>
-            //   )}
-            // </Stack>
           })}
         </Stack>
       </Paper>

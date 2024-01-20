@@ -8,9 +8,6 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 export const KuberNodeConfigTableRow: FC<{ row: any }> = ({ row }) => {
   const dispatch = useAppDispatch();
 
-   const nodeType = useAppSelector((store) => store.createNode.nodeType);
-   const isMaster = nodeType === 1;
-
   const productBundleId = useAppSelector(
     (store) => store.createNode?.productBundle?.id || 0
   );
@@ -21,7 +18,7 @@ export const KuberNodeConfigTableRow: FC<{ row: any }> = ({ row }) => {
   );
 
   const onCheckboxClick = () => {
-    !isMaster && dispatch(setProductBundleIdAction(row));
+    dispatch(setProductBundleIdAction(row));
   };
 
   return (
