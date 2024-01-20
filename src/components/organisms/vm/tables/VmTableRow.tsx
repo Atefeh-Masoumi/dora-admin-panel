@@ -123,8 +123,9 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                     />
                   ) : column.id === "ipv4" ? (
                     <Button
-                      sx={{ cursor: "pointer", py: 0, px: 0.5 }}
+                      sx={{ py: 0, px: 0.5 }}
                       onClick={() => {
+                        if (!text) return;
                         navigator.clipboard.writeText(text);
                         toast.success("IP کپی شد", { position: "bottom-left" });
                       }}

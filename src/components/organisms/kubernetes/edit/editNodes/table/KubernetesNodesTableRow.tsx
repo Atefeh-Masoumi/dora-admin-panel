@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { kubernetesNodesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Chip, IconButton, Stack, Typography } from "@mui/material";
+import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { useNavigate } from "react-router";
 import { Setting } from "src/components/atoms/svg/SettingSvg";
@@ -66,17 +66,19 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
                       }}
                     />
                   ) : column.id === "ip" && text ? (
-                    <Typography
-                      sx={{
-                        cursor: "pointer",
-                      }}
+                    <Button
+                      variant="text"
+                      sx={{ py: 0, px: 0.5 }}
                       onClick={() => {
+                        if (!row[column.id]) return;
                         navigator.clipboard.writeText(row[column.id]);
-                        toast.success("ip نود مورد نظر کپی شد");
+                        toast.success("ip نود مورد نظر کپی شد", {
+                          position: "bottom-left",
+                        });
                       }}
                     >
                       {text}
-                    </Typography>
+                    </Button>
                   ) : (
                     text || "__"
                   )}
