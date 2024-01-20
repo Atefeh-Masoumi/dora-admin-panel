@@ -1,8 +1,7 @@
-import { useContext, FC, useState, useMemo } from "react";
+import { useContext, FC, useState } from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import {
-  GetApiMyVmImageListByDatacenterIdApiResponse,
   ImageListResponse,
   useGetApiMyVmImageListByDatacenterIdQuery,
 } from "src/app/services/api.generated";
@@ -14,23 +13,25 @@ import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
 type SelectOSPropsType = {};
 
 export const SelectOS: FC<SelectOSPropsType> = () => {
-  const { dataCenter, osVersion, setOsVersion, step, setStep } =
-    useContext(AddServerContext);
+  const { dataCenter, osVersion, setOsVersion } = useContext(AddServerContext);
 
   const { data: osVersionsList, isLoading } =
     useGetApiMyVmImageListByDatacenterIdQuery({
       datacenterId: dataCenter?.id || 0,
     });
 
-  const [osType, setOsType] = useState<number | null>(osVersion?.osId || null);
+  const [osType, setOsType] = useState(osVersion?.osId || null);
 
-  const osTypeClickHandler = (id: number | undefined) => id && setOsType(id);
+  const osTypeClickHandler = (id?: number) => {
+    id && setOsType(id);
+  };
 
-  const osVersionClickHandler = (selectedOs: ImageListResponse) =>
+  const osVersionClickHandler = (selectedOs: ImageListResponse) => {
     setOsVersion(selectedOs);
+  };
 
-  const osArray = useMemo(() => {
-    let result: GetApiMyVmImageListByDatacenterIdApiResponse = [];
+  const osArray = () => {
+    let result: ImageListResponse[] = [];
     if (osVersionsList) {
       osVersionsList.forEach((item) => {
         const idx = result.findIndex(({ osId }) => osId === item.osId);
@@ -40,7 +41,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
       });
     }
     return result;
-  }, [osVersionsList]);
+  };
 
   return (
     <Stack
@@ -76,8 +77,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
               <Skeleton width="30%" />
             </Stack>
           ))}
-        {osArray.map((osItem) => {
-          const { id, os, osId } = osItem;
+        {osArray().map(({ id, os, osId }) => {
           const isSelected = osType === osId;
           return (
             <Grid2
