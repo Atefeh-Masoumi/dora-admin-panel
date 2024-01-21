@@ -51,11 +51,10 @@ export const CodeField: FC<CodeFieldPropsType> = ({
   return (
     <Stack
       direction="row"
-      justifyContent="center"
+      justifyContent="space-between"
       width="100%"
-      spacing={2}
+      alignItems="center"
       sx={{ direction: "rtl" }}
-      py={1}
     >
       {characters.map((character, index) => (
         <DorsaTextField
@@ -72,8 +71,6 @@ export const CodeField: FC<CodeFieldPropsType> = ({
             style: { textAlign: "center" },
           }}
           sx={{
-            ...(index === 0 && { ml: 2 }),
-            ...(index === characters.length - 1 && { ml: 0 + "!important" }),
             "& input": { py: 1.5 },
             "& input[type=number]": { "-moz-appearance": "textfield" },
             "& input[type=number]::-webkit-outer-spin-button": {
