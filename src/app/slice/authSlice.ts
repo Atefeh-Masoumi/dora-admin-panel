@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   api,
+  LoginModel,
   PostApiMyAccountLoginApiResponse,
 } from "../services/api.generated";
 
-type authSliceType = PostApiMyAccountLoginApiResponse | null;
+type loginWithPassType = PostApiMyAccountLoginApiResponse & LoginModel;
+
+type authSliceType = loginWithPassType | null;
 
 const initialState: () => authSliceType = () => {
   const localStorageUserInfo = localStorage.getItem("loginInfo");
@@ -14,9 +17,11 @@ const initialState: () => authSliceType = () => {
     if (!localStorageUserInfo) {
       return result;
     }
-    result = JSON.parse(
-      localStorageUserInfo
-    ) as PostApiMyAccountLoginApiResponse;
+    result = {
+      ...JSON.parse(localStorageUserInfo),
+      email: "",
+      password: "",
+    };
   } catch {
     localStorage.removeItem("loginInfo");
   }
@@ -32,46 +37,64 @@ const authSlice = createSlice({
       localStorage.removeItem("loginInfo");
       return null;
     },
-    setTwoFactor: (state, { payload }: { payload: boolean }) => {
-      localStorage.setItem(
-        "loginInfo",
-        JSON.stringify({ ...state, twoFactor: payload })
-      );
-      state!.twoFactor = payload;
-    },
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
       api.endpoints.postApiMyAccountLogin.matchFulfilled,
+      (_, actionPayload) => {
+        const accessToken =
+          actionPayload.payload.accessToken === "0"
+            ? ""
+            : actionPayload.payload.accessToken;
+
+        const enhancedPayload = {
+          ...{
+            ...actionPayload.payload,
+            accessToken,
+          },
+          ...actionPayload.meta.arg.originalArgs.loginModel,
+        };
+
+        localStorage.setItem("loginInfo", JSON.stringify(enhancedPayload));
+
+        return {
+          ...enhancedPayload,
+          ...actionPayload.meta.arg.originalArgs.loginModel,
+        };
+      }
+    );
+    addMatcher(
+      api.endpoints.postApiMyAccountTwoFactorLogin.matchFulfilled,
       (_, { payload }: { payload: PostApiMyAccountLoginApiResponse }) => {
         localStorage.setItem("loginInfo", JSON.stringify(payload));
-        return payload;
+        return { ...payload, email: "", password: "" };
       }
     );
     addMatcher(
       api.endpoints.putApiMyPortalProfileEnableTwoFactor.matchFulfilled,
-      (state) => {
+      (state, { payload }: { payload: any }) => {
         localStorage.setItem(
           "loginInfo",
           JSON.stringify({ ...state, twoFactor: true })
         );
         state!.twoFactor = true;
+        return payload;
       }
     );
     addMatcher(
       api.endpoints.putApiMyPortalProfileDisableTwoFactor.matchFulfilled,
-      (state) => {
+      (state, { payload }: { payload: any }) => {
         localStorage.setItem(
           "loginInfo",
           JSON.stringify({ ...state, twoFactor: false })
         );
         state!.twoFactor = false;
+        return payload;
       }
     );
   },
 });
 
-export const { logout: logoutAction, setTwoFactor: setTwoFactorAction } =
-  authSlice.actions;
+export const { logout: logoutAction } = authSlice.actions;
 
 export default authSlice.reducer;
