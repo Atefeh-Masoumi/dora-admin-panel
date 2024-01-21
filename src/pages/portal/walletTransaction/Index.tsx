@@ -12,7 +12,8 @@ import {
 } from "src/app/services/api.generated";
 
 const Wallet: FC = () => {
-  const { data: walletList, isLoading } = useGetApiMyPortalWalletListQuery();
+  const { data: walletList = [], isLoading } =
+    useGetApiMyPortalWalletListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
@@ -21,17 +22,16 @@ const Wallet: FC = () => {
   const timeStringToDate = (time: string) =>
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
 
-  const filteredList =
-    walletList?.filter(
-      (report: WalletTransactionListResponse) =>
-        report.id?.toString().includes(search) &&
-        (!dateFrom ||
-          (report.transactionDate &&
-            timeStringToDate(report.transactionDate) > dateFrom)) &&
-        (!dateTo ||
-          (report.transactionDate &&
-            timeStringToDate(report.transactionDate) < dateTo))
-    ) || [];
+  const filteredList = walletList.filter(
+    (report: WalletTransactionListResponse) =>
+      report.id?.toString().includes(search) &&
+      (!dateFrom ||
+        (report.transactionDate &&
+          timeStringToDate(report.transactionDate) > dateFrom)) &&
+      (!dateTo ||
+        (report.transactionDate &&
+          timeStringToDate(report.transactionDate) < dateTo))
+  );
 
   return (
     <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
@@ -82,7 +82,7 @@ const Wallet: FC = () => {
         <BaseTable
           struct={walletTableStruct}
           RowComponent={WalletTableRow}
-          rows={filteredList || []}
+          rows={filteredList}
           text="در حال حاضر تراکنشی ندارید"
           isLoading={isLoading}
           initialOrder={1}

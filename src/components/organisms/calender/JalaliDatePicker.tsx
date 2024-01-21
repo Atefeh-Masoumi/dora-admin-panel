@@ -3,7 +3,7 @@ import AdapterJalali from "@date-io/date-fns-jalali";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 type JalaliDatePickerPropsType = {
-  children: JSX.Element;
+  children?: JSX.Element;
 };
 
 export const JalaliDatePicker: FC<JalaliDatePickerPropsType> = ({

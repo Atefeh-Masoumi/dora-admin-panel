@@ -343,8 +343,8 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
   );
 
   if (isJalali) {
-    return <JalaliDatePicker children={renderMobileDatePicker} />;
+    return <JalaliDatePicker />;
   } else {
-    return <GregorianDatePicker children={renderMobileDatePicker} />;
+    return <GregorianDatePicker />;
   }
 };

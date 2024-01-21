@@ -2796,7 +2796,7 @@ export type LoginModel = {
 };
 export type TwoFactorLoginModel = {
   email: string;
-  confirmCode: string;
+  confirmCode: number;
 };
 export type RegisterModel = {
   firstName: string;
@@ -4209,4 +4209,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-
