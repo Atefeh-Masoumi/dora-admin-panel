@@ -306,12 +306,12 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
           InputProps={{
             sx: {
               bgcolor: "rgba(110, 118, 138, 0.06)",
-              "&>fieldset": {
-                borderColor: "transparent",
-              },
-              "&>::placeholder": {
-                color: ({ palette }) => palette.grey[700],
-              },
+              // "&>fieldset": {
+              //   borderColor: "transparent",
+              // },
+              // "&>::placeholder": {
+              //   color: ({ palette }) => palette.grey[700],
+              // },
             },
             endAdornment: (
               <CalendarSvg
@@ -343,8 +343,8 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
   );
 
   if (isJalali) {
-    return <JalaliDatePicker />;
+    return <JalaliDatePicker children={renderMobileDatePicker} />;
   } else {
-    return <GregorianDatePicker />;
+    return <GregorianDatePicker children={renderMobileDatePicker} />;
   }
 };

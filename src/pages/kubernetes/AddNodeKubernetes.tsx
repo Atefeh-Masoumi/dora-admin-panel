@@ -4,7 +4,7 @@ import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/ste
 import { NodeConfig } from "src/components/organisms/kubernetes/edit/editNodes/addNode/NodeConfig";
 import { useAppSelector } from "src/app/hooks";
 import { usePostApiMyKubernetesNodeCreateMutation } from "src/app/services/api.generated";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { Box } from "@mui/material";
 
@@ -12,6 +12,8 @@ type AddNodeKubernetesPropsType = {};
 
 const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
   const { id: hostId } = useParams();
+
+  const navigate = useNavigate();
 
   const { productBundle, nodeType, vmPassword } = useAppSelector(
     (store) => store.createNode
@@ -37,7 +39,12 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
         memory: null,
         disk: null,
       },
-    });
+    })
+      .unwrap()
+      .then(() => {
+        navigate(`/kubernetes/${hostId}`);
+      })
+      .catch((err) => {});
   };
 
   return (
