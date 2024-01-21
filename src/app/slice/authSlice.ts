@@ -72,29 +72,26 @@ const authSlice = createSlice({
     );
     addMatcher(
       api.endpoints.putApiMyPortalProfileEnableTwoFactor.matchFulfilled,
-      (state, { payload }: { payload: any }) => {
-        localStorage.setItem(
-          "loginInfo",
-          JSON.stringify({ ...state, twoFactor: true, email: "", password: "" })
-        );
+      (state) => {
+        const enhancedPayload = {
+          ...state,
+          twoFactor: true,
+        };
+
+        localStorage.setItem("loginInfo", JSON.stringify(enhancedPayload));
         state!.twoFactor = true;
-        return payload;
       }
     );
     addMatcher(
       api.endpoints.putApiMyPortalProfileDisableTwoFactor.matchFulfilled,
-      (state, { payload }: { payload: any }) => {
-        localStorage.setItem(
-          "loginInfo",
-          JSON.stringify({
-            ...state,
-            twoFactor: false,
-            email: "",
-            password: "",
-          })
-        );
+      (state) => {
+        const enhancedPayload = {
+          ...state,
+          twoFactor: false,
+        };
+
+        localStorage.setItem("loginInfo", JSON.stringify(enhancedPayload));
         state!.twoFactor = false;
-        return payload;
       }
     );
   },
