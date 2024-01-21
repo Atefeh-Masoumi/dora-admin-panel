@@ -75,7 +75,7 @@ const authSlice = createSlice({
       (state, { payload }: { payload: any }) => {
         localStorage.setItem(
           "loginInfo",
-          JSON.stringify({ ...state, twoFactor: true })
+          JSON.stringify({ ...state, twoFactor: true, email: "", password: "" })
         );
         state!.twoFactor = true;
         return payload;
@@ -86,7 +86,12 @@ const authSlice = createSlice({
       (state, { payload }: { payload: any }) => {
         localStorage.setItem(
           "loginInfo",
-          JSON.stringify({ ...state, twoFactor: false })
+          JSON.stringify({
+            ...state,
+            twoFactor: false,
+            email: "",
+            password: "",
+          })
         );
         state!.twoFactor = false;
         return payload;

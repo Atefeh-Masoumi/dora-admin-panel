@@ -202,7 +202,7 @@ export const KuberServiceReceipt: FC<KuberServiceReceiptPropsType> = ({
             </Typography>
           </Grid>
         </Grid>
-        {paymentType !== undefined && !setPaymentType && (
+        {(paymentType || setPaymentType) && (
           <Stack
             direction="row"
             columnGap={3}
