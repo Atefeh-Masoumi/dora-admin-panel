@@ -24,7 +24,11 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
   }, [navigate, token]);
 
   return (
-    <Box p={4} bgcolor="rgba(229, 229, 229, 0.8)" height="100vh">
+    <Box
+      p={{ xs: 2, sm: 3, md: 4 }}
+      bgcolor="rgba(229, 229, 229, 0.8)"
+      height="100vh"
+    >
       <Grid container spacing={2} height="100%">
         <Grid item xs={12} md={6}>
           <Stack
@@ -48,7 +52,7 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
               <Stack
                 bgcolor="white"
                 py={3.5}
-                px={2.5}
+                px={{ xs: 1.5, sm: 2.5 }}
                 spacing={2}
                 borderRadius={3}
                 sx={{ width: "100%", maxWidth: "450px" }}
