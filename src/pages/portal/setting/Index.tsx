@@ -9,14 +9,14 @@ const Setting: FC = () => {
     <Stack direction="column" rowGap={2}>
       <ChangePassword />
       <Stack
-        direction={{ xs: "column", md: "row" }}
-        // alignItems="center"
+        direction={{ xs: "column", xl: "row" }}
         justifyContent="space-between"
+        spacing={2}
       >
-        <Box width={{ xs: "100%", md: "49%" }}>
+        <Box width={{ xs: "100%", xl: "50%" }}>
           <NotificationSetting />
         </Box>
-        <Box width={{ xs: "100%", md: "49%" }}>
+        <Box width={{ xs: "100%", xl: "50%" }}>
           <SecuritySetting />
         </Box>
       </Stack>
