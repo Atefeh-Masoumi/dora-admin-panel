@@ -42,9 +42,14 @@ export const api = generatedApi
       "VmHosts",
       "VmHost",
       "Kubernetes",
+      "NotificationStatus",
     ],
     endpoints: {
+      // ============================== Kubernetes ============================== //
       getApiMyKubernetesHostList: {
+        providesTags: () => ["Kubernetes"],
+      },
+      getApiMyKubernetesNodeListByKubernetesHostId: {
         providesTags: () => ["Kubernetes"],
       },
       getApiMyKubernetesHostGetById: {
@@ -62,44 +67,80 @@ export const api = generatedApi
       deleteApiMyKubernetesHostDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      getApiMyPortalProfileGet: {
-        providesTags: () => ["Profile"],
-      },
+      // ============================== NotificationStatus ============================== //
       getApiMyPortalProfileGetNotificationStatus: {
-        providesTags: () => ["Notification"],
-      },
-      postApiMyPortalProfileConfirmPhoneNumber: {
-        invalidatesTags: () => ["Profile"],
+        providesTags: () => ["NotificationStatus"],
       },
       putApiMyPortalProfileEditPhoneNotification: {
-        invalidatesTags: () => ["Notification"],
+        invalidatesTags: () => ["NotificationStatus"],
       },
       putApiMyPortalProfileEditEmailNotification: {
+        invalidatesTags: () => ["NotificationStatus"],
+      },
+      // ============================== Notification ============================== //
+      getApiMyPortalNotificationShortList: {
+        providesTags: () => ["Notification"],
+      },
+      getApiMyPortalNotificationList: {
+        providesTags: () => ["Notification"],
+      },
+      putApiMyPortalNotificationSeenById: {
         invalidatesTags: () => ["Notification"],
       },
-      getApiMyCdnDnsRecordGetById: {
-        providesTags: () => ["EditRecordDialog"],
-      },
-      getApiMyCdnDnsRecordListByCdnId: {
-        providesTags: () => ["ProxyStatus", "DNSRecordSetting"],
-      },
-      getApiMyCdnHostGetById: {
-        providesTags: () => ["ZoneData"],
-      },
-      getApiMyPortalIssueItemListByIssueId: {
-        providesTags: () => ["Support"],
-      },
-      getApiMyCdnLoadBalanceListByCdnId: {
-        providesTags: () => ["LoadBalance"],
-      },
-      putApiMyPortalCustomerEditCustomerType: {
-        invalidatesTags: () => ["Profile"],
+      // ============================== Profile ============================== //
+      getApiMyPortalProfileGet: {
+        providesTags: () => ["Profile"],
       },
       getApiMyPortalCustomerGet: {
         providesTags: () => ["Profile"],
       },
+      postApiMyPortalProfileConfirmPhoneNumber: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalProfileEditTwoFactor: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalCustomerEditCustomerType: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalProfileEdit: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalProfileEditEmail: {
+        invalidatesTags: () => ["Profile"],
+      },
+      putApiMyPortalProfileEditPhoneNumber: {
+        invalidatesTags: () => ["Profile"],
+      },
+      postApiMyPortalProfileConfirmEmail: {
+        invalidatesTags: () => ["Profile"],
+      },
+      postApiMyPortalProfileChangePassword: {
+        invalidatesTags: () => ["Profile"],
+      },
+      // ============================== Support ============================== //
+      getApiMyPortalIssueItemListByIssueId: {
+        providesTags: () => ["Support"],
+      },
+      getApiMyPortalIssueList: {
+        providesTags: () => ["Support"],
+      },
+      postApiMyPortalIssueCreate: {
+        invalidatesTags: () => ["Support"],
+      },
+      postApiMyPortalIssueItemCreate: {
+        invalidatesTags: () => ["Support"],
+      },
+      // ============================== EditRecordDialog ============================== //
+      getApiMyCdnDnsRecordGetById: {
+        providesTags: () => ["EditRecordDialog"],
+      },
       putApiMyCdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
+      },
+      // ============================== DNSRecordSetting ============================== //
+      getApiMyCdnDnsRecordListByCdnId: {
+        providesTags: () => ["DNSRecordSetting", "ProxyStatus"],
       },
       deleteApiMyCdnDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
@@ -110,8 +151,12 @@ export const api = generatedApi
       postApiMyCdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
+      // ============================== ZoneData ============================== //
       putApiMyCdnHostChangeCdnType: {
         invalidatesTags: () => ["ZoneData"],
+      },
+      getApiMyCdnHostGetById: {
+        providesTags: () => ["ZoneData"],
       },
       putApiMyCdnHostChangeHsts: {
         invalidatesTags: () => ["ZoneData"],
@@ -128,6 +173,10 @@ export const api = generatedApi
       putApiMyCdnHostChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
+      // ============================== LoadBalance ============================== //
+      getApiMyCdnLoadBalanceListByCdnId: {
+        providesTags: () => ["LoadBalance"],
+      },
       deleteApiMyCdnLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
@@ -137,6 +186,7 @@ export const api = generatedApi
       putApiMyCdnLoadBalanceEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
+      // ============================== SslSetting ============================== //
       getApiMyCdnEdgeCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
@@ -152,15 +202,7 @@ export const api = generatedApi
       postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      getApiMyPortalIssueList: {
-        providesTags: () => ["Support"],
-      },
-      postApiMyPortalIssueCreate: {
-        invalidatesTags: () => ["Support"],
-      },
-      postApiMyPortalIssueItemCreate: {
-        invalidatesTags: () => ["Support"],
-      },
+      // ============================== VmHosts ============================== //
       getApiMyVmProjectList: {
         providesTags: () => ["VmHosts"],
       },
@@ -182,6 +224,7 @@ export const api = generatedApi
       putApiMyVmHostEdit: {
         invalidatesTags: () => ["VmHosts"],
       },
+      // ============================== VmHost ============================== //
       getApiMyVmHostGetById: {
         providesTags: () => ["VmHost"],
       },
