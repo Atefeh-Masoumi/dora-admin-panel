@@ -39,9 +39,9 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
       toast.warning("لطفا ابتدا ایمیل خود را وارد کنید");
       return;
     }
-    sendMail({ forgotModel: { email } }).then(() =>
-      toast.success("کد با موفقیت ارسال شد")
-    );
+    sendMail({ forgotModel: { email } })
+      .unwrap()
+      .then(() => toast.success("کد با موفقیت ارسال شد"));
     setCountDownDate(Date.now() + 120000);
   };
 
