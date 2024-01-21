@@ -71,27 +71,15 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.putApiMyPortalProfileEnableTwoFactor.matchFulfilled,
-      (state) => {
-        const enhancedPayload = {
-          ...state,
-          twoFactor: true,
-        };
+      api.endpoints.putApiMyPortalProfileEditTwoFactor.matchFulfilled,
+      (state, actionPayload) => {
+        const twoFactor =
+          actionPayload.meta.arg.originalArgs.twoFactorModel.twoFactorStatus;
 
-        localStorage.setItem("loginInfo", JSON.stringify(enhancedPayload));
-        state!.twoFactor = true;
-      }
-    );
-    addMatcher(
-      api.endpoints.putApiMyPortalProfileDisableTwoFactor.matchFulfilled,
-      (state) => {
-        const enhancedPayload = {
-          ...state,
-          twoFactor: false,
-        };
+        const newState = { ...state, twoFactor };
 
-        localStorage.setItem("loginInfo", JSON.stringify(enhancedPayload));
-        state!.twoFactor = false;
+        localStorage.setItem("loginInfo", JSON.stringify(newState));
+        return { ...newState, email: "", password: "" };
       }
     );
   },
