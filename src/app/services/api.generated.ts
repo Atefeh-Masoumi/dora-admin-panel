@@ -14,6 +14,16 @@ export const api = createApi({
         body: queryArg.loginModel,
       }),
     }),
+    postApiMyAccountTwoFactorLogin: build.mutation<
+      PostApiMyAccountTwoFactorLoginApiResponse,
+      PostApiMyAccountTwoFactorLoginApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/two-factor-login`,
+        method: "POST",
+        body: queryArg.twoFactorLoginModel,
+      }),
+    }),
     postApiMyAccountRegister: build.mutation<
       PostApiMyAccountRegisterApiResponse,
       PostApiMyAccountRegisterApiArg
@@ -1250,6 +1260,24 @@ export const api = createApi({
         body: queryArg.editPhoneNotifyModel,
       }),
     }),
+    putApiMyPortalProfileEnableTwoFactor: build.mutation<
+      PutApiMyPortalProfileEnableTwoFactorApiResponse,
+      PutApiMyPortalProfileEnableTwoFactorApiArg
+    >({
+      query: () => ({
+        url: `/api/my/portal/profile/enable-two-factor`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyPortalProfileDisableTwoFactor: build.mutation<
+      PutApiMyPortalProfileDisableTwoFactorApiResponse,
+      PutApiMyPortalProfileDisableTwoFactorApiArg
+    >({
+      query: () => ({
+        url: `/api/my/portal/profile/disable-two-factor`,
+        method: "PUT",
+      }),
+    }),
     postApiMyPortalProfileChangePassword: build.mutation<
       PostApiMyPortalProfileChangePasswordApiResponse,
       PostApiMyPortalProfileChangePasswordApiArg
@@ -1834,6 +1862,11 @@ export type PostApiMyAccountLoginApiResponse =
   /** status 200 Success */ LoginResponse;
 export type PostApiMyAccountLoginApiArg = {
   loginModel: LoginModel;
+};
+export type PostApiMyAccountTwoFactorLoginApiResponse =
+  /** status 200 Success */ LoginResponse;
+export type PostApiMyAccountTwoFactorLoginApiArg = {
+  twoFactorLoginModel: TwoFactorLoginModel;
 };
 export type PostApiMyAccountRegisterApiResponse =
   /** status 200 Success */ LoginResponse;
@@ -2471,6 +2504,10 @@ export type PutApiMyPortalProfileEditPhoneNotificationApiResponse = unknown;
 export type PutApiMyPortalProfileEditPhoneNotificationApiArg = {
   editPhoneNotifyModel: EditPhoneNotifyModel;
 };
+export type PutApiMyPortalProfileEnableTwoFactorApiResponse = unknown;
+export type PutApiMyPortalProfileEnableTwoFactorApiArg = void;
+export type PutApiMyPortalProfileDisableTwoFactorApiResponse = unknown;
+export type PutApiMyPortalProfileDisableTwoFactorApiArg = void;
 export type PostApiMyPortalProfileChangePasswordApiResponse = unknown;
 export type PostApiMyPortalProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
@@ -2743,6 +2780,7 @@ export type PostApiMyDomainWhoisGetApiArg = {
   getDomainWhoisModel: GetDomainWhoisModel;
 };
 export type LoginResponse = {
+  twoFactor?: boolean;
   accessToken?: string | null;
   userId?: string;
   expiration?: string;
@@ -2755,6 +2793,10 @@ export type LoginResponse = {
 export type LoginModel = {
   email: string;
   password: string;
+};
+export type TwoFactorLoginModel = {
+  email: string;
+  confirmCode: string;
 };
 export type RegisterModel = {
   firstName: string;
@@ -3949,6 +3991,7 @@ export type GetDomainWhoisModel = {
 };
 export const {
   usePostApiMyAccountLoginMutation,
+  usePostApiMyAccountTwoFactorLoginMutation,
   usePostApiMyAccountRegisterMutation,
   usePostApiMyAccountForgotMutation,
   usePostApiMyAccountForgotConfirmMutation,
@@ -4097,6 +4140,8 @@ export const {
   usePostApiMyPortalProfileConfirmPhoneNumberMutation,
   usePutApiMyPortalProfileEditEmailNotificationMutation,
   usePutApiMyPortalProfileEditPhoneNotificationMutation,
+  usePutApiMyPortalProfileEnableTwoFactorMutation,
+  usePutApiMyPortalProfileDisableTwoFactorMutation,
   usePostApiMyPortalProfileChangePasswordMutation,
   useGetApiMyRabbitHostListQuery,
   useGetApiMyRabbitHostGetByIdQuery,
@@ -4164,3 +4209,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+
