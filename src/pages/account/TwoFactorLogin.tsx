@@ -21,18 +21,18 @@ const TwoFactorLogin: FC = () => {
     null,
     null,
   ]);
-  const haveNull = confirmCode.some((code) => code === null);
 
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
 
   const [loginUser] = usePostApiMyAccountLoginMutation();
-  const [twoFactorLogin] = usePostApiMyAccountTwoFactorLoginMutation();
+  const [twoFactorLogin, { isLoading }] =
+    usePostApiMyAccountTwoFactorLoginMutation();
+    
+  const email = useAppSelector((state) => state.auth?.email);
+  const password = useAppSelector((state) => state.auth?.password);
+  const twoFactor = useAppSelector((state) => state.auth?.twoFactor);
 
-  const { email, password, twoFactor } = useAppSelector((state) => ({
-    email: state.auth?.email,
-    password: state.auth?.password,
-    twoFactor: state.auth?.twoFactor,
-  }));
+  const disableSubmitButton = confirmCode.some((code) => code === null);
 
   const resendCode = () => {
     if (!email || !password || !twoFactor) {
@@ -43,8 +43,8 @@ const TwoFactorLogin: FC = () => {
       .unwrap()
       .then((res) => {
         if (!res) return;
-        toast.success("کد احراز هویت دوباره به شماره شما ارسال شد");
-        setConfirmCode([]);
+        toast.success("کد احراز هویت به شماره همراهتان ارسال شد");
+        setConfirmCode([null, null, null, null, null, null]);
       })
       .catch(
         ({ status }: { status: number }) =>
@@ -56,7 +56,13 @@ const TwoFactorLogin: FC = () => {
 
   const navigate = useNavigate();
 
-  const submitHandler = (confirmCode: any[]) => {
+  const submitHandler = () => {
+    console.log({ confirmCode });
+    if (!email) {
+      navigate("/account/login");
+      return;
+    }
+
     if (confirmCode.some((char) => char === null)) return;
 
     twoFactorLogin({
@@ -78,7 +84,7 @@ const TwoFactorLogin: FC = () => {
       );
   };
 
-  if (!twoFactor) {
+  if (!twoFactor || !email) {
     return <Navigate to="/account/login" />;
   }
 
@@ -111,13 +117,13 @@ const TwoFactorLogin: FC = () => {
           )}
         </Stack>
         <LoadingButton
-          disabled={haveNull}
-          component="button"
-          type="submit"
+          loading={isLoading}
+          disabled={disableSubmitButton}
           variant="contained"
+          type="submit"
           fullWidth
           sx={{ py: 1.5 }}
-          onClick={() => submitHandler(confirmCode)}
+          onClick={() => submitHandler()}
         >
           ورود
         </LoadingButton>
