@@ -26,8 +26,8 @@ const formValidation = yup.object().shape({
 });
 
 const Login: FC = () => {
-  const [loginUser, { isLoading }] = usePostApiMyAccountLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
+  const [loginUser, { isLoading }] = usePostApiMyAccountLoginMutation();
 
   const navigate = useNavigate();
 
@@ -39,6 +39,10 @@ const Login: FC = () => {
       .unwrap()
       .then((res) => {
         if (!res) return;
+        if (res.twoFactor) {
+          navigate("/account/two-factor-login");
+          return;
+        }
         toast.success("شما با موفقیت وارد شدید");
         navigate("/");
       })
