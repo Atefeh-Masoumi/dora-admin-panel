@@ -11,6 +11,7 @@ import {
   useGetApiMyPortalIssueItemListByIssueIdQuery,
   usePostApiMyPortalIssueItemCreateMutation,
 } from "src/app/services/api.generated";
+import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
 
 const Detail: FC = () => {
   const [file, setFile] = useState<string | Blob>();
@@ -88,22 +89,12 @@ const Detail: FC = () => {
             </Stack>
           </Stack>
           <Chip
-            label={
-              issueItems?.issueStatusId === 1
-                ? "در انتظار پاسخ"
-                : issueItems?.issueStatusId === 2
-                ? "پاسخ داده شده"
-                : "تکمیل شده"
-            }
+            label={supportStatusIdentifier(issueItems?.issueStatusId || 0).text}
             sx={{
-              color:
-                issueItems?.issueStatusId === 1
-                  ? "rgba(255, 147, 68, 1)"
-                  : "rgba(13, 191, 102, 1)",
-              backgroundColor:
-                issueItems?.issueStatusId === 1
-                  ? "rgba(255, 233, 218, 1)"
-                  : "rgba(218, 246, 232, 1)",
+              color: supportStatusIdentifier(issueItems?.issueStatusId || 0)
+                .typographyColor,
+              bgcolor: supportStatusIdentifier(issueItems?.issueStatusId || 0)
+                .bgcolor,
               borderRadius: 1,
               fontSize: "14px",
               p: 0.5,

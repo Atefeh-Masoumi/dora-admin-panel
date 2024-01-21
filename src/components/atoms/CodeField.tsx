@@ -2,6 +2,8 @@ import { FC, KeyboardEvent, useRef } from "react";
 import { Stack } from "@mui/material";
 import { DorsaTextField } from "./DorsaTextField";
 
+const BOX_SIZE = 50;
+
 type CodeFieldPropsType = {
   characters: (string | null)[];
   setCharacters: (characters: (string | null)[]) => void;
@@ -50,11 +52,12 @@ export const CodeField: FC<CodeFieldPropsType> = ({
 
   return (
     <Stack
-      direction="row"
+      direction="row-reverse"
       justifyContent="space-between"
       width="100%"
       alignItems="center"
-      sx={{ direction: "rtl" }}
+      // sx={{ direction: "rtl" }}
+      spacing={1}
     >
       {characters.map((character, index) => (
         <DorsaTextField
@@ -71,7 +74,12 @@ export const CodeField: FC<CodeFieldPropsType> = ({
             style: { textAlign: "center" },
           }}
           sx={{
-            "& input": { py: 1.5 },
+            "& input": {
+              p: 0,
+              height: BOX_SIZE,
+              width: BOX_SIZE,
+              border: "2px solid transparent",
+            },
             "& input[type=number]": { "-moz-appearance": "textfield" },
             "& input[type=number]::-webkit-outer-spin-button": {
               "-webkit-appearance": "none",
@@ -80,7 +88,7 @@ export const CodeField: FC<CodeFieldPropsType> = ({
               "-webkit-appearance": "none",
             },
             "& input:focus": {
-              border: "2px solid rgba(60, 138, 255, 0.7)",
+              borderColor: "rgba(60, 138, 255, 0.7)",
               borderRadius: 1,
               color: "rgba(60, 110, 255, 1)",
             },

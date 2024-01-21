@@ -27,7 +27,7 @@ const TwoFactorLogin: FC = () => {
   const [loginUser] = usePostApiMyAccountLoginMutation();
   const [twoFactorLogin, { isLoading }] =
     usePostApiMyAccountTwoFactorLoginMutation();
-    
+
   const email = useAppSelector((state) => state.auth?.email);
   const password = useAppSelector((state) => state.auth?.password);
   const twoFactor = useAppSelector((state) => state.auth?.twoFactor);
@@ -57,7 +57,6 @@ const TwoFactorLogin: FC = () => {
   const navigate = useNavigate();
 
   const submitHandler = () => {
-    console.log({ confirmCode });
     if (!email) {
       navigate("/account/login");
       return;

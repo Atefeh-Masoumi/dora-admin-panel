@@ -3,9 +3,11 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { supportTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
+import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
 
 export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
+
   return (
     <DorsaTableRow
       hover
@@ -41,14 +43,10 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
                   <Chip
                     label={text}
                     sx={{
-                      backgroundColor:
-                        row.supportStatusId === 3
-                          ? "success.light"
-                          : "error.light",
-                      color:
-                        row.supportStatusId === 3
-                          ? "success.main"
-                          : "error.main",
+                      bgcolor: supportStatusIdentifier(row.issueStatusId)
+                        .bgcolor,
+                      color: supportStatusIdentifier(row.issueStatusId)
+                        .typographyColor,
                       py: 2.2,
                       borderRadius: 1,
                       fontSize: "14px",

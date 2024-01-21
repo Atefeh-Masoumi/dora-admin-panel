@@ -6,6 +6,7 @@ import {
   usePutApiMyPortalProfileEnableTwoFactorMutation,
   usePutApiMyPortalProfileDisableTwoFactorMutation,
 } from "src/app/services/api.generated";
+import { toast } from "react-toastify";
 
 export const SecuritySetting: FC = () => {
   const twoFactor = useAppSelector((state) => state.auth?.twoFactor);
@@ -21,7 +22,9 @@ export const SecuritySetting: FC = () => {
   );
 
   const twoFactorToggleButtonOnClick = () => {
-    (twoFactor ? disableTwoFactor() : enableTwoFactor()).unwrap();
+    (twoFactor ? disableTwoFactor() : enableTwoFactor()).unwrap().then(() => {
+      toast.success(`تایید دو مرحله‌ای شما ${twoFactor ? "" : ""}`);
+    });
   };
 
   return (

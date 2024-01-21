@@ -5,7 +5,7 @@ export const supportTableStruct: columnType[] = [
     id: "id",
     label: "شماره تیکت",
   },
-  { id: "createdDate", label: "تاریخ", type: "date" },
+  { id: "createDate", label: "تاریخ", type: "date" },
   {
     id: "businessUnit",
     label: "واحد",
