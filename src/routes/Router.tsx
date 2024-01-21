@@ -31,6 +31,7 @@ const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
 
 const Login = lazy(() => import("src/pages/account/Login"));
+const TwoFactorLogin = lazy(() => import("src/pages/account/TwoFactorLogin"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
@@ -125,6 +126,7 @@ const Router: FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/account/login" element={<Login />} />
+        <Route path="/account/two-factor-login" element={<TwoFactorLogin />} />
         <Route path="/account/signup" element={<Signup />} />
         <Route path="/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
