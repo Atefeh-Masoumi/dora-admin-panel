@@ -32,6 +32,13 @@ const authSlice = createSlice({
       localStorage.removeItem("loginInfo");
       return null;
     },
+    setTwoFactor: (state, { payload }: { payload: boolean }) => {
+      localStorage.setItem(
+        "loginInfo",
+        JSON.stringify({ ...state, twoFactor: payload })
+      );
+      state!.twoFactor = payload;
+    },
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
@@ -41,9 +48,30 @@ const authSlice = createSlice({
         return payload;
       }
     );
+    addMatcher(
+      api.endpoints.putApiMyPortalProfileEnableTwoFactor.matchFulfilled,
+      (state) => {
+        localStorage.setItem(
+          "loginInfo",
+          JSON.stringify({ ...state, twoFactor: true })
+        );
+        state!.twoFactor = true;
+      }
+    );
+    addMatcher(
+      api.endpoints.putApiMyPortalProfileDisableTwoFactor.matchFulfilled,
+      (state) => {
+        localStorage.setItem(
+          "loginInfo",
+          JSON.stringify({ ...state, twoFactor: false })
+        );
+        state!.twoFactor = false;
+      }
+    );
   },
 });
 
-export const { logout: logoutAction } = authSlice.actions;
+export const { logout: logoutAction, setTwoFactor: setTwoFactorAction } =
+  authSlice.actions;
 
 export default authSlice.reducer;
