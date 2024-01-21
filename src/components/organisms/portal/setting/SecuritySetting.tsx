@@ -1,30 +1,33 @@
-import { useMemo, type FC } from "react";
-import { Divider, Stack, Typography } from "@mui/material";
+import { type FC } from "react";
+import { Divider, Stack, SwitchProps, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { useAppSelector } from "src/app/hooks";
 import {
-  usePutApiMyPortalProfileEnableTwoFactorMutation,
-  usePutApiMyPortalProfileDisableTwoFactorMutation,
+  useGetApiMyPortalProfileGetQuery,
+  usePutApiMyPortalProfileEditTwoFactorMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
 export const SecuritySetting: FC = () => {
-  const twoFactor = useAppSelector((state) => state.auth?.twoFactor);
+  const { data: profileData, isLoading } = useGetApiMyPortalProfileGetQuery();
 
-  const [enableTwoFactor, { isLoading: enableTwoFactorLoading }] =
-    usePutApiMyPortalProfileEnableTwoFactorMutation();
-  const [disableTwoFactor, { isLoading: disableTwoFactorLoading }] =
-    usePutApiMyPortalProfileDisableTwoFactorMutation();
+  const [changeTwoFactorSetting, { isLoading: changeTwoFactorSettingLoading }] =
+    usePutApiMyPortalProfileEditTwoFactorMutation();
 
-  const changeLoading = useMemo(
-    () => enableTwoFactorLoading || disableTwoFactorLoading,
-    [disableTwoFactorLoading, enableTwoFactorLoading]
-  );
-
-  const twoFactorToggleButtonOnClick = () => {
-    (twoFactor ? disableTwoFactor() : enableTwoFactor()).unwrap().then(() => {
-      toast.success(`تایید دو مرحله‌ای شما ${twoFactor ? "" : ""}`);
-    });
+  const twoFactorToggleButtonOnClick: SwitchProps["onChange"] = (
+    event,
+    checked
+  ) => {
+    changeTwoFactorSetting({
+      twoFactorModel: {
+        twoFactorStatus: checked,
+      },
+    })
+      .unwrap()
+      .then(() => {
+        toast.success(
+          `تایید دو مرحله‌ای شما ${checked ? "فعال" : "غیرفعال"}  شد`
+        );
+      });
   };
 
   return (
@@ -51,8 +54,8 @@ export const SecuritySetting: FC = () => {
           </Typography>
         </Stack>
         <DorsaSwitch
-          disabled={changeLoading}
-          checked={!!twoFactor}
+          disabled={changeTwoFactorSettingLoading}
+          checked={!!profileData?.hasTwoFactor}
           onChange={twoFactorToggleButtonOnClick}
           sx={{ mx: { xs: 0, md: 2 } }}
         />
