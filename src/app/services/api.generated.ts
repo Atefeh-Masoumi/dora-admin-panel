@@ -1260,22 +1260,14 @@ export const api = createApi({
         body: queryArg.editPhoneNotifyModel,
       }),
     }),
-    putApiMyPortalProfileEnableTwoFactor: build.mutation<
-      PutApiMyPortalProfileEnableTwoFactorApiResponse,
-      PutApiMyPortalProfileEnableTwoFactorApiArg
+    putApiMyPortalProfileEditTwoFactor: build.mutation<
+      PutApiMyPortalProfileEditTwoFactorApiResponse,
+      PutApiMyPortalProfileEditTwoFactorApiArg
     >({
-      query: () => ({
-        url: `/api/my/portal/profile/enable-two-factor`,
+      query: (queryArg) => ({
+        url: `/api/my/portal/profile/edit-two-factor`,
         method: "PUT",
-      }),
-    }),
-    putApiMyPortalProfileDisableTwoFactor: build.mutation<
-      PutApiMyPortalProfileDisableTwoFactorApiResponse,
-      PutApiMyPortalProfileDisableTwoFactorApiArg
-    >({
-      query: () => ({
-        url: `/api/my/portal/profile/disable-two-factor`,
-        method: "PUT",
+        body: queryArg.twoFactorModel,
       }),
     }),
     postApiMyPortalProfileChangePassword: build.mutation<
@@ -2504,10 +2496,10 @@ export type PutApiMyPortalProfileEditPhoneNotificationApiResponse = unknown;
 export type PutApiMyPortalProfileEditPhoneNotificationApiArg = {
   editPhoneNotifyModel: EditPhoneNotifyModel;
 };
-export type PutApiMyPortalProfileEnableTwoFactorApiResponse = unknown;
-export type PutApiMyPortalProfileEnableTwoFactorApiArg = void;
-export type PutApiMyPortalProfileDisableTwoFactorApiResponse = unknown;
-export type PutApiMyPortalProfileDisableTwoFactorApiArg = void;
+export type PutApiMyPortalProfileEditTwoFactorApiResponse = unknown;
+export type PutApiMyPortalProfileEditTwoFactorApiArg = {
+  twoFactorModel: TwoFactorModel;
+};
 export type PostApiMyPortalProfileChangePasswordApiResponse = unknown;
 export type PostApiMyPortalProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
@@ -2789,6 +2781,7 @@ export type LoginResponse = {
   isSuperUser?: boolean;
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
+  profileCompleted?: boolean;
 };
 export type LoginModel = {
   email: string;
@@ -3624,6 +3617,7 @@ export type GetProfileResponse = {
   email?: string | null;
   emailConfirmed?: boolean;
   idConfirmed?: boolean;
+  hasTwoFactor?: boolean;
   isLegal?: boolean;
   firstName?: string | null;
   lastName?: string | null;
@@ -3660,6 +3654,9 @@ export type EditEmailNotifyModel = {
 };
 export type EditPhoneNotifyModel = {
   phoneNotify: boolean;
+};
+export type TwoFactorModel = {
+  twoFactorStatus: boolean;
 };
 export type ChangePasswordModel = {
   currentPassword: string;
@@ -4140,8 +4137,7 @@ export const {
   usePostApiMyPortalProfileConfirmPhoneNumberMutation,
   usePutApiMyPortalProfileEditEmailNotificationMutation,
   usePutApiMyPortalProfileEditPhoneNotificationMutation,
-  usePutApiMyPortalProfileEnableTwoFactorMutation,
-  usePutApiMyPortalProfileDisableTwoFactorMutation,
+  usePutApiMyPortalProfileEditTwoFactorMutation,
   usePostApiMyPortalProfileChangePasswordMutation,
   useGetApiMyRabbitHostListQuery,
   useGetApiMyRabbitHostGetByIdQuery,
@@ -4209,3 +4205,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+
