@@ -60,7 +60,7 @@ export const NotificationSetting: FC = () => {
         }}
       >
         <Typography variant="text1" color="secondary" sx={{ pt: 1.1 }}>
-          تنظیمات امنیتی
+          تنظیمات اعلان‌ها
         </Typography>
         <Divider variant="middle" sx={{ my: 3 }} />
         <Stack spacing={3}>
