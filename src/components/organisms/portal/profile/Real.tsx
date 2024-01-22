@@ -4,14 +4,14 @@ import { Stack } from "@mui/material";
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import {
-  GetProfileResponse,
+  useGetApiMyPortalProfileGetQuery,
   usePutApiMyPortalProfileEditMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 
-const formValidation = yup.object().shape({
+const validationSchema = yup.object().shape({
   firstName: yup.string().required("نام الزامیست!"),
   lastName: yup.string().required("نام خانوادگی الزامیست!"),
   nationalId: yup.string().required("national id"),
@@ -19,21 +19,26 @@ const formValidation = yup.object().shape({
   address: yup.string().required("address"),
 });
 
-type RealPersonalityPropsType = { data: GetProfileResponse };
+type RealPersonalityPropsType = {};
 
-export const RealPersonality: FC<RealPersonalityPropsType> = ({
-  data: userInformation,
-}) => {
+export const RealPersonality: FC<RealPersonalityPropsType> = () => {
   const [editProfile, { isLoading: loadingEdit }] =
     usePutApiMyPortalProfileEditMutation();
 
-  const submitHandler: formikOnSubmitType<GetProfileResponse> = (
+  const { data: userInformation } = useGetApiMyPortalProfileGetQuery();
+
+  const initialValues = {
+    firstName: userInformation?.firstName || "",
+    lastName: userInformation?.lastName || "",
+    nationalId: userInformation?.nationalId || "",
+    birthDate: userInformation?.birthDate || "",
+    address: userInformation?.address || "",
+  };
+
+  const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { firstName, lastName, nationalId, birthDate, address },
     { setSubmitting }
   ) => {
-    if (!firstName || !lastName || !nationalId || !birthDate || !address) {
-      return;
-    }
     editProfile({
       editProfileModel: {
         firstName,
@@ -44,20 +49,20 @@ export const RealPersonality: FC<RealPersonalityPropsType> = ({
       },
     })
       .unwrap()
-      .then(() => toast.success("مشخصات با موفقیت بروز رسانی شد"))
-      .catch(({ status, data }) => {
-        if (status === 401 || status === 404)
-          toast.error("اطلاعات را درست وارد کنید");
-        else toast.error(data[""][0]);
-      });
+      .then((res) => {
+        if (!res) return;
+        toast.success("مشخصات با موفقیت بروز رسانی شد");
+      })
+      .catch((err) => {});
     setSubmitting(false);
   };
 
   return (
     <Formik
-      initialValues={userInformation as any}
-      validationSchema={formValidation}
-      onSubmit={submitHandler}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      enableReinitialize
+      onSubmit={onSubmit}
     >
       {({ errors, touched, getFieldProps }) => (
         <Form autoComplete="on">

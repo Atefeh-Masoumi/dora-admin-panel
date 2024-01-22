@@ -1,11 +1,12 @@
+import { FC, useState } from "react";
 import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { FC, useState } from "react";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { emailValidator } from "src/utils/formValidator";
 import {
+  useGetApiMyPortalProfileGetQuery,
   usePostApiMyPortalProfileConfirmEmailMutation,
   usePutApiMyPortalProfileEditEmailMutation,
 } from "src/app/services/api.generated";
@@ -14,43 +15,15 @@ import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { CodeField } from "src/components/atoms/CodeField";
 
-const formValidation = yup.object().shape({
+const validationSchema = yup.object().shape({
   email: emailValidator.required("شماره موبایل الزامیست."),
 });
 
-type EmailValidationProps = {
-  isVerified?: boolean;
-  email?: string | any;
-};
+type EmailValidationProps = {};
 
-export const EmailValidation: FC<EmailValidationProps> = ({
-  isVerified,
-  email,
-}) => {
-  const [sendEmail, { isLoading }] =
-    usePutApiMyPortalProfileEditEmailMutation();
+export const EmailValidation: FC<EmailValidationProps> = () => {
   const [isCodeField, setIsCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
-
-  const submitHandler: formikOnSubmitType<{ email?: string }> = (
-    { email },
-    { setSubmitting }
-  ) => {
-    if (!email) return;
-    sendEmail({ editEmailModel: { email } })
-      .unwrap()
-      .then(() => {
-        toast.success("کد تایید به ایمیل شما ارسال شد");
-      })
-      .catch(
-        ({ status }: { status: number }) =>
-          (status === 401 || status === 404) &&
-          toast.error("Something went wrong")
-      );
-    setIsCodeField(true);
-    setSubmitting(false);
-  };
-
   const [confirmCode, setConfirmCode] = useState<(string | null)[]>([
     null,
     null,
@@ -59,6 +32,26 @@ export const EmailValidation: FC<EmailValidationProps> = ({
     null,
     null,
   ]);
+
+  const { data } = useGetApiMyPortalProfileGetQuery();
+
+  const [sendEmail, { isLoading }] =
+    usePutApiMyPortalProfileEditEmailMutation();
+
+  const onSubmit: formikOnSubmitType<{ email: string }> = (
+    { email },
+    { setSubmitting }
+  ) => {
+    sendEmail({ editEmailModel: { email } })
+      .unwrap()
+      .then((res) => {
+        toast.success("کد تایید به ایمیل شما ارسال شد");
+      })
+      .catch((err) => {});
+    setIsCodeField(true);
+    setSubmitting(false);
+  };
+
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
@@ -66,19 +59,23 @@ export const EmailValidation: FC<EmailValidationProps> = ({
 
   const submitConfirm = () => {
     if (haveNull) return;
-    confirm({ confirmEmailModel: { confirmCode: confirmCode.join("") } }).then(
-      () => {
+    confirm({ confirmEmailModel: { confirmCode: confirmCode.join("") } })
+      .unwrap()
+      .then(() => {
         setIsCodeField(false);
         toast.success("ایمیل با موفقیت تایید شد");
-      }
-    );
+      })
+      .catch((res) => {});
   };
 
   return (
     <Formik
-      initialValues={{ email }}
-      validationSchema={formValidation}
-      onSubmit={submitHandler}
+      initialValues={{
+        email: data?.email || "",
+      }}
+      enableReinitialize
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
       {({ errors, touched, getFieldProps }) => {
         const input = getFieldProps("email").value;
@@ -108,7 +105,7 @@ export const EmailValidation: FC<EmailValidationProps> = ({
                 >
                   پست الکترونیکی
                 </Typography>
-                {isVerified ? (
+                {data?.emailConfirmed ? (
                   <Chip
                     label="تایید شده"
                     sx={{
