@@ -82,6 +82,17 @@ const authSlice = createSlice({
         return { ...newState, email: "", password: "" };
       }
     );
+    addMatcher(
+      api.endpoints.putApiMyPortalProfileEdit.matchFulfilled,
+      (state, actionPayload) => {
+        // const profileCompleted = actionPayload.(payload as any).profileCompleted;
+        console.log({ actionPayload });
+        const newState = { ...state };
+
+        localStorage.setItem("loginInfo", JSON.stringify(newState));
+        return { ...newState, email: "", password: "" };
+      }
+    );
   },
 });
 
