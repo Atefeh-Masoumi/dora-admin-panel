@@ -1,11 +1,10 @@
 import type { FC } from "react";
-import { Chip, Divider, Skeleton, Stack, Typography } from "@mui/material";
+import { Chip, Divider, Stack, Typography } from "@mui/material";
 import { RealPersonality } from "./Real";
 import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated";
 
 export const Specifications: FC = () => {
-  const { data: userInformation, isLoading: loadingData } =
-    useGetApiMyPortalProfileGetQuery();
+  const { data: userInformation } = useGetApiMyPortalProfileGetQuery();
 
   return (
     <Stack
@@ -16,6 +15,8 @@ export const Specifications: FC = () => {
         backgroundColor: "white",
       }}
       height="100%"
+      justifyContent="space-between"
+      rowGap={{ xs: 2, md: 0 }}
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography variant="text1" color="secondary" sx={{ p: 1 }}>
@@ -45,51 +46,8 @@ export const Specifications: FC = () => {
           />
         )}
       </Stack>
-      <Stack py={2.5}>
-        <Divider variant="middle" />
-      </Stack>
-      {loadingData ? (
-        <Stack
-          rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}
-          justifyContent="space-between"
-          px={1}
-          pt={3}
-        >
-          <Stack spacing={2} p={1}>
-            <Stack direction="row" spacing={1}>
-              <Stack width="50%">
-                <Skeleton
-                  variant="rectangular"
-                  height={45}
-                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                />
-              </Stack>
-              <Stack width="50%">
-                <Skeleton
-                  variant="rectangular"
-                  height={45}
-                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                />
-              </Stack>
-            </Stack>
-            {[...Array(2)].map((_, index) => (
-              <Skeleton
-                key={index}
-                variant="rectangular"
-                height={45}
-                sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-              />
-            ))}
-            <Skeleton
-              variant="rectangular"
-              height={60}
-              sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-            />
-          </Stack>
-        </Stack>
-      ) : (
-        <RealPersonality data={userInformation as {}} />
-      )}
+      <Divider variant="middle" />
+      <RealPersonality />
     </Stack>
   );
 };

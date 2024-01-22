@@ -1,10 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import {
+  useGetApiMyPortalProfileGetQuery,
   usePostApiMyPortalProfileConfirmPhoneNumberMutation,
   usePutApiMyPortalProfileEditPhoneNumberMutation,
 } from "src/app/services/api.generated";
@@ -14,25 +15,30 @@ import { phoneNumberValidator } from "src/utils/formValidator";
 import { formikOnSubmitType } from "src/types/form.type";
 import { CodeField } from "src/components/atoms/CodeField";
 
-const formValidation = yup.object().shape({
+const validationSchema = yup.object().shape({
   phoneNumber: phoneNumberValidator.required("شماره موبایل الزامیست."),
 });
 
-type MobileValidationProps = {
-  isVerified?: boolean;
-  phoneNumber?: string | any;
-};
+type MobileValidationProps = {};
 
-export const MobileValidation: FC<MobileValidationProps> = ({
-  isVerified,
-  phoneNumber,
-}) => {
-  const [sendMessage, { isLoading }] =
-    usePutApiMyPortalProfileEditPhoneNumberMutation();
+export const MobileValidation: FC<MobileValidationProps> = () => {
   const [isCodeField, setIsCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
+  const [confirmCode, setConfirmCode] = useState<(string | null)[]>([
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
 
-  const submitHandler: formikOnSubmitType<{ phoneNumber?: string }> = (
+  const { data } = useGetApiMyPortalProfileGetQuery();
+
+  const [sendMessage, { isLoading }] =
+    usePutApiMyPortalProfileEditPhoneNumberMutation();
+
+  const onSubmit: formikOnSubmitType<{ phoneNumber: string }> = (
     { phoneNumber },
     { setSubmitting }
   ) => {
@@ -51,14 +57,6 @@ export const MobileValidation: FC<MobileValidationProps> = ({
     setSubmitting(false);
   };
 
-  const [confirmCode, setConfirmCode] = useState<(string | null)[]>([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
@@ -76,9 +74,12 @@ export const MobileValidation: FC<MobileValidationProps> = ({
 
   return (
     <Formik
-      initialValues={{ phoneNumber }}
-      validationSchema={formValidation}
-      onSubmit={submitHandler}
+      initialValues={{
+        phoneNumber: data?.phoneNumber || "",
+      }}
+      enableReinitialize
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
       {({ errors, touched, getFieldProps }) => {
         const input = getFieldProps("phoneNumber").value;
@@ -108,7 +109,7 @@ export const MobileValidation: FC<MobileValidationProps> = ({
                 >
                   شماره موبایل
                 </Typography>
-                {isVerified ? (
+                {data?.phoneNumberConfirmed ? (
                   <Chip
                     label="تایید شده"
                     sx={{

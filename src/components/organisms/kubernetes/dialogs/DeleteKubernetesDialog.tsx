@@ -1,10 +1,9 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyKubernetesHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/kubernetes/Index";
 
 type DeleteKubernetesDialogPropsType = {
   openDialog: boolean;
@@ -21,13 +20,10 @@ export const DeleteKubernetesDialog: FC<DeleteKubernetesDialogPropsType> = ({
   const [deleteKubernetes, { isLoading }] =
     useDeleteApiMyKubernetesHostDeleteByIdMutation();
 
-  const { refetchOnClick } = useContext(DataContext);
-
   const submit = () =>
     deleteKubernetes({ id })
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
-        refetchOnClick();
         handleClose();
       })
       .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));

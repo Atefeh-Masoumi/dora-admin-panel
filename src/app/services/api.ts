@@ -45,6 +45,47 @@ export const api = generatedApi
       "NotificationStatus",
     ],
     endpoints: {
+      // ============================== Login ============================== //
+      postApiMyAccountLogin: {
+        invalidatesTags: () => [
+          "Profile",
+          "Notification",
+          "Order",
+          "Orders",
+          "ZoneData",
+          "EditRecordDialog",
+          "ProxyStatus",
+          "DNSRecordSetting",
+          "LoadBalance",
+          "SslSetting",
+          "SupportItems",
+          "Support",
+          "VmHosts",
+          "VmHost",
+          "Kubernetes",
+          "NotificationStatus",
+        ],
+      },
+      postApiMyAccountTwoFactorLogin: {
+        invalidatesTags: () => [
+          "Profile",
+          "Notification",
+          "Order",
+          "Orders",
+          "ZoneData",
+          "EditRecordDialog",
+          "ProxyStatus",
+          "DNSRecordSetting",
+          "LoadBalance",
+          "SslSetting",
+          "SupportItems",
+          "Support",
+          "VmHosts",
+          "VmHost",
+          "Kubernetes",
+          "NotificationStatus",
+        ],
+      },
       // ============================== Kubernetes ============================== //
       getApiMyKubernetesHostList: {
         providesTags: () => ["Kubernetes"],
