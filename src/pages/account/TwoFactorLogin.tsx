@@ -67,8 +67,8 @@ const TwoFactorLogin: FC = () => {
     twoFactorLogin({
       twoFactorLoginModel: {
         email,
-        confirmCode: confirmCode.join(""),
-      } as any,
+        confirmCode: Number(confirmCode.join("")),
+      },
     })
       .unwrap()
       .then((res) => {
