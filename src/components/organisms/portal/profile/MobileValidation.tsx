@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import Countdown from "react-countdown";
@@ -22,7 +22,7 @@ const validationSchema = yup.object().shape({
 type MobileValidationProps = {};
 
 export const MobileValidation: FC<MobileValidationProps> = () => {
-  const [isCodeField, setIsCodeField] = useState(false);
+  const [showCodeField, setShowCodeField] = useState(false);
   const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
   const [confirmCode, setConfirmCode] = useState<(string | null)[]>([
     null,
@@ -45,15 +45,12 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
     if (!phoneNumber) return;
     sendMessage({ editPhoneNumberModel: { phoneNumber } })
       .unwrap()
-      .then(() => {
+      .then((res) => {
         toast.success("کد تایید به موبایل شما ارسال شد");
+        setShowCodeField(true);
       })
-      .catch(
-        ({ status }: { status: number }) =>
-          (status === 401 || status === 404) &&
-          toast.error("Something went wrong")
-      );
-    setIsCodeField(true);
+      .catch((err) => {});
+
     setSubmitting(false);
   };
 
@@ -66,10 +63,13 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
     if (haveNull) return;
     confirm({
       confirmPhoneNumberModel: { confirmCode: confirmCode.join("") },
-    }).then(() => {
-      setIsCodeField(false);
-      toast.success("شماره با موفقیت تایید شد");
-    });
+    })
+      .then((res) => {
+        if (!res) return;
+        setShowCodeField(false);
+        toast.success("شماره با موفقیت تایید شد");
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -135,13 +135,13 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
               </Stack>
               <Divider variant="middle" sx={{ my: 1 }} />
               <Stack px={1} pt={2} spacing={1}>
-                {isCodeField && (
+                {showCodeField && (
                   <Typography variant="text9" color="secondary">
                     کد تایید به شماره موبایل {input} ارسال شد
                   </Typography>
                 )}
                 <Box>
-                  {isCodeField ? (
+                  {showCodeField ? (
                     <CodeField
                       characters={confirmCode}
                       setCharacters={setConfirmCode}
@@ -164,7 +164,7 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
                   alignItems="center"
                 >
                   <Box>
-                    {isCodeField && (
+                    {showCodeField && (
                       <Box>
                         {countDownDate > Date.now() ? (
                           <Countdown
@@ -195,11 +195,11 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
                   </Box>
                   <LoadingButton
                     component="button"
-                    type={isCodeField ? "button" : "submit"}
-                    loading={isCodeField ? loadingConfirm : isLoading}
+                    type={showCodeField ? "button" : "submit"}
+                    loading={showCodeField ? loadingConfirm : isLoading}
                     variant="contained"
                     sx={{ px: 4, py: 2, fontSize: 16 }}
-                    onClick={isCodeField ? submitConfirm : () => {}}
+                    onClick={showCodeField ? submitConfirm : () => {}}
                   >
                     تایید و تغییر شماره تماس
                   </LoadingButton>
