@@ -40,8 +40,8 @@ const Home: FC = () => {
           </Typography>
           <Button
             onClick={goToProfilePage}
-            variant="contained"
-            sx={{ ml: "auto" }}
+            variant="outlined"
+            sx={{ ml: "auto", borderColor: "white", color: "white" }}
           >
             احراز هویت
           </Button>
