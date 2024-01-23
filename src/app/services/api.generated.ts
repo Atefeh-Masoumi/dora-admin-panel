@@ -2468,7 +2468,8 @@ export type GetApiMyPortalProfileGetApiArg = void;
 export type GetApiMyPortalProfileGetNotificationStatusApiResponse =
   /** status 200 Success */ GetNotificationStatusResponse;
 export type GetApiMyPortalProfileGetNotificationStatusApiArg = void;
-export type PutApiMyPortalProfileEditApiResponse = unknown;
+export type PutApiMyPortalProfileEditApiResponse =
+  /** status 200 Success */ EditInfoResponse;
 export type PutApiMyPortalProfileEditApiArg = {
   editProfileModel: EditProfileModel;
 };
@@ -2476,7 +2477,8 @@ export type PutApiMyPortalProfileEditEmailApiResponse = unknown;
 export type PutApiMyPortalProfileEditEmailApiArg = {
   editEmailModel: EditEmailModel;
 };
-export type PostApiMyPortalProfileConfirmEmailApiResponse = unknown;
+export type PostApiMyPortalProfileConfirmEmailApiResponse =
+  /** status 200 Success */ EditInfoResponse;
 export type PostApiMyPortalProfileConfirmEmailApiArg = {
   confirmEmailModel: ConfirmEmailModel;
 };
@@ -2484,7 +2486,8 @@ export type PutApiMyPortalProfileEditPhoneNumberApiResponse = unknown;
 export type PutApiMyPortalProfileEditPhoneNumberApiArg = {
   editPhoneNumberModel: EditPhoneNumberModel;
 };
-export type PostApiMyPortalProfileConfirmPhoneNumberApiResponse = unknown;
+export type PostApiMyPortalProfileConfirmPhoneNumberApiResponse =
+  /** status 200 Success */ EditInfoResponse;
 export type PostApiMyPortalProfileConfirmPhoneNumberApiArg = {
   confirmPhoneNumberModel: ConfirmPhoneNumberModel;
 };
@@ -3630,6 +3633,9 @@ export type GetNotificationStatusResponse = {
   phoneNotify?: boolean;
   emailNotify?: boolean;
 };
+export type EditInfoResponse = {
+  profileCompleted?: boolean;
+};
 export type EditProfileModel = {
   firstName: string;
   lastName: string;
@@ -4205,4 +4211,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-
