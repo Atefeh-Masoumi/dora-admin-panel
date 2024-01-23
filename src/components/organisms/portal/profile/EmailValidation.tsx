@@ -46,9 +46,9 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
       .unwrap()
       .then((res) => {
         toast.success("کد تایید به ایمیل شما ارسال شد");
+        setIsCodeField(true);
       })
       .catch((err) => {});
-    setIsCodeField(true);
     setSubmitting(false);
   };
 
@@ -61,7 +61,8 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
     if (haveNull) return;
     confirm({ confirmEmailModel: { confirmCode: confirmCode.join("") } })
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        if (!res) return;
         setIsCodeField(false);
         toast.success("ایمیل با موفقیت تایید شد");
       })
