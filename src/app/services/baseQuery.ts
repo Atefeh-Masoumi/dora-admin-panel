@@ -68,8 +68,6 @@ export const baseQuery: BaseQueryFn<
       any
     >;
 
-    // console.log({ e });
-
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);
       return { e };
@@ -82,7 +80,9 @@ export const baseQuery: BaseQueryFn<
     };
 
     let message = "";
-    error.errorMessage.map((item) => (message += `${item}\n`));
+    error.errorMessage &&
+      error.errorMessage.length > 0 &&
+      error.errorMessage.map((item) => (message += `${item}\n`));
 
     if (error.status >= 500) {
       toast.error(message || defaultErrorMessage);
@@ -92,6 +92,7 @@ export const baseQuery: BaseQueryFn<
       return { error };
     }
     if (error.status === 401) {
+      console.log("401");
       auth?.accessToken && dispatch(logoutAction());
       return { error };
     }
