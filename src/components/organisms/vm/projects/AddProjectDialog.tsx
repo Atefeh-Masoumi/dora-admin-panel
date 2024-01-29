@@ -40,7 +40,7 @@ export const AddProjectDialog: FC<AddProjectDialogPropsType> = ({
         setName("");
         onClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
   };
 
   return (
