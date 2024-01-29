@@ -141,9 +141,6 @@ export const api = generatedApi
       putApiMyPortalProfileEditTwoFactor: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyPortalCustomerEditCustomerType: {
-        invalidatesTags: () => ["Profile"],
-      },
       putApiMyPortalProfileEdit: {
         invalidatesTags: () => ["Profile"],
       },
