@@ -6,12 +6,10 @@ import { AddDomainContext } from "src/components/organisms/web/domain/add/contex
 import { SelectDomain } from "src/components/organisms/web/domain/add/steps/SelectDomain";
 import { DomainInfo } from "src/components/organisms/web/domain/add/steps/DomainInfo";
 import {
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
   usePostApiMyDomainHostGetPriceMutation,
   usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddDomain: FC = () => {
@@ -69,9 +67,6 @@ const AddDomain: FC = () => {
   const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
     usePostApiMyDomainHostGetPriceMutation();
 
-  const { data: customerType } =
-    useGetApiMyPortalCustomerGetCustomerTypeQuery();
-
   const [RegisterDomainModel, { isLoading: registerLoading }] =
     usePostApiMyDomainHostRegisterMutation();
 
@@ -125,7 +120,7 @@ const AddDomain: FC = () => {
       validationErrorMessage = "لطفا ns2 را وارد کنید";
     } else if (ns2.length < 3) {
       validationErrorMessage = "ns2 نمی تواند کمتر از سه حرف باشد";
-    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+    } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
@@ -149,10 +144,7 @@ const AddDomain: FC = () => {
           ns1,
           ns2,
           autoRenewal,
-          customerProductTypeId:
-            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
-              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-              : paymentType || 0,
+          customerProductTypeId: paymentType!,
         },
       })
         .unwrap()
@@ -211,7 +203,6 @@ const AddDomain: FC = () => {
               submitButtonIsLoading={registerLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              customerType={customerType}
               receiptItemName={"ثبت/انتقال دامنه"}
               receiptItemNumber={domainPrice !== 0 ? "۱" : "---"}
               reciptItemPrice={Math.floor(domainPrice).toLocaleString("fa-IR")}

@@ -6,12 +6,8 @@ import { SelectDataCenter } from "src/components/organisms/storage/add/steps/Sel
 import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
-import {
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
-  usePostApiMyStorageHostCreateMutation,
-} from "src/app/services/api.generated";
+import { usePostApiMyStorageHostCreateMutation } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddStorageService: FC = () => {
@@ -21,9 +17,6 @@ const AddStorageService: FC = () => {
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
-
-  const { data: customerType } =
-    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [createStorageService, { isLoading }] =
     usePostApiMyStorageHostCreateMutation();
@@ -39,7 +32,7 @@ const AddStorageService: FC = () => {
       validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
     } else if (!serverConfig || !serverConfig.id) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
-    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+    } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
@@ -52,10 +45,7 @@ const AddStorageService: FC = () => {
           isPublic: false,
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
-          customerProductTypeId:
-            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
-              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-              : paymentType || 0,
+          customerProductTypeId: paymentType!,
           isPredefined: true,
         },
       })
@@ -118,7 +108,6 @@ const AddStorageService: FC = () => {
               submitButtonIsLoading={isLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              customerType={customerType}
               receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
               receiptItemNumber={serverConfig?.id ? "۱" : "---"}
               reciptItemPrice={Math.floor(

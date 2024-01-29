@@ -13,12 +13,9 @@ import {
   ImageListResponse,
   ProductBundleListResponse,
   VmSpecListResponse,
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
-// import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/types/customerProductTypeEnum";
 
 type AddKubernetesContextType = {
   kubernetesVersion: DatacenterListResponse | null;
@@ -89,8 +86,8 @@ export const AddKubernetesContextProvider: FC<
   const [createKubernetes, { isLoading: submitLoading }] =
     usePostApiMyKubernetesHostCreateMutation();
 
-  const { data: customerType } =
-    useGetApiMyPortalCustomerGetCustomerTypeQuery();
+  // const { data: customerType } =
+  //   useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const submitHandler = () => {
     if (
@@ -100,7 +97,8 @@ export const AddKubernetesContextProvider: FC<
       !workersCount ||
       !serverConfig ||
       !serverName ||
-      !serverPassword
+      !serverPassword ||
+      !paymentType
     )
       return;
 
@@ -111,10 +109,7 @@ export const AddKubernetesContextProvider: FC<
         imageId: osVersion.id!,
         kubernetesVersionId: kubernetesVersion.id!,
         vmPassword: serverPassword,
-        customerProductTypeId:
-          customerType === CUSTOMER_TYPE_ENUM.POST_PAID
-            ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-            : paymentType || 0,
+        customerProductTypeId: paymentType!,
         nodeCount: workersCount,
         productBundleId: serverConfig?.id || 0,
         isPredefined: true,

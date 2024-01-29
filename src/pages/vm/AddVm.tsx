@@ -8,11 +8,7 @@ import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-import {
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
-  usePostApiMyVmHostCreateMutation,
-} from "src/app/services/api.generated";
-import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
+import { usePostApiMyVmHostCreateMutation } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 import { useAppSelector } from "src/app/hooks";
@@ -31,8 +27,8 @@ const AddVm: FC = () => {
 
   const navigate = useNavigate();
 
-  const { data: customerType } =
-    useGetApiMyPortalCustomerGetCustomerTypeQuery();
+  // const { data: customerType } =
+  //   useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
     usePostApiMyVmHostCreateMutation();
@@ -52,7 +48,7 @@ const AddVm: FC = () => {
       validationErrorMessage = "نام سرور نباید کمتر از سه حرف باشد";
     } else if (!passwordValidationRegex.test(serverPassword)) {
       validationErrorMessage = "رمز عبور نامعتبر است";
-    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+    } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
@@ -66,10 +62,7 @@ const AddVm: FC = () => {
           publicKey: null,
           datacenterId: dataCenter?.id || 0,
           imageId: osVersion?.id || 0,
-          customerProductTypeId:
-            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
-              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-              : paymentType || 0,
+          customerProductTypeId: paymentType!,
           isPredefined: true,
           vmProjectId: vmProjectId,
           productBundleId: serverConfig?.id || 0,
@@ -141,7 +134,6 @@ const AddVm: FC = () => {
               submitButtonIsLoading={createHostIsLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              customerType={customerType}
               receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
               receiptItemNumber={serverConfig?.id ? "۱" : "---"}
               reciptItemPrice={Math.floor(

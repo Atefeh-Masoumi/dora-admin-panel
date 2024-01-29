@@ -1,17 +1,14 @@
 import { FC, useMemo } from "react";
 import { Form, Formik } from "formik";
-import { Stack, SwitchProps, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import { formikOnSubmitType } from "src/types/form.type";
-import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import PageLoading from "src/components/atoms/PageLoading";
 import {
   useGetApiMyPortalCustomerGetQuery,
   usePutApiMyPortalCustomerEditMutation,
-  usePutApiMyPortalCustomerEditCustomerTypeMutation,
   useGetApiMyPortalProfileGetQuery,
 } from "src/app/services/api.generated";
 
@@ -66,102 +63,85 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
     setSubmitting(false);
   };
 
-  // Customer Type
-  const [editType, { isLoading }] =
-    usePutApiMyPortalCustomerEditCustomerTypeMutation();
-
-  const handleChange: SwitchProps["onChange"] = (event, checked) => {
-    editType({ editCustomerTypeModel: { isLegal: checked } })
-      .unwrap()
-      .then(() => {})
-      .catch((err) => {});
-  };
-
   return (
-    <>
-      {isLoading && <PageLoading />}
-      <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
-        <Stack direction="row" alignItems="center" spacing={1} py={1}>
-          <DorsaSwitch onChange={handleChange} checked={isLegal} />
-          <Typography>حساب کاربری حقوقی باشد</Typography>
-        </Stack>
-        {isLegal && (
-          <Stack py={2}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              enableReinitialize
-              onSubmit={onSubmit}
-            >
-              {({ errors, touched, getFieldProps }) => (
-                <Form autoComplete="on">
-                  <Stack rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}>
-                    <Stack direction="row" spacing={1}>
-                      <DorsaTextField
-                        error={Boolean(errors.name && touched.name)}
-                        helperText={errors.name}
-                        {...getFieldProps("name")}
-                        label="نام شرکت/طرف حساب"
-                        fullWidth
-                      />
-                      <DorsaTextField
-                        error={Boolean(errors.nationalId && touched.nationalId)}
-                        helperText={errors.nationalId}
-                        {...getFieldProps("nationalId")}
-                        label="شناسه ملی/کد ملی"
-                        fullWidth
-                        inputProps={{ dir: "ltr" }}
-                        type="text"
-                      />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <DorsaTextField
-                        error={Boolean(errors.phone && touched.phone)}
-                        helperText={errors.phone}
-                        {...getFieldProps("phone")}
-                        label="تلفن شرکت"
-                        fullWidth
-                        inputProps={{ dir: "ltr" }}
-                      />
-                      <DorsaTextField
-                        error={Boolean(errors.postalCode && touched.postalCode)}
-                        helperText={errors.postalCode}
-                        {...getFieldProps("postalCode")}
-                        label="کد پستی"
-                        fullWidth
-                        inputProps={{ dir: "ltr" }}
-                      />
-                    </Stack>
+    <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
+      <Typography>حساب کاربری حقوقی باشد</Typography>
+      {isLegal && (
+        <Stack py={2}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            enableReinitialize
+            onSubmit={onSubmit}
+          >
+            {({ errors, touched, getFieldProps }) => (
+              <Form autoComplete="on">
+                <Stack rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}>
+                  <Stack direction="row" spacing={1}>
                     <DorsaTextField
-                      error={Boolean(errors.address && touched.address)}
-                      {...getFieldProps("address")}
-                      label="آدرس"
+                      error={Boolean(errors.name && touched.name)}
+                      helperText={errors.name}
+                      {...getFieldProps("name")}
+                      label="نام شرکت/طرف حساب"
                       fullWidth
-                      multiline
-                      rows={3}
                     />
-                    <Stack
-                      direction="row"
-                      justifyContent={{ xs: "center", md: "end" }}
-                      pt={1.5}
-                    >
-                      <LoadingButton
-                        component="button"
-                        type="submit"
-                        loading={loadingEdit}
-                        variant="contained"
-                        sx={{ px: 7, py: 2, fontSize: 16 }}
-                      >
-                        ذخیره اطلاعات
-                      </LoadingButton>
-                    </Stack>
+                    <DorsaTextField
+                      error={Boolean(errors.nationalId && touched.nationalId)}
+                      helperText={errors.nationalId}
+                      {...getFieldProps("nationalId")}
+                      label="شناسه ملی/کد ملی"
+                      fullWidth
+                      inputProps={{ dir: "ltr" }}
+                      type="text"
+                    />
                   </Stack>
-                </Form>
-              )}
-            </Formik>
-          </Stack>
-        )}
-      </Stack>
-    </>
+                  <Stack direction="row" spacing={1}>
+                    <DorsaTextField
+                      error={Boolean(errors.phone && touched.phone)}
+                      helperText={errors.phone}
+                      {...getFieldProps("phone")}
+                      label="تلفن شرکت"
+                      fullWidth
+                      inputProps={{ dir: "ltr" }}
+                    />
+                    <DorsaTextField
+                      error={Boolean(errors.postalCode && touched.postalCode)}
+                      helperText={errors.postalCode}
+                      {...getFieldProps("postalCode")}
+                      label="کد پستی"
+                      fullWidth
+                      inputProps={{ dir: "ltr" }}
+                    />
+                  </Stack>
+                  <DorsaTextField
+                    error={Boolean(errors.address && touched.address)}
+                    {...getFieldProps("address")}
+                    label="آدرس"
+                    fullWidth
+                    multiline
+                    rows={3}
+                  />
+                  <Stack
+                    direction="row"
+                    justifyContent={{ xs: "center", md: "end" }}
+                    pt={1.5}
+                  >
+                    <LoadingButton
+                      component="button"
+                      type="submit"
+                      loading={loadingEdit}
+                      variant="contained"
+                      sx={{ px: 7, py: 2, fontSize: 16 }}
+                    >
+                      ذخیره اطلاعات
+                    </LoadingButton>
+                  </Stack>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
+        </Stack>
+      )}
+    </Stack>
   );
 };

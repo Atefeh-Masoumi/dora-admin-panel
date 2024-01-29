@@ -6,13 +6,9 @@ import { AddWebContext } from "src/components/organisms/web/web/add/contexts/Add
 import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectDomain";
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
-import {
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
-  usePostApiMyWebHostCreateMutation,
-} from "src/app/services/api.generated";
+import { usePostApiMyWebHostCreateMutation } from "src/app/services/api.generated";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { CUSTOMER_TYPE_ENUM } from "src/constant/customerTypeEnum";
 
 const AddWeb: FC = () => {
   const { domainName, dataCenter, serverConfig, term } =
@@ -22,9 +18,6 @@ const AddWeb: FC = () => {
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
-
-  const { data: customerType } =
-    useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [createWeb, { isLoading }] = usePostApiMyWebHostCreateMutation();
 
@@ -41,7 +34,7 @@ const AddWeb: FC = () => {
       validationErrorMessage = "لطفا نام دامنه را انتخاب کنید";
     } else if (domainName.length < 3) {
       validationErrorMessage = "نام دامنه نباید کمتر از سه حرف باشد";
-    } else if (customerType === CUSTOMER_TYPE_ENUM.NORMAL && !paymentType) {
+    } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
@@ -53,10 +46,7 @@ const AddWeb: FC = () => {
           domainName: domainName,
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
-          customerProductTypeId:
-            customerType === CUSTOMER_TYPE_ENUM.POST_PAID
-              ? CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-              : paymentType || 0,
+          customerProductTypeId: paymentType!,
         },
       })
         .unwrap()
@@ -118,7 +108,6 @@ const AddWeb: FC = () => {
               submitButtonIsLoading={isLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              customerType={customerType}
               receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
               receiptItemNumber={serverConfig?.id ? "۱" : "---"}
               reciptItemPrice={Math.floor(
