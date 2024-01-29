@@ -31,7 +31,7 @@ export const DeleteAccessKeyDialog: FC<DeleteAccessKeyDialogPropsType> = ({
         refetchUsersData();
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

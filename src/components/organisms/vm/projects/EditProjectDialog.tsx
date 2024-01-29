@@ -60,7 +60,7 @@ export const EditProjectDialog: FC<EditProjectDialogPropsType> = ({
         setName("");
         onClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
   };
 
   return (

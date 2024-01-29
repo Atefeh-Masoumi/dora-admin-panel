@@ -34,7 +34,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
         refetchOnClick();
         toast.error("دامنه مورد نظر حذف شد", { icon: Success });
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

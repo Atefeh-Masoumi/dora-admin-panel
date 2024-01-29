@@ -30,7 +30,7 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
         toast.success("سرویس ابری با موفقیت حذف شد");
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

@@ -27,7 +27,7 @@ export const DeleteRecordDialog: FC<DeleteRecordDialogPropsType> = ({
         toast.error("رکورد مورد نظر حذف شد", { icon: Success });
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

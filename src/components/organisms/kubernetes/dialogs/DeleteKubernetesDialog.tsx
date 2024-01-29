@@ -26,7 +26,7 @@ export const DeleteKubernetesDialog: FC<DeleteKubernetesDialogPropsType> = ({
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

@@ -30,7 +30,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
         toast.success("دامنه با موفقیت حذف شد");
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog

@@ -29,7 +29,7 @@ export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
         toast.success("سرویس هاست ابری با موفقیت حذف شد");
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog
