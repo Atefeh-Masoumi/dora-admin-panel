@@ -85,6 +85,9 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({ vmItem }) => {
             fontSize={18}
             color="rgba(110, 118, 138, 1)"
             whiteSpace="nowrap"
+            maxWidth="80%"
+            noWrap
+            textOverflow="ellipsis"
           >
             {name}
           </Typography>
