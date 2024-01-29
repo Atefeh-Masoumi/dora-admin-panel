@@ -68,7 +68,9 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
       setSubmitting(false);
       return;
     }
-    setPassword({ forgotConfirmModel: { confirmCode: code, email, password } })
+    setPassword({
+      forgotConfirmModel: { confirmCode: Number(code), email, password },
+    })
       .unwrap()
       .then(() => {
         toast.success("گذرواژه با موفقیت بروز رسانی شد");
