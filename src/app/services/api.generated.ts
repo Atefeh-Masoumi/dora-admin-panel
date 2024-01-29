@@ -375,12 +375,6 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/customer/get` }),
     }),
-    getApiMyPortalCustomerGetCustomerType: build.query<
-      GetApiMyPortalCustomerGetCustomerTypeApiResponse,
-      GetApiMyPortalCustomerGetCustomerTypeApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/customer/get-customer-type` }),
-    }),
     putApiMyPortalCustomerEdit: build.mutation<
       PutApiMyPortalCustomerEditApiResponse,
       PutApiMyPortalCustomerEditApiArg
@@ -391,27 +385,17 @@ export const api = createApi({
         body: queryArg.editCustomerModel,
       }),
     }),
-    putApiMyPortalCustomerEditCustomerType: build.mutation<
-      PutApiMyPortalCustomerEditCustomerTypeApiResponse,
-      PutApiMyPortalCustomerEditCustomerTypeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/portal/customer/edit-customer-type`,
-        method: "PUT",
-        body: queryArg.editCustomerTypeModel,
-      }),
-    }),
     getApiMyPortalBillList: build.query<
       GetApiMyPortalBillListApiResponse,
       GetApiMyPortalBillListApiArg
     >({
       query: () => ({ url: `/api/my/portal/bill/list` }),
     }),
-    getApiMyPortalBillBillShortList: build.query<
-      GetApiMyPortalBillBillShortListApiResponse,
-      GetApiMyPortalBillBillShortListApiArg
+    getApiMyPortalBillShortList: build.query<
+      GetApiMyPortalBillShortListApiResponse,
+      GetApiMyPortalBillShortListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/bill/bill-short-list` }),
+      query: () => ({ url: `/api/my/portal/bill/short-list` }),
     }),
     getApiMyPortalBillGetById: build.query<
       GetApiMyPortalBillGetByIdApiResponse,
@@ -435,30 +419,46 @@ export const api = createApi({
         url: `/api/my/portal/customer-product/list/${queryArg.productId}`,
       }),
     }),
-    getApiMyPortalCustomerProductActiveServices: build.query<
-      GetApiMyPortalCustomerProductActiveServicesApiResponse,
-      GetApiMyPortalCustomerProductActiveServicesApiArg
+    getApiMyPortalCustomerProductShortList: build.query<
+      GetApiMyPortalCustomerProductShortListApiResponse,
+      GetApiMyPortalCustomerProductShortListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/customer-product/active-services` }),
+      query: () => ({ url: `/api/my/portal/customer-product/short-list` }),
     }),
-    postApiMyPortalCustomerProductTransfer: build.mutation<
-      PostApiMyPortalCustomerProductTransferApiResponse,
-      PostApiMyPortalCustomerProductTransferApiArg
+    getApiMyPortalCustomerUserList: build.query<
+      GetApiMyPortalCustomerUserListApiResponse,
+      GetApiMyPortalCustomerUserListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/customer-user/list` }),
+    }),
+    postApiMyPortalCustomerUserCreate: build.mutation<
+      PostApiMyPortalCustomerUserCreateApiResponse,
+      PostApiMyPortalCustomerUserCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/customer-product/transfer`,
+        url: `/api/my/portal/customer-user/create`,
         method: "POST",
-        body: queryArg.customerProductTransferModel,
+        body: queryArg.editRoleAccessModel,
       }),
     }),
-    postApiMyPortalCustomerUserChangeUserCustomer: build.mutation<
-      PostApiMyPortalCustomerUserChangeUserCustomerApiResponse,
-      PostApiMyPortalCustomerUserChangeUserCustomerApiArg
+    deleteApiMyPortalCustomerUserDelete: build.mutation<
+      DeleteApiMyPortalCustomerUserDeleteApiResponse,
+      DeleteApiMyPortalCustomerUserDeleteApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/customer-user/change-user-customer`,
+        url: `/api/my/portal/customer-user/delete`,
+        method: "DELETE",
+        body: queryArg.deleteCustomerUserModel,
+      }),
+    }),
+    postApiMyPortalCustomerUserChange: build.mutation<
+      PostApiMyPortalCustomerUserChangeApiResponse,
+      PostApiMyPortalCustomerUserChangeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-user/change`,
         method: "POST",
-        body: queryArg.changeUserCustomerModel,
+        body: queryArg.changeCustomerUserModel,
       }),
     }),
     getApiMyDashboardUsageByCategoryId: build.query<
@@ -665,6 +665,12 @@ export const api = createApi({
       GetApiMyPortalInvoiceUnpaidApiArg
     >({
       query: () => ({ url: `/api/my/portal/invoice/unpaid` }),
+    }),
+    getApiMyPortalInvoiceSummary: build.query<
+      GetApiMyPortalInvoiceSummaryApiResponse,
+      GetApiMyPortalInvoiceSummaryApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/invoice/summary` }),
     }),
     getApiMyPortalIssueList: build.query<
       GetApiMyPortalIssueListApiResponse,
@@ -1384,57 +1390,37 @@ export const api = createApi({
         body: queryArg.joinReferralModel,
       }),
     }),
-    getApiMyPortalRoleRoleAccessTypes: build.query<
-      GetApiMyPortalRoleRoleAccessTypesApiResponse,
-      GetApiMyPortalRoleRoleAccessTypesApiArg
+    getApiMyPortalRoleList: build.query<
+      GetApiMyPortalRoleListApiResponse,
+      GetApiMyPortalRoleListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/role/role-access-types` }),
+      query: () => ({ url: `/api/my/portal/role/list` }),
     }),
-    getApiMyPortalRoleRoles: build.query<
-      GetApiMyPortalRoleRolesApiResponse,
-      GetApiMyPortalRoleRolesApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/role/roles` }),
-    }),
-    postApiMyPortalRoleGetUserAccessEntities: build.mutation<
-      PostApiMyPortalRoleGetUserAccessEntitiesApiResponse,
-      PostApiMyPortalRoleGetUserAccessEntitiesApiArg
+    postApiMyPortalRoleAccessList: build.mutation<
+      PostApiMyPortalRoleAccessListApiResponse,
+      PostApiMyPortalRoleAccessListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/role/get-user-access-entities`,
+        url: `/api/my/portal/role-access/list`,
         method: "POST",
-        body: queryArg.getUserAccessEntityModel,
+        body: queryArg.roleAccessModel,
       }),
     }),
-    postApiMyPortalRoleCreateUserAccess: build.mutation<
-      PostApiMyPortalRoleCreateUserAccessApiResponse,
-      PostApiMyPortalRoleCreateUserAccessApiArg
+    putApiMyPortalRoleAccessEdit: build.mutation<
+      PutApiMyPortalRoleAccessEditApiResponse,
+      PutApiMyPortalRoleAccessEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/role/create-user-access`,
-        method: "POST",
-        body: queryArg.setUserAccessModel,
-      }),
-    }),
-    putApiMyPortalRoleEditUserAccess: build.mutation<
-      PutApiMyPortalRoleEditUserAccessApiResponse,
-      PutApiMyPortalRoleEditUserAccessApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/portal/role/edit-user-access`,
+        url: `/api/my/portal/role-access/edit`,
         method: "PUT",
-        body: queryArg.setUserAccessModel,
+        body: queryArg.editRoleAccessModel,
       }),
     }),
-    deleteApiMyPortalRoleRemoveCustomerUser: build.mutation<
-      DeleteApiMyPortalRoleRemoveCustomerUserApiResponse,
-      DeleteApiMyPortalRoleRemoveCustomerUserApiArg
+    getApiMyPortalRoleAccessTypeList: build.query<
+      GetApiMyPortalRoleAccessTypeListApiResponse,
+      GetApiMyPortalRoleAccessTypeListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/portal/role/remove-customer-user`,
-        method: "DELETE",
-        body: queryArg.removeCustomerUserModel,
-      }),
+      query: () => ({ url: `/api/my/portal/role-access-type/list` }),
     }),
     getApiMyStorageHostList: build.query<
       GetApiMyStorageHostListApiResponse,
@@ -1700,6 +1686,51 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/project/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmSnapshotList: build.mutation<
+      PostApiMyVmSnapshotListApiResponse,
+      PostApiMyVmSnapshotListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/list`,
+        method: "POST",
+        body: queryArg.vmListSnapshotModel,
+      }),
+    }),
+    getApiMyVmSnapshotGetById: build.query<
+      GetApiMyVmSnapshotGetByIdApiResponse,
+      GetApiMyVmSnapshotGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/snapshot/get/${queryArg.id}` }),
+    }),
+    postApiMyVmSnapshotCreate: build.mutation<
+      PostApiMyVmSnapshotCreateApiResponse,
+      PostApiMyVmSnapshotCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/create`,
+        method: "POST",
+        body: queryArg.createSnapshotModel,
+      }),
+    }),
+    putApiMyVmSnapshotRevert: build.mutation<
+      PutApiMyVmSnapshotRevertApiResponse,
+      PutApiMyVmSnapshotRevertApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/revert`,
+        method: "PUT",
+        body: queryArg.revertSnapshotModel,
+      }),
+    }),
+    deleteApiMyVmSnapshotDeleteById: build.mutation<
+      DeleteApiMyVmSnapshotDeleteByIdApiResponse,
+      DeleteApiMyVmSnapshotDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -2029,23 +2060,16 @@ export type GetApiMyPortalCommissionListApiArg = void;
 export type GetApiMyPortalCustomerGetApiResponse =
   /** status 200 Success */ GetCustomerResponse;
 export type GetApiMyPortalCustomerGetApiArg = void;
-export type GetApiMyPortalCustomerGetCustomerTypeApiResponse =
-  /** status 200 Success */ number;
-export type GetApiMyPortalCustomerGetCustomerTypeApiArg = void;
 export type PutApiMyPortalCustomerEditApiResponse = unknown;
 export type PutApiMyPortalCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
 };
-export type PutApiMyPortalCustomerEditCustomerTypeApiResponse = unknown;
-export type PutApiMyPortalCustomerEditCustomerTypeApiArg = {
-  editCustomerTypeModel: EditCustomerTypeModel;
-};
 export type GetApiMyPortalBillListApiResponse =
   /** status 200 Success */ CustomerBillListResponse[];
 export type GetApiMyPortalBillListApiArg = void;
-export type GetApiMyPortalBillBillShortListApiResponse =
+export type GetApiMyPortalBillShortListApiResponse =
   /** status 200 Success */ CustomerBillShortListResponse[];
-export type GetApiMyPortalBillBillShortListApiArg = void;
+export type GetApiMyPortalBillShortListApiArg = void;
 export type GetApiMyPortalBillGetByIdApiResponse =
   /** status 200 Success */ GetCustomerBillResponse;
 export type GetApiMyPortalBillGetByIdApiArg = {
@@ -2060,17 +2084,24 @@ export type GetApiMyPortalCustomerProductListByProductIdApiResponse =
 export type GetApiMyPortalCustomerProductListByProductIdApiArg = {
   productId: number;
 };
-export type GetApiMyPortalCustomerProductActiveServicesApiResponse =
-  /** status 200 Success */ CustomerProductActiveListResponse[];
-export type GetApiMyPortalCustomerProductActiveServicesApiArg = void;
-export type PostApiMyPortalCustomerProductTransferApiResponse = unknown;
-export type PostApiMyPortalCustomerProductTransferApiArg = {
-  customerProductTransferModel: CustomerProductTransferModel;
+export type GetApiMyPortalCustomerProductShortListApiResponse =
+  /** status 200 Success */ CustomerProductShortListResponse[];
+export type GetApiMyPortalCustomerProductShortListApiArg = void;
+export type GetApiMyPortalCustomerUserListApiResponse =
+  /** status 200 Success */ CustomerUserListResponse[];
+export type GetApiMyPortalCustomerUserListApiArg = void;
+export type PostApiMyPortalCustomerUserCreateApiResponse = unknown;
+export type PostApiMyPortalCustomerUserCreateApiArg = {
+  editRoleAccessModel: EditRoleAccessModel;
 };
-export type PostApiMyPortalCustomerUserChangeUserCustomerApiResponse =
+export type DeleteApiMyPortalCustomerUserDeleteApiResponse = unknown;
+export type DeleteApiMyPortalCustomerUserDeleteApiArg = {
+  deleteCustomerUserModel: DeleteCustomerUserModel;
+};
+export type PostApiMyPortalCustomerUserChangeApiResponse =
   /** status 200 Success */ ChangeUserCustomerResponse;
-export type PostApiMyPortalCustomerUserChangeUserCustomerApiArg = {
-  changeUserCustomerModel: ChangeUserCustomerModel;
+export type PostApiMyPortalCustomerUserChangeApiArg = {
+  changeCustomerUserModel: ChangeCustomerUserModel;
 };
 export type GetApiMyDashboardUsageByCategoryIdApiResponse =
   /** status 200 Success */ DashboardUsageResponse[];
@@ -2168,13 +2199,17 @@ export type GetApiMyPortalInvoiceGetByIdApiResponse =
 export type GetApiMyPortalInvoiceGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyPortalInvoicePayApiResponse = unknown;
+export type PostApiMyPortalInvoicePayApiResponse =
+  /** status 200 Success */ CreatePaymentResponse;
 export type PostApiMyPortalInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
 export type GetApiMyPortalInvoiceUnpaidApiResponse =
   /** status 200 Success */ UnPaidInvoiceResponse[];
 export type GetApiMyPortalInvoiceUnpaidApiArg = void;
+export type GetApiMyPortalInvoiceSummaryApiResponse =
+  /** status 200 Success */ InvoiceSummaryResponse;
+export type GetApiMyPortalInvoiceSummaryApiArg = void;
 export type GetApiMyPortalIssueListApiResponse =
   /** status 200 Success */ IssueListResponse[];
 export type GetApiMyPortalIssueListApiArg = void;
@@ -2556,31 +2591,21 @@ export type PostApiMyPortalReferralJoinApiResponse =
 export type PostApiMyPortalReferralJoinApiArg = {
   joinReferralModel: JoinReferralModel;
 };
-export type GetApiMyPortalRoleRoleAccessTypesApiResponse =
-  /** status 200 Success */ GetAccessTypeResponse[];
-export type GetApiMyPortalRoleRoleAccessTypesApiArg = void;
-export type GetApiMyPortalRoleRolesApiResponse =
-  /** status 200 Success */ GetAccessTypeResponse[];
-export type GetApiMyPortalRoleRolesApiArg = void;
-export type PostApiMyPortalRoleGetUserAccessEntitiesApiResponse =
-  /** status 200 Success */ UserEntityAccessResponse[];
-export type PostApiMyPortalRoleGetUserAccessEntitiesApiArg = {
-  getUserAccessEntityModel: GetUserAccessEntityModel;
+export type GetApiMyPortalRoleListApiResponse =
+  /** status 200 Success */ RoleListResponse[];
+export type GetApiMyPortalRoleListApiArg = void;
+export type PostApiMyPortalRoleAccessListApiResponse =
+  /** status 200 Success */ RoleAccessListResponse[];
+export type PostApiMyPortalRoleAccessListApiArg = {
+  roleAccessModel: RoleAccessModel;
 };
-export type PostApiMyPortalRoleCreateUserAccessApiResponse =
-  /** status 200 Success */ BaseResponse;
-export type PostApiMyPortalRoleCreateUserAccessApiArg = {
-  setUserAccessModel: SetUserAccessModel;
+export type PutApiMyPortalRoleAccessEditApiResponse = unknown;
+export type PutApiMyPortalRoleAccessEditApiArg = {
+  editRoleAccessModel: EditRoleAccessModel;
 };
-export type PutApiMyPortalRoleEditUserAccessApiResponse = unknown;
-export type PutApiMyPortalRoleEditUserAccessApiArg = {
-  setUserAccessModel: SetUserAccessModel;
-};
-export type DeleteApiMyPortalRoleRemoveCustomerUserApiResponse =
-  /** status 200 Success */ BaseResponse;
-export type DeleteApiMyPortalRoleRemoveCustomerUserApiArg = {
-  removeCustomerUserModel: RemoveCustomerUserModel;
-};
+export type GetApiMyPortalRoleAccessTypeListApiResponse =
+  /** status 200 Success */ RoleAccessTypeListResponse[];
+export type GetApiMyPortalRoleAccessTypeListApiArg = void;
 export type GetApiMyStorageHostListApiResponse =
   /** status 200 Success */ StorageHostListResponse[];
 export type GetApiMyStorageHostListApiArg = void;
@@ -2706,6 +2731,28 @@ export type DeleteApiMyVmProjectDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmProjectDeleteByIdApiArg = {
   id: number;
 };
+export type PostApiMyVmSnapshotListApiResponse =
+  /** status 200 Success */ VmSnapshotResponse[];
+export type PostApiMyVmSnapshotListApiArg = {
+  vmListSnapshotModel: VmListSnapshotModel;
+};
+export type GetApiMyVmSnapshotGetByIdApiResponse =
+  /** status 200 Success */ VmSnapshotResponse;
+export type GetApiMyVmSnapshotGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmSnapshotCreateApiResponse = unknown;
+export type PostApiMyVmSnapshotCreateApiArg = {
+  createSnapshotModel: CreateSnapshotModel;
+};
+export type PutApiMyVmSnapshotRevertApiResponse = unknown;
+export type PutApiMyVmSnapshotRevertApiArg = {
+  revertSnapshotModel: RevertSnapshotModel;
+};
+export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
+  id: number;
+};
 export type PostApiMyPortalVoucherUseApiResponse =
   /** status 200 Success */ string;
 export type PostApiMyPortalVoucherUseApiArg = {
@@ -2778,13 +2825,12 @@ export type LoginResponse = {
   twoFactor?: boolean;
   accessToken?: string | null;
   userId?: string;
-  expiration?: string;
   userTitle?: string | null;
-  roles?: number[] | null;
   isSuperUser?: boolean;
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
   profileCompleted?: boolean;
+  roles?: number[] | null;
 };
 export type LoginModel = {
   email: string;
@@ -2806,7 +2852,7 @@ export type ForgotModel = {
 };
 export type ForgotConfirmModel = {
   email: string;
-  confirmCode: string;
+  confirmCode: number;
   password: string;
 };
 export type SeriesModel = {
@@ -3004,12 +3050,14 @@ export type CreateColocationModel = {
 };
 export type CommissionListResponse = {
   id?: number;
-  orderId?: number;
+  invoiceId?: number;
   totalPrice?: number;
   commissionPrice?: number;
   commissionDate?: string;
 };
 export type GetCustomerResponse = {
+  id?: number;
+  customerTypeId?: number;
   name?: string | null;
   nationalId?: string | null;
   phone?: string | null;
@@ -3022,9 +3070,6 @@ export type EditCustomerModel = {
   phone: string;
   address: string;
   postalCode: string;
-};
-export type EditCustomerTypeModel = {
-  isLegal?: boolean;
 };
 export type CustomerBillListResponse = {
   id?: number;
@@ -3070,15 +3115,37 @@ export type CustomerProductListResponse = {
   status?: string | null;
   createDate?: string;
 };
-export type CustomerProductActiveListResponse = {
+export type CustomerProductShortListResponse = {
   id?: number;
-  productName?: string | null;
-  serviceName?: string | null;
+  product?: string | null;
+  customerProduct?: string | null;
   createDate?: string;
 };
-export type CustomerProductTransferModel = {
-  customerProductId?: number;
-  customerId?: number;
+export type CustomerUserListResponse = {
+  userId?: string;
+  email?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  phoneNumber?: string | null;
+};
+export type AccessTupleModel = {
+  accessId?: number;
+  hasAccess?: boolean;
+};
+export type EntityAccessModel = {
+  accessType?: number;
+  entityId?: number;
+  accessTuples?: AccessTupleModel[] | null;
+};
+export type EditRoleAccessModel = {
+  email: string;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
+  entityAccesses?: EntityAccessModel[] | null;
+};
+export type DeleteCustomerUserModel = {
+  userId?: string;
 };
 export type ChangeUserCustomerResponse = {
   roles?: number[] | null;
@@ -3086,7 +3153,7 @@ export type ChangeUserCustomerResponse = {
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
 };
-export type ChangeUserCustomerModel = {
+export type ChangeCustomerUserModel = {
   customerId?: number;
 };
 export type DashboardUsageResponse = {
@@ -3280,6 +3347,10 @@ export type GetInvoiceResponse = {
   invoicePrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
 };
+export type CreatePaymentResponse = {
+  status?: boolean;
+  location?: string | null;
+};
 export type PayInvoiceModel = {
   id?: number;
 };
@@ -3292,6 +3363,10 @@ export type UnPaidInvoiceResponse = {
   invoiceStatusId?: number;
   invoicePrice?: number;
   vat?: number;
+};
+export type InvoiceSummaryResponse = {
+  totalPaid?: number;
+  totalUnpaid?: number;
 };
 export type IssueListResponse = {
   id?: number;
@@ -3569,10 +3644,6 @@ export type GetPaymentResponse = {
   paymentProviderId?: number;
   finalStatus?: boolean;
 };
-export type CreatePaymentResponse = {
-  status?: boolean;
-  location?: string | null;
-};
 export type CreatePaymentModel = {
   paymentProviderId?: number;
   amount: number;
@@ -3728,42 +3799,23 @@ export type JoinReferralResponse = {
 export type JoinReferralModel = {
   referralCode: string;
 };
-export type GetAccessTypeResponse = {
+export type RoleListResponse = {
   id?: number;
   name?: string | null;
 };
-export type AccessTupleModel = {
-  accessId?: number;
-  hasAccess?: boolean;
-};
-export type UserEntityAccessResponse = {
-  id?: number;
-  title?: string | null;
+export type RoleAccessListResponse = {
+  roleId?: number;
+  name?: string | null;
   description?: string | null;
   hasAccess?: boolean;
   accesses?: AccessTupleModel[] | null;
 };
-export type GetUserAccessEntityModel = {
-  userId?: string | null;
+export type RoleAccessModel = {
+  userId: string;
 };
-export type BaseResponse = {
-  status?: boolean;
-  message?: string | null;
-};
-export type EntityAccessModel = {
-  accessType?: number;
-  entityId?: number;
-  accessTuples?: AccessTupleModel[] | null;
-};
-export type SetUserAccessModel = {
-  userEmail: string;
-  isSuperUser: boolean;
-  isFinancialManager: boolean;
-  isAccountManager: boolean;
-  entityAccesses?: EntityAccessModel[] | null;
-};
-export type RemoveCustomerUserModel = {
-  userId?: string;
+export type RoleAccessTypeListResponse = {
+  id?: number;
+  name?: string | null;
 };
 export type StorageHostListResponse = {
   id?: number;
@@ -3906,6 +3958,31 @@ export type EditVmProject = {
   name?: string | null;
   id?: number;
 };
+export type VmSnapshotResponse = {
+  id?: number;
+  snapshotId?: number;
+  name?: string | null;
+  isActive?: boolean;
+  isCreated?: boolean;
+  datacenter?: string | null;
+  operatingSystem?: string | null;
+  description?: string | null;
+  vmProjectId?: number | null;
+  vmProjectName?: string | null;
+  createDate?: string;
+  modifiedDate?: string;
+};
+export type VmListSnapshotModel = {
+  vmId?: number;
+};
+export type CreateSnapshotModel = {
+  vmHostId?: number;
+  snapshotName?: string | null;
+  snapshotDescription?: string | null;
+};
+export type RevertSnapshotModel = {
+  snapshotId?: number;
+};
 export type UseVoucherModel = {
   voucherCode: string;
 };
@@ -4036,17 +4113,17 @@ export const {
   useDeleteApiMyColocationHostDeleteByIdMutation,
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCustomerGetQuery,
-  useGetApiMyPortalCustomerGetCustomerTypeQuery,
   usePutApiMyPortalCustomerEditMutation,
-  usePutApiMyPortalCustomerEditCustomerTypeMutation,
   useGetApiMyPortalBillListQuery,
-  useGetApiMyPortalBillBillShortListQuery,
+  useGetApiMyPortalBillShortListQuery,
   useGetApiMyPortalBillGetByIdQuery,
   useGetApiMyPortalBillDownloadByIdQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
-  useGetApiMyPortalCustomerProductActiveServicesQuery,
-  usePostApiMyPortalCustomerProductTransferMutation,
-  usePostApiMyPortalCustomerUserChangeUserCustomerMutation,
+  useGetApiMyPortalCustomerProductShortListQuery,
+  useGetApiMyPortalCustomerUserListQuery,
+  usePostApiMyPortalCustomerUserCreateMutation,
+  useDeleteApiMyPortalCustomerUserDeleteMutation,
+  usePostApiMyPortalCustomerUserChangeMutation,
   useGetApiMyDashboardUsageByCategoryIdQuery,
   useGetApiMyDashboardFinancialQuery,
   useGetApiMyDatacenterListQuery,
@@ -4072,6 +4149,7 @@ export const {
   useGetApiMyPortalInvoiceGetByIdQuery,
   usePostApiMyPortalInvoicePayMutation,
   useGetApiMyPortalInvoiceUnpaidQuery,
+  useGetApiMyPortalInvoiceSummaryQuery,
   useGetApiMyPortalIssueListQuery,
   useGetApiMyPortalIssueShortListQuery,
   usePostApiMyPortalIssueCreateMutation,
@@ -4157,12 +4235,10 @@ export const {
   usePostApiMyRabbitUserChangePasswordMutation,
   useGetApiMyPortalReferralGetQuery,
   usePostApiMyPortalReferralJoinMutation,
-  useGetApiMyPortalRoleRoleAccessTypesQuery,
-  useGetApiMyPortalRoleRolesQuery,
-  usePostApiMyPortalRoleGetUserAccessEntitiesMutation,
-  usePostApiMyPortalRoleCreateUserAccessMutation,
-  usePutApiMyPortalRoleEditUserAccessMutation,
-  useDeleteApiMyPortalRoleRemoveCustomerUserMutation,
+  useGetApiMyPortalRoleListQuery,
+  usePostApiMyPortalRoleAccessListMutation,
+  usePutApiMyPortalRoleAccessEditMutation,
+  useGetApiMyPortalRoleAccessTypeListQuery,
   useGetApiMyStorageHostListQuery,
   useGetApiMyStorageHostGetByIdQuery,
   usePostApiMyStorageHostCreateMutation,
@@ -4193,6 +4269,11 @@ export const {
   usePostApiMyVmProjectCreateMutation,
   usePutApiMyVmProjectEditMutation,
   useDeleteApiMyVmProjectDeleteByIdMutation,
+  usePostApiMyVmSnapshotListMutation,
+  useGetApiMyVmSnapshotGetByIdQuery,
+  usePostApiMyVmSnapshotCreateMutation,
+  usePutApiMyVmSnapshotRevertMutation,
+  useDeleteApiMyVmSnapshotDeleteByIdMutation,
   usePostApiMyPortalVoucherUseMutation,
   useGetApiMyVpcHostListQuery,
   usePostApiMyVpcHostCreateMutation,
