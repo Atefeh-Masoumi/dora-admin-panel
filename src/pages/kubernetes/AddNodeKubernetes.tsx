@@ -1,12 +1,12 @@
 import { FC } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/steps/KuberServiceReceipt";
 import { NodeConfig } from "src/components/organisms/kubernetes/edit/editNodes/addNode/NodeConfig";
 import { useAppSelector } from "src/app/hooks";
 import { usePostApiMyKubernetesNodeCreateMutation } from "src/app/services/api.generated";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { Box } from "@mui/material";
+import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 type AddNodeKubernetesPropsType = {};
 
@@ -54,12 +54,20 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
       </Grid2>
       <Grid2 xs={12} md={4}>
         <Box sx={{ position: "sticky", top: 0 }}>
-          <KuberServiceReceipt
-            serverPrice={productBundle?.price || 0}
-            serverName={productBundle?.name || ""}
-            workersCount={1}
+          <ServiceReceipt
             submitHandler={onSubmitClick}
-            submitLoading={createNodeLoading}
+            submitButtonIsLoading={createNodeLoading}
+            receiptItemName={productBundle?.name || "سرور"}
+            receiptItemNumber="۱"
+            reciptItemPrice={Math.floor(
+              productBundle?.price || 0
+            ).toLocaleString("fa-IR")}
+            totalPrice={Math.floor(
+              (productBundle?.price || 0) * 1.09
+            ).toLocaleString("fa-IR")}
+            vat={Math.floor((productBundle?.price || 0) * 0.09).toLocaleString(
+              "fa-IR"
+            )}
           />
         </Box>
       </Grid2>

@@ -4,8 +4,8 @@ import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/s
 import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
 import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
 import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
-import { KuberServiceReceipt } from "src/components/organisms/kubernetes/add/steps/KuberServiceReceipt";
 import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
 const AddKubernetes: FC = () => {
   const {
@@ -67,14 +67,22 @@ const AddKubernetes: FC = () => {
           style={{ position: "relative", textAlign: "center" }}
         >
           <Box sx={{ position: "sticky", top: 0 }}>
-            <KuberServiceReceipt
-              serverPrice={serverConfig?.price || 0}
-              serverName={serverConfig?.name || ""}
-              workersCount={workersCount}
+            <ServiceReceipt
+              submitHandler={submitHandler}
+              submitButtonIsLoading={submitLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              submitHandler={submitHandler}
-              submitLoading={submitLoading}
+              receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
+              receiptItemNumber={workersCount.toString() || ""}
+              reciptItemPrice={Math.floor(
+                serverConfig?.price || 0
+              ).toLocaleString("fa-IR")}
+              totalPrice={Math.floor(
+                (serverConfig?.price || 0) * 1.09
+              ).toLocaleString("fa-IR")}
+              vat={Math.floor((serverConfig?.price || 0) * 0.09).toLocaleString(
+                "fa-IR"
+              )}
             />
           </Box>
         </Grid>
