@@ -1,9 +1,8 @@
-import { FC, useState, useMemo } from "react";
+import { FC, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 import { useGetApiMyKubernetesHostListQuery } from "src/app/services/api.generated";
@@ -14,17 +13,7 @@ import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/K
 const NamespaceManagement: FC = () => {
   const [search, setSearch] = useState("");
 
-  const {
-    data,
-    isLoading: getDataLoading,
-    refetch,
-    isFetching,
-  } = useGetApiMyKubernetesHostListQuery();
-
-  const isLoading = useMemo(
-    () => getDataLoading || isFetching,
-    [getDataLoading, isFetching]
-  );
+  const { data, isLoading } = useGetApiMyKubernetesHostListQuery();
 
   const filteredList =
     data?.filter((item) => {
@@ -91,51 +80,35 @@ const NamespaceManagement: FC = () => {
               placeholder="جستجو در نام سرویس"
             />
           </Stack>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Button
-              onClick={() => refetch()}
-              variant="outlined"
-              size="large"
-              sx={{
-                whiteSpace: "nowrap",
-                px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
-              }}
-              startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
-            >
-              بازخوانی
-            </Button>
-            <Button
-              onClick={gotToAddKubernetes}
-              variant="outlined"
-              size="large"
-              sx={{
-                whiteSpace: "nowrap",
-                px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
-              }}
-              startIcon={
-                <Stack
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{
-                    width: 24,
-                    height: 24,
-                    border: ({ palette }) =>
-                      "1px solid " + palette.primary.main,
-                    borderRadius: BORDER_RADIUS_1,
-                  }}
-                >
-                  <Add
-                    fontSize="small"
-                    sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
-                  />
-                </Stack>
-              }
-            >
-              ایجاد سرویس کوبرنتیز
-            </Button>
-          </Stack>
+          <Button
+            onClick={gotToAddKubernetes}
+            variant="outlined"
+            size="large"
+            sx={{
+              whiteSpace: "nowrap",
+              px: 1.2,
+              borderRadius: BORDER_RADIUS_5,
+            }}
+            startIcon={
+              <Stack
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  width: 24,
+                  height: 24,
+                  border: ({ palette }) => "1px solid " + palette.primary.main,
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              >
+                <Add
+                  fontSize="small"
+                  sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                />
+              </Stack>
+            }
+          >
+            ایجاد سرویس کوبرنتیز
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>

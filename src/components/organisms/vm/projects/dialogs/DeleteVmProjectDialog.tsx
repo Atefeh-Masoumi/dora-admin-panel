@@ -1,9 +1,8 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/vm/Index";
 import { useDeleteApiMyVmProjectDeleteByIdMutation } from "src/app/services/api.generated";
 
 type DeleteVmProjectDialogPropsType = {
@@ -17,8 +16,6 @@ export const DeleteVmProjectDialog: FC<DeleteVmProjectDialogPropsType> = ({
   handleClose,
   id,
 }) => {
-  const { refetchOnClick } = useContext(DataContext);
-
   const onClose = () => handleClose();
   const [deleteItem, { isLoading }] =
     useDeleteApiMyVmProjectDeleteByIdMutation();
@@ -27,11 +24,10 @@ export const DeleteVmProjectDialog: FC<DeleteVmProjectDialogPropsType> = ({
     deleteItem({ id })
       .unwrap()
       .then(() => {
-        refetchOnClick();
         toast.success("پروژه سرور ابری با موفقیت حذف شد");
         handleClose();
       })
-      .catch(() => toast.error("مشکلی پیش آمده \nلطفا دوباره امتحان کنید"));
+      .catch((err) => {});
 
   return (
     <Dialog
