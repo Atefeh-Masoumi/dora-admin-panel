@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
@@ -17,6 +17,7 @@ const AddVm: FC = () => {
   const selectVmProjects = useAppSelector(
     (store) => store.vmProject.selectedVmProject
   );
+
   const vmProjectId = selectVmProjects?.id || 0;
 
   const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =
@@ -26,9 +27,6 @@ const AddVm: FC = () => {
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
-
-  // const { data: customerType } =
-  //   useGetApiMyPortalCustomerGetCustomerTypeQuery();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
     usePostApiMyVmHostCreateMutation();
@@ -64,7 +62,7 @@ const AddVm: FC = () => {
           imageId: osVersion?.id || 0,
           customerProductTypeId: paymentType!,
           isPredefined: true,
-          vmProjectId: vmProjectId,
+          vmProjectId,
           productBundleId: serverConfig?.id || 0,
           cpu: null,
           memory: null,
@@ -79,6 +77,9 @@ const AddVm: FC = () => {
     }
   };
 
+  if (!selectVmProjects) {
+    return <Navigate to="/vm" />;
+  }
   return (
     <>
       <Typography
