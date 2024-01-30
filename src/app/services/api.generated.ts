@@ -630,11 +630,11 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
+    postApiMyHomeIndex: build.mutation<
+      PostApiMyHomeIndexApiResponse,
+      PostApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index` }),
+      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
     }),
     getApiMyPortalInvoiceList: build.query<
       GetApiMyPortalInvoiceListApiResponse,
@@ -2189,8 +2189,8 @@ export type PostApiMyDomainHostResendVerificationByIdApiResponse = unknown;
 export type PostApiMyDomainHostResendVerificationByIdApiArg = {
   id: number;
 };
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
+export type PostApiMyHomeIndexApiResponse = unknown;
+export type PostApiMyHomeIndexApiArg = void;
 export type GetApiMyPortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiMyPortalInvoiceListApiArg = void;
@@ -3127,14 +3127,16 @@ export type CustomerUserListResponse = {
   firstName?: string | null;
   lastName?: string | null;
   phoneNumber?: string | null;
+  isActive?: boolean;
+  hasTwoFactor?: boolean;
 };
 export type AccessTupleModel = {
   accessId?: number;
   hasAccess?: boolean;
 };
-export type EntityAccessModel = {
-  accessType?: number;
-  entityId?: number;
+export type RoleAccessListModel = {
+  roleAccessTypeId?: number;
+  roleId?: number;
   accessTuples?: AccessTupleModel[] | null;
 };
 export type EditRoleAccessModel = {
@@ -3142,7 +3144,7 @@ export type EditRoleAccessModel = {
   isSuperUser: boolean;
   isFinancialManager: boolean;
   isAccountManager: boolean;
-  entityAccesses?: EntityAccessModel[] | null;
+  roleAccesses?: RoleAccessListModel[] | null;
 };
 export type DeleteCustomerUserModel = {
   userId?: string;
@@ -3952,11 +3954,11 @@ export type VmProjectList = {
   createDate?: string;
 };
 export type CreateVmProject = {
-  name?: string | null;
+  name: string;
 };
 export type EditVmProject = {
-  name?: string | null;
-  id?: number;
+  name: string;
+  id: number;
 };
 export type VmSnapshotResponse = {
   id?: number;
@@ -4144,7 +4146,7 @@ export const {
   usePutApiMyDomainHostChangeContactMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePostApiMyDomainHostResendVerificationByIdMutation,
-  useGetApiMyHomeIndexQuery,
+  usePostApiMyHomeIndexMutation,
   useGetApiMyPortalInvoiceListQuery,
   useGetApiMyPortalInvoiceGetByIdQuery,
   usePostApiMyPortalInvoicePayMutation,
