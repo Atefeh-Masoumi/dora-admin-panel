@@ -5,6 +5,24 @@ import {
 } from "./api.generated";
 import { AxiosRequestConfig } from "axios";
 
+const tags = [
+  "Profile",
+  "Notification",
+  "Order",
+  "Orders",
+  "ZoneData",
+  "EditRecordDialog",
+  "ProxyStatus",
+  "DNSRecordSetting",
+  "LoadBalance",
+  "SslSetting",
+  "SupportItems",
+  "Support",
+  "VmHost",
+  "Kubernetes",
+  "NotificationStatus",
+];
+
 export const api = generatedApi
   .injectEndpoints({
     endpoints: (build) => ({
@@ -26,65 +44,14 @@ export const api = generatedApi
     }),
   })
   .enhanceEndpoints({
-    addTagTypes: [
-      "Profile",
-      "Notification",
-      "Order",
-      "Orders",
-      "ZoneData",
-      "EditRecordDialog",
-      "ProxyStatus",
-      "DNSRecordSetting",
-      "LoadBalance",
-      "SslSetting",
-      "SupportItems",
-      "Support",
-      "VmHosts",
-      "VmHost",
-      "Kubernetes",
-      "NotificationStatus",
-    ],
+    addTagTypes: tags,
     endpoints: {
       // ============================== Login ============================== //
       postApiMyAccountLogin: {
-        invalidatesTags: () => [
-          "Profile",
-          "Notification",
-          "Order",
-          "Orders",
-          "ZoneData",
-          "EditRecordDialog",
-          "ProxyStatus",
-          "DNSRecordSetting",
-          "LoadBalance",
-          "SslSetting",
-          "SupportItems",
-          "Support",
-          "VmHosts",
-          "VmHost",
-          "Kubernetes",
-          "NotificationStatus",
-        ],
+        invalidatesTags: () => tags,
       },
       postApiMyAccountTwoFactorLogin: {
-        invalidatesTags: () => [
-          "Profile",
-          "Notification",
-          "Order",
-          "Orders",
-          "ZoneData",
-          "EditRecordDialog",
-          "ProxyStatus",
-          "DNSRecordSetting",
-          "LoadBalance",
-          "SslSetting",
-          "SupportItems",
-          "Support",
-          "VmHosts",
-          "VmHost",
-          "Kubernetes",
-          "NotificationStatus",
-        ],
+        invalidatesTags: () => tags,
       },
       // ============================== Kubernetes ============================== //
       getApiMyKubernetesHostList: {
@@ -240,27 +207,30 @@ export const api = generatedApi
       postApiMyCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["SslSetting"],
       },
-      // ============================== VmHosts ============================== //
+      // ============================== VmHost ============================== //
       getApiMyVmProjectList: {
-        providesTags: () => ["VmHosts"],
+        providesTags: () => ["VmHost"],
       },
       postApiMyVmProjectCreate: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
       },
       deleteApiMyVmProjectDeleteById: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
       },
       putApiMyVmProjectEdit: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
       },
       postApiMyVmHostCreate: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
       },
       deleteApiMyVmHostDeleteById: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
       },
       putApiMyVmHostEdit: {
-        invalidatesTags: () => ["VmHosts"],
+        invalidatesTags: () => ["VmHost"],
+      },
+      deleteApiMyVmSnapshotDeleteById: {
+        invalidatesTags: () => ["VmHost"],
       },
       // ============================== VmHost ============================== //
       getApiMyVmHostGetById: {
