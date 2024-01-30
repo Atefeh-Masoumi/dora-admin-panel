@@ -42,8 +42,9 @@ const AddVm: FC = () => {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
     } else if (!serverName) {
       validationErrorMessage = "لطفا نام سرور را انتخاب کنید";
-    } else if (serverName.length < 3) {
-      validationErrorMessage = "نام سرور نباید کمتر از سه حرف باشد";
+    } else if (serverName.trim().length < 5 || serverName.length > 50) {
+      validationErrorMessage =
+        "طول کارکترهای بخش نام سرور ابری باید بین ۵ تا ۵۰ کارکتر باشد";
     } else if (!passwordValidationRegex.test(serverPassword)) {
       validationErrorMessage = "رمز عبور نامعتبر است";
     } else if (!paymentType) {
@@ -73,7 +74,8 @@ const AddVm: FC = () => {
         .then((res) => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
           navigate("/vm/list");
-        });
+        })
+        .catch((err) => {});
     }
   };
 
