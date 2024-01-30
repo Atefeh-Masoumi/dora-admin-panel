@@ -51,9 +51,9 @@ export const EditProjectDialog: FC<EditProjectDialogPropsType> = ({
   );
 
   const submit = () => {
-    if (!canChange) return;
+    if (!canChange || !selectedVmProject || !selectedVmProject.id) return;
 
-    editVmProject({ editVmProject: { id: selectedVmProject!.id, name } })
+    editVmProject({ editVmProject: { id: selectedVmProject.id, name } })
       .unwrap()
       .then(() => {
         toast.success("سرور ابری با موفقیت ایجاد شد");
