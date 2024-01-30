@@ -16,6 +16,7 @@ import {
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
+import { passwordValidationRegex } from "src/utils/regexUtils";
 
 type AddKubernetesContextType = {
   kubernetesVersion: DatacenterListResponse | null;
@@ -86,28 +87,38 @@ export const AddKubernetesContextProvider: FC<
   const [createKubernetes, { isLoading: submitLoading }] =
     usePostApiMyKubernetesHostCreateMutation();
 
-  // const { data: customerType } =
-  //   useGetApiMyPortalCustomerGetCustomerTypeQuery();
-
   const submitHandler = () => {
-    if (
-      !dataCenter ||
-      !kubernetesVersion ||
-      !osVersion ||
-      !workersCount ||
-      !serverConfig ||
-      !serverName ||
-      !serverPassword ||
-      !paymentType
-    )
-      return;
+    console.log("first");
+    let validationErrorMessage = "";
+
+    if (!dataCenter || !dataCenter.id) {
+      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
+    } else if (!osVersion || !osVersion.id) {
+      validationErrorMessage = "لطفا ورژن سیستم عامل را انتخاب کنید";
+    } else if (!kubernetesVersion) {
+      validationErrorMessage = "لطفا ورژن کوبرنتیز خود را مشخص کنید";
+    } else if (!serverConfig || !serverConfig.id) {
+      validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
+    } else if (!serverName) {
+      validationErrorMessage = "لطفا نام سرور را انتخاب کنید";
+    } else if (serverName.length < 3) {
+      validationErrorMessage = "نام سرور نباید کمتر از سه حرف باشد";
+    } else if (!passwordValidationRegex.test(serverPassword)) {
+      validationErrorMessage = "رمز عبور نامعتبر است";
+    } else if (!paymentType) {
+      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
+    } 
+
+    if (validationErrorMessage) {
+      return toast.error(validationErrorMessage);
+    }
 
     createKubernetes({
       createKubernetesModel: {
         clusterName: serverName,
-        datacenterId: dataCenter.id!,
-        imageId: osVersion.id!,
-        kubernetesVersionId: kubernetesVersion.id!,
+        datacenterId: dataCenter!.id!,
+        imageId: osVersion!.id!,
+        kubernetesVersionId: kubernetesVersion!.id!,
         vmPassword: serverPassword,
         customerProductTypeId: paymentType!,
         nodeCount: workersCount,
