@@ -38,7 +38,7 @@ export const AuthCard: FC = () => {
           maxWidth="60%"
           textAlign="center"
         >
-          از اعتبار شما در ارائه خدمات آنلاین حفاظت میکنیم.
+          از اعتبار شما در ارائه خدمات آنلاین حفاظت می‌کنیم.
         </Typography>
       </Stack>
     </Stack>
