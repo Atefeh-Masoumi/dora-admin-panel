@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const addVmTableStruct: columnType[] = [
-  { id: "id", label: "", invisibility: true },
+  { id: "id", label: "شناسه", invisibility: true },
   { id: "datacenter", label: "مرکز داده" },
   { id: "name", label: "نام ماشین" },
   { id: "operatingSystem", label: "سیستم عامل" },
