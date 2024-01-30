@@ -33,18 +33,35 @@ const VmManagement: FC<VmManagementPropsType> = () => {
 
   const [vmList, setVmList] = useState<VmListResponse[]>([]);
 
-  const [selectList, { isLoading: vmListLoading }] =
+  const [getVmList, { isLoading: getVmListLoading }] =
     usePostApiMyVmHostListMutation();
 
   useEffect(() => {
-    selectList({
+    const getNotifInterval = setInterval(() => {
+      getVmList({
+        vmListModel: {
+          vmProjectId: vmProjectId,
+        },
+      })
+        .unwrap()
+        .then((res: SetStateAction<VmListResponse[]>) => setVmList(res))
+        .catch((err) => {});
+    }, 120 * 1000);
+    return () => {
+      clearInterval(getNotifInterval);
+    };
+  }, [getVmList, vmProjectId]);
+
+  useEffect(() => {
+    getVmList({
       vmListModel: {
         vmProjectId: vmProjectId,
       },
     })
       .unwrap()
-      .then((res: SetStateAction<VmListResponse[]>) => setVmList(res));
-  }, [selectList, selectVmProjects]);
+      .then((res: SetStateAction<VmListResponse[]>) => setVmList(res))
+      .catch((err) => {});
+  }, []);
 
   const filteredList =
     vmList?.filter((item) => {
@@ -122,7 +139,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
           RowComponent={AddVmTableRow}
           rows={filteredList}
           text="در حال حاضر سروری وجود ندارد"
-          isLoading={vmListLoading}
+          isLoading={getVmListLoading}
           initialOrder={9}
         />
       </Box>
