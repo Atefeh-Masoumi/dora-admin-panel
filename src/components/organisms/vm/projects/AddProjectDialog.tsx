@@ -33,6 +33,9 @@ export const AddProjectDialog: FC<AddProjectDialogPropsType> = ({
     usePostApiMyVmProjectCreateMutation();
 
   const submit = () => {
+    if (name.trim().length < 5 || name.trim().length > 50) {
+      return toast.error("تعداد کارکترهای نام پروژه باید بین ۵ تا ۵۰ باشد");
+    }
     createNewVmProject({ createVmProject: { name } })
       .unwrap()
       .then(() => {
