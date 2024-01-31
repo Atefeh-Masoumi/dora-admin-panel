@@ -9,7 +9,7 @@ import { Setting } from "src/components/atoms/svg/SettingSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
-import { usePostApiMyVmKmsGetMutation } from "src/app/services/api.generated";
+import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -19,25 +19,21 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
   const settingOnClick = () => navigate("/vm/" + row["id"]);
 
-  const [getUrl, { isLoading: getUrlLoading }] = usePostApiMyVmKmsGetMutation();
-  const monitorOnClick = (isVmPlayer?: boolean) => {
+  const [getUrl, { isLoading: getUrlLoading }] =
+    useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
+
+  const monitorOnClick = () => {
     getUrl({
-      getKmsModel: {
-        id: row["id"],
-        typeId: isVmPlayer ? 1 : 2,
-      },
+      id: row["id"],
+      typeId: 2,
     })
       .unwrap()
       .then((res) => {
         if (!res) return;
-        if (isVmPlayer) {
-          window.open(res, "_blank");
-        } else {
-          let a = document.createElement("a");
-          a.href = "/console/wmks-sdk.html?url=" + res;
-          a.target = "_blank";
-          a.click();
-        }
+        let a = document.createElement("a");
+        a.href = "/console/wmks-sdk.html?url=" + res;
+        a.target = "_blank";
+        a.click();
       });
   };
 
@@ -66,10 +62,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                       }}
                     />
                   </IconButton>
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={() => monitorOnClick(false)}
-                  >
+                  <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
                     <MonitorSvg />
                   </IconButton>
                   <IconButton
