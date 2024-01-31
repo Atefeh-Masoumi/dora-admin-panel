@@ -1,8 +1,5 @@
-import { FC, useState, useEffect, SetStateAction } from "react";
-import {
-  VmListResponse,
-  usePostApiMyVmHostListMutation,
-} from "src/app/services/api.generated";
+import { FC, useState, useEffect } from "react";
+import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -27,41 +24,29 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     navigate("/vm");
   }, [navigate, selectVmProjects]);
 
-  const vmProjectId = selectVmProjects?.id;
-
   const [search, setSearch] = useState("");
 
-  const [vmList, setVmList] = useState<VmListResponse[]>([]);
+  const {
+    data: vmList,
+    isLoading: getVmListLoading,
+    refetch,
+  } = useGetApiMyVmHostListByVmProjectIdQuery(
+    {
+      vmProjectId: selectVmProjects?.id || 0,
+    },
+    { skip: !selectVmProjects?.id }
+  );
 
-  const [getVmList, { isLoading: getVmListLoading }] =
-    usePostApiMyVmHostListMutation();
+  console.log({ vmList });
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
-      getVmList({
-        vmListModel: {
-          vmProjectId: vmProjectId,
-        },
-      })
-        .unwrap()
-        .then((res: SetStateAction<VmListResponse[]>) => setVmList(res))
-        .catch((err) => {});
+      refetch();
     }, 120 * 1000);
     return () => {
       clearInterval(getNotifInterval);
     };
-  }, [getVmList, vmProjectId]);
-
-  useEffect(() => {
-    getVmList({
-      vmListModel: {
-        vmProjectId: vmProjectId,
-      },
-    })
-      .unwrap()
-      .then((res: SetStateAction<VmListResponse[]>) => setVmList(res))
-      .catch((err) => {});
-  }, []);
+  }, [refetch]);
 
   const filteredList =
     vmList?.filter((item) => {
