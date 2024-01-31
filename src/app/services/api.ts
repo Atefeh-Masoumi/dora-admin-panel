@@ -208,7 +208,13 @@ export const api = generatedApi
         invalidatesTags: () => ["SslSetting"],
       },
       // ============================== VmHost ============================== //
+      getApiMyVmHostListByVmProjectId: {
+        providesTags: () => ["VmHost"],
+      },
       getApiMyVmProjectList: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmKmsGetByIdAndTypeId: {
         providesTags: () => ["VmHost"],
       },
       postApiMyVmProjectCreate: {
@@ -274,4 +280,5 @@ export const {
   useLazyGetApiMyKubesphereHostGetLoginByIdQuery,
   useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
   useLazyGetApiMyDomainHostGetByIdQuery,
+  useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery
 } = api;
