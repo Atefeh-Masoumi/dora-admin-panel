@@ -10,7 +10,7 @@ import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
 import {
-  usePostApiMyVmKmsGetMutation,
+  useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   usePutApiMyVmHostDisconnectByIdMutation,
   usePutApiMyVmHostConnectByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
@@ -25,8 +25,14 @@ type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const [getUrl, { isLoading: getUrlIsLoading }] =
-    usePostApiMyVmKmsGetMutation();
+  const { data: url, isLoading: getUrlIsLoading } =
+    useGetApiMyVmKmsGetByIdAndTypeIdQuery(
+      {
+        id: serverId || 0,
+        typeId: 2,
+      },
+      { skip: !serverId }
+    );
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiMyVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -40,28 +46,18 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
     usePutApiMyVmHostRebootByIdMutation();
 
+  const sendUserToKmsConsole = () => {
+    let a = document.createElement("a");
+    a.href = "/console/wmks-sdk.html?url=" + url;
+    a.target = "_blank";
+    a.click();
+  };
+
   const actionsArray = [
     {
       label: "Web Console",
       Icon: MonitorSvg,
-      onClick: () => {
-        if (!serverId) return;
-
-        getUrl({
-          getKmsModel: {
-            id: serverId,
-            typeId: 2,
-          },
-        })
-          .unwrap()
-          .then((res) => {
-            if (!res) return;
-            let a = document.createElement("a");
-            a.href = "/console/wmks-sdk.html?url=" + res;
-            a.target = "_blank";
-            a.click();
-          });
-      },
+      onClick: sendUserToKmsConsole,
       isLoading: getUrlIsLoading,
     },
     {
@@ -154,7 +150,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         }}
       >
         {actionsArray.map(({ label, Icon, onClick, isLoading }, index) => {
-          const isVMRC = label === "VMRC Console";
+          // const isVMRC = label === "VMRC Console";
 
           return (
             <LoadingButton
