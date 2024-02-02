@@ -265,19 +265,14 @@ export const api = generatedApi
 
 export const {
   useCustomCreateIssueMutation,
-  useLazyGetApiMyPortalProfileGetNotificationStatusQuery,
   useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
   useLazyGetApiMyCdnDnsRecordGetByIdQuery,
-  useLazyGetApiMyPortalInvoiceGetByIdQuery,
-  useLazyGetApiMyPortalIssueItemDownloadByIdQuery,
   useLazyGetApiMyPortalPaymentGetByIdQuery,
-  useLazyGetApiMyPortalBillDownloadByIdQuery,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
-  useLazyGetApiMyKubesphereHostGetLoginByIdQuery,
   useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
   useLazyGetApiMyDomainHostGetByIdQuery,
   useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery
