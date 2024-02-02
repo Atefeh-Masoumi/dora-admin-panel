@@ -385,30 +385,32 @@ export const api = createApi({
         body: queryArg.editCustomerModel,
       }),
     }),
-    getApiMyPortalBillList: build.query<
-      GetApiMyPortalBillListApiResponse,
-      GetApiMyPortalBillListApiArg
+    getApiMyPortalCustomerBillList: build.query<
+      GetApiMyPortalCustomerBillListApiResponse,
+      GetApiMyPortalCustomerBillListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/bill/list` }),
+      query: () => ({ url: `/api/my/portal/customer-bill/list` }),
     }),
-    getApiMyPortalBillShortList: build.query<
-      GetApiMyPortalBillShortListApiResponse,
-      GetApiMyPortalBillShortListApiArg
+    getApiMyPortalCustomerBillShortList: build.query<
+      GetApiMyPortalCustomerBillShortListApiResponse,
+      GetApiMyPortalCustomerBillShortListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/bill/short-list` }),
+      query: () => ({ url: `/api/my/portal/customer-bill/short-list` }),
     }),
-    getApiMyPortalBillGetById: build.query<
-      GetApiMyPortalBillGetByIdApiResponse,
-      GetApiMyPortalBillGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/portal/bill/get/${queryArg.id}` }),
-    }),
-    getApiMyPortalBillDownloadById: build.query<
-      GetApiMyPortalBillDownloadByIdApiResponse,
-      GetApiMyPortalBillDownloadByIdApiArg
+    getApiMyPortalCustomerBillGetById: build.query<
+      GetApiMyPortalCustomerBillGetByIdApiResponse,
+      GetApiMyPortalCustomerBillGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/bill/download/${queryArg.id}`,
+        url: `/api/my/portal/customer-bill/get/${queryArg.id}`,
+      }),
+    }),
+    getApiMyPortalCustomerBillDownloadById: build.query<
+      GetApiMyPortalCustomerBillDownloadByIdApiResponse,
+      GetApiMyPortalCustomerBillDownloadByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-bill/download/${queryArg.id}`,
       }),
     }),
     getApiMyPortalCustomerProductListByProductId: build.query<
@@ -630,17 +632,23 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    postApiMyHomeIndex: build.mutation<
-      PostApiMyHomeIndexApiResponse,
-      PostApiMyHomeIndexApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyPortalInvoiceList: build.query<
       GetApiMyPortalInvoiceListApiResponse,
       GetApiMyPortalInvoiceListApiArg
     >({
       query: () => ({ url: `/api/my/portal/invoice/list` }),
+    }),
+    getApiMyPortalInvoiceUnpaid: build.query<
+      GetApiMyPortalInvoiceUnpaidApiResponse,
+      GetApiMyPortalInvoiceUnpaidApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/invoice/unpaid` }),
     }),
     getApiMyPortalInvoiceGetById: build.query<
       GetApiMyPortalInvoiceGetByIdApiResponse,
@@ -659,12 +667,6 @@ export const api = createApi({
         method: "POST",
         body: queryArg.payInvoiceModel,
       }),
-    }),
-    getApiMyPortalInvoiceUnpaid: build.query<
-      GetApiMyPortalInvoiceUnpaidApiResponse,
-      GetApiMyPortalInvoiceUnpaidApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/invoice/unpaid` }),
     }),
     getApiMyPortalInvoiceSummary: build.query<
       GetApiMyPortalInvoiceSummaryApiResponse,
@@ -2058,19 +2060,19 @@ export type PutApiMyPortalCustomerEditApiResponse = unknown;
 export type PutApiMyPortalCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
 };
-export type GetApiMyPortalBillListApiResponse =
+export type GetApiMyPortalCustomerBillListApiResponse =
   /** status 200 Success */ CustomerBillListResponse[];
-export type GetApiMyPortalBillListApiArg = void;
-export type GetApiMyPortalBillShortListApiResponse =
+export type GetApiMyPortalCustomerBillListApiArg = void;
+export type GetApiMyPortalCustomerBillShortListApiResponse =
   /** status 200 Success */ CustomerBillShortListResponse[];
-export type GetApiMyPortalBillShortListApiArg = void;
-export type GetApiMyPortalBillGetByIdApiResponse =
+export type GetApiMyPortalCustomerBillShortListApiArg = void;
+export type GetApiMyPortalCustomerBillGetByIdApiResponse =
   /** status 200 Success */ GetCustomerBillResponse;
-export type GetApiMyPortalBillGetByIdApiArg = {
+export type GetApiMyPortalCustomerBillGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyPortalBillDownloadByIdApiResponse = unknown;
-export type GetApiMyPortalBillDownloadByIdApiArg = {
+export type GetApiMyPortalCustomerBillDownloadByIdApiResponse = unknown;
+export type GetApiMyPortalCustomerBillDownloadByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalCustomerProductListByProductIdApiResponse =
@@ -2183,11 +2185,14 @@ export type PostApiMyDomainHostResendVerificationByIdApiResponse = unknown;
 export type PostApiMyDomainHostResendVerificationByIdApiArg = {
   id: number;
 };
-export type PostApiMyHomeIndexApiResponse = unknown;
-export type PostApiMyHomeIndexApiArg = void;
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyPortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiMyPortalInvoiceListApiArg = void;
+export type GetApiMyPortalInvoiceUnpaidApiResponse =
+  /** status 200 Success */ UnPaidInvoiceResponse[];
+export type GetApiMyPortalInvoiceUnpaidApiArg = void;
 export type GetApiMyPortalInvoiceGetByIdApiResponse =
   /** status 200 Success */ GetInvoiceResponse;
 export type GetApiMyPortalInvoiceGetByIdApiArg = {
@@ -2198,9 +2203,6 @@ export type PostApiMyPortalInvoicePayApiResponse =
 export type PostApiMyPortalInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
-export type GetApiMyPortalInvoiceUnpaidApiResponse =
-  /** status 200 Success */ UnPaidInvoiceResponse[];
-export type GetApiMyPortalInvoiceUnpaidApiArg = void;
 export type GetApiMyPortalInvoiceSummaryApiResponse =
   /** status 200 Success */ InvoiceSummaryResponse;
 export type GetApiMyPortalInvoiceSummaryApiArg = void;
@@ -3321,6 +3323,16 @@ export type InvoiceListResponse = {
   invoiceStatusId?: number;
   invoiceStatus?: string | null;
 };
+export type UnPaidInvoiceResponse = {
+  id?: number;
+  customerName?: string | null;
+  invoiceDate?: string;
+  netPrice?: number;
+  discount?: number;
+  invoiceStatusId?: number;
+  invoicePrice?: number;
+  vat?: number;
+};
 export type InvoiceItemModel = {
   product?: string | null;
   quantity?: number;
@@ -3351,16 +3363,6 @@ export type CreatePaymentResponse = {
 };
 export type PayInvoiceModel = {
   id?: number;
-};
-export type UnPaidInvoiceResponse = {
-  id?: number;
-  customerName?: string | null;
-  invoiceDate?: string;
-  netPrice?: number;
-  discount?: number;
-  invoiceStatusId?: number;
-  invoicePrice?: number;
-  vat?: number;
 };
 export type InvoiceSummaryResponse = {
   totalPaid?: number;
@@ -4102,10 +4104,10 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCustomerGetQuery,
   usePutApiMyPortalCustomerEditMutation,
-  useGetApiMyPortalBillListQuery,
-  useGetApiMyPortalBillShortListQuery,
-  useGetApiMyPortalBillGetByIdQuery,
-  useGetApiMyPortalBillDownloadByIdQuery,
+  useGetApiMyPortalCustomerBillListQuery,
+  useGetApiMyPortalCustomerBillShortListQuery,
+  useGetApiMyPortalCustomerBillGetByIdQuery,
+  useGetApiMyPortalCustomerBillDownloadByIdQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
   useGetApiMyPortalCustomerProductShortListQuery,
   useGetApiMyPortalCustomerUserListQuery,
@@ -4132,11 +4134,11 @@ export const {
   usePutApiMyDomainHostChangeContactMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePostApiMyDomainHostResendVerificationByIdMutation,
-  usePostApiMyHomeIndexMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyPortalInvoiceListQuery,
+  useGetApiMyPortalInvoiceUnpaidQuery,
   useGetApiMyPortalInvoiceGetByIdQuery,
   usePostApiMyPortalInvoicePayMutation,
-  useGetApiMyPortalInvoiceUnpaidQuery,
   useGetApiMyPortalInvoiceSummaryQuery,
   useGetApiMyPortalIssueListQuery,
   useGetApiMyPortalIssueShortListQuery,
