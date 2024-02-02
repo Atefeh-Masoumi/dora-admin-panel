@@ -8,12 +8,12 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BillsTableRow } from "src/components/organisms/portal/customerBill/tables/BillsTableRow";
 import { billsTableStruct } from "src/components/organisms/portal/customerBill/tables/billsTableStruct";
 import {
-  useGetApiMyPortalBillListQuery,
+  useGetApiMyPortalCustomerBillListQuery,
   CustomerBillListResponse,
 } from "src/app/services/api.generated";
 
 const CustomerBills: FC = () => {
-  const { data: customerBill, isLoading } = useGetApiMyPortalBillListQuery();
+  const { data: customerBill, isLoading } = useGetApiMyPortalCustomerBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
