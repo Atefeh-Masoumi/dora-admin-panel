@@ -88,7 +88,6 @@ export const AddKubernetesContextProvider: FC<
     usePostApiMyKubernetesHostCreateMutation();
 
   const submitHandler = () => {
-    console.log("first");
     let validationErrorMessage = "";
 
     if (!dataCenter || !dataCenter.id) {
@@ -107,7 +106,7 @@ export const AddKubernetesContextProvider: FC<
       validationErrorMessage = "رمز عبور نامعتبر است";
     } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
-    } 
+    }
 
     if (validationErrorMessage) {
       return toast.error(validationErrorMessage);

@@ -57,9 +57,6 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     )
       return;
 
-    console.log({ nameServer1 });
-    console.log({ nameServer2 });
-
     changeNsModel({
       changeNsModel: {
         id: parseInt(id),
