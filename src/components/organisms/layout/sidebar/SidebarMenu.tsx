@@ -191,7 +191,8 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           p: 3,
           boxShadow: "0px 32px 64px rgba(17, 17, 17, 0.08)",
           height: "100%",
-          overflow: "auto",
+          overflowY: "auto",
+          overflowX: "hidden",
           borderRadius: BORDER_RADIUS_4,
           "&::-webkit-scrollbar": {
             display: "none",
