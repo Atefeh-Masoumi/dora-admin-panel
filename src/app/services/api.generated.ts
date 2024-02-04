@@ -440,17 +440,16 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/portal/customer-user/create`,
         method: "POST",
-        body: queryArg.editRoleAccessModel,
+        body: queryArg.createCustomerUserModel,
       }),
     }),
-    deleteApiMyPortalCustomerUserDelete: build.mutation<
-      DeleteApiMyPortalCustomerUserDeleteApiResponse,
-      DeleteApiMyPortalCustomerUserDeleteApiArg
+    deleteApiMyPortalCustomerUserDeleteByUserId: build.mutation<
+      DeleteApiMyPortalCustomerUserDeleteByUserIdApiResponse,
+      DeleteApiMyPortalCustomerUserDeleteByUserIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/customer-user/delete`,
+        url: `/api/my/portal/customer-user/delete/${queryArg.userId}`,
         method: "DELETE",
-        body: queryArg.deleteCustomerUserModel,
       }),
     }),
     postApiMyPortalCustomerUserChange: build.mutation<
@@ -2088,14 +2087,14 @@ export type GetApiMyPortalCustomerUserListApiResponse =
 export type GetApiMyPortalCustomerUserListApiArg = void;
 export type PostApiMyPortalCustomerUserCreateApiResponse = unknown;
 export type PostApiMyPortalCustomerUserCreateApiArg = {
-  editRoleAccessModel: EditRoleAccessModel;
+  createCustomerUserModel: CreateCustomerUserModel;
 };
-export type DeleteApiMyPortalCustomerUserDeleteApiResponse = unknown;
-export type DeleteApiMyPortalCustomerUserDeleteApiArg = {
-  deleteCustomerUserModel: DeleteCustomerUserModel;
+export type DeleteApiMyPortalCustomerUserDeleteByUserIdApiResponse = unknown;
+export type DeleteApiMyPortalCustomerUserDeleteByUserIdApiArg = {
+  userId: string;
 };
 export type PostApiMyPortalCustomerUserChangeApiResponse =
-  /** status 200 Success */ ChangeUserCustomerResponse;
+  /** status 200 Success */ ChangeCustomerUserResponse;
 export type PostApiMyPortalCustomerUserChangeApiArg = {
   changeCustomerUserModel: ChangeCustomerUserModel;
 };
@@ -3137,21 +3136,18 @@ export type RoleAccessListModel = {
   roleId?: number;
   accessTuples?: AccessTupleModel[] | null;
 };
-export type EditRoleAccessModel = {
+export type CreateCustomerUserModel = {
   email: string;
   isSuperUser: boolean;
   isFinancialManager: boolean;
   isAccountManager: boolean;
   roleAccesses?: RoleAccessListModel[] | null;
 };
-export type DeleteCustomerUserModel = {
-  userId?: string;
-};
-export type ChangeUserCustomerResponse = {
-  roles?: number[] | null;
+export type ChangeCustomerUserResponse = {
   isSuperUser?: boolean;
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
+  roles?: number[] | null;
 };
 export type ChangeCustomerUserModel = {
   customerId?: number;
@@ -3807,11 +3803,31 @@ export type RoleAccessListResponse = {
   roleId?: number;
   name?: string | null;
   description?: string | null;
+  isSuperUser?: boolean;
+  isFinancialManager?: boolean;
+  isAccountManager?: boolean;
+  roleAccessTypeId?: number;
   hasAccess?: boolean;
   accesses?: AccessTupleModel[] | null;
 };
 export type RoleAccessModel = {
   userId: string;
+};
+export type EditAccessTuple = {
+  accessId?: number;
+  hasAccess?: boolean;
+};
+export type EditRoleAccessListModel = {
+  roleAccessTypeId?: number;
+  roleId?: number;
+  accessTuples?: EditAccessTuple[] | null;
+};
+export type EditRoleAccessModel = {
+  email: string;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
+  roleAccesses?: EditRoleAccessListModel[] | null;
 };
 export type RoleAccessTypeListResponse = {
   id?: number;
@@ -4112,7 +4128,7 @@ export const {
   useGetApiMyPortalCustomerProductShortListQuery,
   useGetApiMyPortalCustomerUserListQuery,
   usePostApiMyPortalCustomerUserCreateMutation,
-  useDeleteApiMyPortalCustomerUserDeleteMutation,
+  useDeleteApiMyPortalCustomerUserDeleteByUserIdMutation,
   usePostApiMyPortalCustomerUserChangeMutation,
   useGetApiMyDashboardUsageByCategoryIdQuery,
   useGetApiMyDashboardFinancialQuery,
@@ -4282,4 +4298,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-
