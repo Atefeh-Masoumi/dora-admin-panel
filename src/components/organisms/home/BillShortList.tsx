@@ -19,7 +19,8 @@ import { priceToPersian } from "src/utils/priceToPersian";
 export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
 
-  const { data: reports, isLoading } = useGetApiMyPortalCustomerBillShortListQuery();
+  const { data: reports, isLoading } =
+    useGetApiMyPortalCustomerBillShortListQuery();
 
   return (
     <Stack

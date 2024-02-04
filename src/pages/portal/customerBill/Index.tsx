@@ -13,7 +13,8 @@ import {
 } from "src/app/services/api.generated";
 
 const CustomerBills: FC = () => {
-  const { data: customerBill, isLoading } = useGetApiMyPortalCustomerBillListQuery();
+  const { data: customerBill, isLoading } =
+    useGetApiMyPortalCustomerBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
