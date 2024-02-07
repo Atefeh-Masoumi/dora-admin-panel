@@ -55,9 +55,8 @@ const EditDomain: FC<EditDomainPropsType> = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      setDomainId(Number(id));
-    }
+    if (!id) return;
+    setDomainId(Number(id));
   }, [id, setDomainId]);
 
   const [section, setSection] = useState(0);
