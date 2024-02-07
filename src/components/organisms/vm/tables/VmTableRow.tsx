@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, useMemo, useState } from "react";
 import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -13,16 +13,23 @@ import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api"
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
-
   const navigate = useNavigate();
-  const settingOnClick = () => navigate("/vm/" + row["id"]);
 
   const [getUrl, { isLoading: getUrlLoading }] =
     useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
 
+  const isDeactivate = useMemo(() => row["statusId"] !== 2, [row]);
+
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
+
+  const settingOnClick = () => {
+    if (isDeactivate) return;
+    navigate("/vm/" + row["id"]);
+  };
+
   const monitorOnClick = () => {
+    if (isDeactivate) return;
     getUrl({
       id: row["id"],
       typeId: 2,
@@ -52,21 +59,36 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
               sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
               {column.id === "control" ? (
-                <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
-                    <Setting
-                      sx={{
-                        "&> path": {
-                          stroke: ({ palette }) => palette.grey[700],
-                        },
-                      }}
-                    />
-                  </IconButton>
-                  <IconButton sx={{ borderRadius: 1 }} onClick={monitorOnClick}>
-                    <MonitorSvg />
-                  </IconButton>
+                <Stack
+                  direction="row"
+                  justifyContent="end"
+                  spacing={0.6}
+                  maxWidth="100%"
+                >
+                  {!isDeactivate && (
+                    <IconButton
+                      sx={{ borderRadius: 1 }}
+                      onClick={settingOnClick}
+                    >
+                      <Setting
+                        sx={{
+                          "&> path": {
+                            stroke: ({ palette }) => palette.grey[700],
+                          },
+                        }}
+                      />
+                    </IconButton>
+                  )}
+                  {!isDeactivate && (
+                    <IconButton
+                      sx={{ borderRadius: 1 }}
+                      onClick={monitorOnClick}
+                    >
+                      <MonitorSvg />
+                    </IconButton>
+                  )}
                   <IconButton
-                    sx={{ borderRadius: 1 }}
+                    sx={{ borderRadius: 1, ml: "auto" }}
                     color="error"
                     onClick={handleOpenDelete}
                   >
