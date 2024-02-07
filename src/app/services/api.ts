@@ -265,7 +265,7 @@ export const api = generatedApi
 
 export const {
   useCustomCreateIssueMutation,
-  useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
+  useLazyGetApiMyDatacenterIpListByIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
