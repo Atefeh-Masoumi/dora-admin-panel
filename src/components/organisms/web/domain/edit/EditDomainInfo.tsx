@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -10,17 +10,22 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
 import { formikOnSubmitType } from "src/types/form.type";
 import {
-  ChangeContactModel,
+  useGetApiMyDomainHostGetByIdQuery,
   usePutApiMyDomainHostChangeContactMutation,
 } from "src/app/services/api.generated";
-import { useLazyGetApiMyDomainHostGetByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
 
 const commonValidation = yup.string().required("این فیلد اجباری می‌باشد");
 
-export const domainInfoFormValidation = yup.object().shape({
+export const validationSchema = yup.object().shape({
   name: commonValidation,
-  value: commonValidation,
+  country: commonValidation,
+  province: commonValidation,
+  city: commonValidation,
+  street: commonValidation,
+  postalCode: commonValidation,
+  voice: commonValidation,
+  email: commonValidation,
 });
 
 type EditDomainInfoPropsType = {};
@@ -28,91 +33,60 @@ type EditDomainInfoPropsType = {};
 export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
   const { id } = useParams();
 
-  const [initialValues, setInitialValues] = useState<ChangeContactModel>({
-    id: 0,
-    name: "",
-    country: "",
-    province: "",
-    city: "",
-    street: "",
-    postalCode: "",
-    voice: "",
-    fax: "",
-    email: "",
-  });
+  const { data, isLoading: getDetailsLoading } =
+    useGetApiMyDomainHostGetByIdQuery({ id: Number(id)! }, { skip: !id });
 
-  const [getInfo, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyDomainHostGetByIdQuery();
-
-  useEffect(() => {
-    if (!id) return;
-    getInfo({ id: Number(id)! })
-      .unwrap()
-      .then((response) => {
-        if (
-          !response ||
-          !response.name ||
-          !response.country ||
-          !response.province ||
-          !response.city ||
-          !response.street
-        )
-          return;
-
-        setInitialValues((prevState) => {
-          let result = { ...prevState };
-          result.name = response.name!;
-          result.country = response.country!;
-          result.province = response.province!;
-          result.city = response.city!;
-          result.street = response.street || "";
-          result.postalCode = response.postalCode || "";
-          result.voice = response.voice || "";
-          result.fax = response.fax || "";
-          result.email = response.email || "";
-
-          return result;
-        });
-      });
-  }, [getInfo, id]);
+  const initialValues = {
+    name: data?.name || "",
+    country: data?.country || "",
+    province: data?.province || "",
+    city: data?.city || "",
+    street: data?.street || "",
+    postalCode: data?.postalCode || "",
+    voice: data?.voice || "",
+    email: data?.email || "",
+  };
 
   const navigate = useNavigate();
 
-  const [changeContactModel, { isLoading: loadEdit }] =
+  const [editDomain, { isLoading: loadEdit }] =
     usePutApiMyDomainHostChangeContactMutation();
 
-  const submitHandler: formikOnSubmitType<ChangeContactModel> = (
+  const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { name, country, province, city, street, postalCode, voice, email },
     { setSubmitting }
   ) => {
-    changeContactModel({
+    console.log("first");
+
+    editDomain({
       changeContactModel: {
         id: Number(id)!,
-        name,
-        country,
-        province,
-        city,
-        street,
-        postalCode,
-        voice,
-        email,
+        name: name!,
+        country: country!,
+        province: province!,
+        city: city!,
+        street: street!,
+        postalCode: postalCode!,
+        voice: voice!,
+        email: email!,
       },
     })
       .unwrap()
       .then(() => {
         navigate("/domain");
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-
-    setSubmitting(false);
   };
+
   return (
     <>
       {getDetailsLoading || (getDetailsLoading && <PageLoading />)}
-
       <Formik
         initialValues={initialValues}
-        validationSchema={domainInfoFormValidation}
-        onSubmit={submitHandler}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
         enableReinitialize
       >
         {({ errors, touched, getFieldProps }) => (
@@ -144,7 +118,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
+                    <Grid container xs={12} item sx={{ m: 2 }} spacing={1}>
                       <Stack direction="row" spacing={2} px={2} mb={1}>
                         <ExclamationMarkCircleSvg
                           sx={{
@@ -273,10 +247,9 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                       </Grid>
                     </Grid>
 
-                    <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
+                    <Grid xs={12} item sx={{ m: 2 }}>
                       <Stack alignItems="center" justifyContent="center">
                         <LoadingButton
-                          component="button"
                           type="submit"
                           loading={getDetailsLoading || loadEdit}
                           variant="contained"
@@ -296,6 +269,3 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
     </>
   );
 };
-function getInfo(arg0: { id: string }) {
-  throw new Error("Function not implemented.");
-}
