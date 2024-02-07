@@ -12,7 +12,7 @@ import {
   DatacenterListResponse,
   ImageListResponse,
   ProductBundleListResponse,
-  VmSpecListResponse,
+  ProductBundleVmListResponse,
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
@@ -26,7 +26,7 @@ type AddKubernetesContextType = {
   osVersion: ImageListResponse | null;
   setOsVersion: Dispatch<SetStateAction<ImageListResponse | null>>;
   serverConfig: ProductBundleListResponse | null;
-  setServerConfig: Dispatch<SetStateAction<VmSpecListResponse | null>>;
+  setServerConfig: Dispatch<SetStateAction<ProductBundleVmListResponse | null>>;
   serverName: string;
   setServerName: Dispatch<SetStateAction<string>>;
   serverPassword: string;
@@ -74,9 +74,8 @@ export const AddKubernetesContextProvider: FC<
     useState<DatacenterListResponse | null>(null);
   const [workersCount, setWorkersCount] = useState(3);
   const [osVersion, setOsVersion] = useState<ImageListResponse | null>(null);
-  const [serverConfig, setServerConfig] = useState<VmSpecListResponse | null>(
-    null
-  );
+  const [serverConfig, setServerConfig] =
+    useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
   const [paymentType, setPaymentType] =

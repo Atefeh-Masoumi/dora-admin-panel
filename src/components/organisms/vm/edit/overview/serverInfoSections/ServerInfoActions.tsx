@@ -10,7 +10,6 @@ import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
 import {
-  useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   usePutApiMyVmHostDisconnectByIdMutation,
   usePutApiMyVmHostConnectByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
@@ -20,19 +19,14 @@ import {
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
+import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
 
 type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
-  const { data: url, isLoading: getUrlIsLoading } =
-    useGetApiMyVmKmsGetByIdAndTypeIdQuery(
-      {
-        id: serverId || 0,
-        typeId: 2,
-      },
-      { skip: !serverId }
-    );
+  const [getConsoleUrl, { isLoading: getConsoleUrlLoading }] =
+    useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiMyVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -46,7 +40,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
     usePutApiMyVmHostRebootByIdMutation();
 
-  const sendUserToKmsConsole = () => {
+  const sendUserToKmsConsole = (url: string) => {
     let a = document.createElement("a");
     a.href = "/console/wmks-sdk.html?url=" + url;
     a.target = "_blank";
@@ -57,8 +51,15 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     {
       label: "Web Console",
       Icon: MonitorSvg,
-      onClick: sendUserToKmsConsole,
-      isLoading: getUrlIsLoading,
+      onClick: () => {
+        getConsoleUrl({ id: serverId || 0, typeId: 2 })
+          .unwrap()
+          .then((res) => {
+            if (!res) return;
+            sendUserToKmsConsole(res);
+          });
+      },
+      isLoading: getConsoleUrlLoading,
     },
     {
       label: "Disconnect Network",

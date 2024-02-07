@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { logoutAction } from "./authSlice";
-import { VmSpecListResponse } from "../services/api.generated";
+import { ProductBundleVmListResponse } from "../services/api.generated";
 
 type createNodeSliceType = {
   nodeType: number | null;
-  productBundle: VmSpecListResponse | null;
+  productBundle: ProductBundleVmListResponse | null;
   vmPassword: string;
 };
 
