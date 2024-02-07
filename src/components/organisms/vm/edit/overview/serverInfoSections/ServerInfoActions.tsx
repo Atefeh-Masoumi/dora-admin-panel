@@ -44,12 +44,13 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
     usePutApiMyVmHostRebootByIdMutation();
 
-  const { data: vmData } = useGetApiMyVmHostGetByIdQuery(
-    {
-      id: Number(id || 0)!,
-    },
-    { skip: !id }
-  );
+  const { data: vmData, isLoading: getVmDataLoading } =
+    useGetApiMyVmHostGetByIdQuery(
+      {
+        id: Number(id || 0)!,
+      },
+      { skip: !id }
+    );
 
   const powerOn = useMemo(
     () => vmData?.powerStatus === "POWERED_ON",
@@ -75,7 +76,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
             sendUserToKmsConsole(res);
           });
       },
-      isLoading: getConsoleUrlLoading,
+      isLoading: getVmDataLoading || getConsoleUrlLoading,
       isDisable: !powerOn,
     },
     {
@@ -87,7 +88,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت disconnect شد "));
       },
-      isLoading: disconnectServerIsLoading,
+      isLoading: getVmDataLoading || disconnectServerIsLoading,
       isDisable: !powerOn,
     },
     {
@@ -99,7 +100,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت connect شد "));
       },
-      isLoading: connectServerIsLoading,
+      isLoading: getVmDataLoading || connectServerIsLoading,
       isDisable: !powerOn,
     },
     {
@@ -111,7 +112,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت stop شد "));
       },
-      isLoading: stopServerIsLoading,
+      isLoading: getVmDataLoading || stopServerIsLoading,
       isDisable: !powerOn,
     },
     {
@@ -123,7 +124,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت start شد "));
       },
-      isLoading: startServerIsLoading,
+      isLoading: getVmDataLoading || startServerIsLoading,
       isDisable: false,
     },
     {
@@ -135,7 +136,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت shutdown شد "));
       },
-      isLoading: shutdownServerIsLoading,
+      isLoading: getVmDataLoading || shutdownServerIsLoading,
       isDisable: !powerOn,
     },
     {
@@ -147,7 +148,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت reboot شد "));
       },
-      isLoading: rebootServerIsLoading,
+      isLoading: getVmDataLoading || rebootServerIsLoading,
       isDisable: !powerOn,
     },
   ];
@@ -175,11 +176,9 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       >
         {actionsArray.map(
           ({ label, Icon, onClick, isLoading, isDisable }, index) => {
-            // const isVMRC = label === "VMRC Console";
-
             return (
               <LoadingButton
-                disabled={isDisable}
+                disabled={isDisable || isLoading}
                 loading={isLoading}
                 variant="outlined"
                 key={index}
