@@ -274,6 +274,5 @@ export const {
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
   useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
-  useLazyGetApiMyDomainHostGetByIdQuery,
   useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery,
 } = api;
