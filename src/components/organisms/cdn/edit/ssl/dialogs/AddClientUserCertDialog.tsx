@@ -31,7 +31,7 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   const onClose = () => handleClose();
 
   const formValidation = yup.object().shape({
-    zoneName: yup.string().required(""),
+    //zoneName: yup.string().required(""),
     keyPem: yup.string().required("این فیلد الزامیست"),
     certPem: yup.string().required("این فیلد الزامیست"),
     bundleCertPem: yup.string(),
