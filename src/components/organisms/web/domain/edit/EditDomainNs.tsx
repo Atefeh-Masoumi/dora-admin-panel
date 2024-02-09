@@ -57,9 +57,6 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
     )
       return;
 
-    console.log({ nameServer1 });
-    console.log({ nameServer2 });
-
     changeNsModel({
       changeNsModel: {
         id: parseInt(id),
@@ -101,7 +98,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
+            <Grid xs={12} item sx={{ m: 2 }}>
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={2}
@@ -154,7 +151,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
                 />
               </Grid>
             </Grid>
-            <Grid xs={12} item sx={{ m: 2 }} spacing={1}>
+            <Grid xs={12} item sx={{ m: 2 }}>
               <Stack alignItems="center" justifyContent="center">
                 <LoadingButton
                   loading={isLoading || loadEdit}

@@ -107,42 +107,44 @@ const Calculator: FC = () => {
           })}
         </Stack>
       </Box>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        gap={1}
-        justifyContent="space-between"
-        sx={{
-          maxWidth: "1045px",
-          mx: "auto",
-        }}
-      >
-        <Box sx={{ width: { xs: "100%", md: "635px" } }}>
-          <ServiceSpecifications
-            serverCount={serverCount}
-            cpuCount={cpuCount}
-            memoryCount={memoryCount}
-            diskCount={diskCount}
-            ipv4Count={ipv4Count}
-            ipv6Count={ipv6Count}
-            setServerCount={setServerCount}
-            setCpuCount={setCpuCount}
-            setMemoryCount={setMemoryCount}
-            setDiskCount={setDiskCount}
-            setIpv4Count={setIpv4Count}
-            setIpv6Count={setIpv6Count}
-          />
-        </Box>
-        <Box sx={{ width: { xs: "100%", md: "378px", overflow: "hidden" } }}>
-          <Receipt
-            server={serverCount}
-            memory={memoryCount}
-            cpu={cpuCount}
-            disk={diskCount}
-            ipv4={ipv4Count}
-            ipv6={ipv6Count}
-          />
-        </Box>
-      </Stack>
+      <Box sx={{ overflow: "overlay" }}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          gap={1}
+          justifyContent="space-between"
+          sx={{
+            maxWidth: "1045px",
+            mx: "auto",
+          }}
+        >
+          <Box sx={{ width: { xs: "100%", md: "635px" } }}>
+            <ServiceSpecifications
+              serverCount={serverCount}
+              cpuCount={cpuCount}
+              memoryCount={memoryCount}
+              diskCount={diskCount}
+              ipv4Count={ipv4Count}
+              ipv6Count={ipv6Count}
+              setServerCount={setServerCount}
+              setCpuCount={setCpuCount}
+              setMemoryCount={setMemoryCount}
+              setDiskCount={setDiskCount}
+              setIpv4Count={setIpv4Count}
+              setIpv6Count={setIpv6Count}
+            />
+          </Box>
+          <Box sx={{ width: { xs: "100%", md: "378px", overflow: "hidden" } }}>
+            <Receipt
+              server={serverCount}
+              memory={memoryCount}
+              cpu={cpuCount}
+              disk={diskCount}
+              ipv4={ipv4Count}
+              ipv6={ipv6Count}
+            />
+          </Box>
+        </Stack>
+      </Box>
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useMemo } from "react";
 import { Paper, Stack } from "@mui/material";
 import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
@@ -10,29 +10,27 @@ import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
 import {
-  useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   usePutApiMyVmHostDisconnectByIdMutation,
   usePutApiMyVmHostConnectByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostStopByIdMutation,
   usePutApiMyVmHostRebootByIdMutation,
   usePutApiMyVmHostShutdownByIdMutation,
+  useGetApiMyVmHostGetByIdQuery,
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
+import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
+import { useParams } from "react-router";
 
 type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
+  const { id } = useParams();
+
   const { serverId } = useContext(EditServerContext);
-  const { data: url, isLoading: getUrlIsLoading } =
-    useGetApiMyVmKmsGetByIdAndTypeIdQuery(
-      {
-        id: serverId || 0,
-        typeId: 2,
-      },
-      { skip: !serverId }
-    );
+  const [getConsoleUrl, { isLoading: getConsoleUrlLoading }] =
+    useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiMyVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -46,7 +44,20 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
     usePutApiMyVmHostRebootByIdMutation();
 
-  const sendUserToKmsConsole = () => {
+  const { data: vmData, isLoading: getVmDataLoading } =
+    useGetApiMyVmHostGetByIdQuery(
+      {
+        id: Number(id || 0)!,
+      },
+      { skip: !id }
+    );
+
+  const powerOn = useMemo(
+    () => vmData?.powerStatus === "POWERED_ON",
+    [vmData?.powerStatus]
+  );
+
+  const sendUserToKmsConsole = (url: string) => {
     let a = document.createElement("a");
     a.href = "/console/wmks-sdk.html?url=" + url;
     a.target = "_blank";
@@ -57,8 +68,16 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     {
       label: "Web Console",
       Icon: MonitorSvg,
-      onClick: sendUserToKmsConsole,
-      isLoading: getUrlIsLoading,
+      onClick: () => {
+        getConsoleUrl({ id: serverId || 0, typeId: 2 })
+          .unwrap()
+          .then((res) => {
+            if (!res) return;
+            sendUserToKmsConsole(res);
+          });
+      },
+      isLoading: getVmDataLoading || getConsoleUrlLoading,
+      isDisable: !powerOn,
     },
     {
       label: "Disconnect Network",
@@ -69,7 +88,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت disconnect شد "));
       },
-      isLoading: disconnectServerIsLoading,
+      isLoading: getVmDataLoading || disconnectServerIsLoading,
+      isDisable: !powerOn,
     },
     {
       label: "Connect Network",
@@ -80,7 +100,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت connect شد "));
       },
-      isLoading: connectServerIsLoading,
+      isLoading: getVmDataLoading || connectServerIsLoading,
+      isDisable: !powerOn,
     },
     {
       label: "Stop",
@@ -91,7 +112,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت stop شد "));
       },
-      isLoading: stopServerIsLoading,
+      isLoading: getVmDataLoading || stopServerIsLoading,
+      isDisable: !powerOn,
     },
     {
       label: "Start",
@@ -102,7 +124,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت start شد "));
       },
-      isLoading: startServerIsLoading,
+      isLoading: getVmDataLoading || startServerIsLoading,
+      isDisable: false,
     },
     {
       label: "Shutdown",
@@ -113,7 +136,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت shutdown شد "));
       },
-      isLoading: shutdownServerIsLoading,
+      isLoading: getVmDataLoading || shutdownServerIsLoading,
+      isDisable: !powerOn,
     },
     {
       label: "Reboot",
@@ -124,7 +148,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت reboot شد "));
       },
-      isLoading: rebootServerIsLoading,
+      isLoading: getVmDataLoading || rebootServerIsLoading,
+      isDisable: !powerOn,
     },
   ];
 
@@ -149,38 +174,42 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           width: "fit-content",
         }}
       >
-        {actionsArray.map(({ label, Icon, onClick, isLoading }, index) => {
-          // const isVMRC = label === "VMRC Console";
-
-          return (
-            <LoadingButton
-              loading={isLoading}
-              variant="outlined"
-              key={index}
-              endIcon={
-                <Icon
-                  sx={{
-                    "&>path": { stroke: "#3C8AFF" },
-                    opacity: isLoading ? "0" : "1",
-                  }}
-                />
-              }
-              onClick={onClick}
-              sx={{
-                pt: "9px !important",
-                "&>span:first-of-type": {
-                  marginTop: "-5px",
-                },
-                borderRadius: BORDER_RADIUS_5,
-                border: "1px solid #3C8AFF",
-                color: "#3C8AFF",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {label}
-            </LoadingButton>
-          );
-        })}
+        {actionsArray.map(
+          ({ label, Icon, onClick, isLoading, isDisable }, index) => {
+            return (
+              <LoadingButton
+                disabled={isDisable || isLoading}
+                loading={isLoading}
+                variant="outlined"
+                key={index}
+                endIcon={
+                  <Icon
+                    sx={{
+                      "&>path": {
+                        stroke: ({ palette }) =>
+                          isDisable ? palette.secondary.light : "#3C8AFF",
+                      },
+                      opacity: isLoading ? "0" : "1",
+                    }}
+                  />
+                }
+                onClick={onClick}
+                sx={{
+                  pt: "9px !important",
+                  "&>span:first-of-type": {
+                    marginTop: "-5px",
+                  },
+                  borderRadius: BORDER_RADIUS_5,
+                  border: "1px solid #3C8AFF",
+                  color: "#3C8AFF",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {label}
+              </LoadingButton>
+            );
+          }
+        )}
       </Stack>
     </Paper>
   );

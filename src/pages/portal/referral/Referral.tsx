@@ -10,7 +10,7 @@ type ReferralCallBackPropsType = {};
 
 const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const [message, setMessage] = useState("");
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,9 +22,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
       sendReferralCode({ joinReferralModel: { referralCode: id } })
         .unwrap()
         .then((res) => {
-          if (!res) return;
-          setIsSuccess(res.status || false);
-          // setMessage(res.messages || "");
+          setIsSuccess(true);
         });
     } else {
       navigate(-1);
@@ -57,9 +55,6 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
           fontSize={{ xs: 24, md: 32 }}
         >
           {isSuccess ? "عملیات با موفقیت انجام شد" : "عملیات ناموفق بود"}
-        </Typography>
-        <Typography color="secondary.main" variant="text14" align="justify">
-          {message}
         </Typography>
         <Button
           variant="outlined"

@@ -55,9 +55,8 @@ const EditDomain: FC<EditDomainPropsType> = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      setDomainId(Number(id));
-    }
+    if (!id) return;
+    setDomainId(Number(id));
   }, [id, setDomainId]);
 
   const [section, setSection] = useState(0);
@@ -89,7 +88,7 @@ const EditDomain: FC<EditDomainPropsType> = () => {
       >
         <Tabs
           sx={{
-            minWidth: 'fix-content',
+            minWidth: "fix-content",
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}

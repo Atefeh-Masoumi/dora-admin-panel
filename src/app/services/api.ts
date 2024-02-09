@@ -265,7 +265,7 @@ export const api = generatedApi
 
 export const {
   useCustomCreateIssueMutation,
-  useLazyGetApiMyDatacenterIpListByProductIdAndIdQuery,
+  useLazyGetApiMyDatacenterIpListByIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
@@ -274,6 +274,5 @@ export const {
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
   useLazyGetApiMyRabbitUserListByRabbitHostIdQuery,
-  useLazyGetApiMyDomainHostGetByIdQuery,
-  useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery
+  useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery,
 } = api;

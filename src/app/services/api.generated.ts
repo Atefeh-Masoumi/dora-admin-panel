@@ -440,17 +440,16 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/portal/customer-user/create`,
         method: "POST",
-        body: queryArg.editRoleAccessModel,
+        body: queryArg.createCustomerUserModel,
       }),
     }),
-    deleteApiMyPortalCustomerUserDelete: build.mutation<
-      DeleteApiMyPortalCustomerUserDeleteApiResponse,
-      DeleteApiMyPortalCustomerUserDeleteApiArg
+    deleteApiMyPortalCustomerUserDeleteByUserId: build.mutation<
+      DeleteApiMyPortalCustomerUserDeleteByUserIdApiResponse,
+      DeleteApiMyPortalCustomerUserDeleteByUserIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/customer-user/delete`,
+        url: `/api/my/portal/customer-user/delete/${queryArg.userId}`,
         method: "DELETE",
-        body: queryArg.deleteCustomerUserModel,
       }),
     }),
     postApiMyPortalCustomerUserChange: build.mutation<
@@ -483,12 +482,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/datacenter/list` }),
     }),
-    getApiMyDatacenterIpListByProductIdAndId: build.query<
-      GetApiMyDatacenterIpListByProductIdAndIdApiResponse,
-      GetApiMyDatacenterIpListByProductIdAndIdApiArg
+    getApiMyDatacenterIpListById: build.query<
+      GetApiMyDatacenterIpListByIdApiResponse,
+      GetApiMyDatacenterIpListByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/datacenter/ip/list/${queryArg.productId}/${queryArg.id}`,
+        url: `/api/my/datacenter/ip/list/${queryArg.id}`,
       }),
     }),
     deleteApiMyDatacenterIpDeleteById: build.mutation<
@@ -1398,14 +1397,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/role/list` }),
     }),
-    postApiMyPortalRoleAccessList: build.mutation<
-      PostApiMyPortalRoleAccessListApiResponse,
-      PostApiMyPortalRoleAccessListApiArg
+    getApiMyPortalRoleAccessListByUserId: build.query<
+      GetApiMyPortalRoleAccessListByUserIdApiResponse,
+      GetApiMyPortalRoleAccessListByUserIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/role-access/list`,
-        method: "POST",
-        body: queryArg.roleAccessModel,
+        url: `/api/my/portal/role-access/list/${queryArg.userId}`,
       }),
     }),
     putApiMyPortalRoleAccessEdit: build.mutation<
@@ -1774,17 +1771,17 @@ export const api = createApi({
         body: queryArg.createVpcNetworkModel,
       }),
     }),
-    getApiMyPortalWalletGetBalance: build.query<
-      GetApiMyPortalWalletGetBalanceApiResponse,
-      GetApiMyPortalWalletGetBalanceApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/wallet/get-balance` }),
-    }),
     getApiMyPortalWalletList: build.query<
       GetApiMyPortalWalletListApiResponse,
       GetApiMyPortalWalletListApiArg
     >({
       query: () => ({ url: `/api/my/portal/wallet/list` }),
+    }),
+    getApiMyPortalWalletGetBalance: build.query<
+      GetApiMyPortalWalletGetBalanceApiResponse,
+      GetApiMyPortalWalletGetBalanceApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/wallet/get-balance` }),
     }),
     getApiMyWebHostList: build.query<
       GetApiMyWebHostListApiResponse,
@@ -2041,8 +2038,7 @@ export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
 export type GetApiMyColocationHostListApiResponse =
   /** status 200 Success */ CoLocationListResponse[];
 export type GetApiMyColocationHostListApiArg = void;
-export type PostApiMyColocationHostCreateApiResponse =
-  /** status 200 Success */ number;
+export type PostApiMyColocationHostCreateApiResponse = unknown;
 export type PostApiMyColocationHostCreateApiArg = {
   createColocationModel: CreateColocationModel;
 };
@@ -2088,14 +2084,14 @@ export type GetApiMyPortalCustomerUserListApiResponse =
 export type GetApiMyPortalCustomerUserListApiArg = void;
 export type PostApiMyPortalCustomerUserCreateApiResponse = unknown;
 export type PostApiMyPortalCustomerUserCreateApiArg = {
-  editRoleAccessModel: EditRoleAccessModel;
+  createCustomerUserModel: CreateCustomerUserModel;
 };
-export type DeleteApiMyPortalCustomerUserDeleteApiResponse = unknown;
-export type DeleteApiMyPortalCustomerUserDeleteApiArg = {
-  deleteCustomerUserModel: DeleteCustomerUserModel;
+export type DeleteApiMyPortalCustomerUserDeleteByUserIdApiResponse = unknown;
+export type DeleteApiMyPortalCustomerUserDeleteByUserIdApiArg = {
+  userId: string;
 };
 export type PostApiMyPortalCustomerUserChangeApiResponse =
-  /** status 200 Success */ ChangeUserCustomerResponse;
+  /** status 200 Success */ ChangeCustomerUserResponse;
 export type PostApiMyPortalCustomerUserChangeApiArg = {
   changeCustomerUserModel: ChangeCustomerUserModel;
 };
@@ -2110,10 +2106,9 @@ export type GetApiMyDashboardFinancialApiArg = void;
 export type GetApiMyDatacenterListApiResponse =
   /** status 200 Success */ DatacenterListResponse[];
 export type GetApiMyDatacenterListApiArg = void;
-export type GetApiMyDatacenterIpListByProductIdAndIdApiResponse =
+export type GetApiMyDatacenterIpListByIdApiResponse =
   /** status 200 Success */ DatacenterIpListResponse[];
-export type GetApiMyDatacenterIpListByProductIdAndIdApiArg = {
-  productId: number;
+export type GetApiMyDatacenterIpListByIdApiArg = {
   id: number;
 };
 export type DeleteApiMyDatacenterIpDeleteByIdApiResponse = unknown;
@@ -2164,8 +2159,7 @@ export type PostApiMyDomainHostGetPriceApiResponse =
 export type PostApiMyDomainHostGetPriceApiArg = {
   getPriceModel: GetPriceModel;
 };
-export type PostApiMyDomainHostRegisterApiResponse =
-  /** status 200 Success */ number;
+export type PostApiMyDomainHostRegisterApiResponse = unknown;
 export type PostApiMyDomainHostRegisterApiArg = {
   registerDomainModel: RegisterDomainModel;
 };
@@ -2199,7 +2193,7 @@ export type GetApiMyPortalInvoiceGetByIdApiArg = {
   id: number;
 };
 export type PostApiMyPortalInvoicePayApiResponse =
-  /** status 200 Success */ CreatePaymentResponse;
+  /** status 200 Success */ PayInvoiceResponse;
 export type PostApiMyPortalInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
@@ -2480,13 +2474,13 @@ export type GetApiMyPortalProductBundleListByProductIdApiArg = {
   productId: number;
 };
 export type GetApiMyPortalProductBundleVmListApiResponse =
-  /** status 200 Success */ VmSpecListResponse[];
+  /** status 200 Success */ ProductBundleVmListResponse[];
 export type GetApiMyPortalProductBundleVmListApiArg = void;
 export type GetApiMyPortalProductBundleStorageListApiResponse =
-  /** status 200 Success */ StorageSpecResponse[];
+  /** status 200 Success */ ProductBundleStorageListResponse[];
 export type GetApiMyPortalProductBundleStorageListApiArg = void;
 export type GetApiMyPortalProductBundleWebHostListApiResponse =
-  /** status 200 Success */ WebHostSpecResponse[];
+  /** status 200 Success */ ProductBundleWebListResponse[];
 export type GetApiMyPortalProductBundleWebHostListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
@@ -2500,7 +2494,7 @@ export type GetApiMyPortalProfileGetNotificationStatusApiResponse =
   /** status 200 Success */ GetNotificationStatusResponse;
 export type GetApiMyPortalProfileGetNotificationStatusApiArg = void;
 export type PutApiMyPortalProfileEditApiResponse =
-  /** status 200 Success */ EditInfoResponse;
+  /** status 200 Success */ EditProfileResponse;
 export type PutApiMyPortalProfileEditApiArg = {
   editProfileModel: EditProfileModel;
 };
@@ -2509,7 +2503,7 @@ export type PutApiMyPortalProfileEditEmailApiArg = {
   editEmailModel: EditEmailModel;
 };
 export type PostApiMyPortalProfileConfirmEmailApiResponse =
-  /** status 200 Success */ EditInfoResponse;
+  /** status 200 Success */ EditProfileResponse;
 export type PostApiMyPortalProfileConfirmEmailApiArg = {
   confirmEmailModel: ConfirmEmailModel;
 };
@@ -2518,7 +2512,7 @@ export type PutApiMyPortalProfileEditPhoneNumberApiArg = {
   editPhoneNumberModel: EditPhoneNumberModel;
 };
 export type PostApiMyPortalProfileConfirmPhoneNumberApiResponse =
-  /** status 200 Success */ EditInfoResponse;
+  /** status 200 Success */ EditProfileResponse;
 export type PostApiMyPortalProfileConfirmPhoneNumberApiArg = {
   confirmPhoneNumberModel: ConfirmPhoneNumberModel;
 };
@@ -2582,18 +2576,17 @@ export type PostApiMyRabbitUserChangePasswordApiArg = {
 export type GetApiMyPortalReferralGetApiResponse =
   /** status 200 Success */ GetReferralResponse;
 export type GetApiMyPortalReferralGetApiArg = void;
-export type PostApiMyPortalReferralJoinApiResponse =
-  /** status 200 Success */ JoinReferralResponse;
+export type PostApiMyPortalReferralJoinApiResponse = unknown;
 export type PostApiMyPortalReferralJoinApiArg = {
   joinReferralModel: JoinReferralModel;
 };
 export type GetApiMyPortalRoleListApiResponse =
   /** status 200 Success */ RoleListResponse[];
 export type GetApiMyPortalRoleListApiArg = void;
-export type PostApiMyPortalRoleAccessListApiResponse =
-  /** status 200 Success */ RoleAccessListResponse[];
-export type PostApiMyPortalRoleAccessListApiArg = {
-  roleAccessModel: RoleAccessModel;
+export type GetApiMyPortalRoleAccessListByUserIdApiResponse =
+  /** status 200 Success */ RoleAccessListResponse;
+export type GetApiMyPortalRoleAccessListByUserIdApiArg = {
+  userId: string;
 };
 export type PutApiMyPortalRoleAccessEditApiResponse = unknown;
 export type PutApiMyPortalRoleAccessEditApiArg = {
@@ -2751,8 +2744,7 @@ export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyPortalVoucherUseApiResponse =
-  /** status 200 Success */ string;
+export type PostApiMyPortalVoucherUseApiResponse = unknown;
 export type PostApiMyPortalVoucherUseApiArg = {
   useVoucherModel: UseVoucherModel;
 };
@@ -2772,12 +2764,12 @@ export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
 };
-export type GetApiMyPortalWalletGetBalanceApiResponse =
-  /** status 200 Success */ number;
-export type GetApiMyPortalWalletGetBalanceApiArg = void;
 export type GetApiMyPortalWalletListApiResponse =
   /** status 200 Success */ WalletTransactionListResponse[];
 export type GetApiMyPortalWalletListApiArg = void;
+export type GetApiMyPortalWalletGetBalanceApiResponse =
+  /** status 200 Success */ number;
+export type GetApiMyPortalWalletGetBalanceApiArg = void;
 export type GetApiMyWebHostListApiResponse =
   /** status 200 Success */ WebHostListResponse[];
 export type GetApiMyWebHostListApiArg = void;
@@ -3137,21 +3129,18 @@ export type RoleAccessListModel = {
   roleId?: number;
   accessTuples?: AccessTupleModel[] | null;
 };
-export type EditRoleAccessModel = {
+export type CreateCustomerUserModel = {
   email: string;
   isSuperUser: boolean;
   isFinancialManager: boolean;
   isAccountManager: boolean;
   roleAccesses?: RoleAccessListModel[] | null;
 };
-export type DeleteCustomerUserModel = {
-  userId?: string;
-};
-export type ChangeUserCustomerResponse = {
-  roles?: number[] | null;
+export type ChangeCustomerUserResponse = {
   isSuperUser?: boolean;
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
+  roles?: number[] | null;
 };
 export type ChangeCustomerUserModel = {
   customerId?: number;
@@ -3162,7 +3151,6 @@ export type DashboardUsageResponse = {
 };
 export type DashboardFinancialResponse = {
   walletBalance?: number;
-  paidInvoicePrice?: number;
   unpaidInvoiceCount?: number;
   activeServiceCount?: number;
 };
@@ -3357,7 +3345,7 @@ export type GetInvoiceResponse = {
   invoicePrice?: number;
   invoiceItems?: InvoiceItemModel[] | null;
 };
-export type CreatePaymentResponse = {
+export type PayInvoiceResponse = {
   status?: boolean;
   location?: string | null;
 };
@@ -3644,6 +3632,10 @@ export type GetPaymentResponse = {
   paymentProviderId?: number;
   finalStatus?: boolean;
 };
+export type CreatePaymentResponse = {
+  status?: boolean;
+  location?: string | null;
+};
 export type CreatePaymentModel = {
   paymentProviderId?: number;
   amount: number;
@@ -3651,14 +3643,21 @@ export type CreatePaymentModel = {
 export type ProductListResponse = {
   id?: number;
   name?: string | null;
+  description?: string | null;
+  supplementaryDescription?: string | null;
+};
+export type ProductBundleConfiguration = {
+  name?: string | null;
+  quantity?: number;
 };
 export type ProductBundleListResponse = {
   id?: number;
   name?: string | null;
   description?: string | null;
   price?: number;
+  configurations?: ProductBundleConfiguration[] | null;
 };
-export type VmSpecListResponse = {
+export type ProductBundleVmListResponse = {
   id?: number;
   name?: string | null;
   price?: number;
@@ -3667,13 +3666,13 @@ export type VmSpecListResponse = {
   disk?: number;
   ipv4?: number;
 };
-export type StorageSpecResponse = {
+export type ProductBundleStorageListResponse = {
   id?: number;
   name?: string | null;
   price?: number;
   disk?: number;
 };
-export type WebHostSpecResponse = {
+export type ProductBundleWebListResponse = {
   id?: number;
   name?: string | null;
   price?: number;
@@ -3704,7 +3703,7 @@ export type GetNotificationStatusResponse = {
   phoneNotify?: boolean;
   emailNotify?: boolean;
 };
-export type EditInfoResponse = {
+export type EditProfileResponse = {
   profileCompleted?: boolean;
 };
 export type EditProfileModel = {
@@ -3788,13 +3787,9 @@ export type ChangeRabbitPasswordModel = {
 };
 export type GetReferralResponse = {
   isJoined?: boolean;
-  joinCode?: string | null;
   referralCode?: string | null;
   referralLink?: string | null;
-};
-export type JoinReferralResponse = {
-  status?: boolean;
-  message?: string | null;
+  joinCode?: string | null;
 };
 export type JoinReferralModel = {
   referralCode: string;
@@ -3803,15 +3798,30 @@ export type RoleListResponse = {
   id?: number;
   name?: string | null;
 };
-export type RoleAccessListResponse = {
+export type RoleAccessListTuple = {
+  accessId?: number;
+  hasAccess?: boolean;
+};
+export type RoleAccessList = {
   roleId?: number;
   name?: string | null;
   description?: string | null;
+  roleAccessTypeId?: number;
   hasAccess?: boolean;
-  accesses?: AccessTupleModel[] | null;
+  accesses?: RoleAccessListTuple[] | null;
 };
-export type RoleAccessModel = {
-  userId: string;
+export type RoleAccessListResponse = {
+  isSuperUser?: boolean;
+  isFinancialManager?: boolean;
+  isAccountManager?: boolean;
+  roleAccesses?: RoleAccessList[] | null;
+};
+export type EditRoleAccessModel = {
+  email: string;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
+  roleAccesses?: RoleAccessListModel[] | null;
 };
 export type RoleAccessTypeListResponse = {
   id?: number;
@@ -4112,12 +4122,12 @@ export const {
   useGetApiMyPortalCustomerProductShortListQuery,
   useGetApiMyPortalCustomerUserListQuery,
   usePostApiMyPortalCustomerUserCreateMutation,
-  useDeleteApiMyPortalCustomerUserDeleteMutation,
+  useDeleteApiMyPortalCustomerUserDeleteByUserIdMutation,
   usePostApiMyPortalCustomerUserChangeMutation,
   useGetApiMyDashboardUsageByCategoryIdQuery,
   useGetApiMyDashboardFinancialQuery,
   useGetApiMyDatacenterListQuery,
-  useGetApiMyDatacenterIpListByProductIdAndIdQuery,
+  useGetApiMyDatacenterIpListByIdQuery,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,
   useGetApiMyCdnDnsRecordListByCdnIdQuery,
   useGetApiMyCdnDnsRecordGetByIdQuery,
@@ -4226,7 +4236,7 @@ export const {
   useGetApiMyPortalReferralGetQuery,
   usePostApiMyPortalReferralJoinMutation,
   useGetApiMyPortalRoleListQuery,
-  usePostApiMyPortalRoleAccessListMutation,
+  useGetApiMyPortalRoleAccessListByUserIdQuery,
   usePutApiMyPortalRoleAccessEditMutation,
   useGetApiMyPortalRoleAccessTypeListQuery,
   useGetApiMyStorageHostListQuery,
@@ -4269,8 +4279,8 @@ export const {
   usePostApiMyVpcHostCreateMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,
-  useGetApiMyPortalWalletGetBalanceQuery,
   useGetApiMyPortalWalletListQuery,
+  useGetApiMyPortalWalletGetBalanceQuery,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetByIdQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,

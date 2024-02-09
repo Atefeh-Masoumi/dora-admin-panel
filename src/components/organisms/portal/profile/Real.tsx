@@ -14,9 +14,9 @@ import * as yup from "yup";
 const validationSchema = yup.object().shape({
   firstName: yup.string().required("نام الزامیست!"),
   lastName: yup.string().required("نام خانوادگی الزامیست!"),
-  nationalId: yup.string().required("national id"),
-  birthDate: yup.string().required("birth date"),
-  address: yup.string().required("address"),
+  nationalId: yup.string().required("کد ملی الزامیست!"),
+  birthDate: yup.string().required("تاریخ تولد الزامیست!"),
+  address: yup.string().required("آدرس الزامیست!"),
 });
 
 type RealPersonalityPropsType = {};

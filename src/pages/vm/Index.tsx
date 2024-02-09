@@ -37,8 +37,6 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     { skip: !selectVmProjects?.id }
   );
 
-  console.log({ vmList });
-
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
       refetch();
