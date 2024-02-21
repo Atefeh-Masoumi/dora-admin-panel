@@ -15,6 +15,7 @@ import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
+import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -56,9 +57,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      setServerId(Number(id));
-    }
+    if (!id) return;
+    setServerId(Number(id));
   }, [id, setServerId]);
 
   const [section, setSection] = useState(0);
@@ -71,9 +71,16 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP سرور",
     "بازسازی سیستم عامل",
     "تغییر مشخصات سخت افزاری",
+    "Snapshot",
   ];
 
-  const tabPanelArray = [VmInfo, VmIpAddress, VmRebuild, ServerConfig];
+  const tabPanelArray = [
+    VmInfo,
+    VmIpAddress,
+    VmRebuild,
+    ServerConfig,
+    Snapshot,
+  ];
 
   if (!id) return <Navigate to="/vm/list" />;
 
@@ -95,7 +102,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
       >
         <Tabs
           sx={{
-            minWidth: { xs: 450, md: 505 },
+            minWidth: { xs: 550, md: 605 },
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
