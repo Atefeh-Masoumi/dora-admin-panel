@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 type ChartTooltipPropsType = { categoryId: number; payload?: any };
 
@@ -23,7 +24,7 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
         {category}
       </Typography>
       <Typography fontSize="12px" color="rgba(255, 255, 255, 0.8)">
-        {analyticsValue} {categoryId === 2 && " عدد"}
+        {priceToPersian(analyticsValue)} {categoryId === 2 && " ریال"}
       </Typography>
     </Paper>
   );

@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { useGetApiMyDashboardUsageByCategoryIdQuery } from "src/app/services/api.generated";
 import { ChartTooltip } from "./ChartTooltip";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 type SampleChartPropsType = {
   categoryId: number;
@@ -38,14 +39,12 @@ export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={userAnalytics?.[0]?.data?.map((item, index) => ({
-              uv: item,
-              name: index,
-            }))}
+            data={userAnalytics}
             margin={{
               top: 20,
               left: -30,
               right: 30,
+              bottom: 10,
             }}
           >
             <CartesianGrid strokeDasharray="1" vertical={false} />
@@ -53,23 +52,25 @@ export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
               axisLine={false}
               tickLine={false}
               allowDecimals={false}
-              dataKey="name"
+              dataKey="month"
               height={33}
               tickMargin={15}
-              interval={4}
             />
             <YAxis
-              unit=""
+              unit="ریال"
               tickCount={5}
               width={130}
               axisLine={false}
               tickLine={false}
               tickMargin={70}
+              tickFormatter={(value: any) => {
+                return priceToPersian(value);
+              }}
             />
             <Tooltip content={<ChartTooltip categoryId={categoryId} />} />
             <Line
               type="monotone"
-              dataKey="uv"
+              dataKey="count"
               stroke="rgba(11, 36, 251, 1)"
               dot={false}
             />
