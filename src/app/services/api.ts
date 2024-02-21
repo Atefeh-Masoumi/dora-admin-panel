@@ -63,7 +63,7 @@ export const api = generatedApi
       getApiMyKubernetesHostGetById: {
         providesTags: () => ["Kubernetes"],
       },
-      putApiMyKubernetesNodeDeleteByKubernetesHostNodeId: {
+      putApiMyKubernetesNodeDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
       postApiMyKubernetesNodeCreate: {
@@ -217,6 +217,21 @@ export const api = generatedApi
       getApiMyVmKmsGetByIdAndTypeId: {
         providesTags: () => ["VmHost"],
       },
+      getApiMyVmHostGetById: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmSnapshotListByVmId: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmSnapshotGetById: {
+        providesTags: () => ["VmHost"],
+      },
+      putApiMyVmSnapshotRevert: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      postApiMyVmSnapshotCreate: {
+        invalidatesTags: () => ["VmHost"],
+      },
       postApiMyVmProjectCreate: {
         invalidatesTags: () => ["VmHost"],
       },
@@ -237,10 +252,6 @@ export const api = generatedApi
       },
       deleteApiMyVmSnapshotDeleteById: {
         invalidatesTags: () => ["VmHost"],
-      },
-      // ============================== VmHost ============================== //
-      getApiMyVmHostGetById: {
-        providesTags: () => ["VmHost"],
       },
       putApiMyVmHostConnectById: {
         invalidatesTags: () => ["VmHost"],
