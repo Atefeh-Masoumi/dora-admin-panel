@@ -45,6 +45,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
         snapshotDescription,
       },
     })
+      .unwrap()
       .then(() => {
         toast.success("snapshot جدید با موفقیت ایجاد شد");
         forceClose();
