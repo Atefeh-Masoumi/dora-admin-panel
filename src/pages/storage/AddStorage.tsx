@@ -39,6 +39,7 @@ const AddStorageService: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
+      // TODO: add "storageHostTypeId" and "disk";
       createStorageService({
         createStorageHostModel: {
           name: name,
@@ -47,6 +48,8 @@ const AddStorageService: FC = () => {
           productBundleId: serverConfig?.id || 0,
           customerProductTypeId: paymentType!,
           isPredefined: true,
+          storageHostTypeId: 2,
+          disk: null,
         },
       })
         .unwrap()
