@@ -60,6 +60,59 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
+    getApiMyBareMetalHostList: build.query<
+      GetApiMyBareMetalHostListApiResponse,
+      GetApiMyBareMetalHostListApiArg
+    >({
+      query: () => ({ url: `/api/my/bare-metal/host/list` }),
+    }),
+    getApiMyBareMetalHostGetById: build.query<
+      GetApiMyBareMetalHostGetByIdApiResponse,
+      GetApiMyBareMetalHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/bare-metal/host/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyBareMetalHostCreate: build.mutation<
+      PostApiMyBareMetalHostCreateApiResponse,
+      PostApiMyBareMetalHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/bare-metal/host/create`,
+        method: "POST",
+        body: queryArg.createBareMetalModel,
+      }),
+    }),
+    deleteApiMyBareMetalHostDeleteById: build.mutation<
+      DeleteApiMyBareMetalHostDeleteByIdApiResponse,
+      DeleteApiMyBareMetalHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/bare-metal/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getApiMyBareMetalImageListByDatacenterId: build.query<
+      GetApiMyBareMetalImageListByDatacenterIdApiResponse,
+      GetApiMyBareMetalImageListByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/bare-metal/image/list/${queryArg.datacenterId}`,
+      }),
+    }),
+    getApiMyPortalBusinessUnitList: build.query<
+      GetApiMyPortalBusinessUnitListApiResponse,
+      GetApiMyPortalBusinessUnitListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/business-unit/list` }),
+    }),
+    getApiMyPortalCalculateMonthList: build.query<
+      GetApiMyPortalCalculateMonthListApiResponse,
+      GetApiMyPortalCalculateMonthListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/calculate-month/list` }),
+    }),
     getApiMyCdnAnalyticGetByCdnIdAndPeriodId: build.query<
       GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse,
       GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg
@@ -112,52 +165,6 @@ export const api = createApi({
         url: `/api/my/cdn/api-gateway/delete/${queryArg.id}`,
         method: "DELETE",
       }),
-    }),
-    getApiMyBareMetalHostList: build.query<
-      GetApiMyBareMetalHostListApiResponse,
-      GetApiMyBareMetalHostListApiArg
-    >({
-      query: () => ({ url: `/api/my/bare-metal/host/list` }),
-    }),
-    getApiMyBareMetalHostGetById: build.query<
-      GetApiMyBareMetalHostGetByIdApiResponse,
-      GetApiMyBareMetalHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/bare-metal/host/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyBareMetalHostCreate: build.mutation<
-      PostApiMyBareMetalHostCreateApiResponse,
-      PostApiMyBareMetalHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/bare-metal/host/create`,
-        method: "POST",
-        body: queryArg.createBareMetalModel,
-      }),
-    }),
-    deleteApiMyBareMetalHostDelete: build.mutation<
-      DeleteApiMyBareMetalHostDeleteApiResponse,
-      DeleteApiMyBareMetalHostDeleteApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/bare-metal/host/delete`,
-        method: "DELETE",
-        params: { id: queryArg.id },
-      }),
-    }),
-    getApiMyPortalBusinessUnitList: build.query<
-      GetApiMyPortalBusinessUnitListApiResponse,
-      GetApiMyPortalBusinessUnitListApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/business-unit/list` }),
-    }),
-    getApiMyPortalCalculateMonthList: build.query<
-      GetApiMyPortalCalculateMonthListApiResponse,
-      GetApiMyPortalCalculateMonthListApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/calculate-month/list` }),
     }),
     getApiMyCdnClientCertGetByCdnId: build.query<
       GetApiMyCdnClientCertGetByCdnIdApiResponse,
@@ -338,11 +345,64 @@ export const api = createApi({
         body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
+    getApiMyCdnLoadBalanceListByCdnId: build.query<
+      GetApiMyCdnLoadBalanceListByCdnIdApiResponse,
+      GetApiMyCdnLoadBalanceListByCdnIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/load-balance/list/${queryArg.cdnId}`,
+      }),
+    }),
+    getApiMyCdnLoadBalanceGetById: build.query<
+      GetApiMyCdnLoadBalanceGetByIdApiResponse,
+      GetApiMyCdnLoadBalanceGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/load-balance/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyCdnLoadBalanceCreate: build.mutation<
+      PostApiMyCdnLoadBalanceCreateApiResponse,
+      PostApiMyCdnLoadBalanceCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/load-balance/create`,
+        method: "POST",
+        body: queryArg.createLoadBalanceModel,
+      }),
+    }),
+    putApiMyCdnLoadBalanceEdit: build.mutation<
+      PutApiMyCdnLoadBalanceEditApiResponse,
+      PutApiMyCdnLoadBalanceEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/load-balance/edit`,
+        method: "PUT",
+        body: queryArg.editLoadBalanceModel,
+      }),
+    }),
+    deleteApiMyCdnLoadBalanceDeleteById: build.mutation<
+      DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse,
+      DeleteApiMyCdnLoadBalanceDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/load-balance/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
     getApiMyColocationHostList: build.query<
       GetApiMyColocationHostListApiResponse,
       GetApiMyColocationHostListApiArg
     >({
       query: () => ({ url: `/api/my/colocation/host/list` }),
+    }),
+    getApiMyColocationHostGetById: build.query<
+      GetApiMyColocationHostGetByIdApiResponse,
+      GetApiMyColocationHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/colocation/host/get/${queryArg.id}`,
+      }),
     }),
     postApiMyColocationHostCreate: build.mutation<
       PostApiMyColocationHostCreateApiResponse,
@@ -405,6 +465,15 @@ export const api = createApi({
         url: `/api/my/portal/customer-bill/get/${queryArg.id}`,
       }),
     }),
+    getApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductId:
+      build.query<
+        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse,
+        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/my/portal/customer-bill/get-customer-product/${queryArg.customerBillId}/${queryArg.customerProductId}`,
+        }),
+      }),
     getApiMyPortalCustomerBillDownloadById: build.query<
       GetApiMyPortalCustomerBillDownloadByIdApiResponse,
       GetApiMyPortalCustomerBillDownloadByIdApiArg
@@ -630,6 +699,26 @@ export const api = createApi({
         url: `/api/my/domain/host/resend-verification/${queryArg.id}`,
         method: "POST",
       }),
+    }),
+    getApiMyColocationEquipmentListByTypeIdAndBrandId: build.query<
+      GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiResponse,
+      GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/colocation/equipment/list/${queryArg.typeId}/${queryArg.brandId}`,
+      }),
+    }),
+    getApiMyColocationEquipmentBrandList: build.query<
+      GetApiMyColocationEquipmentBrandListApiResponse,
+      GetApiMyColocationEquipmentBrandListApiArg
+    >({
+      query: () => ({ url: `/api/my/colocation/equipment/brand-list` }),
+    }),
+    getApiMyColocationEquipmentTypeList: build.query<
+      GetApiMyColocationEquipmentTypeListApiResponse,
+      GetApiMyColocationEquipmentTypeListApiArg
+    >({
+      query: () => ({ url: `/api/my/colocation/equipment/type-list` }),
     }),
     getApiMyHomeIndex: build.query<
       GetApiMyHomeIndexApiResponse,
@@ -917,12 +1006,12 @@ export const api = createApi({
         body: queryArg.createKubernetesNodeModel,
       }),
     }),
-    putApiMyKubernetesNodeDeleteByKubernetesHostNodeId: build.mutation<
-      PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiResponse,
-      PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiArg
+    putApiMyKubernetesNodeDeleteById: build.mutation<
+      PutApiMyKubernetesNodeDeleteByIdApiResponse,
+      PutApiMyKubernetesNodeDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes/node/delete/${queryArg.kubernetesHostNodeId}`,
+        url: `/api/my/kubernetes/node/delete/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -1035,51 +1124,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyCdnLoadBalanceListByCdnId: build.query<
-      GetApiMyCdnLoadBalanceListByCdnIdApiResponse,
-      GetApiMyCdnLoadBalanceListByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/list/${queryArg.cdnId}`,
-      }),
-    }),
-    getApiMyCdnLoadBalanceGetById: build.query<
-      GetApiMyCdnLoadBalanceGetByIdApiResponse,
-      GetApiMyCdnLoadBalanceGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyCdnLoadBalanceCreate: build.mutation<
-      PostApiMyCdnLoadBalanceCreateApiResponse,
-      PostApiMyCdnLoadBalanceCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/create`,
-        method: "POST",
-        body: queryArg.createLoadBalanceModel,
-      }),
-    }),
-    putApiMyCdnLoadBalanceEdit: build.mutation<
-      PutApiMyCdnLoadBalanceEditApiResponse,
-      PutApiMyCdnLoadBalanceEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/edit`,
-        method: "PUT",
-        body: queryArg.editLoadBalanceModel,
-      }),
-    }),
-    deleteApiMyCdnLoadBalanceDeleteById: build.mutation<
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse,
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
     getApiMyPortalNotificationList: build.query<
       GetApiMyPortalNotificationListApiResponse,
       GetApiMyPortalNotificationListApiArg
@@ -1151,6 +1195,14 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/product/list` }),
     }),
+    getApiMyPortalProductGetById: build.query<
+      GetApiMyPortalProductGetByIdApiResponse,
+      GetApiMyPortalProductGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/product/get/${queryArg.id}`,
+      }),
+    }),
     getApiMyPortalProductBundleListByProductId: build.query<
       GetApiMyPortalProductBundleListByProductIdApiResponse,
       GetApiMyPortalProductBundleListByProductIdApiArg
@@ -1183,6 +1235,14 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/portal/product-item/list/${queryArg.productId}`,
+      }),
+    }),
+    getApiMyPortalProductItemKubernetesPriceByWorkerNodeCount: build.query<
+      GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiResponse,
+      GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/product-item/kubernetes-price/${queryArg.workerNodeCount}`,
       }),
     }),
     getApiMyPortalProfileGet: build.query<
@@ -1605,14 +1665,6 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
-    getApiMyVmKmsGetByIdAndTypeId: build.query<
-      GetApiMyVmKmsGetByIdAndTypeIdApiResponse,
-      GetApiMyVmKmsGetByIdAndTypeIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/kms/get/${queryArg.id}/${queryArg.typeId}`,
-      }),
-    }),
     getApiMyVmImageListByDatacenterId: build.query<
       GetApiMyVmImageListByDatacenterIdApiResponse,
       GetApiMyVmImageListByDatacenterIdApiArg
@@ -1647,6 +1699,14 @@ export const api = createApi({
         url: `/api/my/vm/iso/unmount`,
         method: "PUT",
         body: queryArg.unmountModel,
+      }),
+    }),
+    getApiMyVmKmsGetByIdAndTypeId: build.query<
+      GetApiMyVmKmsGetByIdAndTypeIdApiResponse,
+      GetApiMyVmKmsGetByIdAndTypeIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/kms/get/${queryArg.id}/${queryArg.typeId}`,
       }),
     }),
     getApiMyVmProjectList: build.query<
@@ -1783,6 +1843,15 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/wallet/get-balance` }),
     }),
+    getApiMyPortalWalletBalanceUsage: build.query<
+      GetApiMyPortalWalletBalanceUsageApiResponse,
+      GetApiMyPortalWalletBalanceUsageApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/wallet/balance-usage`,
+        params: { period: queryArg.period },
+      }),
+    }),
     getApiMyWebHostList: build.query<
       GetApiMyWebHostListApiResponse,
       GetApiMyWebHostListApiArg
@@ -1899,6 +1968,33 @@ export type PostApiMyAccountForgotConfirmApiArg = {
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
+export type GetApiMyBareMetalHostListApiResponse =
+  /** status 200 Success */ BareMetalListResponse[];
+export type GetApiMyBareMetalHostListApiArg = void;
+export type GetApiMyBareMetalHostGetByIdApiResponse =
+  /** status 200 Success */ BareMetalResponse;
+export type GetApiMyBareMetalHostGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyBareMetalHostCreateApiResponse = unknown;
+export type PostApiMyBareMetalHostCreateApiArg = {
+  createBareMetalModel: CreateBareMetalModel;
+};
+export type DeleteApiMyBareMetalHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyBareMetalHostDeleteByIdApiArg = {
+  id: number;
+};
+export type GetApiMyBareMetalImageListByDatacenterIdApiResponse =
+  /** status 200 Success */ BareMetalImageListResponse[];
+export type GetApiMyBareMetalImageListByDatacenterIdApiArg = {
+  datacenterId: number;
+};
+export type GetApiMyPortalBusinessUnitListApiResponse =
+  /** status 200 Success */ BusinessUnitListResponse[];
+export type GetApiMyPortalBusinessUnitListApiArg = void;
+export type GetApiMyPortalCalculateMonthListApiResponse =
+  /** status 200 Success */ CalculateMonthListResponse[];
+export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse =
   /** status 200 Success */ GetAnalyticResponse;
 export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg = {
@@ -1927,28 +2023,6 @@ export type DeleteApiMyCdnApiGatewayDeleteByIdApiResponse = unknown;
 export type DeleteApiMyCdnApiGatewayDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyBareMetalHostListApiResponse =
-  /** status 200 Success */ BareMetalListResponse[];
-export type GetApiMyBareMetalHostListApiArg = void;
-export type GetApiMyBareMetalHostGetByIdApiResponse =
-  /** status 200 Success */ BareMetalResponse;
-export type GetApiMyBareMetalHostGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyBareMetalHostCreateApiResponse = unknown;
-export type PostApiMyBareMetalHostCreateApiArg = {
-  createBareMetalModel: CreateBareMetalModel;
-};
-export type DeleteApiMyBareMetalHostDeleteApiResponse = unknown;
-export type DeleteApiMyBareMetalHostDeleteApiArg = {
-  id?: number;
-};
-export type GetApiMyPortalBusinessUnitListApiResponse =
-  /** status 200 Success */ BusinessUnitListResponse[];
-export type GetApiMyPortalBusinessUnitListApiArg = void;
-export type GetApiMyPortalCalculateMonthListApiResponse =
-  /** status 200 Success */ CalculateMonthListResponse[];
-export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyCdnClientCertGetByCdnIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
 export type GetApiMyCdnClientCertGetByCdnIdApiArg = {
@@ -2035,9 +2109,36 @@ export type PutApiMyCdnHostChangeNonWwwRedirectApiResponse = unknown;
 export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
+export type GetApiMyCdnLoadBalanceListByCdnIdApiResponse =
+  /** status 200 Success */ LoadBalanceListResponse[];
+export type GetApiMyCdnLoadBalanceListByCdnIdApiArg = {
+  cdnId: number;
+};
+export type GetApiMyCdnLoadBalanceGetByIdApiResponse =
+  /** status 200 Success */ GetLoadBalanceResponse;
+export type GetApiMyCdnLoadBalanceGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyCdnLoadBalanceCreateApiResponse = unknown;
+export type PostApiMyCdnLoadBalanceCreateApiArg = {
+  createLoadBalanceModel: CreateLoadBalanceModel;
+};
+export type PutApiMyCdnLoadBalanceEditApiResponse = unknown;
+export type PutApiMyCdnLoadBalanceEditApiArg = {
+  editLoadBalanceModel: EditLoadBalanceModel;
+};
+export type DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnLoadBalanceDeleteByIdApiArg = {
+  id: number;
+};
 export type GetApiMyColocationHostListApiResponse =
-  /** status 200 Success */ CoLocationListResponse[];
+  /** status 200 Success */ ColocationListResponse[];
 export type GetApiMyColocationHostListApiArg = void;
+export type GetApiMyColocationHostGetByIdApiResponse =
+  /** status 200 Success */ GetColocationResponse;
+export type GetApiMyColocationHostGetByIdApiArg = {
+  id: number;
+};
 export type PostApiMyColocationHostCreateApiResponse = unknown;
 export type PostApiMyColocationHostCreateApiArg = {
   createColocationModel: CreateColocationModel;
@@ -2047,7 +2148,7 @@ export type DeleteApiMyColocationHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalCommissionListApiResponse =
-  /** status 200 Success */ CommissionListResponse;
+  /** status 200 Success */ CommissionListResponse[];
 export type GetApiMyPortalCommissionListApiArg = void;
 export type GetApiMyPortalCustomerGetApiResponse =
   /** status 200 Success */ GetCustomerResponse;
@@ -2067,6 +2168,13 @@ export type GetApiMyPortalCustomerBillGetByIdApiResponse =
 export type GetApiMyPortalCustomerBillGetByIdApiArg = {
   id: number;
 };
+export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse =
+  /** status 200 Success */ GetCustomerProductResponse;
+export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg =
+  {
+    customerBillId: number;
+    customerProductId: number;
+  };
 export type GetApiMyPortalCustomerBillDownloadByIdApiResponse = unknown;
 export type GetApiMyPortalCustomerBillDownloadByIdApiArg = {
   id: number;
@@ -2179,6 +2287,18 @@ export type PostApiMyDomainHostResendVerificationByIdApiResponse = unknown;
 export type PostApiMyDomainHostResendVerificationByIdApiArg = {
   id: number;
 };
+export type GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiResponse =
+  /** status 200 Success */ EquipmentListResponse[];
+export type GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiArg = {
+  typeId: number;
+  brandId: number;
+};
+export type GetApiMyColocationEquipmentBrandListApiResponse =
+  /** status 200 Success */ EquipmentBrandListResponse[];
+export type GetApiMyColocationEquipmentBrandListApiArg = void;
+export type GetApiMyColocationEquipmentTypeListApiResponse =
+  /** status 200 Success */ EquipmentTypeListResponse[];
+export type GetApiMyColocationEquipmentTypeListApiArg = void;
 export type GetApiMyHomeIndexApiResponse = unknown;
 export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyPortalInvoiceListApiResponse =
@@ -2333,10 +2453,9 @@ export type PostApiMyKubernetesNodeCreateApiResponse = unknown;
 export type PostApiMyKubernetesNodeCreateApiArg = {
   createKubernetesNodeModel: CreateKubernetesNodeModel;
 };
-export type PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiResponse =
-  unknown;
-export type PutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdApiArg = {
-  kubernetesHostNodeId: number;
+export type PutApiMyKubernetesNodeDeleteByIdApiResponse = unknown;
+export type PutApiMyKubernetesNodeDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiMyKubernetesVersionListApiResponse =
   /** status 200 Success */ KubernetesVersionListResponse[];
@@ -2388,28 +2507,6 @@ export type PostApiMyKubesphereVolumeCreateApiArg = {
 };
 export type DeleteApiMyKubesphereVolumeDeleteByIdApiResponse = unknown;
 export type DeleteApiMyKubesphereVolumeDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCdnLoadBalanceListByCdnIdApiResponse =
-  /** status 200 Success */ LoadBalanceListResponse[];
-export type GetApiMyCdnLoadBalanceListByCdnIdApiArg = {
-  cdnId: number;
-};
-export type GetApiMyCdnLoadBalanceGetByIdApiResponse =
-  /** status 200 Success */ GetLoadBalanceResponse;
-export type GetApiMyCdnLoadBalanceGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyCdnLoadBalanceCreateApiResponse = unknown;
-export type PostApiMyCdnLoadBalanceCreateApiArg = {
-  createLoadBalanceModel: CreateLoadBalanceModel;
-};
-export type PutApiMyCdnLoadBalanceEditApiResponse = unknown;
-export type PutApiMyCdnLoadBalanceEditApiArg = {
-  editLoadBalanceModel: EditLoadBalanceModel;
-};
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalNotificationListApiResponse =
@@ -2468,6 +2565,11 @@ export type PostApiMyPortalPaymentSepCallBackApiArg = {
 export type GetApiMyPortalProductListApiResponse =
   /** status 200 Success */ ProductListResponse[];
 export type GetApiMyPortalProductListApiArg = void;
+export type GetApiMyPortalProductGetByIdApiResponse =
+  /** status 200 Success */ GetProductResponse;
+export type GetApiMyPortalProductGetByIdApiArg = {
+  id: number;
+};
 export type GetApiMyPortalProductBundleListByProductIdApiResponse =
   /** status 200 Success */ ProductBundleListResponse[];
 export type GetApiMyPortalProductBundleListByProductIdApiArg = {
@@ -2486,6 +2588,11 @@ export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
   productId: number;
+};
+export type GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiResponse =
+  /** status 200 Success */ KubernetesPriceResponse;
+export type GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiArg = {
+  workerNodeCount: number;
 };
 export type GetApiMyPortalProfileGetApiResponse =
   /** status 200 Success */ GetProfileResponse;
@@ -2683,12 +2790,6 @@ export type PutApiMyVmHostStopByIdApiResponse = unknown;
 export type PutApiMyVmHostStopByIdApiArg = {
   id: number;
 };
-export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
-  /** status 200 Success */ string;
-export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
-  id: number;
-  typeId: number;
-};
 export type GetApiMyVmImageListByDatacenterIdApiResponse =
   /** status 200 Success */ ImageListResponse[];
 export type GetApiMyVmImageListByDatacenterIdApiArg = {
@@ -2706,6 +2807,12 @@ export type PutApiMyVmIsoMountApiArg = {
 export type PutApiMyVmIsoUnmountApiResponse = unknown;
 export type PutApiMyVmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
+};
+export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
+  /** status 200 Success */ string;
+export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
+  id: number;
+  typeId: number;
 };
 export type GetApiMyVmProjectListApiResponse =
   /** status 200 Success */ VmProjectList[];
@@ -2770,6 +2877,11 @@ export type GetApiMyPortalWalletListApiArg = void;
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 Success */ number;
 export type GetApiMyPortalWalletGetBalanceApiArg = void;
+export type GetApiMyPortalWalletBalanceUsageApiResponse =
+  /** status 200 Success */ BalanceUsageResponse[];
+export type GetApiMyPortalWalletBalanceUsageApiArg = {
+  period?: number;
+};
 export type GetApiMyWebHostListApiResponse =
   /** status 200 Success */ WebHostListResponse[];
 export type GetApiMyWebHostListApiArg = void;
@@ -2845,6 +2957,63 @@ export type ForgotConfirmModel = {
   confirmCode: number;
   password: string;
 };
+export type BareMetalListResponse = {
+  id?: number;
+  name?: string | null;
+  status?: string | null;
+  statusId?: number;
+  bareMetalImage?: string | null;
+  bareMetalMachine?: string | null;
+  datacenter?: string | null;
+  datacenterRack?: string | null;
+  createDate?: string;
+};
+export type BareMetalResponse = {
+  id?: number;
+  name?: string | null;
+  bareMetalImage?: string | null;
+  bareMetalMachine?: string | null;
+  datacenter?: string | null;
+  datacenterRack?: string | null;
+  status?: string | null;
+  statusId?: number;
+  physicalCpu?: number;
+  physicalMemory?: number;
+  hdd600GSas10K?: number;
+  hdd1200GSas10K?: number;
+  networkPort1G?: number;
+  networkPort10G?: number;
+};
+export type CreateBareMetalModel = {
+  name: string;
+  password?: string | null;
+  datacenterId: number;
+  imageId: number;
+  publicKey?: string | null;
+  productBundleId?: number | null;
+  isPredefined: boolean;
+  customerProductTypeId: number;
+  physicalCpu?: number | null;
+  physicalMemory?: number | null;
+  hdd600Sas10K?: number | null;
+  hdd1200Sas10K?: number | null;
+  networkPort1G?: number | null;
+  networkPort10G?: number | null;
+};
+export type BareMetalImageListResponse = {
+  id?: number;
+  name?: string | null;
+  osId?: number;
+  os?: string | null;
+};
+export type BusinessUnitListResponse = {
+  id?: number;
+  name?: string | null;
+};
+export type CalculateMonthListResponse = {
+  id?: number;
+  name?: string | null;
+};
 export type SeriesModel = {
   name?: string | null;
   data?: number[] | null;
@@ -2888,54 +3057,6 @@ export type EditApiGatewayModel = {
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
-};
-export type BareMetalListResponse = {
-  id?: number;
-  name?: string | null;
-  bareMetalImage?: string | null;
-  bareMetalMachine?: string | null;
-  datacenter?: string | null;
-  datacenterRack?: string | null;
-};
-export type BareMetalResponse = {
-  id?: number;
-  name?: string | null;
-  bareMetalImage?: string | null;
-  bareMetalMachine?: string | null;
-  datacenter?: string | null;
-  datacenterRack?: string | null;
-  physicalCpu?: number;
-  physicalMemory?: number;
-  hdd600GSas10K?: number;
-  hdd1200GSas10K?: number;
-  networkPort1G?: number;
-  networkPort10G?: number;
-};
-export type CreateBareMetalModel = {
-  name: string;
-  password: string;
-  imageId: number;
-  publicKey?: string | null;
-  productBundleId?: number | null;
-  isPredefined: boolean;
-  customerProductTypeId: number;
-  datacenterRackId: number;
-  bareMetalMachineId: number;
-  physicalCpu?: number | null;
-  physicalMemory?: number | null;
-  hdd600Sas10K?: number | null;
-  hdd1200Sas10K?: number | null;
-  networkPort1G?: number | null;
-  networkPort10G?: number | null;
-  datacenterId?: number;
-};
-export type BusinessUnitListResponse = {
-  id?: number;
-  name?: string | null;
-};
-export type CalculateMonthListResponse = {
-  id?: number;
-  name?: string | null;
 };
 export type GetCdnCertResponse = {
   issuer?: string | null;
@@ -3015,16 +3136,62 @@ export type ChangeNonWwwRedirectModel = {
   id?: number;
   isNonWwwRedirect?: boolean;
 };
-export type CoLocationListResponse = {
+export type LoadBalanceListResponse = {
+  id?: number;
+  host?: string | null;
+  path?: string | null;
+  loadBalancingPolicy?: string | null;
+  maxConnectionsPerServer?: number;
+};
+export type GetLoadBalanceResponse = {
+  id?: number;
+  host?: string | null;
+  maxConnectionsPerServer?: number;
+  loadBalancingPolicyId?: number;
+  dangerousAcceptAnyServerCertificate?: boolean;
+  destinations?: DestinationModel[] | null;
+};
+export type CreateLoadBalanceModel = {
+  cdnId: number;
+  host: string;
+  destinations?: DestinationModel[] | null;
+  loadBalancingPolicyId: number;
+  maxConnectionsPerServer: number;
+  dangerousAcceptAnyServerCertificate: boolean;
+};
+export type EditLoadBalanceModel = {
+  id: number;
+  host: string;
+  destinations?: DestinationModel[] | null;
+  loadBalancingPolicyId: number;
+  maxConnectionsPerServer: number;
+  dangerousAcceptAnyServerCertificate: boolean;
+};
+export type ColocationListResponse = {
   id?: number;
   name?: string | null;
   datacenter?: string | null;
+  status?: string | null;
+  statusId?: number;
   datacenterId?: number;
   datacenterRackId?: number;
   datacenterRack?: string | null;
+  createDate?: string;
+};
+export type GetColocationResponse = {
+  id?: number;
+  name?: string | null;
+  datacenter?: string | null;
+  status?: string | null;
+  datacenterRack?: string | null;
+  powerAmp?: number;
+  network1G?: number;
+  network10G?: number;
+  ipv4Count?: number;
+  rackUnitSpace?: number;
 };
 export type EquipmentModel = {
-  equipmentModelId?: number;
+  equipmentId?: number;
   inventoryNumber?: number;
 };
 export type CreateColocationModel = {
@@ -3061,12 +3228,23 @@ export type EditCustomerModel = {
   address: string;
   postalCode: string;
 };
+export type CustomerProductBillResponseModel = {
+  customerProductId?: number;
+  product?: string | null;
+  customerProduct?: string | null;
+  customerProductPrice?: number;
+  fromDate?: string;
+  toDate?: string;
+};
 export type CustomerBillListResponse = {
   id?: number;
+  calculateMonthId?: number;
+  calculateMonth?: string | null;
   billDate?: string;
   netPrice?: number;
   vat?: number;
   totalPrice?: number;
+  customerProductBillListResponse?: CustomerProductBillResponseModel[] | null;
 };
 export type CustomerBillShortListResponse = {
   id?: number;
@@ -3097,10 +3275,27 @@ export type GetCustomerBillResponse = {
   totalPrice?: number;
   customerProductBills?: CustomerProductBillModel[] | null;
 };
+export type GetCustomerProductItemBillResponse = {
+  customerProductItem?: string | null;
+  duration?: number;
+  price?: number;
+  fromDate?: string;
+  toDate?: string;
+};
+export type GetCustomerProductResponse = {
+  id?: number;
+  product?: string | null;
+  customerProduct?: string | null;
+  customerProductPrice?: number;
+  fromDate?: string;
+  toDate?: string;
+  customerProductBillItems?: GetCustomerProductItemBillResponse[] | null;
+};
 export type CustomerProductListResponse = {
   id?: number;
   name?: string | null;
   product?: string | null;
+  productId?: number;
   customerProduct?: string | null;
   status?: string | null;
   createDate?: string;
@@ -3146,17 +3341,19 @@ export type ChangeCustomerUserModel = {
   customerId?: number;
 };
 export type DashboardUsageResponse = {
-  data?: number[] | null;
-  name?: string | null;
+  month?: string | null;
+  count?: number;
 };
 export type DashboardFinancialResponse = {
   walletBalance?: number;
+  paidInvoicePrice?: number;
   unpaidInvoiceCount?: number;
   activeServiceCount?: number;
 };
 export type DatacenterListResponse = {
   id?: number;
   name?: string | null;
+  photoName?: string | null;
 };
 export type DatacenterIpListResponse = {
   id?: number;
@@ -3300,6 +3497,22 @@ export type ChangeNsModel = {
   ns1: string;
   ns2: string;
 };
+export type EquipmentListResponse = {
+  id?: number;
+  name?: string | null;
+  type?: string | null;
+  typeId?: number;
+  brand?: string | null;
+  brandId?: number;
+};
+export type EquipmentBrandListResponse = {
+  id?: number;
+  name?: string | null;
+};
+export type EquipmentTypeListResponse = {
+  id?: number;
+  name?: string | null;
+};
 export type InvoiceListResponse = {
   id?: number;
   invoiceDate?: string;
@@ -3435,7 +3648,7 @@ export type GetKubeLoginResponse = {
 };
 export type CreateKubeHostModel = {
   name: string;
-  datacenterId?: number;
+  datacenterId: number;
   customerProductTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
@@ -3515,6 +3728,7 @@ export type KubernetesNodeListResponse = {
   hostId?: number;
   statusId?: number;
   ip?: string | null;
+  vmProjectId?: number;
 };
 export type CreateKubernetesNodeModel = {
   kubernetesHostId: number;
@@ -3570,37 +3784,6 @@ export type CreateKubeVolumeModel = {
   name: string;
   capacity: number;
 };
-export type LoadBalanceListResponse = {
-  id?: number;
-  host?: string | null;
-  path?: string | null;
-  loadBalancingPolicy?: string | null;
-  maxConnectionsPerServer?: number;
-};
-export type GetLoadBalanceResponse = {
-  id?: number;
-  host?: string | null;
-  maxConnectionsPerServer?: number;
-  loadBalancingPolicyId?: number;
-  dangerousAcceptAnyServerCertificate?: boolean;
-  destinations?: DestinationModel[] | null;
-};
-export type CreateLoadBalanceModel = {
-  cdnId: number;
-  host: string;
-  destinations?: DestinationModel[] | null;
-  loadBalancingPolicyId: number;
-  maxConnectionsPerServer: number;
-  dangerousAcceptAnyServerCertificate: boolean;
-};
-export type EditLoadBalanceModel = {
-  id: number;
-  host: string;
-  destinations?: DestinationModel[] | null;
-  loadBalancingPolicyId: number;
-  maxConnectionsPerServer: number;
-  dangerousAcceptAnyServerCertificate: boolean;
-};
 export type NotificationListResponse = {
   id?: number;
   content?: string | null;
@@ -3644,6 +3827,11 @@ export type ProductListResponse = {
   id?: number;
   name?: string | null;
   description?: string | null;
+};
+export type GetProductResponse = {
+  id?: number;
+  name?: string | null;
+  description?: string | null;
   supplementaryDescription?: string | null;
 };
 export type ProductBundleConfiguration = {
@@ -3682,6 +3870,21 @@ export type ProductItemListResponse = {
   id?: number;
   name?: string | null;
   price?: number;
+};
+export type VmSpec = {
+  productItemId?: number;
+  name?: string | null;
+  quantity?: number;
+};
+export type MasterNodeModel = {
+  kubernetesManagementItemId?: number;
+  kubernetesManagementItemPrice?: number;
+  masterNodeCount?: number;
+  masterVmSpecs?: VmSpec[] | null;
+};
+export type KubernetesPriceResponse = {
+  vmProductItemsPrice?: ProductItemListResponse[] | null;
+  masterNodesInfo?: MasterNodeModel;
 };
 export type GetProfileResponse = {
   id?: string;
@@ -3852,10 +4055,10 @@ export type GetStorageHostResponse = {
 };
 export type CreateStorageHostModel = {
   name: string;
-  isPublic?: boolean;
-  datacenterId?: number;
+  isPublic: boolean;
+  datacenterId: number;
   customerProductTypeId: number;
-  storageHostTypeId?: number;
+  storageHostTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
   disk?: number | null;
@@ -4022,6 +4225,10 @@ export type WalletTransactionListResponse = {
   balance?: number;
   description?: string | null;
 };
+export type BalanceUsageResponse = {
+  balance?: number;
+  toDate?: string;
+};
 export type WebHostListResponse = {
   id?: number;
   datacenter?: string | null;
@@ -4076,18 +4283,19 @@ export const {
   usePostApiMyAccountForgotMutation,
   usePostApiMyAccountForgotConfirmMutation,
   usePostApiMyAccountLogoutMutation,
+  useGetApiMyBareMetalHostListQuery,
+  useGetApiMyBareMetalHostGetByIdQuery,
+  usePostApiMyBareMetalHostCreateMutation,
+  useDeleteApiMyBareMetalHostDeleteByIdMutation,
+  useGetApiMyBareMetalImageListByDatacenterIdQuery,
+  useGetApiMyPortalBusinessUnitListQuery,
+  useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyCdnAnalyticGetByCdnIdAndPeriodIdQuery,
   useGetApiMyCdnApiGatewayListByCdnIdQuery,
   useGetApiMyCdnApiGatewayGetByIdQuery,
   usePostApiMyCdnApiGatewayCreateMutation,
   usePutApiMyCdnApiGatewayEditMutation,
   useDeleteApiMyCdnApiGatewayDeleteByIdMutation,
-  useGetApiMyBareMetalHostListQuery,
-  useGetApiMyBareMetalHostGetByIdQuery,
-  usePostApiMyBareMetalHostCreateMutation,
-  useDeleteApiMyBareMetalHostDeleteMutation,
-  useGetApiMyPortalBusinessUnitListQuery,
-  useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyCdnClientCertGetByCdnIdQuery,
   useGetApiMyCdnClientCertGetUserCertByCdnIdQuery,
   usePostApiMyCdnClientCertCreateUserCertMutation,
@@ -4108,7 +4316,13 @@ export const {
   usePutApiMyCdnHostChangeHstsMutation,
   usePutApiMyCdnHostChangeHttpsRedirectMutation,
   usePutApiMyCdnHostChangeNonWwwRedirectMutation,
+  useGetApiMyCdnLoadBalanceListByCdnIdQuery,
+  useGetApiMyCdnLoadBalanceGetByIdQuery,
+  usePostApiMyCdnLoadBalanceCreateMutation,
+  usePutApiMyCdnLoadBalanceEditMutation,
+  useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
   useGetApiMyColocationHostListQuery,
+  useGetApiMyColocationHostGetByIdQuery,
   usePostApiMyColocationHostCreateMutation,
   useDeleteApiMyColocationHostDeleteByIdMutation,
   useGetApiMyPortalCommissionListQuery,
@@ -4117,6 +4331,7 @@ export const {
   useGetApiMyPortalCustomerBillListQuery,
   useGetApiMyPortalCustomerBillShortListQuery,
   useGetApiMyPortalCustomerBillGetByIdQuery,
+  useGetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdQuery,
   useGetApiMyPortalCustomerBillDownloadByIdQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
   useGetApiMyPortalCustomerProductShortListQuery,
@@ -4144,6 +4359,9 @@ export const {
   usePutApiMyDomainHostChangeContactMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePostApiMyDomainHostResendVerificationByIdMutation,
+  useGetApiMyColocationEquipmentListByTypeIdAndBrandIdQuery,
+  useGetApiMyColocationEquipmentBrandListQuery,
+  useGetApiMyColocationEquipmentTypeListQuery,
   useGetApiMyHomeIndexQuery,
   useGetApiMyPortalInvoiceListQuery,
   useGetApiMyPortalInvoiceUnpaidQuery,
@@ -4179,7 +4397,7 @@ export const {
   useGetApiMyKubernetesImageListByDatacenterIdQuery,
   useGetApiMyKubernetesNodeListByKubernetesHostIdQuery,
   usePostApiMyKubernetesNodeCreateMutation,
-  usePutApiMyKubernetesNodeDeleteByKubernetesHostNodeIdMutation,
+  usePutApiMyKubernetesNodeDeleteByIdMutation,
   useGetApiMyKubernetesVersionListQuery,
   useGetApiMyKubesphereUserListQuery,
   useGetApiMyKubesphereUserShortListQuery,
@@ -4193,11 +4411,6 @@ export const {
   useGetApiMyKubesphereVolumeGetByIdQuery,
   usePostApiMyKubesphereVolumeCreateMutation,
   useDeleteApiMyKubesphereVolumeDeleteByIdMutation,
-  useGetApiMyCdnLoadBalanceListByCdnIdQuery,
-  useGetApiMyCdnLoadBalanceGetByIdQuery,
-  usePostApiMyCdnLoadBalanceCreateMutation,
-  usePutApiMyCdnLoadBalanceEditMutation,
-  useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
   useGetApiMyPortalNotificationListQuery,
   useGetApiMyPortalNotificationShortListQuery,
   usePutApiMyPortalNotificationSeenByIdMutation,
@@ -4207,11 +4420,13 @@ export const {
   usePostApiMyPortalPaymentPecCallBackMutation,
   usePostApiMyPortalPaymentSepCallBackMutation,
   useGetApiMyPortalProductListQuery,
+  useGetApiMyPortalProductGetByIdQuery,
   useGetApiMyPortalProductBundleListByProductIdQuery,
   useGetApiMyPortalProductBundleVmListQuery,
   useGetApiMyPortalProductBundleStorageListQuery,
   useGetApiMyPortalProductBundleWebHostListQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
+  useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useGetApiMyPortalProfileGetQuery,
   useGetApiMyPortalProfileGetNotificationStatusQuery,
   usePutApiMyPortalProfileEditMutation,
@@ -4260,11 +4475,11 @@ export const {
   usePutApiMyVmHostResetByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostStopByIdMutation,
-  useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   useGetApiMyVmImageListByDatacenterIdQuery,
   useGetApiMyVmIsoListByDatacenterIdQuery,
   usePutApiMyVmIsoMountMutation,
   usePutApiMyVmIsoUnmountMutation,
+  useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   useGetApiMyVmProjectListQuery,
   usePostApiMyVmProjectCreateMutation,
   usePutApiMyVmProjectEditMutation,
@@ -4281,6 +4496,7 @@ export const {
   usePostApiMyVpcNetworkCreateMutation,
   useGetApiMyPortalWalletListQuery,
   useGetApiMyPortalWalletGetBalanceQuery,
+  useGetApiMyPortalWalletBalanceUsageQuery,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetByIdQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
