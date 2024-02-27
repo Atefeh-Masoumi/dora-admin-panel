@@ -4182,17 +4182,11 @@ export type EditVmProject = {
 };
 export type VmSnapshotResponse = {
   id?: number;
-  snapshotId?: number;
   name?: string | null;
   isActive?: boolean;
   isCreated?: boolean;
-  datacenter?: string | null;
-  operatingSystem?: string | null;
   description?: string | null;
-  vmProjectId?: number | null;
-  vmProjectName?: string | null;
   createDate?: string;
-  modifiedDate?: string;
 };
 export type CreateSnapshotModel = {
   vmHostId: number;
