@@ -60,6 +60,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
+    getApiMyAccountCaptcha: build.query<
+      GetApiMyAccountCaptchaApiResponse,
+      GetApiMyAccountCaptchaApiArg
+    >({
+      query: () => ({ url: `/api/my/account/captcha` }),
+    }),
     getApiMyBareMetalHostList: build.query<
       GetApiMyBareMetalHostListApiResponse,
       GetApiMyBareMetalHostListApiArg
@@ -1968,6 +1974,9 @@ export type PostApiMyAccountForgotConfirmApiArg = {
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
+export type GetApiMyAccountCaptchaApiResponse =
+  /** status 200 Success */ CaptchaResponse;
+export type GetApiMyAccountCaptchaApiArg = void;
 export type GetApiMyBareMetalHostListApiResponse =
   /** status 200 Success */ BareMetalListResponse[];
 export type GetApiMyBareMetalHostListApiArg = void;
@@ -2937,6 +2946,8 @@ export type LoginResponse = {
 export type LoginModel = {
   email: string;
   password: string;
+  captchaKey?: string | null;
+  captchaCode?: string | null;
 };
 export type TwoFactorLoginModel = {
   email: string;
@@ -2956,6 +2967,10 @@ export type ForgotConfirmModel = {
   email: string;
   confirmCode: number;
   password: string;
+};
+export type CaptchaResponse = {
+  base64CaptchaImage?: string | null;
+  captchaKey?: string;
 };
 export type BareMetalListResponse = {
   id?: number;
@@ -3277,6 +3292,7 @@ export type GetCustomerBillResponse = {
 };
 export type GetCustomerProductItemBillResponse = {
   customerProductItem?: string | null;
+  quantity?: number;
   duration?: number;
   price?: number;
   fromDate?: string;
@@ -3346,7 +3362,7 @@ export type DashboardUsageResponse = {
 };
 export type DashboardFinancialResponse = {
   walletBalance?: number;
-  paidInvoicePrice?: number;
+  billPrice?: number;
   unpaidInvoiceCount?: number;
   activeServiceCount?: number;
 };
@@ -4179,12 +4195,12 @@ export type VmSnapshotResponse = {
   modifiedDate?: string;
 };
 export type CreateSnapshotModel = {
-  vmHostId?: number;
-  snapshotName?: string | null;
+  vmHostId: number;
+  snapshotName: string;
   snapshotDescription?: string | null;
 };
 export type RevertSnapshotModel = {
-  snapshotId?: number;
+  snapshotId: number;
 };
 export type UseVoucherModel = {
   voucherCode: string;
@@ -4283,6 +4299,7 @@ export const {
   usePostApiMyAccountForgotMutation,
   usePostApiMyAccountForgotConfirmMutation,
   usePostApiMyAccountLogoutMutation,
+  useGetApiMyAccountCaptchaQuery,
   useGetApiMyBareMetalHostListQuery,
   useGetApiMyBareMetalHostGetByIdQuery,
   usePostApiMyBareMetalHostCreateMutation,
