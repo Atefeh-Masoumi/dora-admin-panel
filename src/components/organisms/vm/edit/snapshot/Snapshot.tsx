@@ -26,10 +26,10 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
 
   return (
     <>
-      <Paper sx={{ overflow: "hidden" }} elevation={0}>
+      <Paper sx={{ overflow: "hidden", p: 3 }} elevation={0}>
         <Stack
-          px={3}
-          py={2}
+          // px={3}
+          pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
           justifyContent="space-between"
