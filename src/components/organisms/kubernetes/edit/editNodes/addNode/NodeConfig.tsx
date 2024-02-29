@@ -16,7 +16,6 @@ import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMa
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import {
   setNodeTypeAction,
-  setProductBundleIdAction,
   setVmPasswordAction,
 } from "src/app/slice/createNodeSlice";
 import { kubernetesNodeType } from "src/constant/kubernetesNodeType";

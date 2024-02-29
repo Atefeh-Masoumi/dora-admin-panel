@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FC, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import {
   Button,
   Divider,
@@ -12,7 +12,6 @@ import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { InvoiceSvg } from "../atoms/svg/InvoiceSvg";
 import { CalculateSvg } from "../atoms/svg/CalculateSvg";
-import useResize from "src/utils/useResize";
 
 type ServiceReceiptPropsType = {
   receiptItemNumber: string;
