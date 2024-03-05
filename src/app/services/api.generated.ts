@@ -2941,6 +2941,7 @@ export type LoginResponse = {
   isFinancialManager?: boolean;
   isAccountManager?: boolean;
   profileCompleted?: boolean;
+  captchaRequired?: boolean;
   roles?: number[] | null;
 };
 export type LoginModel = {
