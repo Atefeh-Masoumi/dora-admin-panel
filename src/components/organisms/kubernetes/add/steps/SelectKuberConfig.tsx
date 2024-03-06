@@ -8,15 +8,39 @@ import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
 type SelectKuberConfigPropsType = {};
 
 export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
-  const { data: configsList, isLoading } =
+  const { data, isLoading } =
     useGetApiMyPortalProductBundleListByProductIdQuery({ productId: 17 });
+
+  const configsList = useMemo(() => {
+    if (!data) return [];
+    return data.map(({ id, name, price, configurations }) => {
+      const cpu =
+        configurations?.find((item) => item.name === "CPU")?.quantity || 0;
+      const memory =
+        configurations?.find((item) => item.name === "Memory")?.quantity || 0;
+      const disk =
+        configurations?.find((item) => item.name === "Disk")?.quantity || 0;
+      const ipv4 =
+        configurations?.find((item) => item.name === "IPV4")?.quantity || 0;
+
+      return {
+        id,
+        name,
+        cpu,
+        memory,
+        disk,
+        ipv4,
+        price,
+      };
+    });
+  }, [data]);
 
   const table = useMemo(
     () => (
       <BaseTable
         struct={productBundleTableStruct}
         RowComponent={KuberServerConfigTableRow}
-        rows={configsList || []}
+        rows={configsList}
         text=""
         isLoading={isLoading}
       />

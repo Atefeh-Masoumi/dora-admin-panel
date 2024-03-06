@@ -2,7 +2,7 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { columnType } from "../../../tables/table.types";
 
 export const productBundleTableStruct: columnType[] = [
-  { id: "productBundleId", label: "" },
+  { id: "id", label: "" },
   { id: "name", label: "نام سروریس" },
   { id: "cpu", label: "CPU" },
   { id: "memory", label: "Memory" },
