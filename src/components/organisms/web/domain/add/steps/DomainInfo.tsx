@@ -35,8 +35,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     setNs2,
     autoRenewal,
     setAutoRenewal,
-    activeCdn,
-    setActiveCdn,
   } = useContext(AddDomainContext);
 
   const nameInputChangeHandler = (
@@ -77,9 +75,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
 
   const autoRenewalInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setAutoRenewal(e.target.checked);
-
-  const activeCdnInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setActiveCdn(e.target.checked);
 
   return (
     <Box sx={{ spacing: 2 }}>

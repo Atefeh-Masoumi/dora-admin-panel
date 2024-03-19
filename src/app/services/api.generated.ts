@@ -648,14 +648,14 @@ export const api = createApi({
         url: `/api/my/domain/host/get-status/${queryArg.id}`,
       }),
     }),
-    postApiMyDomainHostGetPrice: build.mutation<
-      PostApiMyDomainHostGetPriceApiResponse,
-      PostApiMyDomainHostGetPriceApiArg
+    postApiMyDomainHostCheckDomain: build.mutation<
+      PostApiMyDomainHostCheckDomainApiResponse,
+      PostApiMyDomainHostCheckDomainApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/domain/host/get-price`,
+        url: `/api/my/domain/host/check-domain`,
         method: "POST",
-        body: queryArg.getPriceModel,
+        body: queryArg.checkDomainModel,
       }),
     }),
     postApiMyDomainHostRegister: build.mutation<
@@ -726,11 +726,11 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/colocation/equipment/type-list` }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
+    getApiMyHomeIndexByDomain: build.query<
+      GetApiMyHomeIndexByDomainApiResponse,
+      GetApiMyHomeIndexByDomainApiArg
     >({
-      query: () => ({ url: `/api/my/home/index` }),
+      query: (queryArg) => ({ url: `/api/my/home/index/${queryArg.domain}` }),
     }),
     getApiMyPortalInvoiceList: build.query<
       GetApiMyPortalInvoiceListApiResponse,
@@ -832,127 +832,6 @@ export const api = createApi({
         body: queryArg.issueSubjectSelectListModel,
       }),
     }),
-    getApiMyKubesphereDevopsListById: build.query<
-      GetApiMyKubesphereDevopsListByIdApiResponse,
-      GetApiMyKubesphereDevopsListByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/devops/list/${queryArg.id}`,
-      }),
-    }),
-    getApiMyKubesphereDevopsGetById: build.query<
-      GetApiMyKubesphereDevopsGetByIdApiResponse,
-      GetApiMyKubesphereDevopsGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/devops/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyKubesphereDevopsCreate: build.mutation<
-      PostApiMyKubesphereDevopsCreateApiResponse,
-      PostApiMyKubesphereDevopsCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/devops/create`,
-        method: "POST",
-        body: queryArg.createKubeDevOpsModel,
-      }),
-    }),
-    deleteApiMyKubesphereDevopsDeleteById: build.mutation<
-      DeleteApiMyKubesphereDevopsDeleteByIdApiResponse,
-      DeleteApiMyKubesphereDevopsDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/devops/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getApiMyKubesphereHostList: build.query<
-      GetApiMyKubesphereHostListApiResponse,
-      GetApiMyKubesphereHostListApiArg
-    >({
-      query: () => ({ url: `/api/my/kubesphere/host/list` }),
-    }),
-    getApiMyKubesphereHostGetById: build.query<
-      GetApiMyKubesphereHostGetByIdApiResponse,
-      GetApiMyKubesphereHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/host/get/${queryArg.id}`,
-      }),
-    }),
-    getApiMyKubesphereHostGetLoginById: build.query<
-      GetApiMyKubesphereHostGetLoginByIdApiResponse,
-      GetApiMyKubesphereHostGetLoginByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/host/get-login/${queryArg.id}`,
-      }),
-    }),
-    postApiMyKubesphereHostCreate: build.mutation<
-      PostApiMyKubesphereHostCreateApiResponse,
-      PostApiMyKubesphereHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/host/create`,
-        method: "POST",
-        body: queryArg.createKubeHostModel,
-      }),
-    }),
-    putApiMyKubesphereHostEdit: build.mutation<
-      PutApiMyKubesphereHostEditApiResponse,
-      PutApiMyKubesphereHostEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/host/edit`,
-        method: "PUT",
-        body: queryArg.editKubeHostModel,
-      }),
-    }),
-    deleteApiMyKubesphereHostDeleteById: build.mutation<
-      DeleteApiMyKubesphereHostDeleteByIdApiResponse,
-      DeleteApiMyKubesphereHostDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/host/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getApiMyKubesphereServiceListById: build.query<
-      GetApiMyKubesphereServiceListByIdApiResponse,
-      GetApiMyKubesphereServiceListByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/service/list/${queryArg.id}`,
-      }),
-    }),
-    getApiMyKubesphereServiceGetById: build.query<
-      GetApiMyKubesphereServiceGetByIdApiResponse,
-      GetApiMyKubesphereServiceGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/service/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyKubesphereServiceCreate: build.mutation<
-      PostApiMyKubesphereServiceCreateApiResponse,
-      PostApiMyKubesphereServiceCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/service/create`,
-        method: "POST",
-        body: queryArg.createKubeServiceModel,
-      }),
-    }),
-    deleteApiMyKubesphereServiceDeleteById: build.mutation<
-      DeleteApiMyKubesphereServiceDeleteByIdApiResponse,
-      DeleteApiMyKubesphereServiceDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/service/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
     getApiMyKubernetesHostList: build.query<
       GetApiMyKubernetesHostListApiResponse,
       GetApiMyKubernetesHostListApiArg
@@ -1026,109 +905,6 @@ export const api = createApi({
       GetApiMyKubernetesVersionListApiArg
     >({
       query: () => ({ url: `/api/my/kubernetes/version/list` }),
-    }),
-    getApiMyKubesphereUserList: build.query<
-      GetApiMyKubesphereUserListApiResponse,
-      GetApiMyKubesphereUserListApiArg
-    >({
-      query: () => ({ url: `/api/my/kubesphere/user/list` }),
-    }),
-    getApiMyKubesphereUserShortList: build.query<
-      GetApiMyKubesphereUserShortListApiResponse,
-      GetApiMyKubesphereUserShortListApiArg
-    >({
-      query: () => ({ url: `/api/my/kubesphere/user/short-list` }),
-    }),
-    postApiMyKubesphereUserCreate: build.mutation<
-      PostApiMyKubesphereUserCreateApiResponse,
-      PostApiMyKubesphereUserCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user/create`,
-        method: "POST",
-        body: queryArg.createKubeUserModel,
-      }),
-    }),
-    deleteApiMyKubesphereUserDeleteById: build.mutation<
-      DeleteApiMyKubesphereUserDeleteByIdApiResponse,
-      DeleteApiMyKubesphereUserDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyKubesphereUserChangePassword: build.mutation<
-      PostApiMyKubesphereUserChangePasswordApiResponse,
-      PostApiMyKubesphereUserChangePasswordApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user/change-password`,
-        method: "POST",
-        body: queryArg.changeKubeUserPasswordModel,
-      }),
-    }),
-    getApiMyKubesphereUserRoleListByKubeHostId: build.query<
-      GetApiMyKubesphereUserRoleListByKubeHostIdApiResponse,
-      GetApiMyKubesphereUserRoleListByKubeHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user-role/list/${queryArg.kubeHostId}`,
-      }),
-    }),
-    postApiMyKubesphereUserRoleCreate: build.mutation<
-      PostApiMyKubesphereUserRoleCreateApiResponse,
-      PostApiMyKubesphereUserRoleCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user-role/create`,
-        method: "POST",
-        body: queryArg.createKubeUserRoleModel,
-      }),
-    }),
-    deleteApiMyKubesphereUserRoleDeleteById: build.mutation<
-      DeleteApiMyKubesphereUserRoleDeleteByIdApiResponse,
-      DeleteApiMyKubesphereUserRoleDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/user-role/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getApiMyKubesphereVolumeListById: build.query<
-      GetApiMyKubesphereVolumeListByIdApiResponse,
-      GetApiMyKubesphereVolumeListByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/volume/list/${queryArg.id}`,
-      }),
-    }),
-    getApiMyKubesphereVolumeGetById: build.query<
-      GetApiMyKubesphereVolumeGetByIdApiResponse,
-      GetApiMyKubesphereVolumeGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/volume/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyKubesphereVolumeCreate: build.mutation<
-      PostApiMyKubesphereVolumeCreateApiResponse,
-      PostApiMyKubesphereVolumeCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/volume/create`,
-        method: "POST",
-        body: queryArg.createKubeVolumeModel,
-      }),
-    }),
-    deleteApiMyKubesphereVolumeDeleteById: build.mutation<
-      DeleteApiMyKubesphereVolumeDeleteByIdApiResponse,
-      DeleteApiMyKubesphereVolumeDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubesphere/volume/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
     }),
     getApiMyPortalNotificationList: build.query<
       GetApiMyPortalNotificationListApiResponse,
@@ -1229,11 +1005,11 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/storage-list` }),
     }),
-    getApiMyPortalProductBundleWebHostList: build.query<
-      GetApiMyPortalProductBundleWebHostListApiResponse,
-      GetApiMyPortalProductBundleWebHostListApiArg
+    getApiMyPortalProductBundleWebList: build.query<
+      GetApiMyPortalProductBundleWebListApiResponse,
+      GetApiMyPortalProductBundleWebListApiArg
     >({
-      query: () => ({ url: `/api/my/portal/product-bundle/web-host-list` }),
+      query: () => ({ url: `/api/my/portal/product-bundle/web-list` }),
     }),
     getApiMyPortalProductItemListByProductId: build.query<
       GetApiMyPortalProductItemListByProductIdApiResponse,
@@ -1351,94 +1127,6 @@ export const api = createApi({
         url: `/api/my/portal/profile/change-password`,
         method: "POST",
         body: queryArg.changePasswordModel,
-      }),
-    }),
-    getApiMyRabbitHostList: build.query<
-      GetApiMyRabbitHostListApiResponse,
-      GetApiMyRabbitHostListApiArg
-    >({
-      query: () => ({ url: `/api/my/rabbit/host/list` }),
-    }),
-    getApiMyRabbitHostGetById: build.query<
-      GetApiMyRabbitHostGetByIdApiResponse,
-      GetApiMyRabbitHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/rabbit/host/get/${queryArg.id}` }),
-    }),
-    postApiMyRabbitHostCreate: build.mutation<
-      PostApiMyRabbitHostCreateApiResponse,
-      PostApiMyRabbitHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/host/create`,
-        method: "POST",
-        body: queryArg.createRabbitHostModel,
-      }),
-    }),
-    putApiMyRabbitHostChangeService: build.mutation<
-      PutApiMyRabbitHostChangeServiceApiResponse,
-      PutApiMyRabbitHostChangeServiceApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/host/change-service`,
-        method: "PUT",
-        body: queryArg.editRabbitHostModel,
-      }),
-    }),
-    deleteApiMyRabbitHostDeleteById: build.mutation<
-      DeleteApiMyRabbitHostDeleteByIdApiResponse,
-      DeleteApiMyRabbitHostDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/host/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyRabbitHostChangeExchange: build.mutation<
-      PostApiMyRabbitHostChangeExchangeApiResponse,
-      PostApiMyRabbitHostChangeExchangeApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/host/change-exchange`,
-        method: "POST",
-        body: queryArg.changeExchangeModel,
-      }),
-    }),
-    getApiMyRabbitUserListByRabbitHostId: build.query<
-      GetApiMyRabbitUserListByRabbitHostIdApiResponse,
-      GetApiMyRabbitUserListByRabbitHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/user/list/${queryArg.rabbitHostId}`,
-      }),
-    }),
-    postApiMyRabbitUserCreate: build.mutation<
-      PostApiMyRabbitUserCreateApiResponse,
-      PostApiMyRabbitUserCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/user/create`,
-        method: "POST",
-        body: queryArg.createRabbitUserModel,
-      }),
-    }),
-    deleteApiMyRabbitUserDeleteById: build.mutation<
-      DeleteApiMyRabbitUserDeleteByIdApiResponse,
-      DeleteApiMyRabbitUserDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/user/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyRabbitUserChangePassword: build.mutation<
-      PostApiMyRabbitUserChangePasswordApiResponse,
-      PostApiMyRabbitUserChangePasswordApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/rabbit/user/change-password`,
-        method: "POST",
-        body: queryArg.changeRabbitPasswordModel,
       }),
     }),
     getApiMyPortalReferralGet: build.query<
@@ -1790,6 +1478,15 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/snapshot/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteApiMyVmSnapshotDeleteAllByVmHostId: build.mutation<
+      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse,
+      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/delete-all/${queryArg.vmHostId}`,
         method: "DELETE",
       }),
     }),
@@ -2271,10 +1968,9 @@ export type GetApiMyDomainHostGetStatusByIdApiResponse =
 export type GetApiMyDomainHostGetStatusByIdApiArg = {
   id: number;
 };
-export type PostApiMyDomainHostGetPriceApiResponse =
-  /** status 200 Success */ GetProductPriceResponse;
-export type PostApiMyDomainHostGetPriceApiArg = {
-  getPriceModel: GetPriceModel;
+export type PostApiMyDomainHostCheckDomainApiResponse = unknown;
+export type PostApiMyDomainHostCheckDomainApiArg = {
+  checkDomainModel: CheckDomainModel;
 };
 export type PostApiMyDomainHostRegisterApiResponse = unknown;
 export type PostApiMyDomainHostRegisterApiArg = {
@@ -2308,8 +2004,10 @@ export type GetApiMyColocationEquipmentBrandListApiArg = void;
 export type GetApiMyColocationEquipmentTypeListApiResponse =
   /** status 200 Success */ EquipmentTypeListResponse[];
 export type GetApiMyColocationEquipmentTypeListApiArg = void;
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
+export type GetApiMyHomeIndexByDomainApiResponse = unknown;
+export type GetApiMyHomeIndexByDomainApiArg = {
+  domain: string;
+};
 export type GetApiMyPortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiMyPortalInvoiceListApiArg = void;
@@ -2371,67 +2069,6 @@ export type PostApiMyPortalIssueSubjectSelectListApiResponse =
 export type PostApiMyPortalIssueSubjectSelectListApiArg = {
   issueSubjectSelectListModel: IssueSubjectSelectListModel;
 };
-export type GetApiMyKubesphereDevopsListByIdApiResponse =
-  /** status 200 Success */ KubeDevOpsListResponse[];
-export type GetApiMyKubesphereDevopsListByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereDevopsGetByIdApiResponse =
-  /** status 200 Success */ KubeDevOpsListResponse;
-export type GetApiMyKubesphereDevopsGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyKubesphereDevopsCreateApiResponse = unknown;
-export type PostApiMyKubesphereDevopsCreateApiArg = {
-  createKubeDevOpsModel: CreateKubeDevOpsModel;
-};
-export type DeleteApiMyKubesphereDevopsDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereDevopsDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereHostListApiResponse =
-  /** status 200 Success */ KubeHostListResponse[];
-export type GetApiMyKubesphereHostListApiArg = void;
-export type GetApiMyKubesphereHostGetByIdApiResponse =
-  /** status 200 Success */ GetKubeHostResponse;
-export type GetApiMyKubesphereHostGetByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereHostGetLoginByIdApiResponse =
-  /** status 200 Success */ GetKubeLoginResponse;
-export type GetApiMyKubesphereHostGetLoginByIdApiArg = {
-  id: number;
-};
-export type PostApiMyKubesphereHostCreateApiResponse = unknown;
-export type PostApiMyKubesphereHostCreateApiArg = {
-  createKubeHostModel: CreateKubeHostModel;
-};
-export type PutApiMyKubesphereHostEditApiResponse = unknown;
-export type PutApiMyKubesphereHostEditApiArg = {
-  editKubeHostModel: EditKubeHostModel;
-};
-export type DeleteApiMyKubesphereHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereHostDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereServiceListByIdApiResponse =
-  /** status 200 Success */ KubeServiceListResponse[];
-export type GetApiMyKubesphereServiceListByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereServiceGetByIdApiResponse =
-  /** status 200 Success */ KubeServiceListResponse;
-export type GetApiMyKubesphereServiceGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyKubesphereServiceCreateApiResponse = unknown;
-export type PostApiMyKubesphereServiceCreateApiArg = {
-  createKubeServiceModel: CreateKubeServiceModel;
-};
-export type DeleteApiMyKubesphereServiceDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereServiceDeleteByIdApiArg = {
-  id: number;
-};
 export type GetApiMyKubernetesHostListApiResponse =
   /** status 200 Success */ KubernetesListResponse[];
 export type GetApiMyKubernetesHostListApiArg = void;
@@ -2469,55 +2106,6 @@ export type PutApiMyKubernetesNodeDeleteByIdApiArg = {
 export type GetApiMyKubernetesVersionListApiResponse =
   /** status 200 Success */ KubernetesVersionListResponse[];
 export type GetApiMyKubernetesVersionListApiArg = void;
-export type GetApiMyKubesphereUserListApiResponse =
-  /** status 200 Success */ KubeUserListResponse[];
-export type GetApiMyKubesphereUserListApiArg = void;
-export type GetApiMyKubesphereUserShortListApiResponse =
-  /** status 200 Success */ KubeShortListResponse[];
-export type GetApiMyKubesphereUserShortListApiArg = void;
-export type PostApiMyKubesphereUserCreateApiResponse = unknown;
-export type PostApiMyKubesphereUserCreateApiArg = {
-  createKubeUserModel: CreateKubeUserModel;
-};
-export type DeleteApiMyKubesphereUserDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereUserDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyKubesphereUserChangePasswordApiResponse = unknown;
-export type PostApiMyKubesphereUserChangePasswordApiArg = {
-  changeKubeUserPasswordModel: ChangeKubeUserPasswordModel;
-};
-export type GetApiMyKubesphereUserRoleListByKubeHostIdApiResponse =
-  /** status 200 Success */ KubeUserRoleListResponse[];
-export type GetApiMyKubesphereUserRoleListByKubeHostIdApiArg = {
-  kubeHostId: number;
-};
-export type PostApiMyKubesphereUserRoleCreateApiResponse = unknown;
-export type PostApiMyKubesphereUserRoleCreateApiArg = {
-  createKubeUserRoleModel: CreateKubeUserRoleModel;
-};
-export type DeleteApiMyKubesphereUserRoleDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereUserRoleDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereVolumeListByIdApiResponse =
-  /** status 200 Success */ KubeVolumeListResponse[];
-export type GetApiMyKubesphereVolumeListByIdApiArg = {
-  id: number;
-};
-export type GetApiMyKubesphereVolumeGetByIdApiResponse =
-  /** status 200 Success */ KubeVolumeListResponse;
-export type GetApiMyKubesphereVolumeGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyKubesphereVolumeCreateApiResponse = unknown;
-export type PostApiMyKubesphereVolumeCreateApiArg = {
-  createKubeVolumeModel: CreateKubeVolumeModel;
-};
-export type DeleteApiMyKubesphereVolumeDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubesphereVolumeDeleteByIdApiArg = {
-  id: number;
-};
 export type GetApiMyPortalNotificationListApiResponse =
   /** status 200 Success */ NotificationListResponse[];
 export type GetApiMyPortalNotificationListApiArg = void;
@@ -2590,9 +2178,9 @@ export type GetApiMyPortalProductBundleVmListApiArg = void;
 export type GetApiMyPortalProductBundleStorageListApiResponse =
   /** status 200 Success */ ProductBundleStorageListResponse[];
 export type GetApiMyPortalProductBundleStorageListApiArg = void;
-export type GetApiMyPortalProductBundleWebHostListApiResponse =
+export type GetApiMyPortalProductBundleWebListApiResponse =
   /** status 200 Success */ ProductBundleWebListResponse[];
-export type GetApiMyPortalProductBundleWebHostListApiArg = void;
+export type GetApiMyPortalProductBundleWebListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 Success */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
@@ -2647,47 +2235,6 @@ export type PutApiMyPortalProfileEditTwoFactorApiArg = {
 export type PostApiMyPortalProfileChangePasswordApiResponse = unknown;
 export type PostApiMyPortalProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
-};
-export type GetApiMyRabbitHostListApiResponse =
-  /** status 200 Success */ RabbitHostListResponse[];
-export type GetApiMyRabbitHostListApiArg = void;
-export type GetApiMyRabbitHostGetByIdApiResponse =
-  /** status 200 Success */ GetRabbitHostResponse;
-export type GetApiMyRabbitHostGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyRabbitHostCreateApiResponse = unknown;
-export type PostApiMyRabbitHostCreateApiArg = {
-  createRabbitHostModel: CreateRabbitHostModel;
-};
-export type PutApiMyRabbitHostChangeServiceApiResponse = unknown;
-export type PutApiMyRabbitHostChangeServiceApiArg = {
-  editRabbitHostModel: EditRabbitHostModel;
-};
-export type DeleteApiMyRabbitHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyRabbitHostDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyRabbitHostChangeExchangeApiResponse = unknown;
-export type PostApiMyRabbitHostChangeExchangeApiArg = {
-  changeExchangeModel: ChangeExchangeModel;
-};
-export type GetApiMyRabbitUserListByRabbitHostIdApiResponse =
-  /** status 200 Success */ RabbitHostUserListResponse[];
-export type GetApiMyRabbitUserListByRabbitHostIdApiArg = {
-  rabbitHostId: number;
-};
-export type PostApiMyRabbitUserCreateApiResponse = unknown;
-export type PostApiMyRabbitUserCreateApiArg = {
-  createRabbitUserModel: CreateRabbitUserModel;
-};
-export type DeleteApiMyRabbitUserDeleteByIdApiResponse = unknown;
-export type DeleteApiMyRabbitUserDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyRabbitUserChangePasswordApiResponse = unknown;
-export type PostApiMyRabbitUserChangePasswordApiArg = {
-  changeRabbitPasswordModel: ChangeRabbitPasswordModel;
 };
 export type GetApiMyPortalReferralGetApiResponse =
   /** status 200 Success */ GetReferralResponse;
@@ -2859,6 +2406,10 @@ export type PutApiMyVmSnapshotRevertApiArg = {
 export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
   id: number;
+};
+export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse = unknown;
+export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg = {
+  vmHostId: number;
 };
 export type PostApiMyPortalVoucherUseApiResponse = unknown;
 export type PostApiMyPortalVoucherUseApiArg = {
@@ -3470,19 +3021,14 @@ export type GetDomainResponse = {
   ns1?: string | null;
   ns2?: string | null;
 };
-export type GetProductPriceResponse = {
-  productPrice?: number;
-};
-export type GetPriceModel = {
+export type CheckDomainModel = {
   domainName: string;
   ext: string;
-  typeId: number;
-  authCode?: string | null;
 };
 export type RegisterDomainModel = {
   domainName: string;
   ext: string;
-  typeId: number;
+  productId: number;
   authCode?: string | null;
   name: string;
   country: string;
@@ -3495,7 +3041,6 @@ export type RegisterDomainModel = {
   ns1: string;
   ns2: string;
   autoRenewal: boolean;
-  customerProductTypeId?: number;
 };
 export type ChangeContactModel = {
   id: number;
@@ -3629,69 +3174,6 @@ export type IssueSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
 };
-export type KubeDevOpsListResponse = {
-  id?: number;
-  name?: string | null;
-  createDate?: string;
-};
-export type CreateKubeDevOpsModel = {
-  kubeHostId?: number;
-  name: string;
-};
-export type KubeHostListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-  expireDate?: string | null;
-};
-export type GetKubeHostResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-  ipAddress?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-  expireDate?: string | null;
-};
-export type GetKubeLoginResponse = {
-  location?: string | null;
-};
-export type CreateKubeHostModel = {
-  name: string;
-  datacenterId: number;
-  customerProductTypeId: number;
-  isPredefined: boolean;
-  productBundleId?: number | null;
-};
-export type EditKubeHostModel = {
-  id?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-};
-export type KubeServiceListResponse = {
-  id?: number;
-  name?: string | null;
-  cpu?: number;
-  memory?: number;
-  hdd?: number;
-  autoScale?: boolean;
-  createDate?: string;
-};
-export type CreateKubeServiceModel = {
-  kubeHostId?: number;
-  name: string;
-  cpu?: number;
-  memory?: number;
-  autoScale?: boolean;
-};
 export type KubernetesListResponse = {
   id?: number;
   datacenter?: string | null;
@@ -3760,46 +3242,6 @@ export type CreateKubernetesNodeModel = {
 export type KubernetesVersionListResponse = {
   id?: number;
   name?: string | null;
-};
-export type KubeUserListResponse = {
-  id?: number;
-  email?: string | null;
-  userName?: string | null;
-  createDate?: string;
-};
-export type KubeShortListResponse = {
-  id?: number;
-  name?: string | null;
-};
-export type CreateKubeUserModel = {
-  email: string;
-  username: string;
-  password: string;
-};
-export type ChangeKubeUserPasswordModel = {
-  id?: number;
-  password: string;
-};
-export type KubeUserRoleListResponse = {
-  id?: number;
-  email?: string | null;
-  userName?: string | null;
-  createDate?: string;
-};
-export type CreateKubeUserRoleModel = {
-  kubeHostId?: number;
-  kubeUserId?: number;
-};
-export type KubeVolumeListResponse = {
-  id?: number;
-  name?: string | null;
-  capacity?: number;
-  createDate?: string;
-};
-export type CreateKubeVolumeModel = {
-  kubeHostId?: number;
-  name: string;
-  capacity: number;
 };
 export type NotificationListResponse = {
   id?: number;
@@ -3956,53 +3398,6 @@ export type TwoFactorModel = {
 };
 export type ChangePasswordModel = {
   currentPassword: string;
-  password: string;
-};
-export type RabbitHostListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-};
-export type GetRabbitHostResponse = {
-  id?: number;
-  datacenterId?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
-};
-export type CreateRabbitHostModel = {
-  name: string;
-  username: string;
-  password: string;
-  datacenterId?: number;
-  customerProductTypeId: number;
-  isPredefined: boolean;
-  productBundleId?: number | null;
-  per1000Request?: number | null;
-};
-export type EditRabbitHostModel = {
-  id?: number;
-  productBundleId?: number;
-};
-export type ChangeExchangeModel = {
-  id?: number;
-};
-export type RabbitHostUserListResponse = {
-  id?: number;
-  userName?: string | null;
-};
-export type CreateRabbitUserModel = {
-  rabbitHostId?: number;
-  username: string;
-  password: string;
-};
-export type ChangeRabbitPasswordModel = {
-  id?: number;
   password: string;
 };
 export type GetReferralResponse = {
@@ -4365,7 +3760,7 @@ export const {
   useGetApiMyDomainHostListQuery,
   useGetApiMyDomainHostGetByIdQuery,
   useGetApiMyDomainHostGetStatusByIdQuery,
-  usePostApiMyDomainHostGetPriceMutation,
+  usePostApiMyDomainHostCheckDomainMutation,
   usePostApiMyDomainHostRegisterMutation,
   useDeleteApiMyDomainHostDeleteByIdMutation,
   usePutApiMyDomainHostChangeContactMutation,
@@ -4374,7 +3769,7 @@ export const {
   useGetApiMyColocationEquipmentListByTypeIdAndBrandIdQuery,
   useGetApiMyColocationEquipmentBrandListQuery,
   useGetApiMyColocationEquipmentTypeListQuery,
-  useGetApiMyHomeIndexQuery,
+  useGetApiMyHomeIndexByDomainQuery,
   useGetApiMyPortalInvoiceListQuery,
   useGetApiMyPortalInvoiceUnpaidQuery,
   useGetApiMyPortalInvoiceGetByIdQuery,
@@ -4388,20 +3783,6 @@ export const {
   useGetApiMyPortalIssueItemDownloadByIdQuery,
   useGetApiMyPortalIssueSubjectListQuery,
   usePostApiMyPortalIssueSubjectSelectListMutation,
-  useGetApiMyKubesphereDevopsListByIdQuery,
-  useGetApiMyKubesphereDevopsGetByIdQuery,
-  usePostApiMyKubesphereDevopsCreateMutation,
-  useDeleteApiMyKubesphereDevopsDeleteByIdMutation,
-  useGetApiMyKubesphereHostListQuery,
-  useGetApiMyKubesphereHostGetByIdQuery,
-  useGetApiMyKubesphereHostGetLoginByIdQuery,
-  usePostApiMyKubesphereHostCreateMutation,
-  usePutApiMyKubesphereHostEditMutation,
-  useDeleteApiMyKubesphereHostDeleteByIdMutation,
-  useGetApiMyKubesphereServiceListByIdQuery,
-  useGetApiMyKubesphereServiceGetByIdQuery,
-  usePostApiMyKubesphereServiceCreateMutation,
-  useDeleteApiMyKubesphereServiceDeleteByIdMutation,
   useGetApiMyKubernetesHostListQuery,
   useGetApiMyKubernetesHostGetByIdQuery,
   usePostApiMyKubernetesHostCreateMutation,
@@ -4411,18 +3792,6 @@ export const {
   usePostApiMyKubernetesNodeCreateMutation,
   usePutApiMyKubernetesNodeDeleteByIdMutation,
   useGetApiMyKubernetesVersionListQuery,
-  useGetApiMyKubesphereUserListQuery,
-  useGetApiMyKubesphereUserShortListQuery,
-  usePostApiMyKubesphereUserCreateMutation,
-  useDeleteApiMyKubesphereUserDeleteByIdMutation,
-  usePostApiMyKubesphereUserChangePasswordMutation,
-  useGetApiMyKubesphereUserRoleListByKubeHostIdQuery,
-  usePostApiMyKubesphereUserRoleCreateMutation,
-  useDeleteApiMyKubesphereUserRoleDeleteByIdMutation,
-  useGetApiMyKubesphereVolumeListByIdQuery,
-  useGetApiMyKubesphereVolumeGetByIdQuery,
-  usePostApiMyKubesphereVolumeCreateMutation,
-  useDeleteApiMyKubesphereVolumeDeleteByIdMutation,
   useGetApiMyPortalNotificationListQuery,
   useGetApiMyPortalNotificationShortListQuery,
   usePutApiMyPortalNotificationSeenByIdMutation,
@@ -4436,7 +3805,7 @@ export const {
   useGetApiMyPortalProductBundleListByProductIdQuery,
   useGetApiMyPortalProductBundleVmListQuery,
   useGetApiMyPortalProductBundleStorageListQuery,
-  useGetApiMyPortalProductBundleWebHostListQuery,
+  useGetApiMyPortalProductBundleWebListQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useGetApiMyPortalProfileGetQuery,
@@ -4450,16 +3819,6 @@ export const {
   usePutApiMyPortalProfileEditPhoneNotificationMutation,
   usePutApiMyPortalProfileEditTwoFactorMutation,
   usePostApiMyPortalProfileChangePasswordMutation,
-  useGetApiMyRabbitHostListQuery,
-  useGetApiMyRabbitHostGetByIdQuery,
-  usePostApiMyRabbitHostCreateMutation,
-  usePutApiMyRabbitHostChangeServiceMutation,
-  useDeleteApiMyRabbitHostDeleteByIdMutation,
-  usePostApiMyRabbitHostChangeExchangeMutation,
-  useGetApiMyRabbitUserListByRabbitHostIdQuery,
-  usePostApiMyRabbitUserCreateMutation,
-  useDeleteApiMyRabbitUserDeleteByIdMutation,
-  usePostApiMyRabbitUserChangePasswordMutation,
   useGetApiMyPortalReferralGetQuery,
   usePostApiMyPortalReferralJoinMutation,
   useGetApiMyPortalRoleListQuery,
@@ -4501,6 +3860,7 @@ export const {
   usePostApiMyVmSnapshotCreateMutation,
   usePutApiMyVmSnapshotRevertMutation,
   useDeleteApiMyVmSnapshotDeleteByIdMutation,
+  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
   usePostApiMyPortalVoucherUseMutation,
   useGetApiMyVpcHostListQuery,
   usePostApiMyVpcHostCreateMutation,

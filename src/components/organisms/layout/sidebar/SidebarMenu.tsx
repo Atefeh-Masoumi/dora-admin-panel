@@ -61,7 +61,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       title: "Virtual Machine",
-      text: "سرویس سرور های ابری",
+      text: "سرور های ابری",
       Icon: DriverSvg,
       link: "/vm",
       subList: [
@@ -74,20 +74,21 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       text: "سرویس کوبرنتیز ابری",
       Icon: DnsOutlinedIcon,
       link: "/kubernetes",
+      subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes" }],
     },
     {
       title: "Object Storage",
       text: "فضای ابری",
       Icon: StorageOutlined,
       link: "/storage",
-      subList: [{ title: "فضای ابری", link: "/storage" }],
+      subList: [{ title: "مدیریت فضای ابری", link: "/storage" }],
     },
     {
       title: "Web Hosting",
-      text: "سرویس هاستینگ ابری",
+      text: "هاستینگ ابری",
       Icon: CoinSvg,
       link: "/web",
-      subList: [{ title: "سرویس هاستینگ ابری", link: "/web" }],
+      subList: [{ title: "مدیریت هاستینگ ابری", link: "/web" }],
     },
     {
       title: "Domain Registration",

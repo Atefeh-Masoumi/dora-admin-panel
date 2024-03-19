@@ -11,8 +11,6 @@ import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/Ad
 import { ProjectSelect } from "src/components/organisms/vm/edit/ProjectSelect";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import AddRabbitContextProvider from "src/components/organisms/rabbit/add/contexts/AddRabbitContext";
-import EditRabbitContextProvider from "src/components/organisms/rabbit/edit/contexts/EditRabbitContext";
 import AddWebContextProvider from "src/components/organisms/web/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/web/edit/contexts/EditWebContext";
 import AddDomainContextProvider from "src/components/organisms/web/domain/add/contexts/AddContext";
@@ -66,10 +64,6 @@ const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectIndex"));
-
-const RabbitIndex = lazy(() => import("src/pages/rabbit/Index"));
-const AddRabbitService = lazy(() => import("src/pages/rabbit/AddRabbit"));
-const EditRabbitService = lazy(() => import("src/pages/rabbit/EditRabbit"));
 
 const WebIndex = lazy(() => import("src/pages/web/web/Index"));
 const AddWeb = lazy(() => import("src/pages/web/web/AddWeb"));
@@ -374,41 +368,6 @@ const Router: FC = () => {
               EditServerContextProvider
             )}
           />
-          {/* ======================================= RabbitMQ ======================================= */}
-          <Route
-            path="/rabbit"
-            element={mainTemplate(RabbitIndex, {
-              pageTitle: "مدیریت سرویس RabbitMQ",
-            })}
-          />
-          <Route
-            path="/rabbit/addRabbitService"
-            element={mainTemplate(
-              AddRabbitService,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرویس RabbitMQ",
-                  url: "/rabbit",
-                },
-                hideSidebar: false,
-              },
-              AddRabbitContextProvider
-            )}
-          />
-          <Route
-            path="/rabbit/:id"
-            element={mainTemplate(
-              EditRabbitService,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرویس RabbitMQ",
-                  url: "/rabbit",
-                },
-                hideSidebar: false,
-              },
-              EditRabbitContextProvider
-            )}
-          />
           {/* ======================================= Kubernetes ======================================= */}
           <Route
             path="/kubernetes"
@@ -439,7 +398,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
                   url: "/kubernetes",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddKubernetesContextProvider
             )}
@@ -453,7 +412,7 @@ const Router: FC = () => {
                   text: "بازگشت ویرایش هاست کوبرنتیز",
                   url: BACK_URL_HINTS_ENUM.ADD_NODE,
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddKubernetesContextProvider
             )}

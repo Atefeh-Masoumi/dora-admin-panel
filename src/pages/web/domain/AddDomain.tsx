@@ -6,7 +6,7 @@ import { AddDomainContext } from "src/components/organisms/web/domain/add/contex
 import { SelectDomain } from "src/components/organisms/web/domain/add/steps/SelectDomain";
 import { DomainInfo } from "src/components/organisms/web/domain/add/steps/DomainInfo";
 import {
-  usePostApiMyDomainHostGetPriceMutation,
+  usePostApiMyDomainHostCheckDomainMutation,
   usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
@@ -43,17 +43,12 @@ const AddDomain: FC = () => {
     if (term && authCode && domainName && ext) {
       timer = setTimeout(() => {
         callApiDomainGetPrice({
-          getPriceModel: {
+          checkDomainModel: {
             domainName,
             ext,
-            typeId,
-            authCode,
           },
         })
           .unwrap()
-          .then((res) => {
-            setDomainPrice(res.productPrice || 0);
-          })
           .catch((err) => {
             setDomainPrice(0);
           });
@@ -65,7 +60,7 @@ const AddDomain: FC = () => {
   }, [term, ext, typeId, domainName, authCode]);
 
   const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
-    usePostApiMyDomainHostGetPriceMutation();
+    usePostApiMyDomainHostCheckDomainMutation();
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
     usePostApiMyDomainHostRegisterMutation();
@@ -131,7 +126,7 @@ const AddDomain: FC = () => {
         registerDomainModel: {
           domainName,
           ext,
-          typeId,
+          productId: paymentType!,
           authCode,
           name,
           country,
@@ -144,7 +139,6 @@ const AddDomain: FC = () => {
           ns1,
           ns2,
           autoRenewal,
-          customerProductTypeId: paymentType!,
         },
       })
         .unwrap()
