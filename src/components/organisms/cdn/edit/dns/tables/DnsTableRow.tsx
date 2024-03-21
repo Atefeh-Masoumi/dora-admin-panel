@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { Edit } from "src/components/atoms/svg/EditSvg";
 import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
@@ -47,6 +47,17 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
                     <TrashSvg />
                   </IconButton>
                 </Stack>
+              ) : column.id === "value" ? (
+                <Tooltip title={text}>
+                  <Typography
+                    variant="text9"
+                    maxWidth={300}
+                    textOverflow="ellipsis"
+                    noWrap
+                  >
+                    {text}
+                  </Typography>
+                </Tooltip>
               ) : (
                 text
               )}
