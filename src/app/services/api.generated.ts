@@ -726,11 +726,11 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/colocation/equipment/type-list` }),
     }),
-    getApiMyHomeIndexByDomain: build.query<
-      GetApiMyHomeIndexByDomainApiResponse,
-      GetApiMyHomeIndexByDomainApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: (queryArg) => ({ url: `/api/my/home/index/${queryArg.domain}` }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyPortalInvoiceList: build.query<
       GetApiMyPortalInvoiceListApiResponse,
@@ -1534,24 +1534,24 @@ export const api = createApi({
         body: queryArg.createVpcNetworkModel,
       }),
     }),
-    getApiMyPortalWalletList: build.query<
-      GetApiMyPortalWalletListApiResponse,
-      GetApiMyPortalWalletListApiArg
-    >({
-      query: () => ({ url: `/api/my/portal/wallet/list` }),
-    }),
     getApiMyPortalWalletGetBalance: build.query<
       GetApiMyPortalWalletGetBalanceApiResponse,
       GetApiMyPortalWalletGetBalanceApiArg
     >({
       query: () => ({ url: `/api/my/portal/wallet/get-balance` }),
     }),
-    getApiMyPortalWalletBalanceUsage: build.query<
-      GetApiMyPortalWalletBalanceUsageApiResponse,
-      GetApiMyPortalWalletBalanceUsageApiArg
+    getApiMyPortalWalletTransactionList: build.query<
+      GetApiMyPortalWalletTransactionListApiResponse,
+      GetApiMyPortalWalletTransactionListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/wallet-transaction/list` }),
+    }),
+    getApiMyPortalWalletTransactionBalanceUsage: build.query<
+      GetApiMyPortalWalletTransactionBalanceUsageApiResponse,
+      GetApiMyPortalWalletTransactionBalanceUsageApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/wallet/balance-usage`,
+        url: `/api/my/portal/wallet-transaction/balance-usage`,
         params: { period: queryArg.period },
       }),
     }),
@@ -2004,10 +2004,8 @@ export type GetApiMyColocationEquipmentBrandListApiArg = void;
 export type GetApiMyColocationEquipmentTypeListApiResponse =
   /** status 200 Success */ EquipmentTypeListResponse[];
 export type GetApiMyColocationEquipmentTypeListApiArg = void;
-export type GetApiMyHomeIndexByDomainApiResponse = unknown;
-export type GetApiMyHomeIndexByDomainApiArg = {
-  domain: string;
-};
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyPortalInvoiceListApiResponse =
   /** status 200 Success */ InvoiceListResponse[];
 export type GetApiMyPortalInvoiceListApiArg = void;
@@ -2431,15 +2429,15 @@ export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
 };
-export type GetApiMyPortalWalletListApiResponse =
-  /** status 200 Success */ WalletTransactionListResponse[];
-export type GetApiMyPortalWalletListApiArg = void;
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 Success */ number;
 export type GetApiMyPortalWalletGetBalanceApiArg = void;
-export type GetApiMyPortalWalletBalanceUsageApiResponse =
+export type GetApiMyPortalWalletTransactionListApiResponse =
+  /** status 200 Success */ WalletTransactionListResponse[];
+export type GetApiMyPortalWalletTransactionListApiArg = void;
+export type GetApiMyPortalWalletTransactionBalanceUsageApiResponse =
   /** status 200 Success */ BalanceUsageResponse[];
-export type GetApiMyPortalWalletBalanceUsageApiArg = {
+export type GetApiMyPortalWalletTransactionBalanceUsageApiArg = {
   period?: number;
 };
 export type GetApiMyWebHostListApiResponse =
@@ -3769,7 +3767,7 @@ export const {
   useGetApiMyColocationEquipmentListByTypeIdAndBrandIdQuery,
   useGetApiMyColocationEquipmentBrandListQuery,
   useGetApiMyColocationEquipmentTypeListQuery,
-  useGetApiMyHomeIndexByDomainQuery,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyPortalInvoiceListQuery,
   useGetApiMyPortalInvoiceUnpaidQuery,
   useGetApiMyPortalInvoiceGetByIdQuery,
@@ -3866,9 +3864,9 @@ export const {
   usePostApiMyVpcHostCreateMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,
-  useGetApiMyPortalWalletListQuery,
   useGetApiMyPortalWalletGetBalanceQuery,
-  useGetApiMyPortalWalletBalanceUsageQuery,
+  useGetApiMyPortalWalletTransactionListQuery,
+  useGetApiMyPortalWalletTransactionBalanceUsageQuery,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetByIdQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
