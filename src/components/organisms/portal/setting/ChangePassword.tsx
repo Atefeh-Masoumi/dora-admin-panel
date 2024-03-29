@@ -31,7 +31,11 @@ const formValidation = yup.object().shape({
     .test("Password validation", "Password is not valid", (value) =>
       passValidationHandler(value as string)
     ),
-  // password: passwordValidator.required("فیلد الزامیست")
+  currentPassword: yup
+    .string()
+    .test("Password validation", "Password is not valid", (value) =>
+      passValidationHandler(value as string)
+    ),
 });
 
 export const ChangePassword: FC = () => {
