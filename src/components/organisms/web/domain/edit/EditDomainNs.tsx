@@ -3,7 +3,7 @@ import { Divider, Paper, Grid, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import {

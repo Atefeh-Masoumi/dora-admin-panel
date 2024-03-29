@@ -12,7 +12,7 @@ import {
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiMyPortalProductBundleVmListQuery } from "src/app/services/api.generated";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import {
   setNodeTypeAction,

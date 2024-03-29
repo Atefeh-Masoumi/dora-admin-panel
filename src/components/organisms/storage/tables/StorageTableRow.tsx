@@ -2,8 +2,8 @@ import { FC, Fragment, useState } from "react";
 import { storageTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { DeleteStorageDialog } from "../dialogs/DeleteStorageDialog";
 import { useNavigate } from "react-router";
 

@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AxiosProgressEvent } from "axios";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { Add } from "src/components/atoms/svg/AddSvg";
+import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import {
   IssueSubjectListResponse,
   useGetApiMyPortalBusinessUnitListQuery,

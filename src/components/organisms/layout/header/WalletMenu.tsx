@@ -1,4 +1,5 @@
 import { FC, MouseEvent, useState } from "react";
+import { useNavigate } from "react-router";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
@@ -9,14 +10,13 @@ import {
   Redeem as RedeemIcon,
 } from "@mui/icons-material";
 import { LinearProgress, Stack, Typography } from "@mui/material";
-import WalletSvg from "../../atoms/svg/WalletSvg";
-import { InvoiceSvg } from "../../atoms/svg/InvoiceSvg";
+import { GiftDialog } from "src/components/organisms/portal/payment/dialog/GiftDialog";
+import { WalletSvg } from "src/components/atoms/svg-icons/WalletSvg";
+import { InvoiceSvg } from "src/components/atoms/svg-icons/InvoiceSvg";
 import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
+import { CalculatorSvg } from "src/components/atoms/svg-icons/CalculatorSvg";
+import { TransactionSvg } from "src/components/atoms/svg-icons/TransactionSvg";
 import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
-import { useNavigate } from "react-router";
-import { CalculateSvg } from "src/components/atoms/svg/CalculateSvg";
-import { TransactionSvg } from "src/components/atoms/svg/TransactionSvg";
-import { GiftDialog } from "../portal/payment/dialog/GiftDialog";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -118,7 +118,7 @@ export const WalletMenu: FC = () => {
     {
       value: "user-bill",
       label: "گزارش محاسبات",
-      icon: CalculateSvg,
+      icon: CalculatorSvg,
       link: "/portal/wallet/bill",
     },
   ];

@@ -1,9 +1,9 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
 import { usePutApiMyCdnHostChangeEdgeCertTypeMutation } from "src/app/services/api.generated";
-import { User } from "src/components/atoms/svg/UserSvg";
-import Cloud from "src/components/atoms/svg/Cloud.svg";
-import CloudOff from "src/components/atoms/svg/CloudOff.svg";
+import { User } from "src/components/atoms/svg-icons/UserSvg";
+import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
+import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { CdnEdgeCertUserCert } from "./CdnEdgeCertUserCert";
 import { CdnEdgeCert } from "./CdnEdgeCert";

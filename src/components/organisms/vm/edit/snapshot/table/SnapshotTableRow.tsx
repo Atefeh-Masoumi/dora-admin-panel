@@ -3,8 +3,8 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { snapShotTableStruct } from "./struct";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { DeleteVmSnapshotDialog } from "../../../dialogs/DeleteVmSnapshotDialog";
 import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
 

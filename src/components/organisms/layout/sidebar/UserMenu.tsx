@@ -11,12 +11,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import More2Svg from "src/components/atoms/svg/More2Svg";
-import { Account } from "src/components/atoms/svg/AccountSvg";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
-import { Referral } from "src/components/atoms/svg/ReferralSvg";
-import { Service } from "src/components/atoms/svg/ServiceSvg";
-import { Logout } from "src/components/atoms/svg/LogoutSvg";
+import More2Svg from "src/components/atoms/svg-icons/More2Svg";
+import { Account } from "src/components/atoms/svg-icons/AccountSvg";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
+import { Referral } from "src/components/atoms/svg-icons/ReferralSvg";
+import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
+import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { logoutAction } from "src/app/slice/authSlice";

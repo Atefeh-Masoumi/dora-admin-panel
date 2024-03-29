@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Stack, Typography, Paper } from "@mui/material";
-import { SuccessfulPayment } from "src/components/atoms/svg/SuccessfulSvg";
-import { UnsuccessfulPayment } from "src/components/atoms/svg/UnsuccessfulSvg";
+import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
+import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
 import { useNavigate, useParams } from "react-router";
 import PageLoading from "src/components/atoms/PageLoading";
 import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";

@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { Copy } from "src/components/atoms/svg/CopySvg";
+import { Copy } from "src/components/atoms/svg-icons/CopySvg";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";

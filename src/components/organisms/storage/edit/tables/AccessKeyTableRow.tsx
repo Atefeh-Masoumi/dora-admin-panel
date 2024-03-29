@@ -3,7 +3,7 @@ import { IconButton, Stack } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { accessKeyTableStruct } from "./AccessKeyStruct";
 import { DeleteAccessKeyDialog } from "../dialogs/DeleteAccessKeyDialog";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 
 export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);

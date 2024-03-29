@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
 
 type DomainInfoPropsType = {};

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-const WalletSvg: FC<SvgIconProps> = (props) => {
+export const WalletSvg: FC<SvgIconProps> = (props) => {
   return (
     <SvgIcon
       width="20"
@@ -34,5 +34,3 @@ const WalletSvg: FC<SvgIconProps> = (props) => {
     </SvgIcon>
   );
 };
-
-export default WalletSvg;

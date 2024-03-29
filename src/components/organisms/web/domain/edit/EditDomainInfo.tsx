@@ -7,7 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { formikOnSubmitType } from "src/types/form.type";
 import {
   useGetApiMyDomainHostGetByIdQuery,

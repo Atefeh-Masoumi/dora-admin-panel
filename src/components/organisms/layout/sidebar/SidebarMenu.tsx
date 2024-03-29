@@ -6,20 +6,17 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
 import { SubItemList } from "./SubItemList";
-import EmptyWalletSvg from "src/components/atoms/svg/EmptyWalletSvg";
-import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
-import DriverSvg from "src/components/atoms/svg/DriverSvg";
-import CoinSvg from "src/components/atoms/svg/CoinSvg";
-import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
-import { StorageOutlined } from "@mui/icons-material";
-import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
+import { CloudConnectionSvg } from "src/components/atoms/svg-icons/CloudConnectionSvg";
+import { WalletSvg } from "src/components/atoms/svg-icons/WalletSvg";
+import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
+import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
+import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
+import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
+import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 
 type SidebarPropsType = {};
 
 export const Sidebar: FC<SidebarPropsType> = () => {
-  // const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  // const [showSpecialOffer, setShowSpecialOffer] = useState(false);
-
   const { pathname } = useLocation();
 
   const listItems: sidebarItemType[] = [
@@ -53,16 +50,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           title: "تنظیمات Load Balance",
           link: "/cdn/load-balance-settings",
         },
-        // {
-        //   title: "تنظیمات API Gateway",
-        //   link: "/cdn/api-gateway-settings",
-        // },
       ],
     },
     {
       title: "Virtual Machine",
       text: "سرور های ابری",
-      Icon: DriverSvg,
+      Icon: VmSvg,
       link: "/vm",
       subList: [
         { title: "مدیریت پروژه ها", link: "/vm" },
@@ -72,28 +65,28 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     {
       title: "Kubernetes",
       text: "سرویس کوبرنتیز ابری",
-      Icon: DnsOutlinedIcon,
+      Icon: KubernetesSvg,
       link: "/kubernetes",
       subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes" }],
     },
     {
       title: "Object Storage",
       text: "فضای ابری",
-      Icon: StorageOutlined,
+      Icon: ObjectStorageSvg,
       link: "/storage",
       subList: [{ title: "مدیریت فضای ابری", link: "/storage" }],
     },
     {
       title: "Web Hosting",
       text: "هاستینگ ابری",
-      Icon: CoinSvg,
+      Icon: WebHostSvg,
       link: "/web",
       subList: [{ title: "مدیریت هاستینگ ابری", link: "/web" }],
     },
     {
       title: "Domain Registration",
       text: "ثبت/تمدید دامنه",
-      Icon: GlobalSvg,
+      Icon: CdnSvg,
       link: "/domain",
       subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
     },
@@ -126,7 +119,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     //   link: "/apis",
     // },
     {
-      Icon: EmptyWalletSvg,
+      Icon: WalletSvg,
       link: "/portal/wallet",
       subList: [
         { title: "گزارش کیف پول", link: "/portal/wallet" },

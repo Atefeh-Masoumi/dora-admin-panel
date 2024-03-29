@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import { Box, Button, Stack, Typography, Dialog, Grid } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { Instagram } from "src/components/atoms/svg/InstagramSvg";
-import { Message } from "src/components/atoms/svg/MessageSvg";
-import { Telegram } from "src/components/atoms/svg/TelegramSvg";
-import { Twitter } from "src/components/atoms/svg/TwitterSvg";
-import { Whatsapp } from "src/components/atoms/svg/WhatsappSvg";
+import { Instagram } from "src/components/atoms/svg-icons/InstagramSvg";
+import { Message } from "src/components/atoms/svg-icons/MessageSvg";
+import { Telegram } from "src/components/atoms/svg-icons/TelegramSvg";
+import { Twitter } from "src/components/atoms/svg-icons/TwitterSvg";
+import { Whatsapp } from "src/components/atoms/svg-icons/WhatsappSvg";
 
 type HeaderPropsType = {
   openDialog: boolean;

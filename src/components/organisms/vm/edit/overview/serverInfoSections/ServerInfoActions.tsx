@@ -1,14 +1,14 @@
 import { FC, useContext, useMemo } from "react";
 import { Paper, Stack } from "@mui/material";
-import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
+import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
 import { LoadingButton } from "@mui/lab";
-import { CloudRemoveSvg } from "src/components/atoms/svg/CloudRemoveSvg";
-import { CloudAddSvg } from "src/components/atoms/svg/CloudAddSvg";
-import { StopSvg } from "src/components/atoms/svg/StopSvg";
-import { PlaySvg } from "src/components/atoms/svg/PlaySvg";
-import { ElectricitySvg } from "src/components/atoms/svg/ElectricitySvg";
-import { LeftRotateSvg } from "src/components/atoms/svg/LeftRotateSvg";
+import { CloudRemoveSvg } from "src/components/atoms/svg-icons/CloudRemoveSvg";
+import { CloudAddSvg } from "src/components/atoms/svg-icons/CloudAddSvg";
+import { StopSvg } from "src/components/atoms/svg-icons/StopSvg";
+import { PlaySvg } from "src/components/atoms/svg-icons/PlaySvg";
+import { ElectricitySvg } from "src/components/atoms/svg-icons/ElectricitySvg";
+import { LeftRotateSvg } from "src/components/atoms/svg-icons/LeftRotateSvg";
 import {
   usePutApiMyVmHostDisconnectByIdMutation,
   usePutApiMyVmHostConnectByIdMutation,

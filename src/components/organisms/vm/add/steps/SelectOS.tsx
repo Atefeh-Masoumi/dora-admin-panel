@@ -7,8 +7,8 @@ import {
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
-import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 
 type SelectOSPropsType = {};
 

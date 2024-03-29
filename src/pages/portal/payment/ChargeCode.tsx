@@ -1,6 +1,6 @@
 import { FC, Fragment, useState } from "react";
 import { Add } from "@mui/icons-material";
-import { Tick } from "src/components/atoms/svg/TickSvg";
+import { Tick } from "src/components/atoms/svg-icons/TickSvg";
 import { Button, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Stack } from "@mui/system";

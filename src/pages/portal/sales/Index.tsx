@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Button, Grid, Stack, Typography } from "@mui/material";
-import { Cart } from "src/components/atoms/svg/CartSvg";
+import { Cart } from "src/components/atoms/svg-icons/CartSvg";
 
 const Sales: FC = () => {
   return (

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { CalendarSvg } from "src/components/atoms/svg/CalendarSvg";
+import { CalendarSvg } from "src/components/atoms/svg-icons/CalendarSvg";
 import { JalaliDatePicker } from "./JalaliDatePicker";
 import { GregorianDatePicker } from "./GregorianDatePicker";
 import { PickersActionBarProps } from "@mui/x-date-pickers/PickersActionBar";

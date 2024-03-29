@@ -2,10 +2,10 @@ import { FC, useState } from "react";
 import { kubernetesTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteKubernetesDialog } from "../dialogs/DeleteKubernetesDialog";
 import { useNavigate } from "react-router";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 
 export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {

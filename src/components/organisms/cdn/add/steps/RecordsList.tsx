@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
+import { ContentCopyOutlined } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import CloudConnectionSvg from "src/components/atoms/svg/CloudConnectionSvg";
-import { ContentCopyOutlined } from "@mui/icons-material";
+import { CloudConnectionSvg } from "src/components/atoms/svg-icons/CloudConnectionSvg";
 
 type RecordsListPropsType = { zoneName: string };
 

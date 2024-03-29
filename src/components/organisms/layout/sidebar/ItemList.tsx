@@ -12,7 +12,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { UserMenu } from "./UserMenu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { sidebarItemType } from "src/types/itemsList.type";
-import CategorySvg from "src/components/atoms/svg/CategorySvg";
+import { CategorySvg } from "src/components/atoms/svg-icons/CategorySvg";
 import CustomListItemButton from "src/components/atoms/CustomListItemButton";
 
 type ItemListPropsType = {

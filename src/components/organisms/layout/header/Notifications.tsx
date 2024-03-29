@@ -16,20 +16,17 @@ import {
   useTheme,
 } from "@mui/material";
 import { useGetApiMyPortalNotificationShortListQuery } from "src/app/services/api.generated";
-import { EmptyNotificationSvg } from "src/components/atoms/svg/EmptyNotifSvg";
-import NotificationSvg from "src/components/atoms/svg/NotificationSvg";
+import { EmptyNotificationSvg } from "src/components/atoms/svg-icons/EmptyNotifSvg";
+import { NotificationSvg } from "src/components/atoms/svg-icons/NotificationSvg";
 
 export const Notifications: FC = () => {
+  const [open, setOpen] = useState(false);
+  const handleTooltipClose = () => setOpen(false);
+  const handleTooltipOpen = () => setOpen(!open);
+  const theme = useTheme();
+
   const { data: notifications, isLoading } =
     useGetApiMyPortalNotificationShortListQuery();
-
-  const [open, setOpen] = useState(false);
-
-  const handleTooltipClose = () => setOpen(false);
-
-  const handleTooltipOpen = () => setOpen(!open);
-
-  const theme = useTheme();
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -182,7 +179,7 @@ export const Notifications: FC = () => {
             sx={{ "& .MuiBadge-badge": { ml: 0.5, mt: 0.5 } }}
             anchorOrigin={{ vertical: "top", horizontal: "left" }}
           >
-            <NotificationSvg />
+            <NotificationSvg mode="default" sx={{ opacity: "0.8" }} />
           </Badge>
         </IconButton>
       </Tooltip>

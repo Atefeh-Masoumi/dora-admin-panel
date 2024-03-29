@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import CloudSvg from "src/components/atoms/svg/CloudSvg.svg";
+import CloudSvg from "src/components/atoms/svg-icons/CloudSvg.svg";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
 import { usePutApiMyCdnHostChangeCdnTypeMutation } from "src/app/services/api.generated";

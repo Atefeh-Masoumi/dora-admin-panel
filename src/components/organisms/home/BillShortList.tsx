@@ -11,7 +11,7 @@ import {
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useGetApiMyPortalCustomerBillShortListQuery } from "src/app/services/api.generated";
-import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
+import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
 import { useNavigate } from "react-router";
 import moment from "jalali-moment";
 import { priceToPersian } from "src/utils/priceToPersian";

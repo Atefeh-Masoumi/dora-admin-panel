@@ -1,7 +1,7 @@
 import { FC, useContext, ChangeEvent, useState } from "react";
 import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 

@@ -2,8 +2,8 @@ import { FC, Fragment, useState } from "react";
 import { loadBalanceTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { IconButton, Stack } from "@mui/material";
-import { Edit } from "src/components/atoms/svg/EditSvg";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteLoadBalanceDialog } from "../dialogs/DeleteDialog";
 import { AddLoadBalanceDialog } from "../dialogs/AddDialog";
 

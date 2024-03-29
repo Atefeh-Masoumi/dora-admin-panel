@@ -1,14 +1,18 @@
-import type { FC } from "react";
+import { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-type CloudConnectionProps = { mode: "default" | "selected" | "fill" };
-
-const CalculatorSvg: FC<SvgIconProps & CloudConnectionProps> = ({
-  mode,
-  ...props
-}) => {
+export const CalculatorSvg: FC<SvgIconProps> = ({ mode, ...props }) => {
   return (
-    <SvgIcon {...props} sx={{ fill: "none", ...props.sx }}>
+    <SvgIcon
+      className="svg-default-class"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+      sx={{ fill: "none", ...props.sx }}
+    >
       <path
         d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z"
         stroke={mode === "selected" ? "#3C8AFF" : "#6E768A"}
@@ -36,5 +40,3 @@ const CalculatorSvg: FC<SvgIconProps & CloudConnectionProps> = ({
     </SvgIcon>
   );
 };
-
-export default CalculatorSvg;

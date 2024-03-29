@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useMemo } from "react";
 import { Button, Stack, Typography, Paper } from "@mui/material";
-import { SuccessfulPayment } from "src/components/atoms/svg/SuccessfulSvg";
-import { UnsuccessfulPayment } from "src/components/atoms/svg/UnsuccessfulSvg";
+import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
+import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useNavigate, useParams } from "react-router";
 import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";

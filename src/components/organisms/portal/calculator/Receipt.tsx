@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
-import ReceiptItem from "src/components/atoms/svg/ReceiptItem.svg";
+import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 
 const cost = {
   cpu: 600000,

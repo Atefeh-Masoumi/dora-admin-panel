@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Stack, Typography } from "@mui/material";
-import { AuthSvg } from "src/components/atoms/svg/AuthSvg";
+import { AuthSvg } from "src/components/atoms/svg-icons/AuthSvg";
 
 export const AuthCard: FC = () => {
   return (

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { SxProps, Theme, ListItemButton } from "@mui/material";
 
 type ListItemNavLinkProps = {
+  selected?: boolean;
   to: string;
   children: React.ReactNode;
   sx?: SxProps<Theme>;
@@ -17,8 +18,16 @@ const CustomListItemButton = React.forwardRef<
   HTMLAnchorElement,
   ListItemNavLinkProps
 >((props, ref) => {
-  const { children, to, sx, onClick, onMouseEnter, onMouseLeave, disabled } =
-    props;
+  const {
+    children,
+    to,
+    sx,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    disabled,
+    selected,
+  } = props;
 
   const MyLink = React.useMemo(
     () =>
@@ -32,9 +41,19 @@ const CustomListItemButton = React.forwardRef<
 
   return (
     <ListItemButton
+      disableRipple={selected}
+      disableTouchRipple={selected}
+      selected={selected}
       component={MyLink}
       ref={ref}
-      sx={sx}
+      sx={{
+        ...(selected && {
+          backgroundColor: ({ palette }) =>
+            palette.primary.main + " !important",
+          color: "primary.contrastText",
+        }),
+        ...sx,
+      }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

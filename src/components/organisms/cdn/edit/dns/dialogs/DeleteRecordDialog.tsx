@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyCdnDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { Success } from "src/components/atoms/svg/SuccessSvg";
+import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 
 type DeleteRecordDialogPropsType = {
   id: number;

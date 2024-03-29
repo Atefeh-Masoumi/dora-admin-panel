@@ -9,15 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
-import MenuSvg from "src/components/atoms/svg/MenuSvg";
-import CalculatorSvg from "src/components/atoms/svg/CalculatorSvg";
-import HeadphoneSvg from "src/components/atoms/svg/HeadphoneSvg";
-import MoreSvg from "src/components/atoms/svg/MoreSvg";
-import { WalletMenu } from "src/components/organisms/header/WalletMenu";
-import { Notifications } from "../../header/Notifications";
 import { useNavigate, useParams } from "react-router";
 import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
+import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
+import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
+import { CalculatorSvg } from "src/components/atoms/svg-icons/CalculatorSvg";
+import { HeadphoneSvg } from "src/components/atoms/svg-icons/HeadphoneSvg";
+import { WalletMenu } from "src/components/organisms/layout/header/WalletMenu";
+import { Notifications } from "./Notifications";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -63,7 +63,7 @@ const Header: FC<HeaderPropsType> = ({
         }}
         onClick={goToCalculator}
       >
-        <CalculatorSvg mode="default" sx={{ opacity: "0.8" }} />
+        <CalculatorSvg fill="transparent" />
       </IconButton>
       <IconButton
         sx={{
@@ -76,7 +76,11 @@ const Header: FC<HeaderPropsType> = ({
           navigate("/portal/supports");
         }}
       >
-        <HeadphoneSvg mode="default" sx={{ opacity: "0.8" }} />
+        <HeadphoneSvg
+          fill="transparent"
+          mode="default"
+          sx={{ width: "100%", height: "100%" }}
+        />
       </IconButton>
     </>
   );

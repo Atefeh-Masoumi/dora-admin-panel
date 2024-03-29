@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, useMemo } from "react";
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { Add } from "src/components/atoms/svg/AddSvg";
+import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { VmProjectCard } from "src/components/organisms/vm/edit/ProjectCard";

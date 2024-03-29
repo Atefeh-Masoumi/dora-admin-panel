@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg/AddSvg";
+import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import {
   usePostApiMyCdnEdgeCertCreateMutation,
   useGetApiMyCdnEdgeCertGetByCdnIdQuery,

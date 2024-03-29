@@ -1,7 +1,7 @@
 import { FC, useContext, ChangeEvent } from "react";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 
 type ServerInfoPropsType = {};

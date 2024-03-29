@@ -3,7 +3,7 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useNavigate } from "react-router";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { WebTableRow } from "src/components/organisms/web/web/tables/WebTableRow";

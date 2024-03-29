@@ -12,8 +12,8 @@ import { BORDER_RADIUS_4 } from "src/configs/theme";
 import { GetApiMyVmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
-import { UbuntuSvg } from "src/components/atoms/svg/UbuntuSvg";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { useLazyGetApiMyVmImageListByDatacenterIdQuery } from "src/app/services/api";
 
 type ChooseOSPropsType = {

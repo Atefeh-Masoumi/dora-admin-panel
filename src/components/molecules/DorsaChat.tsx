@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 import { IssueItemModel } from "src/app/services/api.generated";
-import { Document } from "src/components/atoms/svg/DocumentSvg";
+import { Document } from "src/components/atoms/svg-icons/DocumentSvg";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";

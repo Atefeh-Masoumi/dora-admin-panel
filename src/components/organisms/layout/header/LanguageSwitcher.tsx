@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import i18n from "src/i18n";
-import GlobalSvg from "src/components/atoms/svg/GlobalSvg";
+import GlobalSvg from "src/components/atoms/svg-icons/GlobalSvg";
 
 export const LanguageSwitcher: FC = () => {
   const [anchorEl, setAnchorEl] = useState<

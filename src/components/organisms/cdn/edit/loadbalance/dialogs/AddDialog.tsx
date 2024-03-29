@@ -20,7 +20,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import { useAppSelector } from "src/app/hooks";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";

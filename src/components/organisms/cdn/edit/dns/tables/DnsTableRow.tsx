@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
-import { Edit } from "src/components/atoms/svg/EditSvg";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { ProxyStatus } from "../ProxyStatus";
 import { zoneTableStruct } from "./struct";

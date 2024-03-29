@@ -15,8 +15,8 @@ import { numberToWords } from "@persian-tools/persian-tools";
 import { formikOnSubmitType } from "src/types/form.type";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { SamanLogo } from "src/components/atoms/svg/SamanSvg";
-import { ParsianLogo } from "src/components/atoms/svg/ParsianSvg";
+import { SamanLogo } from "src/components/atoms/svg-icons/SamanSvg";
+import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
 import { usePostApiMyPortalPaymentCreateMutation } from "src/app/services/api.generated";
 
 const selectedStyle: SxProps<Theme> = {

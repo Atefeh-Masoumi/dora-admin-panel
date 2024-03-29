@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { Success } from "src/components/atoms/svg/SuccessSvg";
+import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyCdnHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";

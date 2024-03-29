@@ -7,9 +7,9 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
-import DriverSvg from "src/components/atoms/svg/DriverSvg";
-import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
+import { DriverSvg } from "src/components/atoms/svg-icons/DriverSvg";
+import { BuildingSvg } from "src/components/atoms/svg-icons/BuildingSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { addDomainStepsType } from "./contexts/AddContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({

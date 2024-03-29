@@ -7,10 +7,10 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
-import { BuildingSvg } from "src/components/atoms/svg/BuildingSvg";
-import { WindowsSvg } from "src/components/atoms/svg/WindowsSvg";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg/ExclamationMarkCircleSvg";
-import DriverSvg from "src/components/atoms/svg/DriverSvg";
+import { BuildingSvg } from "src/components/atoms/svg-icons/BuildingSvg";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
+import { DriverSvg } from "src/components/atoms/svg-icons/DriverSvg";
 import { addStorageStepsType } from "./contexts/AddStorageContext";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({

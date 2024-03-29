@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { Chip, Divider, Stack, Typography } from "@mui/material";
-import CircleTickSvg from "src/components/atoms/svg/CircleTickSvg";
-import ClockSvg from "src/components/atoms/svg/ClockSvg";
+import CircleTickSvg from "src/components/atoms/svg-icons/CircleTickSvg";
+import ClockSvg from "src/components/atoms/svg-icons/ClockSvg";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { CdnListResponse } from "src/app/services/api.generated";

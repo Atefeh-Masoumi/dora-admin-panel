@@ -10,8 +10,8 @@ import {
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppSelector } from "src/app/hooks";
 import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { useGetApiMyCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 

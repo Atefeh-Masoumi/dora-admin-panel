@@ -4,7 +4,7 @@ import { Stack, Typography } from "@mui/material";
 import { ErrorCode, FileRejection, useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { DocCloud } from "src/components/atoms/svg/DocCloudSvg";
+import { DocCloud } from "src/components/atoms/svg-icons/DocCloudSvg";
 
 // Supported Size as !MB
 const supportedSize = 80;

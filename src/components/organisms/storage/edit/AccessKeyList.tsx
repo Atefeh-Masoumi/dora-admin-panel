@@ -14,7 +14,7 @@ import {
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
-import { RefreshSvg } from "src/components/atoms/svg/RefreshSvg";
+import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { accessKeyTableStruct } from "./tables/AccessKeyStruct";
 import { AccessKeyTableRow } from "./tables/AccessKeyTableRow";
 import { AddAccessKeyDialog } from "./dialogs/AddAccessKeyDialog";

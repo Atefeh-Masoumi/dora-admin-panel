@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { Box, IconButton, Skeleton, Stack, Typography } from "@mui/material";
-import AddUserSvg from "src/components/atoms/svg/AddUser";
-import { Copy } from "src/components/atoms/svg/CopySvg";
-import { Share } from "src/components/atoms/svg/ShareSvg";
+import AddUserSvg from "src/components/atoms/svg-icons/AddUser";
+import { Copy } from "src/components/atoms/svg-icons/CopySvg";
+import { Share } from "src/components/atoms/svg-icons/ShareSvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ShareDialog } from "./ShareDialog";
 import { WelcomeTooltip } from "./WelcomeTooltip";

@@ -2,13 +2,13 @@ import { FC, Fragment, useState } from "react";
 import { Chip, IconButton, Stack } from "@mui/material";
 import { webTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { MonitorSvg } from "src/components/atoms/svg/MonitorSvg";
-import { TrashSvg } from "src/components/atoms/svg/TrashSvg";
+import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
 import { useLazyGetApiMyWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
 import { useNavigate } from "react-router";
-import { Setting } from "src/components/atoms/svg/SettingSvg";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 
 export const WebTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);

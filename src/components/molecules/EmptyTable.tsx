@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import type { FC } from "react";
-import EmptyTableSvg from "src/components/atoms/svg/EmptyTableSvg.svg";
+import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
 
 export const EmptyTable: FC<{ text: string }> = ({ text }) => {
   return (

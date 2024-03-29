@@ -8,8 +8,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { CloudTrue } from "src/components/atoms/svg/CloudTrueSvg";
-import { CloudFalse } from "src/components/atoms/svg/CloudFalseSvg";
+import { CloudTrue } from "src/components/atoms/svg-icons/CloudTrueSvg";
+import { CloudFalse } from "src/components/atoms/svg-icons/CloudFalseSvg";
 import { usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";

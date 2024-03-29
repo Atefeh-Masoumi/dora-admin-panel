@@ -13,7 +13,7 @@ import {
   CheckCircleOutline as CheckCircleOutlineIcon,
   Cancel as CancelIcon,
 } from "@mui/icons-material";
-import { DeleteSvg } from "src/components/atoms/svg/DeleteSvg";
+import { DeleteSvg } from "src/components/atoms/svg-icons/DeleteSvg";
 import {
   GetApiMyDatacenterIpListByIdApiResponse,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,

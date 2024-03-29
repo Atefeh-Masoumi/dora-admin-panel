@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { InvoiceSvg } from "../atoms/svg/InvoiceSvg";
-import { CalculateSvg } from "../atoms/svg/CalculateSvg";
+import { InvoiceSvg } from "../atoms/svg-icons/InvoiceSvg";
+import { CalculateSvg } from "../atoms/svg-icons/CalculateSvg";
 
 type ServiceReceiptPropsType = {
   receiptItemNumber: string;

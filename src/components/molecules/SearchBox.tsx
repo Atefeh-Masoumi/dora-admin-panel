@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Input, InputAdornment } from "@mui/material";
-import { Search } from "src/components/atoms/svg/SearchSvg";
+import { Search } from "src/components/atoms/svg-icons/SearchSvg";
 
 export const SearchBox: FC<{
   placeholder: string;
