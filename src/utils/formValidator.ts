@@ -20,4 +20,4 @@ export const phoneNumberValidator = yup
   .max(11, "لطفا شماره موبایل صحیح وارد کنید");
 
 export const passwordValidatorRegex =
-  /^(?=.*[A-Z])(?=.*[!@#$&.*_])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
+  /^(?=.*[A-Z])(?=.*[!@#$&.*-_])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
