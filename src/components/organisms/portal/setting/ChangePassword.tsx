@@ -33,7 +33,7 @@ const formValidation = yup.object().shape({
     ),
   currentPassword: yup
     .string()
-    .test("Password validation", "Password is not valid", (value) =>
+    .test("Current Password validation", "Password is not valid", (value) =>
       passValidationHandler(value as string)
     ),
 });
