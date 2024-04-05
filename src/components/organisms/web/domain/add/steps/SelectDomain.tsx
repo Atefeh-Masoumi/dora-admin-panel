@@ -23,22 +23,6 @@ import DorsaRadio from "src/components/atoms/DorsaRadio";
 import { ProductItemListResponse } from "src/app/services/api.generated";
 import { useLazyGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api";
 
-// const useDomainArray = [
-//   { name: "com", value: "com" },
-//   { name: "net", value: "net" },
-//   { name: "org", value: "org" },
-//   { name: "zone", value: "zone" },
-//   { name: "app", value: "app" },
-//   { name: "cloud", value: "cloud" },
-//   { name: "click", value: "click" },
-//   { name: "shop", value: "shop" },
-//   { name: "site", value: "site" },
-//   { name: "support", value: "support" },
-//   { name: "tech", value: "tech" },
-//   { name: "tel", value: "tel" },
-//   { name: "name", value: "name" },
-// ];
-
 type SelectDomainPropsType = {};
 
 export const SelectDomain: FC<SelectDomainPropsType> = () => {
