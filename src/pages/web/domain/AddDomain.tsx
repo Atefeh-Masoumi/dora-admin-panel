@@ -16,7 +16,7 @@ const AddDomain: FC = () => {
   const {
     domainName,
     ext,
-    typeId,
+    productId,
     authCode,
     name,
     country,
@@ -29,6 +29,7 @@ const AddDomain: FC = () => {
     ns2,
     autoRenewal,
     term,
+    extObject,
   } = useContext(AddDomainContext);
 
   const [paymentType, setPaymentType] =
@@ -38,29 +39,29 @@ const AddDomain: FC = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let timer: any = null;
-    if (term && authCode && domainName && ext) {
-      timer = setTimeout(() => {
-        callApiDomainGetPrice({
-          checkDomainModel: {
-            domainName,
-            ext,
-          },
-        })
-          .unwrap()
-          .catch((err) => {
-            setDomainPrice(0);
-          });
-      }, 1000);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [term, ext, typeId, domainName, authCode]);
+  // useEffect(() => {
+  //   let timer: any = null;
+  //   if (term && authCode && domainName && extObject.id) {
+  //     timer = setTimeout(() => {
+  //       callApiDomainGetPrice({
+  //         checkDomainModel: {
+  //           domainName,
+  //           extObject.name,
+  //         },
+  //       })
+  //         .unwrap()
+  //         .catch((err) => {
+  //           setDomainPrice(0);
+  //         });
+  //     }, 1000);
+  //   }
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [term, ext, productId, domainName, authCode]);
 
-  const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
-    usePostApiMyDomainHostCheckDomainMutation();
+  // const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
+  //   usePostApiMyDomainHostCheckDomainMutation();
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
     usePostApiMyDomainHostRegisterMutation();
@@ -74,10 +75,12 @@ const AddDomain: FC = () => {
       validationErrorMessage = "لطفا نام دامنه را وارد کنید";
     } else if (domainName.length < 3) {
       validationErrorMessage = "نام دامنه نمی تواند کمتر از سه حرف باشد";
-    } else if (!ext) {
+    } else if (!extObject.id) {
       validationErrorMessage = "لطفا دامنه را انتخاب کنید";
-    } else if (ext.length < 3) {
+    } else if (extObject.name?.length < 3) {
       validationErrorMessage = "دامنه نمی تواند کمتر از سه حرف باشد";
+    } else if (!authCode && productId === 11) {
+      validationErrorMessage = "کدانتقال را وارد کنید";
     } else if (!name) {
       validationErrorMessage = "لطفا نام و نام خانوادگی را وارد کنید";
     } else if (name.length < 3) {
@@ -125,8 +128,8 @@ const AddDomain: FC = () => {
       RegisterDomainModel({
         registerDomainModel: {
           domainName,
-          ext,
-          productId: paymentType!,
+          ext: extObject.name!,
+          productId: productId!,
           authCode,
           name,
           country,
@@ -198,13 +201,15 @@ const AddDomain: FC = () => {
               paymentType={paymentType}
               setPaymentType={setPaymentType}
               receiptItemName={"ثبت/انتقال دامنه"}
-              receiptItemNumber={domainPrice !== 0 ? "۱" : "---"}
-              reciptItemPrice={Math.floor(domainPrice).toLocaleString("fa-IR")}
-              totalPrice={Math.floor(domainPrice * 1.09).toLocaleString(
+              receiptItemNumber={extObject.price !== 0 ? "۱" : "---"}
+              reciptItemPrice={Math.floor(extObject.price).toLocaleString(
                 "fa-IR"
               )}
-              vat={Math.floor(domainPrice * 0.09).toLocaleString("fa-IR")}
-              priceIsLoading={getPriceIsLoading}
+              totalPrice={Math.floor(extObject.price * 1.09).toLocaleString(
+                "fa-IR"
+              )}
+              vat={Math.floor(extObject.price * 0.09).toLocaleString("fa-IR")}
+              // priceIsLoading={getPriceIsLoading}
             />
           </Grid>
         </Grid>
