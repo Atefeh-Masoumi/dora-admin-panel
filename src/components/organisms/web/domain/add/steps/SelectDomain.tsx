@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext } from "react";
+import { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import {
   Radio,
   RadioGroup,
@@ -7,36 +7,67 @@ import {
   Checkbox,
   Typography,
   Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  CircularProgress,
+  SelectChangeEvent,
+  selectClasses,
+  outlinedInputClasses,
 } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
 import { Box } from "@mui/system";
 import DorsaRadio from "src/components/atoms/DorsaRadio";
+import { ProductItemListResponse } from "src/app/services/api.generated";
+import { useLazyGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api";
 
-const useDomainArray = [
-  { name: "com", value: "com" },
-  { name: "net", value: "net" },
-  { name: "org", value: "org" },
-  { name: "zone", value: "zone" },
-  { name: "app", value: "app" },
-  { name: "cloud", value: "cloud" },
-  { name: "click", value: "click" },
-  { name: "shop", value: "shop" },
-  { name: "site", value: "site" },
-  { name: "support", value: "support" },
-  { name: "tech", value: "tech" },
-  { name: "tel", value: "tel" },
-  { name: "name", value: "name" },
-];
+// const useDomainArray = [
+//   { name: "com", value: "com" },
+//   { name: "net", value: "net" },
+//   { name: "org", value: "org" },
+//   { name: "zone", value: "zone" },
+//   { name: "app", value: "app" },
+//   { name: "cloud", value: "cloud" },
+//   { name: "click", value: "click" },
+//   { name: "shop", value: "shop" },
+//   { name: "site", value: "site" },
+//   { name: "support", value: "support" },
+//   { name: "tech", value: "tech" },
+//   { name: "tel", value: "tel" },
+//   { name: "name", value: "name" },
+// ];
 
 type SelectDomainPropsType = {};
 
 export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const { domainName, setDomainName } = useContext(AddDomainContext);
-  const { ext, setExt } = useContext(AddDomainContext);
-  const { typeId, setTypeId } = useContext(AddDomainContext);
+  // const { ext, setExt } = useContext(AddDomainContext);
+  const { productId, setProductId } = useContext(AddDomainContext);
   const { authCode, setAuthCode } = useContext(AddDomainContext);
   const { term, setTerm } = useContext(AddDomainContext);
+  const { extObject, setExtObject } = useContext(AddDomainContext);
+
+  const [bundleList, setBundleList] = useState<ProductItemListResponse[]>([]);
+  const [getBundleList, { isLoading: getBundleListIsLoading }] =
+    useLazyGetApiMyPortalProductItemListByProductIdQuery();
+  console.log(bundleList);
+
+  useEffect(() => {
+    getBundleList({
+      productId: productId!,
+    })
+      .unwrap()
+      .then((res) => {
+        if (!res) return;
+        setBundleList(res);
+      })
+      .catch();
+
+    setExtObject({ id: "", name: "", price: 0 });
+    // formik.setFieldValue("bundleId", "");
+  }, [getBundleList, productId]);
 
   const termInputChangeHandler = () => setTerm(!term);
 
@@ -44,8 +75,8 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
     _: ChangeEvent<HTMLInputElement>,
     value: string
   ) => {
-    setTypeId(parseInt(value));
-    if (parseInt(value) === 1) {
+    setProductId(parseInt(value));
+    if (parseInt(value) === 10) {
       setAuthCode("Auth Code");
     } else {
       setAuthCode("");
@@ -60,12 +91,16 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setAuthCode(e.target.value);
 
-  const extInputChangeHandler = (
-    _event: any,
-    newValue: { name: string; value: string } | null
-  ) => {
-    if (!newValue) return;
-    setExt((newValue && newValue.value) || "");
+  const extInputChangeHandler = (e: SelectChangeEvent<number>) => {
+    const bundleObj = (bundleList ?? []).find(
+      (item) => item.id === Number(e.target.value!)
+    );
+
+    setExtObject({
+      id: bundleObj?.id || "",
+      name: bundleObj?.name || "",
+      price: bundleObj?.price || 0,
+    });
   };
 
   return (
@@ -86,23 +121,22 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
           xs={12}
           lg={4}
           item
-          spacing={1}
           sx={{ p: { xs: 2, lg: 0 }, mr: { xs: -3, lg: 0 } }}
         >
           <RadioGroup
-            name={"typeId"}
-            value={typeId.toString()}
+            name={"productId"}
+            value={productId.toString()}
             onChange={typeChangeHandler}
           >
             <DorsaRadio
               sx={{ width: { xs: "100%", lg: "100%" } }}
-              value="1"
+              value="10"
               control={<Radio />}
               label="ثبت دامنه"
             />
             <DorsaRadio
               sx={{ width: { xs: "100%", lg: "100%" } }}
-              value="2"
+              value="11"
               control={<Radio />}
               label="انتقال دامنه"
             />
@@ -110,22 +144,49 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
         </Grid>
         <Grid xs={12} lg={8} item container spacing={1}>
           <Grid item xs={4}>
-            <Autocomplete
-              disablePortal
-              disableClearable
-              value={useDomainArray.find(
-                (option: { name: string; value: string }) =>
-                  option.value === ext
-              )}
-              options={useDomainArray}
-              getOptionLabel={(option: { name: string; value: string }) =>
-                (option && option.name) || ""
-              }
-              onChange={extInputChangeHandler}
-              renderInput={(params) => (
-                <DorsaTextField {...params} label="دامنه" />
-              )}
-            />
+            <FormControl sx={{ direction: "rtl" }} required fullWidth>
+              <InputLabel>Ext</InputLabel>
+              <Select
+                value={extObject.id || ""}
+                label="Ext"
+                sx={{
+                  [`& .${selectClasses.select}`]: {
+                    background: "white",
+                    borderRadius: "4px",
+                    paddingBottom: "15px",
+                  },
+                  [`& .${outlinedInputClasses.notchedOutline}`]: {
+                    border: "none",
+                    backgroundColor: "rgba(110, 118, 138, 0.06)",
+                  },
+                  // "&:hover": {
+                  //   [`& .${outlinedInputClasses.notchedOutline}`]: {},
+                  // },
+                }}
+                onChange={extInputChangeHandler}
+                renderValue={() => (
+                  <Box display="flex" alignItems="center">
+                    {getBundleListIsLoading ? (
+                      <CircularProgress size={20} />
+                    ) : (
+                      extObject.name || bundleList[0].name || ""
+                    )}
+                  </Box>
+                )}
+              >
+                {bundleList?.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={item.id}
+                      sx={{ direction: "rtl" }}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={8}>
             <DorsaTextField
@@ -140,7 +201,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            {typeId === 2 && (
+            {productId === 11 && (
               <DorsaTextField
                 value={authCode}
                 onKeyDown={(e) =>
