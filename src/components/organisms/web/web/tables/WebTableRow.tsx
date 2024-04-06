@@ -88,21 +88,39 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                           : id === 5
                           ? "حذف شده"
                           : id === 6
-                          ? "انتظار"
+                          ? "درانتظار انجام عملیات"
                           : id === 7
                           ? "بازسازی"
+                          : id === 8
+                          ? "خطا در زیرساخت"
+                          : id === 9
+                          ? "بازسازی"
+                          : id === 10
+                          ? "خاموش"
+                          : id === 11
+                          ? "در صف انتظار"
                           : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
                         backgroundColor:
-                          id === 6 || id === 7
+                          id === 6 ||
+                          id === 7 ||
+                          id === 8 ||
+                          id === 9 ||
+                          id === 10 ||
+                          id === 11
                             ? "warning.light"
                             : id === 2
                             ? "success.light"
                             : "error.light",
                         color:
-                          id === 6 || id === 7
+                          id === 6 ||
+                          id === 7 ||
+                          id === 8 ||
+                          id === 9 ||
+                          id === 10 ||
+                          id === 11
                             ? "warning.main"
                             : id === 2
                             ? "success.main"
