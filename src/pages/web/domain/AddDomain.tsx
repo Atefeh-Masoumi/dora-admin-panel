@@ -15,7 +15,6 @@ import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 const AddDomain: FC = () => {
   const {
     domainName,
-    ext,
     productId,
     authCode,
     name,
@@ -35,33 +34,31 @@ const AddDomain: FC = () => {
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
-  const [domainPrice, setDomainPrice] = useState(0);
-
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   let timer: any = null;
-  //   if (term && authCode && domainName && extObject.id) {
-  //     timer = setTimeout(() => {
-  //       callApiDomainGetPrice({
-  //         checkDomainModel: {
-  //           domainName,
-  //           extObject.name,
-  //         },
-  //       })
-  //         .unwrap()
-  //         .catch((err) => {
-  //           setDomainPrice(0);
-  //         });
-  //     }, 1000);
-  //   }
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [term, ext, productId, domainName, authCode]);
+  useEffect(() => {
+    let timer: any = null;
+    if (term && authCode && domainName && extObject.id) {
+      timer = setTimeout(() => {
+        checkDomain({
+          checkDomainModel: {
+            domainName,
+            ext: extObject.name!,
+          },
+        })
+          .unwrap()
+          .catch((err) => {
+            // setDomainPrice(0);
+          });
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [term, extObject.name, productId, domainName, authCode]);
 
-  // const [callApiDomainGetPrice, { isLoading: getPriceIsLoading }] =
-  //   usePostApiMyDomainHostCheckDomainMutation();
+  const [checkDomain, { isLoading: checkDomainLoading }] =
+    usePostApiMyDomainHostCheckDomainMutation();
 
   const [RegisterDomainModel, { isLoading: registerLoading }] =
     usePostApiMyDomainHostRegisterMutation();
@@ -148,7 +145,8 @@ const AddDomain: FC = () => {
         .then((res) => {
           toast.success("دامنه با موفقیت ایجاد/منتقل گردید");
           navigate("/domain");
-        });
+        })
+        .catch((err) => {});
     }
   };
 
@@ -209,7 +207,7 @@ const AddDomain: FC = () => {
                 "fa-IR"
               )}
               vat={Math.floor(extObject.price * 0.09).toLocaleString("fa-IR")}
-              // priceIsLoading={getPriceIsLoading}
+              priceIsLoading={checkDomainLoading}
             />
           </Grid>
         </Grid>
