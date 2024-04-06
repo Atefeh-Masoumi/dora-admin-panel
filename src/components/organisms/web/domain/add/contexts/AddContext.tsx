@@ -1,6 +1,11 @@
 import { FC, createContext, ReactNode, useState } from "react";
 
 export type addDomainStepsType = 1 | 2 | 3;
+type extObjectType = {
+  id: number | "";
+  name: string;
+  price: number;
+};
 
 type AddDomainContextType = {
   step: addDomainStepsType;
@@ -9,8 +14,8 @@ type AddDomainContextType = {
   setDomainName: (domainName: string) => void;
   ext: string;
   setExt: (ext: string) => void;
-  typeId: number;
-  setTypeId: (ext: number) => void;
+  productId: number;
+  setProductId: (ext: number) => void;
   authCode: string;
   setAuthCode: (ext: string) => void;
   name: string;
@@ -37,6 +42,8 @@ type AddDomainContextType = {
   setActiveCdn: (activeCdn: boolean) => void;
   term: boolean;
   setTerm: (term: boolean) => void;
+  extObject: extObjectType;
+  setExtObject: (extObject: extObjectType) => void;
 };
 
 export const AddDomainContext = createContext<AddDomainContextType>({
@@ -46,8 +53,8 @@ export const AddDomainContext = createContext<AddDomainContextType>({
   setDomainName: (domainName) => {},
   ext: "",
   setExt: (ext) => {},
-  typeId: 1,
-  setTypeId: (typeId) => {},
+  productId: 1,
+  setProductId: (productId) => {},
   authCode: "",
   setAuthCode: (authCode) => {},
   name: "",
@@ -74,10 +81,22 @@ export const AddDomainContext = createContext<AddDomainContextType>({
   setActiveCdn: (activeCdn) => {},
   term: false,
   setTerm: (term) => {},
+  extObject: {
+    id: "",
+    name: "",
+    price: 0,
+  },
+  setExtObject: (extObject) => {},
 });
 
 type AddDomainContextProviderPropsType = {
   children?: ReactNode;
+};
+
+const defaultExtObject: extObjectType = {
+  id: "",
+  name: "",
+  price: 0,
 };
 
 const AddDomainContextProvider: FC<AddDomainContextProviderPropsType> = ({
@@ -86,7 +105,7 @@ const AddDomainContextProvider: FC<AddDomainContextProviderPropsType> = ({
   const [step, setStep] = useState<addDomainStepsType>(1);
   const [domainName, setDomainName] = useState("");
   const [ext, setExt] = useState("com");
-  const [typeId, setTypeId] = useState(1);
+  const [productId, setProductId] = useState(10);
   const [authCode, setAuthCode] = useState("Auth Code");
   const [name, setName] = useState("");
   const [country, setCountry] = useState("Iran");
@@ -100,6 +119,7 @@ const AddDomainContextProvider: FC<AddDomainContextProviderPropsType> = ({
   const [autoRenewal, setAutoRenewal] = useState(true);
   const [activeCdn, setActiveCdn] = useState(true);
   const [term, setTerm] = useState(false);
+  const [extObject, setExtObject] = useState<extObjectType>(defaultExtObject);
 
   return (
     <AddDomainContext.Provider
@@ -110,8 +130,8 @@ const AddDomainContextProvider: FC<AddDomainContextProviderPropsType> = ({
         setDomainName,
         ext,
         setExt,
-        typeId,
-        setTypeId,
+        productId,
+        setProductId,
         authCode,
         setAuthCode,
         name,
@@ -138,6 +158,8 @@ const AddDomainContextProvider: FC<AddDomainContextProviderPropsType> = ({
         setActiveCdn,
         term,
         setTerm,
+        extObject,
+        setExtObject,
       }}
     >
       {children}

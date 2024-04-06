@@ -285,4 +285,5 @@ export const {
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
   useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery,
+  useLazyGetApiMyPortalProductItemListByProductIdQuery,
 } = api;
