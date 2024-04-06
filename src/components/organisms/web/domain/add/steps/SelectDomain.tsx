@@ -3,11 +3,10 @@ import {
   Radio,
   RadioGroup,
   Grid,
-  Autocomplete,
   Checkbox,
   Typography,
   Stack,
-  FormControl,
+  FormControl,             
   InputLabel,
   Select,
   MenuItem,
@@ -27,7 +26,6 @@ type SelectDomainPropsType = {};
 
 export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const { domainName, setDomainName } = useContext(AddDomainContext);
-  // const { ext, setExt } = useContext(AddDomainContext);
   const { productId, setProductId } = useContext(AddDomainContext);
   const { authCode, setAuthCode } = useContext(AddDomainContext);
   const { term, setTerm } = useContext(AddDomainContext);
@@ -36,7 +34,6 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   const [bundleList, setBundleList] = useState<ProductItemListResponse[]>([]);
   const [getBundleList, { isLoading: getBundleListIsLoading }] =
     useLazyGetApiMyPortalProductItemListByProductIdQuery();
-  console.log(bundleList);
 
   useEffect(() => {
     getBundleList({
@@ -50,7 +47,6 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
       .catch();
 
     setExtObject({ id: "", name: "", price: 0 });
-    // formik.setFieldValue("bundleId", "");
   }, [getBundleList, productId]);
 
   const termInputChangeHandler = () => setTerm(!term);
@@ -76,7 +72,8 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
   ) => setAuthCode(e.target.value);
 
   const extInputChangeHandler = (e: SelectChangeEvent<number>) => {
-    const bundleObj = (bundleList ?? []).find(
+    if (bundleList.length <= 0) return;
+    const bundleObj = bundleList.find(
       (item) => item.id === Number(e.target.value!)
     );
 
