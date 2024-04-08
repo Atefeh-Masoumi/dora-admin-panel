@@ -56,8 +56,6 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
     { name, country, province, city, street, postalCode, voice, email },
     { setSubmitting }
   ) => {
-    console.log("first");
-
     editDomain({
       changeContactModel: {
         id: Number(id)!,

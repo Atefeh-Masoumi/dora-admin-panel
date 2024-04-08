@@ -9,7 +9,7 @@ import {
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { Navigate, useParams } from "react-router";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
@@ -55,16 +55,24 @@ type EditCloudServerPropsType = {};
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const { setServerId } = useContext(EditServerContext);
   const { id } = useParams();
+  const navigate = useNavigate(); // Added
 
   useEffect(() => {
     if (!id) return;
     setServerId(Number(id));
   }, [id, setServerId]);
 
-  const [section, setSection] = useState(0);
+  const [section, setSection] = useState(() => {
+    const initialSection = new URLSearchParams(window.location.search).get(
+      "section"
+    );
+    return initialSection ? parseInt(initialSection, 10) : 0;
+  });
 
-  const handleChange = (_: SyntheticEvent, newValue: number) =>
+  const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
+    navigate(`?section=${newValue}`, { replace: true });
+  };
 
   const tabArray = [
     "مشخصات سرور",
