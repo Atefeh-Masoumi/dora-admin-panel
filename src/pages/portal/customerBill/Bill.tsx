@@ -38,7 +38,6 @@ const Bill: FC = () => {
   });
 
   const productList = bill?.customerProductBills || [];
-  console.log("productList: ", productList);
   const token = useAppSelector((state) => state.auth?.accessToken);
 
   const payBill = [
@@ -77,6 +76,7 @@ const Bill: FC = () => {
 
         window.URL.revokeObjectURL(objectUrl);
       })
+      .catch((err) => {})
       .finally(() => setDownloadFileLoading(false));
   };
 
