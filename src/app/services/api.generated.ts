@@ -231,65 +231,20 @@ export const api = createApi({
         body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
-    getApiMyCdnLoadBalanceListByCdnId: build.query<
-      GetApiMyCdnLoadBalanceListByCdnIdApiResponse,
-      GetApiMyCdnLoadBalanceListByCdnIdApiArg
+    getApiMyCdnOriginCertGetByDnsHostId: build.query<
+      GetApiMyCdnOriginCertGetByDnsHostIdApiResponse,
+      GetApiMyCdnOriginCertGetByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/origin-cert/get/${queryArg.dnsHostId}`,
       }),
     }),
-    getApiMyCdnLoadBalanceGetById: build.query<
-      GetApiMyCdnLoadBalanceGetByIdApiResponse,
-      GetApiMyCdnLoadBalanceGetByIdApiArg
+    getApiMyCdnOriginCertGetUserCertByDnsHostId: build.query<
+      GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiResponse,
+      GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyCdnLoadBalanceCreate: build.mutation<
-      PostApiMyCdnLoadBalanceCreateApiResponse,
-      PostApiMyCdnLoadBalanceCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/create`,
-        method: "POST",
-        body: queryArg.createLoadBalanceModel,
-      }),
-    }),
-    putApiMyCdnLoadBalanceEdit: build.mutation<
-      PutApiMyCdnLoadBalanceEditApiResponse,
-      PutApiMyCdnLoadBalanceEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/edit`,
-        method: "PUT",
-        body: queryArg.editLoadBalanceModel,
-      }),
-    }),
-    deleteApiMyCdnLoadBalanceDeleteById: build.mutation<
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse,
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getApiMyCdnOriginCertGetByCdnId: build.query<
-      GetApiMyCdnOriginCertGetByCdnIdApiResponse,
-      GetApiMyCdnOriginCertGetByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/origin-cert/get/${queryArg.cdnId}`,
-      }),
-    }),
-    getApiMyCdnOriginCertGetUserCertByCdnId: build.query<
-      GetApiMyCdnOriginCertGetUserCertByCdnIdApiResponse,
-      GetApiMyCdnOriginCertGetUserCertByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/origin-cert/get-user-cert/${queryArg.cdnId}`,
+        url: `/api/my/cdn/origin-cert/get-user-cert/${queryArg.dnsHostId}`,
       }),
     }),
     postApiMyCdnOriginCertCreateUserCert: build.mutation<
@@ -300,6 +255,49 @@ export const api = createApi({
         url: `/api/my/cdn/origin-cert/create-user-cert`,
         method: "POST",
         body: queryArg.createCdnOriginUserCertModel,
+      }),
+    }),
+    getApiMyCdnRouteListByDnsHostId: build.query<
+      GetApiMyCdnRouteListByDnsHostIdApiResponse,
+      GetApiMyCdnRouteListByDnsHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/list/${queryArg.dnsHostId}`,
+      }),
+    }),
+    getApiMyCdnRouteGetById: build.query<
+      GetApiMyCdnRouteGetByIdApiResponse,
+      GetApiMyCdnRouteGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/cdn/route/get/${queryArg.id}` }),
+    }),
+    postApiMyCdnRouteCreate: build.mutation<
+      PostApiMyCdnRouteCreateApiResponse,
+      PostApiMyCdnRouteCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/create`,
+        method: "POST",
+        body: queryArg.createCdnRouteModel,
+      }),
+    }),
+    putApiMyCdnRouteEdit: build.mutation<
+      PutApiMyCdnRouteEditApiResponse,
+      PutApiMyCdnRouteEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/edit`,
+        method: "PUT",
+        body: queryArg.editCdnRouteModel,
+      }),
+    }),
+    deleteApiMyCdnRouteDeleteById: build.mutation<
+      DeleteApiMyCdnRouteDeleteByIdApiResponse,
+      DeleteApiMyCdnRouteDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/delete/${queryArg.id}`,
+        method: "DELETE",
       }),
     }),
     getApiMyColocationHostList: build.query<
@@ -1709,41 +1707,41 @@ export type PutApiMyCdnHostChangeNonWwwRedirectApiResponse = unknown;
 export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
-export type GetApiMyCdnLoadBalanceListByCdnIdApiResponse =
-  /** status 200 Success */ LoadBalanceListResponse[];
-export type GetApiMyCdnLoadBalanceListByCdnIdApiArg = {
-  cdnId: number;
-};
-export type GetApiMyCdnLoadBalanceGetByIdApiResponse =
-  /** status 200 Success */ GetLoadBalanceResponse;
-export type GetApiMyCdnLoadBalanceGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyCdnLoadBalanceCreateApiResponse = unknown;
-export type PostApiMyCdnLoadBalanceCreateApiArg = {
-  createLoadBalanceModel: CreateLoadBalanceModel;
-};
-export type PutApiMyCdnLoadBalanceEditApiResponse = unknown;
-export type PutApiMyCdnLoadBalanceEditApiArg = {
-  editLoadBalanceModel: EditLoadBalanceModel;
-};
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCdnOriginCertGetByCdnIdApiResponse =
+export type GetApiMyCdnOriginCertGetByDnsHostIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnOriginCertGetByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnOriginCertGetByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
-export type GetApiMyCdnOriginCertGetUserCertByCdnIdApiResponse =
+export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnOriginCertGetUserCertByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
 export type PostApiMyCdnOriginCertCreateUserCertApiResponse = unknown;
 export type PostApiMyCdnOriginCertCreateUserCertApiArg = {
   createCdnOriginUserCertModel: CreateCdnOriginUserCertModel;
+};
+export type GetApiMyCdnRouteListByDnsHostIdApiResponse =
+  /** status 200 Success */ CdnRouteListResponse[];
+export type GetApiMyCdnRouteListByDnsHostIdApiArg = {
+  dnsHostId: number;
+};
+export type GetApiMyCdnRouteGetByIdApiResponse =
+  /** status 200 Success */ GetCdnRouteResponse;
+export type GetApiMyCdnRouteGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyCdnRouteCreateApiResponse = unknown;
+export type PostApiMyCdnRouteCreateApiArg = {
+  createCdnRouteModel: CreateCdnRouteModel;
+};
+export type PutApiMyCdnRouteEditApiResponse = unknown;
+export type PutApiMyCdnRouteEditApiArg = {
+  editCdnRouteModel: EditCdnRouteModel;
+};
+export type DeleteApiMyCdnRouteDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnRouteDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiMyColocationHostListApiResponse =
   /** status 200 Success */ ColocationListResponse[];
@@ -2567,8 +2565,13 @@ export type ChangeNonWwwRedirectModel = {
   dnsHostId?: number;
   isNonWwwRedirect?: boolean;
 };
-export type LoadBalanceListResponse = {
+export type CreateCdnOriginUserCertModel = {
   dnsHostId?: number;
+  keyPem: string;
+  certPem: string;
+};
+export type CdnRouteListResponse = {
+  id?: number;
   host?: string | null;
   path?: string | null;
   loadBalancingPolicy?: string | null;
@@ -2577,7 +2580,7 @@ export type LoadBalanceListResponse = {
 export type DestinationModel = {
   address: string;
 };
-export type GetLoadBalanceResponse = {
+export type GetCdnRouteResponse = {
   dnsHostId?: number;
   host?: string | null;
   maxConnectionsPerServer?: number;
@@ -2585,7 +2588,7 @@ export type GetLoadBalanceResponse = {
   dangerousAcceptAnyServerCertificate?: boolean;
   destinations?: DestinationModel[] | null;
 };
-export type CreateLoadBalanceModel = {
+export type CreateCdnRouteModel = {
   dnsHostId?: number;
   host: string;
   loadBalancingPolicyId: number;
@@ -2593,18 +2596,13 @@ export type CreateLoadBalanceModel = {
   dangerousAcceptAnyServerCertificate: boolean;
   destinations?: DestinationModel[] | null;
 };
-export type EditLoadBalanceModel = {
+export type EditCdnRouteModel = {
   id?: number;
   host: string;
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
   destinations?: DestinationModel[] | null;
-};
-export type CreateCdnOriginUserCertModel = {
-  dnsHostId?: number;
-  keyPem: string;
-  certPem: string;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -2853,7 +2851,7 @@ export type GetDnsRecordResponse = {
   isSystemRecord?: boolean;
 };
 export type CreateDnsRecordModel = {
-  cdnId: number;
+  dnsHostId?: number;
   name: string;
   type: string;
   ttl: string;
@@ -2869,7 +2867,7 @@ export type CreateDnsRecordModel = {
   authority?: string | null;
 };
 export type EditDnsRecordModel = {
-  cdnId: number;
+  dnsHostId?: number;
   name: string;
   type: string;
   ttl: string;
@@ -3610,14 +3608,14 @@ export const {
   usePutApiMyCdnHostChangeHstsMutation,
   usePutApiMyCdnHostChangeHttpsRedirectMutation,
   usePutApiMyCdnHostChangeNonWwwRedirectMutation,
-  useGetApiMyCdnLoadBalanceListByCdnIdQuery,
-  useGetApiMyCdnLoadBalanceGetByIdQuery,
-  usePostApiMyCdnLoadBalanceCreateMutation,
-  usePutApiMyCdnLoadBalanceEditMutation,
-  useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
-  useGetApiMyCdnOriginCertGetByCdnIdQuery,
-  useGetApiMyCdnOriginCertGetUserCertByCdnIdQuery,
+  useGetApiMyCdnOriginCertGetByDnsHostIdQuery,
+  useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery,
   usePostApiMyCdnOriginCertCreateUserCertMutation,
+  useGetApiMyCdnRouteListByDnsHostIdQuery,
+  useGetApiMyCdnRouteGetByIdQuery,
+  usePostApiMyCdnRouteCreateMutation,
+  usePutApiMyCdnRouteEditMutation,
+  useDeleteApiMyCdnRouteDeleteByIdMutation,
   useGetApiMyColocationHostListQuery,
   useGetApiMyColocationHostGetByIdQuery,
   usePostApiMyColocationHostCreateMutation,
@@ -3776,3 +3774,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+

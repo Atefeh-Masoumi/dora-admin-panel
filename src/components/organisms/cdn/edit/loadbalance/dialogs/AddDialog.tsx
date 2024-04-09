@@ -24,11 +24,11 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiMyCdnLoadBalanceGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePostApiMyCdnLoadBalanceCreateMutation,
-  usePutApiMyCdnLoadBalanceEditMutation,
+  usePostApiMyCdnRouteCreateMutation,
+  usePutApiMyCdnRouteEditMutation,
 } from "src/app/services/api.generated";
 
 type InitialValuesType = {
@@ -93,7 +93,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
   const [getDetails, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyCdnLoadBalanceGetByIdQuery();
+    useLazyGetApiMyCdnRouteGetByIdQuery();
 
   useEffect(() => {
     if (!id) return;
@@ -136,10 +136,10 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     setCertificateSwitch((prevState) => !prevState);
 
   const [createLoadBalance, { isLoading: createLoadBalanceLoading }] =
-    usePostApiMyCdnLoadBalanceCreateMutation();
+    usePostApiMyCdnRouteCreateMutation();
 
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutApiMyCdnLoadBalanceEditMutation();
+    usePutApiMyCdnRouteEditMutation();
 
   const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
@@ -147,7 +147,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
   ) => {
     if (id) {
       editLoadBalance({
-        editLoadBalanceModel: {
+        editCdnRouteModel: {
           id: selectedDomain?.id!,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
@@ -163,7 +163,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
         });
     } else {
       createLoadBalance({
-        createLoadBalanceModel: {
+        createCdnRouteModel: {
           dnsHostId: cdnId,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,

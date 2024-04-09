@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
-import { useGetApiMyCdnLoadBalanceListByCdnIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnRouteListByDnsHostIdQuery } from "src/app/services/api.generated";
 
 type LoadBalancePropsType = {};
 
@@ -15,8 +15,8 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
-  const { data, isLoading } = useGetApiMyCdnLoadBalanceListByCdnIdQuery({
-    cdnId,
+  const { data, isLoading } = useGetApiMyCdnRouteListByDnsHostIdQuery({
+    dnsHostId: cdnId,
   });
 
   const openDialog = () => setShowDialog(true);

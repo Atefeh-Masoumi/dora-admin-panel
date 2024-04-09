@@ -178,17 +178,17 @@ export const api = generatedApi
       putApiMyCdnHostChangeClientCertType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      // ============================== LoadBalance ============================== //
-      getApiMyCdnLoadBalanceListByCdnId: {
+      // ============================== Cdn Route ============================== //
+      getApiMyCdnRouteListByDnsHostId: {
         providesTags: () => ["LoadBalance"],
       },
-      deleteApiMyCdnLoadBalanceDeleteById: {
+      deleteApiMyCdnRouteDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      postApiMyCdnLoadBalanceCreate: {
+      postApiMyCdnRouteCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      putApiMyCdnLoadBalanceEdit: {
+      putApiMyCdnRouteEdit: {
         invalidatesTags: () => ["LoadBalance"],
       },
       // ============================== SslSetting ============================== //
@@ -198,7 +198,7 @@ export const api = generatedApi
       getApiMyCdnEdgeCertGetUserCertByDnsHostId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiMyCdnOriginCertGetByCdnId: {
+      getApiMyCdnOriginCertGetByDnsHostId: {
         providesTags: () => ["SslSetting"],
       },
       postApiMyCdnEdgeCertCreate: {
@@ -279,7 +279,7 @@ export const {
   useLazyGetApiMyDatacenterIpListByIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
-  useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
+  useLazyGetApiMyCdnRouteGetByIdQuery,
   useLazyGetApiMyCdnDnsRecordGetByIdQuery,
   useLazyGetApiMyPortalPaymentGetByIdQuery,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,

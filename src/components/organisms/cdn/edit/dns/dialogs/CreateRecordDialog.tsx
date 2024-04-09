@@ -109,7 +109,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       editDnsRecord({
         editDnsRecordModel: {
           id: id,
-          cdnId,
+          dnsHostId: cdnId,
           name,
           type,
           ttl,
@@ -129,7 +129,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     } else {
       createDnsRecord({
         createDnsRecordModel: {
-          cdnId,
+          dnsHostId: cdnId,
           name,
           type,
           ttl,

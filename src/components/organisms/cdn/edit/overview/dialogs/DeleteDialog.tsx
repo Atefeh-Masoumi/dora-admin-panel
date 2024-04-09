@@ -5,8 +5,8 @@ import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import {
-  useDeleteApiMyCdnHostDeleteByIdMutation,
-  useGetApiMyCdnHostListQuery,
+  useDeleteApiMyDnsHostDeleteByIdMutation,
+  useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { DataContext } from "src/pages/cdn/Index";
@@ -25,12 +25,8 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [DeleteZone, { isLoading }] = useDeleteApiMyCdnHostDeleteByIdMutation();
-  const {
-    data: cdnHostList,
-    isLoading: getCdnHostLoading,
-    refetch,
-  } = useGetApiMyCdnHostListQuery();
+  const [DeleteZone, { isLoading }] = useDeleteApiMyDnsHostDeleteByIdMutation();
+  const { refetch } = useGetApiMyDnsHostListQuery();
 
   const navigate = useNavigate();
 
@@ -43,7 +39,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
         toast.error("دامنه مورد نظر حذف شد", { icon: Success });
         refetch();
       })
-      .catch((err) => {});
+      .catch(() => {});
 
   return (
     <Dialog
