@@ -3,7 +3,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import {
   usePostApiMyCdnEdgeCertCreateMutation,
-  useGetApiMyCdnEdgeCertGetByCdnIdQuery,
+  useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
 } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -17,14 +17,15 @@ export const CdnEdgeCert: FC = () => {
   const [createLicense, { isLoading: loadingCreate }] =
     usePostApiMyCdnEdgeCertCreateMutation();
 
-  const { data: edgeCert, isLoading } = useGetApiMyCdnEdgeCertGetByCdnIdQuery({
-    cdnId,
-  });
+  const { data: edgeCert, isLoading } =
+    useGetApiMyCdnEdgeCertGetByDnsHostIdQuery({
+      dnsHostId: cdnId,
+    });
 
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
-        cdnId,
+        dnsHostId: cdnId,
       },
     })
       .unwrap()

@@ -160,7 +160,7 @@ export const api = generatedApi
       putApiMyCdnHostChangeCdnType: {
         invalidatesTags: () => ["ZoneData"],
       },
-      getApiMyCdnHostGetById: {
+      getApiMyDnsHostGetById: {
         providesTags: () => ["ZoneData"],
       },
       putApiMyCdnHostChangeHsts: {
@@ -192,13 +192,13 @@ export const api = generatedApi
         invalidatesTags: () => ["LoadBalance"],
       },
       // ============================== SslSetting ============================== //
-      getApiMyCdnEdgeCertGetByCdnId: {
+      getApiMyCdnEdgeCertGetByDnsHostId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiMyCdnEdgeCertGetUserCertByCdnId: {
+      getApiMyCdnEdgeCertGetUserCertByDnsHostId: {
         providesTags: () => ["SslSetting"],
       },
-      getApiMyCdnClientCertGetByCdnId: {
+      getApiMyCdnOriginCertGetByCdnId: {
         providesTags: () => ["SslSetting"],
       },
       postApiMyCdnEdgeCertCreate: {

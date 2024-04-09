@@ -164,7 +164,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     } else {
       createLoadBalance({
         createLoadBalanceModel: {
-          cdnId,
+          dnsHostId: cdnId,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),

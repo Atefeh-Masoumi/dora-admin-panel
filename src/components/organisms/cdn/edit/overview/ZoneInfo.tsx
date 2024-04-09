@@ -12,7 +12,7 @@ import { useAppSelector } from "src/app/hooks";
 import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
-import { useGetApiMyCdnHostOverviewByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ZoneInfoPropsType = {};
@@ -32,7 +32,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiMyCdnHostOverviewByIdQuery({ id: cdnId });
+  } = useGetApiMyDnsHostGetByIdQuery({ id: cdnId });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
@@ -146,7 +146,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
           />
           <BoxRow
             title="Domain Name"
-            value={zoneData?.domainName}
+            value={zoneData?.zoneName}
             isLoading={isLoading}
           />
           <BoxRow
