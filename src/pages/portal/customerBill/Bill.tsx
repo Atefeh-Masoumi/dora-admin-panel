@@ -1,15 +1,30 @@
 import { FC, useEffect, useState } from "react";
-import { Divider, LinearProgress, Stack, Typography } from "@mui/material";
+import {
+  Divider,
+  LinearProgress,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 import moment from "jalali-moment";
-import { billTableStruct } from "src/components/organisms/portal/customerBill/tables/billTableStruct";
+import {
+  billTableStruct,
+  customerProductsTableStruct,
+} from "src/components/organisms/portal/customerBill/tables/billTableStruct";
 import { BillTableRow } from "src/components/organisms/portal/customerBill/tables/BillTableRow";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
+import BillProductsTableRow from "src/components/organisms/bill/bill_table/BillProductsTableRow";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 
@@ -22,6 +37,8 @@ const Bill: FC = () => {
     id: parseInt(id as string),
   });
 
+  const productList = bill?.customerProductBills || [];
+  console.log("productList: ", productList);
   const token = useAppSelector((state) => state.auth?.accessToken);
 
   const payBill = [
@@ -135,13 +152,34 @@ const Bill: FC = () => {
         </Stack>
         <Divider sx={{ my: 2 }} />
         <Stack>
-          <BaseTable
+          {/* <BaseTable
             struct={billTableStruct}
             RowComponent={BillTableRow}
             rows={bill?.customerProductBills || []}
             text="گزارش موجود نیست"
             isLoading={isLoading}
-          />
+          /> */}
+
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {customerProductsTableStruct.map((item, index) => {
+                    return (
+                      <TableCell align="center" key={index}>
+                        {item.label}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {productList.map((product, index) => (
+                  <BillProductsTableRow key={index} rowData={product} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Stack>
       </Stack>
 
