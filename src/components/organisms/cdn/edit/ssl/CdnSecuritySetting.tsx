@@ -29,7 +29,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   const onChangeHttpsRedirect = () => {
     if (isHttpsRedirect === undefined) return;
     changeHttpsRedirect({
-      changeHttpsRedirectModel: { id, isHttpsRedirect: !isHttpsRedirect },
+      changeHttpsRedirectModel: { dnsHostId: id, isHttpsRedirect: !isHttpsRedirect },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
@@ -39,7 +39,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   const onChangeNonWwwRedirect = () => {
     if (isNonWwwRedirect === undefined) return;
     changeNonWwwRedirect({
-      changeNonWwwRedirectModel: { id, isNonWwwRedirect: !isNonWwwRedirect },
+      changeNonWwwRedirectModel: { dnsHostId: id, isNonWwwRedirect: !isNonWwwRedirect },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
@@ -48,9 +48,11 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
 
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
-    changeHSTS({ changeHstsModel: { id, isHsts: !isHSTS } }).then(() => {
-      toast.success("وضعیت HSTS بروز رسانی شد");
-    });
+    changeHSTS({ changeHstsModel: { dnsHostId: id, isHsts: !isHSTS } }).then(
+      () => {
+        toast.success("وضعیت HSTS بروز رسانی شد");
+      }
+    );
   };
 
   const items = [

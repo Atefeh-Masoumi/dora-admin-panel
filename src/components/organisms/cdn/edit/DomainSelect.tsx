@@ -4,10 +4,10 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
-import { useGetApiMyCdnHostListQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
 
 export const DomainSelect: FC = () => {
-  const { data: domains, isLoading } = useGetApiMyCdnHostListQuery();
+  const { data: domains, isLoading } = useGetApiMyDnsHostListQuery();
 
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
 

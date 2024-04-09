@@ -24,7 +24,7 @@ export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
-      changeClientCertTypeModel: { id, zoneClientCertTypeId: type },
+      changeClientCertTypeModel: { dnsHostId: id, zoneClientCertTypeId: type },
     });
   };
   return (

@@ -29,7 +29,7 @@ const AddZone: FC = () => {
     setStep((step - 1) as addZoneStepsType);
   };
 
-  const [checkZone, { isLoading }] = usePostApiMyCdnHostCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostApiMyDnsHostCheckZoneMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
     usePostApiMyCdnHostCreateMutation();
   const {
@@ -50,7 +50,7 @@ const AddZone: FC = () => {
     }
 
     createCdn({
-      createCdnModel: {
+      createDnsModel: {
         zoneName: domainName,
       },
     })
@@ -70,7 +70,7 @@ const AddZone: FC = () => {
           return;
         }
         checkZone({
-          checkCdnModel: {
+          checkDnsModel: {
             zoneName: domainName,
           },
         })

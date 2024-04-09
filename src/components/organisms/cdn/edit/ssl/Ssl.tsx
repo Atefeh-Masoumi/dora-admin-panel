@@ -5,14 +5,14 @@ import { CdnTypeSetting } from "src/components/organisms/cdn/edit/ssl/CdnTypeSet
 import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/ssl/CdnSecuritySetting";
 import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edge/CdnChangeEdgeCertType";
 import { CdnChangeClientCertType } from "src/components/organisms/cdn/edit/ssl/client/CdnChangeClientCertType";
-import { useGetApiMyCdnHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnHostGetByDnsHostIdQuery } from "src/app/services/api.generated";
 
 export const SSLSetting: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
-  const { data: zoneData, isLoading } = useGetApiMyCdnHostGetByIdQuery({
-    id: cdnId,
+  const { data: zoneData, isLoading } = useGetApiMyCdnHostGetByDnsHostIdQuery({
+    dnsHostId: cdnId,
   });
   return (
     <Stack width="100%" spacing={4}>

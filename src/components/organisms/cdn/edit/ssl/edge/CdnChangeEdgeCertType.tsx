@@ -23,7 +23,9 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
     usePutApiMyCdnHostChangeEdgeCertTypeMutation();
   const onChangeEdge = (type: number) => {
     if (!certTypeId) return;
-    changeEdge({ changeEdgeCertTypeModel: { id, zoneEdgeCertTypeId: type } });
+    changeEdge({
+      changeEdgeCertTypeModel: { dnsHostId: id, zoneEdgeCertTypeId: type },
+    });
   };
 
   return (

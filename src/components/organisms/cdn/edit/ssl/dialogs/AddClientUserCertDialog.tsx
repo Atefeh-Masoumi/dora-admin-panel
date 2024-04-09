@@ -6,8 +6,8 @@ import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
-  CreateCdnClientUserCertModel,
-  usePostApiMyCdnClientCertCreateUserCertMutation,
+  CreateCdnOriginUserCertModel,
+  usePostApiMyCdnOriginCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -26,7 +26,7 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   const formInitialValues = { cdnId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiMyCdnClientCertCreateUserCertMutation();
+    usePostApiMyCdnOriginCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -37,13 +37,13 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
     bundleCertPem: yup.string(),
   });
 
-  const submitHandler: formikOnSubmitType<CreateCdnClientUserCertModel> = (
-    { cdnId, keyPem, certPem },
+  const submitHandler: formikOnSubmitType<CreateCdnOriginUserCertModel> = (
+    { dnsHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!cdnId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnClientUserCertModel: { cdnId, keyPem, certPem },
+      createCdnOriginUserCertModel: { dnsHostId: cdnId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

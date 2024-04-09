@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { useGetApiMyCdnClientCertGetByCdnIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnOriginCertGetByCdnIdQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
@@ -10,7 +10,7 @@ export const CdnClientCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
-  const { data: edgeCert, isLoading } = useGetApiMyCdnClientCertGetByCdnIdQuery(
+  const { data: edgeCert, isLoading } = useGetApiMyCdnOriginCertGetByCdnIdQuery(
     {
       cdnId,
     }
