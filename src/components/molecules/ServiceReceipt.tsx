@@ -12,6 +12,7 @@ import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { InvoiceSvg } from "../atoms/svg-icons/InvoiceSvg";
 import { CalculateSvg } from "../atoms/svg-icons/CalculateSvg";
+import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
 
 type ServiceReceiptPropsType = {
   receiptItemNumber: string;

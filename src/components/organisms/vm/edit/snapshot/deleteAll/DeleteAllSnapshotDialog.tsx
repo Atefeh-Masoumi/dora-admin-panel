@@ -1,30 +1,28 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyVmSnapshotDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation } from "src/app/services/api.generated";
 
-type DeleteVmSnapshotDialogPropsType = {
+type DeleteAllSnapshotsDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteVmSnapshotDialog: FC<DeleteVmSnapshotDialogPropsType> = ({
-  openDialog,
-  handleClose,
-  id,
-}) => {
+export const DeleteAllSnapshotsDialog: FC<
+  DeleteAllSnapshotsDialogPropsType
+> = ({ openDialog, handleClose, id }) => {
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] =
-    useDeleteApiMyVmSnapshotDeleteByIdMutation();
+  const [deleteAllSnapShots, { isLoading }] =
+    useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation();
 
   const submit = () =>
-    deleteItem({ id })
+    deleteAllSnapShots({ vmHostId: id })
       .unwrap()
       .then(() => {
-        toast.success("حدف snapshot مورد نظر در حال بررسی است");
+        toast.success("تمام snapshot ها بعد از بررسی حذف خواهند شد");
         handleClose();
       })
       .catch((err) => {});
@@ -41,7 +39,7 @@ export const DeleteVmSnapshotDialog: FC<DeleteVmSnapshotDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            آیا از حذف snapshot مورد نظر مطمئن هستید؟
+            آیا از حذف تمام Snapshot ها مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد

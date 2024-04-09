@@ -77,12 +77,12 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
       <DeleteVmSnapshotDialog
-        id={row["snapshotId"]}
+        id={row.id}
         openDialog={openDelete}
         handleClose={handleCloseDelete}
       />
       <RevertVmSnapshotDialog
-        snapshotId={row["snapshotId"]}
+        snapshotId={row.id}
         openDialog={openRevert}
         handleClose={handleCloseRevert}
       />

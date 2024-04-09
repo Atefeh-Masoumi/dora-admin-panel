@@ -7,8 +7,9 @@ import { SelectDomain } from "src/components/organisms/cdn/add/steps/SelectDomai
 import { RecordsList } from "src/components/organisms/cdn/add/steps/RecordsList";
 import { AddZoneStepper } from "src/components/organisms/cdn/add/AddStepper";
 import {
-  usePostApiMyDnsHostCheckZoneMutation,
-  usePostApiMyDnsHostCreateMutation,
+  useGetApiMyCdnHostListQuery,
+  usePostApiMyCdnHostCheckZoneMutation,
+  usePostApiMyCdnHostCreateMutation,
 } from "src/app/services/api.generated";
 import {
   AddZoneContext,
@@ -30,7 +31,12 @@ const AddZone: FC = () => {
 
   const [checkZone, { isLoading }] = usePostApiMyDnsHostCheckZoneMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
-    usePostApiMyDnsHostCreateMutation();
+    usePostApiMyCdnHostCreateMutation();
+  const {
+    data: cdnHostList,
+    isLoading: getCdnHostLoading,
+    refetch,
+  } = useGetApiMyCdnHostListQuery();
 
   const submitHandler = () => {
     if (term !== true) {
@@ -52,6 +58,7 @@ const AddZone: FC = () => {
       .then((res) => {
         toast.success("زون با موفقیت ایجاد شد");
         navigate("/cdn");
+        refetch();
       });
   };
 

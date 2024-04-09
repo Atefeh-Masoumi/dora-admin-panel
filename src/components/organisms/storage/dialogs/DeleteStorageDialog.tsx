@@ -27,7 +27,6 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
     deleteStorage({ id })
       .then(() => {
         refetchOnClick();
-        toast.success("سرویس ابری با موفقیت حذف شد");
         handleClose();
       })
       .catch((err) => {});

@@ -23,8 +23,7 @@ export const DeleteKubernetesNodeDialog: FC<
     if (!nodeId) return;
     deleteKubernetesNode({
       id: nodeId,
-    }).then(() => {
-      toast.success("نود سرویس کوبرنتیز شما با موفقیت حذف شد");
+    }).then((res) => {
       handleClose();
     });
   };

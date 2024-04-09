@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyDnsHostDeleteByIdMutation } from "src/app/services/api.generated";
+import {
+  useDeleteApiMyCdnHostDeleteByIdMutation,
+  useGetApiMyCdnHostListQuery,
+} from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
 import { DataContext } from "src/pages/cdn/Index";
 
@@ -22,7 +25,12 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [DeleteZone, { isLoading }] = useDeleteApiMyDnsHostDeleteByIdMutation();
+  const [DeleteZone, { isLoading }] = useDeleteApiMyCdnHostDeleteByIdMutation();
+  const {
+    data: cdnHostList,
+    isLoading: getCdnHostLoading,
+    refetch,
+  } = useGetApiMyCdnHostListQuery();
 
   const navigate = useNavigate();
 
@@ -33,6 +41,7 @@ export const DeleteZoneDialog: FC<DeleteZoneDialogPropsType> = ({
         navigate("/cdn");
         refetchOnClick();
         toast.error("دامنه مورد نظر حذف شد", { icon: Success });
+        refetch();
       })
       .catch((err) => {});
 

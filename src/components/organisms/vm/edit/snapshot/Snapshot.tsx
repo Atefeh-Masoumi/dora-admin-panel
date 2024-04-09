@@ -5,23 +5,31 @@ import { useGetApiMyVmSnapshotListByVmIdQuery } from "src/app/services/api.gener
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { snapShotTableStruct } from "./table/struct";
 import { SnapshotTableRow } from "./table/SnapshotTableRow";
-import { Add } from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
 import { CreateSnapshotDialog } from "./create/CreateSnapshotDialog";
+import { DeleteAllSnapshotsDialog } from "./deleteAll/DeleteAllSnapshotDialog";
 
 type SnapshotPropsType = {};
 
 export const Snapshot: FC<SnapshotPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
 
   const { id } = useParams();
   const { data: snapshotList = [], isLoading: getSnapshotLoading } =
     useGetApiMyVmSnapshotListByVmIdQuery({ vmId: Number(id) }, { skip: !id });
-
-  const openDialogHandler = () => {
+  const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
   };
   const closeDialogHandler = () => {
     setShowCreateDialog(false);
+  };
+
+  const openDeleteAllDialogHandler = () => {
+    setShowDeleteAllDialog(true);
+  };
+  const closeDeleteAllDialogHandler = () => {
+    setShowDeleteAllDialog(false);
   };
 
   return (
@@ -33,16 +41,28 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
           justifyContent="space-between"
-          gap={2}
+          gap={1}
         >
           <Typography>لیست snapshot های سرور</Typography>
-          <Button
-            onClick={openDialogHandler}
-            variant="outlined"
-            startIcon={<Add />}
-          >
-            افزودن snapshot جدید
-          </Button>
+          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
+            <Button
+              onClick={openCreateDialogHandler}
+              variant="outlined"
+              startIcon={<Add />}
+            >
+              افزودن snapshot جدید
+            </Button>
+            {snapshotList.length > 0 && (
+              <Button
+                onClick={openDeleteAllDialogHandler}
+                variant="outlined"
+                color="error"
+                startIcon={<Remove />}
+              >
+                حذف همه snapshot
+              </Button>
+            )}
+          </Stack>
         </Stack>
         <Divider />
         <BaseTable
@@ -60,6 +80,11 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
+      />
+      <DeleteAllSnapshotsDialog
+        openDialog={showDeleteAllDialog && !!id}
+        handleClose={closeDeleteAllDialogHandler}
+        id={Number(id!)}
       />
     </>
   );
