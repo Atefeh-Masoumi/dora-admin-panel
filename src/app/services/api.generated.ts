@@ -527,57 +527,55 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyCdnDnsRecordListByCdnId: build.query<
-      GetApiMyCdnDnsRecordListByCdnIdApiResponse,
-      GetApiMyCdnDnsRecordListByCdnIdApiArg
+    getApiMyDnsRecordListByDnsHostId: build.query<
+      GetApiMyDnsRecordListByDnsHostIdApiResponse,
+      GetApiMyDnsRecordListByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/list/${queryArg.cdnId}`,
+        url: `/api/my/dns/record/list/${queryArg.dnsHostId}`,
       }),
     }),
-    getApiMyCdnDnsRecordGetById: build.query<
-      GetApiMyCdnDnsRecordGetByIdApiResponse,
-      GetApiMyCdnDnsRecordGetByIdApiArg
+    getApiMyDnsRecordGetById: build.query<
+      GetApiMyDnsRecordGetByIdApiResponse,
+      GetApiMyDnsRecordGetByIdApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/get/${queryArg.id}`,
-      }),
+      query: (queryArg) => ({ url: `/api/my/dns/record/get/${queryArg.id}` }),
     }),
-    postApiMyCdnDnsRecordCreate: build.mutation<
-      PostApiMyCdnDnsRecordCreateApiResponse,
-      PostApiMyCdnDnsRecordCreateApiArg
+    postApiMyDnsRecordCreate: build.mutation<
+      PostApiMyDnsRecordCreateApiResponse,
+      PostApiMyDnsRecordCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/create`,
+        url: `/api/my/dns/record/create`,
         method: "POST",
         body: queryArg.createDnsRecordModel,
       }),
     }),
-    putApiMyCdnDnsRecordEdit: build.mutation<
-      PutApiMyCdnDnsRecordEditApiResponse,
-      PutApiMyCdnDnsRecordEditApiArg
+    putApiMyDnsRecordEdit: build.mutation<
+      PutApiMyDnsRecordEditApiResponse,
+      PutApiMyDnsRecordEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/edit`,
+        url: `/api/my/dns/record/edit`,
         method: "PUT",
         body: queryArg.editDnsRecordModel,
       }),
     }),
-    deleteApiMyCdnDnsRecordDeleteById: build.mutation<
-      DeleteApiMyCdnDnsRecordDeleteByIdApiResponse,
-      DeleteApiMyCdnDnsRecordDeleteByIdApiArg
+    deleteApiMyDnsRecordDeleteById: build.mutation<
+      DeleteApiMyDnsRecordDeleteByIdApiResponse,
+      DeleteApiMyDnsRecordDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/delete/${queryArg.id}`,
+        url: `/api/my/dns/record/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiMyCdnDnsRecordChangeProxyStatusById: build.mutation<
-      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse,
-      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg
+    putApiMyDnsRecordChangeProxyStatusById: build.mutation<
+      PutApiMyDnsRecordChangeProxyStatusByIdApiResponse,
+      PutApiMyDnsRecordChangeProxyStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/change-proxy-status/${queryArg.id}`,
+        url: `/api/my/dns/record/change-proxy-status/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -1860,30 +1858,30 @@ export type DeleteApiMyDnsHostDeleteByIdApiResponse = unknown;
 export type DeleteApiMyDnsHostDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyCdnDnsRecordListByCdnIdApiResponse =
+export type GetApiMyDnsRecordListByDnsHostIdApiResponse =
   /** status 200 Success */ DnsRecordListResponse[];
-export type GetApiMyCdnDnsRecordListByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyDnsRecordListByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
-export type GetApiMyCdnDnsRecordGetByIdApiResponse =
+export type GetApiMyDnsRecordGetByIdApiResponse =
   /** status 200 Success */ GetDnsRecordResponse;
-export type GetApiMyCdnDnsRecordGetByIdApiArg = {
+export type GetApiMyDnsRecordGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyCdnDnsRecordCreateApiResponse = unknown;
-export type PostApiMyCdnDnsRecordCreateApiArg = {
+export type PostApiMyDnsRecordCreateApiResponse = unknown;
+export type PostApiMyDnsRecordCreateApiArg = {
   createDnsRecordModel: CreateDnsRecordModel;
 };
-export type PutApiMyCdnDnsRecordEditApiResponse = unknown;
-export type PutApiMyCdnDnsRecordEditApiArg = {
+export type PutApiMyDnsRecordEditApiResponse = unknown;
+export type PutApiMyDnsRecordEditApiArg = {
   editDnsRecordModel: EditDnsRecordModel;
 };
-export type DeleteApiMyCdnDnsRecordDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnDnsRecordDeleteByIdApiArg = {
+export type DeleteApiMyDnsRecordDeleteByIdApiResponse = unknown;
+export type DeleteApiMyDnsRecordDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse = unknown;
-export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg = {
+export type PutApiMyDnsRecordChangeProxyStatusByIdApiResponse = unknown;
+export type PutApiMyDnsRecordChangeProxyStatusByIdApiArg = {
   id: number;
 };
 export type GetApiMyDomainHostListApiResponse =
@@ -3645,12 +3643,12 @@ export const {
   usePostApiMyDnsHostCheckZoneMutation,
   usePostApiMyDnsHostCreateMutation,
   useDeleteApiMyDnsHostDeleteByIdMutation,
-  useGetApiMyCdnDnsRecordListByCdnIdQuery,
-  useGetApiMyCdnDnsRecordGetByIdQuery,
-  usePostApiMyCdnDnsRecordCreateMutation,
-  usePutApiMyCdnDnsRecordEditMutation,
-  useDeleteApiMyCdnDnsRecordDeleteByIdMutation,
-  usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation,
+  useGetApiMyDnsRecordListByDnsHostIdQuery,
+  useGetApiMyDnsRecordGetByIdQuery,
+  usePostApiMyDnsRecordCreateMutation,
+  usePutApiMyDnsRecordEditMutation,
+  useDeleteApiMyDnsRecordDeleteByIdMutation,
+  usePutApiMyDnsRecordChangeProxyStatusByIdMutation,
   useGetApiMyDomainHostListQuery,
   useGetApiMyDomainHostGetByIdQuery,
   useGetApiMyDomainHostGetStatusByIdQuery,

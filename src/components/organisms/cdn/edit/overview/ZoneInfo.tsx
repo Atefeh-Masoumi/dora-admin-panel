@@ -145,13 +145,18 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
-            title="Domain Name"
+            title="Zone Name"
             value={zoneData?.zoneName}
             isLoading={isLoading}
           />
           <BoxRow
             title="Create Date"
             value={zoneData?.createDate}
+            isLoading={isLoading}
+          />{" "}
+          <BoxRow
+            title="Last Edit Date"
+            value={zoneData?.modifyDate}
             isLoading={isLoading}
           />
         </Stack>
