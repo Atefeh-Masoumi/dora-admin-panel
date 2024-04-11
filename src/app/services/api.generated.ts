@@ -375,15 +375,6 @@ export const api = createApi({
         url: `/api/my/portal/customer-bill/get/${queryArg.id}`,
       }),
     }),
-    getApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductId:
-      build.query<
-        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse,
-        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/my/portal/customer-bill/get-customer-product/${queryArg.customerBillId}/${queryArg.customerProductId}`,
-        }),
-      }),
     getApiMyPortalCustomerBillDownloadById: build.query<
       GetApiMyPortalCustomerBillDownloadByIdApiResponse,
       GetApiMyPortalCustomerBillDownloadByIdApiArg
@@ -1778,13 +1769,6 @@ export type GetApiMyPortalCustomerBillGetByIdApiResponse =
 export type GetApiMyPortalCustomerBillGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse =
-  /** status 200 Success */ GetCustomerProductResponse;
-export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg =
-  {
-    customerBillId: number;
-    customerProductId: number;
-  };
 export type GetApiMyPortalCustomerBillDownloadByIdApiResponse = unknown;
 export type GetApiMyPortalCustomerBillDownloadByIdApiArg = {
   id: number;
@@ -2688,8 +2672,8 @@ export type CustomerBillShortListResponse = {
 };
 export type CustomerProductBillItemModel = {
   customerProductItem?: string | null;
-  duration?: number;
   quantity?: number;
+  duration?: number;
   price?: number;
   fromDate?: string;
   toDate?: string;
@@ -2710,23 +2694,6 @@ export type GetCustomerBillResponse = {
   vat?: number;
   totalPrice?: number;
   customerProductBills?: CustomerProductBillModel[] | null;
-};
-export type GetCustomerProductItemBillResponse = {
-  customerProductItem?: string | null;
-  quantity?: number;
-  duration?: number;
-  price?: number;
-  fromDate?: string;
-  toDate?: string;
-};
-export type GetCustomerProductResponse = {
-  id?: number;
-  product?: string | null;
-  customerProduct?: string | null;
-  customerProductPrice?: number;
-  fromDate?: string;
-  toDate?: string;
-  customerProductBillItems?: GetCustomerProductItemBillResponse[] | null;
 };
 export type CustomerProductListResponse = {
   id?: number;
@@ -3117,8 +3084,8 @@ export type KubernetesNodeListResponse = {
   status?: string | null;
   kubernetesNodeType?: string | null;
   kubernetesNodeTypeId?: number;
-  productTypeId?: number;
-  productType?: string | null;
+  productId?: number;
+  product?: string | null;
   hostId?: number;
   statusId?: number;
   ip?: string | null;
@@ -3625,7 +3592,6 @@ export const {
   useGetApiMyPortalCustomerBillListQuery,
   useGetApiMyPortalCustomerBillShortListQuery,
   useGetApiMyPortalCustomerBillGetByIdQuery,
-  useGetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdQuery,
   useGetApiMyPortalCustomerBillDownloadByIdQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
   useGetApiMyPortalCustomerProductShortListQuery,
@@ -3773,3 +3739,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+
