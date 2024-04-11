@@ -8,15 +8,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { FC, useState, MouseEvent, useMemo } from "react";
+import { FC, useState } from "react";
 import { CustomerProductBillModel } from "src/app/services/api.generated";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { e2p } from "src/utils/e2p.utils";
 import { customerProductItemsTableStruct } from "../../portal/customerBill/tables/billTableStruct";
-
-// CustomerProductBillItemModel[]
 
 type BillProductsTableRowPropsType = {
   rowData: CustomerProductBillModel;

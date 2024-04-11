@@ -114,10 +114,18 @@ export const api = generatedApi
         invalidatesTags: () => ["Support"],
       },
       // ============================== DnsHost ============================== //
+      getApiMyDnsHostList: {
+        providesTags: () => ["DnsHost"],
+      },
+      postApiMyDnsHostCreate: {
+        invalidatesTags: () => ["DnsHost"],
+      },
       getApiMyDnsHostGetById: {
         providesTags: () => ["DnsHost"],
       },
-      // ============================== DNSRecordSetting ============================== //
+      deleteApiMyDnsHostDeleteById: {
+        invalidatesTags: () => ["DnsHost"],
+      },
       getApiMyDnsRecordListByDnsHostId: {
         providesTags: () => ["DNSRecordSetting", "ProxyStatus"],
       },

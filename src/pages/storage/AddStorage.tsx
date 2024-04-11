@@ -24,12 +24,7 @@ const AddStorageService: FC = () => {
   const [createStorageService, { isLoading }] =
     usePostApiMyStorageHostCreateMutation();
 
-  const {
-    data,
-    isLoading: getDataLoading,
-    refetch,
-    isFetching,
-  } = useGetApiMyStorageHostListQuery();
+  const { refetch } = useGetApiMyStorageHostListQuery();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -63,7 +58,7 @@ const AddStorageService: FC = () => {
         },
       })
         .unwrap()
-        .then((res) => {
+        .then(() => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
           navigate("/storage");
           refetch();
