@@ -2689,6 +2689,7 @@ export type CustomerBillShortListResponse = {
 export type CustomerProductBillItemModel = {
   customerProductItem?: string | null;
   duration?: number;
+  quantity?: number;
   price?: number;
   fromDate?: string;
   toDate?: string;
@@ -3772,4 +3773,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

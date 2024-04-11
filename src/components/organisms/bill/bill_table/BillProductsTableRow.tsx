@@ -29,6 +29,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
   const customerProductPrice = rowData.customerProductPrice!;
   const customerProduct = rowData.customerProduct!;
   const customerProductBillItems = rowData.customerProductBillItems || [];
+
   return (
     <>
       <TableRow
@@ -87,9 +88,14 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                               {row.customerProductItem}
                             </TableCell>
                             <TableCell align="center">
+                              {priceToPersian(row.quantity!)}
+                            </TableCell>
+                            <TableCell align="center">
+                              {priceToPersian(row.duration!)}
+                            </TableCell>
+                            <TableCell align="center">
                               {priceToPersian(row.price!)}
                             </TableCell>
-                            <TableCell align="center">{row.duration}</TableCell>
                             <TableCell align="center">
                               {e2p(row.fromDate!.replace(" ", " - "))}
                             </TableCell>
