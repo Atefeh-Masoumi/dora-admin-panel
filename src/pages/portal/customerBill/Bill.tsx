@@ -19,7 +19,7 @@ import moment from "jalali-moment";
 import { customerProductsTableStruct } from "src/components/organisms/portal/customerBill/tables/billTableStruct";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
-import BillProductsTableRow from "src/components/organisms/bill/bill_table/BillProductsTableRow";
+import BillProductsTableRow from "src/components/organisms/bill/BillProductsTableRow";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 
@@ -147,14 +147,6 @@ const Bill: FC = () => {
         </Stack>
         <Divider sx={{ my: 2 }} />
         <Stack>
-          {/* <BaseTable
-            struct={billTableStruct}
-            RowComponent={BillTableRow}
-            rows={bill?.customerProductBills || []}
-            text="گزارش موجود نیست"
-            isLoading={isLoading}
-          /> */}
-
           <TableContainer>
             <Table>
               <TableHead>

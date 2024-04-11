@@ -55,9 +55,10 @@ export const customerProductsTableStruct: columnType[] = [
 ];
 
 export const customerProductItemsTableStruct: columnType[] = [
-  { id: "customerProductItem", label: "نام آیتم" },
-  { id: "duration", label: "مبلغ" },
-  { id: "price", label: " مدت زمان استفاده" },
+  { id: "customerProductItem", label: "نام" },
   { id: "fromDate", label: "از تاریخ" },
   { id: "toDate", label: "تا تاریخ" },
+  { id: "quantity", label: "تعداد" },
+  { id: "duration", label: "مدت استفاده" },
+  { id: "price", label: "مبلغ" },
 ];
