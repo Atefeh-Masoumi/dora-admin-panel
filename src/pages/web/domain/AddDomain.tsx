@@ -37,6 +37,7 @@ const AddDomain: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (productId === 11) return;
     let timer: any = null;
     if (term && authCode && domainName && extObject.id) {
       timer = setTimeout(() => {

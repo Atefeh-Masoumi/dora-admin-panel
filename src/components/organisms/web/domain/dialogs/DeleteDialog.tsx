@@ -25,9 +25,15 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
 
   const submit = () =>
     deleteItem({ id })
-      .then(() => {
+      .then((res) => {
+        const response: any = res;
+        const status = response.error.status;
+        if (status && status === 400) {
+          toast.error(response.error.errorMessage);
+        } else {
+          toast.success("دامنه با موفقیت حذف شد");
+        }
         refetchOnClick();
-        toast.success("دامنه با موفقیت حذف شد");
         handleClose();
       })
       .catch((err) => {});
