@@ -17,6 +17,9 @@ import { useNavigate } from "react-router";
 import { usePostApiMyAccountLoginMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Captcha } from "src/components/molecules/Captcha";
+import { useAppSelector } from "src/app/hooks";
+import { captchaRegex } from "src/utils/regexUtils";
 
 const formInitialValues = { email: "", password: "" };
 
@@ -27,20 +30,39 @@ const formValidation = yup.object().shape({
 
 const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [captchaCode, setCaptchaCode] = useState("");
+  const [captchaKey, setCaptchaKey] = useState("");
   const [loginUser, { isLoading }] = usePostApiMyAccountLoginMutation();
 
   const navigate = useNavigate();
+
+  const needCaptcha = useAppSelector((store) => store.auth?.captchaRequired);
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { email, password },
     { setSubmitting }
   ) => {
-    loginUser({ loginModel: { email, password } })
+    if (needCaptcha && !captchaRegex.test(captchaCode)) {
+      toast.error("ساختار عبارت امنیتی وارد شده صحیح نمی‌باشد");
+      return;
+    }
+    loginUser({
+      loginModel: {
+        email,
+        password,
+        captchaKey: captchaKey || undefined,
+        captchaCode: captchaCode || undefined,
+      },
+    })
       .unwrap()
       .then((res) => {
         if (!res) return;
         if (res.twoFactor) {
           navigate("/account/two-factor-login");
+          return;
+        }
+        if (!res.accessToken || res.accessToken === "0") {
+          toast.error("نام کاربری یا گذرواژه وارد شده صحیح نمی‌باشد.");
           return;
         }
         toast.success("شما با موفقیت وارد شدید");
@@ -96,6 +118,13 @@ const Login: FC = () => {
               <Button color="secondary" sx={{ fontSize: 14 }} href="./forget">
                 رمز عبور خود را فراموش کرده اید؟
               </Button>
+              {needCaptcha && (
+                <Captcha
+                  captchaCode={captchaCode}
+                  setCaptchaCode={setCaptchaCode}
+                  setCaptchaKey={setCaptchaKey}
+                />
+              )}
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
                   loading={isLoading}
