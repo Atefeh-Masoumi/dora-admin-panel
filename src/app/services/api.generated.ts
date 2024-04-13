@@ -3739,4 +3739,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

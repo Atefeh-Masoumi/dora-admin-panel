@@ -3,7 +3,7 @@ import { styled, Tab, TabProps } from "@mui/material";
 export const DorsaTab = styled((props: TabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
-  margin: "0 4px !important",
+  margin: "0 auto !important",
   textTransform: "none",
   padding: "8px 8px 4px",
   minWidth: 0,
