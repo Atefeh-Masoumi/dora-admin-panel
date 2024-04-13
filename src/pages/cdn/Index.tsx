@@ -12,7 +12,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { useGetApiMyCdnHostListQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 
@@ -32,7 +32,7 @@ const ZoneManagement: FC = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyCdnHostListQuery();
+  } = useGetApiMyDnsHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

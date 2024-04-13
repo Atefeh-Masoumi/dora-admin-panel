@@ -119,99 +119,28 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/portal/calculate-month/list` }),
     }),
-    getApiMyCdnAnalyticGetByCdnIdAndPeriodId: build.query<
-      GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse,
-      GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg
+    getApiMyCdnAnalyticGetByDnsHostIdAndPeriodId: build.query<
+      GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiResponse,
+      GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/analytic/get/${queryArg.cdnId}/${queryArg.periodId}`,
+        url: `/api/my/cdn/analytic/get/${queryArg.dnsHostId}/${queryArg.periodId}`,
       }),
     }),
-    getApiMyCdnApiGatewayListByCdnId: build.query<
-      GetApiMyCdnApiGatewayListByCdnIdApiResponse,
-      GetApiMyCdnApiGatewayListByCdnIdApiArg
+    getApiMyCdnEdgeCertGetByDnsHostId: build.query<
+      GetApiMyCdnEdgeCertGetByDnsHostIdApiResponse,
+      GetApiMyCdnEdgeCertGetByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/api-gateway/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/edge-cert/get/${queryArg.dnsHostId}`,
       }),
     }),
-    getApiMyCdnApiGatewayGetById: build.query<
-      GetApiMyCdnApiGatewayGetByIdApiResponse,
-      GetApiMyCdnApiGatewayGetByIdApiArg
+    getApiMyCdnEdgeCertGetUserCertByDnsHostId: build.query<
+      GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiResponse,
+      GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/api-gateway/get/${queryArg.id}`,
-      }),
-    }),
-    postApiMyCdnApiGatewayCreate: build.mutation<
-      PostApiMyCdnApiGatewayCreateApiResponse,
-      PostApiMyCdnApiGatewayCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/api-gateway/create`,
-        method: "POST",
-        body: queryArg.createApiGatewayModel,
-      }),
-    }),
-    putApiMyCdnApiGatewayEdit: build.mutation<
-      PutApiMyCdnApiGatewayEditApiResponse,
-      PutApiMyCdnApiGatewayEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/api-gateway/edit`,
-        method: "PUT",
-        body: queryArg.editApiGatewayModel,
-      }),
-    }),
-    deleteApiMyCdnApiGatewayDeleteById: build.mutation<
-      DeleteApiMyCdnApiGatewayDeleteByIdApiResponse,
-      DeleteApiMyCdnApiGatewayDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/api-gateway/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    getApiMyCdnClientCertGetByCdnId: build.query<
-      GetApiMyCdnClientCertGetByCdnIdApiResponse,
-      GetApiMyCdnClientCertGetByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/client-cert/get/${queryArg.cdnId}`,
-      }),
-    }),
-    getApiMyCdnClientCertGetUserCertByCdnId: build.query<
-      GetApiMyCdnClientCertGetUserCertByCdnIdApiResponse,
-      GetApiMyCdnClientCertGetUserCertByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/client-cert/get-user-cert/${queryArg.cdnId}`,
-      }),
-    }),
-    postApiMyCdnClientCertCreateUserCert: build.mutation<
-      PostApiMyCdnClientCertCreateUserCertApiResponse,
-      PostApiMyCdnClientCertCreateUserCertApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/client-cert/create-user-cert`,
-        method: "POST",
-        body: queryArg.createCdnClientUserCertModel,
-      }),
-    }),
-    getApiMyCdnEdgeCertGetByCdnId: build.query<
-      GetApiMyCdnEdgeCertGetByCdnIdApiResponse,
-      GetApiMyCdnEdgeCertGetByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/edge-cert/get/${queryArg.cdnId}`,
-      }),
-    }),
-    getApiMyCdnEdgeCertGetUserCertByCdnId: build.query<
-      GetApiMyCdnEdgeCertGetUserCertByCdnIdApiResponse,
-      GetApiMyCdnEdgeCertGetUserCertByCdnIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/edge-cert/get-user-cert/${queryArg.cdnId}`,
+        url: `/api/my/cdn/edge-cert/get-user-cert/${queryArg.dnsHostId}`,
       }),
     }),
     postApiMyCdnEdgeCertCreate: build.mutation<
@@ -234,61 +163,12 @@ export const api = createApi({
         body: queryArg.createCdnEdgeUserCertModel,
       }),
     }),
-    getApiMyCdnHostList: build.query<
-      GetApiMyCdnHostListApiResponse,
-      GetApiMyCdnHostListApiArg
-    >({
-      query: () => ({ url: `/api/my/cdn/host/list` }),
-    }),
-    getApiMyCdnHostGetById: build.query<
-      GetApiMyCdnHostGetByIdApiResponse,
-      GetApiMyCdnHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/cdn/host/get/${queryArg.id}` }),
-    }),
-    getApiMyCdnHostGetNsStatusById: build.query<
-      GetApiMyCdnHostGetNsStatusByIdApiResponse,
-      GetApiMyCdnHostGetNsStatusByIdApiArg
+    getApiMyCdnHostGetByDnsHostId: build.query<
+      GetApiMyCdnHostGetByDnsHostIdApiResponse,
+      GetApiMyCdnHostGetByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/host/get-ns-status/${queryArg.id}`,
-      }),
-    }),
-    getApiMyCdnHostOverviewById: build.query<
-      GetApiMyCdnHostOverviewByIdApiResponse,
-      GetApiMyCdnHostOverviewByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/host/overview/${queryArg.id}`,
-      }),
-    }),
-    postApiMyCdnHostCheckZone: build.mutation<
-      PostApiMyCdnHostCheckZoneApiResponse,
-      PostApiMyCdnHostCheckZoneApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/host/check-zone`,
-        method: "POST",
-        body: queryArg.checkCdnModel,
-      }),
-    }),
-    postApiMyCdnHostCreate: build.mutation<
-      PostApiMyCdnHostCreateApiResponse,
-      PostApiMyCdnHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/host/create`,
-        method: "POST",
-        body: queryArg.createCdnModel,
-      }),
-    }),
-    deleteApiMyCdnHostDeleteById: build.mutation<
-      DeleteApiMyCdnHostDeleteByIdApiResponse,
-      DeleteApiMyCdnHostDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/host/delete/${queryArg.id}`,
-        method: "DELETE",
+        url: `/api/my/cdn/host/get/${queryArg.dnsHostId}`,
       }),
     }),
     putApiMyCdnHostChangeCdnType: build.mutation<
@@ -351,48 +231,72 @@ export const api = createApi({
         body: queryArg.changeNonWwwRedirectModel,
       }),
     }),
-    getApiMyCdnLoadBalanceListByCdnId: build.query<
-      GetApiMyCdnLoadBalanceListByCdnIdApiResponse,
-      GetApiMyCdnLoadBalanceListByCdnIdApiArg
+    getApiMyCdnOriginCertGetByDnsHostId: build.query<
+      GetApiMyCdnOriginCertGetByDnsHostIdApiResponse,
+      GetApiMyCdnOriginCertGetByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/list/${queryArg.cdnId}`,
+        url: `/api/my/cdn/origin-cert/get/${queryArg.dnsHostId}`,
       }),
     }),
-    getApiMyCdnLoadBalanceGetById: build.query<
-      GetApiMyCdnLoadBalanceGetByIdApiResponse,
-      GetApiMyCdnLoadBalanceGetByIdApiArg
+    getApiMyCdnOriginCertGetUserCertByDnsHostId: build.query<
+      GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiResponse,
+      GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/get/${queryArg.id}`,
+        url: `/api/my/cdn/origin-cert/get-user-cert/${queryArg.dnsHostId}`,
       }),
     }),
-    postApiMyCdnLoadBalanceCreate: build.mutation<
-      PostApiMyCdnLoadBalanceCreateApiResponse,
-      PostApiMyCdnLoadBalanceCreateApiArg
+    postApiMyCdnOriginCertCreateUserCert: build.mutation<
+      PostApiMyCdnOriginCertCreateUserCertApiResponse,
+      PostApiMyCdnOriginCertCreateUserCertApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/create`,
+        url: `/api/my/cdn/origin-cert/create-user-cert`,
         method: "POST",
-        body: queryArg.createLoadBalanceModel,
+        body: queryArg.createCdnOriginUserCertModel,
       }),
     }),
-    putApiMyCdnLoadBalanceEdit: build.mutation<
-      PutApiMyCdnLoadBalanceEditApiResponse,
-      PutApiMyCdnLoadBalanceEditApiArg
+    getApiMyCdnRouteListByDnsHostId: build.query<
+      GetApiMyCdnRouteListByDnsHostIdApiResponse,
+      GetApiMyCdnRouteListByDnsHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/edit`,
+        url: `/api/my/cdn/route/list/${queryArg.dnsHostId}`,
+      }),
+    }),
+    getApiMyCdnRouteGetById: build.query<
+      GetApiMyCdnRouteGetByIdApiResponse,
+      GetApiMyCdnRouteGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/cdn/route/get/${queryArg.id}` }),
+    }),
+    postApiMyCdnRouteCreate: build.mutation<
+      PostApiMyCdnRouteCreateApiResponse,
+      PostApiMyCdnRouteCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/create`,
+        method: "POST",
+        body: queryArg.createCdnRouteModel,
+      }),
+    }),
+    putApiMyCdnRouteEdit: build.mutation<
+      PutApiMyCdnRouteEditApiResponse,
+      PutApiMyCdnRouteEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/cdn/route/edit`,
         method: "PUT",
-        body: queryArg.editLoadBalanceModel,
+        body: queryArg.editCdnRouteModel,
       }),
     }),
-    deleteApiMyCdnLoadBalanceDeleteById: build.mutation<
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse,
-      DeleteApiMyCdnLoadBalanceDeleteByIdApiArg
+    deleteApiMyCdnRouteDeleteById: build.mutation<
+      DeleteApiMyCdnRouteDeleteByIdApiResponse,
+      DeleteApiMyCdnRouteDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/load-balance/delete/${queryArg.id}`,
+        url: `/api/my/cdn/route/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -471,15 +375,6 @@ export const api = createApi({
         url: `/api/my/portal/customer-bill/get/${queryArg.id}`,
       }),
     }),
-    getApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductId:
-      build.query<
-        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse,
-        GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/my/portal/customer-bill/get-customer-product/${queryArg.customerBillId}/${queryArg.customerProductId}`,
-        }),
-      }),
     getApiMyPortalCustomerBillDownloadById: build.query<
       GetApiMyPortalCustomerBillDownloadByIdApiResponse,
       GetApiMyPortalCustomerBillDownloadByIdApiArg
@@ -574,57 +469,104 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyCdnDnsRecordListByCdnId: build.query<
-      GetApiMyCdnDnsRecordListByCdnIdApiResponse,
-      GetApiMyCdnDnsRecordListByCdnIdApiArg
+    getApiMyDnsHostList: build.query<
+      GetApiMyDnsHostListApiResponse,
+      GetApiMyDnsHostListApiArg
+    >({
+      query: () => ({ url: `/api/my/dns/host/list` }),
+    }),
+    getApiMyDnsHostGetById: build.query<
+      GetApiMyDnsHostGetByIdApiResponse,
+      GetApiMyDnsHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/dns/host/get/${queryArg.id}` }),
+    }),
+    getApiMyDnsHostGetNsStatusById: build.query<
+      GetApiMyDnsHostGetNsStatusByIdApiResponse,
+      GetApiMyDnsHostGetNsStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/list/${queryArg.cdnId}`,
+        url: `/api/my/dns/host/get-ns-status/${queryArg.id}`,
       }),
     }),
-    getApiMyCdnDnsRecordGetById: build.query<
-      GetApiMyCdnDnsRecordGetByIdApiResponse,
-      GetApiMyCdnDnsRecordGetByIdApiArg
+    postApiMyDnsHostCheckZone: build.mutation<
+      PostApiMyDnsHostCheckZoneApiResponse,
+      PostApiMyDnsHostCheckZoneApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/get/${queryArg.id}`,
+        url: `/api/my/dns/host/check-zone`,
+        method: "POST",
+        body: queryArg.checkDnsModel,
       }),
     }),
-    postApiMyCdnDnsRecordCreate: build.mutation<
-      PostApiMyCdnDnsRecordCreateApiResponse,
-      PostApiMyCdnDnsRecordCreateApiArg
+    postApiMyDnsHostCreate: build.mutation<
+      PostApiMyDnsHostCreateApiResponse,
+      PostApiMyDnsHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/create`,
+        url: `/api/my/dns/host/create`,
+        method: "POST",
+        body: queryArg.createDnsModel,
+      }),
+    }),
+    deleteApiMyDnsHostDeleteById: build.mutation<
+      DeleteApiMyDnsHostDeleteByIdApiResponse,
+      DeleteApiMyDnsHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/dns/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getApiMyDnsRecordListByDnsHostId: build.query<
+      GetApiMyDnsRecordListByDnsHostIdApiResponse,
+      GetApiMyDnsRecordListByDnsHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/dns/record/list/${queryArg.dnsHostId}`,
+      }),
+    }),
+    getApiMyDnsRecordGetById: build.query<
+      GetApiMyDnsRecordGetByIdApiResponse,
+      GetApiMyDnsRecordGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/dns/record/get/${queryArg.id}` }),
+    }),
+    postApiMyDnsRecordCreate: build.mutation<
+      PostApiMyDnsRecordCreateApiResponse,
+      PostApiMyDnsRecordCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/dns/record/create`,
         method: "POST",
         body: queryArg.createDnsRecordModel,
       }),
     }),
-    putApiMyCdnDnsRecordEdit: build.mutation<
-      PutApiMyCdnDnsRecordEditApiResponse,
-      PutApiMyCdnDnsRecordEditApiArg
+    putApiMyDnsRecordEdit: build.mutation<
+      PutApiMyDnsRecordEditApiResponse,
+      PutApiMyDnsRecordEditApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/edit`,
+        url: `/api/my/dns/record/edit`,
         method: "PUT",
         body: queryArg.editDnsRecordModel,
       }),
     }),
-    deleteApiMyCdnDnsRecordDeleteById: build.mutation<
-      DeleteApiMyCdnDnsRecordDeleteByIdApiResponse,
-      DeleteApiMyCdnDnsRecordDeleteByIdApiArg
+    deleteApiMyDnsRecordDeleteById: build.mutation<
+      DeleteApiMyDnsRecordDeleteByIdApiResponse,
+      DeleteApiMyDnsRecordDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/delete/${queryArg.id}`,
+        url: `/api/my/dns/record/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    putApiMyCdnDnsRecordChangeProxyStatusById: build.mutation<
-      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse,
-      PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg
+    putApiMyDnsRecordChangeProxyStatusById: build.mutation<
+      PutApiMyDnsRecordChangeProxyStatusByIdApiResponse,
+      PutApiMyDnsRecordChangeProxyStatusByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/cdn/dns-record/change-proxy-status/${queryArg.id}`,
+        url: `/api/my/dns/record/change-proxy-status/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -1701,57 +1643,21 @@ export type GetApiMyPortalBusinessUnitListApiArg = void;
 export type GetApiMyPortalCalculateMonthListApiResponse =
   /** status 200 Success */ CalculateMonthListResponse[];
 export type GetApiMyPortalCalculateMonthListApiArg = void;
-export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiResponse =
+export type GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiResponse =
   /** status 200 Success */ GetAnalyticResponse;
-export type GetApiMyCdnAnalyticGetByCdnIdAndPeriodIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiArg = {
+  dnsHostId: number;
   periodId: number;
 };
-export type GetApiMyCdnApiGatewayListByCdnIdApiResponse =
-  /** status 200 Success */ ApiGatewayListResponse[];
-export type GetApiMyCdnApiGatewayListByCdnIdApiArg = {
-  cdnId: number;
-};
-export type GetApiMyCdnApiGatewayGetByIdApiResponse =
-  /** status 200 Success */ GetApiGatewayResponse;
-export type GetApiMyCdnApiGatewayGetByIdApiArg = {
-  id: number;
-};
-export type PostApiMyCdnApiGatewayCreateApiResponse = unknown;
-export type PostApiMyCdnApiGatewayCreateApiArg = {
-  createApiGatewayModel: CreateApiGatewayModel;
-};
-export type PutApiMyCdnApiGatewayEditApiResponse = unknown;
-export type PutApiMyCdnApiGatewayEditApiArg = {
-  editApiGatewayModel: EditApiGatewayModel;
-};
-export type DeleteApiMyCdnApiGatewayDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnApiGatewayDeleteByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCdnClientCertGetByCdnIdApiResponse =
+export type GetApiMyCdnEdgeCertGetByDnsHostIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnClientCertGetByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnEdgeCertGetByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
-export type GetApiMyCdnClientCertGetUserCertByCdnIdApiResponse =
+export type GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiResponse =
   /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnClientCertGetUserCertByCdnIdApiArg = {
-  cdnId: number;
-};
-export type PostApiMyCdnClientCertCreateUserCertApiResponse = unknown;
-export type PostApiMyCdnClientCertCreateUserCertApiArg = {
-  createCdnClientUserCertModel: CreateCdnClientUserCertModel;
-};
-export type GetApiMyCdnEdgeCertGetByCdnIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnEdgeCertGetByCdnIdApiArg = {
-  cdnId: number;
-};
-export type GetApiMyCdnEdgeCertGetUserCertByCdnIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
-export type GetApiMyCdnEdgeCertGetUserCertByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
 export type PostApiMyCdnEdgeCertCreateApiResponse = unknown;
 export type PostApiMyCdnEdgeCertCreateApiArg = {
@@ -1761,35 +1667,10 @@ export type PostApiMyCdnEdgeCertCreateUserCertApiResponse = unknown;
 export type PostApiMyCdnEdgeCertCreateUserCertApiArg = {
   createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
 };
-export type GetApiMyCdnHostListApiResponse =
-  /** status 200 Success */ CdnListResponse[];
-export type GetApiMyCdnHostListApiArg = void;
-export type GetApiMyCdnHostGetByIdApiResponse =
+export type GetApiMyCdnHostGetByDnsHostIdApiResponse =
   /** status 200 Success */ GetCdnResponse;
-export type GetApiMyCdnHostGetByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCdnHostGetNsStatusByIdApiResponse =
-  /** status 200 Success */ GetCdnNsStatusResponse;
-export type GetApiMyCdnHostGetNsStatusByIdApiArg = {
-  id: number;
-};
-export type GetApiMyCdnHostOverviewByIdApiResponse =
-  /** status 200 Success */ CdnOverviewResponse;
-export type GetApiMyCdnHostOverviewByIdApiArg = {
-  id: number;
-};
-export type PostApiMyCdnHostCheckZoneApiResponse = unknown;
-export type PostApiMyCdnHostCheckZoneApiArg = {
-  checkCdnModel: CheckCdnModel;
-};
-export type PostApiMyCdnHostCreateApiResponse = unknown;
-export type PostApiMyCdnHostCreateApiArg = {
-  createCdnModel: CreateCdnModel;
-};
-export type DeleteApiMyCdnHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnHostDeleteByIdApiArg = {
-  id: number;
+export type GetApiMyCdnHostGetByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
 export type PutApiMyCdnHostChangeCdnTypeApiResponse = unknown;
 export type PutApiMyCdnHostChangeCdnTypeApiArg = {
@@ -1815,26 +1696,40 @@ export type PutApiMyCdnHostChangeNonWwwRedirectApiResponse = unknown;
 export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
-export type GetApiMyCdnLoadBalanceListByCdnIdApiResponse =
-  /** status 200 Success */ LoadBalanceListResponse[];
-export type GetApiMyCdnLoadBalanceListByCdnIdApiArg = {
-  cdnId: number;
+export type GetApiMyCdnOriginCertGetByDnsHostIdApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiMyCdnOriginCertGetByDnsHostIdApiArg = {
+  dnsHostId: number;
 };
-export type GetApiMyCdnLoadBalanceGetByIdApiResponse =
-  /** status 200 Success */ GetLoadBalanceResponse;
-export type GetApiMyCdnLoadBalanceGetByIdApiArg = {
+export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiResponse =
+  /** status 200 Success */ GetCdnCertResponse;
+export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiArg = {
+  dnsHostId: number;
+};
+export type PostApiMyCdnOriginCertCreateUserCertApiResponse = unknown;
+export type PostApiMyCdnOriginCertCreateUserCertApiArg = {
+  createCdnOriginUserCertModel: CreateCdnOriginUserCertModel;
+};
+export type GetApiMyCdnRouteListByDnsHostIdApiResponse =
+  /** status 200 Success */ CdnRouteListResponse[];
+export type GetApiMyCdnRouteListByDnsHostIdApiArg = {
+  dnsHostId: number;
+};
+export type GetApiMyCdnRouteGetByIdApiResponse =
+  /** status 200 Success */ GetCdnRouteResponse;
+export type GetApiMyCdnRouteGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyCdnLoadBalanceCreateApiResponse = unknown;
-export type PostApiMyCdnLoadBalanceCreateApiArg = {
-  createLoadBalanceModel: CreateLoadBalanceModel;
+export type PostApiMyCdnRouteCreateApiResponse = unknown;
+export type PostApiMyCdnRouteCreateApiArg = {
+  createCdnRouteModel: CreateCdnRouteModel;
 };
-export type PutApiMyCdnLoadBalanceEditApiResponse = unknown;
-export type PutApiMyCdnLoadBalanceEditApiArg = {
-  editLoadBalanceModel: EditLoadBalanceModel;
+export type PutApiMyCdnRouteEditApiResponse = unknown;
+export type PutApiMyCdnRouteEditApiArg = {
+  editCdnRouteModel: EditCdnRouteModel;
 };
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnLoadBalanceDeleteByIdApiArg = {
+export type DeleteApiMyCdnRouteDeleteByIdApiResponse = unknown;
+export type DeleteApiMyCdnRouteDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyColocationHostListApiResponse =
@@ -1874,13 +1769,6 @@ export type GetApiMyPortalCustomerBillGetByIdApiResponse =
 export type GetApiMyPortalCustomerBillGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiResponse =
-  /** status 200 Success */ GetCustomerProductResponse;
-export type GetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdApiArg =
-  {
-    customerBillId: number;
-    customerProductId: number;
-  };
 export type GetApiMyPortalCustomerBillDownloadByIdApiResponse = unknown;
 export type GetApiMyPortalCustomerBillDownloadByIdApiArg = {
   id: number;
@@ -1929,30 +1817,55 @@ export type DeleteApiMyDatacenterIpDeleteByIdApiResponse = unknown;
 export type DeleteApiMyDatacenterIpDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyCdnDnsRecordListByCdnIdApiResponse =
-  /** status 200 Success */ DnsRecordListResponse[];
-export type GetApiMyCdnDnsRecordListByCdnIdApiArg = {
-  cdnId: number;
-};
-export type GetApiMyCdnDnsRecordGetByIdApiResponse =
-  /** status 200 Success */ GetDnsRecordResponse;
-export type GetApiMyCdnDnsRecordGetByIdApiArg = {
+export type GetApiMyDnsHostListApiResponse =
+  /** status 200 Success */ DnsListResponse[];
+export type GetApiMyDnsHostListApiArg = void;
+export type GetApiMyDnsHostGetByIdApiResponse =
+  /** status 200 Success */ GetDnsResponse;
+export type GetApiMyDnsHostGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyCdnDnsRecordCreateApiResponse = unknown;
-export type PostApiMyCdnDnsRecordCreateApiArg = {
+export type GetApiMyDnsHostGetNsStatusByIdApiResponse =
+  /** status 200 Success */ GetDnsNsStatusResponse;
+export type GetApiMyDnsHostGetNsStatusByIdApiArg = {
+  id: number;
+};
+export type PostApiMyDnsHostCheckZoneApiResponse = unknown;
+export type PostApiMyDnsHostCheckZoneApiArg = {
+  checkDnsModel: CheckDnsModel;
+};
+export type PostApiMyDnsHostCreateApiResponse = unknown;
+export type PostApiMyDnsHostCreateApiArg = {
+  createDnsModel: CreateDnsModel;
+};
+export type DeleteApiMyDnsHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyDnsHostDeleteByIdApiArg = {
+  id: number;
+};
+export type GetApiMyDnsRecordListByDnsHostIdApiResponse =
+  /** status 200 Success */ DnsRecordListResponse[];
+export type GetApiMyDnsRecordListByDnsHostIdApiArg = {
+  dnsHostId: number;
+};
+export type GetApiMyDnsRecordGetByIdApiResponse =
+  /** status 200 Success */ GetDnsRecordResponse;
+export type GetApiMyDnsRecordGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyDnsRecordCreateApiResponse = unknown;
+export type PostApiMyDnsRecordCreateApiArg = {
   createDnsRecordModel: CreateDnsRecordModel;
 };
-export type PutApiMyCdnDnsRecordEditApiResponse = unknown;
-export type PutApiMyCdnDnsRecordEditApiArg = {
+export type PutApiMyDnsRecordEditApiResponse = unknown;
+export type PutApiMyDnsRecordEditApiArg = {
   editDnsRecordModel: EditDnsRecordModel;
 };
-export type DeleteApiMyCdnDnsRecordDeleteByIdApiResponse = unknown;
-export type DeleteApiMyCdnDnsRecordDeleteByIdApiArg = {
+export type DeleteApiMyDnsRecordDeleteByIdApiResponse = unknown;
+export type DeleteApiMyDnsRecordDeleteByIdApiArg = {
   id: number;
 };
-export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiResponse = unknown;
-export type PutApiMyCdnDnsRecordChangeProxyStatusByIdApiArg = {
+export type PutApiMyDnsRecordChangeProxyStatusByIdApiResponse = unknown;
+export type PutApiMyDnsRecordChangeProxyStatusByIdApiArg = {
   id: number;
 };
 export type GetApiMyDomainHostListApiResponse =
@@ -2587,7 +2500,59 @@ export type GetAnalyticResponse = {
   categories?: string[] | null;
   series?: SeriesModel[] | null;
 };
-export type ApiGatewayListResponse = {
+export type GetCdnCertResponse = {
+  issuer?: string | null;
+  commonName?: string | null;
+  expirationDate?: string | null;
+};
+export type CreateCdnEdgeCertModel = {
+  dnsHostId?: number;
+};
+export type CreateCdnEdgeUserCertModel = {
+  dnsHostId?: number;
+  keyPem: string;
+  certPem: string;
+  bundleCertPem?: string | null;
+};
+export type GetCdnResponse = {
+  zoneStatusId?: number;
+  zoneTypeId?: number;
+  zoneEdgeCertTypeId?: number;
+  zoneClientCertTypeId?: number;
+  isHsts?: boolean;
+  isHttpsRedirect?: boolean;
+  isNonWwwRedirect?: boolean;
+};
+export type ChangeCdnTypeModel = {
+  dnsHostId?: number;
+  zoneTypeId?: number;
+};
+export type ChangeClientCertTypeModel = {
+  dnsHostId?: number;
+  zoneClientCertTypeId?: number;
+};
+export type ChangeEdgeCertTypeModel = {
+  dnsHostId?: number;
+  zoneEdgeCertTypeId?: number;
+};
+export type ChangeHstsModel = {
+  dnsHostId?: number;
+  isHsts?: boolean;
+};
+export type ChangeHttpsRedirectModel = {
+  dnsHostId?: number;
+  isHttpsRedirect?: boolean;
+};
+export type ChangeNonWwwRedirectModel = {
+  dnsHostId?: number;
+  isNonWwwRedirect?: boolean;
+};
+export type CreateCdnOriginUserCertModel = {
+  dnsHostId?: number;
+  keyPem: string;
+  certPem: string;
+};
+export type CdnRouteListResponse = {
   id?: number;
   host?: string | null;
   path?: string | null;
@@ -2597,140 +2562,29 @@ export type ApiGatewayListResponse = {
 export type DestinationModel = {
   address: string;
 };
-export type GetApiGatewayResponse = {
-  id?: number;
-  host?: string | null;
-  path?: string | null;
-  maxConnectionsPerServer?: number;
-  loadBalancingPolicyId?: number;
-  dangerousAcceptAnyServerCertificate?: boolean;
-  destinations?: DestinationModel[] | null;
-};
-export type CreateApiGatewayModel = {
-  cdnId: number;
-  host: string;
-  path: string;
-  destinations: DestinationModel[];
-  loadBalancingPolicyId: number;
-  maxConnectionsPerServer: number;
-  dangerousAcceptAnyServerCertificate: boolean;
-};
-export type EditApiGatewayModel = {
-  id?: number;
-  path: string;
-  destinations?: DestinationModel[] | null;
-  loadBalancingPolicyId: number;
-  maxConnectionsPerServer: number;
-  dangerousAcceptAnyServerCertificate: boolean;
-};
-export type GetCdnCertResponse = {
-  issuer?: string | null;
-  commonName?: string | null;
-  expirationDate?: string | null;
-};
-export type CreateCdnClientUserCertModel = {
-  cdnId: number;
-  keyPem: string;
-  certPem: string;
-};
-export type CreateCdnEdgeCertModel = {
-  cdnId: number;
-};
-export type CreateCdnEdgeUserCertModel = {
-  cdnId: number;
-  keyPem: string;
-  certPem: string;
-  bundleCertPem?: string | null;
-};
-export type CdnListResponse = {
-  id?: number;
-  zoneName?: string | null;
-  zoneStatus?: string | null;
-  zoneStatusId?: number;
-  createDate?: string;
-};
-export type GetCdnResponse = {
-  id?: number;
-  zoneStatusId?: number;
-  zoneTypeId?: number;
-  zoneEdgeCertTypeId?: number;
-  zoneClientCertTypeId?: number;
-  isHsts?: boolean;
-  isHttpsRedirect?: boolean;
-  isNonWwwRedirect?: boolean;
-};
-export type GetCdnNsStatusResponse = {
-  status?: boolean;
-  ns?: string[] | null;
-  cloudNs?: string[] | null;
-};
-export type CdnOverviewResponse = {
-  id?: number;
-  domainName?: string | null;
-  statusId?: number;
-  status?: string | null;
-  createDate?: string;
-};
-export type CheckCdnModel = {
-  zoneName: string;
-};
-export type CreateCdnModel = {
-  zoneName: string;
-};
-export type ChangeCdnTypeModel = {
-  id?: number;
-  zoneTypeId?: number;
-};
-export type ChangeClientCertTypeModel = {
-  id?: number;
-  zoneClientCertTypeId?: number;
-};
-export type ChangeEdgeCertTypeModel = {
-  id?: number;
-  zoneEdgeCertTypeId?: number;
-};
-export type ChangeHstsModel = {
-  id?: number;
-  isHsts?: boolean;
-};
-export type ChangeHttpsRedirectModel = {
-  id?: number;
-  isHttpsRedirect?: boolean;
-};
-export type ChangeNonWwwRedirectModel = {
-  id?: number;
-  isNonWwwRedirect?: boolean;
-};
-export type LoadBalanceListResponse = {
-  id?: number;
-  host?: string | null;
-  path?: string | null;
-  loadBalancingPolicy?: string | null;
-  maxConnectionsPerServer?: number;
-};
-export type GetLoadBalanceResponse = {
-  id?: number;
+export type GetCdnRouteResponse = {
+  dnsHostId?: number;
   host?: string | null;
   maxConnectionsPerServer?: number;
   loadBalancingPolicyId?: number;
   dangerousAcceptAnyServerCertificate?: boolean;
   destinations?: DestinationModel[] | null;
 };
-export type CreateLoadBalanceModel = {
-  cdnId: number;
+export type CreateCdnRouteModel = {
+  dnsHostId?: number;
   host: string;
-  destinations?: DestinationModel[] | null;
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
+  destinations?: DestinationModel[] | null;
 };
-export type EditLoadBalanceModel = {
-  id: number;
+export type EditCdnRouteModel = {
+  id?: number;
   host: string;
-  destinations?: DestinationModel[] | null;
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
+  destinations?: DestinationModel[] | null;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -2818,6 +2672,7 @@ export type CustomerBillShortListResponse = {
 };
 export type CustomerProductBillItemModel = {
   customerProductItem?: string | null;
+  quantity?: number;
   duration?: number;
   price?: number;
   fromDate?: string;
@@ -2839,23 +2694,6 @@ export type GetCustomerBillResponse = {
   vat?: number;
   totalPrice?: number;
   customerProductBills?: CustomerProductBillModel[] | null;
-};
-export type GetCustomerProductItemBillResponse = {
-  customerProductItem?: string | null;
-  quantity?: number;
-  duration?: number;
-  price?: number;
-  fromDate?: string;
-  toDate?: string;
-};
-export type GetCustomerProductResponse = {
-  id?: number;
-  product?: string | null;
-  customerProduct?: string | null;
-  customerProductPrice?: number;
-  fromDate?: string;
-  toDate?: string;
-  customerProductBillItems?: GetCustomerProductItemBillResponse[] | null;
 };
 export type CustomerProductListResponse = {
   id?: number;
@@ -2927,6 +2765,32 @@ export type DatacenterIpListResponse = {
   isV4?: boolean;
   isPrimary?: boolean;
 };
+export type DnsListResponse = {
+  id?: number;
+  zoneName?: string | null;
+  zoneStatus?: string | null;
+  zoneStatusId?: number;
+  createDate?: string;
+};
+export type GetDnsResponse = {
+  id?: number;
+  zoneName?: string | null;
+  statusId?: number;
+  status?: string | null;
+  createDate?: string;
+  modifyDate?: string;
+};
+export type GetDnsNsStatusResponse = {
+  status?: boolean;
+  ns?: string[] | null;
+  cloudNs?: string[] | null;
+};
+export type CheckDnsModel = {
+  zoneName: string;
+};
+export type CreateDnsModel = {
+  zoneName: string;
+};
 export type DnsRecordListResponse = {
   id?: number;
   name?: string | null;
@@ -2953,7 +2817,7 @@ export type GetDnsRecordResponse = {
   isSystemRecord?: boolean;
 };
 export type CreateDnsRecordModel = {
-  cdnId: number;
+  dnsHostId?: number;
   name: string;
   type: string;
   ttl: string;
@@ -2969,7 +2833,7 @@ export type CreateDnsRecordModel = {
   authority?: string | null;
 };
 export type EditDnsRecordModel = {
-  cdnId: number;
+  dnsHostId?: number;
   name: string;
   type: string;
   ttl: string;
@@ -3220,8 +3084,8 @@ export type KubernetesNodeListResponse = {
   status?: string | null;
   kubernetesNodeType?: string | null;
   kubernetesNodeTypeId?: number;
-  productTypeId?: number;
-  productType?: string | null;
+  productId?: number;
+  product?: string | null;
   hostId?: number;
   statusId?: number;
   ip?: string | null;
@@ -3516,8 +3380,8 @@ export type GetVmResponse = {
   operatingSystem?: string | null;
   powerStatus?: string | null;
   networkStatus?: string | null;
-  isCluster: boolean;
-  isMaster: boolean;
+  isCluster?: boolean;
+  isMaster?: boolean;
 };
 export type CreateVmModel = {
   name: string;
@@ -3578,6 +3442,7 @@ export type EditVmProject = {
 };
 export type VmSnapshotResponse = {
   id?: number;
+  parentId?: number | null;
   name?: string | null;
   isActive?: boolean;
   isCreated?: boolean;
@@ -3697,37 +3562,26 @@ export const {
   useGetApiMyBareMetalImageListByDatacenterIdQuery,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
-  useGetApiMyCdnAnalyticGetByCdnIdAndPeriodIdQuery,
-  useGetApiMyCdnApiGatewayListByCdnIdQuery,
-  useGetApiMyCdnApiGatewayGetByIdQuery,
-  usePostApiMyCdnApiGatewayCreateMutation,
-  usePutApiMyCdnApiGatewayEditMutation,
-  useDeleteApiMyCdnApiGatewayDeleteByIdMutation,
-  useGetApiMyCdnClientCertGetByCdnIdQuery,
-  useGetApiMyCdnClientCertGetUserCertByCdnIdQuery,
-  usePostApiMyCdnClientCertCreateUserCertMutation,
-  useGetApiMyCdnEdgeCertGetByCdnIdQuery,
-  useGetApiMyCdnEdgeCertGetUserCertByCdnIdQuery,
+  useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery,
+  useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
+  useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery,
   usePostApiMyCdnEdgeCertCreateMutation,
   usePostApiMyCdnEdgeCertCreateUserCertMutation,
-  useGetApiMyCdnHostListQuery,
-  useGetApiMyCdnHostGetByIdQuery,
-  useGetApiMyCdnHostGetNsStatusByIdQuery,
-  useGetApiMyCdnHostOverviewByIdQuery,
-  usePostApiMyCdnHostCheckZoneMutation,
-  usePostApiMyCdnHostCreateMutation,
-  useDeleteApiMyCdnHostDeleteByIdMutation,
+  useGetApiMyCdnHostGetByDnsHostIdQuery,
   usePutApiMyCdnHostChangeCdnTypeMutation,
   usePutApiMyCdnHostChangeClientCertTypeMutation,
   usePutApiMyCdnHostChangeEdgeCertTypeMutation,
   usePutApiMyCdnHostChangeHstsMutation,
   usePutApiMyCdnHostChangeHttpsRedirectMutation,
   usePutApiMyCdnHostChangeNonWwwRedirectMutation,
-  useGetApiMyCdnLoadBalanceListByCdnIdQuery,
-  useGetApiMyCdnLoadBalanceGetByIdQuery,
-  usePostApiMyCdnLoadBalanceCreateMutation,
-  usePutApiMyCdnLoadBalanceEditMutation,
-  useDeleteApiMyCdnLoadBalanceDeleteByIdMutation,
+  useGetApiMyCdnOriginCertGetByDnsHostIdQuery,
+  useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery,
+  usePostApiMyCdnOriginCertCreateUserCertMutation,
+  useGetApiMyCdnRouteListByDnsHostIdQuery,
+  useGetApiMyCdnRouteGetByIdQuery,
+  usePostApiMyCdnRouteCreateMutation,
+  usePutApiMyCdnRouteEditMutation,
+  useDeleteApiMyCdnRouteDeleteByIdMutation,
   useGetApiMyColocationHostListQuery,
   useGetApiMyColocationHostGetByIdQuery,
   usePostApiMyColocationHostCreateMutation,
@@ -3738,7 +3592,6 @@ export const {
   useGetApiMyPortalCustomerBillListQuery,
   useGetApiMyPortalCustomerBillShortListQuery,
   useGetApiMyPortalCustomerBillGetByIdQuery,
-  useGetApiMyPortalCustomerBillGetCustomerProductByCustomerBillIdAndCustomerProductIdQuery,
   useGetApiMyPortalCustomerBillDownloadByIdQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
   useGetApiMyPortalCustomerProductShortListQuery,
@@ -3751,12 +3604,18 @@ export const {
   useGetApiMyDatacenterListQuery,
   useGetApiMyDatacenterIpListByIdQuery,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,
-  useGetApiMyCdnDnsRecordListByCdnIdQuery,
-  useGetApiMyCdnDnsRecordGetByIdQuery,
-  usePostApiMyCdnDnsRecordCreateMutation,
-  usePutApiMyCdnDnsRecordEditMutation,
-  useDeleteApiMyCdnDnsRecordDeleteByIdMutation,
-  usePutApiMyCdnDnsRecordChangeProxyStatusByIdMutation,
+  useGetApiMyDnsHostListQuery,
+  useGetApiMyDnsHostGetByIdQuery,
+  useGetApiMyDnsHostGetNsStatusByIdQuery,
+  usePostApiMyDnsHostCheckZoneMutation,
+  usePostApiMyDnsHostCreateMutation,
+  useDeleteApiMyDnsHostDeleteByIdMutation,
+  useGetApiMyDnsRecordListByDnsHostIdQuery,
+  useGetApiMyDnsRecordGetByIdQuery,
+  usePostApiMyDnsRecordCreateMutation,
+  usePutApiMyDnsRecordEditMutation,
+  useDeleteApiMyDnsRecordDeleteByIdMutation,
+  usePutApiMyDnsRecordChangeProxyStatusByIdMutation,
   useGetApiMyDomainHostListQuery,
   useGetApiMyDomainHostGetByIdQuery,
   useGetApiMyDomainHostGetStatusByIdQuery,

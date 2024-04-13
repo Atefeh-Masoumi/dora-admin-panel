@@ -20,7 +20,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { id: serverId } = useParams();
 
-  const { data, isLoading } = useGetApiMyStorageHostGetByIdQuery({
+  const { data } = useGetApiMyStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
 

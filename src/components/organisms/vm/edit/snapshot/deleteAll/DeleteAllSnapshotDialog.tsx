@@ -1,31 +1,31 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiMyKubernetesNodeDeleteByIdMutation } from "src/app/services/api.generated";
+import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation } from "src/app/services/api.generated";
 
-type DeleteKubernetesNodeDialogPropsType = {
+type DeleteAllSnapshotsDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  nodeId: number;
+  id: number;
 };
 
-export const DeleteKubernetesNodeDialog: FC<
-  DeleteKubernetesNodeDialogPropsType
-> = ({ openDialog, handleClose, nodeId }) => {
+export const DeleteAllSnapshotsDialog: FC<
+  DeleteAllSnapshotsDialogPropsType
+> = ({ openDialog, handleClose, id }) => {
   const onClose = () => handleClose();
+  const [deleteAllSnapShots, { isLoading }] =
+    useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation();
 
-  const [deleteKubernetesNode, { isLoading }] =
-    usePutApiMyKubernetesNodeDeleteByIdMutation();
-
-  const submit = () => {
-    if (!nodeId) return;
-    deleteKubernetesNode({
-      id: nodeId,
-    }).then((res) => {
-      handleClose();
-    });
-  };
+  const submit = () =>
+    deleteAllSnapShots({ vmHostId: id })
+      .unwrap()
+      .then(() => {
+        toast.success("تمام snapshot ها بعد از بررسی حذف خواهند شد");
+        handleClose();
+      })
+      .catch((err) => {});
 
   return (
     <Dialog
@@ -39,10 +39,10 @@ export const DeleteKubernetesNodeDialog: FC<
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف این نود سرویس کوبرنتیز مطمئن هستید؟
+            آیا از حذف تمام Snapshot ها مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
-            در صورت حذف نود، امکان بازگرداندن آن وجود ندارد
+            در صورت تایید حذف، امکان بازگشت وجود ندارد
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="end" spacing={1}>

@@ -6,7 +6,10 @@ import { SelectDataCenter } from "src/components/organisms/storage/add/steps/Sel
 import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
-import { usePostApiMyStorageHostCreateMutation } from "src/app/services/api.generated";
+import {
+  useGetApiMyStorageHostListQuery,
+  usePostApiMyStorageHostCreateMutation,
+} from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 
@@ -20,6 +23,8 @@ const AddStorageService: FC = () => {
 
   const [createStorageService, { isLoading }] =
     usePostApiMyStorageHostCreateMutation();
+
+  const { refetch } = useGetApiMyStorageHostListQuery();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -53,9 +58,10 @@ const AddStorageService: FC = () => {
         },
       })
         .unwrap()
-        .then((res) => {
+        .then(() => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
           navigate("/storage");
+          refetch();
         });
     }
   };

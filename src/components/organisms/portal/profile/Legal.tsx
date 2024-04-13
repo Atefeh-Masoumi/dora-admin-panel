@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Form, Formik } from "formik";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -26,7 +26,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
   const { data: customerData } = useGetApiMyPortalCustomerGetQuery();
   const { data: profileInfo } = useGetApiMyPortalProfileGetQuery();
 
-  // const isLegal = useMemo(() => !!profileInfo?.isLegal, [profileInfo?.isLegal]);
+  const isLegal = useMemo(() => !!profileInfo?.isLegal, [profileInfo?.isLegal]);
 
   const initialValues = {
     name: customerData?.name || "",

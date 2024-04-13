@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { useGetApiMyCdnClientCertGetByCdnIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnOriginCertGetByDnsHostIdQuery } from "src/app/services/api.generated";
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
@@ -10,11 +10,10 @@ export const CdnClientCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
-  const { data: edgeCert, isLoading } = useGetApiMyCdnClientCertGetByCdnIdQuery(
-    {
-      cdnId,
-    }
-  );
+  const { data: edgeCert, isLoading } =
+    useGetApiMyCdnOriginCertGetByDnsHostIdQuery({
+      dnsHostId: cdnId,
+    });
 
   return (
     <Stack bgcolor="white" borderRadius={2} p={2} width="100%">

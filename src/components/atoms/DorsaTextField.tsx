@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 type DorsaTextFieldProps = {
   mode?: "white" | "black";
   error?: boolean;
+  password?: boolean;
 };
 
 export const DorsaTextField = styled(TextField)<DorsaTextFieldProps>(

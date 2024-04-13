@@ -9,11 +9,9 @@ import {
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
-import { Navigate, useParams } from "react-router";
+import { Navigate, useParams, useNavigate } from "react-router-dom"; // Modified import
 import { EditStorageContext } from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
-
-// import { ServiceUser } from "src/components/organisms/storage/edit/ServiceUsers";
 import AccessKeyList from "src/components/organisms/storage/edit/AccessKeyList";
 import { SelectConfig } from "src/components/organisms/storage/edit/SelectConfig";
 
@@ -55,6 +53,7 @@ type EditStoragePropsType = {};
 const EditRabbitService: FC<EditStoragePropsType> = () => {
   const { setServerId } = useContext(EditStorageContext);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -62,10 +61,17 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
     }
   }, [id, setServerId]);
 
-  const [section, setSection] = useState(0);
+  const [section, setSection] = useState(() => {
+    const initialSection = new URLSearchParams(window.location.search).get(
+      "section"
+    );
+    return initialSection ? parseInt(initialSection, 10) : 0;
+  });
 
-  const handleChange = (_: SyntheticEvent, newValue: number) =>
+  const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
+    navigate(`?section=${newValue}`, { replace: true });
+  };
 
   const tabArray = ["مشخصات سرویس", "لیست کلیدهای دسترسی", "تغییر مشخصات"];
 

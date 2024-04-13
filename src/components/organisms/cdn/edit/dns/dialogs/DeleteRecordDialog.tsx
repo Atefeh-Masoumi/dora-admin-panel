@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyCdnDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
+import { useDeleteApiMyDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
 
 type DeleteRecordDialogPropsType = {
   id: number;
@@ -19,7 +19,7 @@ export const DeleteRecordDialog: FC<DeleteRecordDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [deleteRecord, { isLoading }] =
-    useDeleteApiMyCdnDnsRecordDeleteByIdMutation();
+    useDeleteApiMyDnsRecordDeleteByIdMutation();
 
   const submit = () =>
     deleteRecord({ id })

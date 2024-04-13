@@ -7,8 +7,8 @@ import { SelectDomain } from "src/components/organisms/cdn/add/steps/SelectDomai
 import { RecordsList } from "src/components/organisms/cdn/add/steps/RecordsList";
 import { AddZoneStepper } from "src/components/organisms/cdn/add/AddStepper";
 import {
-  usePostApiMyCdnHostCheckZoneMutation,
-  usePostApiMyCdnHostCreateMutation,
+  usePostApiMyDnsHostCheckZoneMutation,
+  usePostApiMyDnsHostCreateMutation,
 } from "src/app/services/api.generated";
 import {
   AddZoneContext,
@@ -28,9 +28,9 @@ const AddZone: FC = () => {
     setStep((step - 1) as addZoneStepsType);
   };
 
-  const [checkZone, { isLoading }] = usePostApiMyCdnHostCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostApiMyDnsHostCheckZoneMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
-    usePostApiMyCdnHostCreateMutation();
+    usePostApiMyDnsHostCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {
@@ -44,7 +44,7 @@ const AddZone: FC = () => {
     }
 
     createCdn({
-      createCdnModel: {
+      createDnsModel: {
         zoneName: domainName,
       },
     })
@@ -52,7 +52,8 @@ const AddZone: FC = () => {
       .then((res) => {
         toast.success("زون با موفقیت ایجاد شد");
         navigate("/cdn");
-      });
+      })
+      .catch((err) => {});
   };
 
   const goNextStep = () => {
@@ -62,21 +63,21 @@ const AddZone: FC = () => {
           toast.error("به علت عدم تائید قوانین امکان ثبت وجود ندارد.");
           return;
         }
+        if (!domainName || domainName.length < 3) {
+          toast.error("خطا در تکمیل اطلاعات");
+          return;
+        }
         checkZone({
-          checkCdnModel: {
+          checkDnsModel: {
             zoneName: domainName,
           },
         })
           .unwrap()
           .then(() => {
             toast.success("دامنه تایید شد");
+            domainName && setStep(2);
           })
-          .catch((res) => {
-            if (res.status === 401 || res.status === 404)
-              toast.error("خطای سرور");
-            else toast.error(res.data[""][0]);
-          });
-        domainName && setStep(2);
+          .catch(() => {});
         break;
       case 2:
         domainName && submitHandler();

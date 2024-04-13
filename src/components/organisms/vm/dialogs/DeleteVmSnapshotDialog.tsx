@@ -24,7 +24,7 @@ export const DeleteVmSnapshotDialog: FC<DeleteVmSnapshotDialogPropsType> = ({
     deleteItem({ id })
       .unwrap()
       .then(() => {
-        toast.success("snapshot مورد نظر با موفقیت حذف شد");
+        toast.success("حدف snapshot مورد نظر در حال بررسی است");
         handleClose();
       })
       .catch((err) => {});

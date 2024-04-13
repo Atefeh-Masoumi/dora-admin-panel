@@ -46,9 +46,11 @@ export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
     usePutApiMyCdnHostChangeCdnTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
-    changeCdnType({ changeCdnTypeModel: { id, zoneTypeId } }).then(() => {
-      toast.success("بروزرسانی پروتکل ارتباطی انجام شد");
-    });
+    changeCdnType({ changeCdnTypeModel: { dnsHostId: id, zoneTypeId } }).then(
+      () => {
+        toast.success("بروزرسانی پروتکل ارتباطی انجام شد");
+      }
+    );
   };
 
   return (

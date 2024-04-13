@@ -7,20 +7,19 @@ import { AxiosRequestConfig } from "axios";
 
 const tags = [
   "Profile",
+  "NotificationStatus",
   "Notification",
-  "Order",
-  "Orders",
-  "ZoneData",
+  "DnsHost",
+  "DNSRecordSetting",
   "EditRecordDialog",
   "ProxyStatus",
-  "DNSRecordSetting",
-  "LoadBalance",
-  "SslSetting",
+  "CdnHost",
+  "CdnRoute",
+  "CdnCert",
   "SupportItems",
   "Support",
   "VmHost",
   "Kubernetes",
-  "NotificationStatus",
 ];
 
 export const api = generatedApi
@@ -52,28 +51,6 @@ export const api = generatedApi
       },
       postApiMyAccountTwoFactorLogin: {
         invalidatesTags: () => tags,
-      },
-      // ============================== Kubernetes ============================== //
-      getApiMyKubernetesHostList: {
-        providesTags: () => ["Kubernetes"],
-      },
-      getApiMyKubernetesNodeListByKubernetesHostId: {
-        providesTags: () => ["Kubernetes"],
-      },
-      getApiMyKubernetesHostGetById: {
-        providesTags: () => ["Kubernetes"],
-      },
-      putApiMyKubernetesNodeDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
-      },
-      postApiMyKubernetesNodeCreate: {
-        invalidatesTags: () => ["Kubernetes"],
-      },
-      postApiMyKubernetesHostCreate: {
-        invalidatesTags: () => ["Kubernetes"],
-      },
-      deleteApiMyKubernetesHostDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
       },
       // ============================== NotificationStatus ============================== //
       getApiMyPortalProfileGetNotificationStatus: {
@@ -136,76 +113,87 @@ export const api = generatedApi
       postApiMyPortalIssueItemCreate: {
         invalidatesTags: () => ["Support"],
       },
-      // ============================== EditRecordDialog ============================== //
-      getApiMyCdnDnsRecordGetById: {
-        providesTags: () => ["EditRecordDialog"],
+      // ============================== DnsHost ============================== //
+      getApiMyDnsHostList: {
+        providesTags: () => ["DnsHost"],
       },
-      putApiMyCdnDnsRecordChangeProxyStatusById: {
-        invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
+      postApiMyDnsHostCreate: {
+        invalidatesTags: () => ["DnsHost"],
       },
-      // ============================== DNSRecordSetting ============================== //
-      getApiMyCdnDnsRecordListByCdnId: {
+      getApiMyDnsHostGetById: {
+        providesTags: () => ["DnsHost"],
+      },
+      deleteApiMyDnsHostDeleteById: {
+        invalidatesTags: () => ["DnsHost"],
+      },
+      getApiMyDnsRecordListByDnsHostId: {
         providesTags: () => ["DNSRecordSetting", "ProxyStatus"],
       },
-      deleteApiMyCdnDnsRecordDeleteById: {
+      getApiMyDnsRecordGetById: {
+        providesTags: () => ["EditRecordDialog"],
+      },
+      postApiMyDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      putApiMyCdnDnsRecordEdit: {
+      putApiMyDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      postApiMyCdnDnsRecordCreate: {
+      putApiMyDnsRecordChangeProxyStatusById: {
+        invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
+      },
+      deleteApiMyDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
-      // ============================== ZoneData ============================== //
-      putApiMyCdnHostChangeCdnType: {
-        invalidatesTags: () => ["ZoneData"],
+      // ============================== CdnHost ============================== //
+      getApiMyCdnHostGetByDnsHostId: {
+        providesTags: () => ["CdnHost"],
       },
-      getApiMyCdnHostGetById: {
-        providesTags: () => ["ZoneData"],
+      putApiMyCdnHostChangeCdnType: {
+        invalidatesTags: () => ["CdnHost"],
       },
       putApiMyCdnHostChangeHsts: {
-        invalidatesTags: () => ["ZoneData"],
+        invalidatesTags: () => ["CdnHost"],
       },
       putApiMyCdnHostChangeHttpsRedirect: {
-        invalidatesTags: () => ["ZoneData"],
+        invalidatesTags: () => ["CdnHost"],
       },
       putApiMyCdnHostChangeNonWwwRedirect: {
-        invalidatesTags: () => ["ZoneData"],
+        invalidatesTags: () => ["CdnHost"],
       },
       putApiMyCdnHostChangeEdgeCertType: {
-        invalidatesTags: () => ["ZoneData"],
+        invalidatesTags: () => ["CdnHost"],
       },
       putApiMyCdnHostChangeClientCertType: {
-        invalidatesTags: () => ["ZoneData"],
+        invalidatesTags: () => ["CdnHost"],
       },
-      // ============================== LoadBalance ============================== //
-      getApiMyCdnLoadBalanceListByCdnId: {
-        providesTags: () => ["LoadBalance"],
+      // ============================== CdnRoute ============================== //
+      getApiMyCdnRouteListByDnsHostId: {
+        providesTags: () => ["CdnRoute"],
       },
-      deleteApiMyCdnLoadBalanceDeleteById: {
-        invalidatesTags: () => ["LoadBalance"],
+      deleteApiMyCdnRouteDeleteById: {
+        invalidatesTags: () => ["CdnRoute"],
       },
-      postApiMyCdnLoadBalanceCreate: {
-        invalidatesTags: () => ["LoadBalance"],
+      postApiMyCdnRouteCreate: {
+        invalidatesTags: () => ["CdnRoute"],
       },
-      putApiMyCdnLoadBalanceEdit: {
-        invalidatesTags: () => ["LoadBalance"],
+      putApiMyCdnRouteEdit: {
+        invalidatesTags: () => ["CdnRoute"],
       },
-      // ============================== SslSetting ============================== //
-      getApiMyCdnEdgeCertGetByCdnId: {
-        providesTags: () => ["SslSetting"],
+      // ============================== CdnCert ============================== //
+      getApiMyCdnEdgeCertGetByDnsHostId: {
+        providesTags: () => ["CdnCert"],
       },
-      getApiMyCdnEdgeCertGetUserCertByCdnId: {
-        providesTags: () => ["SslSetting"],
-      },
-      getApiMyCdnClientCertGetByCdnId: {
-        providesTags: () => ["SslSetting"],
+      getApiMyCdnEdgeCertGetUserCertByDnsHostId: {
+        providesTags: () => ["CdnCert"],
       },
       postApiMyCdnEdgeCertCreate: {
-        invalidatesTags: () => ["SslSetting"],
+        invalidatesTags: () => ["CdnCert"],
       },
       postApiMyCdnEdgeCertCreateUserCert: {
-        invalidatesTags: () => ["SslSetting"],
+        invalidatesTags: () => ["CdnCert"],
+      },
+      getApiMyCdnOriginCertGetByDnsHostId: {
+        providesTags: () => ["CdnCert"],
       },
       // ============================== VmHost ============================== //
       getApiMyVmHostListByVmProjectId: {
@@ -271,6 +259,28 @@ export const api = generatedApi
       putApiMyVmHostRebootById: {
         invalidatesTags: () => ["VmHost"],
       },
+      // ============================== Kubernetes ============================== //
+      getApiMyKubernetesHostList: {
+        providesTags: () => ["Kubernetes"],
+      },
+      getApiMyKubernetesNodeListByKubernetesHostId: {
+        providesTags: () => ["Kubernetes"],
+      },
+      getApiMyKubernetesHostGetById: {
+        providesTags: () => ["Kubernetes"],
+      },
+      putApiMyKubernetesNodeDeleteById: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      postApiMyKubernetesNodeCreate: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      postApiMyKubernetesHostCreate: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
+      deleteApiMyKubernetesHostDeleteById: {
+        invalidatesTags: () => ["Kubernetes"],
+      },
     },
   });
 
@@ -279,8 +289,8 @@ export const {
   useLazyGetApiMyDatacenterIpListByIdQuery,
   useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
-  useLazyGetApiMyCdnLoadBalanceGetByIdQuery,
-  useLazyGetApiMyCdnDnsRecordGetByIdQuery,
+  useLazyGetApiMyCdnRouteGetByIdQuery,
+  useLazyGetApiMyDnsRecordGetByIdQuery,
   useLazyGetApiMyPortalPaymentGetByIdQuery,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,

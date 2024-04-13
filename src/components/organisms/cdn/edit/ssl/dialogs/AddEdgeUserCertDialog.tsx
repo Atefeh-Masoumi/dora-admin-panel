@@ -37,12 +37,12 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
-    { cdnId, keyPem, certPem },
+    { dnsHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!cdnId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnEdgeUserCertModel: { cdnId, keyPem, certPem },
+      createCdnEdgeUserCertModel: { dnsHostId: cdnId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {
