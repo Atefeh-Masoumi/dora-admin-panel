@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmHostListQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -8,21 +8,11 @@ import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
-import { useAppSelector } from "src/app/hooks";
 
 type VmManagementPropsType = {};
 
 const VmManagement: FC<VmManagementPropsType> = () => {
-  const selectVmProjects = useAppSelector(
-    (store) => store.vmProject.selectedVmProject
-  );
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (selectVmProjects) return;
-    navigate("/vm");
-  }, [navigate, selectVmProjects]);
 
   const [search, setSearch] = useState("");
 
@@ -30,12 +20,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     data: vmList,
     isLoading: getVmListLoading,
     refetch,
-  } = useGetApiMyVmHostListByVmProjectIdQuery(
-    {
-      vmProjectId: selectVmProjects?.id || 0,
-    },
-    { skip: !selectVmProjects?.id }
-  );
+  } = useGetApiMyVmHostListQuery();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {

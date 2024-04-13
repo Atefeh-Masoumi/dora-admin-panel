@@ -57,10 +57,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       text: "سرور های ابری",
       Icon: VmSvg,
       link: "/vm",
-      subList: [
-        { title: "مدیریت پروژه ها", link: "/vm" },
-        { title: "مدیریت سرورها", link: "/vm/list" },
-      ],
+      subList: [{ title: "مدیریت سرورها", link: "/vm" }],
     },
     {
       title: "Kubernetes",

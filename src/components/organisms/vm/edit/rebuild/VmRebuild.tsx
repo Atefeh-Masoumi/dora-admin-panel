@@ -36,7 +36,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         .unwrap()
         .then(() => {
           toast.success("درخواست با موفقیت انجام شد");
-          navigate("/vm/list");
+          navigate("/vm");
         });
       return;
     }

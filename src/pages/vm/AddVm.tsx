@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
@@ -11,15 +11,8 @@ import { passwordValidationRegex } from "src/utils/regexUtils";
 import { usePostApiMyVmHostCreateMutation } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
-import { useAppSelector } from "src/app/hooks";
 
 const AddVm: FC = () => {
-  const selectVmProjects = useAppSelector(
-    (store) => store.vmProject.selectedVmProject
-  );
-
-  const vmProjectId = selectVmProjects?.id || 0;
-
   const { dataCenter, osVersion, serverConfig, serverName, serverPassword } =
     useContext(AddServerContext);
 
@@ -63,7 +56,6 @@ const AddVm: FC = () => {
           imageId: osVersion?.id || 0,
           customerProductTypeId: paymentType!,
           isPredefined: true,
-          vmProjectId,
           productBundleId: serverConfig?.id || 0,
           cpu: null,
           memory: null,
@@ -73,15 +65,12 @@ const AddVm: FC = () => {
         .unwrap()
         .then((res) => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
-          navigate("/vm/list");
+          navigate("/vm");
         })
         .catch((err) => {});
     }
   };
 
-  if (!selectVmProjects) {
-    return <Navigate to="/vm" />;
-  }
   return (
     <>
       <Typography

@@ -73,13 +73,6 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     setServerId(Number(id));
   }, [id, setServerId]);
 
-  const [section, setSection] = useState(() => {
-    const initialSection = new URLSearchParams(window.location.search).get(
-      "section"
-    );
-    return initialSection ? parseInt(initialSection, 10) : 0;
-  });
-
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
     navigate(`?section=${newValue}`, { replace: true });
@@ -101,7 +94,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     Snapshot,
   ];
 
-  if (!id) return <Navigate to="/vm/list" />;
+  if (!id) return <Navigate to="/vm" />;
 
   let hiddenTabs: number[] = [];
 

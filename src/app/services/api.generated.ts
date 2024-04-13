@@ -1185,13 +1185,11 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyVmHostListByVmProjectId: build.query<
-      GetApiMyVmHostListByVmProjectIdApiResponse,
-      GetApiMyVmHostListByVmProjectIdApiArg
+    getApiMyVmHostList: build.query<
+      GetApiMyVmHostListApiResponse,
+      GetApiMyVmHostListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/list/${queryArg.vmProjectId}`,
-      }),
+      query: () => ({ url: `/api/my/vm/host/list` }),
     }),
     getApiMyVmHostGetById: build.query<
       GetApiMyVmHostGetByIdApiResponse,
@@ -1343,41 +1341,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/kms/get/${queryArg.id}/${queryArg.typeId}`,
-      }),
-    }),
-    getApiMyVmProjectList: build.query<
-      GetApiMyVmProjectListApiResponse,
-      GetApiMyVmProjectListApiArg
-    >({
-      query: () => ({ url: `/api/my/vm/project/list` }),
-    }),
-    postApiMyVmProjectCreate: build.mutation<
-      PostApiMyVmProjectCreateApiResponse,
-      PostApiMyVmProjectCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/project/create`,
-        method: "POST",
-        body: queryArg.createVmProject,
-      }),
-    }),
-    putApiMyVmProjectEdit: build.mutation<
-      PutApiMyVmProjectEditApiResponse,
-      PutApiMyVmProjectEditApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/project/edit`,
-        method: "PUT",
-        body: queryArg.editVmProject,
-      }),
-    }),
-    deleteApiMyVmProjectDeleteById: build.mutation<
-      DeleteApiMyVmProjectDeleteByIdApiResponse,
-      DeleteApiMyVmProjectDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/project/delete/${queryArg.id}`,
-        method: "DELETE",
       }),
     }),
     getApiMyVmSnapshotListByVmId: build.query<
@@ -1877,7 +1840,7 @@ export type GetApiMyDomainHostGetByIdApiArg = {
   id: number;
 };
 export type GetApiMyDomainHostGetStatusByIdApiResponse =
-  /** status 200 Success */ GetDomainResponse;
+  /** status 200 Success */ string;
 export type GetApiMyDomainHostGetStatusByIdApiArg = {
   id: number;
 };
@@ -2203,11 +2166,9 @@ export type DeleteApiMyStorageUserDeleteByIdApiResponse = unknown;
 export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVmHostListByVmProjectIdApiResponse =
+export type GetApiMyVmHostListApiResponse =
   /** status 200 Success */ VmListResponse[];
-export type GetApiMyVmHostListByVmProjectIdApiArg = {
-  vmProjectId: number;
-};
+export type GetApiMyVmHostListApiArg = void;
 export type GetApiMyVmHostGetByIdApiResponse =
   /** status 200 Success */ GetVmResponse;
 export type GetApiMyVmHostGetByIdApiArg = {
@@ -2280,21 +2241,6 @@ export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
 export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
   id: number;
   typeId: number;
-};
-export type GetApiMyVmProjectListApiResponse =
-  /** status 200 Success */ VmProjectList[];
-export type GetApiMyVmProjectListApiArg = void;
-export type PostApiMyVmProjectCreateApiResponse = unknown;
-export type PostApiMyVmProjectCreateApiArg = {
-  createVmProject: CreateVmProject;
-};
-export type PutApiMyVmProjectEditApiResponse = unknown;
-export type PutApiMyVmProjectEditApiArg = {
-  editVmProject: EditVmProject;
-};
-export type DeleteApiMyVmProjectDeleteByIdApiResponse = unknown;
-export type DeleteApiMyVmProjectDeleteByIdApiArg = {
-  id: number;
 };
 export type GetApiMyVmSnapshotListByVmIdApiResponse =
   /** status 200 Success */ VmSnapshotResponse[];
@@ -3089,7 +3035,6 @@ export type KubernetesNodeListResponse = {
   hostId?: number;
   statusId?: number;
   ip?: string | null;
-  vmProjectId?: number;
 };
 export type CreateKubernetesNodeModel = {
   kubernetesHostId: number;
@@ -3362,8 +3307,6 @@ export type VmListResponse = {
   datacenter?: string | null;
   operatingSystem?: string | null;
   ipv4?: string | null;
-  vmProjectId?: number | null;
-  vmProjectName?: string | null;
   createDate?: string;
 };
 export type GetVmResponse = {
@@ -3391,7 +3334,6 @@ export type CreateVmModel = {
   imageId: number;
   customerProductTypeId: number;
   isPredefined: boolean;
-  vmProjectId: number;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -3426,19 +3368,6 @@ export type MountModel = {
 export type UnmountModel = {
   id?: number;
   vmId?: number;
-};
-export type VmProjectList = {
-  id?: number;
-  name?: string | null;
-  vmCount?: number;
-  createDate?: string;
-};
-export type CreateVmProject = {
-  name: string;
-};
-export type EditVmProject = {
-  name: string;
-  id: number;
 };
 export type VmSnapshotResponse = {
   id?: number;
@@ -3692,7 +3621,7 @@ export const {
   useGetApiMyStorageUserListByStorageHostIdQuery,
   usePostApiMyStorageUserCreateMutation,
   useDeleteApiMyStorageUserDeleteByIdMutation,
-  useGetApiMyVmHostListByVmProjectIdQuery,
+  useGetApiMyVmHostListQuery,
   useGetApiMyVmHostGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
   usePutApiMyVmHostEditMutation,
@@ -3710,10 +3639,6 @@ export const {
   usePutApiMyVmIsoMountMutation,
   usePutApiMyVmIsoUnmountMutation,
   useGetApiMyVmKmsGetByIdAndTypeIdQuery,
-  useGetApiMyVmProjectListQuery,
-  usePostApiMyVmProjectCreateMutation,
-  usePutApiMyVmProjectEditMutation,
-  useDeleteApiMyVmProjectDeleteByIdMutation,
   useGetApiMyVmSnapshotListByVmIdQuery,
   useGetApiMyVmSnapshotGetByIdQuery,
   usePostApiMyVmSnapshotCreateMutation,
@@ -3739,3 +3664,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+
