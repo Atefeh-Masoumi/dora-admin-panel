@@ -3516,6 +3516,8 @@ export type GetVmResponse = {
   operatingSystem?: string | null;
   powerStatus?: string | null;
   networkStatus?: string | null;
+  isCluster: boolean;
+  isMaster: boolean;
 };
 export type CreateVmModel = {
   name: string;
@@ -3878,4 +3880,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

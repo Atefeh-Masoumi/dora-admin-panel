@@ -6,7 +6,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { Tabs, Stack, Box } from "@mui/material";
+import { Tabs, Stack, Box, CircularProgress } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
@@ -16,6 +16,8 @@ import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
+import { VM_ENUM } from "src/types/vmEnum";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -53,15 +55,22 @@ const a11yProps = (index: number) => {
 type EditCloudServerPropsType = {};
 
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
+  const [section, setSection] = useState(0);
   const { setServerId } = useContext(EditServerContext);
   const { id } = useParams();
+
+  const {
+    data: vmData,
+    isLoading: getVmDataLoading,
+    isFetching: getVmDataFetching,
+  } = useGetApiMyVmHostGetByIdQuery({
+    id: Number(id)!,
+  });
 
   useEffect(() => {
     if (!id) return;
     setServerId(Number(id));
   }, [id, setServerId]);
-
-  const [section, setSection] = useState(0);
 
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
@@ -77,12 +86,30 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const tabPanelArray = [
     VmInfo,
     VmIpAddress,
-    VmRebuild,
     ServerConfig,
+    VmRebuild,
     Snapshot,
   ];
 
   if (!id) return <Navigate to="/vm/list" />;
+
+  let hiddenTabs: number[] = [];
+
+  switch (true) {
+    case vmData?.isCluster && vmData?.isMaster:
+      hiddenTabs = [VM_ENUM.VM_REBUILD, VM_ENUM.SNAPSHOT];
+      break;
+    case vmData?.isCluster && !vmData?.isMaster:
+      hiddenTabs = [
+        VM_ENUM.VM_REBUILD,
+        VM_ENUM.SNAPSHOT,
+        VM_ENUM.SERVER_CONFIG,
+      ];
+      break;
+    default:
+      hiddenTabs = [];
+      break;
+  }
 
   return (
     <Stack
@@ -108,9 +135,26 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
           value={section}
           onChange={handleChange}
         >
-          {tabArray.map((label, index) => (
-            <DorsaTab {...a11yProps(index)} label={label} key={index} />
-          ))}
+          {getVmDataLoading ? (
+            <CircularProgress
+              size={20}
+              sx={{
+                margin: "10px auto",
+              }}
+            />
+          ) : (
+            tabArray.map(
+              (label, index) =>
+                !hiddenTabs.includes(index) && (
+                  <DorsaTab
+                    {...a11yProps(index)}
+                    label={label}
+                    key={index}
+                    onClick={() => setSection(index)}
+                  />
+                )
+            )
+          )}
         </Tabs>
       </Box>
       {id &&
