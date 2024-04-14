@@ -3,13 +3,19 @@ import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
+import {
+  useGetApiMyPortalProductBundleListByProductIdQuery,
+  useGetApiMyPortalProductBundleStorageListQuery,
+} from "src/app/services/api.generated";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyPortalProductBundleStorageListQuery();
+    useGetApiMyPortalProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
+    });
 
   const table = useMemo(
     () => (
