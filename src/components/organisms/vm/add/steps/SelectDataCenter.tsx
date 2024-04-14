@@ -27,7 +27,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
       <Stack
         justifyContent="center"
         direction={{ xs: "column", sm: "row" }}
-        spacing={3}
+        spacing={2}
         sx={{ width: "100%" }}
       >
         {isLoading &&
