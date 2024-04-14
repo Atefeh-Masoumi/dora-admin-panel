@@ -4,12 +4,15 @@ import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/serv
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type SelectKuberConfigPropsType = {};
 
 export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
   const { data, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({ productId: 6 });
+    useGetApiMyPortalProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
+    });
 
   const configsList = useMemo(() => {
     if (!data) return [];
