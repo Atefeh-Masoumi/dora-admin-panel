@@ -23,6 +23,8 @@ import { captchaRegex } from "src/utils/regexUtils";
 
 const formInitialValues = { email: "", password: "" };
 
+
+
 const formValidation = yup.object().shape({
   email: emailValidator.required("ایمیل الزامیست!"),
   password: passwordValidator.required("گذرواژه الزامیست!"),

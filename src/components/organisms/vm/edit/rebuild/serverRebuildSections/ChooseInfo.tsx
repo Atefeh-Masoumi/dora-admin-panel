@@ -9,12 +9,26 @@ import {
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { FormikProps } from "formik";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  error: {
+    "& .MuiOutlinedInput-root.Mui-error": {
+      "& .MuiOutlinedInput-notchedOutline": {
+        border: "none", // Change the border color to red on error
+        backgroundColor: "rgba(110, 118, 138, 0.06)",
+      },
+    },
+  },
+});
 
 type ChooseInfoPropsType = {
   name: string;
   setName: Dispatch<SetStateAction<string>>;
   password: string;
   setPassword: Dispatch<SetStateAction<string>>;
+  formik: FormikProps<any>;
 };
 
 export const ChooseInfo: FC<ChooseInfoPropsType> = ({
@@ -22,6 +36,7 @@ export const ChooseInfo: FC<ChooseInfoPropsType> = ({
   setName,
   password,
   setPassword,
+  formik,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -30,35 +45,28 @@ export const ChooseInfo: FC<ChooseInfoPropsType> = ({
     event.preventDefault();
   };
 
-  const nameInputChangeHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setName(e.target.value);
-
-  const passwordInputChangeHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setPassword(e.target.value);
+  const classes = useStyles();
 
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center" my={4}>
       <DorsaTextField
-        type={showPassword ? "text" : "password"}
-        value={name}
-        onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
         label="نام سرور ابری (Server Name)"
         dir="ltr"
+        focused
+        {...formik.getFieldProps("serverName")}
+        error={Boolean(formik.errors.serverName && formik.touched.serverName)}
+        className={classes.error}
       />
       <DorsaTextField
         type={showPassword ? "text" : "password"}
-        value={password}
-        onChange={passwordInputChangeHandler}
         sx={{ minWidth: 300 }}
-        // label="رمز عبور سرور ابری (Password)" + `&nbsp`
         label={`رمز عبور سرور ابری (Password)`}
         dir="ltr"
-        InputLabelProps={{
-          style: { paddingRight: 14 },
-        }}
+        focused
+        {...formik.getFieldProps("password")}
+        error={Boolean(formik.errors.password && formik.touched.password)}
+        className={classes.error}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

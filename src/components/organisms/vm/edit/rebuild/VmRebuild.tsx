@@ -7,6 +7,9 @@ import { usePutApiMyVmHostRebuildMutation } from "src/app/services/api.generated
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { formikOnSubmitType } from "src/types/form.type";
 
 type VmRebuildSteps = 1 | 2;
 
@@ -43,10 +46,27 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     imageId && setStep(2);
   };
 
+  //formik
+  const formInitialValues = { serverName: "", password: "" };
+
+  const formValidation = yup.object().shape({
+    serverName: yup.string().required("نام سرور الزامیست!"),
+    password: yup.string().required("گذرواژه الزامیست!"),
+  });
+  const onSubmit: formikOnSubmitType<typeof formInitialValues> = () => {
+    
+  };
+
+  const formik = useFormik({
+    initialValues: formInitialValues,
+    validationSchema: formValidation,
+    onSubmit,
+  });
+
   return (
     <Paper
       elevation={0}
-      component={Stack}
+      component={Stack} 
       rowGap={2}
       sx={{ py: 5, px: { xs: 2, sm: 5 } }}
     >
@@ -64,6 +84,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
           setName={setName}
           password={password}
           setPassword={setPassword}
+          formik={formik}
         />
       )}
       <Stack alignItems="center" justifyContent="center">
