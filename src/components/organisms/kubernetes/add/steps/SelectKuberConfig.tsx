@@ -9,7 +9,7 @@ type SelectKuberConfigPropsType = {};
 
 export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
   const { data, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({ productId: 17 });
+    useGetApiMyPortalProductBundleListByProductIdQuery({ productId: 6 });
 
   const configsList = useMemo(() => {
     if (!data) return [];
