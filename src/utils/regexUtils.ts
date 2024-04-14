@@ -11,3 +11,5 @@ export const enWordNumAndSpaceRegex = /^[a-zA-Z0-9\s]+$/;
 
 export const passwordValidationRegex =
   /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+export const captchaRegex = /^[a-zA-Z0-9!@#]{6}$/;
+
