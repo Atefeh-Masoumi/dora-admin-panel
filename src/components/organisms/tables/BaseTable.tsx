@@ -22,8 +22,6 @@ import { visuallyHidden } from "@mui/utils";
 
 export type tableOrderType = "asc" | "desc";
 
-const defaultRowsPerPage = 10;
-
 type BaseTablePropsType = {
   rows: any[];
   struct: columnType[];
@@ -32,7 +30,7 @@ type BaseTablePropsType = {
   isLoading: boolean;
   initialOrder?: number;
   initialSortDirection?: 1 | -1;
-  RowsPerPage?: number;
+  rowsPerPage?: number;
 };
 
 export const BaseTable: FC<BaseTablePropsType> = ({
@@ -43,7 +41,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
   isLoading,
   initialOrder = -1,
   initialSortDirection = -1,
-  RowsPerPage,
+  rowsPerPage = 10,
 }) => {
   const [page, setPage] = useState(1);
   const [orderBy, setOrderBy] = useState<number>(initialOrder);
@@ -138,30 +136,18 @@ export const BaseTable: FC<BaseTablePropsType> = ({
                                 b[sortingColumn.id]
                               )
                           )
-                          .slice(
-                            (page - 1) * (rowsPerPage || defaultRowsPerPage),
-                            page * (rowsPerPage || defaultRowsPerPage)
-                          )
+                          .slice((page - 1) * rowsPerPage, page * rowsPerPage)
                           .map((row: any, index: number) => (
                             <RowComponent
-                              key={
-                                page * (rowsPerPage || defaultRowsPerPage) +
-                                index
-                              }
+                              key={page * rowsPerPage + index}
                               row={row}
                             />
                           ))
                       : rows
-                          .slice(
-                            (page - 1) * (rowsPerPage || defaultRowsPerPage),
-                            page * (rowsPerPage || defaultRowsPerPage)
-                          )
+                          .slice((page - 1) * rowsPerPage, page * rowsPerPage)
                           .map((row: any, index: number) => (
                             <RowComponent
-                              key={
-                                page * (rowsPerPage || defaultRowsPerPage) +
-                                index
-                              }
+                              key={page * rowsPerPage + index}
                               row={row}
                             />
                           ))}
@@ -175,16 +161,10 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               alignItems="center"
               py={1}
               spacing={3}
-              display={
-                rows.length <= (rowsPerPage || defaultRowsPerPage)
-                  ? "none"
-                  : "flex"
-              }
+              display={rows.length <= rowsPerPage ? "none" : "flex"}
             >
               <DorsaTablePagination
-                count={Math.ceil(
-                  rows.length / (rowsPerPage || defaultRowsPerPage)
-                )}
+                count={Math.ceil(rows.length / rowsPerPage)}
                 color="primary"
                 siblingCount={0}
                 shape="rounded"
@@ -194,7 +174,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               />
               <Typography color="rgba(110, 118, 138, 0.8)">
                 {rows.length} نتیجه ، صفحه {page} از
-                {Math.ceil(rows.length / (rowsPerPage || defaultRowsPerPage))}
+                {Math.ceil(rows.length / rowsPerPage)}
               </Typography>
             </Stack>
           </Stack>
