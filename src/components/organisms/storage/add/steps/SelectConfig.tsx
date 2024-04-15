@@ -12,10 +12,25 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data: configsList, isLoading } =
+  const { data, isLoading } =
     useGetApiMyPortalProductBundleListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
+
+  const configsList = useMemo(() => {
+    if (!data) return [];
+    return data.map(({ id, name, price, configurations }) => {
+      const disk =
+        configurations?.find((item) => item.name === "Disk")?.quantity || 0;
+
+      return {
+        id,
+        name,
+        disk,
+        price,
+      };
+    });
+  }, [data]);
 
   const table = useMemo(
     () => (

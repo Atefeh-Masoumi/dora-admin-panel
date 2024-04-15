@@ -89,8 +89,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const tabPanelArray = [
     VmInfo,
     VmIpAddress,
-    ServerConfig,
     VmRebuild,
+    ServerConfig,
     Snapshot,
   ];
 
@@ -100,14 +100,14 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   switch (true) {
     case vmData?.isCluster && vmData?.isMaster:
-      hiddenTabs = [VM_ENUM.VM_REBUILD, VM_ENUM.SNAPSHOT];
-      break;
-    case vmData?.isCluster && !vmData?.isMaster:
       hiddenTabs = [
         VM_ENUM.VM_REBUILD,
         VM_ENUM.SNAPSHOT,
         VM_ENUM.SERVER_CONFIG,
       ];
+      break;
+    case vmData?.isCluster && !vmData?.isMaster:
+      hiddenTabs = [VM_ENUM.VM_REBUILD, VM_ENUM.SNAPSHOT];
       break;
     default:
       hiddenTabs = [];
