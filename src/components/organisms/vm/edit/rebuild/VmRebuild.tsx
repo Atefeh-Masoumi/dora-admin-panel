@@ -26,26 +26,12 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildMutation();
 
   const submitHandler = () => {
-    if (step === 2) {
-      if (!serverId || !name || !password || !imageId) return;
-      rebuild({
-        rebuildVmModel: {
-          id: serverId,
-          name,
-          password,
-          imageId,
-        },
-      })
-        .unwrap()
-        .then(() => {
-          toast.success("درخواست با موفقیت انجام شد");
-          navigate("/vm");
-        });
-      return;
+    if (step === 1) {
+      imageId && setStep(2);
+    } else if (step === 2) {
+      formik.handleSubmit();
     }
-    imageId && setStep(2);
   };
-
   //formik
   const formInitialValues = { serverName: "", password: "" };
 
@@ -54,7 +40,30 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     password: yup.string().required("گذرواژه الزامیست!"),
   });
   const onSubmit: formikOnSubmitType<typeof formInitialValues> = () => {
-    
+    if (
+      !serverId ||
+      !formik.values.serverName ||
+      !formik.values.password ||
+      !imageId
+    )
+      return;
+    rebuild({
+      rebuildVmModel: {
+        id: serverId,
+        name: formik.values.serverName,
+        password: formik.values.password,
+        imageId,
+      },
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("درخواست با موفقیت انجام شد");
+        navigate("/vm");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
   };
 
   const formik = useFormik({
@@ -66,7 +75,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   return (
     <Paper
       elevation={0}
-      component={Stack} 
+      component={Stack}
       rowGap={2}
       sx={{ py: 5, px: { xs: 2, sm: 5 } }}
     >
