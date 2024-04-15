@@ -29,10 +29,7 @@ type OsDropDownType = {
 };
 
 export const SelectOS: FC<SelectOSPropsType> = () => {
-  const {
-    dataCenter,
-    setOsVersion: setOsImage, // this is for better naming convention
-  } = useContext(AddServerContext);
+  const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } =
     useGetApiMyVmImageListByDatacenterIdQuery({
@@ -220,13 +217,6 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                           ? palette.primary.main
                           : "rgba(110, 118, 138, 0.12)"
                       } !important`,
-                    "&:hover": {
-                      // bgcolor: "red",
-                      // display: "none",
-                    },
-                  },
-                  "&.MuiOutlinedInput-root:hover": {
-                    border: "0px",
                   },
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderBottomRightRadius: BORDER_RADIUS_4,
