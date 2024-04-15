@@ -100,7 +100,7 @@ const AddVm: FC = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <SelectOS />
-                  <Divider sx={{ margin: "50px 10px" }} />
+                  <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
                   <SelectConfig />
