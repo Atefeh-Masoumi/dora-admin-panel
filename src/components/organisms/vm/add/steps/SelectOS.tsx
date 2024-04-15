@@ -164,6 +164,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                         ? palette.primary.main
                         : "rgba(110, 118, 138, 0.12)"
                     }`,
+                  borderBottom: "0px",
                   overflow: "hidden",
                   px: 1,
                   cursor: "pointer",
@@ -212,23 +213,42 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                 value={osDropDown.selectedImageId || ""}
                 onChange={handleChange}
                 sx={{
-                  "& .MuiInputBase-colorPrimary": {
-                    "&:hover": { backgroundColor: "red" },
+                  "&> fieldset": {
+                    border: ({ palette }) =>
+                      `2px solid ${
+                        osDropDown.isSelected
+                          ? palette.primary.main
+                          : "rgba(110, 118, 138, 0.12)"
+                      } !important`,
+                    "&:hover": {
+                      // bgcolor: "red",
+                      // display: "none",
+                    },
+                  },
+                  "&.MuiOutlinedInput-root:hover": {
+                    border: "0px",
                   },
                   "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "rgba(110, 118, 138, 0.12)",
                     borderBottomRightRadius: BORDER_RADIUS_4,
                     borderBottomLeftRadius: BORDER_RADIUS_4,
                     borderTopLeftRadius: 0,
                     borderTopRightRadius: 0,
-                    border: "1px solid rgba(110, 118, 138, 0.12) !important",
+                    border: ({ palette }) =>
+                      `2px solid ${
+                        osDropDown.isSelected
+                          ? palette.primary.main
+                          : "rgba(110, 118, 138, 0.12)"
+                      }`,
+
+                    borderTop: "1px solid",
                   },
+                  direction: "rtl",
                 }}
                 fullWidth
                 style={{ height: 40 }}
               >
                 {osDropDown.content.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                  <MenuItem dir="ltr" key={item.id} value={item.id}>
                     {item.name || "---"}
                   </MenuItem>
                 ))}
