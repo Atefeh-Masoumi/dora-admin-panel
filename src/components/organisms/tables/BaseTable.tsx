@@ -22,8 +22,6 @@ import { visuallyHidden } from "@mui/utils";
 
 export type tableOrderType = "asc" | "desc";
 
-const rowsPerPage = 10;
-
 type BaseTablePropsType = {
   rows: any[];
   struct: columnType[];
@@ -32,6 +30,7 @@ type BaseTablePropsType = {
   isLoading: boolean;
   initialOrder?: number;
   initialSortDirection?: 1 | -1;
+  rowsPerPage?: number;
 };
 
 export const BaseTable: FC<BaseTablePropsType> = ({
@@ -42,6 +41,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
   isLoading,
   initialOrder = -1,
   initialSortDirection = -1,
+  rowsPerPage = 10,
 }) => {
   const [page, setPage] = useState(1);
   const [orderBy, setOrderBy] = useState<number>(initialOrder);
@@ -164,7 +164,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               display={rows.length <= rowsPerPage ? "none" : "flex"}
             >
               <DorsaTablePagination
-                count={Math.ceil(rows.length / 10)}
+                count={Math.ceil(rows.length / rowsPerPage)}
                 color="primary"
                 siblingCount={0}
                 shape="rounded"
@@ -174,7 +174,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               />
               <Typography color="rgba(110, 118, 138, 0.8)">
                 {rows.length} نتیجه ، صفحه {page} از
-                {Math.ceil(rows.length / 10)}
+                {Math.ceil(rows.length / rowsPerPage)}
               </Typography>
             </Stack>
           </Stack>
