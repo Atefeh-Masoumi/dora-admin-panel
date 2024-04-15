@@ -49,6 +49,7 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         </Typography>
       </Stack>
       <DorsaTextField
+        focused
         value={serverName}
         onChange={nameInputChangeHandler}
         sx={{ minWidth: 300 }}
@@ -56,6 +57,7 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         inputProps={{ dir: "ltr" }}
       />
       <DorsaTextField
+        focused
         type={showPassword ? "text" : "password"}
         InputProps={{
           startAdornment: (
