@@ -7,7 +7,7 @@ export const productBundleTableStruct: columnType[] = [
   { id: "cpu", label: "CPU" },
   { id: "memory", label: "Memory" },
   { id: "disk", label: "Disk" },
-  { id: "ipv4", label: "IPv" },
+  { id: "ipv4", label: "IPv4" },
   {
     id: "price",
     label: "قیمت (ماهیانه)",
