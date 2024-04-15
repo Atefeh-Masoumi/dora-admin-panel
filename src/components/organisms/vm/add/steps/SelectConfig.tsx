@@ -22,7 +22,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
         rows={configsList || []}
         text=""
         isLoading={isLoading}
-        RowsPerPage={5}
+        rowsPerPage={5}
       />
     ),
     [configsList, isLoading]
