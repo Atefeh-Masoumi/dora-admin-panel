@@ -48,9 +48,7 @@ const AddDomain: FC = () => {
           },
         })
           .unwrap()
-          .catch((err) => {
-            // setDomainPrice(0);
-          });
+          .catch((err) => {});
       }, 1000);
     }
     return () => {
@@ -116,8 +114,6 @@ const AddDomain: FC = () => {
       validationErrorMessage = "لطفا ns2 را وارد کنید";
     } else if (ns2.length < 3) {
       validationErrorMessage = "ns2 نمی تواند کمتر از سه حرف باشد";
-    } else if (!paymentType) {
-      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
     if (validationErrorMessage !== "") {
@@ -194,22 +190,22 @@ const AddDomain: FC = () => {
             item
             style={{ position: "relative", textAlign: "center" }}
           >
-            <ServiceReceipt
-              submitHandler={() => submitHandler()}
-              submitButtonIsLoading={registerLoading}
-              paymentType={paymentType}
-              setPaymentType={setPaymentType}
-              receiptItemName={"ثبت/انتقال دامنه"}
-              receiptItemNumber={extObject.price !== 0 ? "۱" : "---"}
-              reciptItemPrice={Math.floor(extObject.price).toLocaleString(
-                "fa-IR"
-              )}
-              totalPrice={Math.floor(extObject.price * 1.09).toLocaleString(
-                "fa-IR"
-              )}
-              vat={Math.floor(extObject.price * 0.09).toLocaleString("fa-IR")}
-              priceIsLoading={checkDomainLoading}
-            />
+            <Stack sx={{ position: "sticky", top: 0 }}>
+              <ServiceReceipt
+                submitHandler={() => submitHandler()}
+                submitButtonIsLoading={registerLoading}
+                receiptItemName={"ثبت/انتقال دامنه"}
+                receiptItemNumber={extObject.price !== 0 ? "۱" : "---"}
+                reciptItemPrice={Math.floor(extObject.price).toLocaleString(
+                  "fa-IR"
+                )}
+                totalPrice={Math.floor(extObject.price * 1.09).toLocaleString(
+                  "fa-IR"
+                )}
+                vat={Math.floor(extObject.price * 0.09).toLocaleString("fa-IR")}
+                priceIsLoading={checkDomainLoading}
+              />
+            </Stack>
           </Grid>
         </Grid>
         <Stack
