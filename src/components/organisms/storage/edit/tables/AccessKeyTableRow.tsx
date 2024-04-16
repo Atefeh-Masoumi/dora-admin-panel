@@ -66,6 +66,7 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
                     style: { paddingLeft: "8px", paddingRight: "0px" },
                   }}
                   sx={{
+                    fontSize: "12px",
                     "& .MuiInputBase-root": {},
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "secondary !important",
