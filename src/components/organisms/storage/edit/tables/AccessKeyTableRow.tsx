@@ -73,7 +73,7 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
                       borderWidth: "1px !important",
                     },
                     "& .MuiOutlinedInput-input": {
-                      "-webkit-text-fill-color": "black !important",
+                      WebkitTextFillColor: "black !important",
                     },
                     minWidth: "200px",
                   }}
