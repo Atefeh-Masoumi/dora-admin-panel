@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FC } from "react";
+import { Dispatch, SetStateAction, FC, Fragment } from "react";
 import {
   Button,
   Divider,
@@ -12,7 +12,14 @@ import { LoadingButton } from "@mui/lab";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { InvoiceSvg } from "../atoms/svg-icons/InvoiceSvg";
 import { CalculateSvg } from "../atoms/svg-icons/CalculateSvg";
-import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
+import { priceToPersian } from "src/utils/priceToPersian";
+import { e2p } from "src/utils/e2p.utils";
+type CustomConfigType = { numberOfItem: number; name: string; fee?: number }[];
+
+export enum ReceiptTypeEnum {
+  CUSTOM = 1,
+  PREDEFINED_BUNDLE = 2,
+}
 
 type ServiceReceiptPropsType = {
   receiptItemNumber: string;
@@ -25,6 +32,8 @@ type ServiceReceiptPropsType = {
   paymentType?: CUSTOMER_PRODUCT_TYPE_ENUM | null;
   setPaymentType?: Dispatch<SetStateAction<CUSTOMER_PRODUCT_TYPE_ENUM | null>>;
   priceIsLoading?: boolean;
+  customConfig?: CustomConfigType;
+  receiptType?: ReceiptTypeEnum;
 };
 
 const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
@@ -38,7 +47,10 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
   totalPrice,
   vat,
   priceIsLoading,
+  customConfig,
+  receiptType,
 }) => {
+  let netPrice = 0;
   return (
     <Paper sx={{ p: 2 }}>
       {priceIsLoading ? (
@@ -119,30 +131,69 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
               marginBottom: "5px !important",
             }}
           >
-            <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
-              <Typography
-                fontSize={12}
-                sx={{ color: ({ palette }) => palette.grey[700] }}
-              >
-                {receiptItemName}
-              </Typography>
-            </Grid>
-            <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
-              <Typography
-                fontSize={12}
-                sx={{ color: ({ palette }) => palette.grey[700] }}
-              >
-                {receiptItemNumber}
-              </Typography>
-            </Grid>
-            <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
-              <Typography
-                fontSize={12}
-                sx={{ color: ({ palette }) => palette.grey[700] }}
-              >
-                {reciptItemPrice}
-              </Typography>
-            </Grid>
+            {receiptType === ReceiptTypeEnum.CUSTOM &&
+              customConfig?.map((item) => {
+                netPrice += item.numberOfItem * (item?.fee || 0);
+                return (
+                  <Fragment key={item.name}>
+                    <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                      <Typography
+                        fontSize={12}
+                        sx={{ color: ({ palette }) => palette.grey[700] }}
+                      >
+                        {item.name || "---"}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                      <Typography
+                        fontSize={12}
+                        sx={{ color: ({ palette }) => palette.grey[700] }}
+                      >
+                        {item.fee ? e2p(item.numberOfItem) : "---"}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                      <Typography
+                        fontSize={12}
+                        sx={{ color: ({ palette }) => palette.grey[700] }}
+                      >
+                        {item.fee
+                          ? e2p(priceToPersian(item.fee * item.numberOfItem))
+                          : "---"}
+                      </Typography>
+                    </Grid>
+                  </Fragment>
+                );
+              })}
+
+            {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE && (
+              <>
+                <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                  <Typography
+                    fontSize={12}
+                    sx={{ color: ({ palette }) => palette.grey[700] }}
+                  >
+                    {receiptItemName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                  <Typography
+                    fontSize={12}
+                    sx={{ color: ({ palette }) => palette.grey[700] }}
+                  >
+                    {receiptItemNumber}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                  <Typography
+                    fontSize={12}
+                    sx={{ color: ({ palette }) => palette.grey[700] }}
+                  >
+                    {reciptItemPrice}
+                  </Typography>
+                </Grid>
+              </>
+            )}
           </Grid>
           <Divider
             sx={{ margin: "10px 20px !important", borderBottomWidth: 1 }}
@@ -185,7 +236,9 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 fontSize={14}
                 sx={{ color: ({ palette }) => palette.grey[700] }}
               >
-                {reciptItemPrice}
+                {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE
+                  ? reciptItemPrice
+                  : e2p(priceToPersian(netPrice))}
               </Typography>
             </Grid>
           </Grid>
@@ -229,6 +282,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
               </Typography>
             </Grid>
           </Grid>
+
           <Grid
             container
             sx={{
@@ -267,10 +321,13 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 fontSize={14}
                 sx={{ color: ({ palette }) => palette.grey[700] }}
               >
-                {vat}
+                {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE
+                  ? vat
+                  : e2p(priceToPersian(netPrice * 0.1))}
               </Typography>
             </Grid>
           </Grid>
+
           <Divider
             sx={{ margin: "15px 20px !important", borderBottomWidth: 1 }}
           />
@@ -311,7 +368,12 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 fontSize={14}
                 sx={{ color: ({ palette }) => palette.grey[700] }}
               >
-                <strong>{totalPrice}</strong>
+                <strong>
+                  {e2p(priceToPersian(totalPrice))}
+                  {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE
+                    ? totalPrice
+                    : e2p(priceToPersian(netPrice * 1.1))}
+                </strong>
               </Typography>
             </Grid>
           </Grid>
