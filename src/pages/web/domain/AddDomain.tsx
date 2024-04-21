@@ -10,7 +10,9 @@ import {
   usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 
 const AddDomain: FC = () => {
   const {
@@ -195,6 +197,7 @@ const AddDomain: FC = () => {
             style={{ position: "relative", textAlign: "center" }}
           >
             <ServiceReceipt
+              receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
               submitHandler={() => submitHandler()}
               submitButtonIsLoading={registerLoading}
               paymentType={paymentType}

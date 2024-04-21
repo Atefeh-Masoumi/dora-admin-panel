@@ -5,7 +5,9 @@ import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/step
 import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
 import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
 import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
-import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 
 const AddKubernetes: FC = () => {
   const {
@@ -68,6 +70,7 @@ const AddKubernetes: FC = () => {
         >
           <Box sx={{ position: "sticky", top: 0 }}>
             <ServiceReceipt
+              receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
               submitHandler={submitHandler}
               submitButtonIsLoading={submitLoading}
               paymentType={paymentType}
