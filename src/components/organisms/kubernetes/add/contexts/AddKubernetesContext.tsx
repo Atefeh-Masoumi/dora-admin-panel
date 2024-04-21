@@ -5,6 +5,7 @@ import {
   useState,
   Dispatch,
   SetStateAction,
+  useContext,
 } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -17,6 +18,11 @@ import {
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { passwordValidationRegex } from "src/utils/regexUtils";
+export type kubernetesCustomConfigType = {
+  cpu: number | null;
+  memory: number | null;
+  disk: number | null;
+};
 
 type AddKubernetesContextType = {
   kubernetesVersion: DatacenterListResponse | null;
@@ -36,7 +42,11 @@ type AddKubernetesContextType = {
   submitHandler: () => void;
   submitLoading: boolean;
   paymentType: CUSTOMER_PRODUCT_TYPE_ENUM | null;
+  isPredefined: boolean;
+  setIsPredefined: (isPredefined: boolean) => void;
   setPaymentType: Dispatch<SetStateAction<CUSTOMER_PRODUCT_TYPE_ENUM | null>>;
+  customConfig: kubernetesCustomConfigType;
+  setCustomConfig: (customConfig: kubernetesCustomConfigType) => void;
 };
 
 export const AddKubernetesContext = createContext<AddKubernetesContextType>({
@@ -57,7 +67,15 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   submitHandler: () => {},
   submitLoading: false,
   paymentType: null,
+  isPredefined: false,
+  setIsPredefined: (isPredefined) => {},
   setPaymentType: () => {},
+  customConfig: {
+    cpu: null,
+    memory: null,
+    disk: null,
+  },
+  setCustomConfig: (customConfig) => {},
 });
 
 type AddKubernetesContextProviderPropsType = {
@@ -80,6 +98,13 @@ export const AddKubernetesContextProvider: FC<
   const [serverPassword, setServerPassword] = useState("");
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
+  const [isPredefined, setIsPredefined] = useState(true);
+
+  const [customConfig, setCustomConfig] = useState<kubernetesCustomConfigType>({
+    cpu: 3,
+    memory: 4,
+    disk: 2,
+  });
 
   const navigate = useNavigate();
 
@@ -95,7 +120,7 @@ export const AddKubernetesContextProvider: FC<
       validationErrorMessage = "لطفا ورژن سیستم عامل را انتخاب کنید";
     } else if (!kubernetesVersion) {
       validationErrorMessage = "لطفا ورژن کوبرنتیز خود را مشخص کنید";
-    } else if (!serverConfig || !serverConfig.id) {
+    } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
     } else if (!serverName) {
       validationErrorMessage = "لطفا نام سرور را انتخاب کنید";
@@ -122,9 +147,9 @@ export const AddKubernetesContextProvider: FC<
         nodeCount: workersCount,
         productBundleId: serverConfig?.id || 0,
         isPredefined: true,
-        cpu: null,
-        memory: null,
-        disk: null,
+        cpu: customConfig.cpu,
+        memory: customConfig.memory,
+        disk: customConfig.disk,
       },
     })
       .unwrap()
@@ -156,6 +181,10 @@ export const AddKubernetesContextProvider: FC<
         submitLoading,
         paymentType,
         setPaymentType,
+        isPredefined,
+        setIsPredefined,
+        customConfig,
+        setCustomConfig,
       }}
     >
       {children}
