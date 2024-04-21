@@ -39,8 +39,8 @@ const AddVm: FC = () => {
     serverName,
     serverPassword,
     isPredefined,
+    setIsPredefined,
     customConfig,
-    setCustomConfig,
   } = useContext(AddServerContext);
 
   const [paymentType, setPaymentType] =
@@ -161,7 +161,10 @@ const AddVm: FC = () => {
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
-                  <SelectConfigType />
+                  <SelectConfigType
+                    isPredefined={isPredefined}
+                    setIsPredefined={setIsPredefined}
+                  />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
