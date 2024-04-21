@@ -1,10 +1,12 @@
-import { FC, useMemo } from "react";
+import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
+import ReverseSlider from "src/components/atoms/ReverseSlider";
 
 type SelectKuberConfigPropsType = {};
 
@@ -13,6 +15,48 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
     useGetApiMyPortalProductBundleListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
     });
+
+  const { isPredefined, customConfig, setCustomConfig } =
+    useContext(AddKubernetesContext);
+
+  const customConfigItem = [
+    {
+      id: "Memory",
+      label: "Memory (GB)",
+      min: 1,
+      max: 10,
+      step: 1,
+      value: customConfig.memory,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, memory: newValue as number });
+      },
+    },
+    {
+      id: "CPU",
+      label: "CPU (Core)",
+      min: 1,
+      max: 10,
+      step: 1,
+      value: customConfig.cpu,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, cpu: newValue as number });
+      },
+    },
+    {
+      id: "Disk",
+      label: "Disk (GB)",
+      min: 1,
+      max: 10,
+      step: 1,
+      value: customConfig.disk,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, disk: newValue as number });
+      },
+    },
+  ];
 
   const configsList = useMemo(() => {
     if (!data) return [];
@@ -65,7 +109,47 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
           بعد از ایجاد سرور می توانید سخت افزار مورد نیاز خود را تغییر دهید.
         </Typography>
       </Stack>
-      <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
+      <Box sx={{ px: { lg: 5 }, pt: 5 }}>
+        {isPredefined ? (
+          table
+        ) : (
+          <Stack gap={2}>
+            {customConfigItem.map((item, index) => (
+              <Stack
+                key={index}
+                direction={{ xs: "column-reverse", md: "row" }}
+                rowGap={1}
+                columnGap={1}
+                alignItems={{ xs: "center", md: "end" }}
+                justifyContent="center"
+                sx={{
+                  fontFamily: "roboto",
+                }}
+              >
+                <ReverseSlider
+                  value={Number(item.value)}
+                  valueLabelDisplay="on"
+                  onChange={(_, value) => item.onChange(value as number)}
+                  min={item.min}
+                  max={item.max}
+                  step={item.step}
+                  sx={{
+                    width: { xs: "90%", md: "70%" },
+                  }}
+                />
+                <Stack width={{ xs: "90%", md: "15%" }}>
+                  <Typography
+                    variant="text8"
+                    textAlign={{ xs: "start", md: "end" }}
+                  >
+                    {item.label}
+                  </Typography>
+                </Stack>
+              </Stack>
+            ))}
+          </Stack>
+        )}
+      </Box>
     </>
   );
 };
