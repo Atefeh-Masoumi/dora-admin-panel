@@ -37,7 +37,11 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <CreditCardIcon sx={{ color: "grey.700" }} />
                   </IconButton> */}
-                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                  <IconButton
+                    disabled={row.statusId !== 2}
+                    sx={{ borderRadius: 1 }}
+                    onClick={settingOnClick}
+                  >
                     <Setting
                       sx={{
                         "&> path": {
@@ -47,6 +51,7 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
                     />
                   </IconButton>
                   <IconButton
+                    disabled={row.statusId !== 2}
                     sx={{ borderRadius: 1 }}
                     color="error"
                     onClick={handleOpenDelete}
