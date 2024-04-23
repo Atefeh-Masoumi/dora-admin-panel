@@ -77,7 +77,10 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
             صورتحساب
           </Typography>
           <Divider
-            sx={{ margin: "10px 20px !important", borderBottomWidth: 3 }}
+            sx={{
+              margin: "10px 20px !important",
+              borderBottomWidth: 3,
+            }}
           />
           <Grid
             container

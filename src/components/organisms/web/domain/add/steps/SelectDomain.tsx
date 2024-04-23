@@ -6,7 +6,7 @@ import {
   Checkbox,
   Typography,
   Stack,
-  FormControl,             
+  FormControl,
   InputLabel,
   Select,
   MenuItem,
@@ -126,7 +126,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
         <Grid xs={12} lg={8} item container spacing={1}>
           <Grid item xs={4}>
             <FormControl sx={{ direction: "rtl" }} required fullWidth>
-              <InputLabel>Ext</InputLabel>
+              <InputLabel>tld</InputLabel>
               <Select
                 value={extObject.id || ""}
                 label="Ext"
