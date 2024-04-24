@@ -27,9 +27,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       max: 1024,
       step: 25,
       value: customConfig.disk,
-      onChange: (newValue: any) => {
-        setCustomConfig &&
-          setCustomConfig({ ...customConfig, disk: newValue as number });
+      onChange: (newValue: number) => {
+        setCustomConfig && setCustomConfig({ ...customConfig, disk: newValue });
       },
     },
     {
@@ -39,9 +38,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       max: 128,
       step: 1,
       value: customConfig.memory,
-      onChange: (newValue: any) => {
+      onChange: (newValue: number) => {
         setCustomConfig &&
-          setCustomConfig({ ...customConfig, memory: newValue as number });
+          setCustomConfig({ ...customConfig, memory: newValue });
       },
     },
     {
@@ -51,9 +50,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       max: 48,
       step: 1,
       value: customConfig.cpu,
-      onChange: (newValue: any) => {
+      onChange: (newValue: number) => {
         setCustomConfig &&
-          setCustomConfig({ ...customConfig, cpu: newValue as number });
+          setCustomConfig({ ...customConfig, cpu: newValue});
       },
     },
 
@@ -64,9 +63,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       max: 10,
       step: 1,
       value: customConfig.IPV4,
-      onChange: (newValue: any) => {
+      onChange: (newValue: number) => {
         setCustomConfig &&
-          setCustomConfig({ ...customConfig, IPV4: newValue as number });
+          setCustomConfig({ ...customConfig, IPV4: newValue });
       },
     },
   ];

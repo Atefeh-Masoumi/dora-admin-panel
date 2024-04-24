@@ -60,10 +60,10 @@ const AddKubernetes: FC = () => {
     getKubernetesPrice({ workerNodeCount: workersCount })
       .unwrap()
       .then((res) => {
-        console.log(res);
         setProductItemPrices(res);
       })
       .catch((e) => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getKubernetesPrice, isPredefined, workersCount, serverConfig?.id]);
 
   const mapCustomConfig = useMemo(() => {
