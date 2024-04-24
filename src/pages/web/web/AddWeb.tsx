@@ -7,9 +7,7 @@ import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectD
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
 import { usePostApiMyWebHostCreateMutation } from "src/app/services/api.generated";
-import ServiceReceipt, {
-  ReceiptTypeEnum,
-} from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt from "src/components/molecules/ServiceReceipt";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 
 const AddWeb: FC = () => {
@@ -117,10 +115,10 @@ const AddWeb: FC = () => {
                   serverConfig?.price || 0
                 ).toLocaleString("fa-IR")}
                 totalPrice={Math.floor(
-                  (serverConfig?.price || 0) * 1.09
+                  (serverConfig?.price || 0) * 1.1
                 ).toLocaleString("fa-IR")}
                 vat={Math.floor(
-                  (serverConfig?.price || 0) * 0.09
+                  (serverConfig?.price || 0) * 0.1
                 ).toLocaleString("fa-IR")}
               />
             </Box>

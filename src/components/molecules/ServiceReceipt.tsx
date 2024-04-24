@@ -382,7 +382,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
               >
                 <strong>
                   {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE
-                    ? totalPrice
+                    ? e2p(priceToPersian(totalPrice))
                     : e2p(priceToPersian(netPrice * 1.1))}
                 </strong>
               </Typography>
