@@ -372,9 +372,8 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 sx={{ color: ({ palette }) => palette.grey[700] }}
               >
                 <strong>
-                  {e2p(priceToPersian(totalPrice))}
                   {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE
-                    ? totalPrice
+                    ? e2p(priceToPersian(totalPrice))
                     : e2p(priceToPersian(netPrice * 1.1))}
                 </strong>
               </Typography>
