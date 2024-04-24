@@ -139,24 +139,30 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
                 netPrice += item.numberOfItem * (item?.fee || 0);
                 return (
                   <Fragment key={item.name}>
-                    <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                    <Grid item xs={4} px={2}>
                       <Typography
+                        minWidth="max-content"
+                        textAlign="left"
                         fontSize={12}
                         sx={{ color: ({ palette }) => palette.grey[700] }}
                       >
                         {item.name || "---"}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                    <Grid item xs={4} px={2}>
                       <Typography
+                        minWidth="max-content"
+                        textAlign="center"
                         fontSize={12}
                         sx={{ color: ({ palette }) => palette.grey[700] }}
                       >
-                        {item.fee ? e2p(item.numberOfItem) : "---"}
+                        {item.numberOfItem ? e2p(item.numberOfItem) : "---"}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                    <Grid item xs={4} px={2}>
                       <Typography
+                        minWidth="max-content"
+                        textAlign="right"
                         fontSize={12}
                         sx={{ color: ({ palette }) => palette.grey[700] }}
                       >
@@ -171,24 +177,27 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
 
             {receiptType === ReceiptTypeEnum.PREDEFINED_BUNDLE && (
               <>
-                <Grid item xs={4} px={2} sx={{ textAlign: "left" }}>
+                <Grid item xs={4} px={2}>
                   <Typography
+                    textAlign="left"
                     fontSize={12}
                     sx={{ color: ({ palette }) => palette.grey[700] }}
                   >
                     {receiptItemName}
                   </Typography>
                 </Grid>
-                <Grid item xs={4} px={2} sx={{ textAlign: "center" }}>
+                <Grid item xs={4} px={2}>
                   <Typography
+                    textAlign="center"
                     fontSize={12}
                     sx={{ color: ({ palette }) => palette.grey[700] }}
                   >
                     {receiptItemNumber}
                   </Typography>
                 </Grid>
-                <Grid item xs={4} px={2} sx={{ textAlign: "right" }}>
+                <Grid item xs={4} px={2}>
                   <Typography
+                    textAlign="right"
                     fontSize={12}
                     sx={{ color: ({ palette }) => palette.grey[700] }}
                   >

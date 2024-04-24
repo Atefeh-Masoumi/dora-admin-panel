@@ -60,9 +60,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         toast.success("درخواست با موفقیت انجام شد");
         navigate("/vm");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
     return;
   };
 

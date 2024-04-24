@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useMemo } from "react";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/steps/SelectKuberDataCenter";
 import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
@@ -8,6 +8,29 @@ import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/co
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
+import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import { useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery } from "src/app/services/api";
+
+const mapConfig = {
+  cpu: "CPU",
+  memory: "Memory",
+  disk: "Disk",
+  ipv4: "IPV4",
+  ipv6: "IPV6",
+  rackUnitSpace: "Rack Space Unit",
+  powerAmp: "Power (A)",
+  ipv4Count: "IPV4",
+  networkPort10G: "Network 10G Port",
+  networkPort1G: "Network 1G Port",
+};
+
+type MapCustomConfigType = {
+  numberOfItem: number;
+  name: string;
+  fee: number | undefined;
+}[];
 
 const AddKubernetes: FC = () => {
   const {
@@ -17,7 +40,115 @@ const AddKubernetes: FC = () => {
     setPaymentType,
     submitHandler,
     submitLoading,
+    isPredefined,
+    setIsPredefined,
+    customConfig,
+    setProductItemPrices,
+    productItemPrices,
   } = useContext(AddKubernetesContext);
+
+  const { data: vmBundlesList, isLoading: vmBundlesListLoading } =
+    useGetApiMyPortalProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
+    });
+
+  const [getKubernetesPrice] =
+    useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery();
+
+  useEffect(() => {
+    if (isPredefined && !serverConfig?.id) return;
+    getKubernetesPrice({ workerNodeCount: workersCount })
+      .unwrap()
+      .then((res) => {
+        setProductItemPrices(res);
+      })
+      .catch((e) => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getKubernetesPrice, isPredefined, workersCount, serverConfig?.id]);
+
+  const mapCustomConfig = useMemo(() => {
+    const numberOfMasterNodes =
+      productItemPrices?.masterNodesInfo?.masterNodeCount;
+
+    let items: MapCustomConfigType = [];
+
+    productItemPrices?.masterNodesInfo?.masterVmSpecs?.forEach((x) => {
+      const vmItem = productItemPrices?.vmProductItemsPrice?.find(
+        (y) => y.name?.toLowerCase() === x.name?.toLowerCase()
+      );
+
+      if (vmItem) {
+        items.push({
+          numberOfItem: (numberOfMasterNodes || 0) * (x.quantity || 0),
+          fee: vmItem.price || 0,
+          name: `${x.name?.toLowerCase() || ""} (${
+            numberOfMasterNodes || 0
+          } مستر نود)`,
+        });
+      }
+    });
+
+    items.push({
+      numberOfItem: 1,
+      name: "هزینه نگهداری",
+      fee: productItemPrices?.masterNodesInfo?.kubernetesManagementItemPrice,
+    });
+
+    if (isPredefined && serverConfig?.id) {
+      const selectedProductBundle = vmBundlesList?.find(
+        (x) => x.id === serverConfig?.id
+      );
+
+      return [
+        {
+          numberOfItem: workersCount,
+          name: selectedProductBundle?.name || "",
+          fee: selectedProductBundle?.price,
+        },
+        ...items,
+      ];
+    } else if (!isPredefined) {
+      return [
+        {
+          numberOfItem: customConfig.cpu * workersCount,
+          name: `${mapConfig.cpu.toLowerCase()} (${workersCount} ورکر نود)`,
+          fee: productItemPrices?.vmProductItemsPrice?.find(
+            (y) => y.name?.toLowerCase() === mapConfig.cpu.toLowerCase()
+          )?.price,
+        },
+        {
+          numberOfItem: customConfig.disk * workersCount,
+          name: `${mapConfig.disk.toLowerCase()} (${workersCount} ورکر نود)`,
+          fee: productItemPrices?.vmProductItemsPrice?.find(
+            (y) => y.name?.toLowerCase() === mapConfig.disk.toLowerCase()
+          )?.price,
+        },
+        {
+          numberOfItem: customConfig.memory * workersCount,
+          name: `${mapConfig.memory.toLowerCase()} (${workersCount} ورکر نود)`,
+          fee: productItemPrices?.vmProductItemsPrice?.find(
+            (y) => y.name?.toLowerCase() === mapConfig.memory.toLowerCase()
+          )?.price,
+        },
+        {
+          numberOfItem: customConfig.ipV4 * workersCount,
+          name: `${mapConfig.ipv4.toLowerCase()} (${workersCount} ورکر نود)`,
+          fee: productItemPrices?.vmProductItemsPrice?.find(
+            (y) => y.name?.toLowerCase() === mapConfig.ipv4.toLowerCase()
+          )?.price,
+        },
+        ...items,
+      ];
+    }
+    return [{ numberOfItem: 0, name: "", fee: undefined }];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    customConfig,
+    isPredefined,
+    serverConfig?.id,
+    vmBundlesList,
+    productItemPrices,
+  ]);
 
   return (
     <>
@@ -50,7 +181,17 @@ const AddKubernetes: FC = () => {
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
-                <SelectKuberConfig />
+                <SelectConfigType
+                  isPredefined={isPredefined}
+                  setIsPredefined={setIsPredefined}
+                />
+                <Divider sx={{ margin: "50px 10px" }} />
+              </Grid>
+              <Grid xs={12} item>
+                <SelectKuberConfig
+                  vmBundlesList={vmBundlesList || []}
+                  vmBundlesListLoading={vmBundlesListLoading}
+                />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
@@ -70,12 +211,17 @@ const AddKubernetes: FC = () => {
         >
           <Box sx={{ position: "sticky", top: 0 }}>
             <ServiceReceipt
-              receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
+              customConfig={mapCustomConfig}
+              receiptType={
+                isPredefined
+                  ? ReceiptTypeEnum.PREDEFINED_BUNDLE
+                  : ReceiptTypeEnum.CUSTOM
+              }
               submitHandler={submitHandler}
               submitButtonIsLoading={submitLoading}
               paymentType={paymentType}
               setPaymentType={setPaymentType}
-              receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
+              receiptItemName={serverConfig?.id ? serverConfig.name : "--"}
               receiptItemNumber={workersCount.toString() || ""}
               reciptItemPrice={Math.floor(
                 serverConfig?.price || 0

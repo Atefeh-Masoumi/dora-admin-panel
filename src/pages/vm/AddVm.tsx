@@ -39,14 +39,14 @@ const AddVm: FC = () => {
     serverName,
     serverPassword,
     isPredefined,
+    setIsPredefined,
     customConfig,
-    setCustomConfig,
   } = useContext(AddServerContext);
 
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
-  const { data: productItems, isLoading: productItemsLoading } =
+  const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
@@ -104,7 +104,6 @@ const AddVm: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
-      console.log("test");
       createCloudServer({
         createVmModel: {
           name: serverName,
@@ -161,7 +160,10 @@ const AddVm: FC = () => {
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
-                  <SelectConfigType />
+                  <SelectConfigType
+                    isPredefined={isPredefined}
+                    setIsPredefined={setIsPredefined}
+                  />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
