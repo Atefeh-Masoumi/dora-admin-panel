@@ -10,7 +10,9 @@ import {
   usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 
 const AddDomain: FC = () => {
   const {
@@ -192,8 +194,11 @@ const AddDomain: FC = () => {
           >
             <Stack sx={{ position: "sticky", top: 0 }}>
               <ServiceReceipt
+                receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={registerLoading}
+                paymentType={paymentType}
+                setPaymentType={setPaymentType}
                 receiptItemName={"ثبت/انتقال دامنه"}
                 receiptItemNumber={extObject.price !== 0 ? "۱" : "---"}
                 reciptItemPrice={Math.floor(extObject.price).toLocaleString(

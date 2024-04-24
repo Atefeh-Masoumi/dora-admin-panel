@@ -5,7 +5,9 @@ import { useAppSelector } from "src/app/hooks";
 import { usePostApiMyKubernetesNodeCreateMutation } from "src/app/services/api.generated";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 
 type AddNodeKubernetesPropsType = {};
 
@@ -53,6 +55,7 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
       </Grid2>
       <Grid2 xs={12} md={4} sx={{ position: "sticky", top: 0 }}>
         <ServiceReceipt
+          receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
           submitHandler={onSubmitClick}
           submitButtonIsLoading={createNodeLoading}
           receiptItemName={productBundle?.name || "سرور"}

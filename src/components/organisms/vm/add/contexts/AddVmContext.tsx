@@ -7,6 +7,13 @@ import {
 
 export type addServerStepsType = 1 | 2 | 3 | 4;
 
+export type vmCustomConfigType = {
+  cpu: number | null;
+  memory: number | null;
+  disk: number | null;
+  IPV4: number | null;
+};
+
 type AddServerContextType = {
   step: addServerStepsType;
   setStep: (step: addServerStepsType) => void;
@@ -20,6 +27,11 @@ type AddServerContextType = {
   setServerName: (name: string) => void;
   serverPassword: string;
   setServerPassword: (password: string) => void;
+  isPredefined: boolean;
+  setIsPredefined: (isPredefined: boolean) => void;
+  //-------------for custom config---------------//
+  customConfig: vmCustomConfigType;
+  setCustomConfig: (customConfig: vmCustomConfigType) => void;
 };
 
 export const AddServerContext = createContext<AddServerContextType>({
@@ -35,6 +47,15 @@ export const AddServerContext = createContext<AddServerContextType>({
   setServerName: (name) => {},
   serverPassword: "",
   setServerPassword: (password) => {},
+  isPredefined: false,
+  setIsPredefined: (isPredefined) => {},
+  customConfig: {
+    cpu: null,
+    memory: null,
+    disk: null,
+    IPV4: 1,
+  },
+  setCustomConfig: (customConfig) => {},
 });
 
 type AddServerContextProviderPropsType = {
@@ -53,6 +74,13 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
     useState<ProductBundleListResponse | null>(null);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
+  const [isPredefined, setIsPredefined] = useState(true);
+  const [customConfig, setCustomConfig] = useState<vmCustomConfigType>({
+    cpu: 3,
+    memory: 4,
+    disk: 2,
+    IPV4: 1,
+  });
 
   return (
     <AddServerContext.Provider
@@ -69,6 +97,10 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
         setServerName,
         serverPassword,
         setServerPassword,
+        isPredefined,
+        setIsPredefined,
+        customConfig,
+        setCustomConfig,
       }}
     >
       {children}

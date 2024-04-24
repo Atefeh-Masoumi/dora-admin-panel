@@ -7,7 +7,9 @@ import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectD
 import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
 import { usePostApiMyWebHostCreateMutation } from "src/app/services/api.generated";
-import ServiceReceipt from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 
 const AddWeb: FC = () => {
