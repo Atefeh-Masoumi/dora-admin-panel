@@ -80,9 +80,9 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   setIsPredefined: (isPredefined) => {},
   setPaymentType: () => {},
   customConfig: {
-    cpu: 1,
-    memory: 1,
-    disk: 25,
+    cpu: 0,
+    memory: 0,
+    disk: 0,
     ipV4: 1,
   },
   setCustomConfig: (customConfig) => {},
@@ -115,9 +115,9 @@ export const AddKubernetesContextProvider: FC<
     useState<KubernetesPriceResponse | null>(null);
 
   const [customConfig, setCustomConfig] = useState<kubernetesCustomConfigType>({
-    cpu: 3,
-    memory: 4,
-    disk: 2,
+    cpu: 4,
+    memory: 25,
+    disk: 300,
     ipV4: 1,
   });
 

@@ -21,10 +21,22 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
 
   const customConfigItem = [
     {
+      id: "Disk",
+      label: "Disk (GB)",
+      min: 0,
+      max: 1024,
+      step: 25,
+      value: customConfig.disk,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, disk: newValue as number });
+      },
+    },
+    {
       id: "Memory",
       label: "Memory (GB)",
-      min: 1,
-      max: 10,
+      min: 0,
+      max: 128,
       step: 1,
       value: customConfig.memory,
       onChange: (newValue: any) => {
@@ -35,25 +47,13 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
     {
       id: "CPU",
       label: "CPU (Core)",
-      min: 1,
-      max: 10,
+      min: 0,
+      max: 48,
       step: 1,
       value: customConfig.cpu,
       onChange: (newValue: any) => {
         setCustomConfig &&
           setCustomConfig({ ...customConfig, cpu: newValue as number });
-      },
-    },
-    {
-      id: "Disk",
-      label: "Disk (GB)",
-      min: 1,
-      max: 10,
-      step: 1,
-      value: customConfig.disk,
-      onChange: (newValue: any) => {
-        setCustomConfig &&
-          setCustomConfig({ ...customConfig, disk: newValue as number });
       },
     },
     {

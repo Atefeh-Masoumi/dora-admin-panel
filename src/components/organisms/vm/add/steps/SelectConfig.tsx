@@ -23,9 +23,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     {
       id: "Disk",
       label: "Disk (GB)",
-      min: 1,
-      max: 10,
-      step: 1,
+      min: 0,
+      max: 1024,
+      step: 25,
       value: customConfig.disk,
       onChange: (newValue: any) => {
         setCustomConfig &&
@@ -47,8 +47,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     {
       id: "CPU",
       label: "CPU (Core)",
-      min: 1,
-      max: 10,
+      min: 0,
+      max: 48,
       step: 1,
       value: customConfig.cpu,
       onChange: (newValue: any) => {
