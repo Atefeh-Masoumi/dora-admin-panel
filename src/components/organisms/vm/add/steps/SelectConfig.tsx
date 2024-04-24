@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -21,10 +21,22 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const customConfigItems = [
     {
-      id: "Memory",
-      label: "Memory (GB)",
+      id: "Disk",
+      label: "Disk (GB)",
       min: 1,
       max: 10,
+      step: 1,
+      value: customConfig.disk,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, disk: newValue as number });
+      },
+    },
+    {
+      id: "Memory",
+      label: "Memory (GB)",
+      min: 0,
+      max: 128,
       step: 1,
       value: customConfig.memory,
       onChange: (newValue: any) => {
@@ -44,18 +56,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
           setCustomConfig({ ...customConfig, cpu: newValue as number });
       },
     },
-    {
-      id: "Disk",
-      label: "Disk (GB)",
-      min: 1,
-      max: 10,
-      step: 1,
-      value: customConfig.disk,
-      onChange: (newValue: any) => {
-        setCustomConfig &&
-          setCustomConfig({ ...customConfig, disk: newValue as number });
-      },
-    },
+
     {
       id: "IpV4",
       label: "Public IpV4",

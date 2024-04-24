@@ -5,23 +5,25 @@ import {
   useState,
   Dispatch,
   SetStateAction,
-  useContext,
 } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   DatacenterListResponse,
   ImageListResponse,
+  KubernetesPriceResponse,
   ProductBundleListResponse,
   ProductBundleVmListResponse,
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
 import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { passwordValidationRegex } from "src/utils/regexUtils";
+
 export type kubernetesCustomConfigType = {
-  cpu: number | null;
-  memory: number | null;
-  disk: number | null;
+  cpu: number;
+  memory: number;
+  disk: number;
+  ipV4: number;
 };
 
 type AddKubernetesContextType = {
@@ -47,23 +49,30 @@ type AddKubernetesContextType = {
   setPaymentType: Dispatch<SetStateAction<CUSTOMER_PRODUCT_TYPE_ENUM | null>>;
   customConfig: kubernetesCustomConfigType;
   setCustomConfig: (customConfig: kubernetesCustomConfigType) => void;
+  productItemPrices: KubernetesPriceResponse | null;
+  setProductItemPrices: Dispatch<
+    SetStateAction<KubernetesPriceResponse | null>
+  >;
 };
 
 export const AddKubernetesContext = createContext<AddKubernetesContextType>({
-  kubernetesVersion: null,
-  setKubernetesVersion: () => {},
+  //------main-------//
   dataCenter: null,
   setDataCenter: () => {},
   osVersion: null,
   setOsVersion: () => {},
+  workersCount: 3,
+  setWorkersCount: () => {},
+  kubernetesVersion: null,
+  setKubernetesVersion: () => {},
+
+  //-------------//
   serverConfig: null,
   setServerConfig: () => {},
   serverName: "",
   setServerName: () => {},
   serverPassword: "",
   setServerPassword: () => {},
-  workersCount: 3,
-  setWorkersCount: () => {},
   submitHandler: () => {},
   submitLoading: false,
   paymentType: null,
@@ -71,11 +80,14 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   setIsPredefined: (isPredefined) => {},
   setPaymentType: () => {},
   customConfig: {
-    cpu: null,
-    memory: null,
-    disk: null,
+    cpu: 1,
+    memory: 1,
+    disk: 25,
+    ipV4: 1,
   },
   setCustomConfig: (customConfig) => {},
+  productItemPrices: null,
+  setProductItemPrices: () => {},
 });
 
 type AddKubernetesContextProviderPropsType = {
@@ -99,11 +111,14 @@ export const AddKubernetesContextProvider: FC<
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
   const [isPredefined, setIsPredefined] = useState(true);
+  const [productItemPrices, setProductItemPrices] =
+    useState<KubernetesPriceResponse | null>(null);
 
   const [customConfig, setCustomConfig] = useState<kubernetesCustomConfigType>({
     cpu: 3,
     memory: 4,
     disk: 2,
+    ipV4: 1,
   });
 
   const navigate = useNavigate();
@@ -185,6 +200,8 @@ export const AddKubernetesContextProvider: FC<
         setIsPredefined,
         customConfig,
         setCustomConfig,
+        productItemPrices,
+        setProductItemPrices,
       }}
     >
       {children}

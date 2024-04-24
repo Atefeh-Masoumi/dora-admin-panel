@@ -1,21 +1,21 @@
 import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import { ProductBundleListResponse } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 
-type SelectKuberConfigPropsType = {};
+type SelectKuberConfigPropsType = {
+  vmBundlesList: ProductBundleListResponse[];
+  vmBundlesListLoading: boolean;
+};
 
-export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
-  const { data, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
-    });
-
+export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
+  vmBundlesList,
+  vmBundlesListLoading,
+}) => {
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddKubernetesContext);
 
@@ -56,11 +56,23 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
           setCustomConfig({ ...customConfig, disk: newValue as number });
       },
     },
+    {
+      id: "IpV4",
+      label: "IpV4 (GB)",
+      min: 1,
+      max: 10,
+      step: 1,
+      value: 1,
+      onChange: (newValue: any) => {
+        setCustomConfig &&
+          setCustomConfig({ ...customConfig, ipV4: newValue as number });
+      },
+    },
   ];
 
   const configsList = useMemo(() => {
-    if (!data) return [];
-    return data.map(({ id, name, price, configurations }) => {
+    if (!vmBundlesList) return [];
+    return vmBundlesList.map(({ id, name, price, configurations }) => {
       const cpu =
         configurations?.find((item) => item.name === "CPU")?.quantity || 0;
       const memory =
@@ -80,7 +92,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
         price,
       };
     });
-  }, [data]);
+  }, [vmBundlesList]);
 
   const table = useMemo(
     () => (
@@ -89,10 +101,10 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
         RowComponent={KuberServerConfigTableRow}
         rows={configsList}
         text=""
-        isLoading={isLoading}
+        isLoading={vmBundlesListLoading}
       />
     ),
-    [configsList, isLoading]
+    [configsList, vmBundlesListLoading]
   );
 
   return (
@@ -129,7 +141,9 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
                 <ReverseSlider
                   value={Number(item.value)}
                   valueLabelDisplay="on"
-                  onChange={(_, value) => item.onChange(value as number)}
+                  onChange={(_, value) =>
+                    item.id === "IpV4" ? "" : item.onChange(value as number)
+                  }
                   min={item.min}
                   max={item.max}
                   step={item.step}

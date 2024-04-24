@@ -46,7 +46,7 @@ const AddVm: FC = () => {
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
-  const { data: productItems, isLoading: productItemsLoading } =
+  const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
@@ -104,7 +104,6 @@ const AddVm: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
-      console.log("test");
       createCloudServer({
         createVmModel: {
           name: serverName,

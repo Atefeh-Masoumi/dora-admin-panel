@@ -9,13 +9,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, FC, useContext } from "react";
+import { ChangeEvent, FC } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { AddServerContext } from "../contexts/AddVmContext";
 
-export const SelectConfigType: FC = () => {
-  const { isPredefined, setIsPredefined } = useContext(AddServerContext);
+type SelectConfigTypeType = {
+  isPredefined?: boolean;
+  setIsPredefined: (isPredefined: boolean) => void;
+};
+
+export const SelectConfigType: FC<SelectConfigTypeType> = ({
+  isPredefined,
+  setIsPredefined,
+}) => {
   const handleConfigTypeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsPredefined(!isPredefined);
   };
@@ -69,16 +75,26 @@ export const SelectConfigType: FC = () => {
                 <Stack
                   key={index}
                   p={2}
+                  px={3}
                   width={{ xs: "100%", md: "50%" }}
-                  sx={{ bgcolor: "rgba(240, 247, 255, 1)", borderRadius: 2 }}
+                  sx={{ bgcolor: "rgba(240, 247, 255, 1)", borderRadius: 1 }}
                 >
                   <FormControlLabel
+                    sx={{
+                      mb: 2,
+                      mx: 0,
+                      width: "auto",
+                      bgcolor: "white",
+                      borderRadius: "5px",
+                    }}
                     value={item.id}
                     control={<Radio />}
                     label={item.label}
                   />
                   <Divider sx={{ mb: 1 }} />
-                  <Typography variant="text14">{item.description}</Typography>
+                  <Typography textAlign="justify" variant="text14">
+                    {item.description}
+                  </Typography>
                   <List>
                     {item.descriptionItems.map((descriptionItem, index) => (
                       <ListItem sx={{ pb: 0 }} key={index}>
@@ -86,7 +102,7 @@ export const SelectConfigType: FC = () => {
                           <FiberManualRecordIcon sx={{ fontSize: 10 }} />
                         </ListItemIcon>
                         <ListItemText
-                          sx={{ m: 0 }}
+                          sx={{ m: 0, minWidth: "max-content" }}
                           primaryTypographyProps={{
                             variant: "text13",
                           }}

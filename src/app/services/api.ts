@@ -284,4 +284,5 @@ export const {
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
   useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery,
   useLazyGetApiMyPortalProductItemListByProductIdQuery,
+  useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
 } = api;
