@@ -105,24 +105,25 @@ const AddWeb: FC = () => {
             item
             style={{ position: "relative", textAlign: "center" }}
           >
-            <ServiceReceipt
-              receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
-              submitHandler={() => submitHandler()}
-              submitButtonIsLoading={isLoading}
-              paymentType={paymentType}
-              setPaymentType={setPaymentType}
-              receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
-              receiptItemNumber={serverConfig?.id ? "۱" : "---"}
-              reciptItemPrice={Math.floor(
-                serverConfig?.price || 0
-              ).toLocaleString("fa-IR")}
-              totalPrice={Math.floor(
-                (serverConfig?.price || 0) * 1.09
-              ).toLocaleString("fa-IR")}
-              vat={Math.floor((serverConfig?.price || 0) * 0.09).toLocaleString(
-                "fa-IR"
-              )}
-            />
+            <Box sx={{ position: "sticky", top: 0 }}>
+              <ServiceReceipt
+                submitHandler={() => submitHandler()}
+                submitButtonIsLoading={isLoading}
+                paymentType={paymentType}
+                setPaymentType={setPaymentType}
+                receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
+                receiptItemNumber={serverConfig?.id ? "۱" : "---"}
+                reciptItemPrice={Math.floor(
+                  serverConfig?.price || 0
+                ).toLocaleString("fa-IR")}
+                totalPrice={Math.floor(
+                  (serverConfig?.price || 0) * 1.09
+                ).toLocaleString("fa-IR")}
+                vat={Math.floor(
+                  (serverConfig?.price || 0) * 0.09
+                ).toLocaleString("fa-IR")}
+              />
+            </Box>
           </Grid>
         </Grid>
         <Stack
