@@ -60,13 +60,10 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Added
 
-  const {
-    data: vmData,
-    isLoading: getVmDataLoading,
-    isFetching: getVmDataFetching,
-  } = useGetApiMyVmHostGetByIdQuery({
-    id: Number(id)!,
-  });
+  const { data: vmData, isLoading: getVmDataLoading } =
+    useGetApiMyVmHostGetByIdQuery({
+      id: Number(id)!,
+    });
 
   useEffect(() => {
     if (!id) return;

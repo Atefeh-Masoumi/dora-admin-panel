@@ -52,6 +52,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@rtk-incubator/rtk-query-codegen-openapi": "^0.5.1",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
