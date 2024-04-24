@@ -64,9 +64,9 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
             "fa-IR"
           )}
           totalPrice={Math.floor(
-            (productBundle?.price || 0) * 1.09
+            (productBundle?.price || 0) * 1.1
           ).toLocaleString("fa-IR")}
-          vat={Math.floor((productBundle?.price || 0) * 0.09).toLocaleString(
+          vat={Math.floor((productBundle?.price || 0) * 0.1).toLocaleString(
             "fa-IR"
           )}
         />

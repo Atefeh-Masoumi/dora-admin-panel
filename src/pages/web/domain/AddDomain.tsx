@@ -204,10 +204,10 @@ const AddDomain: FC = () => {
                 reciptItemPrice={Math.floor(extObject.price).toLocaleString(
                   "fa-IR"
                 )}
-                totalPrice={Math.floor(extObject.price * 1.09).toLocaleString(
+                totalPrice={Math.floor(extObject.price * 1.1).toLocaleString(
                   "fa-IR"
                 )}
-                vat={Math.floor(extObject.price * 0.09).toLocaleString("fa-IR")}
+                vat={Math.floor(extObject.price * 0.1).toLocaleString("fa-IR")}
                 priceIsLoading={checkDomainLoading}
               />
             </Stack>

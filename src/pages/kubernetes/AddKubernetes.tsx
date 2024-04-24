@@ -81,9 +81,9 @@ const AddKubernetes: FC = () => {
                 serverConfig?.price || 0
               ).toLocaleString("fa-IR")}
               totalPrice={Math.floor(
-                (serverConfig?.price || 0) * 1.09
+                (serverConfig?.price || 0) * 1.1
               ).toLocaleString("fa-IR")}
-              vat={Math.floor((serverConfig?.price || 0) * 0.09).toLocaleString(
+              vat={Math.floor((serverConfig?.price || 0) * 0.1).toLocaleString(
                 "fa-IR"
               )}
             />
