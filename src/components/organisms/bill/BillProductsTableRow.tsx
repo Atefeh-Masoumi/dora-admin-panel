@@ -18,9 +18,11 @@ import { customerProductItemsTableStruct } from "../portal/customerBill/tables/b
 
 type BillProductsTableRowPropsType = {
   rowData: CustomerProductBillModel;
+  rowBgColor: string
 };
 const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
   rowData,
+  rowBgColor,
 }) => {
   const [open, setOpen] = useState(false);
   const fromDate = rowData.fromDate!;
@@ -36,7 +38,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
         sx={{
           "& > *": { borderBottom: "unset" },
           "&:nth-of-type(odd)": {
-            backgroundColor: "rgba(240, 247, 255, 1)",
+            backgroundColor: rowBgColor,
           },
         }}
       >
