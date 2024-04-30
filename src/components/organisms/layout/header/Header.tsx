@@ -154,6 +154,7 @@ const Header: FC<HeaderPropsType> = ({
         boxShadow: isScrolled ? 4 : 0,
         bgcolor: "white",
         overflow: "overlay",
+        borderRadius: "24px",
       }}
     >
       <Toolbar sx={{ p: 0 + "!important" }}>

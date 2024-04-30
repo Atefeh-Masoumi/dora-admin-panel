@@ -22,7 +22,7 @@ export const Products: FC = () => {
       <Stack
         direction="row"
         alignItems="center"
-        columnGap={{ xs: 1, lg: 1.5 }}
+        columnGap={{ xs: 1, lg: 2 }}
         sx={{ width: { xs: 0, lg: 0 } }}
       >
         {homeProductsConstantListItems.map(

@@ -9,7 +9,7 @@ export const Wallet: FC = () => {
       container
       justifyContent="space-between"
       rowGap={2}
-      columnGap={3}
+      columnGap={2}
       sx={{ mb: { xs: 2, md: 3 } }}
     >
       <Balance />

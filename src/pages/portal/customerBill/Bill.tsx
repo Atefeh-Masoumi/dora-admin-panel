@@ -162,7 +162,13 @@ const Bill: FC = () => {
               </TableHead>
               <TableBody>
                 {productList.map((product, index) => (
-                  <BillProductsTableRow key={index} rowData={product} />
+                  <BillProductsTableRow
+                    rowBgColor={
+                      (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
+                    }
+                    key={index}
+                    rowData={product}
+                  />
                 ))}
               </TableBody>
             </Table>
