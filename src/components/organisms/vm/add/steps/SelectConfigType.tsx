@@ -13,6 +13,11 @@ import { ChangeEvent, FC } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
+enum PRODUCT_TYPE_ENUM {
+  PRE_DEFINED = 1,
+  CUSTOM = 2,
+}
+
 type SelectConfigTypeType = {
   isPredefined?: boolean;
   setIsPredefined: (isPredefined: boolean) => void;
@@ -23,12 +28,13 @@ export const SelectConfigType: FC<SelectConfigTypeType> = ({
   setIsPredefined,
 }) => {
   const handleConfigTypeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsPredefined(!isPredefined);
+    const productType = event.target.value;
+    setIsPredefined(Number(productType) === PRODUCT_TYPE_ENUM.PRE_DEFINED);
   };
 
   const configItemData = [
     {
-      id: 1,
+      id: PRODUCT_TYPE_ENUM.PRE_DEFINED,
       label: "پیش فرض",
       description:
         "بهترین نسبت قیمت/عملکرد برنامه ها باید بتوانند سطوح مختلف تخصیص CPU را انجام دهند. برای استفاده مداوم از CPU مناسب نیست.",
@@ -38,7 +44,7 @@ export const SelectConfigType: FC<SelectConfigTypeType> = ({
       ],
     },
     {
-      id: 2,
+      id: PRODUCT_TYPE_ENUM.CUSTOM,
       label: "سفارشی",
       description:
         "بهترین انتخاب برای تولید حیاتی و همچنین کاربردهای بالای CPU. عملکرد و زمان پاسخ قابل پیش بینی را ارائه می‌دهد.",
@@ -67,7 +73,11 @@ export const SelectConfigType: FC<SelectConfigTypeType> = ({
       >
         <Stack>
           <RadioGroup
-            value={isPredefined ? 1 : 2}
+            value={
+              isPredefined
+                ? PRODUCT_TYPE_ENUM.PRE_DEFINED
+                : PRODUCT_TYPE_ENUM.CUSTOM
+            }
             onChange={handleConfigTypeOnChange}
           >
             <Stack gap={2} direction={{ xs: "column", md: "row" }}>
