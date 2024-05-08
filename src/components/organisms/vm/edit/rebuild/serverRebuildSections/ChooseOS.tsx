@@ -9,12 +9,12 @@ import {
 } from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
-import { GetApiMyVmImageListByDatacenterIdApiResponse } from "src/app/services/api.generated";
+import { GetApiMyVmImageListApiResponse } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
-import { useLazyGetApiMyVmImageListByDatacenterIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyVmImageListQuery } from "src/app/services/api";
 
 type ChooseOSPropsType = {
   imageId: number;
@@ -24,17 +24,15 @@ type ChooseOSPropsType = {
 export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
   const { dataCenter } = useContext(EditServerContext);
 
-  const [getData, { isLoading }] =
-    useLazyGetApiMyVmImageListByDatacenterIdQuery();
+  const [getData, { isLoading }] = useLazyGetApiMyVmImageListQuery();
 
-  const [data, setData] =
-    useState<GetApiMyVmImageListByDatacenterIdApiResponse | null>(null);
+  const [data, setData] = useState<GetApiMyVmImageListApiResponse | null>(null);
 
   const [osType, setOsType] = useState<number | null>(null);
 
   useEffect(() => {
     if (dataCenter) {
-      getData({ datacenterId: dataCenter })
+      getData({ datacenterId: dataCenter, vmTypeId: 1 })
         .unwrap()
         .then((res) => res && setData(res));
     }
@@ -45,7 +43,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
   const osVersionClickHandler = (selectedOs: number) => setImageId(selectedOs);
 
   const osArray = useMemo(() => {
-    let result: GetApiMyVmImageListByDatacenterIdApiResponse = [];
+    let result: GetApiMyVmImageListApiResponse = [];
     if (data) {
       data.forEach((item) => {
         const idx = result.findIndex(({ osId }) => osId === item.osId);
