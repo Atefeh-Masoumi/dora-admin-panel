@@ -32,8 +32,8 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
     name: customerData?.name || "",
     nationalId: customerData?.nationalId || "",
     phone: customerData?.phone || "",
-    address: customerData?.address || "",
-    postalCode: customerData?.postalCode || "",
+    address: "",
+    postalCode: "",
   };
 
   const [editCustomer, { isLoading: loadingEdit }] =
@@ -115,7 +115,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
                   />
                   <DorsaTextField
                     error={Boolean(errors.postalCode && touched.postalCode)}
-                    helperText={errors.postalCode}
+                    // helperText={errors.postalCode}
                     {...getFieldProps("postalCode")}
                     label="کد پستی"
                     fullWidth

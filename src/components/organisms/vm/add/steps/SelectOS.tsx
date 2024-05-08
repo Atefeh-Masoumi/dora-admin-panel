@@ -11,7 +11,7 @@ import {
 import { BORDER_RADIUS_4 } from "src/configs/theme";
 import {
   ImageListResponse,
-  useGetApiMyVmImageListByDatacenterIdQuery,
+  useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -32,8 +32,9 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } =
-    useGetApiMyVmImageListByDatacenterIdQuery({
+  useGetApiMyVmImageListQuery({
       datacenterId: dataCenter?.id || 0,
+      vmTypeId: 1
     });
 
   const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(
