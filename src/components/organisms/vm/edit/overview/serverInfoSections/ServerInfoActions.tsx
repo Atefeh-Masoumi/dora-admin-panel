@@ -64,6 +64,13 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     a.click();
   };
 
+  const sendUserToOpenConsole = (url: string) => {
+    let a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.click();
+  };
+
   const actionsArray = [
     {
       label: "Web Console",
@@ -73,7 +80,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .unwrap()
           .then((res) => {
             if (!res) return;
-            sendUserToKmsConsole(res);
+            if (res.vmTypeId === 1) sendUserToKmsConsole(res?.location ?? "");
+            else sendUserToOpenConsole(res?.location ?? "");
           });
       },
       isLoading: getVmDataLoading || getConsoleUrlLoading,

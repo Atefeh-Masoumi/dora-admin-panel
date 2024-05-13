@@ -2515,7 +2515,7 @@ export type PutApiMyVmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
 };
 export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
-  /** status 200 Success */ string;
+  /** status 200 Success */ GetRemoteConsoleResponse;
 export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
   id: number;
   typeId: number;
@@ -3779,6 +3779,10 @@ export type MountModel = {
 export type UnmountModel = {
   id?: number;
   vmId?: number;
+};
+export type GetRemoteConsoleResponse = {
+  location?: string | null;
+  vmTypeId?: number;
 };
 export type VmSnapshotResponse = {
   id?: number;

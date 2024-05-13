@@ -28,6 +28,20 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
     navigate("/vm/" + row["id"]);
   };
 
+  const sendUserToKmsConsole = (url: string) => {
+    let a = document.createElement("a");
+    a.href = "/console/wmks-sdk.html?url=" + url;
+    a.target = "_blank";
+    a.click();
+  };
+
+  const sendUserToOpenConsole = (url: string) => {
+    let a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.click();
+  };
+
   const monitorOnClick = () => {
     if (isDeactivate) return;
     getUrl({
@@ -37,10 +51,8 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then((res) => {
         if (!res) return;
-        let a = document.createElement("a");
-        a.href = "/console/wmks-sdk.html?url=" + res;
-        a.target = "_blank";
-        a.click();
+        if (res.vmTypeId === 1) sendUserToKmsConsole(res?.location ?? "");
+        else sendUserToOpenConsole(res?.location ?? "");
       });
   };
 
