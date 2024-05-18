@@ -8,6 +8,71 @@ import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { DeleteVmSnapshotDialog } from "../../../dialogs/DeleteVmSnapshotDialog";
 import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
 
+enum VM_SNAPSHOT_STATUS_INFO {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  INQUEUE = 3,
+  WAIT = 4,
+  FAIL = 5,
+  DELETE = 6,
+}
+
+const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
+  switch (vmSnapshotStatusId) {
+    case 1:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.ACTIVE,
+        label: "فعال",
+        bgcolor: theme.palette.success.light,
+        color: theme.palette.success.main,
+      };
+    case 2:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.INACTIVE,
+        label: "غیرفعال",
+        bgcolor: theme.palette.error.light,
+        color: theme.palette.error.main,
+      };
+    case 3:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.INQUEUE,
+        label: "درصف",
+        bgcolor: theme.palette.warning.light,
+        color: theme.palette.warning.main,
+      };
+
+    case 4:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.WAIT,
+        label: "درانتظار",
+        bgcolor: theme.palette.warning.light,
+        color: theme.palette.warning.main,
+      };
+
+    case 5:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.FAIL,
+        label: "ناموفق",
+        bgcolor: theme.palette.error.light,
+        color: theme.palette.error.main,
+      };
+
+    case 6:
+      return {
+        id: VM_SNAPSHOT_STATUS_INFO.DELETE,
+        label: "حذف شده",
+        bgcolor: theme.palette.error.light,
+        color: theme.palette.error.main,
+      };
+    default:
+      return {
+        label: "نامشخص",
+        bgcolor: theme.palette.error.light,
+        color: theme.palette.error.main,
+      };
+  }
+};
+
 export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openRevert, setOpenRevert] = useState(false);
@@ -17,62 +82,6 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
 
   const handleOpenRevert = () => setOpenRevert(true);
   const handleCloseRevert = () => setOpenRevert(false);
-
-  const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
-    switch (vmSnapshotStatusId) {
-      case 1:
-        return {
-          id: 1,
-          label: "فعال",
-          bgcolor: theme.palette.success.light,
-          color: theme.palette.success.main,
-        };
-      case 2:
-        return {
-          id: 2,
-          label: "غیرفعال",
-          bgcolor: theme.palette.error.light,
-          color: theme.palette.error.main,
-        };
-      case 3:
-        return {
-          id: 3,
-          label: "درصف",
-          bgcolor: theme.palette.warning.light,
-          color: theme.palette.warning.main,
-        };
-
-      case 4:
-        return {
-          id: 4,
-          label: "درانتظار",
-          bgcolor: theme.palette.warning.light,
-          color: theme.palette.warning.main,
-        };
-
-      case 5:
-        return {
-          id: 5,
-          label: "ناموفق",
-          bgcolor: theme.palette.error.light,
-          color: theme.palette.error.main,
-        };
-
-      case 6:
-        return {
-          id: 6,
-          label: "حذف شده",
-          bgcolor: theme.palette.error.light,
-          color: theme.palette.error.main,
-        };
-      default:
-        return {
-          label: "نامشخص",
-          bgcolor: theme.palette.error.light,
-          color: theme.palette.error.main,
-        };
-    }
-  };
 
   return (
     <Fragment>
@@ -94,7 +103,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  {vmSnapshotStatusId === 2 && (
+                  {vmSnapshotStatusId === VM_SNAPSHOT_STATUS_INFO.INACTIVE && (
                     <IconButton onClick={handleOpenRevert}>
                       <RefreshSvg />
                     </IconButton>
