@@ -82,7 +82,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
             if (!res) return;
             if (res.vmTypeId === 1) sendUserToKmsConsole(res?.location ?? "");
             else sendUserToOpenConsole(res?.location ?? "");
-          });
+          })
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || getConsoleUrlLoading,
       isDisable: !powerOn,
@@ -94,7 +95,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         disconnectServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت disconnect شد "));
+          .then(() => toast.success("سرور ابری با موفقیت disconnect شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || disconnectServerIsLoading,
       isDisable: !powerOn,
@@ -106,7 +108,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         connectServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت connect شد "));
+          .then(() => toast.success("سرور ابری با موفقیت connect شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || connectServerIsLoading,
       isDisable: !powerOn,
@@ -118,7 +121,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         stopServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت stop شد "));
+          .then(() => toast.success("سرور ابری با موفقیت stop شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || stopServerIsLoading,
       isDisable: !powerOn,
@@ -130,7 +134,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         startServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت start شد "));
+          .then(() => toast.success("سرور ابری با موفقیت start شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || startServerIsLoading,
       isDisable: false,
@@ -142,7 +147,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         shutdownServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت shutdown شد "));
+          .then(() => toast.success("سرور ابری با موفقیت shutdown شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || shutdownServerIsLoading,
       isDisable: !powerOn,
@@ -154,7 +160,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         if (!serverId) return;
         rebootServer({ id: serverId })
           .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت reboot شد "));
+          .then(() => toast.success("سرور ابری با موفقیت reboot شد "))
+          .catch((err) => {});
       },
       isLoading: getVmDataLoading || rebootServerIsLoading,
       isDisable: !powerOn,

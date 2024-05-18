@@ -10,6 +10,12 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
 import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
+import { GetRemoteConsoleResponse } from "src/app/services/api.generated";
+
+enum VM_TYPE {
+  VM_WARE = 1,
+  OPENSTACK = 2,
+}
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -28,16 +34,15 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
     navigate("/vm/" + row["id"]);
   };
 
-  const sendUserToKmsConsole = (url: string) => {
+  const sendUserToKmsConsole = (
+    remoteConsoleObject: GetRemoteConsoleResponse
+  ) => {
     let a = document.createElement("a");
-    a.href = "/console/wmks-sdk.html?url=" + url;
-    a.target = "_blank";
-    a.click();
-  };
+    const url: string = remoteConsoleObject.location || "";
+    const vmTypeId = remoteConsoleObject.vmTypeId || "";
 
-  const sendUserToOpenConsole = (url: string) => {
-    let a = document.createElement("a");
-    a.href = url;
+    a.href =
+      vmTypeId === VM_TYPE.VM_WARE ? "/console/wmks-sdk.html?url=" + url : url;
     a.target = "_blank";
     a.click();
   };
@@ -51,9 +56,9 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then((res) => {
         if (!res) return;
-        if (res.vmTypeId === 1) sendUserToKmsConsole(res?.location ?? "");
-        else sendUserToOpenConsole(res?.location ?? "");
-      });
+        sendUserToKmsConsole(res);
+      })
+      .catch((err) => {});
   };
 
   return (
