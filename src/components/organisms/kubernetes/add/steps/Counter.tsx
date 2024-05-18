@@ -24,17 +24,18 @@ export const Counter: FC<CounterPropsType> = ({
   };
 
   return (
-    <Stack direction="row" columnGap={1} alignItems="center">
+    <Stack direction="row" columnGap={0.5} alignItems="center">
       <IconButton
         onClick={onPlusClick}
         size="small"
         sx={{
           bgcolor: "primary.main",
-          width: 45,
-          height: 45,
+          width: 50,
+          height: 50,
           "&:hover": {
             bgcolor: "primary.dark",
           },
+          borderRadius: "5px",
         }}
       >
         <Add sx={{ color: "common.white" }} />
@@ -58,11 +59,12 @@ export const Counter: FC<CounterPropsType> = ({
         onClick={onMinusClick}
         sx={{
           bgcolor: "primary.main",
-          width: 45,
-          height: 45,
+          width: 50,
+          height: 50,
           "&:hover": {
             bgcolor: "primary.dark",
           },
+          borderRadius: "5px",
         }}
       >
         <Remove sx={{ color: "common.white" }} />
