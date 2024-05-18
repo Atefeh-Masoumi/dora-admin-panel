@@ -3788,7 +3788,8 @@ export type VmSnapshotResponse = {
   id?: number;
   parentId?: number | null;
   name?: string | null;
-  isActive?: boolean;
+  vmSnapshotStatusId?: number;
+  vmSnapshotStatus?: string | null;
   isCreated?: boolean;
   description?: string | null;
   createDate?: string;
