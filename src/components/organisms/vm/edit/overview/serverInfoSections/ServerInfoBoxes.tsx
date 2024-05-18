@@ -77,6 +77,16 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
+            title="Vm Type"
+            isLoading={isLoading}
+            component={
+              <Chip
+                label={vmData?.vmType}
+                sx={{ borderRadius: BORDER_RADIUS_1 }}
+              />
+            }
+          />
+          <BoxRow
             title="Server Name"
             value={vmData?.name}
             isLoading={isLoading}
