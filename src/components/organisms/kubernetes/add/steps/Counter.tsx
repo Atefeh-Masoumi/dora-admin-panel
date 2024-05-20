@@ -30,8 +30,8 @@ export const Counter: FC<CounterPropsType> = ({
         size="small"
         sx={{
           bgcolor: "primary.main",
-          width: 53,
-          height: 53,
+          width: 50,
+          height: 50,
           "&:hover": {
             bgcolor: "primary.dark",
           },
@@ -59,8 +59,8 @@ export const Counter: FC<CounterPropsType> = ({
         onClick={onMinusClick}
         sx={{
           bgcolor: "primary.main",
-          width: 53,
-          height: 53,
+          width: 50,
+          height: 50,
           "&:hover": {
             bgcolor: "primary.dark",
           },
