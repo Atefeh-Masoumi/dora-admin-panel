@@ -2070,8 +2070,7 @@ export type PostApiMyDnsHostCheckZoneApiResponse = unknown;
 export type PostApiMyDnsHostCheckZoneApiArg = {
   checkDnsModel: CheckDnsModel;
 };
-export type PostApiMyDnsHostCreateApiResponse =
-  /** status 200 Success */ DnsHostCreateResponse;
+export type PostApiMyDnsHostCreateApiResponse = unknown;
 export type PostApiMyDnsHostCreateApiArg = {
   createDnsModel: CreateDnsModel;
 };
@@ -3128,9 +3127,6 @@ export type GetDnsNsStatusResponse = {
 export type CheckDnsModel = {
   zoneName: string;
 };
-export type DnsHostCreateResponse = {
-  dnsHostId?: number;
-};
 export type CreateDnsModel = {
   zoneName: string;
 };
@@ -3786,7 +3782,6 @@ export type GetRemoteConsoleResponse = {
 };
 export type VmSnapshotResponse = {
   id?: number;
-  parentId?: number | null;
   name?: string | null;
   vmSnapshotStatusId?: number;
   vmSnapshotStatus?: string | null;
