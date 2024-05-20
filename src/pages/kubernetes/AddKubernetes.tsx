@@ -63,7 +63,7 @@ const AddKubernetes: FC = () => {
         setProductItemPrices(res);
       })
       .catch((e) => {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getKubernetesPrice, isPredefined, workersCount, serverConfig?.id]);
 
   const mapCustomConfig = useMemo(() => {
@@ -212,11 +212,7 @@ const AddKubernetes: FC = () => {
           <Box sx={{ position: "sticky", top: 0 }}>
             <ServiceReceipt
               customConfig={mapCustomConfig}
-              receiptType={
-                isPredefined
-                  ? ReceiptTypeEnum.PREDEFINED_BUNDLE
-                  : ReceiptTypeEnum.CUSTOM
-              }
+              receiptType={ReceiptTypeEnum.CUSTOM}
               submitHandler={submitHandler}
               submitButtonIsLoading={submitLoading}
               paymentType={paymentType}
