@@ -11,11 +11,8 @@ import { addVmTableStruct } from "./struct";
 import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
 import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
 import { GetRemoteConsoleResponse } from "src/app/services/api.generated";
+import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
-enum VM_TYPE {
-  VM_WARE = 1,
-  OPENSTACK = 2,
-}
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
@@ -38,8 +35,8 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
     remoteConsoleObject: GetRemoteConsoleResponse
   ) => {
     let a = document.createElement("a");
-    const url: string = remoteConsoleObject.location || "";
-    const vmTypeId = remoteConsoleObject.vmTypeId || "";
+    const url: string = remoteConsoleObject?.location || "";
+    const vmTypeId = remoteConsoleObject?.vmTypeId || ""
 
     a.href =
       vmTypeId === VM_TYPE.VM_WARE ? "/console/wmks-sdk.html?url=" + url : url;
