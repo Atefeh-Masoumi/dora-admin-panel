@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useMemo, useState } from "react";
 import { Box, Divider, Stack, Typography, Grid, Paper } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -7,6 +7,7 @@ import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectC
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import {
+  useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyStorageHostListQuery,
   usePostApiMyStorageHostCreateMutation,
 } from "src/app/services/api.generated";
@@ -14,9 +15,22 @@ import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
+import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+
+const mapConfig = {
+  disk: "Disk",
+};
 
 const AddStorageService: FC = () => {
-  const { dataCenter, serverConfig, name } = useContext(AddStorageContext);
+  const {
+    dataCenter,
+    serverConfig,
+    name,
+    isPredefined,
+    setIsPredefined,
+    customConfig,
+  } = useContext(AddStorageContext);
 
   const [paymentType, setPaymentType] =
     useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
@@ -26,7 +40,24 @@ const AddStorageService: FC = () => {
   const [createStorageService, { isLoading }] =
     usePostApiMyStorageHostCreateMutation();
 
+  const { data: productItems } =
+    useGetApiMyPortalProductItemListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
+    });
+
   const { refetch } = useGetApiMyStorageHostListQuery();
+
+  const mapCustomConfig = useMemo(() => {
+    return [
+      {
+        numberOfItem: customConfig.disk || 0,
+        name: mapConfig.disk || "",
+        fee: productItems?.find((x) => x.name === "CloudDisk")?.price || 0,
+      },
+    ];
+  }, [customConfig, productItems]);
+
+  console.log(productItems);
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -37,7 +68,7 @@ const AddStorageService: FC = () => {
       validationErrorMessage = "لطفا نام سرویس را انتخاب کنید";
     } else if (name.length < 3) {
       validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
-    } else if (!serverConfig || !serverConfig.id) {
+    } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
     } else if (!paymentType) {
       validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
@@ -46,7 +77,7 @@ const AddStorageService: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
-      // TODO: add "storageHostTypeId" and "disk";
+      // TODO: add "storageHostTypeId";
       createStorageService({
         createStorageHostModel: {
           name: name,
@@ -54,9 +85,9 @@ const AddStorageService: FC = () => {
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
           customerProductTypeId: paymentType!,
-          isPredefined: true,
+          isPredefined: isPredefined,
           storageHostTypeId: 2,
-          disk: null,
+          disk: customConfig.disk,
         },
       })
         .unwrap()
@@ -64,7 +95,8 @@ const AddStorageService: FC = () => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
           navigate("/storage");
           refetch();
-        });
+        })
+        .catch((err) => {});
     }
   };
 
@@ -96,6 +128,13 @@ const AddStorageService: FC = () => {
                   <Divider sx={{ margin: "50px 10px" }} />
                 </Grid>
                 <Grid xs={12} item>
+                  <SelectConfigType
+                    isPredefined={isPredefined}
+                    setIsPredefined={setIsPredefined}
+                  />
+                  <Divider sx={{ margin: "50px 10px" }} />
+                </Grid>
+                <Grid xs={12} item>
                   <SelectConfig />
                   <Divider sx={{ margin: "50px 10px" }} />
                 </Grid>
@@ -116,7 +155,12 @@ const AddStorageService: FC = () => {
           >
             <Box sx={{ position: "sticky", top: 0 }}>
               <ServiceReceipt
-                receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
+                customConfig={mapCustomConfig}
+                receiptType={
+                  isPredefined
+                    ? ReceiptTypeEnum.PREDEFINED_BUNDLE
+                    : ReceiptTypeEnum.CUSTOM
+                }
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={isLoading}
                 paymentType={paymentType}

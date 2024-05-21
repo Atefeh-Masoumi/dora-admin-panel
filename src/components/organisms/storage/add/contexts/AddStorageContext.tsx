@@ -6,6 +6,10 @@ import {
 
 export type addStorageStepsType = 1 | 2 | 3;
 
+export type StorageCustomConfigType = {
+  disk: number | null;
+};
+
 type AddStorageContextType = {
   step: addStorageStepsType;
   setStep: (step: addStorageStepsType) => void;
@@ -15,6 +19,11 @@ type AddStorageContextType = {
   setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
   name: string;
   setName: (name: string) => void;
+  isPredefined: boolean;
+  setIsPredefined: (isPredefined: boolean) => void;
+  //------------------for custom config-----------------//
+  customConfig: StorageCustomConfigType;
+  setCustomConfig: (customConfig: StorageCustomConfigType) => void;
 };
 
 export const AddStorageContext = createContext<AddStorageContextType>({
@@ -26,6 +35,12 @@ export const AddStorageContext = createContext<AddStorageContextType>({
   setServerConfig: (productBundle) => {},
   name: "",
   setName: (name) => {},
+  isPredefined: false,
+  setIsPredefined: (isPredefined) => {},
+  customConfig: {
+    disk: null,
+  },
+  setCustomConfig: (customConfig) => {},
 });
 
 type AddStorageContextProviderPropsType = {
@@ -36,12 +51,16 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
   children,
 }) => {
   const [step, setStep] = useState<addStorageStepsType>(1);
+  const [isPredefined, setIsPredefined] = useState<boolean>(true);
   const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
     null
   );
   const [serverConfig, setServerConfig] =
     useState<ProductBundleListResponse | null>(null);
   const [name, setName] = useState("");
+  const [customConfig, setCustomConfig] = useState<StorageCustomConfigType>({
+    disk: 500,
+  });
 
   return (
     <AddStorageContext.Provider
@@ -54,6 +73,10 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
         setServerConfig,
         name,
         setName,
+        isPredefined,
+        setIsPredefined,
+        customConfig,
+        setCustomConfig,
       }}
     >
       {children}
