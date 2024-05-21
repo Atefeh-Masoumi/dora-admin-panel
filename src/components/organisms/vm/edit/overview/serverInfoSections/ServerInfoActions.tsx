@@ -17,11 +17,13 @@ import {
   usePutApiMyVmHostRebootByIdMutation,
   usePutApiMyVmHostShutdownByIdMutation,
   useGetApiMyVmHostGetByIdQuery,
+  GetRemoteConsoleResponse,
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
 import { useParams } from "react-router";
+import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
 type ServerInfoActionsPropsType = {};
 
@@ -57,16 +59,15 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     [vmData?.powerStatus]
   );
 
-  const sendUserToKmsConsole = (url: string) => {
+  const sendUserToKmsConsole = (
+    remoteConsoleObject: GetRemoteConsoleResponse
+  ) => {
     let a = document.createElement("a");
-    a.href = "/console/wmks-sdk.html?url=" + url;
-    a.target = "_blank";
-    a.click();
-  };
+    const url: string = remoteConsoleObject?.location || "";
+    const vmTypeId = remoteConsoleObject?.vmTypeId || "";
 
-  const sendUserToOpenConsole = (url: string) => {
-    let a = document.createElement("a");
-    a.href = url;
+    a.href =
+      vmTypeId === VM_TYPE.VM_WARE ? "/console/wmks-sdk.html?url=" + url : url;
     a.target = "_blank";
     a.click();
   };
@@ -79,9 +80,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
         getConsoleUrl({ id: serverId || 0, typeId: 2 })
           .unwrap()
           .then((res) => {
-            if (!res) return;
-            if (res.vmTypeId === 1) sendUserToKmsConsole(res?.location ?? "");
-            else sendUserToOpenConsole(res?.location ?? "");
+            sendUserToKmsConsole(res);
           })
           .catch((err) => {});
       },
