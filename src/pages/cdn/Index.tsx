@@ -15,6 +15,7 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -74,6 +75,29 @@ const ZoneManagement: FC = () => {
     <DataContext.Provider value={{ refetchOnClick }}>
       <Fragment>
         <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+          <Stack
+            p={3}
+            mb={3}
+            bgcolor="warning.main"
+            direction="row"
+            gap={1}
+            borderRadius={2}
+            width="100%"
+            color="white"
+            alignItems={{ xs: "start", md: "center" }}
+          >
+            <ErrorOutlineOutlinedIcon />
+            <Typography>توجه:</Typography>
+            <Typography
+              fontSize={14}
+              sx={{
+                opacity: 0.9,
+              }}
+            >
+              استفاده از ترافیک ممنوعه پیگرد قانونی دارد.
+              <br />
+            </Typography>
+          </Stack>
           <Stack
             direction="row"
             spacing={1}
