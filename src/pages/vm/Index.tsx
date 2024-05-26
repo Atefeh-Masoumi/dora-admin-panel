@@ -8,6 +8,7 @@ import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 type VmManagementPropsType = {};
 
@@ -51,6 +52,29 @@ const VmManagement: FC<VmManagementPropsType> = () => {
       borderRadius={3}
       direction="column"
     >
+      <Stack
+        p={3}
+        mb={3}
+        bgcolor="warning.main"
+        direction="row"
+        gap={1}
+        borderRadius={2}
+        width="100%"
+        color="white"
+        alignItems={{ xs: "start", md: "center" }}
+      >
+        <ErrorOutlineOutlinedIcon />
+        <Typography>توجه:</Typography>
+        <Typography
+          fontSize={14}
+          sx={{
+            opacity: 0.9,
+          }}
+        >
+          استفاده از ترافیک ممنوعه پیگرد قانونی دارد.
+          <br />
+        </Typography>
+      </Stack>
       <Stack
         direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
