@@ -3,18 +3,14 @@ import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AddStorageTableRow } from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
 import { AddStorageContext } from "../contexts/AddStorageContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
-    });
+  const { data: bundleList, isLoading } = useGetApiMyPortalProductBundleStorageListQuery();
 
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddStorageContext);
@@ -33,32 +29,32 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     },
   ];
 
-  const configsList = useMemo(() => {
-    if (!data) return [];
-    return data.map(({ id, name, price, configurations }) => {
-      const disk =
-        configurations?.find((item) => item.name === "Disk")?.quantity || 0;
+  // const configsList = useMemo(() => {
+  //   if (!data) return [];
+  //   return data.map(({ id, name, price, configurations }) => {
+  //     const disk =
+  //       configurations?.find((item) => item.name === "Disk")?.quantity || 0;
 
-      return {
-        id,
-        name,
-        disk,
-        price,
-      };
-    });
-  }, [data]);
+  //     return {
+  //       id,
+  //       name,
+  //       disk,
+  //       price,
+  //     };
+  //   });
+  // }, [data]);
 
   const table = useMemo(
     () => (
       <BaseTable
         struct={addStorageTableStruct}
         RowComponent={AddStorageTableRow}
-        rows={configsList || []}
+        rows={bundleList || []}
         text=""
         isLoading={isLoading}
       />
     ),
-    [configsList, isLoading]
+    [bundleList, isLoading]
   );
 
   return (
