@@ -371,6 +371,16 @@ export const api = createApi({
         body: queryArg.editCustomerModel,
       }),
     }),
+    putApiMyPortalCustomerConvertToLegal: build.mutation<
+      PutApiMyPortalCustomerConvertToLegalApiResponse,
+      PutApiMyPortalCustomerConvertToLegalApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer/convert-to-legal`,
+        method: "PUT",
+        body: queryArg.convertCustomerToLegalModel,
+      }),
+    }),
     getApiMyPortalCustomerBillList: build.query<
       GetApiMyPortalCustomerBillListApiResponse,
       GetApiMyPortalCustomerBillListApiArg
@@ -1560,6 +1570,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/vpc/host/list` }),
     }),
+    getApiMyVpcHostGetById: build.query<
+      GetApiMyVpcHostGetByIdApiResponse,
+      GetApiMyVpcHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vpc/host/get/${queryArg.id}` }),
+    }),
     postApiMyVpcHostCreate: build.mutation<
       PostApiMyVpcHostCreateApiResponse,
       PostApiMyVpcHostCreateApiArg
@@ -1580,12 +1596,12 @@ export const api = createApi({
         body: queryArg.editVpcHostModel,
       }),
     }),
-    deleteApiMyVpcHostDeleteByVpcHostId: build.mutation<
-      DeleteApiMyVpcHostDeleteByVpcHostIdApiResponse,
-      DeleteApiMyVpcHostDeleteByVpcHostIdApiArg
+    deleteApiMyVpcHostDeleteById: build.mutation<
+      DeleteApiMyVpcHostDeleteByIdApiResponse,
+      DeleteApiMyVpcHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/host/delete/${queryArg.vpcHostId}`,
+        url: `/api/my/vpc/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1650,12 +1666,12 @@ export const api = createApi({
         body: queryArg.createVpcIpModel,
       }),
     }),
-    deleteApiMyVpcIpDeleteByVpcHostGatewayIpId: build.mutation<
-      DeleteApiMyVpcIpDeleteByVpcHostGatewayIpIdApiResponse,
-      DeleteApiMyVpcIpDeleteByVpcHostGatewayIpIdApiArg
+    deleteApiMyVpcIpDeleteById: build.mutation<
+      DeleteApiMyVpcIpDeleteByIdApiResponse,
+      DeleteApiMyVpcIpDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/ip/delete/${queryArg.vpcHostGatewayIpId}`,
+        url: `/api/my/vpc/ip/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1702,6 +1718,15 @@ export const api = createApi({
         url: `/api/my/vpc/vm/create`,
         method: "POST",
         body: queryArg.createVpcVmModel,
+      }),
+    }),
+    deleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkId: build.mutation<
+      DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiResponse,
+      DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/vm/delete/${queryArg.vmHostId}/${queryArg.vpcNetworkId}`,
+        method: "DELETE",
       }),
     }),
     getApiMyPortalWalletGetBalance: build.query<
@@ -1993,6 +2018,10 @@ export type GetApiMyPortalCustomerGetApiArg = void;
 export type PutApiMyPortalCustomerEditApiResponse = unknown;
 export type PutApiMyPortalCustomerEditApiArg = {
   editCustomerModel: EditCustomerModel;
+};
+export type PutApiMyPortalCustomerConvertToLegalApiResponse = unknown;
+export type PutApiMyPortalCustomerConvertToLegalApiArg = {
+  convertCustomerToLegalModel: ConvertCustomerToLegalModel;
 };
 export type GetApiMyPortalCustomerBillListApiResponse =
   /** status 200 Success */ CustomerBillListResponse[];
@@ -2612,6 +2641,11 @@ export type PostApiMyVpcStaticRouteDeleteByIdApiArg = {
 export type GetApiMyVpcHostListApiResponse =
   /** status 200 Success */ VpcListResponse[];
 export type GetApiMyVpcHostListApiArg = void;
+export type GetApiMyVpcHostGetByIdApiResponse =
+  /** status 200 Success */ VpcResponse;
+export type GetApiMyVpcHostGetByIdApiArg = {
+  id: number;
+};
 export type PostApiMyVpcHostCreateApiResponse = unknown;
 export type PostApiMyVpcHostCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
@@ -2620,9 +2654,9 @@ export type PostApiMyVpcHostEditApiResponse = unknown;
 export type PostApiMyVpcHostEditApiArg = {
   editVpcHostModel: EditVpcHostModel;
 };
-export type DeleteApiMyVpcHostDeleteByVpcHostIdApiResponse = unknown;
-export type DeleteApiMyVpcHostDeleteByVpcHostIdApiArg = {
-  vpcHostId: number;
+export type DeleteApiMyVpcHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVpcHostDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiMyVpcNatServiceListApiResponse =
   /** status 200 Success */ VpcHostTranslateServiceResponse[];
@@ -2655,9 +2689,9 @@ export type PostApiMyVpcIpCreateApiResponse = unknown;
 export type PostApiMyVpcIpCreateApiArg = {
   createVpcIpModel: CreateVpcIpModel;
 };
-export type DeleteApiMyVpcIpDeleteByVpcHostGatewayIpIdApiResponse = unknown;
-export type DeleteApiMyVpcIpDeleteByVpcHostGatewayIpIdApiArg = {
-  vpcHostGatewayIpId: number;
+export type DeleteApiMyVpcIpDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVpcIpDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
   /** status 200 Success */ VpcNetworkListResponse[];
@@ -2680,6 +2714,12 @@ export type GetApiMyVpcVmListByVpcHostIdApiArg = {
 export type PostApiMyVpcVmCreateApiResponse = unknown;
 export type PostApiMyVpcVmCreateApiArg = {
   createVpcVmModel: CreateVpcVmModel;
+};
+export type DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiResponse =
+  unknown;
+export type DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiArg = {
+  vmHostId: number;
+  vpcNetworkId: number;
 };
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 Success */ number;
@@ -2818,10 +2858,8 @@ export type CreateBareMetalModel = {
   customerProductTypeId: number;
   physicalCpu?: number | null;
   physicalMemory?: number | null;
-  hdd600Sas10K?: number | null;
-  hdd1200Sas10K?: number | null;
-  networkPort1G?: number | null;
-  networkPort10G?: number | null;
+  physicalDisk?: number | null;
+  networkPort?: number | null;
 };
 export type BareMetalImageListResponse = {
   id?: number;
@@ -2993,6 +3031,16 @@ export type EditCustomerModel = {
   phone: string;
   address: string;
   postalCode: string;
+};
+export type ConvertCustomerToLegalModel = {
+  name?: string | null;
+  nationalId?: string | null;
+  phoneNumber?: string | null;
+  postalCode?: string | null;
+  address?: string | null;
+  economicNumber?: string | null;
+  registrationNumber?: string | null;
+  registrationDate?: string | null;
 };
 export type CustomerBillListResponse = {
   id?: number;
@@ -3866,9 +3914,19 @@ export type VpcListResponse = {
   statusId?: number;
   createDate?: string;
 };
+export type VpcResponse = {
+  id?: number;
+  datacenter?: string | null;
+  name?: string | null;
+  status?: string | null;
+  statusId?: number;
+  createDate?: string;
+};
 export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
+  productBundleId?: number | null;
+  isPredefined: boolean;
   customerProductTypeId: number;
 };
 export type EditVpcHostModel = {
@@ -3906,12 +3964,12 @@ export type VpcIpListResponse = {
 };
 export type CreateVpcIpModel = {
   vpcHostId: number;
-  vpcHostGatewayId: number;
 };
 export type VpcNetworkListResponse = {
   id?: number;
-  cidr?: string | null;
-  gatewayIp?: string | null;
+  gatewayCidr?: string | null;
+  subnetMask?: string | null;
+  subnetCidr?: string | null;
   name?: string | null;
   status?: string | null;
   datacenter?: string | null;
@@ -3920,15 +3978,16 @@ export type VpcNetworkListResponse = {
 export type CreateVpcNetworkModel = {
   vpcHostId?: number;
   name?: string | null;
-  cidr?: string | null;
-  gatewayIp?: string | null;
+  gatewayCidr?: string | null;
 };
 export type VpcVmListResponse = {
   id?: number;
   vpcNetworkId?: number;
-  name?: string | null;
+  vmName?: string | null;
+  networkName?: string | null;
   status?: string | null;
   statusId?: number;
+  vmHostId?: number;
   datacenter?: string | null;
   operatingSystem?: string | null;
   ipv4?: string | null;
@@ -4046,6 +4105,7 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCustomerGetQuery,
   usePutApiMyPortalCustomerEditMutation,
+  usePutApiMyPortalCustomerConvertToLegalMutation,
   useGetApiMyPortalCustomerBillListQuery,
   useGetApiMyPortalCustomerBillShortListQuery,
   useGetApiMyPortalCustomerBillGetByIdQuery,
@@ -4190,9 +4250,10 @@ export const {
   usePutApiMyVpcStaticRouteEditMutation,
   usePostApiMyVpcStaticRouteDeleteByIdMutation,
   useGetApiMyVpcHostListQuery,
+  useGetApiMyVpcHostGetByIdQuery,
   usePostApiMyVpcHostCreateMutation,
   usePostApiMyVpcHostEditMutation,
-  useDeleteApiMyVpcHostDeleteByVpcHostIdMutation,
+  useDeleteApiMyVpcHostDeleteByIdMutation,
   useGetApiMyVpcNatServiceListQuery,
   useGetApiMyVpcNatServiceGetByIdQuery,
   usePostApiMyVpcNatServiceCreateMutation,
@@ -4200,12 +4261,13 @@ export const {
   useDeleteApiMyVpcNatServiceDeleteByDatacenterIdAndIdMutation,
   useGetApiMyVpcIpListByVpcHostIdQuery,
   usePostApiMyVpcIpCreateMutation,
-  useDeleteApiMyVpcIpDeleteByVpcHostGatewayIpIdMutation,
+  useDeleteApiMyVpcIpDeleteByIdMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,
   useDeleteApiMyVpcNetworkDeleteByIdMutation,
   useGetApiMyVpcVmListByVpcHostIdQuery,
   usePostApiMyVpcVmCreateMutation,
+  useDeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdMutation,
   useGetApiMyPortalWalletGetBalanceQuery,
   useGetApiMyPortalWalletTransactionListQuery,
   useGetApiMyPortalWalletTransactionBalanceUsageQuery,

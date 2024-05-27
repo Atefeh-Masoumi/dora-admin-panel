@@ -1,155 +1,258 @@
-import { FC, useMemo } from "react";
-import { Form, Formik } from "formik";
-import { Stack, Typography } from "@mui/material";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import { formikOnSubmitType } from "src/types/form.type";
 import {
-  useGetApiMyPortalCustomerGetQuery,
-  usePutApiMyPortalCustomerEditMutation,
-  useGetApiMyPortalProfileGetQuery,
-} from "src/app/services/api.generated";
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogProps,
+  Divider,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useFormik } from "formik";
+import { FC, MouseEventHandler, useState } from "react";
+import { toast } from "react-toastify";
+import { usePutApiMyPortalCustomerConvertToLegalMutation } from "src/app/services/api.generated";
+import { formikOnSubmitType } from "src/types/form.type";
+import { e2p } from "src/utils/e2p.utils";
+import { p2e } from "src/utils/p2e.utils";
+import { onlyNumber } from "src/utils/priceToPersian";
+import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("نام شرکت را وارد کنید"),
-  nationalId: yup.number().required("شناسه ملی را به عدد وارد کنید"),
-  phone: yup.number().required("تلفن را به عدد وارد کنید"),
-  address: yup.string().required("آدرس وارد کنید"),
-  postalCode: yup.number().required("کد پستی را به عدد وارد کنید"),
+  name: yup.string().required("نام سازمان الزامی است"),
+  nationalId: yup
+    .string()
+    .required("کدملی الزامی است")
+    .max(10, "کدملی باید حداکثر 10 کاراکتر باشد"),
+  phoneNumber: yup.string().required("شماره تلفن همراه الزامی است"),
+  address: yup.string().required("آدرس الزامی است"),
+  postalCode: yup
+    .string()
+    .required("کدپستی الزامی است")
+    .max(10, "کدپستی باید حداکثر 10 کاراکتر باشد"),
 });
+
+export const convertToLegalTypeModalTextFields: any[] = [
+  {
+    label: "نام سازمان",
+    id: "name",
+  },
+
+  {
+    label: "کدملی",
+    id: "nationalId",
+  },
+  {
+    label: "شماره تلفن همراه",
+    id: "phoneNumber",
+  },
+  {
+    label: "آدرس",
+    id: "address",
+  },
+  {
+    label: "کد پستی",
+    id: "postalCode",
+  },
+  {
+    label: "شماره اقتصادی",
+    id: "economicNumber",
+  },
+  {
+    label: "شناسه ثبت",
+    id: "registrationNumber",
+  },
+  {
+    label: "تاریخ ثبت",
+    id: "registrationDate",
+  },
+];
 
 type LegalPersonalityPropsType = {};
 
-export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
-  const { data: customerData } = useGetApiMyPortalCustomerGetQuery();
-  const { data: profileInfo } = useGetApiMyPortalProfileGetQuery();
+type profileAccountFormInitialValuesType = {
+  name: string;
+  nationalId: string;
+  phoneNumber: string;
+  postalCode: string;
+  address: string;
+  economicNumber: string | null;
+  registrationNumber: string | null;
+  registrationDate: string | null;
+};
 
-  const isLegal = useMemo(() => !!profileInfo?.isLegal, [profileInfo?.isLegal]);
+type InputTypes = {
+  id: string;
+  label: string;
+};
 
-  const initialValues = {
-    name: customerData?.name || "",
-    nationalId: customerData?.nationalId || "",
-    phone: customerData?.phone || "",
-    address: "",
-    postalCode: "",
+type UserIdentityModalPropsType = {
+  dialogProps: DialogProps;
+  forceClose: () => any;
+};
+
+export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
+  dialogProps,
+  forceClose,
+}) => {
+  const closeDialog: MouseEventHandler<HTMLButtonElement> = (event) => {
+    dialogProps.onClose && dialogProps.onClose(event, "escapeKeyDown");
   };
 
-  const [editCustomer, { isLoading: loadingEdit }] =
-    usePutApiMyPortalCustomerEditMutation();
+  const initialValues: profileAccountFormInitialValuesType = {
+    name: "",
+    nationalId: "",
+    phoneNumber: "",
+    postalCode: "",
+    address: "",
+    economicNumber: null,
+    registrationNumber: null,
+    registrationDate: null,
+  };
 
-  const onSubmit: formikOnSubmitType<typeof initialValues> = (
-    { name, nationalId, phone, address, postalCode },
-    { setSubmitting }
+  const [callConvertToLegal, { isLoading: convertToLegalLoading }] =
+    usePutApiMyPortalCustomerConvertToLegalMutation();
+
+  const onSubmit: formikOnSubmitType<profileAccountFormInitialValuesType> = (
+    values,
+    { setSubmitting, resetForm }
   ) => {
-    if (!name || !nationalId || !phone || !address || !postalCode) return;
-    editCustomer({
-      editCustomerModel: {
-        name,
-        nationalId,
-        phone,
-        address,
-        postalCode,
-      },
+    callConvertToLegal({
+      convertCustomerToLegalModel: values,
     })
       .unwrap()
-      .then(() => toast.success("مشخصات با موفقیت بروز رسانی شد"))
-      .catch(({ status, customerData }) => {
-        if (status === 401 || status === 404) {
-          toast.error("اطلاعات را درست وارد کنید");
-        } else toast.error(customerData[""][0]);
+      .then(() => {
+        toast.success("ثبت اطلاعات با موفقیت انجام شد.");
+        forceClose();
+      })
+      .catch((err) => {})
+      .finally(() => {
+        setSubmitting(false);
+        resetForm();
       });
-    setSubmitting(false);
   };
 
-  // const [editType, { isLoading }] =
-  //   usePutApiMyPortalCustomerEditCustomerTypeMutation();
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    enableReinitialize: true,
+    onSubmit,
+  });
 
-  // const handleChange: SwitchProps["onChange"] = (event, checked) => {
-  //   editType({ editCustomerTypeModel: { isLegal: checked } })
-  //     .unwrap()
-  //     .then(() => {})
-  //     .catch((err) => {});
-  // };
+  return (
+    <Dialog
+      {...dialogProps}
+      sx={{ "& .MuiPaper-root": { maxWidth: "500px", padding: "20px" } }}
+    >
+      <Typography align="center">ثبت اطلاعات حقوقی</Typography>
+      <Divider flexItem />
+      <DialogContent>
+        <DialogContentText textAlign="center">
+          جهت افزودن اطلاعات حقوقی,اطلاعات زیر را تکمیل کنید
+        </DialogContentText>
+        <form autoComplete="on" onSubmit={formik.handleSubmit}>
+          <Stack
+            rowGap={3}
+            columnGap={2}
+            width="100%"
+            direction="column"
+            mt={4}
+          >
+            {convertToLegalTypeModalTextFields.map((item: InputTypes) => {
+              return (
+                <TextField
+                  key={item.id}
+                  label={item.label}
+                  fullWidth
+                  size="small"
+                  placeholder={`${item.label} را وارد کنید`}
+                  InputProps={{
+                    dir: "rtl",
+                    sx: { paddingLeft: 0 },
+                  }}
+                  value={e2p(
+                    formik.values[item.id as keyof typeof initialValues] || ""
+                  )}
+                  onChange={(e) => {
+                    formik.setFieldTouched(item.id, true);
+                    item.id === "nationalId"
+                      ? formik.setFieldValue(
+                          item.id,
+                          onlyNumber(p2e(e.target.value))
+                        )
+                      : formik.setFieldValue(item.id, p2e(e.target.value));
+                  }}
+                  onBlur={(e) => {
+                    formik.handleBlur(e);
+                    formik.setFieldTouched(item.id, false);
+                  }}
+                  error={Boolean(
+                    formik.errors[item.id as keyof typeof initialValues] &&
+                      formik.touched[item.id as keyof typeof initialValues]
+                  )}
+                  helperText={
+                    formik.touched[item.id as keyof typeof initialValues] &&
+                    formik.errors[item.id as keyof typeof initialValues]
+                  }
+                />
+              );
+            })}
+            <Stack direction="column" rowGap={1}>
+              <LoadingButton type="submit" variant="contained">
+                ثبت اطلاعات حقوقی
+              </LoadingButton>
+              <Button variant="outlined" onClick={closeDialog}>
+                انصراف
+              </Button>
+            </Stack>
+          </Stack>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const closeDialogHandler = () => {
+    setShowModal(false);
+  };
 
   return (
     <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
-      <Typography>حساب کاربری حقوقی</Typography>
-      <Stack py={2}>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          enableReinitialize
-          onSubmit={onSubmit}
+      <Stack
+        direction="row"
+        sx={{ display: "flex", justifyContent: "space-between" }}
+        pt={1.5}
+      >
+        <Typography
+          variant="text1"
+          fontWeight={500}
+          color="secondary"
+          sx={{ pt: 1.1, pb: 1 }}
         >
-          {({ errors, touched, getFieldProps }) => (
-            <Form autoComplete="on">
-              <Stack rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}>
-                <Stack direction="row" spacing={1}>
-                  <DorsaTextField
-                    error={Boolean(errors.name && touched.name)}
-                    helperText={errors.name}
-                    {...getFieldProps("name")}
-                    label="نام شرکت/طرف حساب"
-                    fullWidth
-                  />
-                  <DorsaTextField
-                    error={Boolean(errors.nationalId && touched.nationalId)}
-                    helperText={errors.nationalId}
-                    {...getFieldProps("nationalId")}
-                    label="شناسه ملی/کد ملی"
-                    fullWidth
-                    inputProps={{ dir: "ltr" }}
-                    type="text"
-                  />
-                </Stack>
-                <Stack direction="row" spacing={1}>
-                  <DorsaTextField
-                    error={Boolean(errors.phone && touched.phone)}
-                    helperText={errors.phone}
-                    {...getFieldProps("phone")}
-                    label="تلفن شرکت"
-                    fullWidth
-                    inputProps={{ dir: "ltr" }}
-                  />
-                  <DorsaTextField
-                    error={Boolean(errors.postalCode && touched.postalCode)}
-                    // helperText={errors.postalCode}
-                    {...getFieldProps("postalCode")}
-                    label="کد پستی"
-                    fullWidth
-                    inputProps={{ dir: "ltr" }}
-                  />
-                </Stack>
-                <DorsaTextField
-                  error={Boolean(errors.address && touched.address)}
-                  {...getFieldProps("address")}
-                  label="آدرس"
-                  fullWidth
-                  multiline
-                  rows={3}
-                />
-                <Stack
-                  direction="row"
-                  justifyContent={{ xs: "center", md: "end" }}
-                  pt={1.5}
-                >
-                  <LoadingButton
-                    component="button"
-                    type="submit"
-                    loading={loadingEdit}
-                    variant="contained"
-                    sx={{ px: 7, py: 2, fontSize: 16 }}
-                  >
-                    ذخیره اطلاعات
-                  </LoadingButton>
-                </Stack>
-              </Stack>
-            </Form>
-          )}
-        </Formik>
+          تغییر اکانت به حقوقی:
+        </Typography>
+        <Button
+          variant="contained"
+          sx={{ px: 7, py: 2, fontSize: 16 }}
+          onClick={() => setShowModal(true)}
+        >
+          درخواست تغییر اکانت به حقوقی
+        </Button>
       </Stack>
+      {showModal && (
+        <LegalFormRegistrationModal
+          dialogProps={{
+            open: showModal,
+            onClose: closeDialogHandler,
+          }}
+          forceClose={closeDialogHandler}
+        />
+      )}
     </Stack>
   );
 };
