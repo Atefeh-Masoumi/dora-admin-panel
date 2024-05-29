@@ -10,3 +10,20 @@ export const addVmTableStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
 ];
+
+export const addVmProjectTableStruct = [
+  {
+    id: "id",
+    label: "id",
+    invisibility: true,
+  },
+  {
+    id: "name",
+    label: "نام پروژه",
+  },
+  {
+    id: "hypervisorType",
+    label: "نوع زیرساخت",
+  },
+  { id: "control", label: "", disableSort: true },
+];

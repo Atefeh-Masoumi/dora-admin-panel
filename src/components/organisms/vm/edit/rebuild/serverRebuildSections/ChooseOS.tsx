@@ -32,7 +32,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
 
   useEffect(() => {
     if (dataCenter) {
-      getData({ datacenterId: dataCenter, vmTypeId: 1 })
+      getData({ datacenterId: dataCenter, hypervisorTypeId: 1 })
         .unwrap()
         .then((res) => res && setData(res));
     }

@@ -31,11 +31,10 @@ type OsDropDownType = {
 export const SelectOS: FC<SelectOSPropsType> = () => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
-  const { data: osImagesList, isLoading } =
-  useGetApiMyVmImageListQuery({
-      datacenterId: dataCenter?.id || 0,
-      vmTypeId: 1
-    });
+  const { data: osImagesList, isLoading } = useGetApiMyVmImageListQuery({
+    datacenterId: dataCenter?.id || 0,
+    hypervisorTypeId: 1,
+  });
 
   const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(
     []

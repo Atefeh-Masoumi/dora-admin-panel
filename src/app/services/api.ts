@@ -196,7 +196,10 @@ export const api = generatedApi
         providesTags: () => ["CdnCert"],
       },
       // ============================== VmHost ============================== //
-      getApiMyVmHostList: {
+      getApiMyVmProjectList: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmHostListByVmProjectId: {
         providesTags: () => ["VmHost"],
       },
       getApiMyVmKmsGetByIdAndTypeId: {
@@ -245,6 +248,15 @@ export const api = generatedApi
         invalidatesTags: () => ["VmHost"],
       },
       putApiMyVmHostRebootById: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      postApiMyVmProjectCreate: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmProjectEditById: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      deleteApiMyVmProjectDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
       // ============================== Kubernetes ============================== //
