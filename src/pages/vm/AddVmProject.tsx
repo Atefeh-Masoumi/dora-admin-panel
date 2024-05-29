@@ -143,7 +143,7 @@ const AddVmProject: FC<vmProjectPropsType> = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس فضای ابری
+              لیست پروژه های ابری
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={1}>
