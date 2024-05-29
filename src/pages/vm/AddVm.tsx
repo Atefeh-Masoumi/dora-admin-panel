@@ -117,6 +117,7 @@ const AddVm: FC = () => {
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
+          isPublic: true,
         },
       })
         .unwrap()
