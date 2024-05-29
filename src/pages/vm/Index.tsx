@@ -44,7 +44,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
       return result;
     }) || [];
 
-  const createCloudOnClick = () => navigate("/vm/add-vm");
+  const createCloudOnClick = () => navigate(`/vm/${projectId}/add-vm`);
 
   return (
     <>

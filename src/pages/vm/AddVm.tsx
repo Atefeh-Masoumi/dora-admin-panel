@@ -1,5 +1,5 @@
 import { FC, useContext, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
@@ -32,6 +32,7 @@ const mapConfig = {
 };
 
 const AddVm: FC = () => {
+  const { projectId } = useParams();
   const {
     dataCenter,
     osVersion,
@@ -118,12 +119,13 @@ const AddVm: FC = () => {
           memory: customConfig.memory,
           disk: customConfig.disk,
           isPublic: true,
+          vmProjectId: Number(projectId),
         },
       })
         .unwrap()
         .then((res) => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
-          navigate("/vm");
+          navigate(`/vm/${projectId}/list`);
         })
         .catch((err) => {});
     }
