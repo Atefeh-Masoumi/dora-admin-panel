@@ -1218,11 +1218,21 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyVmHostList: build.query<
-      GetApiMyVmHostListApiResponse,
-      GetApiMyVmHostListApiArg
+    getApiMyVmHostListByVmProjectId: build.query<
+      GetApiMyVmHostListByVmProjectIdApiResponse,
+      GetApiMyVmHostListByVmProjectIdApiArg
     >({
-      query: () => ({ url: `/api/my/vm/host/list` }),
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/list/${queryArg.vmProjectId}`,
+      }),
+    }),
+    getApiMyVmHostShortListByHypervisorTypeId: build.query<
+      GetApiMyVmHostShortListByHypervisorTypeIdApiResponse,
+      GetApiMyVmHostShortListByHypervisorTypeIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/short-list/${queryArg.hypervisorTypeId}`,
+      }),
     }),
     getApiMyVmHostGetById: build.query<
       GetApiMyVmHostGetByIdApiResponse,
@@ -1332,6 +1342,12 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
+    getApiMyVmHypervisorList: build.query<
+      GetApiMyVmHypervisorListApiResponse,
+      GetApiMyVmHypervisorListApiArg
+    >({
+      query: () => ({ url: `/api/my/vm/hypervisor/list` }),
+    }),
     getApiMyVmImageList: build.query<
       GetApiMyVmImageListApiResponse,
       GetApiMyVmImageListApiArg
@@ -1340,7 +1356,7 @@ export const api = createApi({
         url: `/api/my/vm/image/list`,
         params: {
           DatacenterId: queryArg.datacenterId,
-          VmTypeId: queryArg.vmTypeId,
+          HypervisorTypeId: queryArg.hypervisorTypeId,
         },
       }),
     }),
@@ -1378,6 +1394,41 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/kms/get/${queryArg.id}/${queryArg.typeId}`,
+      }),
+    }),
+    getApiMyVmProjectList: build.query<
+      GetApiMyVmProjectListApiResponse,
+      GetApiMyVmProjectListApiArg
+    >({
+      query: () => ({ url: `/api/my/vm/project/list` }),
+    }),
+    postApiMyVmProjectCreate: build.mutation<
+      PostApiMyVmProjectCreateApiResponse,
+      PostApiMyVmProjectCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/project/create`,
+        method: "POST",
+        body: queryArg.vmProjectCreateModel,
+      }),
+    }),
+    putApiMyVmProjectEditById: build.mutation<
+      PutApiMyVmProjectEditByIdApiResponse,
+      PutApiMyVmProjectEditByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/project/edit/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.vmProjectEditModel,
+      }),
+    }),
+    deleteApiMyVmProjectDeleteById: build.mutation<
+      DeleteApiMyVmProjectDeleteByIdApiResponse,
+      DeleteApiMyVmProjectDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/project/delete/${queryArg.id}`,
+        method: "DELETE",
       }),
     }),
     getApiMyVmSnapshotListByVmId: build.query<
@@ -1431,12 +1482,6 @@ export const api = createApi({
         url: `/api/my/vm/snapshot/delete-all/${queryArg.vmHostId}`,
         method: "DELETE",
       }),
-    }),
-    getApiMyVmTypeList: build.query<
-      GetApiMyVmTypeListApiResponse,
-      GetApiMyVmTypeListApiArg
-    >({
-      query: () => ({ url: `/api/my/vm/type/list` }),
     }),
     postApiMyPortalVoucherUse: build.mutation<
       PostApiMyPortalVoucherUseApiResponse,
@@ -2471,9 +2516,16 @@ export type DeleteApiMyStorageUserDeleteByIdApiResponse = unknown;
 export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVmHostListApiResponse =
+export type GetApiMyVmHostListByVmProjectIdApiResponse =
   /** status 200 Success */ VmListResponse[];
-export type GetApiMyVmHostListApiArg = void;
+export type GetApiMyVmHostListByVmProjectIdApiArg = {
+  vmProjectId: number;
+};
+export type GetApiMyVmHostShortListByHypervisorTypeIdApiResponse =
+  /** status 200 Success */ VmShortListResponse[];
+export type GetApiMyVmHostShortListByHypervisorTypeIdApiArg = {
+  hypervisorTypeId: number;
+};
 export type GetApiMyVmHostGetByIdApiResponse =
   /** status 200 Success */ GetVmResponse;
 export type GetApiMyVmHostGetByIdApiArg = {
@@ -2523,11 +2575,14 @@ export type PutApiMyVmHostStopByIdApiResponse = unknown;
 export type PutApiMyVmHostStopByIdApiArg = {
   id: number;
 };
+export type GetApiMyVmHypervisorListApiResponse =
+  /** status 200 Success */ HypervisorTypeListResponse[];
+export type GetApiMyVmHypervisorListApiArg = void;
 export type GetApiMyVmImageListApiResponse =
   /** status 200 Success */ ImageListResponse[];
 export type GetApiMyVmImageListApiArg = {
   datacenterId?: number;
-  vmTypeId?: number;
+  hypervisorTypeId?: number;
 };
 export type GetApiMyVmIsoListByDatacenterIdApiResponse =
   /** status 200 Success */ IsoListResponse[];
@@ -2547,6 +2602,22 @@ export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
 export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
   id: number;
   typeId: number;
+};
+export type GetApiMyVmProjectListApiResponse =
+  /** status 200 Success */ VmProjectListResponse[];
+export type GetApiMyVmProjectListApiArg = void;
+export type PostApiMyVmProjectCreateApiResponse = unknown;
+export type PostApiMyVmProjectCreateApiArg = {
+  vmProjectCreateModel: VmProjectCreateModel;
+};
+export type PutApiMyVmProjectEditByIdApiResponse = unknown;
+export type PutApiMyVmProjectEditByIdApiArg = {
+  id: number;
+  vmProjectEditModel: VmProjectEditModel;
+};
+export type DeleteApiMyVmProjectDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmProjectDeleteByIdApiArg = {
+  id: number;
 };
 export type GetApiMyVmSnapshotListByVmIdApiResponse =
   /** status 200 Success */ VmSnapshotResponse[];
@@ -2574,9 +2645,6 @@ export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse = unknown;
 export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg = {
   vmHostId: number;
 };
-export type GetApiMyVmTypeListApiResponse =
-  /** status 200 Success */ VmTypeListResponse[];
-export type GetApiMyVmTypeListApiArg = void;
 export type PostApiMyPortalVoucherUseApiResponse = unknown;
 export type PostApiMyPortalVoucherUseApiArg = {
   useVoucherModel: UseVoucherModel;
@@ -3460,6 +3528,7 @@ export type CreateKubernetesModel = {
   cpu?: number | null;
   memory?: number | null;
   disk?: number | null;
+  hypervisorTypeId?: number;
 };
 export type KubernetesImageListResponse = {
   id?: number;
@@ -3759,6 +3828,10 @@ export type VmListResponse = {
   ipv4?: string | null;
   createDate?: string;
 };
+export type VmShortListResponse = {
+  id?: number;
+  name?: string | null;
+};
 export type GetVmResponse = {
   id?: number;
   datacenterId?: number;
@@ -3788,11 +3861,14 @@ export type CreateVmModel = {
   imageId: number;
   customerProductTypeId: number;
   isPredefined: boolean;
+  vmProjectId?: number;
+  isPublic?: boolean;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
-  vmTypeId?: number;
   disk?: number | null;
+  vpcHostNetworkId?: number | null;
+  ipAddress?: string | null;
 };
 export type EditVmModel = {
   id?: number;
@@ -3805,6 +3881,10 @@ export type RebuildVmModel = {
   name?: string | null;
   password: string;
   imageId: number;
+};
+export type HypervisorTypeListResponse = {
+  id?: number;
+  name?: string | null;
 };
 export type ImageListResponse = {
   id?: number;
@@ -3828,6 +3908,19 @@ export type GetRemoteConsoleResponse = {
   location?: string | null;
   vmTypeId?: number;
 };
+export type VmProjectListResponse = {
+  id?: number;
+  name?: string | null;
+  hypervisorType?: string | null;
+  hypervisorTypeId?: number;
+};
+export type VmProjectCreateModel = {
+  name?: string | null;
+  hypervisorTypeId?: number;
+};
+export type VmProjectEditModel = {
+  name?: string | null;
+};
 export type VmSnapshotResponse = {
   id?: number;
   name?: string | null;
@@ -3844,10 +3937,6 @@ export type CreateSnapshotModel = {
 };
 export type RevertSnapshotModel = {
   snapshotId: number;
-};
-export type VmTypeListResponse = {
-  id?: number;
-  name?: string | null;
 };
 export type UseVoucherModel = {
   voucherCode: string;
@@ -3911,16 +4000,20 @@ export type VpcListResponse = {
   datacenter?: string | null;
   name?: string | null;
   status?: string | null;
+  hypervisorTypeId?: number;
   statusId?: number;
   createDate?: string;
 };
 export type VpcResponse = {
   id?: number;
+  datacenterId?: number;
   datacenter?: string | null;
   name?: string | null;
   status?: string | null;
+  hypervisorTypeId?: number;
   statusId?: number;
   createDate?: string;
+  modifyDate?: string;
 };
 export type CreateVpcHostModel = {
   name: string;
@@ -3928,6 +4021,7 @@ export type CreateVpcHostModel = {
   productBundleId?: number | null;
   isPredefined: boolean;
   customerProductTypeId: number;
+  hypervisorTypeId?: number;
 };
 export type EditVpcHostModel = {
   id?: number;
@@ -4210,7 +4304,8 @@ export const {
   useGetApiMyStorageUserListByStorageHostIdQuery,
   usePostApiMyStorageUserCreateMutation,
   useDeleteApiMyStorageUserDeleteByIdMutation,
-  useGetApiMyVmHostListQuery,
+  useGetApiMyVmHostListByVmProjectIdQuery,
+  useGetApiMyVmHostShortListByHypervisorTypeIdQuery,
   useGetApiMyVmHostGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
   usePutApiMyVmHostEditMutation,
@@ -4223,18 +4318,22 @@ export const {
   usePutApiMyVmHostResetByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostStopByIdMutation,
+  useGetApiMyVmHypervisorListQuery,
   useGetApiMyVmImageListQuery,
   useGetApiMyVmIsoListByDatacenterIdQuery,
   usePutApiMyVmIsoMountMutation,
   usePutApiMyVmIsoUnmountMutation,
   useGetApiMyVmKmsGetByIdAndTypeIdQuery,
+  useGetApiMyVmProjectListQuery,
+  usePostApiMyVmProjectCreateMutation,
+  usePutApiMyVmProjectEditByIdMutation,
+  useDeleteApiMyVmProjectDeleteByIdMutation,
   useGetApiMyVmSnapshotListByVmIdQuery,
   useGetApiMyVmSnapshotGetByIdQuery,
   usePostApiMyVmSnapshotCreateMutation,
   usePutApiMyVmSnapshotRevertMutation,
   useDeleteApiMyVmSnapshotDeleteByIdMutation,
   useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
-  useGetApiMyVmTypeListQuery,
   usePostApiMyPortalVoucherUseMutation,
   useGetApiMyVpcGatewayGetByVpcHostIdQuery,
   useGetApiMyVpcNatListByVpcHostIdQuery,

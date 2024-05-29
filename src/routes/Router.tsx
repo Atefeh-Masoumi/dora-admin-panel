@@ -62,6 +62,7 @@ const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
+const AddVmProject = lazy(() => import("src/pages/vm/AddVmProject"));
 
 const WebIndex = lazy(() => import("src/pages/web/web/Index"));
 const AddWeb = lazy(() => import("src/pages/web/web/AddWeb"));
@@ -325,8 +326,20 @@ const Router: FC = () => {
             })}
           />
           {/* ======================================= VM ======================================= */}
+          {/* <Route
+            path="/vm"
+            element={mainTemplate(VmIndex, {
+              pageTitle: "مدیریت سرور ابری",
+            })}
+          /> */}
           <Route
             path="/vm"
+            element={mainTemplate(AddVmProject, {
+              pageTitle: "لیست پروژه‌ها",
+            })}
+          />
+          <Route
+            path="/vm/:projectId/list"
             element={mainTemplate(VmIndex, {
               pageTitle: "مدیریت سرور ابری",
             })}

@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { useGetApiMyVmHostListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
@@ -7,12 +7,13 @@ import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
 import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 type VmManagementPropsType = {};
 
 const VmManagement: FC<VmManagementPropsType> = () => {
+  const { projectId } = useParams();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -21,7 +22,9 @@ const VmManagement: FC<VmManagementPropsType> = () => {
     data: vmList,
     isLoading: getVmListLoading,
     refetch,
-  } = useGetApiMyVmHostListQuery();
+  } = useGetApiMyVmHostListByVmProjectIdQuery({
+    vmProjectId: Number(projectId),
+  });
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
