@@ -181,7 +181,7 @@ const ZoneManagement: FC = () => {
                   />
                 </Grid>
               ))}
-            </Fragment>
+            </Fragment> 
           ) : (
             <Fragment>
               {filteredList?.map((item, index) => (

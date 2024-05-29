@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Divider,
   Grid,
   Stack,
   Typography,
@@ -207,7 +206,11 @@ const AddVmProject: FC<vmProjectPropsType> = () => {
             <CircularProgress />
           </Box>
         ) : vmProjectList?.length === 0 ? (
-          <EmptyTable text={"پروژه‌ای وجود ندارد"} />
+          <Stack py={3} sx={{ width: "100%" }}>
+            <Stack bgcolor="white" borderRadius={3}>
+              <EmptyTable text="پروژه‌ای وجود ندارد" />
+            </Stack>
+          </Stack>
         ) : (
           vmProjectList?.map((item) => {
             return (

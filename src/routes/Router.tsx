@@ -345,7 +345,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/vm/add-vm"
+            path="/vm/:projectId/add-vm"
             element={mainTemplate(
               AddVm,
               {
