@@ -8,6 +8,8 @@ import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { passwordValidationRegex } from "src/utils/regexUtils";
+import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
   usePostApiMyVmHostCreateMutation,
@@ -15,8 +17,7 @@ import {
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
-import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+
 const mapConfig = {
   cpu: "CPU",
   memory: "Memory",

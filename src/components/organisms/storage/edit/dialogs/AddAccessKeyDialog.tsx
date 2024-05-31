@@ -121,7 +121,7 @@ export const AddAccessKeyDialog: FC<AddAccessKeyDialogPropsType> = ({
           alignItems="center"
           justifyContent="center"
         >
-          <Grid2 xs={12} md={8}>
+          <Grid2 xs={12} md={10}>
             <BoxRow
               title="Access Key"
               clipBoardText={accessKeyProp}

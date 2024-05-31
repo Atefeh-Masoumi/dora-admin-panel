@@ -47,7 +47,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
       .catch();
 
     setExtObject({ id: "", name: "", price: 0 });
-  }, [getBundleList, productId]);
+  }, [getBundleList, productId, setExtObject]);
 
   const termInputChangeHandler = () => setTerm(!term);
 

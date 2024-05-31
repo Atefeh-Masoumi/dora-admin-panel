@@ -9,14 +9,14 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { BORDER_RADIUS_4 } from "src/configs/theme";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
+import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import {
   ImageListResponse,
   useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
-import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
-import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 
 type SelectOSPropsType = {};
 
@@ -60,7 +60,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
     });
     setOsDropDownsState(newOsDropDownsState);
     setOsImage(null);
-  }, [osImagesList]);
+  }, [osImagesList, setOsImage]);
 
   const osTypeClickHandler = (id?: number) => {
     setOsDropDownsState(

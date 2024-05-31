@@ -9,7 +9,6 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { WebTableRow } from "src/components/organisms/web/tables/WebTableRow";
 import { webTableStruct } from "src/components/organisms/web/tables/struct";
 import { useGetApiMyWebHostListQuery } from "src/app/services/api.generated";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // Define the type for your context value
 type DataContextValueType = {

@@ -112,7 +112,7 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
     registrationDate: null,
   };
 
-  const [callConvertToLegal, { isLoading: convertToLegalLoading }] =
+  const [callConvertToLegal] =
     usePutApiMyPortalCustomerConvertToLegalMutation();
 
   const onSubmit: formikOnSubmitType<profileAccountFormInitialValuesType> = (
@@ -127,7 +127,7 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
         toast.success("ثبت اطلاعات با موفقیت انجام شد.");
         forceClose();
       })
-      .catch((err) => {})
+      .catch(() => {})
       .finally(() => {
         setSubmitting(false);
         resetForm();

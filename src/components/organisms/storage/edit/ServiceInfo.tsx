@@ -31,7 +31,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-      <Grid2 xs={12} md={8}>
+      <Grid2 xs={12} md={10}>
         <Paper
           component={Stack}
           rowGap={2}

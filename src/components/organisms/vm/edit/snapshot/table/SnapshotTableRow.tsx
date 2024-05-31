@@ -1,7 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { snapShotTableStruct } from "./struct";
-import { Chip, IconButton, Palette, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -91,9 +91,6 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
           const text = column.format ? column.format(value) : value;
           const isCreated = row.isCreated;
           const vmSnapshotStatusId = row.vmSnapshotStatusId;
-
-          //TODO: for revert function
-          const vmTypeId = row.vmTypeId;
 
           return (
             <DorsaTableCell

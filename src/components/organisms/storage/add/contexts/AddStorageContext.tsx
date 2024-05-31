@@ -59,7 +59,7 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
     useState<ProductBundleListResponse | null>(null);
   const [name, setName] = useState("");
   const [customConfig, setCustomConfig] = useState<StorageCustomConfigType>({
-    disk: 500,
+    disk: 45000,
   });
 
   return (

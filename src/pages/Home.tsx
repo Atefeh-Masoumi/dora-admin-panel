@@ -22,26 +22,19 @@ const Home: FC = () => {
   return (
     <>
       <Stack
-        p={3}
-        mb={3}
+        p={2.5}
+        mb={1}
         bgcolor="warning.main"
         direction="row"
-        gap={1}
+        spacing={1}
         borderRadius={2}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}
       >
         <ErrorOutlineOutlinedIcon />
-        <Typography>توجه:</Typography>
-        <Typography
-          fontSize={14}
-          sx={{
-            opacity: 0.9,
-          }}
-        >
+        <Typography variant="text14">
           استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
-          <br />
         </Typography>
       </Stack>
       {!profileCompleted && (

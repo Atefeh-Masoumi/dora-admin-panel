@@ -9,7 +9,6 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
 import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // Define the type for your context value
 type DataContextValueType = {

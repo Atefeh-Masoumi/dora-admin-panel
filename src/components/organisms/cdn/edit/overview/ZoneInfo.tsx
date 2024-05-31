@@ -50,7 +50,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
       py={2}
       px={3}
       borderRadius={3}
-      width="80%"
+      width="100%"
       direction="row"
       justifyContent="center"
     >

@@ -10,7 +10,7 @@ import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalan
 import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
 import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
 
-const Domains: FC = () => {
+const EditZone: FC = () => {
   const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ const Domains: FC = () => {
       >
         <Tabs
           sx={{
-            minWidth: 520,
+            minWidth: "fix-content",
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={selectedTab}
@@ -124,4 +124,4 @@ const Domains: FC = () => {
   );
 };
 
-export default Domains;
+export default EditZone;

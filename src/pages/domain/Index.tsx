@@ -9,7 +9,6 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
 import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
 import { useGetApiMyDomainHostListQuery } from "src/app/services/api.generated";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // Define the type for your context value
 type DataContextValueType = {

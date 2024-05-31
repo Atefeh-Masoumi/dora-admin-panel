@@ -80,7 +80,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
   };
 
   return (
-    <Grid2 container spacing={3} alignItems="center" justifyContent="center">
+    <Grid2 container spacing={3}>
       <Grid2 xs={12}>
         <Paper
           component={Stack}

@@ -24,7 +24,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       id: "Disk",
       label: "Disk (GB)",
       min: 25,
-      max: 1024,
+      max: 1000,
       step: 25,
       value: customConfig.disk,
       onChange: (newValue: number) => {

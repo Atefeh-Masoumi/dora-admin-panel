@@ -15,7 +15,6 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 // Define the type for your context value
 type DataContextValueType = {
