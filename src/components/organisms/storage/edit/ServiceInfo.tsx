@@ -36,7 +36,11 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+          sx={{
+            borderRadius: BORDER_RADIUS_4,
+            p: { xs: 2.5 },
+            height: "100%",
+          }}
         >
           <Typography align="center" fontWeight={700} fontSize={18}>
             فضای ابری
@@ -60,9 +64,22 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           />
           <BoxRow
             title="Object Storage Name"
-            value={storageData?.name}
+            component={
+              <Chip
+                label={storageData?.name}
+                sx={{
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              />
+            }
             isLoading={isLoading}
           />
+          <BoxRow
+            title="DataCenter"
+            value={storageData?.datacenter}
+            isLoading={isLoading}
+          />
+
           <BoxRow
             title="Disk Capacity"
             value={storageData?.disk}
@@ -71,11 +88,6 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           <BoxRow
             title="Access"
             value={storageData?.public}
-            isLoading={isLoading}
-          />
-          <BoxRow
-            title="DataCenter"
-            value={storageData?.datacenter}
             isLoading={isLoading}
           />
           <BoxRow

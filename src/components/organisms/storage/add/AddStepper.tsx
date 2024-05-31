@@ -39,7 +39,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
 
 const ColorlibStepIconRoot = styled("div")<{
   ownerState: { completed?: boolean; active?: boolean };
-}>(({ theme, ownerState }) => ({
+}>(({ ownerState }) => ({
   backgroundColor: "rgba(110, 118, 138, 0.08)",
   zIndex: 1,
   color: "#fff",
@@ -57,7 +57,7 @@ const ColorlibStepIconRoot = styled("div")<{
   }),
 }));
 
-const CustomStepLabel = styled(StepLabel)(({ theme }) => ({
+const CustomStepLabel = styled(StepLabel)(() => ({
   "&>span": {
     "&>.Mui-active": {
       color: "rgba(60, 138, 255, 0.8) !important",

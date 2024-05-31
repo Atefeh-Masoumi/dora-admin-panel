@@ -42,7 +42,7 @@ const ZoneManagement: FC = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/cdn/add-domain");
+  const createBtnOnClick = () => navigate("/cdn/add-domain");
 
   const [search, setSearch] = useState("");
 
@@ -117,7 +117,7 @@ const ZoneManagement: FC = () => {
               </Button>
               <Button
                 variant="outlined"
-                onClick={createCloudOnClick}
+                onClick={createBtnOnClick}
                 size="large"
                 sx={{
                   whiteSpace: "nowrap",

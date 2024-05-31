@@ -11,8 +11,8 @@ import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditWebContext } from "src/components/organisms/web/edit/contexts/EditWebContext";
-import { ServiceInfo } from "src/components/organisms/web/edit/ServiceInfo";
-import { SelectConfig } from "src/components/organisms/web/edit/SelectConfig";
+import { WebInfo } from "src/components/organisms/web/edit/WebInfo";
+import { WebConfig } from "src/components/organisms/web/edit/WebConfig";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -66,7 +66,7 @@ const EditWebService: FC<EditWebPropsType> = () => {
 
   const tabArray = ["مشخصات سرویس", "تغییر سرویس"];
 
-  const tabPanelArray = [ServiceInfo, SelectConfig];
+  const tabPanelArray = [WebInfo, WebConfig];
 
   if (!id) return <Navigate to="/web" />;
 

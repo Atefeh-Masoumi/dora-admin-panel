@@ -14,9 +14,9 @@ import {
 } from "src/app/services/api.generated";
 import { EditWebContext } from "./contexts/EditWebContext";
 
-type SelectConfigPropsType = {};
+type WebConfigPropsType = {};
 
-export const SelectConfig: FC<SelectConfigPropsType> = () => {
+export const WebConfig: FC<WebConfigPropsType> = () => {
   const { data: configsList, isLoading } =
     useGetApiMyPortalProductBundleListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.WEB,

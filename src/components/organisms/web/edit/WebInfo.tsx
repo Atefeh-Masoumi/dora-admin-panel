@@ -6,9 +6,9 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
 import { useGetApiMyWebHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 
-type ServiceInfoPropsType = {};
+type WebInfoPropsType = {};
 
-export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
+export const WebInfo: FC<WebInfoPropsType> = () => {
   const { id } = useParams();
 
   const {
@@ -52,6 +52,18 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
                     isActive ? palette.success.light : palette.error.light,
                   color: ({ palette }) =>
                     isActive ? palette.success.main : palette.error.main,
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              />
+            }
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Domain Name"
+            component={
+              <Chip
+                label={storageData?.domainName}
+                sx={{
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />

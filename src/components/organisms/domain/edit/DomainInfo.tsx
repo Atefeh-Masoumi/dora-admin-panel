@@ -63,7 +63,14 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           />
           <BoxRow
             title="Domain Name"
-            value={domainData?.domainName}
+            component={
+              <Chip
+                label={domainData?.domainName}
+                sx={{
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+              />
+            }
             isLoading={isLoading}
           />
           <BoxRow

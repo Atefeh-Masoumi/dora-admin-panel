@@ -59,10 +59,10 @@ const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
 const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
+const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectIndex"));
 const VmIndex = lazy(() => import("src/pages/vm/Index"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
-const AddVmProject = lazy(() => import("src/pages/vm/AddVmProject"));
 
 const WebIndex = lazy(() => import("src/pages/web/Index"));
 const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
@@ -334,7 +334,7 @@ const Router: FC = () => {
           /> */}
           <Route
             path="/vm"
-            element={mainTemplate(AddVmProject, {
+            element={mainTemplate(VmProjectIndex, {
               pageTitle: "لیست پروژه‌ها",
             })}
           />
