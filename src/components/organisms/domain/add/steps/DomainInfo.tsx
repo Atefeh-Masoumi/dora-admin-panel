@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
-import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
+import { AddDomainContext } from "src/components/organisms/domain/add/contexts/AddContext";
 
 type DomainInfoPropsType = {};
 

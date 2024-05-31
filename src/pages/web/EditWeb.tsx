@@ -10,10 +10,9 @@ import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_5 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
-import { EditDomainContext } from "src/components/organisms/web/domain/edit/contexts/EditContext";
-import { DomainInfo } from "src/components/organisms/web/domain/edit/DomainInfo";
-import { EditDomainInfo } from "src/components/organisms/web/domain/edit/EditDomainInfo";
-import { EditDomainNs } from "src/components/organisms/web/domain/edit/EditDomainNs";
+import { EditWebContext } from "src/components/organisms/web/edit/contexts/EditWebContext";
+import { ServiceInfo } from "src/components/organisms/web/edit/ServiceInfo";
+import { SelectConfig } from "src/components/organisms/web/edit/SelectConfig";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -48,27 +47,28 @@ const a11yProps = (index: number) => {
   };
 };
 
-type EditDomainPropsType = {};
+type EditWebPropsType = {};
 
-const EditDomain: FC<EditDomainPropsType> = () => {
-  const { setDomainId } = useContext(EditDomainContext);
+const EditWebService: FC<EditWebPropsType> = () => {
+  const { setServerId } = useContext(EditWebContext);
   const { id } = useParams();
 
   useEffect(() => {
-    if (!id) return;
-    setDomainId(Number(id));
-  }, [id, setDomainId]);
+    if (id) {
+      setServerId(Number(id));
+    }
+  }, [id, setServerId]);
 
   const [section, setSection] = useState(0);
 
   const handleChange = (_: SyntheticEvent, newValue: number) =>
     setSection(newValue);
 
-  const tabArray = ["مشخصات دامنه", "تغییر اطلاعات", "تغییر NS"];
+  const tabArray = ["مشخصات سرویس", "تغییر سرویس"];
 
-  const tabPanelArray = [DomainInfo, EditDomainInfo, EditDomainNs];
+  const tabPanelArray = [ServiceInfo, SelectConfig];
 
-  if (!id) return <Navigate to="/domain" />;
+  if (!id) return <Navigate to="/web" />;
 
   return (
     <Stack
@@ -88,7 +88,7 @@ const EditDomain: FC<EditDomainPropsType> = () => {
       >
         <Tabs
           sx={{
-            minWidth: "fix-content",
+            minWidth: { xs: 300, md: 250 },
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
@@ -102,11 +102,11 @@ const EditDomain: FC<EditDomainPropsType> = () => {
       {id &&
         tabPanelArray.map((Component, index) => (
           <TabPanel value={section} index={index} key={index}>
-            <Component />
+            <Component key={id} />
           </TabPanel>
         ))}
     </Stack>
   );
 };
 
-export default EditDomain;
+export default EditWebService;

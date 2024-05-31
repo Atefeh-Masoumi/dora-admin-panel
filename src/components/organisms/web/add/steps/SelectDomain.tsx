@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useContext } from "react";
 import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 import { GlobalEdit } from "src/components/atoms/svg-icons/GlobalEdit";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { AddWebContext } from "src/components/organisms/web/web/add/contexts/AddWebContext";
+import { AddWebContext } from "src/components/organisms/web/add/contexts/AddWebContext";
 
 type SelectDomainPropsType = {};
 

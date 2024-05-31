@@ -23,7 +23,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     {
       id: "Disk",
       label: "Disk (GB)",
-      min: 0,
+      min: 25,
       max: 1024,
       step: 25,
       value: customConfig.disk,
@@ -34,7 +34,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     {
       id: "Memory",
       label: "Memory (GB)",
-      min: 0,
+      min: 1,
       max: 128,
       step: 1,
       value: customConfig.memory,
@@ -46,13 +46,12 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     {
       id: "CPU",
       label: "CPU (Core)",
-      min: 0,
+      min: 1,
       max: 48,
       step: 1,
       value: customConfig.cpu,
       onChange: (newValue: number) => {
-        setCustomConfig &&
-          setCustomConfig({ ...customConfig, cpu: newValue});
+        setCustomConfig && setCustomConfig({ ...customConfig, cpu: newValue });
       },
     },
 
@@ -64,8 +63,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       step: 1,
       value: customConfig.IPV4,
       onChange: (newValue: number) => {
-        setCustomConfig &&
-          setCustomConfig({ ...customConfig, IPV4: newValue });
+        setCustomConfig && setCustomConfig({ ...customConfig, IPV4: newValue });
       },
     },
   ];

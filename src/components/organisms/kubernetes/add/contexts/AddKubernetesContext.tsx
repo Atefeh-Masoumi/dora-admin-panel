@@ -16,7 +16,6 @@ import {
   ProductBundleVmListResponse,
   usePostApiMyKubernetesHostCreateMutation,
 } from "src/app/services/api.generated";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
 export type kubernetesCustomConfigType = {
@@ -43,10 +42,8 @@ type AddKubernetesContextType = {
   setWorkersCount: Dispatch<SetStateAction<number>>;
   submitHandler: () => void;
   submitLoading: boolean;
-  paymentType: CUSTOMER_PRODUCT_TYPE_ENUM | null;
   isPredefined: boolean;
   setIsPredefined: (isPredefined: boolean) => void;
-  setPaymentType: Dispatch<SetStateAction<CUSTOMER_PRODUCT_TYPE_ENUM | null>>;
   customConfig: kubernetesCustomConfigType;
   setCustomConfig: (customConfig: kubernetesCustomConfigType) => void;
   productItemPrices: KubernetesPriceResponse | null;
@@ -75,14 +72,12 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   setServerPassword: () => {},
   submitHandler: () => {},
   submitLoading: false,
-  paymentType: null,
   isPredefined: false,
   setIsPredefined: (isPredefined) => {},
-  setPaymentType: () => {},
   customConfig: {
-    cpu: 0,
-    memory: 0,
-    disk: 0,
+    cpu: 1,
+    memory: 1,
+    disk: 25,
     ipV4: 1,
   },
   setCustomConfig: (customConfig) => {},
@@ -108,16 +103,14 @@ export const AddKubernetesContextProvider: FC<
     useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
   const [isPredefined, setIsPredefined] = useState(true);
   const [productItemPrices, setProductItemPrices] =
     useState<KubernetesPriceResponse | null>(null);
 
   const [customConfig, setCustomConfig] = useState<kubernetesCustomConfigType>({
     cpu: 4,
-    memory: 25,
-    disk: 300,
+    memory: 4,
+    disk: 75,
     ipV4: 1,
   });
 
@@ -143,8 +136,6 @@ export const AddKubernetesContextProvider: FC<
       validationErrorMessage = "نام سرور نباید کمتر از سه حرف باشد";
     } else if (!passwordValidationRegex.test(serverPassword)) {
       validationErrorMessage = "رمز عبور نامعتبر است";
-    } else if (!paymentType) {
-      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
     if (validationErrorMessage) {
@@ -158,7 +149,6 @@ export const AddKubernetesContextProvider: FC<
         imageId: osVersion!.id!,
         kubernetesVersionId: kubernetesVersion!.id!,
         vmPassword: serverPassword,
-        customerProductTypeId: paymentType!,
         nodeCount: workersCount,
         productBundleId: serverConfig?.id || 0,
         isPredefined: true,
@@ -194,8 +184,6 @@ export const AddKubernetesContextProvider: FC<
         setWorkersCount,
         submitHandler,
         submitLoading,
-        paymentType,
-        setPaymentType,
         isPredefined,
         setIsPredefined,
         customConfig,

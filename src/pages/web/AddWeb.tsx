@@ -1,21 +1,17 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import { Box, Grid, Paper, Stack, Typography, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { AddWebContext } from "src/components/organisms/web/web/add/contexts/AddWebContext";
-import { SelectDomain } from "src/components/organisms/web/web/add/steps/SelectDomain";
-import { SelectDataCenter } from "src/components/organisms/web/web/add/steps/SelectDataCenter";
-import { SelectConfig } from "src/components/organisms/web/web/add/steps/SelectConfig";
+import { AddWebContext } from "src/components/organisms/web/add/contexts/AddWebContext";
+import { SelectDomain } from "src/components/organisms/web/add/steps/SelectDomain";
+import { SelectDataCenter } from "src/components/organisms/web/add/steps/SelectDataCenter";
+import { SelectConfig } from "src/components/organisms/web/add/steps/SelectConfig";
 import { usePostApiMyWebHostCreateMutation } from "src/app/services/api.generated";
 import ServiceReceipt from "src/components/molecules/ServiceReceipt";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 
 const AddWeb: FC = () => {
   const { domainName, dataCenter, serverConfig, term } =
     useContext(AddWebContext);
-
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
 
@@ -34,8 +30,6 @@ const AddWeb: FC = () => {
       validationErrorMessage = "لطفا نام دامنه را انتخاب کنید";
     } else if (domainName.length < 3) {
       validationErrorMessage = "نام دامنه نباید کمتر از سه حرف باشد";
-    } else if (!paymentType) {
-      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
     if (validationErrorMessage !== "") {
@@ -46,7 +40,6 @@ const AddWeb: FC = () => {
           domainName: domainName,
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
-          customerProductTypeId: paymentType!,
         },
       })
         .unwrap()
@@ -107,8 +100,6 @@ const AddWeb: FC = () => {
               <ServiceReceipt
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={isLoading}
-                paymentType={paymentType}
-                setPaymentType={setPaymentType}
                 receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
                 receiptItemNumber={serverConfig?.id ? "۱" : "---"}
                 reciptItemPrice={Math.floor(

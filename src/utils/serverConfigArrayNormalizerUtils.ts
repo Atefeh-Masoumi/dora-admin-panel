@@ -23,9 +23,9 @@ export const serverConfigArrayNormalizerUtils = (
   //       name: name || "",
   //       price: price || 0,
   //       price: price || 0,
-  //       cpu: 0,
-  //       memory: 0,
-  //       disk: 0,
+  //       cpu: 1,
+  //       memory: 1,
+  //       disk: 25,
   //     };
   //     productBundleItems?.forEach((productBundleItem) => {
   //       switch (productBundleItem.id) {

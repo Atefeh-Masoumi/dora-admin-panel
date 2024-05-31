@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction, FC, Fragment } from "react";
+import { FC, Fragment } from "react";
 import {
-  Button,
   Divider,
   Grid,
   Paper,
@@ -9,9 +8,6 @@ import {
   Skeleton,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
-import { InvoiceSvg } from "../atoms/svg-icons/InvoiceSvg";
-import { CalculateSvg } from "../atoms/svg-icons/CalculateSvg";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { e2p } from "src/utils/e2p.utils";
 type CustomConfigType = { numberOfItem: number; name: string; fee?: number }[];
@@ -29,8 +25,6 @@ type ServiceReceiptPropsType = {
   vat: string;
   submitHandler: () => void;
   submitButtonIsLoading: boolean;
-  paymentType?: CUSTOMER_PRODUCT_TYPE_ENUM | null;
-  setPaymentType?: Dispatch<SetStateAction<CUSTOMER_PRODUCT_TYPE_ENUM | null>>;
   priceIsLoading?: boolean;
   customConfig?: CustomConfigType;
   receiptType?: ReceiptTypeEnum;
@@ -39,8 +33,6 @@ type ServiceReceiptPropsType = {
 const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
   submitHandler,
   submitButtonIsLoading,
-  paymentType,
-  setPaymentType,
   receiptItemName,
   receiptItemNumber,
   reciptItemPrice,
@@ -388,99 +380,6 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
               </Typography>
             </Grid>
           </Grid>
-          {(paymentType || setPaymentType) && (
-            <Grid
-              container
-              sx={{
-                width: "95% !important",
-                margin: "10px auto !important",
-              }}
-            >
-              <Grid item xs={12}>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  whiteSpace="nowrap"
-                >
-                  <Button
-                    variant="outlined"
-                    onClick={() =>
-                      setPaymentType &&
-                      setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID)
-                    }
-                    color={
-                      paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                        ? "primary"
-                        : "secondary"
-                    }
-                    sx={{
-                      border:
-                        paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                          ? "2px solid #3C8AFF !important"
-                          : 1,
-                      py: 1,
-                    }}
-                    fullWidth
-                  >
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems={{ xs: "start", md: "end" }}
-                    >
-                      <InvoiceSvg
-                        stroke={
-                          paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PRE_PAID
-                            ? "#3C8AFF"
-                            : undefined
-                        }
-                        sx={{ fontSize: { xs: 20, md: 30 } }}
-                      />
-                      <Typography variant="text14">پیش پرداخت</Typography>
-                    </Stack>
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      setPaymentType &&
-                      setPaymentType(CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO)
-                    }
-                    variant="outlined"
-                    color={
-                      paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-                        ? "primary"
-                        : "secondary"
-                    }
-                    sx={{
-                      border:
-                        paymentType === CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-                          ? "2px solid #3C8AFF !important"
-                          : 1,
-                      py: 1,
-                    }}
-                    fullWidth
-                  >
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems={{ xs: "start", md: "end" }}
-                    >
-                      <CalculateSvg
-                        stroke={
-                          paymentType ===
-                          CUSTOMER_PRODUCT_TYPE_ENUM.PAY_AS_YOU_GO
-                            ? "#3C8AFF"
-                            : undefined
-                        }
-                        sx={{ fontSize: { xs: 20, md: 30 } }}
-                      />
-                      <Typography variant="text14">براساس مصرف</Typography>
-                    </Stack>
-                  </Button>
-                </Stack>
-              </Grid>
-            </Grid>
-          )}
-
           <Grid
             container
             sx={{

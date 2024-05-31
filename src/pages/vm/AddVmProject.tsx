@@ -36,8 +36,6 @@ const AddVmProject: FC<vmProjectPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [openCreateVmProjectDialog, setOpenCreateVkmProjectDialog] =
     useState(false);
-  const [openDeleteVmProjectDialog, setOpenDeleteVmProjectDialog] =
-    useState(false);
   const [selectedProject, setSelectedProject] =
     useState<VmProjectListResponse | null>(null);
 
@@ -91,7 +89,7 @@ const AddVmProject: FC<vmProjectPropsType> = () => {
         toast.success("پروژه مورد نظر با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   const cardOnClick = (project: VmProjectListResponse) => {

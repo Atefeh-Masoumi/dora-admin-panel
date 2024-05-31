@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { Box, Divider, Stack, Typography, Grid, Paper } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -11,7 +11,6 @@ import {
   useGetApiMyStorageHostListQuery,
   usePostApiMyStorageHostCreateMutation,
 } from "src/app/services/api.generated";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
@@ -31,9 +30,6 @@ const AddStorageService: FC = () => {
     setIsPredefined,
     customConfig,
   } = useContext(AddStorageContext);
-
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
 
   const navigate = useNavigate();
 
@@ -70,8 +66,6 @@ const AddStorageService: FC = () => {
       validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
     } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
-    } else if (!paymentType) {
-      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
     if (validationErrorMessage !== "") {
@@ -84,7 +78,6 @@ const AddStorageService: FC = () => {
           isPublic: false,
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
-          customerProductTypeId: paymentType!,
           isPredefined: isPredefined,
           storageHostTypeId: 2,
           disk: customConfig.disk,
@@ -163,8 +156,6 @@ const AddStorageService: FC = () => {
                 }
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={isLoading}
-                paymentType={paymentType}
-                setPaymentType={setPaymentType}
                 receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
                 receiptItemNumber={serverConfig?.id ? "۱" : "---"}
                 reciptItemPrice={Math.floor(

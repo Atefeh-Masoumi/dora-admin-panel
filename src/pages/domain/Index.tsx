@@ -6,8 +6,8 @@ import { useNavigate } from "react-router";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { DomainTableRow } from "src/components/organisms/web/domain/tables/DomainTableRow";
-import { domainTableStruct } from "src/components/organisms/web/domain/tables/struct";
+import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
+import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
 import { useGetApiMyDomainHostListQuery } from "src/app/services/api.generated";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
@@ -54,29 +54,6 @@ const WebManagement: FC<WebManagementPropsType> = () => {
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
-      <Stack
-        p={3}
-        mb={3}
-        bgcolor="warning.main"
-        direction="row"
-        gap={1}
-        borderRadius={2}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineOutlinedIcon />
-        <Typography>توجه:</Typography>
-        <Typography
-          fontSize={14}
-          sx={{
-            opacity: 0.9,
-          }}
-        >
-          استفاده از ترافیک ممنوعه پیگرد قانونی دارد.
-          <br />
-        </Typography>
-      </Stack>
       <Stack
         bgcolor="white"
         py={3}

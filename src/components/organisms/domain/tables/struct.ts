@@ -1,4 +1,4 @@
-import { columnType } from "../../../tables/table.types";
+import { columnType } from "../../tables/table.types";
 
 export const domainTableStruct: columnType[] = [
   {

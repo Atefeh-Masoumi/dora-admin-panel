@@ -23,7 +23,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
     {
       id: "Disk",
       label: "Disk (GB)",
-      min: 0,
+      min: 25,
       max: 1024,
       step: 25,
       value: customConfig.disk,
@@ -34,7 +34,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
     {
       id: "Memory",
       label: "Memory (GB)",
-      min: 0,
+      min: 1,
       max: 128,
       step: 1,
       value: customConfig.memory,
@@ -46,7 +46,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
     {
       id: "CPU",
       label: "CPU (Core)",
-      min: 0,
+      min: 1,
       max: 48,
       step: 1,
       value: customConfig.cpu,

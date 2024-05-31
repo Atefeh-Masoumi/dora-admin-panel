@@ -32,29 +32,6 @@ const NamespaceManagement: FC = () => {
     <>
       <Stack
         p={3}
-        mb={1}
-        bgcolor="warning.main"
-        direction="row"
-        gap={1}
-        borderRadius={2}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineOutlinedIcon />
-        <Typography>توجه:</Typography>
-        <Typography
-          fontSize={14}
-          sx={{
-            opacity: 0.9,
-          }}
-        >
-          استفاده از ترافیک ممنوعه پیگرد قانونی دارد.
-          <br />
-        </Typography>
-      </Stack>
-      <Stack
-        p={3}
         mb={3}
         bgcolor="warning.main"
         direction="row"

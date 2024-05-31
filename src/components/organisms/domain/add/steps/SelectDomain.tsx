@@ -16,7 +16,7 @@ import {
   outlinedInputClasses,
 } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
+import { AddDomainContext } from "src/components/organisms/domain/add/contexts/AddContext";
 import { Box } from "@mui/system";
 import DorsaRadio from "src/components/atoms/DorsaRadio";
 import { ProductItemListResponse } from "src/app/services/api.generated";

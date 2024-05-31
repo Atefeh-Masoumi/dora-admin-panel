@@ -1,15 +1,14 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect } from "react";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { AddDomainContext } from "src/components/organisms/web/domain/add/contexts/AddContext";
-import { SelectDomain } from "src/components/organisms/web/domain/add/steps/SelectDomain";
-import { DomainInfo } from "src/components/organisms/web/domain/add/steps/DomainInfo";
+import { AddDomainContext } from "src/components/organisms/domain/add/contexts/AddContext";
+import { SelectDomain } from "src/components/organisms/domain/add/steps/SelectDomain";
+import { DomainInfo } from "src/components/organisms/domain/add/steps/DomainInfo";
 import {
   usePostApiMyDomainHostCheckDomainMutation,
   usePostApiMyDomainHostRegisterMutation,
 } from "src/app/services/api.generated";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
@@ -33,9 +32,6 @@ const AddDomain: FC = () => {
     extObject,
   } = useContext(AddDomainContext);
 
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +52,7 @@ const AddDomain: FC = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [term, extObject.name, productId, domainName, authCode]);
+  }, [term, productId, domainName, authCode, extObject.id, extObject.name]);
 
   const [checkDomain, { isLoading: checkDomainLoading }] =
     usePostApiMyDomainHostCheckDomainMutation();
@@ -197,8 +193,6 @@ const AddDomain: FC = () => {
                 receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={registerLoading}
-                paymentType={paymentType}
-                setPaymentType={setPaymentType}
                 receiptItemName={"ثبت/انتقال دامنه"}
                 receiptItemNumber={extObject.price !== 0 ? "۱" : "---"}
                 reciptItemPrice={Math.floor(extObject.price).toLocaleString(

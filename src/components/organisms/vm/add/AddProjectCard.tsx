@@ -38,7 +38,6 @@ export const AddProjectCard: FC<ServiceListCardPropsType> = ({
   onDeleteClick,
   itemOnClick,
   detailsList,
-  showStatus = true,
   isProjectCard = false,
 }) => {
   const isEditable = useMemo(() => {

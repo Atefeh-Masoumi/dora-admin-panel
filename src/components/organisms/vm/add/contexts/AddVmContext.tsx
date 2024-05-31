@@ -76,9 +76,9 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [serverPassword, setServerPassword] = useState("");
   const [isPredefined, setIsPredefined] = useState(true);
   const [customConfig, setCustomConfig] = useState<vmCustomConfigType>({
-    cpu: 4,
-    memory: 25,
-    disk: 300,
+    cpu: 1,
+    memory: 1,
+    disk: 25,
     IPV4: 1,
   });
 

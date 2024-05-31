@@ -67,7 +67,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
             opacity: 0.9,
           }}
         >
-          استفاده از ترافیک ممنوعه پیگرد قانونی دارد.
+          استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
           <br />
         </Typography>
       </Stack>

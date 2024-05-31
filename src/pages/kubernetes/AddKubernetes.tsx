@@ -36,8 +36,6 @@ const AddKubernetes: FC = () => {
   const {
     serverConfig,
     workersCount,
-    paymentType,
-    setPaymentType,
     submitHandler,
     submitLoading,
     isPredefined,
@@ -63,8 +61,13 @@ const AddKubernetes: FC = () => {
         setProductItemPrices(res);
       })
       .catch((e) => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getKubernetesPrice, isPredefined, workersCount, serverConfig?.id]);
+  }, [
+    getKubernetesPrice,
+    setProductItemPrices,
+    isPredefined,
+    workersCount,
+    serverConfig?.id,
+  ]);
 
   const mapCustomConfig = useMemo(() => {
     const numberOfMasterNodes =
@@ -215,8 +218,6 @@ const AddKubernetes: FC = () => {
               receiptType={ReceiptTypeEnum.CUSTOM}
               submitHandler={submitHandler}
               submitButtonIsLoading={submitLoading}
-              paymentType={paymentType}
-              setPaymentType={setPaymentType}
               receiptItemName={serverConfig?.id ? serverConfig.name : "--"}
               receiptItemNumber={workersCount.toString() || ""}
               reciptItemPrice={Math.floor(

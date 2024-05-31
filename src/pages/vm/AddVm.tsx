@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
@@ -12,7 +12,6 @@ import {
   useGetApiMyPortalProductItemListByProductIdQuery,
   usePostApiMyVmHostCreateMutation,
 } from "src/app/services/api.generated";
-import { CUSTOMER_PRODUCT_TYPE_ENUM } from "src/constant/customerProductTypeEnum";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
@@ -44,9 +43,6 @@ const AddVm: FC = () => {
     customConfig,
   } = useContext(AddServerContext);
 
-  const [paymentType, setPaymentType] =
-    useState<CUSTOMER_PRODUCT_TYPE_ENUM | null>(null);
-
   const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
@@ -60,24 +56,24 @@ const AddVm: FC = () => {
   const mapCustomConfig = useMemo(() => {
     return [
       {
-        numberOfItem: customConfig.memory || 0,
+        numberOfItem: customConfig.memory || 1,
         name: mapConfig.memory || "",
-        fee: productItems?.find((x) => x.name === mapConfig.memory)?.price || 0,
+        fee: productItems?.find((x) => x.name === mapConfig.memory)?.price || 1,
       },
       {
-        numberOfItem: customConfig.cpu || 0,
+        numberOfItem: customConfig.cpu || 1,
         name: mapConfig.cpu || "",
-        fee: productItems?.find((x) => x.name === mapConfig.cpu)?.price || 0,
+        fee: productItems?.find((x) => x.name === mapConfig.cpu)?.price || 1,
       },
       {
-        numberOfItem: customConfig.disk || 0,
+        numberOfItem: customConfig.disk || 25,
         name: mapConfig.disk || "",
-        fee: productItems?.find((x) => x.name === mapConfig.disk)?.price || 0,
+        fee: productItems?.find((x) => x.name === mapConfig.disk)?.price || 25,
       },
       {
-        numberOfItem: customConfig.IPV4 || 0,
+        numberOfItem: customConfig.IPV4 || 1,
         name: mapConfig.ipv4 || "",
-        fee: productItems?.find((x) => x.name === mapConfig.ipv4)?.price || 0,
+        fee: productItems?.find((x) => x.name === mapConfig.ipv4)?.price || 1,
       },
     ];
   }, [customConfig, productItems]);
@@ -98,8 +94,6 @@ const AddVm: FC = () => {
         "طول کارکترهای بخش نام سرور ابری باید بین ۵ تا ۵۰ کارکتر باشد";
     } else if (!passwordValidationRegex.test(serverPassword)) {
       validationErrorMessage = "رمز عبور نامعتبر است";
-    } else if (!paymentType) {
-      validationErrorMessage = "لطفا نوع پرداخت را مشخص کنید";
     }
 
     if (validationErrorMessage !== "") {
@@ -112,7 +106,6 @@ const AddVm: FC = () => {
           publicKey: null,
           datacenterId: dataCenter?.id || 0,
           imageId: osVersion?.id || 0,
-          customerProductTypeId: paymentType!,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
@@ -198,8 +191,6 @@ const AddVm: FC = () => {
                 }
                 submitHandler={() => submitHandler()}
                 submitButtonIsLoading={createHostIsLoading}
-                paymentType={paymentType}
-                setPaymentType={setPaymentType}
                 receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
                 receiptItemNumber={serverConfig?.id ? "۱" : "---"}
                 reciptItemPrice={Math.floor(

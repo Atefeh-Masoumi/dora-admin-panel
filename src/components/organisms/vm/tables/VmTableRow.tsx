@@ -13,7 +13,6 @@ import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api"
 import { GetRemoteConsoleResponse } from "src/app/services/api.generated";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
-
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   ) => {
     let a = document.createElement("a");
     const url: string = remoteConsoleObject?.location || "";
-    const vmTypeId = remoteConsoleObject?.vmTypeId || ""
+    const vmTypeId = remoteConsoleObject?.vmTypeId || "";
 
     a.href =
       vmTypeId === VM_TYPE.VM_WARE ? "/console/wmks-sdk.html?url=" + url : url;

@@ -2923,7 +2923,6 @@ export type CreateBareMetalModel = {
   publicKey?: string | null;
   productBundleId?: number | null;
   isPredefined: boolean;
-  customerProductTypeId: number;
   physicalCpu?: number | null;
   physicalMemory?: number | null;
   physicalDisk?: number | null;
@@ -3067,7 +3066,6 @@ export type EquipmentModel = {
 export type CreateColocationModel = {
   datacenterId: number;
   name: string;
-  customerProductTypeId: number;
   equipmentModels: EquipmentModel[];
   rackUnitSpace?: number;
   networkPort1G?: number;
@@ -3521,7 +3519,6 @@ export type CreateKubernetesModel = {
   imageId: number;
   kubernetesVersionId: number;
   vmPassword: string;
-  customerProductTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
   nodeCount?: number;
@@ -3794,7 +3791,6 @@ export type CreateStorageHostModel = {
   name: string;
   isPublic: boolean;
   datacenterId: number;
-  customerProductTypeId: number;
   storageHostTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
@@ -3859,7 +3855,6 @@ export type CreateVmModel = {
   publicKey?: string | null;
   datacenterId: number;
   imageId: number;
-  customerProductTypeId: number;
   isPredefined: boolean;
   vmProjectId?: number;
   isPublic?: boolean;
@@ -4018,9 +4013,7 @@ export type VpcResponse = {
 export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
-  productBundleId?: number | null;
-  isPredefined: boolean;
-  customerProductTypeId: number;
+  productBundleId: number;
   hypervisorTypeId?: number;
 };
 export type EditVpcHostModel = {
@@ -4130,8 +4123,7 @@ export type CheckWebHostDomainModel = {
 };
 export type CreateWebHostModel = {
   domainName: string;
-  datacenterId?: number;
-  customerProductTypeId: number;
+  datacenterId: number;
   productBundleId?: number;
 };
 export type EditWebHostModel = {

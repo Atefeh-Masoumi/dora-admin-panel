@@ -1,18 +1,18 @@
 import { FC, useContext } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyDomainHostDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyWebHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/web/domain/Index";
+import { DataContext } from "src/pages/web/Index";
 
-type DeleteDomainDialogPropsType = {
+type DeleteWebDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   id: number;
 };
 
-export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
+export const DeleteWebDialog: FC<DeleteWebDialogPropsType> = ({
   openDialog,
   handleClose,
   id,
@@ -20,20 +20,13 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
   const { refetchOnClick } = useContext(DataContext);
 
   const onClose = () => handleClose();
-  const [deleteItem, { isLoading }] =
-    useDeleteApiMyDomainHostDeleteByIdMutation();
+  const [deleteItem, { isLoading }] = useDeleteApiMyWebHostDeleteByIdMutation();
 
   const submit = () =>
     deleteItem({ id })
-      .then((res) => {
-        const response: any = res;
-        const status = response.error.status;
-        if (status && status === 400) {
-          toast.error(response.error.errorMessage);
-        } else {
-          toast.success("دامنه با موفقیت حذف شد");
-        }
+      .then(() => {
         refetchOnClick();
+        toast.success("سرویس هاست ابری با موفقیت حذف شد");
         handleClose();
       })
       .catch((err) => {});
@@ -50,7 +43,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>
           <Typography variant="text1" color="error" fontWeight="bold">
-            از حذف سفارش دامنه مطمئن هستید؟
+            از حذف سرویس هاست وب ابری مطمئن هستید؟
           </Typography>
           <Typography variant="text9" color="secondary">
             در صورت تایید حذف، امکان بازگشت وجود ندارد
@@ -72,7 +65,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
             sx={{ px: 3, py: 0.8 }}
             loading={isLoading}
           >
-            حذف دامنه
+            حذف سرویس هاست ابری
           </LoadingButton>
         </Stack>
       </Stack>
