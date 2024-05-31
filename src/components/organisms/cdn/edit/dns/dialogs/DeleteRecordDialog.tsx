@@ -24,10 +24,12 @@ export const DeleteRecordDialog: FC<DeleteRecordDialogPropsType> = ({
   const submit = () =>
     deleteRecord({ id })
       .then(() => {
-        toast.error("رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("رکورد مورد نظر حذف شد", { icon: Success });
         handleClose();
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast.error("مشکلی پیش آمده");
+      });
 
   return (
     <Dialog
