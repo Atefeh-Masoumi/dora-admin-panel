@@ -11,15 +11,15 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import moment from "jalali-moment";
 import { useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
-import moment from "jalali-moment";
 import { customerProductsTableStruct } from "src/components/organisms/portal/customerBill/tables/billTableStruct";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
-import BillProductsTableRow from "src/components/organisms/bill/BillProductsTableRow";
+import BillProductsTableRow from "src/components/organisms/portal/customerBill/tables/BillProductsTableRow";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 

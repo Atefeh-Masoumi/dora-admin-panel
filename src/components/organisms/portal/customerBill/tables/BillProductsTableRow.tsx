@@ -14,7 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { e2p } from "src/utils/e2p.utils";
-import { customerProductItemsTableStruct } from "../portal/customerBill/tables/billTableStruct";
+import { customerProductItemsTableStruct } from "./billTableStruct";
 
 type BillProductsTableRowPropsType = {
   rowData: CustomerProductBillModel;
