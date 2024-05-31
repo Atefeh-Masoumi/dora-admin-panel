@@ -18,7 +18,7 @@ import { customerProductItemsTableStruct } from "../portal/customerBill/tables/b
 
 type BillProductsTableRowPropsType = {
   rowData: CustomerProductBillModel;
-  rowBgColor: string
+  rowBgColor: string;
 };
 const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
   rowData,
@@ -90,12 +90,6 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                               {row.customerProductItem}
                             </TableCell>
                             <TableCell align="center">
-                              {e2p(row.fromDate!.replace(" ", " - "))}
-                            </TableCell>
-                            <TableCell align="center">
-                              {e2p(row.toDate!.replace(" ", " - "))}
-                            </TableCell>
-                            <TableCell align="center">
                               {priceToPersian(row.quantity!)}
                             </TableCell>
                             <TableCell align="center">
@@ -103,6 +97,12 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                             </TableCell>
                             <TableCell align="center">
                               {priceToPersian(row.price!)}
+                            </TableCell>
+                            <TableCell align="center">
+                              {e2p(row.fromDate!.replace(" ", " - "))}
+                            </TableCell>
+                            <TableCell align="center">
+                              {e2p(row.toDate!.replace(" ", " - "))}
                             </TableCell>
                           </TableRow>
                         );
