@@ -317,7 +317,7 @@ const Receipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          href="/vm/add-vm"
+          href="/vm"
           size="large"
           sx={{ py: 2 }}
           fullWidth

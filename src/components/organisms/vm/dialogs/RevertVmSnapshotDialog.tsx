@@ -5,6 +5,7 @@ import { usePutApiMyVmSnapshotRevertMutation } from "src/app/services/api.genera
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type RevertVmSnapshotDialogPropsType = {
   openDialog: boolean;
@@ -42,7 +43,7 @@ export const RevertVmSnapshotDialog: FC<RevertVmSnapshotDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
     >
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>

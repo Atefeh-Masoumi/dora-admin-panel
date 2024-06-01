@@ -21,6 +21,7 @@ import { Box } from "@mui/system";
 import DorsaRadio from "src/components/atoms/DorsaRadio";
 import { ProductItemListResponse } from "src/app/services/api.generated";
 import { useLazyGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type SelectDomainPropsType = {};
 
@@ -96,7 +97,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
         container
         direction="row"
         justifyContent="center"
-        sx={{ borderRadius: 1, bgcolor: "white" }}
+        sx={{ borderRadius: BORDER_RADIUS_1, bgcolor: "white" }}
       >
         <Grid
           xs={12}
@@ -133,7 +134,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
                 sx={{
                   [`& .${selectClasses.select}`]: {
                     background: "white",
-                    borderRadius: "4px",
+                    borderRadius: BORDER_RADIUS_1,
                     paddingBottom: "15px",
                   },
                   [`& .${outlinedInputClasses.notchedOutline}`]: {
@@ -209,7 +210,7 @@ export const SelectDomain: FC<SelectDomainPropsType> = () => {
           <Checkbox
             value={term}
             checked={term}
-            sx={{ p: 0, borderRadius: 0 }}
+            sx={{ p: 0, borderRadius: BORDER_RADIUS_1 }}
           />
           <Typography align="left">
             با شرایط و قوانین استفاده از سایت و حریم خصوصی موافقم

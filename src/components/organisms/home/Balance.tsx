@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
-import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
 
 export const Balance: FC = () => {
@@ -32,7 +32,7 @@ export const Balance: FC = () => {
           width: { xs: "100%", md: 300 },
           height: { xs: 220, md: 300 },
           bgcolor: "white",
-          borderRadius: { xs: BORDER_RADIUS_5, lg: BORDER_RADIUS_4 },
+          borderRadius: BORDER_RADIUS_1,
           px: { xs: 1.5, lg: 2 },
           py: { xs: 2, lg: 2.5 },
         }}
