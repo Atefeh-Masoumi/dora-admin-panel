@@ -11,7 +11,7 @@ import {
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const diskUnitPrice = 45000;
 
@@ -72,7 +72,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
             rowGap={2}
             elevation={0}
             sx={{
-              borderRadius: BORDER_RADIUS_4,
+              borderRadius: BORDER_RADIUS_1,
               p: { xs: 2.5 },
               height: "100%",
             }}

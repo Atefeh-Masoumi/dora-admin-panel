@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Receipt from "src/components/organisms/portal/calculator/Receipt";
 import ServiceSpecifications from "src/components/organisms/portal/calculator/ServiceSpecifications";
 
@@ -72,7 +72,7 @@ const Calculator: FC = () => {
               xl: "650px",
             },
             border: "1px solid #E6E6E6",
-            borderRadius: BORDER_RADIUS_5,
+            borderRadius: BORDER_RADIUS_1,
             p: 0.5,
             mx: "auto",
             mt: 8,

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditDomainContext } from "src/components/organisms/domain/edit/contexts/EditContext";
 import { DomainInfo } from "src/components/organisms/domain/edit/DomainInfo";
@@ -83,7 +83,7 @@ const EditDomain: FC<EditDomainPropsType> = () => {
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Tabs

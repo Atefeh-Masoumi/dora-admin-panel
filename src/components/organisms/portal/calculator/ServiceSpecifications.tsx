@@ -1,6 +1,6 @@
 import type { Dispatch, FC, SetStateAction } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 
 type ServiceSpecificationsPropsType = {
@@ -90,7 +90,7 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
         direction: "ltr !important",
         bgcolor: "#FBFCFF",
         border: "1px solid #DCE7FD",
-        borderRadius: BORDER_RADIUS_4,
+        borderRadius: BORDER_RADIUS_1,
         p: { xs: 2, md: 2.5, lg: 3 },
         flexGrow: 1,
         height: { xs: "auto", md: "659px" },

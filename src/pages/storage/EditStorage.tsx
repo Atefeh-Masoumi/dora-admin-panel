@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Navigate, useParams, useNavigate } from "react-router-dom"; // Modified import
 import { EditStorageContext } from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
@@ -92,7 +92,7 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Tabs

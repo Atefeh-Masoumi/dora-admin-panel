@@ -46,7 +46,7 @@ const CustomSlider = styled(Slider)<SliderProps>(({ theme }) => ({
     "&>.MuiSlider-valueLabel": {
       fontWeight: 700,
       fontSize: "12px",
-      borderRadius: BORDER_RADIUS_5,
+      borderRadius: BORDER_RADIUS_1,
       backgroundColor: theme.palette.primary.main,
     },
   },

@@ -20,7 +20,11 @@ import {
   DatacenterIpListResponse,
 } from "src/app/services/api.generated";
 import { useLazyGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api";
-import { BORDER_RADIUS_5, BORDER_RADIUS_4 } from "src/configs/theme";
+import {
+  BORDER_RADIUS_5,
+  BORDER_RADIUS_4,
+  BORDER_RADIUS_1,
+} from "src/configs/theme";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 
 const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
@@ -32,7 +36,7 @@ const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
   return (
     <Grid2
       container
-      sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_5 }}
+      sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
       alignItems="center"
     >
       <Grid2
@@ -83,7 +87,7 @@ const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
 const LoadingSkeleton: FC = () => (
   <Grid2
     container
-    sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_5 }}
+    sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
     alignItems="center"
     height={56}
   >
@@ -142,7 +146,7 @@ export const VmIpAddress: FC<VmIpAddressPropsType> = () => {
             direction="column"
             spacing={1}
             elevation={0}
-            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_4 }}
+            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
           >
             <Typography fontWeight={700} fontSize={18} align="right">
               IPv6
@@ -178,7 +182,7 @@ export const VmIpAddress: FC<VmIpAddressPropsType> = () => {
             direction="column"
             spacing={1}
             elevation={0}
-            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_4 }}
+            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
           >
             <Typography fontWeight={700} fontSize={18} align="right">
               IPv4

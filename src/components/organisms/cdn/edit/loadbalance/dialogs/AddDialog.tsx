@@ -22,7 +22,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { useAppSelector } from "src/app/hooks";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetApiMyCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
@@ -328,7 +328,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
                   justifyContent="space-between"
                   sx={{
                     border: "1px solid rgba(110, 118, 138, 0.12)",
-                    borderRadius: BORDER_RADIUS_5,
+                    borderRadius: BORDER_RADIUS_1,
                     p: 1.5,
                   }}
                 >

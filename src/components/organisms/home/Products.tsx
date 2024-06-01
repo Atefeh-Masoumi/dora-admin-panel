@@ -2,6 +2,7 @@ import { Box, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
 import {
+  BORDER_RADIUS_1,
   BORDER_RADIUS_2,
   BORDER_RADIUS_4,
   BORDER_RADIUS_5,
@@ -48,7 +49,7 @@ export const Products: FC = () => {
                     width: { xs: 48, lg: 80 },
                     height: { xs: 48, lg: 80 },
                     bgcolor,
-                    borderRadius: BORDER_RADIUS_5,
+                    borderRadius: BORDER_RADIUS_1,
                   }}
                 >
                   <Icon

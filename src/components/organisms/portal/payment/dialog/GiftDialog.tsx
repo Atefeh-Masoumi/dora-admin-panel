@@ -8,7 +8,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostApiMyPortalVoucherUseMutation } from "src/app/services/api.generated";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const formInitialValues = {
   giftCode: "",
@@ -78,7 +78,7 @@ export const GiftDialog: FC<GiftDialogPropsType> = ({
                   justifyContent="space-between"
                   p={1}
                   border="1px solid #eee"
-                  borderRadius={BORDER_RADIUS_5}
+                  borderRadius={BORDER_RADIUS_1}
                 >
                   <DorsaTextField
                     placeholder="کد هدیه خود را در این محل وارد کنید"

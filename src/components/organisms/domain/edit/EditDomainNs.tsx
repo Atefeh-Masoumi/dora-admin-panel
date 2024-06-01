@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { Divider, Paper, Grid, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { toast } from "react-toastify";
@@ -86,7 +86,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 } }}
+          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 } }}
         >
           <Typography align="center" fontWeight={700} fontSize={18}>
             تغییر Name Server دامنه

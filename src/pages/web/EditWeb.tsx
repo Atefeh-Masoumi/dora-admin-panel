@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Navigate, useParams } from "react-router";
 import { EditWebContext } from "src/components/organisms/web/edit/contexts/EditWebContext";
 import { WebInfo } from "src/components/organisms/web/edit/WebInfo";
@@ -83,7 +83,7 @@ const EditWebService: FC<EditWebPropsType> = () => {
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Tabs

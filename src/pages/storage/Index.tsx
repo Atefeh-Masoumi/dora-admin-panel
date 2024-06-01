@@ -1,7 +1,7 @@
 import { FC, useState, useMemo, createContext } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate } from "react-router";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -88,7 +88,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
               sx={{
                 whiteSpace: "nowrap",
                 px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
+                borderRadius: BORDER_RADIUS_1,
               }}
               startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
             >
@@ -101,7 +101,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
               sx={{
                 whiteSpace: "nowrap",
                 px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
+                borderRadius: BORDER_RADIUS_1,
               }}
               startIcon={
                 <Stack

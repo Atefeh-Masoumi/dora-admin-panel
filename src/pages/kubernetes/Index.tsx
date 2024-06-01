@@ -87,7 +87,7 @@ const NamespaceManagement: FC = () => {
             sx={{
               whiteSpace: "nowrap",
               px: 1.2,
-              borderRadius: BORDER_RADIUS_5,
+              borderRadius: BORDER_RADIUS_1,
             }}
             startIcon={
               <Stack

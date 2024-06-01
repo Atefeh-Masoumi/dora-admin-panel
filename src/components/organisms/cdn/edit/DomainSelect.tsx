@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { MenuItem, Skeleton } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
 import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
@@ -26,7 +26,7 @@ export const DomainSelect: FC = () => {
         variant="rectangular"
         width={200}
         height={37}
-        sx={{ borderRadius: BORDER_RADIUS_5 }}
+        sx={{ borderRadius: BORDER_RADIUS_1 }}
       />
     );
   } else {

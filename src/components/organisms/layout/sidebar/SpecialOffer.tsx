@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import image1 from "src/assets/images/image1.png";
 import { useLocation } from "react-router";
 
@@ -23,7 +23,7 @@ export const SpecialOffer: FC<SpecialOfferPropsType> = () => {
         px: 1,
         py: 2,
         bgcolor: ({ palette }) => palette.primary.main,
-        borderRadius: BORDER_RADIUS_4,
+        borderRadius: BORDER_RADIUS_1,
         opacity: isCollapsed ? "0" : "100%",
         transition: isCollapsed
           ? "opacity 0s ease-out"

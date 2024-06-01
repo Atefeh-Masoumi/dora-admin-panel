@@ -14,7 +14,7 @@ import { CalendarSvg } from "src/components/atoms/svg-icons/CalendarSvg";
 import { JalaliDatePicker } from "./JalaliDatePicker";
 import { GregorianDatePicker } from "./GregorianDatePicker";
 import { PickersActionBarProps } from "@mui/x-date-pickers/PickersActionBar";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CustomDatePickerPropsType = {
   setValue: Dispatch<SetStateAction<Date | null>>;
@@ -273,7 +273,7 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
         onClick={onCancelClick}
         variant="outlined"
         color="secondary"
-        sx={{ height: "100%", width: 92, borderRadius: BORDER_RADIUS_5 }}
+        sx={{ height: "100%", width: 92, borderRadius: BORDER_RADIUS_1 }}
       >
         انصراف
       </Button>
@@ -282,7 +282,7 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
         disableElevation
         fullWidth
         variant="contained"
-        sx={{ height: "100%", borderRadius: BORDER_RADIUS_5 }}
+        sx={{ height: "100%", borderRadius: BORDER_RADIUS_1 }}
       >
         تایید
       </Button>

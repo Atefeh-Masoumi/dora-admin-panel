@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Tabs, Stack, Box, CircularProgress } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
@@ -124,7 +124,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Tabs

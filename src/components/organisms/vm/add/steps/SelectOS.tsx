@@ -8,7 +8,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
@@ -122,7 +122,7 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                 width: { xs: "100%", sm: 200 },
                 height: 96,
                 transition: "150ms",
-                borderRadius: BORDER_RADIUS_4,
+                borderRadius: BORDER_RADIUS_1,
                 border: "1px solid rgba(110, 118, 138, 0.12)",
                 overflow: "hidden",
                 p: 1,
@@ -153,8 +153,8 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                 sx={{
                   py: 2,
                   transition: "200ms",
-                  borderTopRightRadius: BORDER_RADIUS_4,
-                  borderTopLeftRadius: BORDER_RADIUS_4,
+                  borderTopRightRadius: BORDER_RADIUS_1,
+                  borderTopLeftRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
                       osDropDown.isSelected
@@ -219,8 +219,8 @@ export const SelectOS: FC<SelectOSPropsType> = () => {
                       } !important`,
                   },
                   "& .MuiOutlinedInput-notchedOutline": {
-                    borderBottomRightRadius: BORDER_RADIUS_4,
-                    borderBottomLeftRadius: BORDER_RADIUS_4,
+                    borderBottomRightRadius: BORDER_RADIUS_1,
+                    borderBottomLeftRadius: BORDER_RADIUS_1,
                     borderTopLeftRadius: 0,
                     borderTopRightRadius: 0,
                     border: ({ palette }) =>

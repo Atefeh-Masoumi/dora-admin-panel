@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 type ChartTooltipPropsType = { categoryId: number; payload?: any };
@@ -18,7 +18,7 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
       alignItems="center"
       justifyContent="center"
       rowGap={1}
-      sx={{ bgcolor: "#202020", borderRadius: BORDER_RADIUS_5, p: 1 }}
+      sx={{ bgcolor: "#202020", borderRadius: BORDER_RADIUS_1, p: 1 }}
     >
       <Typography fontSize="12px" fontWeight={500} color="white">
         {category}

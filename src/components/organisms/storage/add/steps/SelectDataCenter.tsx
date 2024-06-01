@@ -1,6 +1,6 @@
 import { useContext, FC } from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterListQuery,
@@ -39,7 +39,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                 width: { xs: "100%", sm: 200 },
                 height: 96,
                 transition: "150ms",
-                borderRadius: BORDER_RADIUS_4,
+                borderRadius: BORDER_RADIUS_1,
                 border: "1px solid rgba(110, 118, 138, 0.12)",
                 overflow: "hidden",
                 p: 1,
@@ -65,7 +65,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                   width: { xs: "100%", sm: 200 },
                   height: 96,
                   transition: "150ms",
-                  borderRadius: BORDER_RADIUS_4,
+                  borderRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
                       isSelected

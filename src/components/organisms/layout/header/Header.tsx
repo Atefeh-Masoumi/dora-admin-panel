@@ -8,7 +8,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_4, BORDER_RADIUS_5 } from "src/configs/theme";
+import {
+  BORDER_RADIUS_1,
+  BORDER_RADIUS_4,
+  BORDER_RADIUS_5,
+} from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
 import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
@@ -58,7 +62,7 @@ const Header: FC<HeaderPropsType> = ({
       <IconButton
         sx={{
           border: 1,
-          borderRadius: { xs: 62, lg: 8 },
+          borderRadius: BORDER_RADIUS_1,
           borderColor: "rgba(110, 118, 138, 0.16)",
         }}
         onClick={goToCalculator}
@@ -68,7 +72,7 @@ const Header: FC<HeaderPropsType> = ({
       <IconButton
         sx={{
           border: 1,
-          borderRadius: { xs: 62, lg: 8 },
+          borderRadius: BORDER_RADIUS_1,
           borderColor: "rgba(110, 118, 138, 0.16)",
         }}
         onClick={() => {
@@ -90,7 +94,7 @@ const Header: FC<HeaderPropsType> = ({
       <IconButton
         sx={{
           border: 1,
-          borderRadius: { xs: 62, lg: 8 },
+          borderRadius: BORDER_RADIUS_1,
           borderColor: "rgba(110, 118, 138, 0.16)",
           display: { xs: "inline-flex", md: "none" },
         }}
@@ -154,7 +158,7 @@ const Header: FC<HeaderPropsType> = ({
         boxShadow: isScrolled ? 4 : 0,
         bgcolor: "white",
         overflow: "overlay",
-        borderRadius: "24px",
+        borderRadius: BORDER_RADIUS_1,
       }}
     >
       <Toolbar sx={{ p: 0 + "!important" }}>
@@ -167,7 +171,7 @@ const Header: FC<HeaderPropsType> = ({
             height: "100%",
             py: { xs: 1, lg: 2 },
             px: { xs: 1.5, lg: 3 },
-            borderRadius: { xs: BORDER_RADIUS_5, lg: BORDER_RADIUS_4 },
+            borderRadius: BORDER_RADIUS_1,
             zIndex: 2,
           }}
         >

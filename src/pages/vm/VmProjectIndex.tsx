@@ -21,7 +21,7 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AddProjectCard } from "src/components/organisms/vm/add/AddProjectCard";
 import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
 import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const vmDataList = [{ label: "نوع زیرساخت:", id: "hypervisorType" }];
 
@@ -141,7 +141,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                 sx={{
                   whiteSpace: "nowrap",
                   px: 1.2,
-                  borderRadius: BORDER_RADIUS_5,
+                  borderRadius: BORDER_RADIUS_1,
                 }}
                 startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
               >
@@ -154,7 +154,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                 sx={{
                   whiteSpace: "nowrap",
                   px: 1.2,
-                  borderRadius: BORDER_RADIUS_5,
+                  borderRadius: BORDER_RADIUS_1,
                 }}
                 startIcon={
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />

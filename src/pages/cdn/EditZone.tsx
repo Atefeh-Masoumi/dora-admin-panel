@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useMemo } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router";
 import { Tabs, Stack, Box } from "@mui/material";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { useAppSelector } from "src/app/hooks";
 import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
@@ -81,7 +81,7 @@ const EditZone: FC = () => {
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Tabs

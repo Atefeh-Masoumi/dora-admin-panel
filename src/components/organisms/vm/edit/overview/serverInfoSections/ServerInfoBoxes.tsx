@@ -54,7 +54,7 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         >
           <Typography align="right" fontWeight={700} fontSize={18}>
             Virtual Machine
@@ -111,7 +111,7 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
           component={Stack}
           rowGap={2}
           elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         >
           <Typography align="right" fontWeight={700} fontSize={18}>
             Hardware

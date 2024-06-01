@@ -14,7 +14,7 @@ import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -109,7 +109,7 @@ const ZoneManagement: FC = () => {
                 sx={{
                   whiteSpace: "nowrap",
                   px: 1.2,
-                  borderRadius: BORDER_RADIUS_5,
+                  borderRadius: BORDER_RADIUS_1,
                 }}
                 startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
               >
@@ -122,7 +122,7 @@ const ZoneManagement: FC = () => {
                 sx={{
                   whiteSpace: "nowrap",
                   px: 1.2,
-                  borderRadius: BORDER_RADIUS_5,
+                  borderRadius: BORDER_RADIUS_1,
                 }}
                 startIcon={
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />

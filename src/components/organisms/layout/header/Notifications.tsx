@@ -18,6 +18,7 @@ import {
 import { useGetApiMyPortalNotificationShortListQuery } from "src/app/services/api.generated";
 import { EmptyNotificationSvg } from "src/components/atoms/svg-icons/EmptyNotifSvg";
 import { NotificationSvg } from "src/components/atoms/svg-icons/NotificationSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const Notifications: FC = () => {
   const [open, setOpen] = useState(false);
@@ -39,9 +40,9 @@ export const Notifications: FC = () => {
         componentsProps={{
           popper: {
             sx: {
+              borderRadius: BORDER_RADIUS_1,
               "& .MuiTooltip-tooltip": {
                 background: "rgba(32, 32, 32, 1)",
-                borderRadius: 3,
                 minWidth: "330px",
               },
               "& .MuiTooltip-arrow::before": { color: "rgba(32, 32, 32, 1)" },
@@ -55,17 +56,26 @@ export const Notifications: FC = () => {
                 <Skeleton
                   variant="rectangular"
                   height={60}
-                  sx={{ bgcolor: "secondary.main", borderRadius: 2 }}
+                  sx={{
+                    bgcolor: "secondary.main",
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
                 />
                 <Skeleton
                   variant="rectangular"
                   height={60}
-                  sx={{ bgcolor: "secondary.main", borderRadius: 2 }}
+                  sx={{
+                    bgcolor: "secondary.main",
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
                 />
                 <Skeleton
                   variant="rectangular"
                   height={30}
-                  sx={{ bgcolor: "secondary.main", borderRadius: 1.2 }}
+                  sx={{
+                    bgcolor: "secondary.main",
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
                 />
               </Stack>
             ) : (
@@ -91,7 +101,10 @@ export const Notifications: FC = () => {
                           {notifications.map((notification) => (
                             <MenuItem
                               key={notification.id}
-                              sx={{ cursor: "default", borderRadius: 2 }}
+                              sx={{
+                                cursor: "default",
+                                borderRadius: BORDER_RADIUS_1,
+                              }}
                             >
                               <Stack key={notification.id} spacing={1}>
                                 <Stack
@@ -166,7 +179,7 @@ export const Notifications: FC = () => {
         <IconButton
           sx={{
             border: 1,
-            borderRadius: { xs: 62, lg: 8 },
+            borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
           }}
           onClick={handleTooltipOpen}

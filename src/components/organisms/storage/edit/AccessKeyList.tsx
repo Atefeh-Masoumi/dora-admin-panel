@@ -91,7 +91,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
             rowGap={2}
             elevation={0}
             sx={{
-              borderRadius: BORDER_RADIUS_4,
+              borderRadius: BORDER_RADIUS_1,
               p: { xs: 2.5 },
               height: "100%",
             }}
@@ -119,7 +119,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
                   sx={{
                     whiteSpace: "nowrap",
                     px: 1.2,
-                    borderRadius: BORDER_RADIUS_5,
+                    borderRadius: BORDER_RADIUS_1,
                   }}
                   startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
                 >
@@ -134,7 +134,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
                   sx={{
                     whiteSpace: "nowrap",
                     px: 1.2,
-                    borderRadius: BORDER_RADIUS_5,
+                    borderRadius: BORDER_RADIUS_1,
                     width: "220px",
                   }}
                   startIcon={

@@ -11,7 +11,7 @@ import { useGetApiMyKubernetesHostGetByIdQuery } from "src/app/services/api.gene
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type KubernetesOverviewPropsType = {};
 
@@ -52,7 +52,7 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
   return (
     <Container maxWidth="md" sx={{ p: 0 }}>
       <Paper
-        sx={{ borderRadius: BORDER_RADIUS_4, p: { xs: 2.5 }, height: "100%" }}
+        sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         elevation={0}
       >
         <Stack rowGap={2}>

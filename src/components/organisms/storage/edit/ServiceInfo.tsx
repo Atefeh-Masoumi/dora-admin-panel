@@ -37,7 +37,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           rowGap={2}
           elevation={0}
           sx={{
-            borderRadius: BORDER_RADIUS_4,
+            borderRadius: BORDER_RADIUS_1,
             p: { xs: 2.5 },
             height: "100%",
           }}

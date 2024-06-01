@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 
@@ -252,8 +252,8 @@ const Receipt: FC<ReceiptPropsType> = ({
         position: "relative",
         bgcolor: "#FBFCFF",
         border: "1px solid #DCE7FD",
-        borderTopRightRadius: BORDER_RADIUS_4,
-        borderTopLeftRadius: BORDER_RADIUS_4,
+        borderTopRightRadius: BORDER_RADIUS_1,
+        borderTopLeftRadius: BORDER_RADIUS_1,
         borderBottomRightRadius: 0,
         borderBottomLeftRadius: 0,
       }}

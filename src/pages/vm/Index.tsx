@@ -5,7 +5,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
 import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
 import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate, useParams } from "react-router";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
@@ -98,7 +98,7 @@ const VmManagement: FC<VmManagementPropsType> = () => {
             sx={{
               whiteSpace: "nowrap",
               px: 1.2,
-              borderRadius: BORDER_RADIUS_5,
+              borderRadius: BORDER_RADIUS_1,
             }}
             startIcon={
               <Stack

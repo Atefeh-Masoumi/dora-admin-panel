@@ -5,7 +5,7 @@ import { KubernetesEditNodes } from "src/components/organisms/kubernetes/edit/ed
 import { KubernetesOverview } from "src/components/organisms/kubernetes/edit/overview/KubernetesOverview";
 import { Container, Tabs } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams, useNavigate } from "react-router-dom";
 
 const a11yProps = (index: number) => {
@@ -47,7 +47,7 @@ const EditKubernetes: FC = () => {
             minWidth: { xs: 300, md: 250 },
             bgcolor: "white",
             py: 0.5,
-            borderRadius: BORDER_RADIUS_5,
+            borderRadius: BORDER_RADIUS_1,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={value}

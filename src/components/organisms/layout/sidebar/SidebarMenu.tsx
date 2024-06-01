@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { Box, Stack } from "@mui/material";
 import { useLocation } from "react-router";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
@@ -169,7 +169,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         position: "relative",
         overflow: "hidden",
         bgcolor: "white",
-        borderRadius: BORDER_RADIUS_4,
+        borderRadius: BORDER_RADIUS_1,
         height: { xs: "100vh", lg: "calc(100vh - 36px)" },
       }}
     >
@@ -184,7 +184,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
           height: "100%",
           overflowY: "auto",
           overflowX: "hidden",
-          borderRadius: BORDER_RADIUS_4,
+          borderRadius: BORDER_RADIUS_1,
           "&::-webkit-scrollbar": {
             display: "none",
           },

@@ -8,7 +8,7 @@ import {
   SetStateAction,
 } from "react";
 import { Skeleton, Stack, Typography, Box } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { GetApiMyVmImageListApiResponse } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import Grid2 from "@mui/material/Unstable_Grid2";
@@ -72,7 +72,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
                 width: { xs: "100%", sm: 200 },
                 height: 96,
                 transition: "150ms",
-                borderRadius: BORDER_RADIUS_4,
+                borderRadius: BORDER_RADIUS_1,
                 border: "1px solid rgba(110, 118, 138, 0.12)",
                 overflow: "hidden",
                 p: 1,
@@ -105,7 +105,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
                 sx={{
                   height: "100%",
                   transition: "200ms",
-                  borderRadius: BORDER_RADIUS_4,
+                  borderRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
                       isSelected
@@ -173,7 +173,7 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
                     width: "100%",
                     minWidth: { xs: "100%", sm: 270 },
                     transition: "200ms",
-                    borderRadius: BORDER_RADIUS_4,
+                    borderRadius: BORDER_RADIUS_1,
                     border: ({ palette }) =>
                       `2px solid ${
                         isSelected

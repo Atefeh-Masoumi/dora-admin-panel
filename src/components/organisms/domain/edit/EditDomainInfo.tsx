@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useNavigate, useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
@@ -101,7 +101,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
                   rowGap={2}
                   elevation={0}
                   sx={{
-                    borderRadius: BORDER_RADIUS_4,
+                    borderRadius: BORDER_RADIUS_1,
                     p: { xs: 2.5 },
                   }}
                 >

@@ -51,7 +51,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
         justifyContent={isCollapsed ? "center" : "space-between"}
         sx={{
           border: "1px solid rgba(110, 118, 138, 0.16)",
-          borderRadius: BORDER_RADIUS_5,
+          borderRadius: BORDER_RADIUS_1,
           py: 1,
           px: isCollapsed ? 0 : 1.5,
           width: "100%",

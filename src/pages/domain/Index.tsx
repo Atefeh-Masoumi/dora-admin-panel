@@ -88,7 +88,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
               sx={{
                 whiteSpace: "nowrap",
                 px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
+                borderRadius: BORDER_RADIUS_1,
               }}
               startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
             >
@@ -101,7 +101,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
               sx={{
                 whiteSpace: "nowrap",
                 px: 1.2,
-                borderRadius: BORDER_RADIUS_5,
+                borderRadius: BORDER_RADIUS_1,
               }}
               startIcon={
                 <Stack
