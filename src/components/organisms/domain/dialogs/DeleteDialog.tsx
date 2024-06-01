@@ -5,7 +5,6 @@ import { useDeleteApiMyDomainHostDeleteByIdMutation } from "src/app/services/api
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DataContext } from "src/pages/domain/Index";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteDomainDialogPropsType = {
   openDialog: boolean;
@@ -46,7 +45,7 @@ export const DeleteDomainDialog: FC<DeleteDomainDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
     >
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>

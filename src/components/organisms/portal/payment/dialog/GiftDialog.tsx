@@ -57,7 +57,7 @@ export const GiftDialog: FC<GiftDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
     >
       <Formik
         initialValues={formInitialValues}

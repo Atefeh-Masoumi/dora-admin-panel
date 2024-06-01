@@ -5,7 +5,6 @@ import { useDeleteApiMyStorageUserDeleteByIdMutation } from "src/app/services/ap
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { AccessKeyContext } from "../AccessKeyList";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteAccessKeyDialogPropsType = {
   openDialog: boolean;
@@ -41,7 +40,7 @@ export const DeleteAccessKeyDialog: FC<DeleteAccessKeyDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
     >
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>

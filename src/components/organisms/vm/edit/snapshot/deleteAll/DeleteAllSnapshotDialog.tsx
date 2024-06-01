@@ -4,7 +4,6 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteAllSnapshotsDialogPropsType = {
   openDialog: boolean;
@@ -35,7 +34,7 @@ export const DeleteAllSnapshotsDialog: FC<
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
     >
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>

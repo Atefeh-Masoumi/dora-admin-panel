@@ -18,7 +18,6 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { SamanLogo } from "src/components/atoms/svg-icons/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
 import { usePostApiMyPortalPaymentCreateMutation } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const selectedStyle: SxProps<Theme> = {
   border: 1,
@@ -81,7 +80,7 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
         components={{ Backdrop: BlurBackdrop }}
         maxWidth="xs"
         fullWidth
-        sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+        sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
       >
         <Formik
           initialValues={formInitialValues}

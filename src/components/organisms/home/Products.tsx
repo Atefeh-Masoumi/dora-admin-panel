@@ -1,7 +1,12 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  BORDER_RADIUS_1,
+  BORDER_RADIUS_2,
+  BORDER_RADIUS_4,
+  BORDER_RADIUS_5,
+} from "src/configs/theme";
 import { homeProductsConstantListItems } from "./constants/homeProductsConstant";
 
 export const Products: FC = () => {
@@ -33,7 +38,7 @@ export const Products: FC = () => {
                   minWidth: { xs: 240, lg: 343 },
                   px: { xs: 1.5, lg: 3 },
                   py: { xs: 2, lg: 3 },
-                  borderRadius: BORDER_RADIUS_1,
+                  borderRadius: { xs: BORDER_RADIUS_2, lg: BORDER_RADIUS_4 },
                 }}
                 columnGap={{ xs: 0.8, lg: 1.95 }}
               >

@@ -11,7 +11,6 @@ import {
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type AddClientUserCertDialogPropsType = {
   openDialog: boolean;
@@ -68,7 +67,7 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
     >
       <Formik
         initialValues={formInitialValues}

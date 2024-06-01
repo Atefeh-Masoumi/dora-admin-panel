@@ -54,10 +54,10 @@ const VmManagement: FC<VmManagementPropsType> = () => {
         bgcolor="warning.main"
         direction="row"
         spacing={1}
+        borderRadius={2}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}
-        sx={{ borderRadius: BORDER_RADIUS_1 }}
       >
         <ErrorOutlineOutlinedIcon />
         <Typography variant="text14">

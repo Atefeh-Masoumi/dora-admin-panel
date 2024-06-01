@@ -9,7 +9,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  BORDER_RADIUS_1,
+  BORDER_RADIUS_4,
+  BORDER_RADIUS_5,
+} from "src/configs/theme";
 import { SampleChart } from "./charts/SampleChart";
 import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 
@@ -27,7 +31,7 @@ export const Analytics: FC = () => {
       sx={{
         width: "100%",
         bgcolor: "white",
-        borderRadius: BORDER_RADIUS_1,
+        borderRadius: { xs: BORDER_RADIUS_5, md: BORDER_RADIUS_4 },
         px: { xs: 1.5, lg: 2 },
         py: { xs: 2, lg: 2.5 },
         overflow: "hidden",

@@ -4,7 +4,6 @@ import FormControlLabel, {
   formControlLabelClasses,
   FormControlLabelProps,
 } from "@mui/material/FormControlLabel";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 interface StyledFormControlLabelProps extends FormControlLabelProps {
   checked: boolean;
@@ -15,7 +14,7 @@ const StyledFormControlLabel = styled((props: StyledFormControlLabelProps) => (
 ))(({ theme, checked }) => ({
   "&": {
     border: "1px solid #dedede",
-    borderRadius: BORDER_RADIUS_1,
+    borderRadius: "50px",
     borderColor: checked && theme.palette.primary.main,
     backgroundColor: "#f9f9f9",
     marginBottom: "10px",

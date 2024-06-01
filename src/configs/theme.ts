@@ -184,7 +184,7 @@ const theme = createTheme({
     MuiTypography: { styleOverrides: { root: { display: "block" } } },
     MuiContainer: { defaultProps: { maxWidth: "xl" } },
     MuiButton: { styleOverrides: { root: { textTransform: "capitalize" } } },
-    MuiPaper: { styleOverrides: { root: { borderRadius: BORDER_RADIUS_1 } } },
+    MuiPaper: { styleOverrides: { root: { borderRadius: "32px" } } },
     MuiSkeleton: { defaultProps: { animation: "wave" } },
   },
 });
