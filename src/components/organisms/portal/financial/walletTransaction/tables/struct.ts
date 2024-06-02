@@ -1,5 +1,5 @@
 import { priceToPersian } from "src/utils/priceToPersian";
-import { columnType } from "../../../tables/table.types";
+import { columnType } from "../../../../tables/table.types";
 
 export const walletTableStruct: columnType[] = [
   { id: "id", label: "شماره تراکنش" },

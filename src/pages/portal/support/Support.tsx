@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import moment from "jalali-moment";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingChat } from "src/components/organisms/portal/support/LoadingChat";
-import { DorsaTooltip } from "src/components/organisms/portal/referral/WelcomeTooltip";
+import { DorsaTooltip } from "src/components/organisms/portal/account/referral/WelcomeTooltip";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
 import {
   useGetApiMyPortalIssueItemListByIssueIdQuery,

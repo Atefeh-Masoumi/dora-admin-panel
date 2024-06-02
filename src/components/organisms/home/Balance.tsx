@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
-import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
+import { DepositDialog } from "src/components/organisms/portal/financial/payment/dialog/DepositDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const Balance: FC = () => {
