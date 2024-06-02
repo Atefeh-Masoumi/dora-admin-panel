@@ -4,13 +4,18 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { notificationTableStruct } from "src/components/organisms/portal/notification/tables/struct";
 import { NotificationTableRow } from "src/components/organisms/portal/notification/tables/NotificationTableRow";
 import { useGetApiMyPortalNotificationListQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Notification: FC = () => {
   const { data: notifications, isLoading } =
     useGetApiMyPortalNotificationListQuery();
 
   return (
-    <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+    <Stack
+      borderRadius={BORDER_RADIUS_1}
+      bgcolor="white"
+      p={{ xs: 1.8, lg: 3 }}
+    >
       <Stack direction="row" spacing={2} alignItems="center">
         <Typography variant="text1" color="secondary" whiteSpace="nowrap">
           لیست پیام ها

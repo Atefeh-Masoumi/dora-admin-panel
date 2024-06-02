@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Invoice: FC = () => {
   const { id } = useParams();
@@ -84,7 +85,7 @@ const Invoice: FC = () => {
   return (
     <Stack spacing={2}>
       <Stack
-        borderRadius={2}
+        borderRadius={BORDER_RADIUS_1}
         spacing={3}
         bgcolor="white"
         p={{ xs: 1.8, lg: 3 }}
@@ -248,7 +249,7 @@ const Invoice: FC = () => {
       </Stack>
       <Stack direction="row" justifyContent="end">
         <Stack
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           bgcolor="white"
           p={1.5}
           width="100%"

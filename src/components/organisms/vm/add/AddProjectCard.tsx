@@ -122,6 +122,7 @@ export const AddProjectCard: FC<ServiceListCardPropsType> = ({
         <Stack columnGap={4} alignItems="start" justifyContent="space-between">
           {detailsList.map((item, index) => (
             <Stack
+              alignItems={"center"}
               width="100%"
               direction={isProjectCard ? "row" : "column"}
               key={index}

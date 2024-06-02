@@ -31,6 +31,7 @@ import {
   usePostApiMyDnsRecordCreateMutation,
   usePutApiMyDnsRecordEditMutation,
 } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CreateRecordDialogPropsType = {
   id?: number;
@@ -159,7 +160,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       maxWidth="xs"
       fullWidth
       PaperProps={{
-        sx: { borderRadius: 2.5 },
+        sx: { borderRadius: BORDER_RADIUS_1 },
       }}
     >
       {getDetailsLoading && <PageLoading />}
@@ -294,7 +295,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                       ? "primary.light"
                       : "secondary.light"
                   }
-                  borderRadius={2}
+                  borderRadius={BORDER_RADIUS_1}
                   alignItems="center"
                   p={1.5}
                   boxShadow={

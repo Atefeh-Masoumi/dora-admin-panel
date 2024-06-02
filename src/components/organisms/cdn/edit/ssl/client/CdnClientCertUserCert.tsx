@@ -5,6 +5,7 @@ import { useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery } from "src/app/ser
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnClientCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -18,7 +19,7 @@ export const CdnClientCertUserCert: FC = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Stack bgcolor="white" borderRadius={2} p={2} width="100%">
+    <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography>گواهی کاربر</Typography>
         <Button

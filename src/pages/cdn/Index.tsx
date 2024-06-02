@@ -73,7 +73,11 @@ const ZoneManagement: FC = () => {
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
       <Fragment>
-        <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+        <Stack
+          borderRadius={BORDER_RADIUS_1}
+          bgcolor="white"
+          p={{ xs: 1.8, lg: 3 }}
+        >
           <Stack
             direction="row"
             spacing={1}

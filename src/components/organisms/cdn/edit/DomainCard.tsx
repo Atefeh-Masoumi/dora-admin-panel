@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { DnsListResponse } from "src/app/services/api.generated";
 import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DomainCardPropsType = { zoneItem: DnsListResponse };
 
@@ -27,7 +28,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
       direction="column"
       alignItems="flex-start"
       justifyContent="space-between"
-      borderRadius={2}
+      borderRadius={BORDER_RADIUS_1}
       spacing={2}
       p={2.5}
       bgcolor="white"

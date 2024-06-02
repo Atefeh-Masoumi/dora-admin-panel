@@ -1,13 +1,6 @@
 import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -34,8 +27,6 @@ enum DIALOG_TYPE_ENUM {
 
 const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [openCreateVmProjectDialog, setOpenCreateVkmProjectDialog] =
-    useState(false);
   const [selectedProject, setSelectedProject] =
     useState<VmProjectListResponse | null>(null);
 
@@ -61,7 +52,6 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
 
   const createBtnOnClick = () => {
     setDialogType(DIALOG_TYPE_ENUM.CREATE);
-    setOpenCreateVkmProjectDialog(true);
   };
 
   const editBtnOnClick = (project: VmProjectListResponse) => {
@@ -105,7 +95,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
           bgcolor="warning.main"
           direction="row"
           spacing={1}
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           width="100%"
           color="white"
           alignItems={{ xs: "start", md: "center" }}
@@ -116,7 +106,11 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
           </Typography>
         </Stack>
 
-        <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+        <Stack
+          borderRadius={BORDER_RADIUS_1}
+          bgcolor="white"
+          p={{ xs: 1.8, lg: 3 }}
+        >
           <Stack
             direction="row"
             spacing={1}
@@ -130,7 +124,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                 color="rgba(110, 118, 138, 1)"
                 whiteSpace="nowrap"
               >
-                لیست دامنه ها
+                لیست پروژه‌ها
               </Typography>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={1}>
@@ -160,7 +154,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                افزودن دامنه جدید
+                افزودن پروژه جدید
               </Button>
             </Stack>
           </Stack>
@@ -168,15 +162,27 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
 
         <Grid container>
           {VmProjectListLoading ? (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <CircularProgress />
-            </Box>
+            <Fragment>
+              {[...Array(12)].map((_, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={5.8}
+                  lg={3.8}
+                  sx={{ margin: "10px auto" }}
+                >
+                  <Skeleton
+                    variant="rectangular"
+                    height={100}
+                    sx={{
+                      bgcolor: "secondary.light",
+                      borderRadius: BORDER_RADIUS_1,
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Fragment>
           ) : vmProjectList?.length === 0 ? (
             <Stack py={3} sx={{ width: "100%" }}>
               <Stack bgcolor="white" borderRadius={3}>
@@ -193,7 +199,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                   xs={12}
                   md={6}
                   lg={4}
-                  p={2}
+                  py={2}
                 >
                   <AddProjectCard
                     key={item.id}

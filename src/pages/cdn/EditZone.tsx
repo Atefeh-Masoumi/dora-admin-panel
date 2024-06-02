@@ -107,8 +107,7 @@ const EditZone: FC = () => {
         p={2.5}
         bgcolor="rgba(244, 95, 80, 1)"
         direction="row"
-        spacing={1}
-        borderRadius={2}
+        borderRadius={BORDER_RADIUS_1}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}

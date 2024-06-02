@@ -8,6 +8,7 @@ import { ShareDialog } from "./ShareDialog";
 import { WelcomeTooltip } from "./WelcomeTooltip";
 import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const InviteCode: FC = () => {
   const { data: referralData, isLoading } = useGetApiMyPortalReferralGetQuery();
@@ -27,7 +28,7 @@ export const InviteCode: FC = () => {
     <Stack
       direction="row"
       justifyContent="center"
-      borderRadius={2}
+      borderRadius={BORDER_RADIUS_1}
       bgcolor="white"
       px={{ xs: 1.8, lg: 3 }}
       py={{ xs: 1.8, lg: 5 }}

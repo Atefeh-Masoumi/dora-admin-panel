@@ -13,6 +13,7 @@ import { Copy } from "src/components/atoms/svg-icons/CopySvg";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type boxRowType = {
   title: string;
@@ -110,7 +111,7 @@ export const AddAccessKeyDialog: FC<AddAccessKeyDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       fullWidth
       PaperProps={{
-        sx: { borderRadius: 2.5, maxWidth: "850px" },
+        sx: { borderRadius: BORDER_RADIUS_1, maxWidth: "850px" },
       }}
     >
       <DialogTitle>نمایش کلید دسترسی</DialogTitle>

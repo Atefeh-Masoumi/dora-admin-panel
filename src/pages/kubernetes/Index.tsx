@@ -36,7 +36,7 @@ const NamespaceManagement: FC = () => {
         bgcolor="warning.main"
         direction="row"
         gap={1}
-        borderRadius={2}
+        borderRadius={BORDER_RADIUS_1}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}

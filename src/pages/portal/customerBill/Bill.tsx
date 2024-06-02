@@ -20,6 +20,7 @@ import { customerProductsTableStruct } from "src/components/organisms/portal/cus
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
 import BillProductsTableRow from "src/components/organisms/portal/customerBill/tables/BillProductsTableRow";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 
@@ -78,7 +79,7 @@ const Bill: FC = () => {
   return (
     <Stack spacing={2}>
       <Stack
-        borderRadius={2}
+        borderRadius={BORDER_RADIUS_1}
         spacing={3}
         bgcolor="white"
         p={{ xs: 1.8, lg: 3 }}
@@ -178,7 +179,7 @@ const Bill: FC = () => {
 
       <Stack direction="row" justifyContent="end">
         <Stack
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           bgcolor="white"
           p={1.5}
           width="100%"

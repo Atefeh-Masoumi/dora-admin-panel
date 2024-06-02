@@ -12,6 +12,7 @@ import {
   usePostApiMyPortalIssueItemCreateMutation,
 } from "src/app/services/api.generated";
 import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Detail: FC = () => {
   const [file, setFile] = useState<string | Blob>();
@@ -70,7 +71,7 @@ const Detail: FC = () => {
 
   return (
     <Fragment>
-      <Stack p={2} bgcolor="white" spacing={3} borderRadius={2}>
+      <Stack p={2} bgcolor="white" spacing={3} borderRadius={BORDER_RADIUS_1}>
         <Stack
           direction="row"
           justifyContent="space-between"

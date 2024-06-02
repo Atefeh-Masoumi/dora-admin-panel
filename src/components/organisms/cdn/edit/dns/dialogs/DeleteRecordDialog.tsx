@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { useDeleteApiMyDnsRecordDeleteByIdMutation } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteRecordDialogPropsType = {
   id: number;
@@ -38,7 +39,7 @@ export const DeleteRecordDialog: FC<DeleteRecordDialogPropsType> = ({
       components={{ Backdrop: BlurBackdrop }}
       maxWidth="xs"
       fullWidth
-      sx={{ "& .MuiPaper-root": { borderRadius: 2.5 } }}
+      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
     >
       <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
         <Stack>

@@ -5,20 +5,21 @@ import { useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery } from "src/app/servi
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnEdgeCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const cdnId = selectedDomain?.id || 0;
 
   const { data: userCert, isLoading } =
-  useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery({ dnsHostId: cdnId });
+    useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery({ dnsHostId: cdnId });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
   return (
-    <Stack bgcolor="white" borderRadius={2} p={2} width="100%">
+    <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography>گواهی کاربر</Typography>
         <Button

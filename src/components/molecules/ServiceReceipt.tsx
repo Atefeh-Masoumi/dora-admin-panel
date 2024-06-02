@@ -10,6 +10,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { e2p } from "src/utils/e2p.utils";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 type CustomConfigType = { numberOfItem: number; name: string; fee?: number }[];
 
 export enum ReceiptTypeEnum {
@@ -50,7 +51,7 @@ const ServiceReceipt: FC<ServiceReceiptPropsType> = ({
           bgcolor="white"
           p={4}
           pt={10}
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           height="100%"
           spacing={2}
         >

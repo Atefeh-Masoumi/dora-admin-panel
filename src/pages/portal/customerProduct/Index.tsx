@@ -9,6 +9,7 @@ import {
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
@@ -27,7 +28,11 @@ const Services: FC = () => {
   return (
     <>
       {getCategoriesLoading && <PageLoading />}
-      <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+      <Stack
+        borderRadius={BORDER_RADIUS_1}
+        bgcolor="white"
+        p={{ xs: 1.8, lg: 3 }}
+      >
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}

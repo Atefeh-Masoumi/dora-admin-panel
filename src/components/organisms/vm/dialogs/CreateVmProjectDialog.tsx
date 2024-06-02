@@ -20,6 +20,8 @@ import {
   usePutApiMyVmProjectEditByIdMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
+import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 
@@ -95,7 +97,12 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   };
 
   return (
-    <Dialog {...props} onClose={closeDialogHandler}>
+    <Dialog
+      {...props}
+      onClose={closeDialogHandler}
+      components={{ Backdrop: BlurBackdrop }}
+      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+    >
       <DialogTitle textAlign="center">
         {projectId ? "بروزرسانی پروژه" : "افزودن پروژه جدید"}
       </DialogTitle>
@@ -103,11 +110,11 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
           <Stack direction="column" rowGap={2}>
-            {!projectId && (
+            {/* {!projectId && (
               <DialogContentText textAlign="center">
                 یک نام برای شناسایی پروژه خود وارد کنید.
               </DialogContentText>
-            )}
+            )} */}
             <Stack direction="column" rowGap={1}>
               <Typography>نام پروژه</Typography>
               <AlphaNumericTextField
@@ -119,35 +126,10 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 helperText={formik.touched.name && formik.errors.name}
                 placeholder="نام موردنظر را وارد کنید"
               />
-              {/* {!projectId && (
-                <ButtonGroup fullWidth>
-                  {vmHypervisorList?.map((hypervisor: any) => {
-                    return (
-                      <LoadingButton
-                        loading={getVmHypervisorListLoading}
-                        key={hypervisor.id}
-                        variant={
-                          formik.values.hypervisorTypeId === hypervisor.id
-                            ? "contained"
-                            : "outlined"
-                        }
-                        onClick={() =>
-                          formik.setFieldValue(
-                            "hypervisorTypeId",
-                            hypervisor.id
-                          )
-                        }
-                      >
-                        {hypervisor.name}
-                      </LoadingButton>
-                    );
-                  })}
-                </ButtonGroup>
-              )} */}
             </Stack>
             <Divider />
             <Stack
-              direction="column"
+              direction="row"
               justifyContent="center"
               alignItems="center"
               rowGap={1.5}

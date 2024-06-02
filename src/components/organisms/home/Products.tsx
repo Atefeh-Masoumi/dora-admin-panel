@@ -38,7 +38,7 @@ export const Products: FC = () => {
                   minWidth: { xs: 240, lg: 343 },
                   px: { xs: 1.5, lg: 3 },
                   py: { xs: 2, lg: 3 },
-                  borderRadius: { xs: BORDER_RADIUS_2, lg: BORDER_RADIUS_4 },
+                  borderRadius: { xs: BORDER_RADIUS_1, lg: BORDER_RADIUS_1 },
                 }}
                 columnGap={{ xs: 0.8, lg: 1.95 }}
               >
