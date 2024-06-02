@@ -17,11 +17,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import {
-  BORDER_RADIUS_5,
-  BORDER_RADIUS_4,
-  BORDER_RADIUS_1,
-} from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { FC, Fragment, useMemo, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery } from "src/app/services/api.generated";

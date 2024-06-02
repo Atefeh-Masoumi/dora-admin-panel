@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
 import { useGetApiMyKubernetesHostListQuery } from "src/app/services/api.generated";
@@ -58,7 +58,7 @@ const NamespaceManagement: FC = () => {
         py={3}
         px={3}
         width="100%"
-        borderRadius={3}
+        borderRadius={BORDER_RADIUS_1}
         direction="column"
       >
         <Stack

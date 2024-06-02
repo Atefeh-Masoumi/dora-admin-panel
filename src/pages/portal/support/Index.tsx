@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate } from "react-router";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -58,7 +58,7 @@ const Support: FC = () => {
         py={3}
         px={3}
         width="100%"
-        borderRadius={3}
+        borderRadius={BORDER_RADIUS_1}
         direction="column"
       >
         <Stack

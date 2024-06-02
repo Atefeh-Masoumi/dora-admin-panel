@@ -57,7 +57,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
         >
           {LocalStorageData && LocalStorageData.userTitle}
         </Typography>
-        {/* <UserMenu /> */}
       </Stack>
       <List sx={{ p: 0 }}>
         <ListItem disablePadding sx={{ mb: 3 }}>

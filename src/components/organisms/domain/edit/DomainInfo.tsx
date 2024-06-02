@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_4 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { useParams } from "react-router";
 import { useGetApiMyDomainHostGetByIdQuery } from "src/app/services/api.generated";

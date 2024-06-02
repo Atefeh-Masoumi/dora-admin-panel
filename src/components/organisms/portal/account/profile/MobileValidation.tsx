@@ -198,10 +198,10 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
                     type={showCodeField ? "button" : "submit"}
                     loading={showCodeField ? loadingConfirm : isLoading}
                     variant="contained"
-                    sx={{ px: 4, py: 2, fontSize: 16 }}
+                    sx={{ px: 3, py: 1, fontSize: 16 }}
                     onClick={showCodeField ? submitConfirm : () => {}}
                   >
-                    تایید و تغییر شماره تماس
+                    تایید و تغییر موبایل
                   </LoadingButton>
                 </Stack>
               </Stack>

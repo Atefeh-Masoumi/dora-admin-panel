@@ -17,7 +17,7 @@ const Home: FC = () => {
   );
 
   const goToProfilePage = () => {
-    navigate("/portal/profile");
+    navigate("/portal/account");
   };
 
   return (

@@ -47,7 +47,7 @@ export const WalletMenu: FC = () => {
       value: "wallet",
       label: "مدیریت مالی",
       icon: Service,
-      link: "/portal/wallet",
+      link: "/portal/financial",
     },
     {
       value: "password",

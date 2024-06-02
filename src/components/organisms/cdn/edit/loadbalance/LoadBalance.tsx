@@ -7,6 +7,7 @@ import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadba
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
 import { useGetApiMyCdnRouteListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type LoadBalancePropsType = {};
 
@@ -29,7 +30,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
         py={3}
         px={3}
         width="100%"
-        borderRadius={3}
+        borderRadius={BORDER_RADIUS_1}
         direction="column"
       >
         <Stack

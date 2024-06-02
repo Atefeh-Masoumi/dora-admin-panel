@@ -8,6 +8,7 @@ import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/st
 import { ZoneTableRow } from "./tables/DnsTableRow";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 import { useGetApiMyDnsRecordListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const DnsRecord: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -31,7 +32,7 @@ export const DnsRecord: FC = () => {
       bgcolor="white"
       py={2}
       px={3}
-      borderRadius={3}
+      borderRadius={BORDER_RADIUS_1}
       width="100%"
       direction="row"
       justifyContent="center"

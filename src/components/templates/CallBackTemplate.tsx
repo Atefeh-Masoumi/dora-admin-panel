@@ -6,7 +6,7 @@ type breakpointsType = keyof typeof customBreakpoints;
 
 const containerMaxWidthDefault: breakpointsType = "xs";
 
-export const sidebarWidth = 280;
+export const sidebarWidth = 240;
 
 export type CallBackTemplatePropsType = {
   children?: any;

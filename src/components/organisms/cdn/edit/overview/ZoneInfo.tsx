@@ -49,7 +49,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
       bgcolor="white"
       py={2}
       px={3}
-      borderRadius={3}
+      borderRadius={BORDER_RADIUS_1}
       width="100%"
       direction="row"
       justifyContent="center"
@@ -78,7 +78,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
               </Stack>
               <Stack display={{ xs: "flex", md: "none" }}>
                 <IconButton
-                  sx={{ borderRadius: 1 }}
+                  sx={{ borderRadius: BORDER_RADIUS_1 }}
                   color="error"
                   onClick={handleOpenDelete}
                 >

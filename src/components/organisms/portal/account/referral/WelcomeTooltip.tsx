@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { styled, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const DorsaTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -10,7 +11,7 @@ export const DorsaTooltip = styled(({ className, ...props }: TooltipProps) => (
     minWidth: "fit-content",
     color: "#fff",
     fontSize: "14px",
-    borderRadius: "24px",
+    borderRadius: BORDER_RADIUS_1,
     padding: "16px",
     textAlign: "center",
     "& .MuiTooltip-arrow::before": {

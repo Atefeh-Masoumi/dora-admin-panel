@@ -12,6 +12,7 @@ import CloudSvg from "src/components/atoms/svg-icons/CloudSvg.svg";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
 import { usePutApiMyCdnHostChangeCdnTypeMutation } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const radioItems = [
   {
@@ -60,7 +61,7 @@ export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
         bgcolor="white"
         direction="row"
         justifyContent="center"
-        sx={{ py: 2, px: 3, borderRadius: 3 }}
+        sx={{ py: 2, px: 3, borderRadius: BORDER_RADIUS_1 }}
       >
         <Stack width="100%" direction="row" justifyContent="space-between">
           <Stack>

@@ -196,7 +196,7 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
                     type={isCodeField ? "button" : "submit"}
                     loading={isCodeField ? loadingConfirm : isLoading}
                     variant="contained"
-                    sx={{ px: 7, py: 2, fontSize: 16 }}
+                    sx={{ px: 3, py: 1, fontSize: 16 }}
                     onClick={isCodeField ? submitConfirm : () => {}}
                   >
                     تایید و تغییر ایمیل

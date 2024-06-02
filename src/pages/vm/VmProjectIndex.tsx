@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -89,7 +88,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
   return (
     <>
       <Fragment>
-        <Stack
+        {/* <Stack
           p={2.5}
           mb={1}
           bgcolor="warning.main"
@@ -104,7 +103,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
           <Typography variant="text14">
             استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
           </Typography>
-        </Stack>
+        </Stack> */}
 
         <Stack
           borderRadius={BORDER_RADIUS_1}

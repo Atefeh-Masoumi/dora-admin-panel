@@ -8,6 +8,7 @@ import {
   usePutApiMyCdnHostChangeHttpsRedirectMutation,
   usePutApiMyCdnHostChangeNonWwwRedirectMutation,
 } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnSecuritySettingPropsType = {
   id: number;
@@ -29,7 +30,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   const onChangeHttpsRedirect = () => {
     if (isHttpsRedirect === undefined) return;
     changeHttpsRedirect({
-      changeHttpsRedirectModel: { dnsHostId: id, isHttpsRedirect: !isHttpsRedirect },
+      changeHttpsRedirectModel: {
+        dnsHostId: id,
+        isHttpsRedirect: !isHttpsRedirect,
+      },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
@@ -39,7 +43,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   const onChangeNonWwwRedirect = () => {
     if (isNonWwwRedirect === undefined) return;
     changeNonWwwRedirect({
-      changeNonWwwRedirectModel: { dnsHostId: id, isNonWwwRedirect: !isNonWwwRedirect },
+      changeNonWwwRedirectModel: {
+        dnsHostId: id,
+        isNonWwwRedirect: !isNonWwwRedirect,
+      },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
@@ -85,7 +92,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
         تنظیمات دامنه
       </Typography>
 
-      <Stack bgcolor="white" py={2} px={3} borderRadius={3}>
+      <Stack bgcolor="white" py={2} px={3} borderRadius={BORDER_RADIUS_1}>
         <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
           {items.map(({ title, text, data, action }, index) => (
             <Fragment key={index}>

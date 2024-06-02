@@ -87,6 +87,7 @@ const EditZone: FC = () => {
         <Tabs
           sx={{
             minWidth: "fix-content",
+            borderRadius: BORDER_RADIUS_1,
           }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={selectedTab}

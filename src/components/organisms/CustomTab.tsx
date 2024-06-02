@@ -14,7 +14,7 @@ const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
   boxShadow: "0px 2px 28px rgba(185, 207, 252, 0.15)",
   borderRadius: BORDER_RADIUS_1,
   backgroundColor: "white",
-  width: "290px",
+  width: "180px",
   margin: "4px 0",
   position: "relative",
   overflow: "visible",

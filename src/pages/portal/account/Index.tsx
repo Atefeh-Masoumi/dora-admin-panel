@@ -7,23 +7,20 @@ import CustomTabComponent, {
 } from "src/components/organisms/CustomTab";
 import Profile from "src/components/organisms/portal/account/profile/Index";
 import { LegalPersonality } from "src/components/organisms/portal/account/profile/Legal";
-import Settings from "./Settings";
 import Notifications from "./Notifications";
 import Referrals from "./Referrals";
+import { NotificationSetting } from "src/components/organisms/portal/account/setting/NotificationSetting";
+import { SecuritySetting } from "src/components/organisms/portal/account/setting/SecuritySetting";
+import { ChangePassword } from "src/components/organisms/portal/account/setting/ChangePassword";
 
 const tabs: tabsType[] = [
-  {
-    title: "حساب کاربری",
-    content: (
-      <>
-        <Profile />
-      </>
-    ),
-  },
+  { title: "حساب کاربری", content: <Profile /> },
   { title: "اطلاعات صورتحساب", content: <LegalPersonality /> },
   { title: "کد معرف", content: <Referrals /> },
   { title: "اعلان ها", content: <Notifications /> },
-  { title: "تنظیمات", content: <Settings /> },
+  { title: "تنظمات اطلاع رسانی", content: <NotificationSetting /> },
+  { title: "تنظمات امنیتی", content: <SecuritySetting /> },
+  { title: "تغییر رمز عبور", content: <ChangePassword /> },
 ];
 
 const Account: FC = () => {

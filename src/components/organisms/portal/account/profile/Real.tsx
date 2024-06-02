@@ -104,7 +104,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
               label="آدرس"
               fullWidth
               multiline
-              rows={3}
+              rows={4}
             />
             <Stack
               direction="row"
@@ -116,7 +116,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
                 type="submit"
                 loading={loadingEdit}
                 variant="contained"
-                sx={{ px: 8, py: 2, fontSize: 16 }}
+                sx={{ px: 3, py: 1, fontSize: 16 }}
               >
                 ذخیره اطلاعات
               </LoadingButton>

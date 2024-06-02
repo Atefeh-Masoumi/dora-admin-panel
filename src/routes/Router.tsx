@@ -33,9 +33,8 @@ const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
 const Account = lazy(() => import("src/pages/portal/account/Index"));
+const Financial = lazy(() => import("src/pages/portal/financial/Index"));
 
-// const Profile = lazy(() => import("src/pages/portal/account/Index"));
-const Setting = lazy(() => import("src/pages/portal/account/Settings"));
 const Sales = lazy(() => import("src/pages/portal/Sales"));
 const Notification = lazy(
   () => import("src/pages/portal/account/Notifications")
@@ -152,9 +151,9 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/setting"
-            element={mainTemplate(Setting, {
-              pageTitle: "تنظیمات",
+            path="/portal/financial"
+            element={mainTemplate(Financial, {
+              pageTitle: "مدیریت مالی",
             })}
           />
           <Route

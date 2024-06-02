@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Header from "src/components/organisms/layout/header/Header";
 import { Sidebar } from "src/components/organisms/layout/sidebar/SidebarMenu";
 
-export const sidebarWidth = 280;
+export const sidebarWidth = 240;
 
 export type MainTemplatePropsType = {
   children?: any;
