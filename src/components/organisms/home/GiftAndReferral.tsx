@@ -35,7 +35,7 @@ export const GiftAndReferral: FC = () => {
             height={"100%"}
             px={3}
             py={2}
-            bgcolor={"#D3EDE0"}
+            bgcolor={"white"}
             borderRadius={BORDER_RADIUS_1}
           >
             <Typography color="secondary" variant="text2" whiteSpace="nowrap">
@@ -59,7 +59,7 @@ export const GiftAndReferral: FC = () => {
               alignItems="center"
               px={3}
               py={2}
-              bgcolor={"#D3EDE0"}
+              bgcolor={"white"}
               borderRadius={BORDER_RADIUS_1}
             >
               <Grid item>
