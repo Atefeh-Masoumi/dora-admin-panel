@@ -7,6 +7,7 @@ import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { CdnClientCertUserCert } from "./CdnClientCertUserCert";
 import { CdnClientCert } from "./CdnClientCert";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnChangeClientCertTypePropsType = {
   id: number;
@@ -31,7 +32,13 @@ export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
     <>
       {isLoading && <PageLoading />}
       <Stack direction={{ xs: "column", md: "row" }} spacing={1}>
-        <Stack bgcolor="white" py={3} px={4} borderRadius={2} spacing={1.5}>
+        <Stack
+          bgcolor="white"
+          py={3}
+          px={4}
+          borderRadius={BORDER_RADIUS_1}
+          spacing={1.5}
+        >
           {loading ? (
             <Stack spacing={2} justifyContent="center">
               {[...Array(2)].map((_, index) => (

@@ -5,6 +5,7 @@ import { Document } from "src/components/atoms/svg-icons/DocumentSvg";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const downloadFileUrl = baseUrl + "/api/my/portal/issue-item/download/";
 
@@ -54,7 +55,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
             <Stack
               bgcolor="primary.main"
               color="white"
-              borderRadius={2}
+              borderRadius={BORDER_RADIUS_1}
               px={1}
               py={1.5}
               spacing={1.5}
@@ -86,7 +87,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
           <Stack
             bgcolor="rgba(110, 118, 138, 0.06)"
             color="secondary"
-            borderRadius={2}
+            borderRadius={BORDER_RADIUS_1}
             px={1}
             py={1.5}
             spacing={1.5}

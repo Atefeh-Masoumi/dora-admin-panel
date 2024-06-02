@@ -79,7 +79,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
         sx={{
           width: "100%",
           bgcolor: "white",
-          borderRadius: { xs: BORDER_RADIUS_5, md: BORDER_RADIUS_4 },
+          borderRadius: { BORDER_RADIUS_1 },
           px: { xs: 1.5, lg: 2 },
           py: { xs: 2, lg: 2.5 },
           overflow: "hidden",

@@ -4,6 +4,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const ReferralCode: FC = () => {
   const [joinReferral, { isLoading }] =
@@ -20,7 +21,7 @@ export const ReferralCode: FC = () => {
     <Stack
       direction="row"
       justifyContent="center"
-      borderRadius={2}
+      borderRadius={BORDER_RADIUS_1}
       bgcolor="#3C8AFF"
       color="white"
       px={{ xs: 1.8, lg: 3 }}

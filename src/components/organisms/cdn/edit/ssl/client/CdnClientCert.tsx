@@ -5,6 +5,7 @@ import { useGetApiMyCdnOriginCertGetByDnsHostIdQuery } from "src/app/services/ap
 import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnClientCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
@@ -16,7 +17,7 @@ export const CdnClientCert: FC = () => {
     });
 
   return (
-    <Stack bgcolor="white" borderRadius={2} p={2} width="100%">
+    <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography>گواهی ابر درسا</Typography>
         <LoadingButton

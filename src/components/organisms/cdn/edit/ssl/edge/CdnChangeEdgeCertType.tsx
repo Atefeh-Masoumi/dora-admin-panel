@@ -7,6 +7,7 @@ import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { CdnEdgeCertUserCert } from "./CdnEdgeCertUserCert";
 import { CdnEdgeCert } from "./CdnEdgeCert";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnChangeEdgeCertTypePropsType = {
   id: number;
@@ -38,7 +39,7 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
           px={4}
           alignItems="center"
           justifyContent="center"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           spacing={1.5}
         >
           {loading ? (

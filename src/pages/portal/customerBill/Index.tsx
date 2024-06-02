@@ -11,6 +11,7 @@ import {
   useGetApiMyPortalCustomerBillListQuery,
   CustomerBillListResponse,
 } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const CustomerBills: FC = () => {
   const { data: customerBill, isLoading } =
@@ -33,7 +34,11 @@ const CustomerBills: FC = () => {
     ) || [];
 
   return (
-    <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+    <Stack
+      borderRadius={BORDER_RADIUS_1}
+      bgcolor="white"
+      p={{ xs: 1.8, lg: 3 }}
+    >
       <Stack
         direction={{ xs: "column", md: "row" }}
         alignItems={{ xs: "start", md: "center" }}

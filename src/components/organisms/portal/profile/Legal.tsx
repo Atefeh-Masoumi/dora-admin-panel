@@ -14,6 +14,7 @@ import { useFormik } from "formik";
 import { FC, MouseEventHandler, useState } from "react";
 import { toast } from "react-toastify";
 import { usePutApiMyPortalCustomerConvertToLegalMutation } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import { e2p } from "src/utils/e2p.utils";
 import { p2e } from "src/utils/p2e.utils";
@@ -222,7 +223,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
   };
 
   return (
-    <Stack bgcolor="white" borderRadius={2} py={2.5} px={3}>
+    <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} py={2.5} px={3}>
       <Stack
         direction="row"
         sx={{ display: "flex", justifyContent: "space-between" }}

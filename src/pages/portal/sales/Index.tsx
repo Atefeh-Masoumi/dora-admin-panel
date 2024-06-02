@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { Cart } from "src/components/atoms/svg-icons/CartSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Sales: FC = () => {
   return (
@@ -19,7 +20,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >
@@ -53,7 +54,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >
@@ -87,7 +88,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >
@@ -121,7 +122,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >
@@ -155,7 +156,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >
@@ -189,7 +190,7 @@ const Sales: FC = () => {
           alignItems="center"
           bgcolor="rgba(60, 138, 255, 1)"
           color="white"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           px={3}
           minWidth="fit-content"
         >

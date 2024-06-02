@@ -25,32 +25,32 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       text: "شبکه مدیریت و توزیع محتوا",
       Icon: CloudConnectionSvg,
       link: "/cdn",
-      subList: [
-        {
-          title: "مدیریت دامنه‌ها",
-          link: "/cdn",
-        },
-        {
-          title: "مشخصات دامنه",
-          link: "/cdn/overview",
-        },
-        {
-          title: "تنظیمات",
-          link: "/cdn/ssl-tls-settings",
-        },
-        {
-          title: "آنالیز ترافیک",
-          link: "/cdn/analytics",
-        },
-        {
-          title: "تنظیمات DNS Record",
-          link: "/cdn/dns-record-settings",
-        },
-        {
-          title: "تنظیمات Load Balance",
-          link: "/cdn/load-balance-settings",
-        },
-      ],
+      // subList: [
+      //   {
+      //     title: "مدیریت دامنه‌ها",
+      //     link: "/cdn",
+      //   },
+      //   {
+      //     title: "مشخصات دامنه",
+      //     link: "/cdn/overview",
+      //   },
+      //   {
+      //     title: "تنظیمات",
+      //     link: "/cdn/ssl-tls-settings",
+      //   },
+      //   {
+      //     title: "آنالیز ترافیک",
+      //     link: "/cdn/analytics",
+      //   },
+      //   {
+      //     title: "تنظیمات DNS Record",
+      //     link: "/cdn/dns-record-settings",
+      //   },
+      //   {
+      //     title: "تنظیمات Load Balance",
+      //     link: "/cdn/load-balance-settings",
+      //   },
+      // ],
     },
     {
       title: "Virtual Machine",

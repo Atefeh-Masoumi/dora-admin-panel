@@ -1,12 +1,13 @@
-import type { FC } from "react";
-import { Products } from "src/components/organisms/home/Products";
-import { Wallet } from "src/components/organisms/home/Wallet";
-import { ShortUserBill } from "src/components/organisms/home/BillShortList";
-import { Button, Stack, Typography } from "@mui/material";
-import { ShortTickets } from "src/components/organisms/home/SupportShortList";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { Button, Stack, Typography } from "@mui/material";
+import type { FC } from "react";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "src/app/hooks";
+import { ShortUserBill } from "src/components/organisms/home/BillShortList";
+import { Products } from "src/components/organisms/home/Products";
+import { ShortTickets } from "src/components/organisms/home/SupportShortList";
+import { Wallet } from "src/components/organisms/home/Wallet";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Home: FC = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Home: FC = () => {
         bgcolor="warning.main"
         direction="row"
         spacing={1}
-        borderRadius={2}
+        borderRadius={BORDER_RADIUS_1}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}
@@ -44,7 +45,7 @@ const Home: FC = () => {
           bgcolor="warning.main"
           direction="row"
           gap={1}
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           width="100%"
           color="white"
           alignItems={{ xs: "start", md: "center" }}

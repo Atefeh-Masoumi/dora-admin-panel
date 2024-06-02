@@ -4,12 +4,17 @@ import { useGetApiMyPortalCommissionListQuery } from "src/app/services/api.gener
 import { BaseTable } from "../../tables/BaseTable";
 import { ReferralTableRow } from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const InviteList: FC = () => {
   const { data: billList, isLoading } = useGetApiMyPortalCommissionListQuery();
 
   return (
-    <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+    <Stack
+      borderRadius={BORDER_RADIUS_1}
+      bgcolor="white"
+      p={{ xs: 1.8, lg: 3 }}
+    >
       <Typography variant="text1" color="secondary">
         لیست درآمدهای شما از معرفی
       </Typography>

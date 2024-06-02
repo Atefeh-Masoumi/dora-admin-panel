@@ -27,6 +27,7 @@ export const ShortTickets: FC = () => {
         width: { xs: "100%", md: "50%" },
         px: { xs: 1.8, lg: 2 },
         py: { xs: 1.8, lg: 2.25 },
+        borderRadius: BORDER_RADIUS_1,
       }}
     >
       <Stack

@@ -191,7 +191,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
         maxWidth="xs"
         fullWidth
         PaperProps={{
-          sx: { borderRadius: 2.5 },
+          sx: { borderRadius: BORDER_RADIUS_1 },
         }}
       >
         {getDetailsLoading && <PageLoading />}

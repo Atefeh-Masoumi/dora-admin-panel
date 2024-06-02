@@ -10,6 +10,7 @@ import {
   useGetApiMyPortalPaymentListQuery,
   PaymentListResponse,
 } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Payments: FC = () => {
   const { data: payments, isLoading } = useGetApiMyPortalPaymentListQuery();
@@ -34,7 +35,11 @@ const Payments: FC = () => {
     ) || [];
 
   return (
-    <Stack borderRadius={2} bgcolor="white" p={{ xs: 1.8, lg: 3 }}>
+    <Stack
+      borderRadius={BORDER_RADIUS_1}
+      bgcolor="white"
+      p={{ xs: 1.8, lg: 3 }}
+    >
       <Stack
         direction={{ xs: "column", md: "row" }}
         alignItems={{ xs: "start", md: "center" }}

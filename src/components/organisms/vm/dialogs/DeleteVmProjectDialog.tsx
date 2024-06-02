@@ -7,8 +7,11 @@ import {
   DialogTitle,
   Divider,
   Stack,
+  Typography,
 } from "@mui/material";
 import { FC, MouseEventHandler } from "react";
+import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
@@ -32,6 +35,9 @@ export const DeleteVmProjectDialog: FC<DeleteDialogPropsType> = ({
 
   return (
     <Dialog
+      components={{ Backdrop: BlurBackdrop }}
+      fullWidth
+      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
       {...{
         ...props,
         onClose: (e) => {
@@ -40,29 +46,34 @@ export const DeleteVmProjectDialog: FC<DeleteDialogPropsType> = ({
         },
       }}
     >
-      <DialogTitle textAlign="center">{`حذف ${keyTitle}`}</DialogTitle>
-      <Divider />
-      <DialogActions sx={{ padding: "20px" }}>
-        <Stack width="100%" direction="column" alignItems="center" rowGap={1}>
+      <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
+        <Stack>
+          <Typography variant="text1" color="error" fontWeight="bold">
+            از حذف پروژه مطمئن هستید؟
+          </Typography>
+          <Typography variant="text9" color="secondary">
+            در صورت تایید حذف، امکان بازگشت وجود ندارد
+          </Typography>
+        </Stack>
+        <Stack direction="row" justifyContent="end" spacing={1}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ px: 3, py: 0.8 }}
+            onClick={onCloseButtonClick}
+          >
+            انصراف
+          </Button>
           <LoadingButton
             variant="contained"
             color="error"
-            sx={{ width: 260 }}
             onClick={onSubmit}
             loading={submitLoading}
           >
             {`حذف ${keyTitle}`}
           </LoadingButton>
-          <Button
-            variant="text"
-            color="error"
-            sx={{ width: 260 }}
-            onClick={onCloseButtonClick}
-          >
-            انصراف
-          </Button>
         </Stack>
-      </DialogActions>
+      </Stack>
     </Dialog>
   );
 };

@@ -4,6 +4,7 @@ import { Tick } from "src/components/atoms/svg-icons/TickSvg";
 import { Button, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Stack } from "@mui/system";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const ChangeCode: FC = () => {
   const [code, setCode] = useState(0);
@@ -32,7 +33,7 @@ export const ChangeCode: FC = () => {
           alignItems="center"
           whiteSpace="nowrap"
           border={1}
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           borderColor="secondary.light"
         >
           <DorsaTextField placeholder="کد شارژ شگفت انگیز" fullWidth />
@@ -50,7 +51,7 @@ export const ChangeCode: FC = () => {
           direction="row"
           spacing={1.5}
           border={1}
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           borderColor="secondary.light"
           color="primary.main"
         >
