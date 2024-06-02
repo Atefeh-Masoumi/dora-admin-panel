@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Box, Stack } from "@mui/material";
-import { ChangePassword } from "src/components/organisms/portal/setting/ChangePassword";
-import { NotificationSetting } from "src/components/organisms/portal/setting/NotificationSetting";
-import { SecuritySetting } from "src/components/organisms/portal/setting/SecuritySetting";
+import { ChangePassword } from "src/components/organisms/portal/account/setting/ChangePassword";
+import { NotificationSetting } from "src/components/organisms/portal/account/setting/NotificationSetting";
+import { SecuritySetting } from "src/components/organisms/portal/account/setting/SecuritySetting";
 
 const Setting: FC = () => {
   return (

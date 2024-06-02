@@ -32,28 +32,40 @@ const TwoFactorLogin = lazy(() => import("src/pages/account/TwoFactorLogin"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
-const Sales = lazy(() => import("src/pages/portal/sales/Index"));
-const Profile = lazy(() => import("src/pages/portal/profile/Index"));
-const Setting = lazy(() => import("src/pages/portal/setting/Index"));
-const Notification = lazy(() => import("src/pages/portal/notification/Index"));
+const Sales = lazy(() => import("src/pages/portal/account/sales/Index"));
+const Profile = lazy(() => import("src/pages/portal/account/profile/Index"));
+const Setting = lazy(() => import("src/pages/portal/account/setting/Index"));
+const Notification = lazy(
+  () => import("src/pages/portal/account/notification/Index")
+);
 const CustomerProducts = lazy(
-  () => import("src/pages/portal/customerProduct/Index")
+  () => import("src/pages/portal/financial/customerProduct/Index")
 );
 const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
 
-const Referrals = lazy(() => import("src/pages/portal/referral/Index"));
-const Referral = lazy(() => import("src/pages/portal/referral/Referral"));
+const Referrals = lazy(() => import("src/pages/portal/account/referral/Index"));
+const Referral = lazy(
+  () => import("src/pages/portal/account/referral/Referral")
+);
 const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
-const Wallet = lazy(() => import("src/pages/portal/walletTransaction/Index"));
-const Payments = lazy(() => import("src/pages/portal/payment/Index"));
-const Payment = lazy(() => import("src/pages/portal/payment/PaymentCallBack"));
-const Bills = lazy(() => import("src/pages/portal/customerBill/Index"));
-const Bill = lazy(() => import("src/pages/portal/customerBill/Bill"));
-const Invoices = lazy(() => import("src/pages/portal/invoice/Index"));
-const Invoice = lazy(() => import("src/pages/portal/invoice/Invoice"));
+const Wallet = lazy(
+  () => import("src/pages/portal/financial/walletTransaction/Index")
+);
+const Payments = lazy(() => import("src/pages/portal/financial/payment/Index"));
+const Payment = lazy(
+  () => import("src/pages/portal/financial/payment/PaymentCallBack")
+);
+const Bills = lazy(
+  () => import("src/pages/portal/financial/customerBill/Index")
+);
+const Bill = lazy(() => import("src/pages/portal/financial/customerBill/Bill"));
+const Invoices = lazy(() => import("src/pages/portal/financial/invoice/Index"));
+const Invoice = lazy(
+  () => import("src/pages/portal/financial/invoice/Invoice")
+);
 
 const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
 const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));

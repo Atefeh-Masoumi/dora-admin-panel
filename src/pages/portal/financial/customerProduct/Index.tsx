@@ -1,15 +1,15 @@
 import { ChangeEvent, FC, useState } from "react";
 import { Divider, Stack, Typography, MenuItem } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { serviceTableStruct } from "src/components/organisms/portal/customerProduct/tables/struct";
-import { ServiceTableRow } from "src/components/organisms/portal/customerProduct/tables/ServiceTableRow";
+import { serviceTableStruct } from "src/components/organisms/portal/account/customerProduct/tables/struct";
+import { ServiceTableRow } from "src/components/organisms/portal/account/customerProduct/tables/ServiceTableRow";
+import PageLoading from "src/components/atoms/PageLoading";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
 } from "src/app/services/api.generated";
-import PageLoading from "src/components/atoms/PageLoading";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");

@@ -5,9 +5,9 @@ import PageLoading from "src/components/atoms/PageLoading";
 import CustomTabComponent, {
   tabsType,
 } from "src/components/organisms/CustomTab";
-import { EmailValidation } from "src/components/organisms/portal/profile/EmailValidation";
-import { LegalPersonality } from "src/components/organisms/portal/profile/Legal";
-import { MobileValidation } from "src/components/organisms/portal/profile/MobileValidation";
+import { EmailValidation } from "src/components/organisms/portal/account/profile/EmailValidation";
+import { LegalPersonality } from "src/components/organisms/portal/account/profile/Legal";
+import { MobileValidation } from "src/components/organisms/portal/account/profile/MobileValidation";
 
 const tabs: tabsType[] = [
   {

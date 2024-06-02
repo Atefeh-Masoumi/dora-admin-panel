@@ -1,4 +1,4 @@
-import { columnType } from "../../../tables/table.types";
+import { columnType } from "../../../../tables/table.types";
 
 export const notificationTableStruct: columnType[] = [
   { id: "notificationDate", label: "تاریخ" },

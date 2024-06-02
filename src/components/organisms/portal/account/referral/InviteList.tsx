@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { useGetApiMyPortalCommissionListQuery } from "src/app/services/api.generated";
-import { BaseTable } from "../../tables/BaseTable";
+import { BaseTable } from "../../../tables/BaseTable";
 import { ReferralTableRow } from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";

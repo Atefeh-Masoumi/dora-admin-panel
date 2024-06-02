@@ -9,8 +9,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { invoiceTableStruct } from "src/components/organisms/portal/invoices/tables/struct";
-import { invoiceTableRow } from "src/components/organisms/portal/invoices/tables/InvoicesTableRow";
+import { invoiceTableStruct } from "src/components/organisms/portal/financial/invoices/tables/struct";
+import { invoiceTableRow } from "src/components/organisms/portal/financial/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import {
   useGetApiMyPortalInvoiceGetByIdQuery,

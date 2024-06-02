@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
-import { invoicesTableStruct } from "src/components/organisms/portal/invoices/tables/struct";
-import { InvoicesTableRow } from "src/components/organisms/portal/invoices/tables/InvoicesTableRow";
+import { invoicesTableStruct } from "src/components/organisms/portal/financial/invoices/tables/struct";
+import { InvoicesTableRow } from "src/components/organisms/portal/financial/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import {
