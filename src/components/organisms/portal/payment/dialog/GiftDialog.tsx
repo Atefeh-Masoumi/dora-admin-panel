@@ -46,7 +46,8 @@ export const GiftDialog: FC<GiftDialogPropsType> = ({
       .then(() => {
         toast.success("کد هدیه با موفقیت اعمال شد");
         handleClose();
-      });
+      })
+      .catch((err) => {});
     setSubmitting(false);
   };
 
