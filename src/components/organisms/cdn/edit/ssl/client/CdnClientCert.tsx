@@ -21,14 +21,12 @@ export const CdnClientCert: FC = () => {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography>گواهی ابر درسا</Typography>
         <LoadingButton
-          // loading={loadingCreate}
           variant="outlined"
           size="large"
           sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: 1.5, border: 1 }}
           startIcon={
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
-          // onClick={submit}
         >
           صدور گواهی
         </LoadingButton>
