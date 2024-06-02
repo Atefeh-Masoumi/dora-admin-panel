@@ -85,7 +85,11 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
         alignItems="center"
       >
         <Grid xs={12} item sx={{ m: 2 }}>
-          <Stack direction={{ xs: "column", sm: "row" }} sx={{ px: 2 }}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            sx={{ px: 2 }}
+          >
             <ExclamationMarkCircleSvg
               sx={{
                 transform: "rotate(180deg)",

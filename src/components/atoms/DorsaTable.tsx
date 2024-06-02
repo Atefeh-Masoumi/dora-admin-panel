@@ -1,6 +1,7 @@
 import { Pagination, TableRow } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const DorsaTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
@@ -34,7 +35,7 @@ export const DorsaTablePagination = styled(Pagination)(() => ({
     border: "none",
     backgroundColor: "rgba(110, 118, 138, 0.08)",
     color: "secondary",
-    borderRadius: "15px",
+    borderRadius: BORDER_RADIUS_1,
     alignItems: "center",
     "&:hover": {
       backgroundColor: "rgba(60, 138, 255, 0.3)",

@@ -7,6 +7,7 @@ import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
 import { CdnEdgeCertUserCert } from "./CdnEdgeCertUserCert";
 import { CdnEdgeCert } from "./CdnEdgeCert";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnChangeEdgeCertTypePropsType = {
   id: number;
@@ -38,7 +39,7 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
           px={4}
           alignItems="center"
           justifyContent="center"
-          borderRadius={2}
+          borderRadius={BORDER_RADIUS_1}
           spacing={1.5}
         >
           {loading ? (
@@ -49,14 +50,17 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
                   variant="rectangular"
                   height={70}
                   width={240}
-                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                  sx={{
+                    bgcolor: "secondary.light",
+                    borderRadius: { BORDER_RADIUS_1 },
+                  }}
                 />
               ))}
             </Stack>
           ) : (
             <Fragment>
               <Button
-                sx={{ p: 0, borderRadius: 2 }}
+                sx={{ p: 0, borderRadius: BORDER_RADIUS_1 }}
                 onClick={() => onChangeEdge(1)}
               >
                 <Stack
@@ -65,7 +69,7 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 2, md: 3 }}
-                  sx={{ border: 2, borderRadius: 2, px: 2 }}
+                  sx={{ border: 2, borderRadius: BORDER_RADIUS_1, px: 2 }}
                 >
                   <img src={certTypeId === 1 ? Cloud : CloudOff} alt="Cloud" />
                   <Typography
@@ -79,7 +83,7 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
               </Button>
 
               <Button
-                sx={{ p: 0, borderRadius: 2 }}
+                sx={{ p: 0, borderRadius: BORDER_RADIUS_1 }}
                 onClick={() => onChangeEdge(2)}
               >
                 <Stack
@@ -88,7 +92,7 @@ export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 1.2, md: 2.5 }}
-                  sx={{ border: 2, borderRadius: 2, px: 2 }}
+                  sx={{ border: 2, borderRadius: BORDER_RADIUS_1, px: 2 }}
                 >
                   <User
                     status={certTypeId === 2 ? "Active" : "Inactive"}
