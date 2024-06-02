@@ -1,6 +1,4 @@
-import { FC, useEffect, useState, useMemo } from "react";
 import {
-  Avatar,
   List,
   ListItem,
   ListItemIcon,
@@ -8,12 +6,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
-import { UserMenu } from "./UserMenu";
+import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { sidebarItemType } from "src/types/itemsList.type";
-import { CategorySvg } from "src/components/atoms/svg-icons/CategorySvg";
 import CustomListItemButton from "src/components/atoms/CustomListItemButton";
+import { CategorySvg } from "src/components/atoms/svg-icons/CategorySvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { sidebarItemType } from "src/types/itemsList.type";
 
 type ItemListPropsType = {
   listItems: sidebarItemType[];
@@ -22,19 +20,6 @@ type ItemListPropsType = {
 export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
-  const isCollapsed = useMemo(
-    () =>
-      pathname !== "/" &&
-      pathname !== "/portal/calculator" &&
-      pathname !== "/portal/supports" &&
-      pathname !== "/portal/profile" &&
-      pathname !== "/portal/setting" &&
-      pathname !== "/portal/customer-products" &&
-      pathname !== "/portal/referral" &&
-      pathname !== "/portal/notifications",
-    [pathname]
-  );
 
   const [LocalStorageData, setLocalStorageData] = useState<any>();
   useEffect(() => {
@@ -48,32 +33,29 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent={isCollapsed ? "center" : "space-between"}
+        justifyContent={"space-between"}
         sx={{
           border: "1px solid rgba(110, 118, 138, 0.16)",
           borderRadius: BORDER_RADIUS_1,
           py: 1,
-          px: isCollapsed ? 0 : 1.5,
+          px: 1.5,
           width: "100%",
           mb: 3,
         }}
       >
-        {!isCollapsed && (
-          <Avatar sx={{ bgcolor: "primary.main" }} src="/broken-image.jpg" />
-        )}
         <Typography
           sx={{
             whiteSpace: "nowrap",
-            width: isCollapsed ? "0" : "unset",
-            opacity: isCollapsed ? "0" : "100%",
-            transition: isCollapsed ? "" : "all 0.5s ease-in",
+            width: "unset",
+            opacity: "100%",
+            transition: "all 0.5s ease-in",
           }}
           fontSize="16px"
           color="rgba(110, 118, 138, 0.8)"
         >
           {LocalStorageData && LocalStorageData.userTitle}
         </Typography>
-        <UserMenu />
+        {/* <UserMenu /> */}
       </Stack>
       <List sx={{ p: 0 }}>
         <ListItem disablePadding sx={{ mb: 3 }}>
@@ -97,10 +79,8 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
             </ListItemIcon>
             <ListItemText
               sx={{
-                opacity: isCollapsed ? "0" : "100%",
-                transition: isCollapsed
-                  ? "opacity 0.2s ease-out"
-                  : "opacity 0.5s ease-in",
+                opacity: "100%",
+                transition: "opacity 0.5s ease-in",
               }}
               primaryTypographyProps={{
                 color: pathname === "/" ? "primary" : "#6E768A",
@@ -114,10 +94,8 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
         <Typography
           sx={{
             whiteSpace: "nowrap",
-            opacity: isCollapsed ? "0" : "100%",
-            transition: isCollapsed
-              ? "opacity 0.2s ease-out"
-              : "opacity 0.5s ease-in",
+            opacity: "100%",
+            transition: "opacity 0.5s ease-in",
           }}
           fontSize="12px"
           color="rgba(110, 118, 138, 0.8)"
@@ -159,11 +137,9 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                     sx={{
                       m: 0,
                       whiteSpace: "nowrap",
-                      opacity: isCollapsed ? "0" : "100%",
-                      visibility: isCollapsed ? "hidden" : "visible",
-                      transition: isCollapsed
-                        ? "all 0.2s ease-out"
-                        : "all 0.5s ease-in",
+                      opacity: "100%",
+                      visibility: "visible",
+                      transition: "all 0.5s ease-in",
                     }}
                     primaryTypographyProps={{
                       fontSize: "16px",
@@ -188,47 +164,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
           }
         })}
       </List>
-      {isCollapsed && (
-        <List
-          sx={{
-            mt: 8.5,
-            "&>li:last-child": {
-              mb: 4,
-            },
-          }}
-        >
-          {listItems.map(({ title, text, Icon, link }, index) => {
-            const isSelected = link === pathname || pathname.includes(link);
-            if (!text && !title) {
-              return (
-                <ListItem disablePadding key={index} sx={{ mt: 3 }}>
-                  <CustomListItemButton
-                    to={link}
-                    sx={{ p: 0, "&:hover": { bgcolor: "transparent" } }}
-                  >
-                    <ListItemIcon>
-                      <Stack
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{
-                          width: 40,
-                          height: 40,
-                          bgcolor: isSelected ? "#0560FD14" : "#6E768A14",
-                          borderRadius: BORDER_RADIUS_1,
-                        }}
-                      >
-                        <Icon mode={isSelected ? "selected" : "default"} />
-                      </Stack>
-                    </ListItemIcon>
-                  </CustomListItemButton>
-                </ListItem>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </List>
-      )}
     </Stack>
   );
 };

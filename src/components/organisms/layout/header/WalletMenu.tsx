@@ -1,125 +1,65 @@
+import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
+import KeyIcon from "@mui/icons-material/Key";
+import { Divider, MenuList, Stack, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { FC, MouseEvent, useState } from "react";
 import { useNavigate } from "react-router";
-import { styled, alpha } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import Menu, { MenuProps } from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import {
-  ExpandMore as ExpandMoreIcon,
-  Add as AddIcon,
-  Redeem as RedeemIcon,
-} from "@mui/icons-material";
-import { LinearProgress, Stack, Typography } from "@mui/material";
-import { GiftDialog } from "src/components/organisms/portal/payment/dialog/GiftDialog";
-import { WalletSvg } from "src/components/atoms/svg-icons/WalletSvg";
-import { InvoiceSvg } from "src/components/atoms/svg-icons/InvoiceSvg";
-import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
-import { CalculatorSvg } from "src/components/atoms/svg-icons/CalculatorSvg";
-import { TransactionSvg } from "src/components/atoms/svg-icons/TransactionSvg";
-import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
-
-const StyledMenu = styled((props: MenuProps) => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "center",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "center",
-    }}
-    {...props}
-  />
-))(({ theme }) => ({
-  "& .MuiPaper-root": {
-    borderRadius: 6,
-    marginTop: theme.spacing(1),
-    minWidth: 180,
-    color: theme.palette.secondary.main,
-    // boxShadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-    "& .MuiMenu-list": {
-      backgroundColor: "rgba(243, 244, 246, 1)",
-      padding: "4px 0",
-    },
-    "& .MuiMenuItem-root": {
-      "& .MuiSvgIcon-root": {
-        fontSize: 18,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
-      "&:active": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity
-        ),
-      },
-    },
-  },
-}));
+import { useAppDispatch } from "src/app/hooks";
+import { logoutAction } from "src/app/slice/authSlice";
+import { Account } from "src/components/atoms/svg-icons/AccountSvg";
+import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
+import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 
 export const WalletMenu: FC = () => {
-  const [openDepositDialog, setOpenDepositDialog] = useState(false);
-  const [openGiftDialog, setOpenGiftDialog] = useState(false);
-
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const dispatch = useAppDispatch();
   const handleClose = () => setAnchorEl(null);
+  const theme = useTheme();
 
-  const { data: balance, isLoading } = useGetApiMyPortalWalletGetBalanceQuery(
-    null as any,
-    { refetchOnMountOrArgChange: true }
-  );
-  const separateBalance = balance
-    ?.toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-  const handleOpenDepositDialog = () => setOpenDepositDialog(true);
-  const handleCloseDepositDialog = () => setOpenDepositDialog(false);
-
-  const handleOpenGiftDialog = () => setOpenGiftDialog(true);
-  const handleCloseGiftDialog = () => setOpenGiftDialog(false);
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    handleClose();
+  };
 
   const items = [
     {
-      value: "deposit",
-      label: "افزایش موجودی",
-      icon: AddIcon,
-      function: handleOpenDepositDialog,
+      value: "account",
+      label: "سرویس‌های من",
+      icon: Account,
+      link: "/portal/customer-products",
     },
     {
-      value: "gift",
-      label: "کد هدیه",
-      icon: RedeemIcon,
-      function: handleOpenGiftDialog,
+      value: "account",
+      label: "مدیریت اکانت",
+      icon: Setting,
+      link: "/portal/profile",
     },
     {
-      value: "wallets",
-      label: "گزارش کیف پول",
-      icon: WalletSvg,
+      value: "wallet",
+      label: "مدیریت مالی",
+      icon: Service,
       link: "/portal/wallet",
     },
     {
-      value: "invoices",
-      label: "فاکتور های فروش",
-      icon: InvoiceSvg,
-      link: "/portal/wallet/invoice",
+      value: "password",
+      label: "تغییر رمز عبور",
+      icon: KeyIcon,
+      link: "/portal/setting",
     },
     {
-      value: "payments",
-      label: "گزارش پرداخت ها",
-      icon: TransactionSvg,
-      link: "/portal/wallet/payment",
-    },
-    {
-      value: "user-bill",
-      label: "گزارش محاسبات",
-      icon: CalculatorSvg,
-      link: "/portal/wallet/bill",
+      value: "logout",
+      label: "خروج از حساب کاربری",
+      icon: Logout,
+      function: handleLogout,
     },
   ];
 
@@ -136,44 +76,70 @@ export const WalletMenu: FC = () => {
         sx={{ backgroundColor: "rgba(110, 118, 138, 0.06)", py: 1.3 }}
         fullWidth
       >
-        {isLoading ? (
-          <Stack width={30}>
-            <LinearProgress />
-          </Stack>
-        ) : (
-          <Stack direction="row" spacing={0.5}>
-            <Typography sx={{ direction: "rtl" }}>{`${
-              separateBalance || 0
-            }`}</Typography>
-            <Typography> ریال </Typography>
-          </Stack>
-        )}
+        <Stack direction="row">
+          <Typography sx={{ direction: "rtl", width: "100px" }}>
+            مدیریت
+          </Typography>
+        </Stack>
       </Button>
-      <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {items.map((item) => (
-          <MenuItem
-            key={item.value}
-            disableRipple
-            sx={{ borderRadius: 1, m: 1, py: 2 }}
-            onClick={() => {
-              item.function ? item.function() : handleClose();
-              item.link ? navigate(item.link) : handleClose();
-              handleClose();
-            }}
-          >
-            <item.icon fontSize="large" />
-            <Typography>{item.label}</Typography>
-          </MenuItem>
-        ))}
-      </StyledMenu>
-      <DepositDialog
-        openDialog={openDepositDialog}
-        handleClose={handleCloseDepositDialog}
-      />
-      <GiftDialog
-        openDialog={openGiftDialog}
-        handleClose={handleCloseGiftDialog}
-      />
+      <ThemeProvider
+        theme={createTheme({
+          ...theme,
+          palette: { mode: "dark", secondary: theme.palette.secondary },
+        })}
+      >
+        <Menu
+          keepMounted
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          sx={{ marginRight: { xs: "0", md: "60px" }, marginTop: "10px" }}
+        >
+          <MenuList sx={{ backgroundColor: "rgba(32, 32, 32, 1)" }}>
+            <Stack p={1.5} spacing={1}>
+              {items.map((item, index) => (
+                <>
+                  <MenuItem
+                    key={item.value}
+                    disableRipple
+                    sx={{ borderRadius: 1, m: 1, py: 2 }}
+                    onClick={() => {
+                      item.function ? item.function() : handleClose();
+                      item.link ? navigate(item.link) : handleClose();
+                      handleClose();
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      alignItems="start"
+                      spacing={1}
+                      py={0.5}
+                    >
+                      <item.icon />
+                      <Typography
+                        color={item.value === "logout" ? "#d32f2f" : "unset"}
+                      >
+                        {item.label}
+                      </Typography>
+                    </Stack>
+                  </MenuItem>
+                  {index === items.length - 2 && (
+                    <Divider sx={{ bgcolor: "secondary.main" }} />
+                  )}
+                </>
+              ))}
+            </Stack>
+          </MenuList>
+        </Menu>
+      </ThemeProvider>
     </Stack>
   );
 };

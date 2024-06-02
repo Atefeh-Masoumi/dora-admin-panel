@@ -136,7 +136,7 @@ const Router: FC = () => {
           <Route
             path="/portal/profile"
             element={mainTemplate(Profile, {
-              pageTitle: "حساب کاربری",
+              pageTitle: "مدیریت اکانت",
             })}
           />
           <Route
