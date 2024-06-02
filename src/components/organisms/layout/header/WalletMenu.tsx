@@ -41,7 +41,7 @@ export const WalletMenu: FC = () => {
       value: "account",
       label: "مدیریت اکانت",
       icon: Setting,
-      link: "/portal/profile",
+      link: "/portal/account",
     },
     {
       value: "wallet",
@@ -57,7 +57,7 @@ export const WalletMenu: FC = () => {
     },
     {
       value: "logout",
-      label: "خروج از حساب کاربری",
+      label: "خروج از حساب",
       icon: Logout,
       function: handleLogout,
     },
@@ -78,7 +78,7 @@ export const WalletMenu: FC = () => {
       >
         <Stack direction="row">
           <Typography sx={{ direction: "rtl", width: "100px" }}>
-            مدیریت
+            مدیریت سامانه
           </Typography>
         </Stack>
       </Button>

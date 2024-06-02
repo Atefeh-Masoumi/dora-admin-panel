@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
-import { GiftDialog } from "../portal/payment/dialog/GiftDialog";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { GiftDialog } from "../portal/financial/payment/dialog/GiftDialog";
 import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { Copy } from "src/components/atoms/svg-icons/CopySvg";

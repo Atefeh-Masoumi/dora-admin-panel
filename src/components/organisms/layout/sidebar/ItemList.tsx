@@ -1,4 +1,5 @@
 import {
+  Avatar,
   List,
   ListItem,
   ListItemIcon,
@@ -43,6 +44,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
           mb: 3,
         }}
       >
+        <Avatar sx={{ bgcolor: "primary.main" }} src="/broken-image.jpg" />
         <Typography
           sx={{
             whiteSpace: "nowrap",

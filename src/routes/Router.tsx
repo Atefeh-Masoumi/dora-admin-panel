@@ -32,23 +32,23 @@ const TwoFactorLogin = lazy(() => import("src/pages/account/TwoFactorLogin"));
 const Signup = lazy(() => import("src/pages/account/Signup"));
 const Forget = lazy(() => import("src/pages/account/forget"));
 
-const Sales = lazy(() => import("src/pages/portal/account/sales/Index"));
-const Profile = lazy(() => import("src/pages/portal/account/profile/Index"));
-const Setting = lazy(() => import("src/pages/portal/account/setting/Index"));
+const Account = lazy(() => import("src/pages/portal/account/Index"));
+
+// const Profile = lazy(() => import("src/pages/portal/account/Index"));
+const Setting = lazy(() => import("src/pages/portal/account/Settings"));
+const Sales = lazy(() => import("src/pages/portal/Sales"));
 const Notification = lazy(
-  () => import("src/pages/portal/account/notification/Index")
+  () => import("src/pages/portal/account/Notifications")
 );
 const CustomerProducts = lazy(
-  () => import("src/pages/portal/financial/customerProduct/Index")
+  () => import("src/pages/portal/customerProduct/Index")
 );
 const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
 
-const Referrals = lazy(() => import("src/pages/portal/account/referral/Index"));
-const Referral = lazy(
-  () => import("src/pages/portal/account/referral/Referral")
-);
+const Referrals = lazy(() => import("src/pages/portal/account/Referrals"));
+const Referral = lazy(() => import("src/pages/portal/account/Referral"));
 const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
 const Wallet = lazy(
@@ -146,8 +146,8 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/portal/profile"
-            element={mainTemplate(Profile, {
+            path="/portal/account"
+            element={mainTemplate(Account, {
               pageTitle: "مدیریت اکانت",
             })}
           />
