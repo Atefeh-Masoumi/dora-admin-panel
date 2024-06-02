@@ -1,4 +1,3 @@
-import { FC, Fragment, useState } from "react";
 import {
   Button,
   Divider,
@@ -7,13 +6,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { FC, Fragment, useState } from "react";
 import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
-import {
-  BORDER_RADIUS_1,
-  BORDER_RADIUS_4,
-  BORDER_RADIUS_5,
-} from "src/configs/theme";
 import { DepositDialog } from "src/components/organisms/portal/payment/dialog/DepositDialog";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const Balance: FC = () => {
   const handleDeposit = () => setOpenDeposit(true);

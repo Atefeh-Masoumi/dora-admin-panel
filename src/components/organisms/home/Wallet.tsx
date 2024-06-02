@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 import { Balance } from "./Balance";
 import { Analytics } from "./Analytics";
+import { GiftAndReferral } from "./GiftAndReferral";
 
 export const Wallet: FC = () => {
   return (
@@ -12,6 +13,7 @@ export const Wallet: FC = () => {
       columnGap={2}
       sx={{ mb: { xs: 2, md: 3 } }}
     >
+      <GiftAndReferral />
       <Balance />
       <Analytics />
     </Grid>
