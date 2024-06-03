@@ -1,5 +1,8 @@
-import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
-import KeyIcon from "@mui/icons-material/Key";
+import {
+  ExpandMore as ExpandMoreIcon,
+  FolderOutlined,
+  PasswordOutlined,
+} from "@mui/icons-material";
 import { Divider, MenuList, Stack, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -9,10 +12,9 @@ import { FC, MouseEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { logoutAction } from "src/app/slice/authSlice";
-import { Account } from "src/components/atoms/svg-icons/AccountSvg";
+import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
 import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
-import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 
 export const WalletMenu: FC = () => {
   const navigate = useNavigate();
@@ -34,13 +36,13 @@ export const WalletMenu: FC = () => {
     {
       value: "account",
       label: "سرویس‌های من",
-      icon: Account,
+      icon: FolderOutlined,
       link: "/portal/customer-products",
     },
     {
       value: "account",
       label: "مدیریت اکانت",
-      icon: Setting,
+      icon: AccountSvg,
       link: "/portal/account",
     },
     {
@@ -52,7 +54,7 @@ export const WalletMenu: FC = () => {
     {
       value: "password",
       label: "تغییر رمز عبور",
-      icon: KeyIcon,
+      icon: PasswordOutlined,
       link: "/portal/setting",
     },
     {

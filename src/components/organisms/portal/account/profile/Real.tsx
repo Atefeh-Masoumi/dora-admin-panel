@@ -104,7 +104,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
               label="آدرس"
               fullWidth
               multiline
-              rows={4}
+              rows={3}
             />
             <Stack
               direction="row"

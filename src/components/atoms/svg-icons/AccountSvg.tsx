@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export const Account: FC<SvgIconProps> = (props) => {
+export const AccountSvg: FC<SvgIconProps> = (props) => {
   return (
     <SvgIcon {...props} sx={{ fill: "none", ...props.sx }}>
       <path

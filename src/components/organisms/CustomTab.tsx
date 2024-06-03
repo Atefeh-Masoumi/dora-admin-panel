@@ -1,4 +1,4 @@
-import type { TabProps, TabsProps } from "@mui/material";
+import { SvgIconProps, TabProps, TabsProps, Typography } from "@mui/material";
 import { Box, Stack, Tab, Tabs, styled } from "@mui/material";
 import type { FC, ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";
@@ -14,7 +14,7 @@ const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
   boxShadow: "0px 2px 28px rgba(185, 207, 252, 0.15)",
   borderRadius: BORDER_RADIUS_1,
   backgroundColor: "white",
-  width: "180px",
+  width: "200px",
   margin: "4px 0",
   position: "relative",
   overflow: "visible",
@@ -75,6 +75,7 @@ const a11yProps = (index: number) => ({
 export type tabsType = {
   title: string;
   content: any;
+  icon: FC<SvgIconProps>;
 };
 
 type ProductPageTabsPropsType = {
@@ -96,7 +97,7 @@ const CustomTabComponent: FC<ProductPageTabsPropsType> = ({ tabs }) => {
         ))}
       </CustomTabs>
       <Box sx={{ width: "100%" }}>
-        {tabs.map(({ content }, index) => (
+        {tabs.map(({ content, icon }, index) => (
           <TabPanel value={value} index={index} key={index}>
             {content}
           </TabPanel>

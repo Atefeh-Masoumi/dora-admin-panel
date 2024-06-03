@@ -9,12 +9,13 @@ import Wallet from "./walletTransaction/Index";
 import CustomerBills from "./customerBill/Index";
 import Invoices from "./invoice/Index";
 import Payments from "./payment/Index";
+import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 
 const tabs: tabsType[] = [
-  { title: "محاسبات", content: <CustomerBills /> },
-  { title: "کیف پول", content: <Wallet /> },
-  { title: "فاکتورها", content: <Invoices /> },
-  { title: "پرداخت ها", content: <Payments /> },
+  { title: "محاسبات", icon: AccountSvg, content: <CustomerBills /> },
+  { title: "کیف پول", icon: AccountSvg, content: <Wallet /> },
+  { title: "فاکتورها", icon: AccountSvg, content: <Invoices /> },
+  { title: "پرداخت ها", icon: AccountSvg, content: <Payments /> },
 ];
 
 const Financial: FC = () => {

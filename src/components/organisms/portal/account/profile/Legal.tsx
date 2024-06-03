@@ -239,7 +239,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
         </Typography>
         <Button
           variant="contained"
-          sx={{ px: 7, py: 2, fontSize: 16 }}
+          sx={{ px: 3, py: 1, fontSize: 16 }}
           onClick={() => setShowModal(true)}
         >
           درخواست تغییر اکانت به حقوقی
