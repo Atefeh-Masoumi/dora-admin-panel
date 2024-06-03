@@ -43,7 +43,7 @@ export const SubItemList: FC<SubItemListPropsType> = ({ listItems }) => {
         position: "absolute",
         width: sidebarWidth,
         left: 1,
-        p: 3,
+        p: 2,
         paddingLeft: 12,
       }}
     >

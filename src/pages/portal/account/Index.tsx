@@ -4,7 +4,7 @@ import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated
 import PageLoading from "src/components/atoms/PageLoading";
 import CustomTabComponent, {
   tabsType,
-} from "src/components/organisms/CustomTab";
+} from "src/components/molecules/DorsaTab";
 import Profile from "src/components/organisms/portal/account/profile/Index";
 import { LegalPersonality } from "src/components/organisms/portal/account/profile/Legal";
 import Notifications from "./Notifications";
@@ -13,9 +13,6 @@ import { NotificationSetting } from "src/components/organisms/portal/account/set
 import { SecuritySetting } from "src/components/organisms/portal/account/setting/SecuritySetting";
 import { ChangePassword } from "src/components/organisms/portal/account/setting/ChangePassword";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
-import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
-import { Referral } from "src/components/atoms/svg-icons/ReferralSvg";
-import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
 
 const tabs: tabsType[] = [
   { title: "حساب کاربری", icon: AccountSvg, content: <Profile /> },

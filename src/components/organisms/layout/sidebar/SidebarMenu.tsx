@@ -11,6 +11,7 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
+import { SpecialOffer } from "./SpecialOffer";
 
 type SidebarPropsType = {};
 
@@ -84,7 +85,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         sx={{
           transition: "width 0.5s",
           width: sidebarWidth,
-          p: 3,
+          p: 2,
           boxShadow: "0px 32px 64px rgba(17, 17, 17, 0.08)",
           height: "100%",
           borderRadius: BORDER_RADIUS_1,
@@ -94,6 +95,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         }}
       >
         <ItemList listItems={listItems} />
+        <SpecialOffer />
       </Stack>
     </Box>
   );

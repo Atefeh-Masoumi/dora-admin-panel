@@ -4,7 +4,7 @@ import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated
 import PageLoading from "src/components/atoms/PageLoading";
 import CustomTabComponent, {
   tabsType,
-} from "src/components/organisms/CustomTab";
+} from "src/components/molecules/DorsaTab";
 import Wallet from "./walletTransaction/Index";
 import CustomerBills from "./customerBill/Index";
 import Invoices from "./invoice/Index";

@@ -8,11 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import {
-  BORDER_RADIUS_1,
-  BORDER_RADIUS_4,
-  BORDER_RADIUS_5,
-} from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
 import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
@@ -20,8 +16,8 @@ import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
 import { CalculatorSvg } from "src/components/atoms/svg-icons/CalculatorSvg";
 import { HeadphoneSvg } from "src/components/atoms/svg-icons/HeadphoneSvg";
-import { WalletMenu } from "src/components/organisms/layout/header/WalletMenu";
 import { Notifications } from "./Notifications";
+import { ManageMenu } from "./ManageMenu";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -128,7 +124,7 @@ const Header: FC<HeaderPropsType> = ({
           <Stack direction="row" alignItems="center" spacing={1}>
             {desktopHeaderIcon}
           </Stack>
-          <WalletMenu />
+          <ManageMenu />
         </Stack>
       </Popover>
     </>
@@ -229,7 +225,7 @@ const Header: FC<HeaderPropsType> = ({
             spacing={1}
             display={{ xs: "none", md: "inline-flex" }}
           >
-            <WalletMenu />
+            <ManageMenu />
             {desktopHeaderIcon}
           </Stack>
           {mobileHeaderIcon}

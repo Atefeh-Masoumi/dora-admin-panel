@@ -1,4 +1,4 @@
-import { SvgIconProps, TabProps, TabsProps, Typography } from "@mui/material";
+import { SvgIconProps, TabProps, TabsProps } from "@mui/material";
 import { Box, Stack, Tab, Tabs, styled } from "@mui/material";
 import type { FC, ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";

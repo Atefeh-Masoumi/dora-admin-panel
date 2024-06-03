@@ -19,7 +19,7 @@ type detailsListType = {
 };
 
 type ServiceListCardPropsType = {
-  nameID?: string;
+  nameId?: string;
   statusId?: string;
   vmProjectData: any;
   onEditClick?: (item: any) => any;
@@ -32,7 +32,7 @@ type ServiceListCardPropsType = {
 
 export const AddProjectCard: FC<ServiceListCardPropsType> = ({
   vmProjectData,
-  nameID = "name",
+  nameId = "name",
   statusId = "statusId",
   onEditClick,
   onDeleteClick,
@@ -84,7 +84,7 @@ export const AddProjectCard: FC<ServiceListCardPropsType> = ({
             maxWidth={{ xs: "100%", md: "70%" }}
             textOverflow="ellipsis"
           >
-            {vmProjectData[nameID] || "--"}
+            {vmProjectData[nameId] || "--"}
           </Typography>
         </Stack>
         <Stack

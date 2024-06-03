@@ -16,7 +16,7 @@ import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
 import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
 
-export const WalletMenu: FC = () => {
+export const ManageMenu: FC = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

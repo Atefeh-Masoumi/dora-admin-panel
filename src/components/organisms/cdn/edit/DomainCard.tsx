@@ -1,90 +1,135 @@
+import { DeleteOutline, ModeEdit } from "@mui/icons-material";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import {
+  Avatar,
+  Box,
+  Chip,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FC, useMemo } from "react";
-import { Chip, Divider, Stack, Typography } from "@mui/material";
-import CircleTickSvg from "src/components/atoms/svg-icons/CircleTickSvg";
-import ClockSvg from "src/components/atoms/svg-icons/ClockSvg";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "src/app/hooks";
-import { DnsListResponse } from "src/app/services/api.generated";
-import { setSelectedDomainAction } from "src/app/slice/cdnSlice";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { e2p } from "src/utils/e2p.utils";
 
-type DomainCardPropsType = { zoneItem: DnsListResponse };
+type detailsListType = {
+  label: string;
+  id: string;
+  onClick?: (selectedRow: any) => any;
+};
 
-export const DomainCard: FC<DomainCardPropsType> = ({ zoneItem }) => {
-  const { zoneName, zoneStatusId } = zoneItem;
-  const navigate = useNavigate();
+type DomainCardPropsType = {
+  nameId?: string;
+  statusId?: string;
+  domainData: any;
+  onEditClick?: (item: any) => any;
+  onDeleteClick: (item: any) => any;
+  itemOnClick?: (item: any) => any;
+  detailsList: detailsListType[];
+  showStatus?: boolean;
+  isDomainCard?: boolean;
+};
 
-  const dispatch = useAppDispatch();
-
-  const cardClickHandler = () => {
-    dispatch(setSelectedDomainAction(zoneItem));
-    navigate(`/cdn/overview`);
-  };
-
-  const isActive = useMemo(() => zoneStatusId === 2, [zoneStatusId]);
-
+export const DomainCard: FC<DomainCardPropsType> = ({
+  domainData,
+  nameId = "name",
+  statusId = "statusId",
+  onDeleteClick,
+  itemOnClick,
+  detailsList,
+  isDomainCard = false,
+}) => {
   return (
     <Stack
       direction="column"
-      alignItems="flex-start"
-      justifyContent="space-between"
-      borderRadius={BORDER_RADIUS_1}
-      spacing={2}
-      p={2.5}
-      bgcolor="white"
+      rowGap={3}
       sx={{
-        "&: hover": {
-          backgroundColor: "rgba(255, 255, 255, 0.4)",
-          cursor: "pointer",
-        },
+        cursor: itemOnClick ? "pointer" : "default",
+        position: "relative",
+        borderRadius: "10px",
+        backgroundColor: "#fff",
       }}
-      onClick={cardClickHandler}
-      overflow="hidden"
+      px={1}
+      py={2}
+      onClick={() => itemOnClick && itemOnClick(domainData)}
     >
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent="space-between"
-        sx={{ width: "100%" }}
+        gap={1}
+        justifyContent={{ xs: "center", md: "space-between" }}
       >
-        <Chip
-          sx={{
-            color: isActive ? "#40BF6A" : "#FB9D05",
-            backgroundColor: isActive ? "rgba(64, 191, 106, 0.08)" : "#FCEDD5",
-            borderRadius: "8px",
-          }}
-          label={isActive ? "Active" : "Pending"}
-        />
-        <Typography
-          fontSize={18}
-          color="rgba(110, 118, 138, 1)"
-          whiteSpace="nowrap"
+        <Stack
+          width={{ xs: "100%" }}
+          alignItems="right"
+          divider={<Divider orientation="vertical" flexItem />}
+          columnGap={1}
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          {zoneName}
-        </Typography>
-      </Stack>
-      <Divider sx={{ width: "100%", color: "#6E768A14" }} />
-      <Stack
-        direction="row"
-        spacing={0.5}
-        alignItems="center"
-        justifyContent="flex-end"
-        width="100%"
-      >
-        <Typography
-          fontSize={14}
-          color="#6E768A66"
-          whiteSpace="nowrap"
-          sx={{ pt: "4px" }}
+          <Avatar sx={{ bgcolor: "customColor.neutralVeryLight" }}>
+            <FolderOpenIcon
+              sx={{ color: "customColor.neutralDark" }}
+              fontSize="medium"
+            />
+          </Avatar>
+          <Typography
+            noWrap
+            maxWidth={{ xs: "100%", md: "70%" }}
+            textOverflow="ellipsis"
+          >
+            {domainData[nameId] || "--"}
+          </Typography>
+        </Stack>
+        <Stack
+          alignItems="center"
+          width={{ xs: "100%", md: "fit-content" }}
+          justifyContent="end"
+          columnGap={{ xs: 0, md: 1 }}
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          {isActive ? `${zoneName} is Active` : "Pending Name Server Update"}
-        </Typography>
-        {isActive ? (
-          <CircleTickSvg sx={{ color: "white" }} />
-        ) : (
-          <ClockSvg sx={{ color: "white" }} />
-        )}
+          <IconButton
+            color="error"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDeleteClick(domainData);
+            }}
+          >
+            <DeleteOutline />
+          </IconButton>
+        </Stack>
       </Stack>
+      <Box width="100%" sx={{ overflowX: "auto" }}>
+        <Stack columnGap={4} alignItems="start" justifyContent="space-between">
+          {detailsList.map((item, index) => (
+            <Stack
+              alignItems={"center"}
+              width="100%"
+              direction={isDomainCard ? "row" : "column"}
+              key={index}
+              rowGap={0.8}
+              columnGap={1}
+            >
+              <Typography noWrap color="text.light">
+                {item.label}
+              </Typography>
+              <Typography
+                noWrap
+                onClick={() => {
+                  if (!item.onClick) return;
+                  item.onClick(domainData);
+                }}
+              >
+                {isDomainCard ? (
+                  <Chip label={e2p(domainData[item.id as any] || "--")} />
+                ) : (
+                  e2p(domainData[item.id as any] || "--")
+                )}
+              </Typography>
+            </Stack>
+          ))}
+        </Stack>
+      </Box>
     </Stack>
   );
 };

@@ -3,17 +3,17 @@ import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import {
-  VmProjectListResponse,
-  useDeleteApiMyVmProjectDeleteByIdMutation,
-  useGetApiMyVmProjectListQuery,
-} from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AddProjectCard } from "src/components/organisms/vm/add/AddProjectCard";
 import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
 import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  VmProjectListResponse,
+  useDeleteApiMyVmProjectDeleteByIdMutation,
+  useGetApiMyVmProjectListQuery,
+} from "src/app/services/api.generated";
 
 const vmDataList = [{ label: "نوع زیرساخت:", id: "hypervisorType" }];
 
@@ -88,23 +88,6 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
   return (
     <>
       <Fragment>
-        {/* <Stack
-          p={2.5}
-          mb={1}
-          bgcolor="warning.main"
-          direction="row"
-          spacing={1}
-          borderRadius={BORDER_RADIUS_1}
-          width="100%"
-          color="white"
-          alignItems={{ xs: "start", md: "center" }}
-        >
-          <ErrorOutlineOutlinedIcon />
-          <Typography variant="text14">
-            استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
-          </Typography>
-        </Stack> */}
-
         <Stack
           borderRadius={BORDER_RADIUS_1}
           bgcolor="white"

@@ -12,9 +12,14 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { useGetApiMyDnsHostListQuery } from "src/app/services/api.generated";
+import {
+  DomainListResponse,
+  useDeleteApiMyDnsHostDeleteByIdMutation,
+  useGetApiMyDnsHostListQuery,
+} from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { toast } from "react-toastify";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -25,7 +30,6 @@ type DataContextValueType = {
 export const DataContext = createContext<DataContextValueType>({
   refetchOnClick: () => null,
 });
-
 const ZoneManagement: FC = () => {
   const {
     data: zoneList,
@@ -40,6 +44,9 @@ const ZoneManagement: FC = () => {
   );
 
   const navigate = useNavigate();
+
+  const [selectedProject, setSelectedProject] =
+    useState<DomainListResponse | null>(null);
 
   const refetchOnClick = () => refetch();
   const createBtnOnClick = () => navigate("/cdn/add-domain");
@@ -64,11 +71,32 @@ const ZoneManagement: FC = () => {
 
   useEffect(() => {
     window.addEventListener("resize", detectSize);
-
     return () => {
       window.removeEventListener("resize", detectSize);
     };
   }, [windowDimenion]);
+
+  const deleteBtnOnClick = (project: DomainListResponse) => {
+    setSelectedProject(project);
+  };
+
+  const closeDialogHandler = () => {
+    setSelectedProject(null);
+  };
+
+  const [deleteProject, { isLoading: deleteProjectLoading }] =
+    useDeleteApiMyDnsHostDeleteByIdMutation();
+
+  const deleteProjectHandler = () => {
+    if (!selectedProject?.id) return;
+    deleteProject({ id: selectedProject.id })
+      .unwrap()
+      .then(() => {
+        toast.success("پروژه مورد نظر با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch(() => {});
+  };
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
@@ -142,6 +170,7 @@ const ZoneManagement: FC = () => {
             <></>
           )}
         </Stack>
+
         {filteredList && filteredList?.length <= 0 && (
           <Stack py={3}>
             <Stack bgcolor="white" borderRadius={3}>
@@ -149,27 +178,70 @@ const ZoneManagement: FC = () => {
             </Stack>
           </Stack>
         )}
-        <Grid container justifyContent="end" spacing={3} py={3}>
+
+        <Grid container>
           {isLoading ? (
             <Fragment>
               {[...Array(12)].map((_, index) => (
-                <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={5.8}
+                  lg={3.8}
+                  sx={{ margin: "10px auto" }}
+                >
                   <Skeleton
                     variant="rectangular"
-                    height={125}
-                    sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                    height={100}
+                    sx={{
+                      bgcolor: "secondary.light",
+                      borderRadius: BORDER_RADIUS_1,
+                    }}
                   />
                 </Grid>
               ))}
             </Fragment>
+          ) : zoneList?.length === 0 ? (
+            <Stack py={3} sx={{ width: "100%" }}>
+              <Stack bgcolor="white" borderRadius={3}>
+                <EmptyTable text="پروژه‌ای وجود ندارد" />
+              </Stack>
+            </Stack>
           ) : (
-            <Fragment>
-              {filteredList?.map((item, index) => (
-                <Grid key={index} item xs={12} sm={6} md={6} lg={4}>
-                  <DomainCard zoneItem={item} />
+            zoneList?.map((item) => {
+              const vmDataList = [
+                { label: item.zoneStatus, id: item.zoneStatus },
+              ];
+              return (
+                <Grid
+                  key={item.id}
+                  item
+                  xs={12}
+                  sm={5.8}
+                  lg={3.8}
+                  mt={1}
+                  mr={1}
+                  mb={1}
+                  sx={{ margin: "max-content" }}
+                >
+                  <DomainCard
+                    key={item.id}
+                    domainData={item}
+                    onDeleteClick={deleteBtnOnClick}
+                    itemOnClick={createBtnOnClick}
+                    showStatus={false}
+                    isDomainCard={true}
+                    detailsList={[
+                      {
+                        id: item.zoneStatusId?.toString() ?? "",
+                        label: item.zoneStatus ?? "",
+                      },
+                    ]}
+                  />
                 </Grid>
-              ))}
-            </Fragment>
+              );
+            })
           )}
         </Grid>
       </Fragment>

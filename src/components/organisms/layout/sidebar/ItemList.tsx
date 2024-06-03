@@ -39,7 +39,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
           border: "1px solid rgba(110, 118, 138, 0.16)",
           borderRadius: BORDER_RADIUS_1,
           py: 1,
-          px: 1.5,
+          px: 1,
           width: "100%",
           mb: 3,
         }}
@@ -58,6 +58,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
           {LocalStorageData && LocalStorageData.userTitle}
         </Typography>
       </Stack>
+
       <List sx={{ p: 0 }}>
         <ListItem disablePadding sx={{ mb: 3 }}>
           <CustomListItemButton
@@ -92,17 +93,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
             />
           </CustomListItemButton>
         </ListItem>
-        <Typography
-          sx={{
-            whiteSpace: "nowrap",
-            opacity: "100%",
-            transition: "opacity 0.5s ease-in",
-          }}
-          fontSize="12px"
-          color="rgba(110, 118, 138, 0.8)"
-        >
-          سرویس ها و خدمات
-        </Typography>
+
         {listItems.map(({ title, text, Icon, link }, index) => {
           const isSelected = link === pathname || pathname.includes(link);
           if (text) {
@@ -110,7 +101,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
               <ListItem
                 disablePadding
                 key={index}
-                sx={{ mt: 3 }}
+                sx={{ mt: 2 }}
                 onClick={() => navigate(link)}
               >
                 <CustomListItemButton
@@ -134,6 +125,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                       />
                     </Stack>
                   </ListItemIcon>
+
                   <ListItemText
                     sx={{
                       m: 0,
