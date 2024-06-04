@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { AddProjectCard } from "src/components/organisms/vm/add/AddProjectCard";
+import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
 import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
 import {
@@ -183,7 +183,7 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
                   lg={4}
                   py={2}
                 >
-                  <AddProjectCard
+                  <VmProjectCard
                     key={item.id}
                     vmProjectData={item}
                     onEditClick={editBtnOnClick}

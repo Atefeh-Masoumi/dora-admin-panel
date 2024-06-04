@@ -18,7 +18,7 @@ type detailsListType = {
   onClick?: (selectedRow: any) => any;
 };
 
-type ServiceListCardPropsType = {
+type VmProjectCardPropsType = {
   nameId?: string;
   statusId?: string;
   vmProjectData: any;
@@ -30,7 +30,7 @@ type ServiceListCardPropsType = {
   isProjectCard?: boolean;
 };
 
-export const AddProjectCard: FC<ServiceListCardPropsType> = ({
+export const VmProjectCard: FC<VmProjectCardPropsType> = ({
   vmProjectData,
   nameId = "name",
   statusId = "statusId",
