@@ -41,8 +41,8 @@ export const DomainCard: FC<DomainCardPropsType> = ({
   isDomainCard = false,
 }) => {
   const isActive = useMemo(
-    () => domainData?.statusId === 2,
-    [domainData?.statusId]
+    () => domainData?.zoneStatusId === 2,
+    [domainData?.zoneStatusId]
   );
 
   return (
