@@ -3,7 +3,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogContentText,
   DialogProps,
   DialogTitle,
   Divider,
@@ -90,7 +89,6 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   });
 
   const closeDialogHandler = (event: {}) => {
-    console.log(event);
     if (!props.onClose) return;
     props.onClose(event, "escapeKeyDown");
     formik.resetForm();

@@ -80,7 +80,7 @@ export const GiftAndReferral: FC = () => {
                     <Skeleton
                       variant="rectangular"
                       height={45}
-                      width={200}
+                      width={100}
                       sx={{
                         bgcolor: "secondary.light",
                         borderRadius: BORDER_RADIUS_1,
@@ -93,7 +93,7 @@ export const GiftAndReferral: FC = () => {
                       defaultValue={referralData?.referralCode}
                       InputProps={{ readOnly: true }}
                       sx={{
-                        maxWidth: { xs: "143px", md: "200px" },
+                        maxWidth: { xs: "100px", md: "100px" },
                         width: "200px",
                       }}
                       inputProps={{ dir: "ltr" }}

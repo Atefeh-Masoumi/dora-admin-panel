@@ -124,6 +124,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
               mt: 4,
               py: 8,
               px: "0 !important",
+              maxWidth: "100% !important",
             }}
             maxWidth="xl"
           >

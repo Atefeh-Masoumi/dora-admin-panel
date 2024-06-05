@@ -57,8 +57,9 @@ const ZoneManagement: FC = () => {
   );
 
   const createBtnOnClick = () => navigate("/cdn/add-domain");
+
   const cardOnClick = (zone: DomainListResponse) => {
-    navigate(`/vm/${zone.id}/overview`);
+    navigate(`/cdn/${zone.id}/overview`);
   };
 
   const filteredList = zoneList?.filter((zone) =>

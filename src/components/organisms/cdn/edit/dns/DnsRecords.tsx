@@ -1,18 +1,18 @@
-import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
-import { useAppSelector } from "src/app/hooks";
+import { FC, useState } from "react";
+import { useParams } from "react-router";
+import { useGetApiMyDnsRecordListByDnsHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
-import { ZoneTableRow } from "./tables/DnsTableRow";
-import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
-import { useGetApiMyDnsRecordListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
+import { ZoneTableRow } from "./tables/DnsTableRow";
 
 export const DnsRecord: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const { id } = useParams();
+  const cdnId = Number(id) || 0;
 
   const { data: zoneList, isLoading } =
     useGetApiMyDnsRecordListByDnsHostIdQuery({

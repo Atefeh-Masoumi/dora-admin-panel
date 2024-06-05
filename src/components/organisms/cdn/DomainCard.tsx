@@ -9,7 +9,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { e2p } from "src/utils/e2p.utils";
 
 type detailsListType = {
@@ -32,13 +33,18 @@ type DomainCardPropsType = {
 
 export const DomainCard: FC<DomainCardPropsType> = ({
   domainData,
-  nameId = "name",
-  statusId = "statusId",
+  nameId = "zoneName",
+  statusId = "zoneStatusId",
   onDeleteClick,
   itemOnClick,
   detailsList,
   isDomainCard = false,
 }) => {
+  const isActive = useMemo(
+    () => domainData?.statusId === 2,
+    [domainData?.statusId]
+  );
+
   return (
     <Stack
       direction="column"
@@ -46,7 +52,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({
       sx={{
         cursor: itemOnClick ? "pointer" : "default",
         position: "relative",
-        borderRadius: "10px",
+        borderRadius: BORDER_RADIUS_1,
         backgroundColor: "#fff",
       }}
       px={1}
@@ -110,9 +116,6 @@ export const DomainCard: FC<DomainCardPropsType> = ({
               rowGap={0.8}
               columnGap={1}
             >
-              <Typography noWrap color="text.light">
-                {item.label}
-              </Typography>
               <Typography
                 noWrap
                 onClick={() => {
@@ -121,7 +124,16 @@ export const DomainCard: FC<DomainCardPropsType> = ({
                 }}
               >
                 {isDomainCard ? (
-                  <Chip label={e2p(domainData[item.id as any] || "--")} />
+                  <Chip
+                    label={item.label || "--"}
+                    sx={{
+                      bgcolor: ({ palette }) =>
+                        isActive ? palette.success.light : palette.error.light,
+                      color: ({ palette }) =>
+                        isActive ? palette.success.main : palette.error.main,
+                      borderRadius: BORDER_RADIUS_1,
+                    }}
+                  />
                 ) : (
                   e2p(domainData[item.id as any] || "--")
                 )}

@@ -1,7 +1,8 @@
 import { SvgIconProps, TabProps, TabsProps } from "@mui/material";
 import { Box, Stack, Tab, Tabs, styled } from "@mui/material";
 import type { FC, ReactNode, SyntheticEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 interface TabPanelProps {
@@ -76,6 +77,7 @@ export type tabsType = {
   title: string;
   content: any;
   icon: FC<SvgIconProps>;
+  path?: string;
 };
 
 type ProductPageTabsPropsType = {
@@ -83,10 +85,22 @@ type ProductPageTabsPropsType = {
 };
 
 const CustomTabComponent: FC<ProductPageTabsPropsType> = ({ tabs }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabPath = searchParams.get("tab");
+    const tabIndex = tabs.findIndex((tab) => tab.path === tabPath);
+    if (tabIndex !== -1) {
+      setValue(tabIndex);
+    }
+  }, [location, tabs]);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    navigate(`?tab=${tabs[newValue].path}`);
   };
 
   return (
@@ -97,7 +111,7 @@ const CustomTabComponent: FC<ProductPageTabsPropsType> = ({ tabs }) => {
         ))}
       </CustomTabs>
       <Box sx={{ width: "100%" }}>
-        {tabs.map(({ content, icon }, index) => (
+        {tabs.map(({ content }, index) => (
           <TabPanel value={value} index={index} key={index}>
             {content}
           </TabPanel>

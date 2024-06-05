@@ -1,15 +1,15 @@
-import type { FC } from "react";
 import { Stack, Typography } from "@mui/material";
-import { useAppSelector } from "src/app/hooks";
-import { CdnTypeSetting } from "src/components/organisms/cdn/edit/ssl/CdnTypeSetting";
-import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/ssl/CdnSecuritySetting";
-import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edge/CdnChangeEdgeCertType";
-import { CdnChangeClientCertType } from "src/components/organisms/cdn/edit/ssl/client/CdnChangeClientCertType";
+import type { FC } from "react";
+import { useParams } from "react-router";
 import { useGetApiMyCdnHostGetByDnsHostIdQuery } from "src/app/services/api.generated";
+import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/ssl/CdnSecuritySetting";
+import { CdnTypeSetting } from "src/components/organisms/cdn/edit/ssl/CdnTypeSetting";
+import { CdnChangeClientCertType } from "src/components/organisms/cdn/edit/ssl/client/CdnChangeClientCertType";
+import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edge/CdnChangeEdgeCertType";
 
 export const SSLSetting: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const { id } = useParams();
+  const cdnId = Number(id) || 0;
 
   const { data: zoneData, isLoading } = useGetApiMyCdnHostGetByDnsHostIdQuery({
     dnsHostId: cdnId,
