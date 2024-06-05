@@ -13,7 +13,7 @@ type PaymentCallBackPropsType = {
 };
 
 const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
-  const [paymentInfo, setPaymentInfo] = useState<PaymentListResponse>({});
+  const [paymentInfo, setPaymentInfo] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
 

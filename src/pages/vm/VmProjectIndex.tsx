@@ -175,13 +175,15 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
             vmProjectList?.map((item) => {
               return (
                 <Grid
-                  sx={{ minWidth: "max-content" }}
-                  item
                   key={item.id}
+                  item
                   xs={12}
-                  md={6}
-                  lg={4}
-                  py={2}
+                  sm={5.8}
+                  lg={3.8}
+                  mt={1}
+                  mr={1}
+                  mb={1}
+                  sx={{ margin: "max-content" }}
                 >
                   <VmProjectCard
                     key={item.id}

@@ -9,18 +9,18 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { FC, Fragment, useMemo, useState } from "react";
+import { useParams } from "react-router";
 import {
-  LineChart,
+  CartesianGrid,
   Line,
+  LineChart,
+  ResponsiveContainer,
   XAxis,
   YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
 } from "recharts";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { FC, Fragment, useMemo, useState } from "react";
-import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -37,8 +37,8 @@ export const analyticsCategories = [
 type AnalyticChartPropsType = {};
 
 export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const { id } = useParams();
+  const cdnId = Number(id) || 0;
 
   const [categoryId, setCategoryId] = useState(0);
 

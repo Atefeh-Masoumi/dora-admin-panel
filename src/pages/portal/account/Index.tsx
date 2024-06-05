@@ -15,21 +15,48 @@ import { ChangePassword } from "src/components/organisms/portal/account/setting/
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 
 const tabs: tabsType[] = [
-  { title: "حساب کاربری", icon: AccountSvg, content: <Profile /> },
   {
-    title: "اطلاعات صورتحساب",
+    title: "حساب کاربری",
+    icon: AccountSvg,
+    content: <Profile />,
+    path: "profile",
+  },
+  {
+    title: "صورتحساب",
     icon: AccountSvg,
     content: <LegalPersonality />,
+    path: "legal-personality",
   },
-  { title: "کد معرف", icon: AccountSvg, content: <Referrals /> },
-  { title: "اعلان ها", icon: AccountSvg, content: <Notifications /> },
+  {
+    title: "کد معرف",
+    icon: AccountSvg,
+    content: <Referrals />,
+    path: "referral",
+  },
+  {
+    title: "اعلان ها",
+    icon: AccountSvg,
+    content: <Notifications />,
+    path: "notification",
+  },
   {
     title: "تنظمات اطلاع رسانی",
     icon: AccountSvg,
     content: <NotificationSetting />,
+    path: "notification-setting",
   },
-  { title: "تنظمات امنیتی", icon: AccountSvg, content: <SecuritySetting /> },
-  { title: "تغییر رمز عبور", icon: AccountSvg, content: <ChangePassword /> },
+  {
+    title: "تنظمات امنیتی",
+    icon: AccountSvg,
+    content: <SecuritySetting />,
+    path: "security-setting",
+  },
+  {
+    title: "تغییر رمز عبور",
+    icon: AccountSvg,
+    content: <ChangePassword />,
+    path: "change-password",
+  },
 ];
 
 const Account: FC = () => {

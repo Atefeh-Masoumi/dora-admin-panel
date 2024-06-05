@@ -32,7 +32,7 @@ type AddKubernetesContextType = {
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
   osVersion: ImageListResponse | null;
   setOsVersion: Dispatch<SetStateAction<ImageListResponse | null>>;
-  serverConfig: ProductBundleListResponse | null;
+  serverConfig: ProductBundleVmListResponse | null;
   setServerConfig: Dispatch<SetStateAction<ProductBundleVmListResponse | null>>;
   serverName: string;
   setServerName: Dispatch<SetStateAction<string>>;

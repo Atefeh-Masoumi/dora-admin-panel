@@ -55,7 +55,7 @@ export const ManageMenu: FC = () => {
       value: "password",
       label: "تغییر رمز عبور",
       icon: PasswordOutlined,
-      link: "/portal/setting",
+      link: "/portal/account?tab=change-password",
     },
     {
       value: "logout",

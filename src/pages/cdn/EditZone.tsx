@@ -1,17 +1,16 @@
+import { Box, Stack, Tabs } from "@mui/material";
 import { FC, SyntheticEvent, useMemo } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router";
-import { Tabs, Stack, Box } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { useAppSelector } from "src/app/hooks";
-import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
+import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
 import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
 import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalance";
 import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
-import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
+import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const EditZone: FC = () => {
-  const selectedDomain = useAppSelector((state) => state.cdn.selectedDomain);
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
@@ -19,19 +18,19 @@ const EditZone: FC = () => {
   const selectedTab = useMemo(() => {
     let result;
     if (pathname.includes("overview")) {
-      result = "overview";
+      result = `overview`;
     }
     if (pathname.includes("analytics")) {
-      result = "analytics";
+      result = `analytics`;
     }
     if (pathname.includes("dns-record-settings")) {
-      result = "dns-record-settings";
+      result = `dns-record-settings`;
     }
     if (pathname.includes("ssl-tls-settings")) {
-      result = "ssl-tls-settings";
+      result = `ssl-tls-settings`;
     }
     if (pathname.includes("load-balance-settings")) {
-      result = "load-balance-settings";
+      result = `load-balance-settings`;
     }
     // if (pathname.includes("api-gateway-settings")) {
     //   result = "api-gateway-settings";
@@ -39,26 +38,27 @@ const EditZone: FC = () => {
     return result;
   }, [pathname]);
 
-  const handleChange = (_: SyntheticEvent, newValue: string) =>
-    navigate("/cdn/" + newValue);
+  const handleChange = (_: SyntheticEvent, newValue: string) => {
+    navigate(`/cdn/${id}/${newValue}`);
+  };
 
   const renderHandler = () => {
     let result = <></>;
 
     switch (selectedTab) {
-      case "overview":
+      case `overview`:
         result = <ZoneInfo />;
         break;
-      case "analytics":
+      case `analytics`:
         result = <AnalyticChart />;
         break;
-      case "dns-record-settings":
+      case `dns-record-settings`:
         result = <DnsRecord />;
         break;
-      case "ssl-tls-settings":
+      case `ssl-tls-settings`:
         result = <SSLSetting />;
         break;
-      case "load-balance-settings":
+      case `load-balance-settings`:
         result = <LoadBalance />;
         break;
       // case "api-gateway-settings":
@@ -70,8 +70,6 @@ const EditZone: FC = () => {
     }
     return result;
   };
-
-  if (!selectedDomain) return <Navigate to="/cdn" />;
 
   return (
     <Stack spacing={5} alignItems="center">
@@ -93,12 +91,12 @@ const EditZone: FC = () => {
           value={selectedTab}
           onChange={handleChange}
         >
-          <DorsaTab value="overview" label="مشخصات دامنه" />
-          <DorsaTab value="ssl-tls-settings" label="تنظیمات" />
-          <DorsaTab value="analytics" label="آنالیز ترافیک" />
-          <DorsaTab value="dns-record-settings" label="تنظیمات DNS Record" />
+          <DorsaTab value={`overview`} label="مشخصات دامنه" />
+          <DorsaTab value={`ssl-tls-settings`} label="تنظیمات" />
+          <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
+          <DorsaTab value={`dns-record-settings`} label="تنظیمات DNS Record" />
           <DorsaTab
-            value="load-balance-settings"
+            value={`load-balance-settings`}
             label="تنظیمات Load Balance"
           />
           {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}

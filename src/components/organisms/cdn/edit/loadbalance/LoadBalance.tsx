@@ -1,20 +1,20 @@
-import { FC, useState } from "react";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useAppSelector } from "src/app/hooks";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
-import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
-import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import { useParams } from "react-router";
 import { useGetApiMyCdnRouteListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
+import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
+import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type LoadBalancePropsType = {};
 
 const LoadBalance: FC<LoadBalancePropsType> = () => {
   const [showDialog, setShowDialog] = useState(false);
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const { id } = useParams();
+  const cdnId = Number(id) || 0;
 
   const { data, isLoading } = useGetApiMyCdnRouteListByDnsHostIdQuery({
     dnsHostId: cdnId,

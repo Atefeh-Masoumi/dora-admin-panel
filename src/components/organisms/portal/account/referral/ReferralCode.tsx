@@ -1,21 +1,23 @@
 import { FC, useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
+// import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const ReferralCode: FC = () => {
-  const [joinReferral, { isLoading }] =
-    usePostApiMyPortalReferralJoinMutation();
+  // const [joinReferral, { isLoading }] =
+  //   usePostApiMyPortalReferralJoinMutation();
 
   const [referralCode, setReferralCode] = useState("");
 
-  const submit = () =>
-    joinReferral({ joinReferralModel: { referralCode } })
-      .unwrap()
-      .then(() => toast.success("کد با موفقیت ثبت شد"));
+  const submit = () => {
+    console.log("clicked");
+    // joinReferral({ joinReferralModel: { referralCode } })
+    //   .unwrap()
+    //   .then(() => toast.success("کد با موفقیت ثبت شد"));
+  };
 
   return (
     <Stack
@@ -66,7 +68,7 @@ export const ReferralCode: FC = () => {
               "&:hover": { backgroundColor: "#fff" },
               width: { xs: "100%", md: "fit-content" },
             }}
-            loading={isLoading}
+            loading={false}
             onClick={submit}
           >
             ثبت

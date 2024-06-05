@@ -1,27 +1,26 @@
 import { FC, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import {
-  MainTemplate,
-  MainTemplatePropsType,
-} from "src/components/templates/MainTemplate";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PageLoading from "src/components/atoms/PageLoading";
-import { PrivateRoute } from "./PrivateRoute";
-import { DomainSelect } from "src/components/organisms/cdn/edit/DomainSelect";
 import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
-import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
-import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
-import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
+import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
+import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
+import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
+import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
+import {
+  MainTemplate,
+  MainTemplatePropsType,
+} from "src/components/templates/MainTemplate";
+import { PrivateRoute } from "./PrivateRoute";
 
+import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
 import {
   CallBackTemplate,
   CallBackTemplatePropsType,
 } from "src/components/templates/CallBackTemplate";
-import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 
 const Home = lazy(() => import("src/pages/Home"));
@@ -35,7 +34,7 @@ const Forget = lazy(() => import("src/pages/account/forget"));
 const Account = lazy(() => import("src/pages/portal/account/Index"));
 const Financial = lazy(() => import("src/pages/portal/financial/Index"));
 
-const Sales = lazy(() => import("src/pages/portal/Sales"));
+const Sales = lazy(() => import("src/pages/portal/orderOffer/Sales"));
 const Notification = lazy(
   () => import("src/pages/portal/account/Notifications")
 );
@@ -46,8 +45,8 @@ const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
 
-const Referrals = lazy(() => import("src/pages/portal/account/Referrals"));
-const Referral = lazy(() => import("src/pages/portal/account/Referral"));
+// const Referrals = lazy(() => import("src/pages/portal/account/Referrals"));
+// const Referral = lazy(() => import("src/pages/portal/account/Referral"));
 const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
 const Wallet = lazy(
@@ -156,7 +155,7 @@ const Router: FC = () => {
               pageTitle: "مدیریت مالی",
             })}
           />
-          <Route
+          {/* <Route
             path="/portal/referral"
             element={mainTemplate(Referrals, {
               pageTitle: "کد معرف",
@@ -165,8 +164,8 @@ const Router: FC = () => {
           <Route
             path="/portal/referral/:id"
             element={callbackTemplate(Referral)}
-          />
-          <Route path="/referral/:id" element={callbackTemplate(Referral)} />
+          /> */}
+          {/* <Route path="/referral/:id" element={callbackTemplate(Referral)} /> */}
           <Route
             path="/portal/customer-products"
             element={mainTemplate(CustomerProducts, {
@@ -288,45 +287,45 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/cdn/overview"
+            path="/cdn/:id/overview"
             element={mainTemplate(EditZone, {
               pageTitle: "مشخصات دامنه",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/analytics"
+            path="/cdn/:id/analytics"
             element={mainTemplate(EditZone, {
               pageTitle: "آنالیز ترافیک",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/dns-record-settings"
+            path="/cdn/:id/dns-record-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/ssl-tls-settings"
+            path="/cdn/:id/ssl-tls-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route
-            path="/cdn/load-balance-settings"
+            path="/cdn/:id/load-balance-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات Load Balance",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route
             path="/cdn/api-gateway-settings"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات API Gateway",
-              RightComponent: DomainSelect,
+              // RightComponent: DomainSelect,
             })}
           />
           <Route

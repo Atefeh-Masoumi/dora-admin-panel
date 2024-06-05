@@ -1,36 +1,49 @@
+import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import {
   FC,
-  useState,
-  useEffect,
   Fragment,
-  useMemo,
   createContext,
+  useEffect,
+  useMemo,
+  useState,
 } from "react";
-import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
-import { SearchBox } from "src/components/molecules/SearchBox";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { DomainCard } from "src/components/organisms/cdn/DomainCard";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { toast } from "react-toastify";
 import {
+  DnsListResponse,
   DomainListResponse,
   useDeleteApiMyDnsHostDeleteByIdMutation,
   useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
+import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
+import { DeleteCdnDialog } from "src/components/organisms/cdn/dialog/DeleteCdnDialog";
+import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { toast } from "react-toastify";
 
 // Define the type for your context value
 type DataContextValueType = {
   refetchOnClick: () => any;
 };
 
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
+
 // Create the context
 export const DataContext = createContext<DataContextValueType>({
   refetchOnClick: () => null,
 });
 const ZoneManagement: FC = () => {
+  const [selectedCdn, setSelectedCdn] = useState<DnsListResponse | null>(null);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const refetchOnClick = () => refetch();
+
   const {
     data: zoneList,
     isLoading: getDataLoading,
@@ -43,19 +56,11 @@ const ZoneManagement: FC = () => {
     [getDataLoading, isFetching]
   );
 
-  const navigate = useNavigate();
-
-  const [selectedZone, setSelectedZone] = useState<DomainListResponse | null>(
-    null
-  );
-
-  const refetchOnClick = () => refetch();
   const createBtnOnClick = () => navigate("/cdn/add-domain");
-  const cardOnClick = (zone: DomainListResponse) => {
-    navigate(`/vm/${zone.id}/overview`);
-  };
 
-  const [search, setSearch] = useState("");
+  const cardOnClick = (zone: DomainListResponse) => {
+    navigate(`/cdn/${zone.id}/overview`);
+  };
 
   const filteredList = zoneList?.filter((zone) =>
     zone.zoneName?.includes(search)
@@ -80,20 +85,22 @@ const ZoneManagement: FC = () => {
     };
   }, [windowDimenion]);
 
-  const deleteBtnOnClick = (project: DomainListResponse) => {
-    setSelectedZone(project);
+  const deleteBtnOnClick = (cdn: DnsListResponse) => {
+    setSelectedCdn(cdn);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
   const closeDialogHandler = () => {
-    setSelectedZone(null);
+    setDialogType(null);
+    setSelectedCdn(null);
   };
 
-  const [deleteZone, { isLoading: deleteProjectLoading }] =
+  const [deleteCdn, { isLoading: deleteCdnLoading }] =
     useDeleteApiMyDnsHostDeleteByIdMutation();
 
-  const deleteZoneHandler = () => {
-    if (!selectedZone?.id) return;
-    deleteZone({ id: selectedZone.id })
+  const deleteCdnHandler = () => {
+    if (!selectedCdn?.id) return;
+    deleteCdn({ id: selectedCdn.id })
       .unwrap()
       .then(() => {
         toast.success("پروژه مورد نظر با موفقیت حذف شد");
@@ -174,15 +181,6 @@ const ZoneManagement: FC = () => {
             <></>
           )}
         </Stack>
-
-        {filteredList && filteredList?.length <= 0 && (
-          <Stack py={3}>
-            <Stack bgcolor="white" borderRadius={3}>
-              <EmptyTable text="دامنه ای وجود ندارد" />
-            </Stack>
-          </Stack>
-        )}
-
         <Grid container>
           {isLoading ? (
             <Fragment>
@@ -209,11 +207,11 @@ const ZoneManagement: FC = () => {
           ) : zoneList?.length === 0 ? (
             <Stack py={3} sx={{ width: "100%" }}>
               <Stack bgcolor="white" borderRadius={3}>
-                <EmptyTable text="پروژه‌ای وجود ندارد" />
+                <EmptyTable text="دامنه ای وجود ندارد" />
               </Stack>
             </Stack>
           ) : (
-            zoneList?.map((item) => {
+            filteredList?.map((item) => {
               return (
                 <Grid
                   key={item.id}
@@ -245,6 +243,15 @@ const ZoneManagement: FC = () => {
             })
           )}
         </Grid>
+        <DeleteCdnDialog
+          open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+          onClose={closeDialogHandler}
+          keyTitle="دامنه"
+          subTitle="برای حذف دامنه موردنظر، عبارت امنیتی زیر را وارد کنید."
+          securityPhrase={selectedCdn?.zoneName || ""}
+          onSubmit={deleteCdnHandler}
+          submitLoading={deleteCdnLoading}
+        />
       </Fragment>
     </DataContext.Provider>
   );

@@ -1,25 +1,25 @@
-import { FC, useMemo, useState } from "react";
 import {
+  Button,
   Chip,
   Divider,
-  Button,
+  IconButton,
   Stack,
   Typography,
-  IconButton,
 } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { useAppSelector } from "src/app/hooks";
-import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
+import { FC, useMemo, useState } from "react";
+import { useParams } from "react-router";
 import { useGetApiMyDnsHostGetByIdQuery } from "src/app/services/api.generated";
+import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 
 type ZoneInfoPropsType = {};
 
 export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const { id } = useParams();
+  const cdnId = Number(id) || 0;
 
   const handleOpenDelete = () => setOpenDelete(true);
   const [openDelete, setOpenDelete] = useState(false);
@@ -106,7 +106,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                   بررسی مجدد دامنه
                 </Button>
 
-                <Button
+                {/* <Button
                   variant="outlined"
                   onClick={handleOpenDelete}
                   color="error"
@@ -115,15 +115,15 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                   startIcon={<TrashSvg color="error" />}
                 >
                   حذف دامنه
-                </Button>
+                </Button> */}
               </Stack>
             </Stack>
           </Stack>
-          <DeleteZoneDialog
+          {/* <DeleteZoneDialog
             id={zoneData?.id ?? 0}
             openDialog={openDelete}
             handleClose={handleCloseDelete}
-          />
+          /> */}
         </Stack>
 
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

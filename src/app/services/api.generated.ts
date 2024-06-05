@@ -896,6 +896,28 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
+    getApiMyPortalOfferList: build.query<
+      GetApiMyPortalOfferListApiResponse,
+      GetApiMyPortalOfferListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/offer/list` }),
+    }),
+    getApiMyPortalOfferGetById: build.query<
+      GetApiMyPortalOfferGetByIdApiResponse,
+      GetApiMyPortalOfferGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/portal/offer/get/${queryArg.id}` }),
+    }),
+    postApiMyPortalOfferPayment: build.mutation<
+      PostApiMyPortalOfferPaymentApiResponse,
+      PostApiMyPortalOfferPaymentApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/offer/payment`,
+        method: "POST",
+        body: queryArg.paymentModel,
+      }),
+    }),
     getApiMyPortalPaymentList: build.query<
       GetApiMyPortalPaymentListApiResponse,
       GetApiMyPortalPaymentListApiArg
@@ -1104,20 +1126,26 @@ export const api = createApi({
         body: queryArg.changePasswordModel,
       }),
     }),
+    getApiMyPortalPromotionRedirectLinkByCode: build.query<
+      GetApiMyPortalPromotionRedirectLinkByCodeApiResponse,
+      GetApiMyPortalPromotionRedirectLinkByCodeApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/promotion/redirect-link/${queryArg.code}`,
+      }),
+    }),
     getApiMyPortalReferralGet: build.query<
       GetApiMyPortalReferralGetApiResponse,
       GetApiMyPortalReferralGetApiArg
     >({
       query: () => ({ url: `/api/my/portal/referral/get` }),
     }),
-    postApiMyPortalReferralJoin: build.mutation<
-      PostApiMyPortalReferralJoinApiResponse,
-      PostApiMyPortalReferralJoinApiArg
+    getApiMyPortalReferralCustomerByReferralIdList: build.query<
+      GetApiMyPortalReferralCustomerByReferralIdListApiResponse,
+      GetApiMyPortalReferralCustomerByReferralIdListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/referral/join`,
-        method: "POST",
-        body: queryArg.joinReferralModel,
+        url: `/api/my/portal/referral/customer/${queryArg.referralId}/list`,
       }),
     }),
     getApiMyPortalRoleList: build.query<
@@ -1887,25 +1915,25 @@ export const api = createApi({
   }),
 });
 export type PostApiMyAccountLoginApiResponse =
-  /** status 200 Success */ LoginResponse;
+  /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountLoginApiArg = {
   loginModel: LoginModel;
 };
 export type GetApiMyAccountSsoUrlApiResponse =
-  /** status 200 Success */ SsoLoginResponse;
+  /** status 200 OK */ SsoLoginResponse;
 export type GetApiMyAccountSsoUrlApiArg = void;
 export type PostApiMyAccountSsoLoginApiResponse =
-  /** status 200 Success */ LoginResponse;
+  /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountSsoLoginApiArg = {
   ssoLoginModel: SsoLoginModel;
 };
 export type PostApiMyAccountTwoFactorLoginApiResponse =
-  /** status 200 Success */ LoginResponse;
+  /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountTwoFactorLoginApiArg = {
   twoFactorLoginModel: TwoFactorLoginModel;
 };
 export type PostApiMyAccountRegisterApiResponse =
-  /** status 200 Success */ LoginResponse;
+  /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountRegisterApiArg = {
   registerModel: RegisterModel;
 };
@@ -1920,13 +1948,13 @@ export type PostApiMyAccountForgotConfirmApiArg = {
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
 export type GetApiMyAccountCaptchaApiResponse =
-  /** status 200 Success */ CaptchaResponse;
+  /** status 200 OK */ CaptchaResponse;
 export type GetApiMyAccountCaptchaApiArg = void;
 export type GetApiMyBareMetalHostListApiResponse =
-  /** status 200 Success */ BareMetalListResponse[];
+  /** status 200 OK */ BareMetalListResponse[];
 export type GetApiMyBareMetalHostListApiArg = void;
 export type GetApiMyBareMetalHostGetByIdApiResponse =
-  /** status 200 Success */ BareMetalResponse;
+  /** status 200 OK */ BareMetalResponse;
 export type GetApiMyBareMetalHostGetByIdApiArg = {
   id: number;
 };
@@ -1939,29 +1967,29 @@ export type DeleteApiMyBareMetalHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyBareMetalImageListByDatacenterIdApiResponse =
-  /** status 200 Success */ BareMetalImageListResponse[];
+  /** status 200 OK */ BareMetalImageListResponse[];
 export type GetApiMyBareMetalImageListByDatacenterIdApiArg = {
   datacenterId: number;
 };
 export type GetApiMyPortalBusinessUnitListApiResponse =
-  /** status 200 Success */ BusinessUnitListResponse[];
+  /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
 export type GetApiMyPortalCalculateMonthListApiResponse =
-  /** status 200 Success */ CalculateMonthListResponse[];
+  /** status 200 OK */ CalculateMonthListResponse[];
 export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiResponse =
-  /** status 200 Success */ GetAnalyticResponse;
+  /** status 200 OK */ GetAnalyticResponse;
 export type GetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdApiArg = {
   dnsHostId: number;
   periodId: number;
 };
 export type GetApiMyCdnEdgeCertGetByDnsHostIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
+  /** status 200 OK */ GetCdnCertResponse;
 export type GetApiMyCdnEdgeCertGetByDnsHostIdApiArg = {
   dnsHostId: number;
 };
 export type GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
+  /** status 200 OK */ GetCdnCertResponse;
 export type GetApiMyCdnEdgeCertGetUserCertByDnsHostIdApiArg = {
   dnsHostId: number;
 };
@@ -1974,7 +2002,7 @@ export type PostApiMyCdnEdgeCertCreateUserCertApiArg = {
   createCdnEdgeUserCertModel: CreateCdnEdgeUserCertModel;
 };
 export type GetApiMyCdnHostGetByDnsHostIdApiResponse =
-  /** status 200 Success */ GetCdnResponse;
+  /** status 200 OK */ GetCdnResponse;
 export type GetApiMyCdnHostGetByDnsHostIdApiArg = {
   dnsHostId: number;
 };
@@ -2003,12 +2031,12 @@ export type PutApiMyCdnHostChangeNonWwwRedirectApiArg = {
   changeNonWwwRedirectModel: ChangeNonWwwRedirectModel;
 };
 export type GetApiMyCdnOriginCertGetByDnsHostIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
+  /** status 200 OK */ GetCdnCertResponse;
 export type GetApiMyCdnOriginCertGetByDnsHostIdApiArg = {
   dnsHostId: number;
 };
 export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiResponse =
-  /** status 200 Success */ GetCdnCertResponse;
+  /** status 200 OK */ GetCdnCertResponse;
 export type GetApiMyCdnOriginCertGetUserCertByDnsHostIdApiArg = {
   dnsHostId: number;
 };
@@ -2017,12 +2045,12 @@ export type PostApiMyCdnOriginCertCreateUserCertApiArg = {
   createCdnOriginUserCertModel: CreateCdnOriginUserCertModel;
 };
 export type GetApiMyCdnRouteListByDnsHostIdApiResponse =
-  /** status 200 Success */ CdnRouteListResponse[];
+  /** status 200 OK */ CdnRouteListResponse[];
 export type GetApiMyCdnRouteListByDnsHostIdApiArg = {
   dnsHostId: number;
 };
 export type GetApiMyCdnRouteGetByIdApiResponse =
-  /** status 200 Success */ GetCdnRouteResponse;
+  /** status 200 OK */ GetCdnRouteResponse;
 export type GetApiMyCdnRouteGetByIdApiArg = {
   id: number;
 };
@@ -2039,10 +2067,10 @@ export type DeleteApiMyCdnRouteDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyColocationHostListApiResponse =
-  /** status 200 Success */ ColocationListResponse[];
+  /** status 200 OK */ ColocationListResponse[];
 export type GetApiMyColocationHostListApiArg = void;
 export type GetApiMyColocationHostGetByIdApiResponse =
-  /** status 200 Success */ GetColocationResponse;
+  /** status 200 OK */ GetColocationResponse;
 export type GetApiMyColocationHostGetByIdApiArg = {
   id: number;
 };
@@ -2055,10 +2083,10 @@ export type DeleteApiMyColocationHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalCommissionListApiResponse =
-  /** status 200 Success */ CommissionListResponse[];
+  /** status 200 OK */ CommissionListResponse[];
 export type GetApiMyPortalCommissionListApiArg = void;
 export type GetApiMyPortalCustomerGetApiResponse =
-  /** status 200 Success */ GetCustomerResponse;
+  /** status 200 OK */ GetCustomerResponse;
 export type GetApiMyPortalCustomerGetApiArg = void;
 export type PutApiMyPortalCustomerEditApiResponse = unknown;
 export type PutApiMyPortalCustomerEditApiArg = {
@@ -2069,13 +2097,13 @@ export type PutApiMyPortalCustomerConvertToLegalApiArg = {
   convertCustomerToLegalModel: ConvertCustomerToLegalModel;
 };
 export type GetApiMyPortalCustomerBillListApiResponse =
-  /** status 200 Success */ CustomerBillListResponse[];
+  /** status 200 OK */ CustomerBillListResponse[];
 export type GetApiMyPortalCustomerBillListApiArg = void;
 export type GetApiMyPortalCustomerBillShortListApiResponse =
-  /** status 200 Success */ CustomerBillShortListResponse[];
+  /** status 200 OK */ CustomerBillShortListResponse[];
 export type GetApiMyPortalCustomerBillShortListApiArg = void;
 export type GetApiMyPortalCustomerBillGetByIdApiResponse =
-  /** status 200 Success */ GetCustomerBillResponse;
+  /** status 200 OK */ GetCustomerBillResponse;
 export type GetApiMyPortalCustomerBillGetByIdApiArg = {
   id: number;
 };
@@ -2084,15 +2112,15 @@ export type GetApiMyPortalCustomerBillDownloadByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalCustomerProductListByProductIdApiResponse =
-  /** status 200 Success */ CustomerProductListResponse[];
+  /** status 200 OK */ CustomerProductListResponse[];
 export type GetApiMyPortalCustomerProductListByProductIdApiArg = {
   productId: number;
 };
 export type GetApiMyPortalCustomerProductShortListApiResponse =
-  /** status 200 Success */ CustomerProductShortListResponse[];
+  /** status 200 OK */ CustomerProductShortListResponse[];
 export type GetApiMyPortalCustomerProductShortListApiArg = void;
 export type GetApiMyPortalCustomerUserListApiResponse =
-  /** status 200 Success */ CustomerUserListResponse[];
+  /** status 200 OK */ CustomerUserListResponse[];
 export type GetApiMyPortalCustomerUserListApiArg = void;
 export type PostApiMyPortalCustomerUserCreateApiResponse = unknown;
 export type PostApiMyPortalCustomerUserCreateApiArg = {
@@ -2103,23 +2131,23 @@ export type DeleteApiMyPortalCustomerUserDeleteByUserIdApiArg = {
   userId: string;
 };
 export type PostApiMyPortalCustomerUserChangeApiResponse =
-  /** status 200 Success */ ChangeCustomerUserResponse;
+  /** status 200 OK */ ChangeCustomerUserResponse;
 export type PostApiMyPortalCustomerUserChangeApiArg = {
   changeCustomerUserModel: ChangeCustomerUserModel;
 };
 export type GetApiMyDashboardUsageByCategoryIdApiResponse =
-  /** status 200 Success */ DashboardUsageResponse[];
+  /** status 200 OK */ DashboardUsageResponse[];
 export type GetApiMyDashboardUsageByCategoryIdApiArg = {
   categoryId: number;
 };
 export type GetApiMyDashboardFinancialApiResponse =
-  /** status 200 Success */ DashboardFinancialResponse;
+  /** status 200 OK */ DashboardFinancialResponse;
 export type GetApiMyDashboardFinancialApiArg = void;
 export type GetApiMyDatacenterListApiResponse =
-  /** status 200 Success */ DatacenterListResponse[];
+  /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyDatacenterListApiArg = void;
 export type GetApiMyDatacenterIpListByIdApiResponse =
-  /** status 200 Success */ DatacenterIpListResponse[];
+  /** status 200 OK */ DatacenterIpListResponse[];
 export type GetApiMyDatacenterIpListByIdApiArg = {
   id: number;
 };
@@ -2128,15 +2156,15 @@ export type DeleteApiMyDatacenterIpDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyDnsHostListApiResponse =
-  /** status 200 Success */ DnsListResponse[];
+  /** status 200 OK */ DnsListResponse[];
 export type GetApiMyDnsHostListApiArg = void;
 export type GetApiMyDnsHostGetByIdApiResponse =
-  /** status 200 Success */ GetDnsResponse;
+  /** status 200 OK */ GetDnsResponse;
 export type GetApiMyDnsHostGetByIdApiArg = {
   id: number;
 };
 export type GetApiMyDnsHostGetNsStatusByIdApiResponse =
-  /** status 200 Success */ GetDnsNsStatusResponse;
+  /** status 200 OK */ GetDnsNsStatusResponse;
 export type GetApiMyDnsHostGetNsStatusByIdApiArg = {
   id: number;
 };
@@ -2153,12 +2181,12 @@ export type DeleteApiMyDnsHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyDnsRecordListByDnsHostIdApiResponse =
-  /** status 200 Success */ DnsRecordListResponse[];
+  /** status 200 OK */ DnsRecordListResponse[];
 export type GetApiMyDnsRecordListByDnsHostIdApiArg = {
   dnsHostId: number;
 };
 export type GetApiMyDnsRecordGetByIdApiResponse =
-  /** status 200 Success */ GetDnsRecordResponse;
+  /** status 200 OK */ GetDnsRecordResponse;
 export type GetApiMyDnsRecordGetByIdApiArg = {
   id: number;
 };
@@ -2179,15 +2207,15 @@ export type PutApiMyDnsRecordChangeProxyStatusByIdApiArg = {
   id: number;
 };
 export type GetApiMyDomainHostListApiResponse =
-  /** status 200 Success */ DomainListResponse[];
+  /** status 200 OK */ DomainListResponse[];
 export type GetApiMyDomainHostListApiArg = void;
 export type GetApiMyDomainHostGetByIdApiResponse =
-  /** status 200 Success */ GetDomainResponse;
+  /** status 200 OK */ GetDomainResponse;
 export type GetApiMyDomainHostGetByIdApiArg = {
   id: number;
 };
 export type PostApiMyDomainHostGetStatusByIdApiResponse =
-  /** status 200 Success */ DomainGetStatusResponse;
+  /** status 200 OK */ DomainGetStatusResponse;
 export type PostApiMyDomainHostGetStatusByIdApiArg = {
   id: number;
 };
@@ -2216,43 +2244,43 @@ export type PostApiMyDomainHostResendVerificationByIdApiArg = {
   id: number;
 };
 export type GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiResponse =
-  /** status 200 Success */ EquipmentListResponse[];
+  /** status 200 OK */ EquipmentListResponse[];
 export type GetApiMyColocationEquipmentListByTypeIdAndBrandIdApiArg = {
   typeId: number;
   brandId: number;
 };
 export type GetApiMyColocationEquipmentBrandListApiResponse =
-  /** status 200 Success */ EquipmentBrandListResponse[];
+  /** status 200 OK */ EquipmentBrandListResponse[];
 export type GetApiMyColocationEquipmentBrandListApiArg = void;
 export type GetApiMyColocationEquipmentTypeListApiResponse =
-  /** status 200 Success */ EquipmentTypeListResponse[];
+  /** status 200 OK */ EquipmentTypeListResponse[];
 export type GetApiMyColocationEquipmentTypeListApiArg = void;
 export type GetApiMyHomeIndexApiResponse = unknown;
 export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyPortalInvoiceListApiResponse =
-  /** status 200 Success */ InvoiceListResponse[];
+  /** status 200 OK */ InvoiceListResponse[];
 export type GetApiMyPortalInvoiceListApiArg = void;
 export type GetApiMyPortalInvoiceUnpaidApiResponse =
-  /** status 200 Success */ UnPaidInvoiceResponse[];
+  /** status 200 OK */ UnPaidInvoiceResponse[];
 export type GetApiMyPortalInvoiceUnpaidApiArg = void;
 export type GetApiMyPortalInvoiceGetByIdApiResponse =
-  /** status 200 Success */ GetInvoiceResponse;
+  /** status 200 OK */ GetInvoiceResponse;
 export type GetApiMyPortalInvoiceGetByIdApiArg = {
   id: number;
 };
 export type PostApiMyPortalInvoicePayApiResponse =
-  /** status 200 Success */ PayInvoiceResponse;
+  /** status 200 OK */ PayInvoiceResponse;
 export type PostApiMyPortalInvoicePayApiArg = {
   payInvoiceModel: PayInvoiceModel;
 };
 export type GetApiMyPortalInvoiceSummaryApiResponse =
-  /** status 200 Success */ InvoiceSummaryResponse;
+  /** status 200 OK */ InvoiceSummaryResponse;
 export type GetApiMyPortalInvoiceSummaryApiArg = void;
 export type GetApiMyPortalIssueListApiResponse =
-  /** status 200 Success */ IssueListResponse[];
+  /** status 200 OK */ IssueListResponse[];
 export type GetApiMyPortalIssueListApiArg = void;
 export type GetApiMyPortalIssueShortListApiResponse =
-  /** status 200 Success */ IssueShortListResponse[];
+  /** status 200 OK */ IssueShortListResponse[];
 export type GetApiMyPortalIssueShortListApiArg = void;
 export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
@@ -2266,7 +2294,7 @@ export type PostApiMyPortalIssueCreateApiArg = {
   };
 };
 export type GetApiMyPortalIssueItemListByIssueIdApiResponse =
-  /** status 200 Success */ IssueItemListResponse;
+  /** status 200 OK */ IssueItemListResponse;
 export type GetApiMyPortalIssueItemListByIssueIdApiArg = {
   issueId: number;
 };
@@ -2283,18 +2311,18 @@ export type GetApiMyPortalIssueItemDownloadByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalIssueSubjectListApiResponse =
-  /** status 200 Success */ IssueSubjectListResponse[];
+  /** status 200 OK */ IssueSubjectListResponse[];
 export type GetApiMyPortalIssueSubjectListApiArg = void;
 export type PostApiMyPortalIssueSubjectSelectListApiResponse =
-  /** status 200 Success */ IssueSubjectListResponse[];
+  /** status 200 OK */ IssueSubjectListResponse[];
 export type PostApiMyPortalIssueSubjectSelectListApiArg = {
   issueSubjectSelectListModel: IssueSubjectSelectListModel;
 };
 export type GetApiMyKubernetesHostListApiResponse =
-  /** status 200 Success */ KubernetesListResponse[];
+  /** status 200 OK */ KubernetesListResponse[];
 export type GetApiMyKubernetesHostListApiArg = void;
 export type GetApiMyKubernetesHostGetByIdApiResponse =
-  /** status 200 Success */ GetKubernetesResponse;
+  /** status 200 OK */ GetKubernetesResponse;
 export type GetApiMyKubernetesHostGetByIdApiArg = {
   id: number;
 };
@@ -2307,12 +2335,12 @@ export type DeleteApiMyKubernetesHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyKubernetesImageListByDatacenterIdApiResponse =
-  /** status 200 Success */ KubernetesImageListResponse[];
+  /** status 200 OK */ KubernetesImageListResponse[];
 export type GetApiMyKubernetesImageListByDatacenterIdApiArg = {
   datacenterId: number;
 };
 export type GetApiMyKubernetesNodeListByKubernetesHostIdApiResponse =
-  /** status 200 Success */ KubernetesNodeListResponse[];
+  /** status 200 OK */ KubernetesNodeListResponse[];
 export type GetApiMyKubernetesNodeListByKubernetesHostIdApiArg = {
   kubernetesHostId: number;
 };
@@ -2325,28 +2353,41 @@ export type PutApiMyKubernetesNodeDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyKubernetesVersionListApiResponse =
-  /** status 200 Success */ KubernetesVersionListResponse[];
+  /** status 200 OK */ KubernetesVersionListResponse[];
 export type GetApiMyKubernetesVersionListApiArg = void;
 export type GetApiMyPortalNotificationListApiResponse =
-  /** status 200 Success */ NotificationListResponse[];
+  /** status 200 OK */ NotificationListResponse[];
 export type GetApiMyPortalNotificationListApiArg = void;
 export type GetApiMyPortalNotificationShortListApiResponse =
-  /** status 200 Success */ NotificationListResponse[];
+  /** status 200 OK */ NotificationListResponse[];
 export type GetApiMyPortalNotificationShortListApiArg = void;
 export type PutApiMyPortalNotificationSeenByIdApiResponse = unknown;
 export type PutApiMyPortalNotificationSeenByIdApiArg = {
   id: number;
 };
+export type GetApiMyPortalOfferListApiResponse =
+  /** status 200 OK */ OfferListResponse[];
+export type GetApiMyPortalOfferListApiArg = void;
+export type GetApiMyPortalOfferGetByIdApiResponse =
+  /** status 200 OK */ OfferGetResponse;
+export type GetApiMyPortalOfferGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyPortalOfferPaymentApiResponse =
+  /** status 200 OK */ PaymentResponse;
+export type PostApiMyPortalOfferPaymentApiArg = {
+  paymentModel: PaymentModel;
+};
 export type GetApiMyPortalPaymentListApiResponse =
-  /** status 200 Success */ PaymentListResponse[];
+  /** status 200 OK */ PaymentListResponse[];
 export type GetApiMyPortalPaymentListApiArg = void;
 export type GetApiMyPortalPaymentGetByIdApiResponse =
-  /** status 200 Success */ GetPaymentResponse;
+  /** status 200 OK */ GetPaymentResponse;
 export type GetApiMyPortalPaymentGetByIdApiArg = {
   id: number;
 };
 export type PostApiMyPortalPaymentCreateApiResponse =
-  /** status 200 Success */ CreatePaymentResponse;
+  /** status 200 OK */ CreatePaymentResponse;
 export type PostApiMyPortalPaymentCreateApiArg = {
   createPaymentModel: CreatePaymentModel;
 };
@@ -2381,48 +2422,48 @@ export type PostApiMyPortalPaymentSepCallBackApiArg = {
   };
 };
 export type GetApiMyPortalPaymentProviderListApiResponse =
-  /** status 200 Success */ PaymentProviderListResponse[];
+  /** status 200 OK */ PaymentProviderListResponse[];
 export type GetApiMyPortalPaymentProviderListApiArg = void;
 export type GetApiMyPortalProductListApiResponse =
-  /** status 200 Success */ ProductListResponse[];
+  /** status 200 OK */ ProductListResponse[];
 export type GetApiMyPortalProductListApiArg = void;
 export type GetApiMyPortalProductGetByIdApiResponse =
-  /** status 200 Success */ GetProductResponse;
+  /** status 200 OK */ GetProductResponse;
 export type GetApiMyPortalProductGetByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalProductBundleListByProductIdApiResponse =
-  /** status 200 Success */ ProductBundleListResponse[];
+  /** status 200 OK */ ProductBundleListResponse[];
 export type GetApiMyPortalProductBundleListByProductIdApiArg = {
   productId: number;
 };
 export type GetApiMyPortalProductBundleVmListApiResponse =
-  /** status 200 Success */ ProductBundleVmListResponse[];
+  /** status 200 OK */ ProductBundleVmListResponse[];
 export type GetApiMyPortalProductBundleVmListApiArg = void;
 export type GetApiMyPortalProductBundleStorageListApiResponse =
-  /** status 200 Success */ ProductBundleStorageListResponse[];
+  /** status 200 OK */ ProductBundleStorageListResponse[];
 export type GetApiMyPortalProductBundleStorageListApiArg = void;
 export type GetApiMyPortalProductBundleWebListApiResponse =
-  /** status 200 Success */ ProductBundleWebListResponse[];
+  /** status 200 OK */ ProductBundleWebListResponse[];
 export type GetApiMyPortalProductBundleWebListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
-  /** status 200 Success */ ProductItemListResponse[];
+  /** status 200 OK */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
   productId: number;
 };
 export type GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiResponse =
-  /** status 200 Success */ KubernetesPriceResponse;
+  /** status 200 OK */ KubernetesPriceResponse;
 export type GetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountApiArg = {
   workerNodeCount: number;
 };
 export type GetApiMyPortalProfileGetApiResponse =
-  /** status 200 Success */ GetProfileResponse;
+  /** status 200 OK */ GetProfileResponse;
 export type GetApiMyPortalProfileGetApiArg = void;
 export type GetApiMyPortalProfileGetNotificationStatusApiResponse =
-  /** status 200 Success */ GetNotificationStatusResponse;
+  /** status 200 OK */ GetNotificationStatusResponse;
 export type GetApiMyPortalProfileGetNotificationStatusApiArg = void;
 export type PutApiMyPortalProfileEditApiResponse =
-  /** status 200 Success */ EditProfileResponse;
+  /** status 200 OK */ EditProfileResponse;
 export type PutApiMyPortalProfileEditApiArg = {
   editProfileModel: EditProfileModel;
 };
@@ -2431,7 +2472,7 @@ export type PutApiMyPortalProfileEditEmailApiArg = {
   editEmailModel: EditEmailModel;
 };
 export type PostApiMyPortalProfileConfirmEmailApiResponse =
-  /** status 200 Success */ EditProfileResponse;
+  /** status 200 OK */ EditProfileResponse;
 export type PostApiMyPortalProfileConfirmEmailApiArg = {
   confirmEmailModel: ConfirmEmailModel;
 };
@@ -2440,7 +2481,7 @@ export type PutApiMyPortalProfileEditPhoneNumberApiArg = {
   editPhoneNumberModel: EditPhoneNumberModel;
 };
 export type PostApiMyPortalProfileConfirmPhoneNumberApiResponse =
-  /** status 200 Success */ EditProfileResponse;
+  /** status 200 OK */ EditProfileResponse;
 export type PostApiMyPortalProfileConfirmPhoneNumberApiArg = {
   confirmPhoneNumberModel: ConfirmPhoneNumberModel;
 };
@@ -2460,18 +2501,23 @@ export type PostApiMyPortalProfileChangePasswordApiResponse = unknown;
 export type PostApiMyPortalProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
 };
+export type GetApiMyPortalPromotionRedirectLinkByCodeApiResponse = unknown;
+export type GetApiMyPortalPromotionRedirectLinkByCodeApiArg = {
+  code: string;
+};
 export type GetApiMyPortalReferralGetApiResponse =
-  /** status 200 Success */ GetReferralResponse;
+  /** status 200 OK */ GetReferralResponse;
 export type GetApiMyPortalReferralGetApiArg = void;
-export type PostApiMyPortalReferralJoinApiResponse = unknown;
-export type PostApiMyPortalReferralJoinApiArg = {
-  joinReferralModel: JoinReferralModel;
+export type GetApiMyPortalReferralCustomerByReferralIdListApiResponse =
+  /** status 200 OK */ CustomerReferralListResponse[];
+export type GetApiMyPortalReferralCustomerByReferralIdListApiArg = {
+  referralId: number;
 };
 export type GetApiMyPortalRoleListApiResponse =
-  /** status 200 Success */ RoleListResponse[];
+  /** status 200 OK */ RoleListResponse[];
 export type GetApiMyPortalRoleListApiArg = void;
 export type GetApiMyPortalRoleAccessListByUserIdApiResponse =
-  /** status 200 Success */ RoleAccessListResponse;
+  /** status 200 OK */ RoleAccessListResponse;
 export type GetApiMyPortalRoleAccessListByUserIdApiArg = {
   userId: string;
 };
@@ -2480,13 +2526,13 @@ export type PutApiMyPortalRoleAccessEditApiArg = {
   editRoleAccessModel: EditRoleAccessModel;
 };
 export type GetApiMyPortalRoleAccessTypeListApiResponse =
-  /** status 200 Success */ RoleAccessTypeListResponse[];
+  /** status 200 OK */ RoleAccessTypeListResponse[];
 export type GetApiMyPortalRoleAccessTypeListApiArg = void;
 export type GetApiMyStorageHostListApiResponse =
-  /** status 200 Success */ StorageHostListResponse[];
+  /** status 200 OK */ StorageHostListResponse[];
 export type GetApiMyStorageHostListApiArg = void;
 export type GetApiMyStorageHostGetByIdApiResponse =
-  /** status 200 Success */ GetStorageHostResponse;
+  /** status 200 OK */ GetStorageHostResponse;
 export type GetApiMyStorageHostGetByIdApiArg = {
   id: number;
 };
@@ -2503,12 +2549,12 @@ export type DeleteApiMyStorageHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyStorageUserListByStorageHostIdApiResponse =
-  /** status 200 Success */ StorageUserListResponse[];
+  /** status 200 OK */ StorageUserListResponse[];
 export type GetApiMyStorageUserListByStorageHostIdApiArg = {
   storageHostId: number;
 };
 export type PostApiMyStorageUserCreateApiResponse =
-  /** status 200 Success */ CreateStorageUserResponse;
+  /** status 200 OK */ CreateStorageUserResponse;
 export type PostApiMyStorageUserCreateApiArg = {
   createStorageUserModel: CreateStorageUserModel;
 };
@@ -2517,21 +2563,21 @@ export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVmHostListByVmProjectIdApiResponse =
-  /** status 200 Success */ VmListResponse[];
+  /** status 200 OK */ VmListResponse[];
 export type GetApiMyVmHostListByVmProjectIdApiArg = {
   vmProjectId: number;
 };
 export type GetApiMyVmHostShortListByHypervisorTypeIdApiResponse =
-  /** status 200 Success */ VmShortListResponse[];
+  /** status 200 OK */ VmShortListResponse[];
 export type GetApiMyVmHostShortListByHypervisorTypeIdApiArg = {
   hypervisorTypeId: number;
 };
 export type GetApiMyVmHostGetByIdApiResponse =
-  /** status 200 Success */ GetVmResponse;
+  /** status 200 OK */ GetVmResponse;
 export type GetApiMyVmHostGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyVmHostCreateApiResponse = /** status 200 Success */ number;
+export type PostApiMyVmHostCreateApiResponse = /** status 200 OK */ number;
 export type PostApiMyVmHostCreateApiArg = {
   createVmModel: CreateVmModel;
 };
@@ -2576,16 +2622,16 @@ export type PutApiMyVmHostStopByIdApiArg = {
   id: number;
 };
 export type GetApiMyVmHypervisorListApiResponse =
-  /** status 200 Success */ HypervisorTypeListResponse[];
+  /** status 200 OK */ HypervisorTypeListResponse[];
 export type GetApiMyVmHypervisorListApiArg = void;
 export type GetApiMyVmImageListApiResponse =
-  /** status 200 Success */ ImageListResponse[];
+  /** status 200 OK */ ImageListResponse[];
 export type GetApiMyVmImageListApiArg = {
   datacenterId?: number;
   hypervisorTypeId?: number;
 };
 export type GetApiMyVmIsoListByDatacenterIdApiResponse =
-  /** status 200 Success */ IsoListResponse[];
+  /** status 200 OK */ IsoListResponse[];
 export type GetApiMyVmIsoListByDatacenterIdApiArg = {
   datacenterId: number;
 };
@@ -2598,13 +2644,13 @@ export type PutApiMyVmIsoUnmountApiArg = {
   unmountModel: UnmountModel;
 };
 export type GetApiMyVmKmsGetByIdAndTypeIdApiResponse =
-  /** status 200 Success */ GetRemoteConsoleResponse;
+  /** status 200 OK */ GetRemoteConsoleResponse;
 export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
   id: number;
   typeId: number;
 };
 export type GetApiMyVmProjectListApiResponse =
-  /** status 200 Success */ VmProjectListResponse[];
+  /** status 200 OK */ VmProjectListResponse[];
 export type GetApiMyVmProjectListApiArg = void;
 export type PostApiMyVmProjectCreateApiResponse = unknown;
 export type PostApiMyVmProjectCreateApiArg = {
@@ -2620,12 +2666,12 @@ export type DeleteApiMyVmProjectDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVmSnapshotListByVmIdApiResponse =
-  /** status 200 Success */ VmSnapshotResponse[];
+  /** status 200 OK */ VmSnapshotResponse[];
 export type GetApiMyVmSnapshotListByVmIdApiArg = {
   vmId: number;
 };
 export type GetApiMyVmSnapshotGetByIdApiResponse =
-  /** status 200 Success */ VmSnapshotResponse;
+  /** status 200 OK */ VmSnapshotResponse;
 export type GetApiMyVmSnapshotGetByIdApiArg = {
   id: number;
 };
@@ -2650,17 +2696,17 @@ export type PostApiMyPortalVoucherUseApiArg = {
   useVoucherModel: UseVoucherModel;
 };
 export type GetApiMyVpcGatewayGetByVpcHostIdApiResponse =
-  /** status 200 Success */ GetVpcGatewayResponse;
+  /** status 200 OK */ GetVpcGatewayResponse;
 export type GetApiMyVpcGatewayGetByVpcHostIdApiArg = {
   vpcHostId: number;
 };
 export type GetApiMyVpcNatListByVpcHostIdApiResponse =
-  /** status 200 Success */ GetVpcGatewayNatResponse[];
+  /** status 200 OK */ GetVpcGatewayNatResponse[];
 export type GetApiMyVpcNatListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
 export type GetApiMyVpcNatGetByIdApiResponse =
-  /** status 200 Success */ GetVpcGatewayNatResponse;
+  /** status 200 OK */ GetVpcGatewayNatResponse;
 export type GetApiMyVpcNatGetByIdApiArg = {
   id: number;
 };
@@ -2685,12 +2731,12 @@ export type DeleteApiMyVpcNatDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcStaticRouteListByVpcHostIdApiResponse =
-  /** status 200 Success */ GetVpcGatewayNatResponse[];
+  /** status 200 OK */ GetVpcGatewayNatResponse[];
 export type GetApiMyVpcStaticRouteListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
 export type GetApiMyVpcStaticRouteGetByIdApiResponse =
-  /** status 200 Success */ GetVpcGatewayNatResponse;
+  /** status 200 OK */ GetVpcGatewayNatResponse;
 export type GetApiMyVpcStaticRouteGetByIdApiArg = {
   id: number;
 };
@@ -2707,10 +2753,10 @@ export type PostApiMyVpcStaticRouteDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcHostListApiResponse =
-  /** status 200 Success */ VpcListResponse[];
+  /** status 200 OK */ VpcListResponse[];
 export type GetApiMyVpcHostListApiArg = void;
 export type GetApiMyVpcHostGetByIdApiResponse =
-  /** status 200 Success */ VpcResponse;
+  /** status 200 OK */ VpcResponse;
 export type GetApiMyVpcHostGetByIdApiArg = {
   id: number;
 };
@@ -2727,10 +2773,10 @@ export type DeleteApiMyVpcHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcNatServiceListApiResponse =
-  /** status 200 Success */ VpcHostTranslateServiceResponse[];
+  /** status 200 OK */ VpcHostTranslateServiceResponse[];
 export type GetApiMyVpcNatServiceListApiArg = void;
 export type GetApiMyVpcNatServiceGetByIdApiResponse =
-  /** status 200 Success */ VpcHostTranslateServiceResponse;
+  /** status 200 OK */ VpcHostTranslateServiceResponse;
 export type GetApiMyVpcNatServiceGetByIdApiArg = {
   id: number;
 };
@@ -2749,7 +2795,7 @@ export type DeleteApiMyVpcNatServiceDeleteByDatacenterIdAndIdApiArg = {
   datacenterId: number;
 };
 export type GetApiMyVpcIpListByVpcHostIdApiResponse =
-  /** status 200 Success */ VpcIpListResponse[];
+  /** status 200 OK */ VpcIpListResponse[];
 export type GetApiMyVpcIpListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
@@ -2762,7 +2808,7 @@ export type DeleteApiMyVpcIpDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
-  /** status 200 Success */ VpcNetworkListResponse[];
+  /** status 200 OK */ VpcNetworkListResponse[];
 export type GetApiMyVpcNetworkListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
@@ -2775,7 +2821,7 @@ export type DeleteApiMyVpcNetworkDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcVmListByVpcHostIdApiResponse =
-  /** status 200 Success */ VpcVmListResponse[];
+  /** status 200 OK */ VpcVmListResponse[];
 export type GetApiMyVpcVmListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
@@ -2790,26 +2836,26 @@ export type DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiArg = {
   vpcNetworkId: number;
 };
 export type GetApiMyPortalWalletGetBalanceApiResponse =
-  /** status 200 Success */ number;
+  /** status 200 OK */ number;
 export type GetApiMyPortalWalletGetBalanceApiArg = void;
 export type GetApiMyPortalWalletTransactionListApiResponse =
-  /** status 200 Success */ WalletTransactionListResponse[];
+  /** status 200 OK */ WalletTransactionListResponse[];
 export type GetApiMyPortalWalletTransactionListApiArg = void;
 export type GetApiMyPortalWalletTransactionBalanceUsageApiResponse =
-  /** status 200 Success */ BalanceUsageResponse[];
+  /** status 200 OK */ BalanceUsageResponse[];
 export type GetApiMyPortalWalletTransactionBalanceUsageApiArg = {
   period?: number;
 };
 export type GetApiMyWebHostListApiResponse =
-  /** status 200 Success */ WebHostListResponse[];
+  /** status 200 OK */ WebHostListResponse[];
 export type GetApiMyWebHostListApiArg = void;
 export type GetApiMyWebHostGetByIdApiResponse =
-  /** status 200 Success */ GetWebHostResponse;
+  /** status 200 OK */ GetWebHostResponse;
 export type GetApiMyWebHostGetByIdApiArg = {
   id: number;
 };
 export type GetApiMyWebHostGetLoginSessionByIdApiResponse =
-  /** status 200 Success */ GetLoginSessionResponse;
+  /** status 200 OK */ GetLoginSessionResponse;
 export type GetApiMyWebHostGetLoginSessionByIdApiArg = {
   id: number;
 };
@@ -2860,10 +2906,10 @@ export type LoginModel = {
   captchaCode?: string | null;
 };
 export type SsoLoginResponse = {
-  url?: string | null;
+  url: string | null;
 };
 export type SsoLoginModel = {
-  code?: string | null;
+  code: string | null;
 };
 export type TwoFactorLoginModel = {
   email: string;
@@ -2875,6 +2921,7 @@ export type RegisterModel = {
   phoneNumber: string;
   email: string;
   password: string;
+  referralCode?: string | null;
 };
 export type ForgotModel = {
   email: string;
@@ -2885,35 +2932,35 @@ export type ForgotConfirmModel = {
   password: string;
 };
 export type CaptchaResponse = {
-  base64CaptchaImage?: string | null;
-  captchaKey?: string;
+  base64CaptchaImage: string | null;
+  captchaKey: string;
 };
 export type BareMetalListResponse = {
-  id?: number;
-  name?: string | null;
-  status?: string | null;
+  id: number;
+  name: string | null;
+  status: string | null;
   statusId?: number;
-  bareMetalImage?: string | null;
-  bareMetalMachine?: string | null;
-  datacenter?: string | null;
-  datacenterRack?: string | null;
+  bareMetalImage: string | null;
+  bareMetalMachine: string | null;
+  datacenter: string | null;
+  datacenterRack: string | null;
   createDate?: string;
 };
 export type BareMetalResponse = {
-  id?: number;
-  name?: string | null;
-  bareMetalImage?: string | null;
-  bareMetalMachine?: string | null;
-  datacenter?: string | null;
-  datacenterRack?: string | null;
-  status?: string | null;
+  id: number;
+  name: string | null;
+  bareMetalImage: string | null;
+  bareMetalMachine: string | null;
+  datacenter: string | null;
+  datacenterRack: string | null;
+  status: string | null;
   statusId?: number;
-  physicalCpu?: number;
-  physicalMemory?: number;
-  hdd600GSas10K?: number;
-  hdd1200GSas10K?: number;
-  networkPort1G?: number;
-  networkPort10G?: number;
+  physicalCpu: number;
+  physicalMemory: number;
+  hdd600GSas10K: number;
+  hdd1200GSas10K: number;
+  networkPort1G: number;
+  networkPort10G: number;
 };
 export type CreateBareMetalModel = {
   name: string;
@@ -2930,17 +2977,17 @@ export type CreateBareMetalModel = {
 };
 export type BareMetalImageListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
   osId?: number;
-  os?: string | null;
+  os: string | null;
 };
 export type BusinessUnitListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type CalculateMonthListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
 };
 export type SeriesModel = {
   name?: string | null;
@@ -3003,10 +3050,10 @@ export type CreateCdnOriginUserCertModel = {
   certPem: string;
 };
 export type CdnRouteListResponse = {
-  id?: number;
-  host?: string | null;
-  path?: string | null;
-  loadBalancingPolicy?: string | null;
+  id: number;
+  host: string | null;
+  path: string | null;
+  loadBalancingPolicy: string | null;
   maxConnectionsPerServer?: number;
 };
 export type DestinationModel = {
@@ -3014,11 +3061,11 @@ export type DestinationModel = {
 };
 export type GetCdnRouteResponse = {
   dnsHostId?: number;
-  host?: string | null;
+  host: string | null;
   maxConnectionsPerServer?: number;
   loadBalancingPolicyId?: number;
   dangerousAcceptAnyServerCertificate?: boolean;
-  destinations?: DestinationModel[] | null;
+  destinations: DestinationModel[] | null;
 };
 export type CreateCdnRouteModel = {
   dnsHostId?: number;
@@ -3034,34 +3081,34 @@ export type EditCdnRouteModel = {
   loadBalancingPolicyId: number;
   maxConnectionsPerServer: number;
   dangerousAcceptAnyServerCertificate: boolean;
-  destinations?: DestinationModel[] | null;
+  destinations: DestinationModel[] | null;
 };
 export type ColocationListResponse = {
   id?: number;
-  name?: string | null;
-  datacenter?: string | null;
-  status?: string | null;
+  name: string | null;
+  datacenter: string | null;
+  status: string | null;
   statusId?: number;
   datacenterId?: number;
   datacenterRackId?: number;
-  datacenterRack?: string | null;
+  datacenterRack: string | null;
   createDate?: string;
 };
 export type GetColocationResponse = {
-  id?: number;
-  name?: string | null;
-  datacenter?: string | null;
-  status?: string | null;
-  datacenterRack?: string | null;
-  powerAmp?: number;
-  network1G?: number;
-  network10G?: number;
-  ipv4Count?: number;
-  rackUnitSpace?: number;
+  id: number;
+  name: string | null;
+  datacenter: string | null;
+  status: string | null;
+  datacenterRack: string | null;
+  powerAmp: number;
+  network1G: number;
+  network10G: number;
+  ipv4Count: number;
+  rackUnitSpace: number;
 };
 export type EquipmentModel = {
-  equipmentId?: number;
-  inventoryNumber?: number;
+  equipmentId: number;
+  inventoryNumber: number;
 };
 export type CreateColocationModel = {
   datacenterId: number;
@@ -3075,19 +3122,19 @@ export type CreateColocationModel = {
 };
 export type CommissionListResponse = {
   id?: number;
-  invoiceId?: number;
+  walletTransactionId?: number;
   totalPrice?: number;
   commissionPrice?: number;
   commissionDate?: string;
 };
 export type GetCustomerResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   nationalId?: string | null;
   registrationNumber?: string | null;
   registrationDate?: string | null;
   phone?: string | null;
-  status?: string | null;
+  status: string | null;
   createDate?: string | null;
   modifyDate?: string | null;
 };
@@ -3099,86 +3146,86 @@ export type EditCustomerModel = {
   postalCode: string;
 };
 export type ConvertCustomerToLegalModel = {
-  name?: string | null;
-  nationalId?: string | null;
-  phoneNumber?: string | null;
-  postalCode?: string | null;
-  address?: string | null;
+  name: string | null;
+  nationalId: string | null;
+  phoneNumber: string | null;
+  postalCode: string | null;
+  address: string | null;
   economicNumber?: string | null;
   registrationNumber?: string | null;
   registrationDate?: string | null;
 };
 export type CustomerBillListResponse = {
-  id?: number;
-  calculateMonthId?: number;
-  calculateMonth?: string | null;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
+  id: number;
+  calculateMonthId: number;
+  calculateMonth: string | null;
+  billDate: string;
+  netPrice: number;
+  vat: number;
+  totalPrice: number;
 };
 export type CustomerBillShortListResponse = {
-  id?: number;
-  billDate?: string;
-  totalPrice?: number;
+  id: number;
+  billDate: string;
+  totalPrice: number;
 };
 export type CustomerProductBillItemModel = {
-  customerProductItem?: string | null;
-  quantity?: number;
-  duration?: number;
-  price?: number;
-  fromDate?: string;
-  toDate?: string;
+  customerProductItem: string | null;
+  quantity: number;
+  duration: number;
+  price: number;
+  fromDate: string;
+  toDate: string;
 };
 export type CustomerProductBillModel = {
-  product?: string | null;
-  customerProduct?: string | null;
-  customerProductId?: number;
-  customerProductPrice?: number;
-  fromDate?: string;
-  toDate?: string;
+  product: string | null;
+  customerProduct: string | null;
+  customerProductId: number;
+  customerProductPrice: number;
+  fromDate: string;
+  toDate: string;
   customerProductBillItems?: CustomerProductBillItemModel[] | null;
 };
 export type GetCustomerBillResponse = {
-  id?: number;
-  name?: string | null;
-  billDate?: string;
-  netPrice?: number;
-  vat?: number;
-  totalPrice?: number;
+  id: number;
+  name: string | null;
+  billDate: string;
+  netPrice: number;
+  vat: number;
+  totalPrice: number;
   customerProductBills?: CustomerProductBillModel[] | null;
 };
 export type CustomerProductListResponse = {
-  id?: number;
-  name?: string | null;
-  product?: string | null;
-  productId?: number;
-  customerProduct?: string | null;
-  status?: string | null;
-  createDate?: string;
+  id: number;
+  name: string | null;
+  product: string | null;
+  productId: number;
+  customerProduct: string | null;
+  status: string | null;
+  createDate: string;
 };
 export type CustomerProductShortListResponse = {
-  id?: number;
-  product?: string | null;
-  customerProduct?: string | null;
-  createDate?: string;
+  id: number;
+  product: string | null;
+  customerProduct: string | null;
+  createDate: string;
 };
 export type CustomerUserListResponse = {
-  userId?: string;
-  name?: string | null;
-  userName?: string | null;
-  phoneNumber?: string | null;
-  isSuperUser?: boolean;
-  isActive?: boolean;
-  hasTwoFactor?: boolean;
+  userId: string;
+  name: string | null;
+  userName: string | null;
+  phoneNumber: string | null;
+  isSuperUser: boolean;
+  isActive: boolean;
+  hasTwoFactor: boolean;
 };
 export type AccessTupleModel = {
-  accessId?: number;
-  hasAccess?: boolean;
+  accessId: number;
+  hasAccess: boolean;
 };
 export type RoleAccessListModel = {
-  roleAccessTypeId?: number;
-  roleId?: number;
+  roleAccessTypeId: number;
+  roleId: number;
   accessTuples?: AccessTupleModel[] | null;
 };
 export type CreateCustomerUserModel = {
@@ -3189,17 +3236,17 @@ export type CreateCustomerUserModel = {
   roleAccesses?: RoleAccessListModel[] | null;
 };
 export type ChangeCustomerUserResponse = {
-  isSuperUser?: boolean;
-  isFinancialManager?: boolean;
-  isAccountManager?: boolean;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
   roles?: number[] | null;
 };
 export type ChangeCustomerUserModel = {
   customerId?: number;
 };
 export type DashboardUsageResponse = {
-  month?: string | null;
-  count?: number;
+  month: string | null;
+  count: number;
 };
 export type DashboardFinancialResponse = {
   walletBalance?: number;
@@ -3208,8 +3255,8 @@ export type DashboardFinancialResponse = {
   activeServiceCount?: number;
 };
 export type DatacenterListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   photoName?: string | null;
 };
 export type DatacenterIpListResponse = {
@@ -3220,18 +3267,18 @@ export type DatacenterIpListResponse = {
 };
 export type DnsListResponse = {
   id?: number;
-  zoneName?: string | null;
-  zoneStatus?: string | null;
+  zoneName: string | null;
+  zoneStatus: string | null;
   zoneStatusId?: number;
   createDate?: string;
 };
 export type GetDnsResponse = {
   id?: number;
-  zoneName?: string | null;
-  statusId?: number;
-  status?: string | null;
-  createDate?: string;
-  modifyDate?: string;
+  zoneName: string | null;
+  statusId: number;
+  status: string | null;
+  createDate: string;
+  modifyDate: string;
 };
 export type GetDnsNsStatusResponse = {
   status?: boolean;
@@ -3246,18 +3293,18 @@ export type CreateDnsModel = {
 };
 export type DnsRecordListResponse = {
   id?: number;
-  name?: string | null;
-  type?: string | null;
-  ttl?: string | null;
-  value?: string | null;
+  name: string | null;
+  type: string | null;
+  ttl: string | null;
+  value: string | null;
   useProxy?: boolean;
 };
 export type GetDnsRecordResponse = {
   id?: number;
-  name?: string | null;
-  type?: string | null;
-  ttl?: string | null;
-  value?: string | null;
+  name: string | null;
+  type: string | null;
+  ttl: string | null;
+  value: string | null;
   preference?: string | null;
   flags?: string | null;
   tag?: string | null;
@@ -3303,38 +3350,38 @@ export type EditDnsRecordModel = {
   id?: number;
 };
 export type DomainListResponse = {
-  id?: number;
-  domainName?: string | null;
-  status?: string | null;
-  statusId?: number;
-  type?: string | null;
-  ns1?: string | null;
-  ns2?: string | null;
-  createDate?: string;
+  id: number;
+  domainName: string | null;
+  status: string | null;
+  statusId: number;
+  type: string | null;
+  ns1: string | null;
+  ns2: string | null;
+  createDate: string;
   expireDate?: string | null;
 };
 export type GetDomainResponse = {
-  id?: number;
-  domainName?: string | null;
-  status?: string | null;
-  statusId?: number;
-  type?: string | null;
-  createDate?: string;
+  id: number;
+  domainName: string | null;
+  status: string | null;
+  statusId: number;
+  type: string | null;
+  createDate: string;
   expireDate?: string | null;
-  name?: string | null;
-  organization?: string | null;
-  country?: string | null;
-  province?: string | null;
-  city?: string | null;
-  street?: string | null;
-  postalCode?: string | null;
-  voice?: string | null;
+  name: string | null;
+  organization: string | null;
+  country: string | null;
+  province: string | null;
+  city: string | null;
+  street: string | null;
+  postalCode: string | null;
+  voice: string | null;
   fax?: string | null;
-  email?: string | null;
-  autoRenewal?: boolean;
-  isPremium?: boolean;
-  ns1?: string | null;
-  ns2?: string | null;
+  email: string | null;
+  autoRenewal: boolean;
+  isPremium: boolean;
+  ns1: string | null;
+  ns2: string | null;
 };
 export type DomainGetStatusResponse = {
   statusId?: number;
@@ -3373,144 +3420,144 @@ export type ChangeContactModel = {
   email: string;
 };
 export type ChangeNsModel = {
-  id?: number;
+  id: number;
   ns1: string;
   ns2: string;
 };
 export type EquipmentListResponse = {
-  id?: number;
-  name?: string | null;
-  type?: string | null;
-  typeId?: number;
-  brand?: string | null;
-  brandId?: number;
+  id: number;
+  name: string | null;
+  type: string | null;
+  typeId: number;
+  brand: string | null;
+  brandId: number;
 };
 export type EquipmentBrandListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type EquipmentTypeListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type InvoiceListResponse = {
-  id?: number;
-  invoiceDate?: string;
-  netPrice?: number;
-  discount?: number;
-  vat?: number;
-  totalPrice?: number;
-  invoicePrice?: number;
-  invoiceStatusId?: number;
-  invoiceStatus?: string | null;
+  id: number;
+  invoiceDate: string;
+  netPrice: number;
+  discount: number;
+  vat: number;
+  totalPrice: number;
+  invoicePrice: number;
+  invoiceStatusId: number;
+  invoiceStatus: string | null;
 };
 export type UnPaidInvoiceResponse = {
-  id?: number;
-  customerName?: string | null;
-  invoiceDate?: string;
-  netPrice?: number;
-  discount?: number;
-  invoiceStatusId?: number;
-  invoicePrice?: number;
-  vat?: number;
+  id: number;
+  customerName: string | null;
+  invoiceDate: string;
+  netPrice: number;
+  discount: number;
+  invoiceStatusId: number;
+  invoicePrice: number;
+  vat: number;
 };
 export type InvoiceItemModel = {
-  product?: string | null;
-  quantity?: number;
-  unitPrice?: number;
-  price?: number;
+  product: string | null;
+  quantity: number;
+  unitPrice: number;
+  price: number;
 };
 export type GetInvoiceResponse = {
-  id?: number;
-  sellerName?: string | null;
-  sellerAddress?: string | null;
-  sellerPhone?: string | null;
-  customerName?: string | null;
+  id: number;
+  sellerName: string | null;
+  sellerAddress: string | null;
+  sellerPhone: string | null;
+  customerName: string | null;
   customerAddress?: string | null;
   customerPhone?: string | null;
-  invoiceStatusId?: number;
-  invoiceStatus?: string | null;
-  invoiceDate?: string;
-  netPrice?: number;
-  discount?: number;
-  totalPrice?: number;
-  vat?: number;
-  invoicePrice?: number;
-  invoiceItems?: InvoiceItemModel[] | null;
+  invoiceStatusId: number;
+  invoiceStatus: string | null;
+  invoiceDate: string;
+  netPrice: number;
+  discount: number;
+  totalPrice: number;
+  vat: number;
+  invoicePrice: number;
+  invoiceItems: InvoiceItemModel[] | null;
 };
 export type PayInvoiceResponse = {
-  status?: boolean;
-  location?: string | null;
+  status: boolean;
+  location: string | null;
 };
 export type PayInvoiceModel = {
   id?: number;
 };
 export type InvoiceSummaryResponse = {
-  totalPaid?: number;
-  totalUnpaid?: number;
+  totalPaid: number;
+  totalUnpaid: number;
 };
 export type IssueListResponse = {
-  id?: number;
-  issueSubject?: string | null;
-  businessUnit?: string | null;
-  issueStatus?: string | null;
-  issueStatusId?: number;
-  createDate?: string;
-  modifyDate?: string | null;
+  id: number;
+  issueSubject: string | null;
+  businessUnit: string | null;
+  issueStatus: string | null;
+  issueStatusId: number;
+  createDate: string;
+  modifyDate: string | null;
 };
 export type IssueShortListResponse = {
-  id?: number;
-  issueSubject?: string | null;
-  issueStatus?: string | null;
-  createDate?: string;
+  id: number;
+  issueSubject: string | null;
+  issueStatus: string | null;
+  createDate: string;
   modifyDate?: string | null;
 };
 export type IssueItemModel = {
-  id?: number;
-  issueDate?: string;
-  content?: string | null;
-  user?: string | null;
-  userId?: string;
+  id: number;
+  issueDate: string;
+  content: string | null;
+  user: string | null;
+  userId: string;
   fileName?: string | null;
   fileSize?: number | null;
 };
 export type IssueItemListResponse = {
-  issueId?: number;
-  issueSubject?: string | null;
-  businessUnit?: string | null;
+  issueId: number;
+  issueSubject: string | null;
+  businessUnit: string | null;
   customerProduct?: string | null;
-  issueStatusId?: number;
-  createDate?: string;
+  issueStatusId: number;
+  createDate: string;
   modifyDate?: string | null;
   issueItems?: IssueItemModel[] | null;
 };
 export type IssueSubjectListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type IssueSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
 };
 export type KubernetesListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  createDate?: string;
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  statusId: number;
+  createDate: string;
 };
 export type GetKubernetesResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  masterNode?: number;
-  workerNode?: number;
-  status?: string | null;
-  statusId?: number;
-  customerProductType?: string | null;
-  createDate?: string;
-  modifyDate?: string;
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  masterNode: number;
+  workerNode: number;
+  status: string | null;
+  statusId: number;
+  customerProductType: string | null;
+  createDate: string;
+  modifyDate: string;
   expireDate?: string | null;
 };
 export type CreateKubernetesModel = {
@@ -3529,21 +3576,21 @@ export type CreateKubernetesModel = {
 };
 export type KubernetesImageListResponse = {
   id?: number;
-  name?: string | null;
-  osId?: number;
-  os?: string | null;
+  name: string | null;
+  osId: number;
+  os: string | null;
 };
 export type KubernetesNodeListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  kubernetesNodeType?: string | null;
-  kubernetesNodeTypeId?: number;
-  productId?: number;
-  product?: string | null;
-  hostId?: number;
-  statusId?: number;
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  kubernetesNodeType: string | null;
+  kubernetesNodeTypeId: number;
+  productId: number;
+  product: string | null;
+  hostId: number;
+  statusId: number;
   ip?: string | null;
 };
 export type CreateKubernetesNodeModel = {
@@ -3558,137 +3605,158 @@ export type CreateKubernetesNodeModel = {
 };
 export type KubernetesVersionListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
 };
 export type NotificationListResponse = {
-  id?: number;
-  content?: string | null;
-  subject?: string | null;
-  isRead?: boolean;
-  notificationDate?: string;
+  id: number;
+  content: string | null;
+  subject: string | null;
+  isRead: boolean;
+  notificationDate: string;
+};
+export type OfferListResponse = {
+  id: number;
+  name: string | null;
+  amount: number;
+  freeAmount: number;
+  expireDate: string;
+};
+export type OfferGetResponse = {
+  name: string | null;
+  amount: number;
+  freeAmount: number;
+  expireDate: string;
+};
+export type PaymentResponse = {
+  status: boolean;
+  location: string | null;
+};
+export type PaymentModel = {
+  paymentProviderId?: number;
+  offerId?: number;
 };
 export type PaymentListResponse = {
-  id?: number;
-  transactionDate?: string;
-  amount?: number;
+  id: number;
+  transactionDate: string;
+  amount: number;
   rrn?: number | null;
   hashCardNumber?: string | null;
-  paymentStatus?: string | null;
-  paymentStatusId?: number;
-  paymentProvider?: string | null;
-  paymentProviderId?: number;
-  finalStatus?: boolean;
+  paymentStatus: string | null;
+  paymentStatusId: number;
+  paymentProvider: string | null;
+  paymentProviderId: number;
+  finalStatus: boolean;
 };
 export type GetPaymentResponse = {
-  id?: number;
-  transactionDate?: string;
-  amount?: number;
+  id: number;
+  transactionDate: string;
+  amount: number;
   rrn?: number | null;
   hashCardNumber?: string | null;
-  paymentStatus?: string | null;
-  paymentStatusId?: number;
-  paymentProvider?: string | null;
-  paymentProviderId?: number;
-  finalStatus?: boolean;
+  paymentStatus: string | null;
+  paymentStatusId: number;
+  paymentProvider: string | null;
+  paymentProviderId: number;
+  finalStatus: boolean;
 };
 export type CreatePaymentResponse = {
-  status?: boolean;
-  location?: string | null;
+  status: boolean;
+  location: string | null;
 };
 export type CreatePaymentModel = {
   paymentProviderId?: number;
   amount: number;
 };
 export type PaymentProviderListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   photoName?: string | null;
 };
 export type ProductListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   description?: string | null;
 };
 export type GetProductResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   description?: string | null;
   supplementaryDescription?: string | null;
 };
 export type ProductBundleConfiguration = {
-  name?: string | null;
-  quantity?: number;
+  name: string | null;
+  quantity: number;
 };
 export type ProductBundleListResponse = {
-  id?: number;
-  name?: string | null;
-  description?: string | null;
-  price?: number;
-  configurations?: ProductBundleConfiguration[] | null;
+  id: number;
+  name: string | null;
+  description: string | null;
+  price: number;
+  configurations: ProductBundleConfiguration[] | null;
 };
 export type ProductBundleVmListResponse = {
-  id?: number;
-  name?: string | null;
-  price?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
-  ipv4?: number;
+  id: number;
+  name: string | null;
+  price: number;
+  cpu: number;
+  memory: number;
+  disk: number;
+  ipv4: number;
 };
 export type ProductBundleStorageListResponse = {
-  id?: number;
-  name?: string | null;
-  price?: number;
-  disk?: number;
+  id: number;
+  name: string | null;
+  price: number;
+  disk: number;
 };
 export type ProductBundleWebListResponse = {
-  id?: number;
-  name?: string | null;
-  price?: number;
+  id: number;
+  name: string | null;
+  price: number;
   quantity?: number;
 };
 export type ProductItemListResponse = {
-  id?: number;
-  name?: string | null;
-  price?: number;
+  id: number;
+  name: string | null;
+  price: number;
 };
 export type VmSpec = {
-  productItemId?: number;
-  name?: string | null;
-  quantity?: number;
+  productItemId: number;
+  name: string | null;
+  quantity: number;
 };
 export type MasterNodeModel = {
-  kubernetesManagementItemId?: number;
-  kubernetesManagementItemPrice?: number;
-  masterNodeCount?: number;
-  masterVmSpecs?: VmSpec[] | null;
+  kubernetesManagementItemId: number;
+  kubernetesManagementItemPrice: number;
+  masterNodeCount: number;
+  masterVmSpecs: VmSpec[] | null;
 };
 export type KubernetesPriceResponse = {
-  vmProductItemsPrice?: ProductItemListResponse[] | null;
-  masterNodesInfo?: MasterNodeModel;
+  vmProductItemsPrice: ProductItemListResponse[] | null;
+  masterNodesInfo: MasterNodeModel;
 };
 export type GetProfileResponse = {
-  phoneNumber?: string | null;
-  phoneNumberConfirmed?: boolean;
-  email?: string | null;
-  emailConfirmed?: boolean;
-  idConfirmed?: boolean;
-  hasTwoFactor?: boolean;
-  isLegal?: boolean;
-  firstName?: string | null;
-  lastName?: string | null;
+  phoneNumber: string | null;
+  phoneNumberConfirmed: boolean;
+  email: string | null;
+  emailConfirmed: boolean;
+  idConfirmed: boolean;
+  hasTwoFactor: boolean;
+  isLegal: boolean;
+  firstName: string | null;
+  lastName: string | null;
   nationalId?: string | null;
   birthDate?: string | null;
   address?: string | null;
   isFromSso?: boolean;
 };
 export type GetNotificationStatusResponse = {
-  id?: string;
-  phoneNotify?: boolean;
-  emailNotify?: boolean;
+  id: string;
+  phoneNotify: boolean;
+  emailNotify: boolean;
 };
 export type EditProfileResponse = {
-  profileCompleted?: boolean;
+  profileCompleted: boolean;
 };
 export type EditProfileModel = {
   firstName: string;
@@ -3723,34 +3791,35 @@ export type ChangePasswordModel = {
   password: string;
 };
 export type GetReferralResponse = {
-  isJoined?: boolean;
-  referralCode?: string | null;
-  referralLink?: string | null;
-  joinCode?: string | null;
+  id: number;
+  referralCode: string | null;
+  referralLink: string | null;
 };
-export type JoinReferralModel = {
-  referralCode: string;
+export type CustomerReferralListResponse = {
+  customer: string | null;
+  commissionPercent: number;
+  joinDate: string;
 };
 export type RoleListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type RoleAccessListTuple = {
-  accessId?: number;
-  hasAccess?: boolean;
+  accessId: number;
+  hasAccess: boolean;
 };
 export type RoleAccessList = {
-  roleId?: number;
-  name?: string | null;
-  description?: string | null;
+  roleId: number;
+  name: string | null;
+  description: string | null;
   roleAccessTypeId?: number;
-  hasAccess?: boolean;
+  hasAccess: boolean;
   accesses?: RoleAccessListTuple[] | null;
 };
 export type RoleAccessListResponse = {
-  isSuperUser?: boolean;
-  isFinancialManager?: boolean;
-  isAccountManager?: boolean;
+  isSuperUser: boolean;
+  isFinancialManager: boolean;
+  isAccountManager: boolean;
   roleAccesses?: RoleAccessList[] | null;
 };
 export type EditRoleAccessModel = {
@@ -3761,18 +3830,18 @@ export type EditRoleAccessModel = {
   roleAccesses?: RoleAccessListModel[] | null;
 };
 export type RoleAccessTypeListResponse = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
 };
 export type StorageHostListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  statusId?: number;
-  isPublic?: boolean;
-  public?: string | null;
-  createDate?: string;
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  statusId: number;
+  isPublic: boolean;
+  public: string | null;
+  createDate: string;
   expireDate?: string | null;
 };
 export type GetStorageHostResponse = {
@@ -3802,52 +3871,52 @@ export type EditStorageHostModel = {
   storageHostTypeId?: number;
 };
 export type StorageUserListResponse = {
-  id?: number;
-  accessKey?: string | null;
-  secretKey?: string | null;
-  createDate?: string;
+  id: number;
+  accessKey: string | null;
+  secretKey: string | null;
+  createDate: string;
 };
 export type CreateStorageUserResponse = {
-  accessKey?: string | null;
-  secretKey?: string | null;
+  accessKey: string | null;
+  secretKey: string | null;
 };
 export type CreateStorageUserModel = {
-  storageHostId?: number;
+  storageHostId: number;
 };
 export type VmListResponse = {
   id?: number;
-  name?: string | null;
-  status?: string | null;
+  name: string | null;
+  status: string | null;
   statusId?: number;
-  datacenter?: string | null;
-  operatingSystem?: string | null;
+  datacenter: string | null;
+  operatingSystem: string | null;
   ipv4?: string | null;
   createDate?: string;
 };
 export type VmShortListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
 };
 export type GetVmResponse = {
-  id?: number;
-  datacenterId?: number;
-  name?: string | null;
-  status?: string | null;
+  id: number;
+  datacenterId: number;
+  name: string | null;
+  status: string | null;
   statusId?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
+  cpu: number;
+  memory: number;
+  disk: number;
   macAddress?: string | null;
   ip?: string | null;
-  operatingSystem?: string | null;
+  operatingSystem: string | null;
   powerStatus?: string | null;
   networkStatus?: string | null;
   isCluster?: boolean;
   isMaster?: boolean;
   vmTypeId?: number;
-  vmType?: string | null;
-  createDate?: string;
-  modifyDate?: string;
+  vmType: string | null;
+  createDate: string;
+  modifyDate: string;
 };
 export type CreateVmModel = {
   name: string;
@@ -3856,8 +3925,8 @@ export type CreateVmModel = {
   datacenterId: number;
   imageId: number;
   isPredefined: boolean;
-  vmProjectId?: number;
-  isPublic?: boolean;
+  vmProjectId: number;
+  isPublic: boolean;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -3866,64 +3935,64 @@ export type CreateVmModel = {
   ipAddress?: string | null;
 };
 export type EditVmModel = {
-  id?: number;
-  cpu?: number;
-  memory?: number;
-  disk?: number;
+  id: number;
+  cpu: number;
+  memory: number;
+  disk: number;
 };
 export type RebuildVmModel = {
-  id?: number;
-  name?: string | null;
+  id: number;
+  name: string | null;
   password: string;
   imageId: number;
 };
 export type HypervisorTypeListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
 };
 export type ImageListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
   osId?: number;
-  os?: string | null;
+  os: string | null;
 };
 export type IsoListResponse = {
   id?: number;
-  name?: string | null;
+  name: string | null;
 };
 export type MountModel = {
   id?: number;
   vmId?: number;
 };
 export type UnmountModel = {
-  id?: number;
-  vmId?: number;
+  id: number;
+  vmId: number;
 };
 export type GetRemoteConsoleResponse = {
-  location?: string | null;
-  vmTypeId?: number;
+  location: string | null;
+  vmTypeId: number;
 };
 export type VmProjectListResponse = {
   id?: number;
-  name?: string | null;
-  hypervisorType?: string | null;
+  name: string | null;
+  hypervisorType: string | null;
   hypervisorTypeId?: number;
 };
 export type VmProjectCreateModel = {
-  name?: string | null;
-  hypervisorTypeId?: number;
+  name: string | null;
+  hypervisorTypeId: number;
 };
 export type VmProjectEditModel = {
   name?: string | null;
 };
 export type VmSnapshotResponse = {
-  id?: number;
-  name?: string | null;
-  vmSnapshotStatusId?: number;
-  vmSnapshotStatus?: string | null;
-  isCreated?: boolean;
+  id: number;
+  name: string | null;
+  vmSnapshotStatusId: number;
+  vmSnapshotStatus: string | null;
+  isCreated: boolean;
   description?: string | null;
-  createDate?: string;
+  createDate: string;
 };
 export type CreateSnapshotModel = {
   vmHostId: number;
@@ -3937,46 +4006,46 @@ export type UseVoucherModel = {
   voucherCode: string;
 };
 export type GetVpcGatewayResponse = {
-  id?: number;
-  name?: string | null;
-  status?: string | null;
-  datacenterId?: number;
-  createDate?: string;
+  id: number;
+  name: string | null;
+  status: string | null;
+  datacenterId: number;
+  createDate: string;
 };
 export type GetVpcGatewayNatResponse = {
-  indexId?: number;
-  id?: number;
-  natTypeId?: number;
-  natTypeName?: string | null;
-  sourceIp?: string | null;
-  sourcePort?: string | null;
-  destinationIp?: string | null;
-  destinationPort?: string | null;
-  translateIp?: string | null;
-  isDisabled?: boolean;
-  serviceName?: string | null;
-  serviceId?: number;
+  id: number;
+  natTypeId: number;
+  natTypeName: string | null;
+  name: string | null;
+  sourceIp: string | null;
+  sourcePort: string | null;
+  destinationIp: string | null;
+  destinationPort: string | null;
+  isDisabled: boolean;
+  translateIp: string | null;
   sequence?: number;
+  vpcHostServiceName?: string | null;
+  serviceId?: number | null;
   description?: string | null;
-  createDate?: string;
+  createDate: string;
 };
 export type CreateVpcGatewayNatModel = {
   vpcHostId: number;
   natTypeId: number;
-  name?: string | null;
+  name: string | null;
   sourceIp?: string | null;
-  sourcePort?: number | null;
+  sourcePort?: string | null;
   destinationIp?: string | null;
   destinationPort?: string | null;
   translateIp: string;
   vpcHostServiceId?: number | null;
   description?: string | null;
-  isDisabled?: boolean;
+  isDisabled: boolean;
 };
 export type EditVpcGatewayNatModel = {
-  id?: number;
-  vpcHostId?: number;
-  name?: string | null;
+  id: number;
+  vpcHostId: number;
+  name: string | null;
   vpcHostServiceId?: number | null;
   sourceIp?: string | null;
   sourcePort?: string | null;
@@ -3987,28 +4056,28 @@ export type EditVpcGatewayNatModel = {
   isDisabled?: boolean;
 };
 export type EditIncreaseSequenceVpcGatewayNatModel = {
-  id?: number;
-  vpcHostId?: number;
+  id: number;
+  vpcHostId: number;
 };
 export type VpcListResponse = {
-  id?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  hypervisorTypeId?: number;
-  statusId?: number;
-  createDate?: string;
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  hypervisorTypeId: number;
+  statusId: number;
+  createDate: string;
 };
 export type VpcResponse = {
-  id?: number;
-  datacenterId?: number;
-  datacenter?: string | null;
-  name?: string | null;
-  status?: string | null;
-  hypervisorTypeId?: number;
-  statusId?: number;
-  createDate?: string;
-  modifyDate?: string;
+  id: number;
+  datacenterId: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  hypervisorTypeId: number;
+  statusId: number;
+  createDate: string;
+  modifyDate: string;
 };
 export type CreateVpcHostModel = {
   name: string;
@@ -4021,22 +4090,22 @@ export type EditVpcHostModel = {
   name: string;
 };
 export type VpcHostTranslateServiceResponse = {
-  vpcHostServiceId?: number;
-  name?: string | null;
+  vpcHostServiceId: number;
+  name: string | null;
   port?: number | null;
   isTcp?: boolean;
   createDate?: string;
 };
 export type CreateVpcNatServiceModel = {
-  vpcHostId?: number;
-  serviceName?: string | null;
-  isTcp?: boolean;
-  port?: number;
-  description?: string | null;
+  vpcHostId: number;
+  serviceName: string | null;
+  isTcp: boolean;
+  port: number;
+  description: string | null;
 };
 export type EditVpcNatServiceModel = {
-  id?: number;
-  vpcHostId?: number;
+  id: number;
+  vpcHostId: number;
   serviceName?: string | null;
   isTcp?: boolean | null;
   port?: number | null;
@@ -4053,70 +4122,70 @@ export type CreateVpcIpModel = {
   vpcHostId: number;
 };
 export type VpcNetworkListResponse = {
-  id?: number;
-  gatewayCidr?: string | null;
-  subnetMask?: string | null;
-  subnetCidr?: string | null;
-  name?: string | null;
-  status?: string | null;
-  datacenter?: string | null;
-  createDate?: string;
+  id: number;
+  gatewayCidr: string | null;
+  subnetMask: string | null;
+  subnetCidr: string | null;
+  name: string | null;
+  status: string | null;
+  datacenter: string | null;
+  createDate: string;
 };
 export type CreateVpcNetworkModel = {
-  vpcHostId?: number;
-  name?: string | null;
-  gatewayCidr?: string | null;
+  vpcHostId: number;
+  name: string | null;
+  gatewayCidr: string | null;
 };
 export type VpcVmListResponse = {
   id?: number;
   vpcNetworkId?: number;
-  vmName?: string | null;
-  networkName?: string | null;
-  status?: string | null;
+  vmName: string | null;
+  networkName: string | null;
+  status: string | null;
   statusId?: number;
-  vmHostId?: number;
-  datacenter?: string | null;
-  operatingSystem?: string | null;
+  vmHostId: number;
+  datacenter: string | null;
+  operatingSystem: string | null;
   ipv4?: string | null;
   vmTypeId?: number | null;
   createDate?: string;
 };
 export type CreateVpcVmModel = {
-  vpcNetworkId?: number;
-  vmHostId?: number;
+  vpcNetworkId: number;
+  vmHostId: number;
 };
 export type WalletTransactionListResponse = {
-  id?: number;
-  transactionDate?: string;
-  credit?: number;
-  debit?: number;
-  balance?: number;
+  id: number;
+  transactionDate: string;
+  credit: number;
+  debit: number;
+  balance: number;
   description?: string | null;
 };
 export type BalanceUsageResponse = {
-  balance?: number;
-  toDate?: string;
+  balance: number;
+  toDate: string;
 };
 export type WebHostListResponse = {
   id?: number;
-  datacenter?: string | null;
-  domainName?: string | null;
-  status?: string | null;
+  datacenter: string | null;
+  domainName: string | null;
+  status: string | null;
   statusId?: number;
   createDate?: string;
   expireDate?: string | null;
 };
 export type GetWebHostResponse = {
-  id?: number;
-  datacenter?: string | null;
-  domainName?: string | null;
-  status?: string | null;
+  id: number;
+  datacenter: string | null;
+  domainName: string | null;
+  status: string | null;
   statusId?: number;
   createDate?: string;
   expireDate?: string | null;
 };
 export type GetLoginSessionResponse = {
-  location?: string | null;
+  location: string | null;
 };
 export type CheckWebHostDomainModel = {
   domainName: string;
@@ -4127,8 +4196,8 @@ export type CreateWebHostModel = {
   productBundleId?: number;
 };
 export type EditWebHostModel = {
-  id?: number;
-  productBundleId?: number;
+  id: number;
+  productBundleId: number;
 };
 export type CreateContactUsModel = {
   firstName: string;
@@ -4257,6 +4326,9 @@ export const {
   useGetApiMyPortalNotificationListQuery,
   useGetApiMyPortalNotificationShortListQuery,
   usePutApiMyPortalNotificationSeenByIdMutation,
+  useGetApiMyPortalOfferListQuery,
+  useGetApiMyPortalOfferGetByIdQuery,
+  usePostApiMyPortalOfferPaymentMutation,
   useGetApiMyPortalPaymentListQuery,
   useGetApiMyPortalPaymentGetByIdQuery,
   usePostApiMyPortalPaymentCreateMutation,
@@ -4282,8 +4354,9 @@ export const {
   usePutApiMyPortalProfileEditPhoneNotificationMutation,
   usePutApiMyPortalProfileEditTwoFactorMutation,
   usePostApiMyPortalProfileChangePasswordMutation,
+  useGetApiMyPortalPromotionRedirectLinkByCodeQuery,
   useGetApiMyPortalReferralGetQuery,
-  usePostApiMyPortalReferralJoinMutation,
+  useGetApiMyPortalReferralCustomerByReferralIdListQuery,
   useGetApiMyPortalRoleListQuery,
   useGetApiMyPortalRoleAccessListByUserIdQuery,
   usePutApiMyPortalRoleAccessEditMutation,

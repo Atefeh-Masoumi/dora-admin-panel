@@ -1,10 +1,10 @@
-import { FC, useEffect, useState } from "react";
-import { Button, Stack, Typography, Paper } from "@mui/material";
-import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
-import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
+import { Button, Paper, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PageLoading from "src/components/atoms/PageLoading";
-import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
+import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
+import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
+// import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
 
 type ReferralCallBackPropsType = {};
 
@@ -14,20 +14,20 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [sendReferralCode, { isLoading }] =
-    usePostApiMyPortalReferralJoinMutation();
+  // const [sendReferralCode, { isLoading }] =
+  //   usePostApiMyPortalReferralJoinMutation();
 
-  useEffect(() => {
-    if (id) {
-      sendReferralCode({ joinReferralModel: { referralCode: id } })
-        .unwrap()
-        .then((res) => {
-          setIsSuccess(true);
-        });
-    } else {
-      navigate(-1);
-    }
-  }, [id, navigate, sendReferralCode]);
+  // useEffect(() => {
+  //   if (id) {
+  //     sendReferralCode({ joinReferralModel: { referralCode: id } })
+  //       .unwrap()
+  //       .then((res) => {
+  //         setIsSuccess(true);
+  //       });
+  //   } else {
+  //     navigate(-1);
+  //   }
+  // }, [id, navigate, sendReferralCode]);
 
   const closeHandler = () => navigate("/portal/referral");
 
@@ -35,7 +35,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
 
   return (
     <>
-      {isLoading && <PageLoading />}
+      {false && <PageLoading />}
       <Paper
         elevation={0}
         component={Stack}

@@ -12,10 +12,25 @@ import Payments from "./payment/Index";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 
 const tabs: tabsType[] = [
-  { title: "محاسبات", icon: AccountSvg, content: <CustomerBills /> },
-  { title: "کیف پول", icon: AccountSvg, content: <Wallet /> },
-  { title: "فاکتورها", icon: AccountSvg, content: <Invoices /> },
-  { title: "پرداخت ها", icon: AccountSvg, content: <Payments /> },
+  {
+    title: "محاسبات",
+    icon: AccountSvg,
+    content: <CustomerBills />,
+    path: "customer-bill",
+  },
+  { title: "کیف پول", icon: AccountSvg, content: <Wallet />, path: "wallet" },
+  {
+    title: "فاکتورها",
+    icon: AccountSvg,
+    content: <Invoices />,
+    path: "invoice",
+  },
+  {
+    title: "پرداخت ها",
+    icon: AccountSvg,
+    content: <Payments />,
+    path: "payment",
+  },
 ];
 
 const Financial: FC = () => {
