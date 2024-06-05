@@ -35,9 +35,6 @@ const Account = lazy(() => import("src/pages/portal/account/Index"));
 const Financial = lazy(() => import("src/pages/portal/financial/Index"));
 
 const Sales = lazy(() => import("src/pages/portal/orderOffer/Sales"));
-const Notification = lazy(
-  () => import("src/pages/portal/account/Notifications")
-);
 const CustomerProducts = lazy(
   () => import("src/pages/portal/customerProduct/Index")
 );
@@ -182,13 +179,6 @@ const Router: FC = () => {
               hideSidebar: false,
             })}
           />
-          <Route
-            path="/portal/notifications"
-            element={mainTemplate(Notification, {
-              pageTitle: "مرکز اطلاع رسانی",
-            })}
-          />
-
           {/* ======================================= SUPPORT ======================================= */}
           <Route
             path="/portal/supports"
