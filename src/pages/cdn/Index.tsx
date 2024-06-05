@@ -10,7 +10,7 @@ import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
+import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import {
   DomainListResponse,
@@ -45,11 +45,15 @@ const ZoneManagement: FC = () => {
 
   const navigate = useNavigate();
 
-  const [selectedProject, setSelectedProject] =
-    useState<DomainListResponse | null>(null);
+  const [selectedZone, setSelectedZone] = useState<DomainListResponse | null>(
+    null
+  );
 
   const refetchOnClick = () => refetch();
   const createBtnOnClick = () => navigate("/cdn/add-domain");
+  const cardOnClick = (zone: DomainListResponse) => {
+    navigate(`/vm/${zone.id}/overview`);
+  };
 
   const [search, setSearch] = useState("");
 
@@ -77,19 +81,19 @@ const ZoneManagement: FC = () => {
   }, [windowDimenion]);
 
   const deleteBtnOnClick = (project: DomainListResponse) => {
-    setSelectedProject(project);
+    setSelectedZone(project);
   };
 
   const closeDialogHandler = () => {
-    setSelectedProject(null);
+    setSelectedZone(null);
   };
 
-  const [deleteProject, { isLoading: deleteProjectLoading }] =
+  const [deleteZone, { isLoading: deleteProjectLoading }] =
     useDeleteApiMyDnsHostDeleteByIdMutation();
 
-  const deleteProjectHandler = () => {
-    if (!selectedProject?.id) return;
-    deleteProject({ id: selectedProject.id })
+  const deleteZoneHandler = () => {
+    if (!selectedZone?.id) return;
+    deleteZone({ id: selectedZone.id })
       .unwrap()
       .then(() => {
         toast.success("پروژه مورد نظر با موفقیت حذف شد");
@@ -210,9 +214,6 @@ const ZoneManagement: FC = () => {
             </Stack>
           ) : (
             zoneList?.map((item) => {
-              const vmDataList = [
-                { label: item.zoneStatus, id: item.zoneStatus },
-              ];
               return (
                 <Grid
                   key={item.id}
@@ -229,7 +230,7 @@ const ZoneManagement: FC = () => {
                     key={item.id}
                     domainData={item}
                     onDeleteClick={deleteBtnOnClick}
-                    itemOnClick={createBtnOnClick}
+                    itemOnClick={cardOnClick}
                     showStatus={false}
                     isDomainCard={true}
                     detailsList={[

@@ -9,7 +9,7 @@ import {
 import { Tabs, Stack, Box } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { Navigate, useParams, useNavigate } from "react-router-dom"; // Modified import
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { EditStorageContext } from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import { ServiceInfo } from "src/components/organisms/storage/edit/ServiceInfo";
 import AccessKeyList from "src/components/organisms/storage/edit/AccessKeyList";

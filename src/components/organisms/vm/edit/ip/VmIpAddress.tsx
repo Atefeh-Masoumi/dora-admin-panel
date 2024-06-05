@@ -20,11 +20,7 @@ import {
   DatacenterIpListResponse,
 } from "src/app/services/api.generated";
 import { useLazyGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api";
-import {
-  BORDER_RADIUS_5,
-  BORDER_RADIUS_4,
-  BORDER_RADIUS_1,
-} from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 
 const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
