@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Grid,
   IconButton,
@@ -13,6 +14,7 @@ import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generate
 import { toast } from "react-toastify";
 import { Copy } from "src/components/atoms/svg-icons/CopySvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { WelcomeTooltip } from "../portal/account/referral/WelcomeTooltip";
 
 export const GiftAndReferral: FC = () => {
   const [giftCodeOpen, setGiftCodeOpen] = useState(false);
@@ -63,13 +65,14 @@ export const GiftAndReferral: FC = () => {
               borderRadius={BORDER_RADIUS_1}
             >
               <Grid item>
-                <Typography
-                  color="secondary"
-                  variant="text2"
-                  whiteSpace="nowrap"
-                >
-                  کد معرف شما:
-                </Typography>
+                <Stack direction="row">
+                  <Typography color="secondary" variant="text2">
+                    دوستان خود را دعوت کنید و تخفیف بگیرید
+                  </Typography>
+                  <Box display={{ xs: "none", md: "flex" }}>
+                    <WelcomeTooltip />
+                  </Box>
+                </Stack>
               </Grid>
               <Grid item display={"flex"}>
                 {isLoading ? (
