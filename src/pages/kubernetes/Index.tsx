@@ -10,7 +10,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
 import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
 
-const NamespaceManagement: FC = () => {
+const KubernetesIndex: FC = () => {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useGetApiMyKubernetesHostListQuery();
@@ -126,4 +126,4 @@ const NamespaceManagement: FC = () => {
   );
 };
 
-export default NamespaceManagement;
+export default KubernetesIndex;

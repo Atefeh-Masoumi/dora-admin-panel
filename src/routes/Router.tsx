@@ -1,6 +1,13 @@
 import { FC, lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PageLoading from "src/components/atoms/PageLoading";
+import {
+  MainTemplate,
+  MainTemplatePropsType,
+} from "src/components/templates/MainTemplate";
+import { PrivateRoute } from "./PrivateRoute";
+import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
+import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
 import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
 import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
@@ -10,18 +17,6 @@ import AddServerContextProvider from "src/components/organisms/vm/add/contexts/A
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
-import {
-  MainTemplate,
-  MainTemplatePropsType,
-} from "src/components/templates/MainTemplate";
-import { PrivateRoute } from "./PrivateRoute";
-
-import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
-import {
-  CallBackTemplate,
-  CallBackTemplatePropsType,
-} from "src/components/templates/CallBackTemplate";
-import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -42,25 +37,21 @@ const Supports = lazy(() => import("src/pages/portal/support/Index"));
 const Support = lazy(() => import("src/pages/portal/support/Support"));
 const AddSupport = lazy(() => import("src/pages/portal/support/AddSupport"));
 
-// const Referrals = lazy(() => import("src/pages/portal/account/Referrals"));
-// const Referral = lazy(() => import("src/pages/portal/account/Referral"));
 const Calculator = lazy(() => import("src/pages/portal/calculator"));
 
 const Wallet = lazy(
-  () => import("src/pages/portal/financial/walletTransaction/Index")
+  () => import("src/pages/portal/financial/WalletTransactions")
 );
-const Payments = lazy(() => import("src/pages/portal/financial/payment/Index"));
-const Payment = lazy(
-  () => import("src/pages/portal/financial/payment/PaymentCallBack")
+const Payments = lazy(() => import("src/pages/portal/financial/Payments"));
+const Payment = lazy(() => import("src/pages/portal/financial/Payment"));
+const CustomerBills = lazy(
+  () => import("src/pages/portal/financial/CustomerBills")
 );
-const Bills = lazy(
-  () => import("src/pages/portal/financial/customerBill/Index")
+const CustomerBill = lazy(
+  () => import("src/pages/portal/financial/CustomerBill")
 );
-const Bill = lazy(() => import("src/pages/portal/financial/customerBill/Bill"));
-const Invoices = lazy(() => import("src/pages/portal/financial/invoice/Index"));
-const Invoice = lazy(
-  () => import("src/pages/portal/financial/invoice/Invoice")
-);
+const Invoices = lazy(() => import("src/pages/portal/financial/Invoices"));
+const Invoice = lazy(() => import("src/pages/portal/financial/Invoice"));
 
 const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
 const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));
@@ -83,7 +74,7 @@ const StorageIndex = lazy(() => import("src/pages/storage/Index"));
 const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
-const PlatformIndex = lazy(() => import("src/pages/kubernetes/Index"));
+const KubernetesIndex = lazy(() => import("src/pages/kubernetes/Index"));
 const AddKubernetes = lazy(() => import("src/pages/kubernetes/AddKubernetes"));
 const EditKubernetes = lazy(
   () => import("src/pages/kubernetes/EditKubernetes")
@@ -108,17 +99,6 @@ const mainTemplate = (
       )}
     </Suspense>
   </MainTemplate>
-);
-
-const callbackTemplate = (
-  PageComponent: FC<any>,
-  templateProps?: CallBackTemplatePropsType
-) => (
-  <CallBackTemplate {...templateProps}>
-    <Suspense fallback={<PageLoading />}>
-      <PageComponent />
-    </Suspense>
-  </CallBackTemplate>
 );
 
 const Router: FC = () => {
@@ -244,13 +224,13 @@ const Router: FC = () => {
           />
           <Route
             path="/portal/wallet/bill"
-            element={mainTemplate(Bills, {
+            element={mainTemplate(CustomerBills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
           <Route
             path="/portal/wallet/bill/:id"
-            element={mainTemplate(Bill, {
+            element={mainTemplate(CustomerBill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
                 url: "/portal/wallet/bill",
@@ -375,7 +355,7 @@ const Router: FC = () => {
           {/* ======================================= Kubernetes ======================================= */}
           <Route
             path="/kubernetes"
-            element={mainTemplate(PlatformIndex, {
+            element={mainTemplate(KubernetesIndex, {
               pageTitle: "مدیریت سرویس کوبرنتیز",
             })}
           />

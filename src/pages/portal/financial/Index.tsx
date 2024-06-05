@@ -5,10 +5,10 @@ import PageLoading from "src/components/atoms/PageLoading";
 import CustomTabComponent, {
   tabsType,
 } from "src/components/molecules/DorsaTab";
-import Wallet from "./walletTransaction/Index";
-import CustomerBills from "./customerBill/Index";
-import Invoices from "./invoice/Index";
-import Payments from "./payment/Index";
+import Wallet from "./WalletTransactions";
+import CustomerBills from "./CustomerBills";
+import Invoices from "./Invoices";
+import Payments from "./Payments";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 
 const tabs: tabsType[] = [

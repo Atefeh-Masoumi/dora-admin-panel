@@ -6,7 +6,6 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { useNavigate, useParams } from "react-router";
 import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
-import { PaymentListResponse } from "src/app/services/api.generated";
 
 type PaymentCallBackPropsType = {
   handleClose: () => void;
