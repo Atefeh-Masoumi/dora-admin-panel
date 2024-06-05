@@ -1,12 +1,7 @@
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
-import {
-  BORDER_RADIUS_1,
-  BORDER_RADIUS_2,
-  BORDER_RADIUS_4,
-  BORDER_RADIUS_5,
-} from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { homeProductsConstantListItems } from "./constants/homeProductsConstant";
 
 export const Products: FC = () => {

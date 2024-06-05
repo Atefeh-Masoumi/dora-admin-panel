@@ -35,7 +35,7 @@ export const SpecialOffer: FC<SpecialOfferPropsType> = () => {
             color: "white",
           },
         }}
-        href="/sales"
+        href="/portal/sales"
       >
         مشاهده پلن‌ها
       </Button>

@@ -1,1 +1,1 @@
-export const analyticsCategories = ["سرویس پیامک ابری", "صورتحساب ها"];
+export const analyticsCategories = ["سرویس پیامک ابری", "صورتحساب"];

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   DnsListResponse,
+  DomainListResponse,
   useDeleteApiMyDnsHostDeleteByIdMutation,
   useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
@@ -19,7 +20,7 @@ import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { DeleteCdnDialog } from "src/components/organisms/cdn/dialog/DeleteCdnDialog";
-import { DomainCard } from "src/components/organisms/cdn/edit/DomainCard";
+import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 // Define the type for your context value
@@ -56,6 +57,9 @@ const ZoneManagement: FC = () => {
   );
 
   const createBtnOnClick = () => navigate("/cdn/add-domain");
+  const cardOnClick = (zone: DomainListResponse) => {
+    navigate(`/vm/${zone.id}/overview`);
+  };
 
   const filteredList = zoneList?.filter((zone) =>
     zone.zoneName?.includes(search)
@@ -223,7 +227,7 @@ const ZoneManagement: FC = () => {
                     key={item.id}
                     domainData={item}
                     onDeleteClick={deleteBtnOnClick}
-                    itemOnClick={createBtnOnClick}
+                    itemOnClick={cardOnClick}
                     showStatus={false}
                     isDomainCard={true}
                     detailsList={[

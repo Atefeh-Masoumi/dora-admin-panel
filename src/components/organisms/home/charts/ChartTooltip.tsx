@@ -9,7 +9,7 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
   categoryId,
   payload,
 }) => {
-  const category = categoryId === 1 ? "سرویس پیامک ابری" : "صورتحساب ها";
+  const category = categoryId === 1 ? "سرویس پیامک ابری" : "صورتحساب";
   const analyticsValue =
     payload?.[0]?.value === 0 ? "صفر" : Math.trunc(payload?.[0]?.value);
   return (

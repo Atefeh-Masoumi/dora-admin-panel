@@ -1,4 +1,4 @@
-import { DeleteOutline, ModeEdit } from "@mui/icons-material";
+import { DeleteOutline } from "@mui/icons-material";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import {
   Avatar,
@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { e2p } from "src/utils/e2p.utils";
 
 type detailsListType = {
