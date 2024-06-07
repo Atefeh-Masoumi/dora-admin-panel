@@ -40,13 +40,13 @@ const tabs: tabsType[] = [
     path: "notification",
   },
   {
-    title: "تنظمات اطلاع رسانی",
+    title: "تنظیمات اطلاع رسانی",
     icon: AccountSvg,
     content: <NotificationSetting />,
     path: "notification-setting",
   },
   {
-    title: "تنظمات امنیتی",
+    title: "تنظیمات امنیتی",
     icon: AccountSvg,
     content: <SecuritySetting />,
     path: "security-setting",
