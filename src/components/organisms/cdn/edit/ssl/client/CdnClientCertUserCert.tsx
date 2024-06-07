@@ -9,10 +9,10 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnClientCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const dnsId = selectedDomain?.id || 0;
 
   const { data: userCert, isLoading } =
-    useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery({ dnsHostId: cdnId });
+    useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery({ dnsHostId: dnsId });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
@@ -64,7 +64,7 @@ export const CdnClientCertUserCert: FC = () => {
       <AddClientUserCertDialog
         openDialog={open}
         handleClose={handleClose}
-        cdnId={cdnId}
+        dnsId={dnsId}
       />
     </Stack>
   );

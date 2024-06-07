@@ -9,10 +9,10 @@ import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edg
 
 export const SSLSetting: FC = () => {
   const { id } = useParams();
-  const cdnId = Number(id) || 0;
+  const dnsId = Number(id) || 0;
 
   const { data: zoneData, isLoading } = useGetApiMyCdnHostGetByDnsHostIdQuery({
-    dnsHostId: cdnId,
+    dnsHostId: dnsId,
   });
   return (
     <Stack width="100%" spacing={4}>
@@ -23,10 +23,10 @@ export const SSLSetting: FC = () => {
         <CdnTypeSetting
           zoneTypeId={zoneData?.zoneTypeId as number}
           loading={isLoading}
-          id={cdnId}
+          dnsId={dnsId}
         />
         <CdnSecuritySetting
-          id={cdnId}
+          dnsId={dnsId}
           isHSTS={zoneData?.isHsts}
           isHttpsRedirect={zoneData?.isHttpsRedirect}
           isNonWwwRedirect={zoneData?.isNonWwwRedirect}
@@ -38,7 +38,7 @@ export const SSLSetting: FC = () => {
           گواهی های لبه (EDGE)
         </Typography>
         <CdnChangeEdgeCertType
-          id={cdnId}
+          id={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneEdgeCertTypeId}
         />
@@ -48,7 +48,7 @@ export const SSLSetting: FC = () => {
           گواهی های سرور (ORIGIN)
         </Typography>
         <CdnChangeClientCertType
-          id={cdnId}
+          id={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneClientCertTypeId}
         />

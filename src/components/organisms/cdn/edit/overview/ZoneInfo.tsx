@@ -1,29 +1,16 @@
-import {
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { FC, useMemo, useState } from "react";
+import { Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import { FC, useMemo } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyDnsHostGetByIdQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { DeleteZoneDialog } from "./dialogs/DeleteDialog";
 
 type ZoneInfoPropsType = {};
 
 export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
   const { id } = useParams();
-  const cdnId = Number(id) || 0;
-
-  const handleOpenDelete = () => setOpenDelete(true);
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const dnsId = Number(id) || 0;
 
   const refetchOnClick = () => refetch();
 
@@ -32,7 +19,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiMyDnsHostGetByIdQuery({ id: cdnId });
+  } = useGetApiMyDnsHostGetByIdQuery({ id: dnsId });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
@@ -76,16 +63,6 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                   مشخصات دامنه
                 </Typography>
               </Stack>
-              <Stack display={{ xs: "flex", md: "none" }}>
-                <IconButton
-                  sx={{ borderRadius: BORDER_RADIUS_1 }}
-                  color="error"
-                  onClick={handleOpenDelete}
-                >
-                  <TrashSvg />
-                </IconButton>
-              </Stack>
-
               <Stack
                 display={{ xs: "none", md: "flex" }}
                 direction="row"
@@ -105,25 +82,9 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
                 >
                   بررسی مجدد دامنه
                 </Button>
-
-                {/* <Button
-                  variant="outlined"
-                  onClick={handleOpenDelete}
-                  color="error"
-                  size="large"
-                  sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-                  startIcon={<TrashSvg color="error" />}
-                >
-                  حذف دامنه
-                </Button> */}
               </Stack>
             </Stack>
           </Stack>
-          {/* <DeleteZoneDialog
-            id={zoneData?.id ?? 0}
-            openDialog={openDelete}
-            handleClose={handleCloseDelete}
-          /> */}
         </Stack>
 
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

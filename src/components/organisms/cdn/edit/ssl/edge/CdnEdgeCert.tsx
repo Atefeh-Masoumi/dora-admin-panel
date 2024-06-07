@@ -13,20 +13,20 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnEdgeCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const dnsId = selectedDomain?.id || 0;
 
   const [createLicense, { isLoading: loadingCreate }] =
     usePostApiMyCdnEdgeCertCreateMutation();
 
   const { data: edgeCert, isLoading } =
     useGetApiMyCdnEdgeCertGetByDnsHostIdQuery({
-      dnsHostId: cdnId,
+      dnsHostId: dnsId,
     });
 
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
-        dnsHostId: cdnId,
+        dnsHostId: dnsId,
       },
     })
       .unwrap()

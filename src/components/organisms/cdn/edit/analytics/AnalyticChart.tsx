@@ -38,7 +38,7 @@ type AnalyticChartPropsType = {};
 
 export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const { id } = useParams();
-  const cdnId = Number(id) || 0;
+  const dnsId = Number(id) || 0;
 
   const [categoryId, setCategoryId] = useState(0);
 
@@ -51,7 +51,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     isLoading: getDataLoading,
     isFetching: getDataFetching,
   } = useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery({
-    dnsHostId: cdnId,
+    dnsHostId: dnsId,
     periodId: categoryId + 1,
   });
 

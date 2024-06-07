@@ -68,13 +68,13 @@ const formValidation = yup.object().shape({
   maxConnectionsPerServer: yup.string().required("تعداد کانکشن را وارد‍ کنید"),
 });
 
-type AddLoadBalanceDialogPropsType = {
+type CreateLoadBalanceDialogPropsType = {
   onClose: () => void;
   id?: number;
   openDialog: boolean;
 };
 
-export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
+export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   onClose,
   id,
   openDialog,
@@ -88,7 +88,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     dangerousAcceptAnyServerCertificate: false,
   });
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const dnsId = selectedDomain?.id || 0;
 
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
@@ -164,7 +164,7 @@ export const AddLoadBalanceDialog: FC<AddLoadBalanceDialogPropsType> = ({
     } else {
       createLoadBalance({
         createCdnRouteModel: {
-          dnsHostId: cdnId,
+          dnsHostId: dnsId,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),

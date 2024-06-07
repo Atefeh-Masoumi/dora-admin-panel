@@ -9,11 +9,11 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnClientCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+  const dnsId = selectedDomain?.id || 0;
 
   const { data: edgeCert, isLoading } =
     useGetApiMyCdnOriginCertGetByDnsHostIdQuery({
-      dnsHostId: cdnId,
+      dnsHostId: dnsId,
     });
 
   return (

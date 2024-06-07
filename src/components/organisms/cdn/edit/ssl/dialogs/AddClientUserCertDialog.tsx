@@ -16,15 +16,15 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 type AddClientUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  cdnId: number;
+  dnsId: number;
 };
 
 export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
-  cdnId,
+  dnsId,
 }) => {
-  const formInitialValues = { cdnId, keyPem: "", certPem: "" };
+  const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiMyCdnOriginCertCreateUserCertMutation();
@@ -42,9 +42,9 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
     { dnsHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
-    if (!cdnId || !keyPem || !certPem) return;
+    if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnOriginUserCertModel: { dnsHostId: cdnId, keyPem, certPem },
+      createCdnOriginUserCertModel: { dnsHostId: dnsId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

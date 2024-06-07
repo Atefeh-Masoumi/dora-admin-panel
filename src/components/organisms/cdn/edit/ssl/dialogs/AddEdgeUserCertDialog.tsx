@@ -16,15 +16,15 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 type AddEdgeUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  cdnId: number;
+  dnsId: number;
 };
 
 export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
-  cdnId,
+  dnsId,
 }) => {
-  const formInitialValues = { cdnId, keyPem: "", certPem: "" };
+  const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiMyCdnEdgeCertCreateUserCertMutation();
@@ -41,9 +41,9 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
     { dnsHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
-    if (!cdnId || !keyPem || !certPem) return;
+    if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnEdgeUserCertModel: { dnsHostId: cdnId, keyPem, certPem },
+      createCdnEdgeUserCertModel: { dnsHostId: dnsId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {
