@@ -117,7 +117,11 @@ export const DnsRecord: FC = () => {
           />
         </Stack>
       </Stack>
-      <CreateRecordDialog openDialog={showDialog} onClose={handleClose} />
+      <CreateRecordDialog
+        openDialog={showDialog}
+        onClose={handleClose}
+        dnsId={dnsId}
+      />
     </Stack>
   );
 };

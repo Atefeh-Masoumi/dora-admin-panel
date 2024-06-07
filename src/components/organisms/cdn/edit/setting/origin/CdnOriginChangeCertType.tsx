@@ -10,13 +10,13 @@ import { CdnOriginCert } from "./CdnOriginCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnOriginChangeCertTypePropsType = {
-  id: number;
+  dnsId: number;
   loading: boolean | undefined;
   certTypeId: number | undefined;
 };
 
 export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
-  id,
+  dnsId,
   loading,
   certTypeId,
 }) => {
@@ -25,7 +25,10 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
-      changeClientCertTypeModel: { dnsHostId: id, zoneClientCertTypeId: type },
+      changeClientCertTypeModel: {
+        dnsHostId: dnsId,
+        zoneClientCertTypeId: type,
+      },
     });
   };
   return (
@@ -108,7 +111,11 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
             </Fragment>
           )}
         </Stack>
-        {certTypeId === 1 ? <CdnOriginCert /> : <CdnOriginCertUserCert />}
+        {certTypeId === 1 ? (
+          <CdnOriginCert dnsId={dnsId} loading />
+        ) : (
+          <CdnOriginCertUserCert dnsId={dnsId} loading />
+        )}
       </Stack>
     </>
   );

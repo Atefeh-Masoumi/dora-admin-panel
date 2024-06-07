@@ -39,7 +39,7 @@ export const CdnSetting: FC = () => {
           گواهی های لبه (EDGE)
         </Typography>
         <CdnEdgeChangeCertType
-          id={dnsId}
+          dnsId={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneEdgeCertTypeId}
         />
@@ -50,7 +50,7 @@ export const CdnSetting: FC = () => {
           گواهی های سرور (ORIGIN)
         </Typography>
         <CdnOriginChangeCertType
-          id={dnsId}
+          dnsId={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneClientCertTypeId}
         />

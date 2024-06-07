@@ -1,16 +1,20 @@
 import { FC, useState } from "react";
 import { Button, Divider, Stack, Typography } from "@mui/material";
-import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddEdgeUserCertDialog } from "../dialogs/CreateEdgeUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnEdgeCertUserCert: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const dnsId = selectedDomain?.id || 0;
+type CdnEdgeCertPropsType = {
+  dnsId: number;
+  loading?: boolean;
+};
 
+export const CdnEdgeCertUserCert: FC<CdnEdgeCertPropsType> = ({
+  dnsId,
+  loading,
+}) => {
   const { data: userCert, isLoading } =
     useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery({ dnsHostId: dnsId });
 

@@ -64,7 +64,11 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           />
         </Box>
       </Stack>
-      <CreateLoadBalanceDialog openDialog={showDialog} onClose={closeDialog} />
+      <CreateLoadBalanceDialog
+        openDialog={showDialog}
+        onClose={closeDialog}
+        dnsId={dnsId}
+      />
     </>
   );
 };

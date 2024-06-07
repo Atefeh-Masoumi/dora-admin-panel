@@ -2,15 +2,19 @@ import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { useGetApiMyCdnOriginCertGetByDnsHostIdQuery } from "src/app/services/api.generated";
-import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnOriginCert: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const dnsId = selectedDomain?.id || 0;
+type CdnOriginCertPropsType = {
+  dnsId: number;
+  loading?: boolean;
+};
 
+export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
+  dnsId,
+  loading,
+}) => {
   const { data: edgeCert, isLoading } =
     useGetApiMyCdnOriginCertGetByDnsHostIdQuery({
       dnsHostId: dnsId,

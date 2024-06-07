@@ -10,13 +10,13 @@ import { CdnEdgeCert } from "./CdnEdgeCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnEdgeChangeCertTypePropsType = {
-  id: number;
+  dnsId: number;
   loading?: boolean;
   certTypeId?: number;
 };
 
 export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
-  id,
+  dnsId,
   loading,
   certTypeId,
 }) => {
@@ -25,7 +25,7 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
   const onChangeEdge = (type: number) => {
     if (!certTypeId) return;
     changeEdge({
-      changeEdgeCertTypeModel: { dnsHostId: id, zoneEdgeCertTypeId: type },
+      changeEdgeCertTypeModel: { dnsHostId: dnsId, zoneEdgeCertTypeId: type },
     });
   };
 
@@ -111,7 +111,11 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
             </Fragment>
           )}
         </Stack>
-        {certTypeId === 1 ? <CdnEdgeCert /> : <CdnEdgeCertUserCert />}
+        {certTypeId === 1 ? (
+          <CdnEdgeCert dnsId={dnsId} loading />
+        ) : (
+          <CdnEdgeCertUserCert dnsId={dnsId} loading />
+        )}
       </Stack>
     </>
   );

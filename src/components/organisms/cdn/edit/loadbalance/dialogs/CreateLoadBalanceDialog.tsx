@@ -19,7 +19,6 @@ import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
-import { useAppSelector } from "src/app/hooks";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -71,12 +70,14 @@ const formValidation = yup.object().shape({
 type CreateLoadBalanceDialogPropsType = {
   onClose: () => void;
   id?: number;
+  dnsId: number;
   openDialog: boolean;
 };
 
 export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   onClose,
   id,
+  dnsId,
   openDialog,
 }) => {
   const [initialValues, setInitialValues] = useState<InitialValuesType>({
@@ -87,9 +88,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     maxConnectionsPerServer: 0,
     dangerousAcceptAnyServerCertificate: false,
   });
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const dnsId = selectedDomain?.id || 0;
-
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
   const [getDetails, { isLoading: getDetailsLoading }] =
@@ -148,7 +146,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     if (id) {
       editLoadBalance({
         editCdnRouteModel: {
-          id: selectedDomain?.id!,
+          id: id,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),

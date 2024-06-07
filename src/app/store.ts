@@ -1,6 +1,5 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import auth from "./slice/authSlice";
-import cdn from "./slice/cdnSlice";
 import forgetPassword from "./slice/forgetPasswordSlice";
 import createNode from "./slice/createNodeSlice";
 import { api } from "./services/api";
@@ -9,7 +8,6 @@ export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth,
-    cdn,
     forgetPassword,
     createNode,
   },

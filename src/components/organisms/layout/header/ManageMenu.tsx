@@ -15,6 +15,7 @@ import { logoutAction } from "src/app/slice/authSlice";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
 import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const ManageMenu: FC = () => {
   const navigate = useNavigate();
@@ -34,30 +35,35 @@ export const ManageMenu: FC = () => {
 
   const items = [
     {
+      id: 1,
       value: "account",
       label: "سرویس‌های من",
       icon: FolderOutlined,
       link: "/portal/customer-products",
     },
     {
+      id: 2,
       value: "account",
       label: "مدیریت اکانت",
       icon: AccountSvg,
       link: "/portal/account",
     },
     {
+      id: 3,
       value: "wallet",
       label: "مدیریت مالی",
       icon: Service,
       link: "/portal/financial",
     },
     {
+      id: 4,
       value: "password",
       label: "تغییر رمز عبور",
       icon: PasswordOutlined,
       link: "/portal/account?tab=change-password",
     },
     {
+      id: 5,
       value: "logout",
       label: "خروج از حساب",
       icon: Logout,
@@ -110,9 +116,9 @@ export const ManageMenu: FC = () => {
               {items.map((item, index) => (
                 <>
                   <MenuItem
-                    key={item.value}
+                    key={item.id}
                     disableRipple
-                    sx={{ borderRadius: 1, m: 1, py: 2 }}
+                    sx={{ borderRadius: BORDER_RADIUS_1, m: 1, py: 2 }}
                     onClick={() => {
                       item.function ? item.function() : handleClose();
                       item.link ? navigate(item.link) : handleClose();

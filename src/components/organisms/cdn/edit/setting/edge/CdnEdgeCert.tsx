@@ -1,20 +1,21 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import {
-  usePostApiMyCdnEdgeCertCreateMutation,
-  useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
-} from "src/app/services/api.generated";
-import { useAppSelector } from "src/app/hooks";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  usePostApiMyCdnEdgeCertCreateMutation,
+  useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
+} from "src/app/services/api.generated";
 
-export const CdnEdgeCert: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const dnsId = selectedDomain?.id || 0;
+type CdnEdgeCertPropsType = {
+  dnsId: number;
+  loading?: boolean;
+};
 
+export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
   const [createLicense, { isLoading: loadingCreate }] =
     usePostApiMyCdnEdgeCertCreateMutation();
 

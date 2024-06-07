@@ -56,7 +56,7 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
       />
       {openEdit && (
         <CreateLoadBalanceDialog
-          id={row.id}
+          dnsId={row.id}
           openDialog={openEdit}
           onClose={handleCloseEdit}
         />
