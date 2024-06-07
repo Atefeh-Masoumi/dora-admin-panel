@@ -116,6 +116,9 @@ export const DomainCard: FC<DomainCardPropsType> = ({
               rowGap={0.8}
               columnGap={1}
             >
+              <Typography noWrap color="text.light">
+                وضعیت:
+              </Typography>
               <Typography
                 noWrap
                 onClick={() => {
