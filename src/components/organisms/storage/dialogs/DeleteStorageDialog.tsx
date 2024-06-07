@@ -3,7 +3,7 @@ import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyStorageHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/storage/Index";
+import { DataContext } from "src/pages/storage/StorageList";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteStorageDialogPropsType = {

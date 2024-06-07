@@ -20,17 +20,17 @@ const EditZone: FC = () => {
     if (pathname.includes("overview")) {
       result = `overview`;
     }
-    if (pathname.includes("analytics")) {
-      result = `analytics`;
-    }
-    if (pathname.includes("dns-record-settings")) {
-      result = `dns-record-settings`;
-    }
     if (pathname.includes("setting")) {
       result = `setting`;
     }
-    if (pathname.includes("load-balance-settings")) {
-      result = `load-balance-settings`;
+    if (pathname.includes("analytics")) {
+      result = `analytics`;
+    }
+    if (pathname.includes("dns-record")) {
+      result = `dns-record`;
+    }
+    if (pathname.includes("load-balance")) {
+      result = `load-balance`;
     }
     // if (pathname.includes("api-gateway-settings")) {
     //   result = "api-gateway-settings";
@@ -49,16 +49,16 @@ const EditZone: FC = () => {
       case `overview`:
         result = <ZoneInfo />;
         break;
-      case `analytics`:
-        result = <AnalyticChart />;
-        break;
-      case `dns-record-settings`:
-        result = <DnsRecord />;
-        break;
       case `setting`:
         result = <CdnSetting />;
         break;
-      case `load-balance-settings`:
+      case `analytics`:
+        result = <AnalyticChart />;
+        break;
+      case `dns-record`:
+        result = <DnsRecord />;
+        break;
+      case `load-balance`:
         result = <LoadBalance />;
         break;
       // case "api-gateway-settings":
@@ -94,29 +94,11 @@ const EditZone: FC = () => {
           <DorsaTab value={`overview`} label="مشخصات دامنه" />
           <DorsaTab value={`setting`} label="تنظیمات" />
           <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
-          <DorsaTab value={`dns-record-settings`} label="تنظیمات DNS Record" />
-          <DorsaTab
-            value={`load-balance-settings`}
-            label="تنظیمات Load Balance"
-          />
+          <DorsaTab value={`dns-record`} label="تنظیمات DNS Record" />
+          <DorsaTab value={`load-balance`} label="تنظیمات Load Balance" />
           {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}
         </Tabs>
       </Box>
-      {/* <Stack
-        p={2.5}
-        bgcolor="rgba(244, 95, 80, 1)"
-        direction="row"
-        borderRadius={BORDER_RADIUS_1}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineIcon />
-        <Typography variant="text14">
-          دامنه مورد نظر به دلیل بدهی مسدود می‌باشد، لطفا با پشتیبانی تماس
-          بگیرید.
-        </Typography>
-      </Stack> */}
       {renderHandler()}
     </Stack>
   );

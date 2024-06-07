@@ -3,12 +3,12 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate } from "react-router";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
-import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
-import { useGetApiMyDomainHostListQuery } from "src/app/services/api.generated";
+import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
+import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
+import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -20,9 +20,7 @@ export const DataContext = createContext<DataContextValueType>({
   refetchOnClick: () => null,
 });
 
-type WebManagementPropsType = {};
-
-const WebManagement: FC<WebManagementPropsType> = () => {
+const StorageList: FC = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -30,7 +28,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyDomainHostListQuery();
+  } = useGetApiMyStorageHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -40,8 +38,8 @@ const WebManagement: FC<WebManagementPropsType> = () => {
   const filteredList =
     data?.filter((item) => {
       let result = null;
-      if (item?.domainName) {
-        result = item?.domainName.includes(search);
+      if (item?.name) {
+        result = item?.name.includes(search);
       }
       return result;
     }) || [];
@@ -49,7 +47,7 @@ const WebManagement: FC<WebManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/domain/registerDomain");
+  const createCloudOnClick = () => navigate("/storage/addStorageService");
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
@@ -73,11 +71,11 @@ const WebManagement: FC<WebManagementPropsType> = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست ثبت/تمدید دامنه
+              لیست سرویس فضای ابری
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام دامنه"
+              placeholder="جستجو در نام سرویس"
             />
           </Stack>
           <Stack direction="row" alignItems="center" spacing={1}>
@@ -122,17 +120,17 @@ const WebManagement: FC<WebManagementPropsType> = () => {
                 </Stack>
               }
             >
-              ثبت/تمدید دامنه جدید
+              فضای ابری جدید
             </Button>
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={domainTableStruct}
-            RowComponent={DomainTableRow}
+            struct={storageTableStruct}
+            RowComponent={StorageTableRow}
             rows={filteredList}
-            text="در حال حاضر دامنه ای وجود ندارد"
+            text="در حال حاضر سرویسی وجود ندارد"
             isLoading={isLoading}
             initialOrder={9}
           />
@@ -142,4 +140,4 @@ const WebManagement: FC<WebManagementPropsType> = () => {
   );
 };
 
-export default WebManagement;
+export default StorageList;

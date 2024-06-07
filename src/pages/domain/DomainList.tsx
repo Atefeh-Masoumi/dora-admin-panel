@@ -3,12 +3,12 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate } from "react-router";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
-import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
-import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
+import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
+import { useGetApiMyDomainHostListQuery } from "src/app/services/api.generated";
 
 // Define the type for your context value
 type DataContextValueType = {
@@ -20,9 +20,7 @@ export const DataContext = createContext<DataContextValueType>({
   refetchOnClick: () => null,
 });
 
-type StorageManagementPropsType = {};
-
-const StorageManagement: FC<StorageManagementPropsType> = () => {
+const DomainList: FC = () => {
   const [search, setSearch] = useState("");
 
   const {
@@ -30,7 +28,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyStorageHostListQuery();
+  } = useGetApiMyDomainHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -40,8 +38,8 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   const filteredList =
     data?.filter((item) => {
       let result = null;
-      if (item?.name) {
-        result = item?.name.includes(search);
+      if (item?.domainName) {
+        result = item?.domainName.includes(search);
       }
       return result;
     }) || [];
@@ -49,7 +47,7 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   const navigate = useNavigate();
 
   const refetchOnClick = () => refetch();
-  const createCloudOnClick = () => navigate("/storage/addStorageService");
+  const createCloudOnClick = () => navigate("/domain/registerDomain");
 
   return (
     <DataContext.Provider value={{ refetchOnClick }}>
@@ -73,11 +71,11 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس فضای ابری
+              لیست ثبت/تمدید دامنه
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام سرویس"
+              placeholder="جستجو در نام دامنه"
             />
           </Stack>
           <Stack direction="row" alignItems="center" spacing={1}>
@@ -122,17 +120,17 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
                 </Stack>
               }
             >
-              فضای ابری جدید
+              ثبت/تمدید دامنه جدید
             </Button>
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={storageTableStruct}
-            RowComponent={StorageTableRow}
+            struct={domainTableStruct}
+            RowComponent={DomainTableRow}
             rows={filteredList}
-            text="در حال حاضر سرویسی وجود ندارد"
+            text="در حال حاضر دامنه ای وجود ندارد"
             isLoading={isLoading}
             initialOrder={9}
           />
@@ -142,4 +140,4 @@ const StorageManagement: FC<StorageManagementPropsType> = () => {
   );
 };
 
-export default StorageManagement;
+export default DomainList;

@@ -1,22 +1,40 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { Add } from "@mui/icons-material";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
+import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate } from "react-router";
-import { useGetApiMyKubernetesHostListQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
-import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
+import { useNavigate, useParams } from "react-router";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
-const KubernetesIndex: FC = () => {
+const VmList: FC = () => {
+  const { projectId } = useParams();
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyKubernetesHostListQuery();
+  const {
+    data: vmList,
+    isLoading: getVmListLoading,
+    refetch,
+  } = useGetApiMyVmHostListByVmProjectIdQuery({
+    vmProjectId: Number(projectId),
+  });
+
+  useEffect(() => {
+    const getNotifInterval = setInterval(() => {
+      refetch();
+    }, 120 * 1000);
+    return () => {
+      clearInterval(getNotifInterval);
+    };
+  }, [refetch]);
 
   const filteredList =
-    data?.filter((item) => {
+    vmList?.filter((item) => {
       let result = null;
       if (item?.name) {
         result = item?.name.includes(search);
@@ -24,33 +42,24 @@ const KubernetesIndex: FC = () => {
       return result;
     }) || [];
 
-  const navigate = useNavigate();
-
-  const gotToAddKubernetes = () => navigate("/kubernetes/add");
+  const createCloudOnClick = () => navigate(`/vm/${projectId}/add-vm`);
 
   return (
     <>
       <Stack
-        p={3}
-        mb={3}
+        p={2.5}
+        mb={1}
         bgcolor="warning.main"
         direction="row"
-        gap={1}
+        spacing={1}
         borderRadius={BORDER_RADIUS_1}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}
       >
         <ErrorOutlineOutlinedIcon />
-        <Typography>توجه:</Typography>
-        <Typography
-          fontSize={14}
-          sx={{
-            opacity: 0.9,
-          }}
-        >
-          این سرویس نسخه آزمایشی می باشد.
-          <br />
+        <Typography variant="text14">
+          استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
         </Typography>
       </Stack>
       <Stack
@@ -73,15 +82,15 @@ const KubernetesIndex: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس کوبرنتیز ابری
+              لیست سرورهای ابری
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام سرویس"
+              placeholder="جستجو در نام ماشین"
             />
           </Stack>
           <Button
-            onClick={gotToAddKubernetes}
+            onClick={createCloudOnClick}
             variant="outlined"
             size="large"
             sx={{
@@ -107,17 +116,17 @@ const KubernetesIndex: FC = () => {
               </Stack>
             }
           >
-            ایجاد سرویس کوبرنتیز
+            سرور ابری جدید
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={kubernetesTableStruct}
-            RowComponent={KubernetesTableRow}
+            struct={addVmTableStruct}
+            RowComponent={AddVmTableRow}
             rows={filteredList}
-            text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
-            isLoading={isLoading}
+            text="در حال حاضر سروری وجود ندارد"
+            isLoading={getVmListLoading}
             initialOrder={9}
           />
         </Box>
@@ -126,4 +135,4 @@ const KubernetesIndex: FC = () => {
   );
 };
 
-export default KubernetesIndex;
+export default VmList;

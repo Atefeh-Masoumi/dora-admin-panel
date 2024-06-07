@@ -53,12 +53,12 @@ const CustomerBill = lazy(
 const Invoices = lazy(() => import("src/pages/portal/financial/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/financial/Invoice"));
 
-const CdnIndex = lazy(() => import("src/pages/cdn/Index"));
-const AddZone = lazy(() => import("src/pages/cdn/AddCdn"));
+const CdnIndex = lazy(() => import("src/pages/cdn/CdnList"));
+const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
-const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectIndex"));
-const VmIndex = lazy(() => import("src/pages/vm/Index"));
+const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectList"));
+const VmIndex = lazy(() => import("src/pages/vm/VmList"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
@@ -66,21 +66,25 @@ const WebIndex = lazy(() => import("src/pages/web/Index"));
 const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
 const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
 
-const DomainIndex = lazy(() => import("src/pages/domain/Index"));
+const DomainIndex = lazy(() => import("src/pages/domain/DomainList"));
 const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
 const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
 
-const StorageIndex = lazy(() => import("src/pages/storage/Index"));
+const StorageIndex = lazy(() => import("src/pages/storage/StorageList"));
 const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
-const KubernetesIndex = lazy(() => import("src/pages/kubernetes/Index"));
-const AddKubernetes = lazy(() => import("src/pages/kubernetes/AddKubernetes"));
+const KubernetesIndex = lazy(
+  () => import("src/pages/kuberCluster/KubernetesList")
+);
+const AddKubernetes = lazy(
+  () => import("src/pages/kuberCluster/AddKubernetes")
+);
 const EditKubernetes = lazy(
-  () => import("src/pages/kubernetes/EditKubernetes")
+  () => import("src/pages/kuberCluster/EditKubernetes")
 );
 const AddNodeKubernetes = lazy(
-  () => import("src/pages/kubernetes/AddNodeKubernetes")
+  () => import("src/pages/kuberCluster/AddNodeKubernetes")
 );
 
 const mainTemplate = (
@@ -271,7 +275,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/:id/dns-record-settings"
+            path="/cdn/:id/dns-record"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات DNS Record",
               // RightComponent: DomainSelect,
@@ -285,7 +289,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/:id/load-balance-settings"
+            path="/cdn/:id/load-balance"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات Load Balance",
               // RightComponent: DomainSelect,

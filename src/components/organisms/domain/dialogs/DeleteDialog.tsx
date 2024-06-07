@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyDomainHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/domain/Index";
+import { DataContext } from "src/pages/domain/DomainList";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteDomainDialogPropsType = {

@@ -9,7 +9,7 @@ import {
   useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
 import { useNavigate } from "react-router";
-import { DataContext } from "src/pages/cdn/Index";
+import { DataContext } from "src/pages/cdn/CdnList";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteZoneDialogPropsType = {
