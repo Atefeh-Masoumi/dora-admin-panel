@@ -4,7 +4,7 @@ import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
+import { AddEdgeUserCertDialog } from "../dialogs/CreateEdgeUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnEdgeCertUserCert: FC = () => {

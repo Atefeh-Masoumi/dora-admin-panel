@@ -4,10 +4,10 @@ import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
+import { CreateOriginUserCertDialog } from "../dialogs/CreateOriginUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnClientCertUserCert: FC = () => {
+export const CdnOriginCertUserCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const dnsId = selectedDomain?.id || 0;
 
@@ -61,7 +61,7 @@ export const CdnClientCertUserCert: FC = () => {
           )}
         </Stack>
       </Stack>
-      <AddClientUserCertDialog
+      <CreateOriginUserCertDialog
         openDialog={open}
         handleClose={handleClose}
         dnsId={dnsId}

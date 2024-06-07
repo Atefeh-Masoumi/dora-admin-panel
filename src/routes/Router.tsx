@@ -278,7 +278,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/:id/ssl-tls-settings"
+            path="/cdn/:id/setting"
             element={mainTemplate(EditZone, {
               pageTitle: "تنظیمات",
               // RightComponent: DomainSelect,

@@ -7,7 +7,7 @@ import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnClientCert: FC = () => {
+export const CdnOriginCert: FC = () => {
   const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
   const dnsId = selectedDomain?.id || 0;
 

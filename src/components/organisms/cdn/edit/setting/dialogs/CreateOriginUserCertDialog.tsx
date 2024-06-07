@@ -13,17 +13,15 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type AddClientUserCertDialogPropsType = {
+type CreateOriginUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
   dnsId: number;
 };
 
-export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
-  openDialog,
-  handleClose,
-  dnsId,
-}) => {
+export const CreateOriginUserCertDialog: FC<
+  CreateOriginUserCertDialogPropsType
+> = ({ openDialog, handleClose, dnsId }) => {
   const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
@@ -32,7 +30,6 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   const onClose = () => handleClose();
 
   const formValidation = yup.object().shape({
-    //zoneName: yup.string().required(""),
     keyPem: yup.string().required("این فیلد الزامیست"),
     certPem: yup.string().required("این فیلد الزامیست"),
     bundleCertPem: yup.string(),

@@ -5,17 +5,17 @@ import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
-import { CdnClientCertUserCert } from "./CdnClientCertUserCert";
-import { CdnClientCert } from "./CdnClientCert";
+import { CdnOriginCertUserCert } from "./CdnOriginCertUserCert";
+import { CdnOriginCert } from "./CdnOriginCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type CdnChangeClientCertTypePropsType = {
+type CdnOriginChangeCertTypePropsType = {
   id: number;
   loading: boolean | undefined;
   certTypeId: number | undefined;
 };
 
-export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
+export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
   id,
   loading,
   certTypeId,
@@ -108,7 +108,7 @@ export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
             </Fragment>
           )}
         </Stack>
-        {certTypeId === 1 ? <CdnClientCert /> : <CdnClientCertUserCert />}
+        {certTypeId === 1 ? <CdnOriginCert /> : <CdnOriginCertUserCert />}
       </Stack>
     </>
   );

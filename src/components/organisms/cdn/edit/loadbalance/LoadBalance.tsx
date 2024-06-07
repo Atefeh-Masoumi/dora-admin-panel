@@ -39,7 +39,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           alignItems="center"
         >
           <Typography fontSize={18} color="secondary">
-            لیست Load Balancer ابری
+            لیست Load Balance ابری
           </Typography>
           <Button
             onClick={openDialog}
@@ -59,7 +59,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
             struct={loadBalanceTableStruct}
             RowComponent={LoadBalanceTableRow}
             rows={data || []}
-            text="در حال حاضر Load Balancer وجود ندارد"
+            text="در حال حاضر Load Balance وجود ندارد"
             isLoading={isLoading}
           />
         </Box>

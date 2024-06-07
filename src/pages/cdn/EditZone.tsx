@@ -6,7 +6,7 @@ import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/Analy
 import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
 import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalance";
 import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
-import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
+import { CdnSetting } from "src/components/organisms/cdn/edit/setting/CdnSetting";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const EditZone: FC = () => {
@@ -26,8 +26,8 @@ const EditZone: FC = () => {
     if (pathname.includes("dns-record-settings")) {
       result = `dns-record-settings`;
     }
-    if (pathname.includes("ssl-tls-settings")) {
-      result = `ssl-tls-settings`;
+    if (pathname.includes("setting")) {
+      result = `setting`;
     }
     if (pathname.includes("load-balance-settings")) {
       result = `load-balance-settings`;
@@ -55,8 +55,8 @@ const EditZone: FC = () => {
       case `dns-record-settings`:
         result = <DnsRecord />;
         break;
-      case `ssl-tls-settings`:
-        result = <SSLSetting />;
+      case `setting`:
+        result = <CdnSetting />;
         break;
       case `load-balance-settings`:
         result = <LoadBalance />;
@@ -92,7 +92,7 @@ const EditZone: FC = () => {
           onChange={handleChange}
         >
           <DorsaTab value={`overview`} label="مشخصات دامنه" />
-          <DorsaTab value={`ssl-tls-settings`} label="تنظیمات" />
+          <DorsaTab value={`setting`} label="تنظیمات" />
           <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
           <DorsaTab value={`dns-record-settings`} label="تنظیمات DNS Record" />
           <DorsaTab

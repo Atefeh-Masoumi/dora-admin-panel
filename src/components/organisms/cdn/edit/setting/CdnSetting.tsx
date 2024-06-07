@@ -2,12 +2,12 @@ import { Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyCdnHostGetByDnsHostIdQuery } from "src/app/services/api.generated";
-import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/ssl/CdnSecuritySetting";
-import { CdnTypeSetting } from "src/components/organisms/cdn/edit/ssl/CdnTypeSetting";
-import { CdnChangeClientCertType } from "src/components/organisms/cdn/edit/ssl/client/CdnChangeClientCertType";
-import { CdnChangeEdgeCertType } from "src/components/organisms/cdn/edit/ssl/edge/CdnChangeEdgeCertType";
+import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/setting/CdnSecuritySetting";
+import { CdnTypeSetting } from "src/components/organisms/cdn/edit/setting/CdnTypeSetting";
+import { CdnOriginChangeCertType } from "src/components/organisms/cdn/edit/setting/origin/CdnOriginChangeCertType";
+import { CdnEdgeChangeCertType } from "src/components/organisms/cdn/edit/setting/edge/CdnEdgeChangeCertType";
 
-export const SSLSetting: FC = () => {
+export const CdnSetting: FC = () => {
   const { id } = useParams();
   const dnsId = Number(id) || 0;
 
@@ -33,21 +33,23 @@ export const SSLSetting: FC = () => {
           loading={isLoading}
         />
       </Stack>
+
       <Stack spacing={2}>
         <Typography fontSize={24} color="secondary" fontWeight="bold">
           گواهی های لبه (EDGE)
         </Typography>
-        <CdnChangeEdgeCertType
+        <CdnEdgeChangeCertType
           id={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneEdgeCertTypeId}
         />
       </Stack>
+
       <Stack spacing={2}>
         <Typography fontSize={24} color="secondary" fontWeight="bold">
           گواهی های سرور (ORIGIN)
         </Typography>
-        <CdnChangeClientCertType
+        <CdnOriginChangeCertType
           id={dnsId}
           loading={isLoading}
           certTypeId={zoneData?.zoneClientCertTypeId}

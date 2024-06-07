@@ -9,13 +9,13 @@ import { CdnEdgeCertUserCert } from "./CdnEdgeCertUserCert";
 import { CdnEdgeCert } from "./CdnEdgeCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type CdnChangeEdgeCertTypePropsType = {
+type CdnEdgeChangeCertTypePropsType = {
   id: number;
   loading?: boolean;
   certTypeId?: number;
 };
 
-export const CdnChangeEdgeCertType: FC<CdnChangeEdgeCertTypePropsType> = ({
+export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
   id,
   loading,
   certTypeId,
