@@ -34,7 +34,6 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent={"space-between"}
         sx={{
           border: "1px solid rgba(110, 118, 138, 0.16)",
           borderRadius: BORDER_RADIUS_1,
@@ -51,6 +50,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
             width: "unset",
             opacity: "100%",
             transition: "all 0.5s ease-in",
+            margin: "0 auto",
           }}
           fontSize="16px"
           color="rgba(110, 118, 138, 0.8)"

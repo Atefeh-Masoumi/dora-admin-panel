@@ -18,8 +18,6 @@ import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const InviteCode: FC = () => {
-  const { data: referralData, isLoading } = useGetApiMyPortalReferralGetQuery();
-
   const [code, setCode] = useState<string | undefined | null>();
   const handleOpen = () => {
     if (!code) return;
@@ -30,6 +28,8 @@ export const InviteCode: FC = () => {
     setCode(null);
     setOpen(false);
   };
+
+  const { data: referralData, isLoading } = useGetApiMyPortalReferralGetQuery();
 
   return (
     <Grid
