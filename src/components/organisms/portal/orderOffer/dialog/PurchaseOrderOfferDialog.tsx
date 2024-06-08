@@ -1,12 +1,26 @@
 import { LoadingButton } from "@mui/lab";
-import { Button, Dialog, DialogProps, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogProps,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Form, Formik } from "formik";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { usePostApiMyPortalOfferPaymentMutation } from "src/app/services/api.generated";
+import {
+  CreatePaymentResponse,
+  useGetApiMyPortalPaymentProviderListQuery,
+  usePostApiMyPortalOfferPaymentMutation,
+} from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
 import { SamanLogo } from "src/components/atoms/svg-icons/SamanSvg";
+import FanavaLogo from "src/components/atoms/svg-icons/fanava.png";
+import MellatLogo from "src/components/atoms/svg-icons/mellat.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
@@ -24,17 +38,26 @@ const formValidation = yup.object().shape({
   paymentProviderId: yup.number(),
 });
 
+interface MellatCreatePaymentResponse extends CreatePaymentResponse {
+  phoneNumber: string;
+  refId: string;
+}
+
 export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
   name,
   offerId,
   ...props
 }) => {
-  const formRef = useRef(null);
-  const formToken = useRef(null);
-  const formRedirectURL = useRef(null);
+  const [mellatResponseRefId, setMellatResponseRefId] = useState("");
+  const [mellatResponsePhoneNumber, setMellatResponsePhoneNumber] =
+    useState("");
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const [callOfferPayment, { isLoading }] =
     usePostApiMyPortalOfferPaymentMutation();
+
+  const { data: paymentProviderList, isLoading: paymentProviderListLoading } =
+    useGetApiMyPortalPaymentProviderListQuery();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { paymentProviderId },
@@ -48,12 +71,19 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
     })
       .unwrap()
       .then((res) => {
-        if (!res || !res.location || !res.status) return;
-        let a = document.createElement("a");
-        a.href = res.location;
-        a.click();
-        toast.success("در حال انتقال به صفحه پرداخت");
-      });
+        if (paymentProviderId === 10) {
+          const mellatProviderRes = res as MellatCreatePaymentResponse;
+          setMellatResponseRefId(mellatProviderRes.refId);
+          setMellatResponsePhoneNumber(mellatProviderRes.phoneNumber);
+        } else {
+          if (!res || !res.location || !res.status) return;
+          let a = document.createElement("a");
+          a.href = res.location;
+          a.click();
+          toast.success("در حال انتقال به صفحه پرداخت");
+        }
+      })
+      .catch(() => {});
     setSubmitting(false);
   };
 
@@ -61,6 +91,46 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
     if (!props.onClose) return;
     props.onClose(event, "escapeKeyDown");
   };
+
+  const renderProviderLogo = (photoName: string) => {
+    switch (photoName) {
+      case "parsian":
+        return (
+          <ParsianLogo
+            sx={{
+              fontSize: { xs: 20, md: 30 },
+            }}
+          />
+        );
+      case "saman":
+        return (
+          <SamanLogo
+            sx={{
+              fontSize: { xs: 20, md: 30 },
+            }}
+          />
+        );
+      case "fanava":
+        return <img src={FanavaLogo} alt={"fanava-logo"} width={"70px"} />;
+      case "mellat":
+        return (
+          <img
+            src={MellatLogo}
+            alt={"mellat-logo"}
+            width={"30px"}
+            height={"30px"}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    if (formRef.current && mellatResponseRefId && mellatResponsePhoneNumber) {
+      formRef.current.submit();
+    }
+  }, [formRef.current, mellatResponseRefId, mellatResponsePhoneNumber]);
 
   return (
     <>
@@ -84,68 +154,48 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                   <Typography variant="text1" fontWeight="bold">
                     خرید {name}
                   </Typography>
-                  <Stack
-                    spacing={2}
-                    border={1}
-                    borderRadius={BORDER_RADIUS_1}
-                    borderColor="secondary.light"
-                    p={2}
-                  >
-                    <Typography variant="text14" color="secondary">
-                      درگاه پرداخت
-                    </Typography>
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems="center"
-                      whiteSpace="nowrap"
-                    >
-                      <Button
-                        onClick={() => setFieldValue("paymentProviderId", 1)}
-                        variant="outlined"
-                        color={paymentProvider === 1 ? "primary" : "secondary"}
-                        sx={{
-                          border:
-                            paymentProvider === 1
-                              ? "2px solid #3C8AFF !important"
-                              : 1,
-                          py: 1,
-                        }}
-                        fullWidth
-                      >
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          alignItems={{ xs: "start", md: "end" }}
-                        >
-                          <ParsianLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                          <Typography variant="text14">بانک پارسیان</Typography>
-                        </Stack>
-                      </Button>
-                      <Button
-                        onClick={() => setFieldValue("paymentProviderId", 2)}
-                        variant="outlined"
-                        color={paymentProvider === 2 ? "primary" : "secondary"}
-                        sx={{
-                          border:
-                            paymentProvider === 2
-                              ? "2px solid #3C8AFF !important"
-                              : 1,
-                          py: 1,
-                        }}
-                        fullWidth
-                      >
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          alignItems={{ xs: "start", md: "end" }}
-                        >
-                          <SamanLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                          <Typography variant="text14">بانک سامان</Typography>
-                        </Stack>
-                      </Button>
-                    </Stack>
-                  </Stack>
+                  <Grid container rowSpacing={1} columnSpacing={1}>
+                    {paymentProviderListLoading ? (
+                      <CircularProgress sx={{ margin: "0 auto" }} />
+                    ) : (
+                      paymentProviderList?.map((provider) => {
+                        return (
+                          <Grid key={provider.id} item xs={5.7}>
+                            <Button
+                              onClick={() =>
+                                setFieldValue("paymentProviderId", provider.id)
+                              }
+                              variant="outlined"
+                              color={
+                                paymentProvider === provider.id
+                                  ? "primary"
+                                  : "secondary"
+                              }
+                              sx={{
+                                border:
+                                  paymentProvider === provider.id
+                                    ? "2px solid #3C8AFF !important"
+                                    : 1,
+                                py: 1,
+                              }}
+                              fullWidth
+                            >
+                              <Stack
+                                direction="row"
+                                spacing={1}
+                                alignItems={{ xs: "start", md: "end" }}
+                              >
+                                {renderProviderLogo(String(provider.photoName))}
+                                <Typography variant="text14">
+                                  {provider.name}
+                                </Typography>
+                              </Stack>
+                            </Button>
+                          </Grid>
+                        );
+                      })
+                    )}
+                  </Grid>
                   <Stack
                     direction="row"
                     spacing={0.5}
@@ -177,16 +227,21 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
         </Formik>
       </Dialog>
       <form
-        action="https://sep.shaparak.ir/payment.aspx"
+        action={"https://bpm.shaparak.ir/pgwchannel/startpay.mellat"}
         method="POST"
         ref={formRef}
       >
-        <input ref={formToken} type="hidden" name="Token" value="token" />
         <input
-          ref={formRedirectURL}
           type="hidden"
-          name="RedirectURL"
-          value="redirect"
+          name="MobileNo"
+          id="MobileNo"
+          value={mellatResponsePhoneNumber}
+        />
+        <input
+          type="hidden"
+          name="RefId"
+          id="RefId"
+          value={mellatResponseRefId}
         />
       </form>
     </>

@@ -1,4 +1,10 @@
-import { SvgIconProps, TabProps, TabsProps } from "@mui/material";
+import {
+  SvgIconProps,
+  TabProps,
+  TabsProps,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { Box, Stack, Tab, Tabs, styled } from "@mui/material";
 import type { FC, ReactNode, SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
@@ -32,6 +38,20 @@ const CustomTab = styled(Tab)<TabProps>(({ theme }) => ({
     borderLeft: "10px solid white",
     opacity: 0,
   },
+  [theme.breakpoints.down("sm")]: {
+    width: "30%",
+    margin: "2px 0",
+    marginRight: "10px",
+    border: "1px solid #ccc",
+    "&::after": {
+      right: 0,
+      top: "50%",
+      transform: "translateY(-50%)",
+      borderLeft: "10px solid white",
+      borderTop: "10px solid transparent",
+      borderBottom: "10px solid transparent",
+    },
+  },
 }));
 
 const CustomTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
@@ -51,6 +71,23 @@ const CustomTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
       width: 10,
       borderTopLeftRadius: BORDER_RADIUS_1,
       borderBottomLeftRadius: BORDER_RADIUS_1,
+    },
+  },
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    overflowX: "auto",
+    "-webkit-overflow-scrolling": "touch",
+    "&>.MuiTabs-scroller": {
+      overflow: "visible !important",
+      "&>.MuiTabs-flexContainerVertical": {
+        flexDirection: "row",
+        flexWrap: "nowrap",
+        "&>button.Mui-selected": {
+          "&:after": {
+            opacity: 1,
+          },
+        },
+      },
     },
   },
 }));
@@ -87,6 +124,8 @@ type ProductPageTabsPropsType = {
 const CustomTabComponent: FC<ProductPageTabsPropsType> = ({ tabs }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -104,8 +143,17 @@ const CustomTabComponent: FC<ProductPageTabsPropsType> = ({ tabs }) => {
   };
 
   return (
-    <Stack direction="row" columnGap={2}>
-      <CustomTabs orientation="vertical" value={value} onChange={handleChange}>
+    <Stack
+      direction={isSmallScreen ? "column" : "row"}
+      columnGap={isSmallScreen ? 0 : 2}
+    >
+      <CustomTabs
+        orientation={isSmallScreen ? "horizontal" : "vertical"}
+        value={value}
+        onChange={handleChange}
+        variant={isSmallScreen ? "scrollable" : "standard"}
+        scrollButtons={isSmallScreen ? "auto" : false}
+      >
         {tabs.map(({ title }, index) => (
           <CustomTab label={title} key={index} {...a11yProps(index)} />
         ))}

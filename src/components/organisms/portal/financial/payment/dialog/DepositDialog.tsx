@@ -1,24 +1,32 @@
-import { FC, ChangeEvent, useRef } from "react";
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
-  Stack,
-  Typography,
+  CircularProgress,
   Dialog,
+  Grid,
+  Stack,
   SxProps,
   Theme,
+  Typography,
 } from "@mui/material";
-import { Form, Formik } from "formik";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
 import { numberToWords } from "@persian-tools/persian-tools";
-import { formikOnSubmitType } from "src/types/form.type";
+import { Form, Formik } from "formik";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  CreatePaymentResponse,
+  useGetApiMyPortalPaymentProviderListQuery,
+  usePostApiMyPortalPaymentCreateMutation,
+} from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { SamanLogo } from "src/components/atoms/svg-icons/SamanSvg";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
-import { usePostApiMyPortalPaymentCreateMutation } from "src/app/services/api.generated";
+import { SamanLogo } from "src/components/atoms/svg-icons/SamanSvg";
+import FanavaLogo from "src/components/atoms/svg-icons/fanava.png";
+import MellatLogo from "src/components/atoms/svg-icons/mellat.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { formikOnSubmitType } from "src/types/form.type";
+import * as yup from "yup";
 
 const selectedStyle: SxProps<Theme> = {
   border: 1,
@@ -39,16 +47,25 @@ const formValidation = yup.object().shape({
 
 type DepositDialogPropsType = { openDialog: boolean; handleClose: () => void };
 
+interface MellatCreatePaymentResponse extends CreatePaymentResponse {
+  phoneNumber: string;
+  refId: string;
+}
+
 export const DepositDialog: FC<DepositDialogPropsType> = ({
   openDialog,
   handleClose,
 }) => {
+  const [mellatResponseRefId, setMellatResponseRefId] = useState("");
+  const [mellatResponsePhoneNumber, setMellatResponsePhoneNumber] =
+    useState("");
   const [createDeposit, { isLoading }] =
     usePostApiMyPortalPaymentCreateMutation();
 
-  const formRef = useRef(null);
-  const formToken = useRef(null);
-  const formRedirectURL = useRef(null);
+  const { data: paymentProviderList, isLoading: paymentProviderListLoading } =
+    useGetApiMyPortalPaymentProviderListQuery();
+
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { paymentProviderId, amount },
@@ -64,14 +81,61 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
     })
       .unwrap()
       .then((res) => {
-        if (!res || !res.location || !res.status) return;
-        let a = document.createElement("a");
-        a.href = res.location;
-        a.click();
-        toast.success("در حال انتقال به صفحه پرداخت");
-      });
+        if (paymentProviderId === 10) {
+          const mellatProviderRes = res as MellatCreatePaymentResponse;
+          setMellatResponseRefId(mellatProviderRes.refId);
+          setMellatResponsePhoneNumber(mellatProviderRes.phoneNumber);
+        } else {
+          if (!res || !res.location || !res.status) return;
+          let a = document.createElement("a");
+          a.href = res.location;
+          a.click();
+          toast.success("در حال انتقال به صفحه پرداخت");
+        }
+      })
+      .catch((err) => {});
     setSubmitting(false);
   };
+
+  const renderProviderLogo = (photoName: string) => {
+    switch (photoName) {
+      case "parsian":
+        return (
+          <ParsianLogo
+            sx={{
+              fontSize: { xs: 20, md: 30 },
+            }}
+          />
+        );
+      case "saman":
+        return (
+          <SamanLogo
+            sx={{
+              fontSize: { xs: 20, md: 30 },
+            }}
+          />
+        );
+      case "fanava":
+        return <img src={FanavaLogo} alt={"fanava-logo"} width={"70px"} />;
+      case "mellat":
+        return (
+          <img
+            src={MellatLogo}
+            alt={"mellat-logo"}
+            width={"30px"}
+            height={"30px"}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    if (formRef.current && mellatResponseRefId && mellatResponsePhoneNumber) {
+      formRef.current.submit();
+    }
+  }, [formRef.current, mellatResponseRefId, mellatResponsePhoneNumber]);
 
   return (
     <>
@@ -175,57 +239,53 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                     <Typography variant="text14" color="secondary">
                       درگاه پرداخت
                     </Typography>
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems="center"
-                      whiteSpace="nowrap"
-                    >
-                      <Button
-                        onClick={() => setFieldValue("paymentProviderId", 1)}
-                        variant="outlined"
-                        color={paymentProvider === 1 ? "primary" : "secondary"}
-                        sx={{
-                          border:
-                            paymentProvider === 1
-                              ? "2px solid #3C8AFF !important"
-                              : 1,
-                          py: 1,
-                        }}
-                        fullWidth
-                      >
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          alignItems={{ xs: "start", md: "end" }}
-                        >
-                          <ParsianLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                          <Typography variant="text14">بانک پارسیان</Typography>
-                        </Stack>
-                      </Button>
-                      <Button
-                        onClick={() => setFieldValue("paymentProviderId", 2)}
-                        variant="outlined"
-                        color={paymentProvider === 2 ? "primary" : "secondary"}
-                        sx={{
-                          border:
-                            paymentProvider === 2
-                              ? "2px solid #3C8AFF !important"
-                              : 1,
-                          py: 1,
-                        }}
-                        fullWidth
-                      >
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          alignItems={{ xs: "start", md: "end" }}
-                        >
-                          <SamanLogo sx={{ fontSize: { xs: 20, md: 30 } }} />
-                          <Typography variant="text14">بانک سامان</Typography>
-                        </Stack>
-                      </Button>
-                    </Stack>
+                    <Grid container rowSpacing={1} columnSpacing={1}>
+                      {paymentProviderListLoading ? (
+                        <CircularProgress sx={{ margin: "0 auto" }} />
+                      ) : (
+                        paymentProviderList?.map((provider) => {
+                          return (
+                            <Grid key={provider.id} item xs={5.7}>
+                              <Button
+                                onClick={() =>
+                                  setFieldValue(
+                                    "paymentProviderId",
+                                    provider.id
+                                  )
+                                }
+                                variant="outlined"
+                                color={
+                                  paymentProvider === provider.id
+                                    ? "primary"
+                                    : "secondary"
+                                }
+                                sx={{
+                                  border:
+                                    paymentProvider === provider.id
+                                      ? "2px solid #3C8AFF !important"
+                                      : 1,
+                                  py: 1,
+                                }}
+                                fullWidth
+                              >
+                                <Stack
+                                  direction="row"
+                                  spacing={1}
+                                  alignItems={{ xs: "start", md: "end" }}
+                                >
+                                  {renderProviderLogo(
+                                    String(provider.photoName)
+                                  )}
+                                  <Typography variant="text14">
+                                    {provider.name}
+                                  </Typography>
+                                </Stack>
+                              </Button>
+                            </Grid>
+                          );
+                        })
+                      )}
+                    </Grid>
                   </Stack>
                   <Stack
                     direction="row"
@@ -258,16 +318,21 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
         </Formik>
       </Dialog>
       <form
-        action="https://sep.shaparak.ir/payment.aspx"
+        action={"https://bpm.shaparak.ir/pgwchannel/startpay.mellat"}
         method="POST"
         ref={formRef}
       >
-        <input ref={formToken} type="hidden" name="Token" value="token" />
         <input
-          ref={formRedirectURL}
           type="hidden"
-          name="RedirectURL"
-          value="redirect"
+          name="MobileNo"
+          id="MobileNo"
+          value={mellatResponsePhoneNumber}
+        />
+        <input
+          type="hidden"
+          name="RefId"
+          id="RefId"
+          value={mellatResponseRefId}
         />
       </form>
     </>
