@@ -3,17 +3,16 @@ import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
-import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
-import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
 import {
   VmProjectListResponse,
   useDeleteApiMyVmProjectDeleteByIdMutation,
   useGetApiMyVmProjectListQuery,
 } from "src/app/services/api.generated";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
+import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
+import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const vmDataList = [{ label: "نوع زیرساخت:", id: "hypervisorType" }];
 
@@ -66,8 +65,6 @@ const VmProjectList: FC = () => {
     setSelectedProject(null);
   };
 
-  const refetchOnClick = () => refetch();
-
   const deleteProjectHandler = () => {
     if (!selectedProject?.id) return;
     deleteProject({ id: selectedProject.id })
@@ -109,19 +106,6 @@ const VmProjectList: FC = () => {
             </Stack>
             <Stack direction="row" alignItems="center" spacing={1}>
               <Button
-                onClick={refetchOnClick}
-                variant="outlined"
-                size="large"
-                sx={{
-                  whiteSpace: "nowrap",
-                  px: 1.2,
-                  borderRadius: BORDER_RADIUS_1,
-                }}
-                startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
-              >
-                بازخوانی
-              </Button>
-              <Button
                 variant="outlined"
                 onClick={createBtnOnClick}
                 size="large"
@@ -140,7 +124,7 @@ const VmProjectList: FC = () => {
           </Stack>
         </Stack>
 
-        <Grid container>
+        <Grid container columnSpacing={1}>
           {VmProjectListLoading ? (
             <Fragment>
               {[...Array(12)].map((_, index) => (
@@ -177,9 +161,8 @@ const VmProjectList: FC = () => {
                   item
                   xs={12}
                   sm={5.8}
-                  lg={3.8}
+                  lg={4}
                   mt={1}
-                  mr={1}
                   mb={1}
                   sx={{ margin: "max-content" }}
                 >

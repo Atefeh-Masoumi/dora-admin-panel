@@ -55,7 +55,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
         px: 2,
         bgcolor: "#F5F5F5",
         height: "100vh",
-        width: "100vw",
+        width: "100%",
         ...(hideSidebar && { display: "block" }),
       }}
     >
@@ -85,11 +85,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
       <Box
         sx={{
           ...(!hideSidebar && {
-            width: { xs: "100%", lg: `calc(100vw - ${sidebarWidth + 32}px)` },
-            maxWidth: {
-              xs: "100%",
-              lg: `calc(100vw - ${sidebarWidth + 32}px)`,
-            },
+            width: { xs: "100%" },
           }),
           height: "100%",
           pl: { xs: 0, lg: 6.5 },
@@ -104,6 +100,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
             overflowX: "visible",
             maxHeight: "100vh",
             position: "relative",
+            width: "100%",
           }}
         >
           <Header
@@ -118,7 +115,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
             sx={{
               height: "100%",
               overflow: "overlay",
-              overflowY: "scroll",
+              // overflowY: "scroll",
               overflowX: "hidden",
               msOverflowStyle: "none",
               mt: 4,
@@ -126,7 +123,6 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
               px: "0 !important",
               maxWidth: "100% !important",
             }}
-            maxWidth="xl"
           >
             {children}
           </Container>

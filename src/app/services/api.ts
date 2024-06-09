@@ -20,6 +20,7 @@ const tags = [
   "Support",
   "VmHost",
   "Kubernetes",
+  "Storage",
 ];
 
 export const api = generatedApi
@@ -280,6 +281,22 @@ export const api = generatedApi
       },
       deleteApiMyKubernetesHostDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
+      },
+      // ============================== Storage ============================== //
+      getApiMyStorageHostList: {
+        providesTags: () => ["Storage"],
+      },
+      getApiMyStorageHostGetById: {
+        providesTags: () => ["Storage"],
+      },
+      postApiMyStorageHostCreate: {
+        invalidatesTags: () => ["Storage"],
+      },
+      putApiMyStorageHostEdit: {
+        invalidatesTags: () => ["Storage"],
+      },
+      deleteApiMyStorageHostDeleteById: {
+        invalidatesTags: () => ["Storage"],
       },
     },
   });

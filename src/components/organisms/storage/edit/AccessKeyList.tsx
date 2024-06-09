@@ -1,8 +1,4 @@
-import { FC, createContext, useMemo, useState } from "react";
-import {
-  useGetApiMyStorageUserListByStorageHostIdQuery,
-  usePostApiMyStorageUserCreateMutation,
-} from "src/app/services/api.generated";
+import { Add } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,25 +8,24 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import { FC, useMemo, useState } from "react";
+import { useParams } from "react-router";
+import {
+  useGetApiMyStorageUserListByStorageHostIdQuery,
+  usePostApiMyStorageUserCreateMutation,
+} from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
+import { AddAccessKeyDialog } from "./dialogs/AddAccessKeyDialog";
 import { accessKeyTableStruct } from "./tables/AccessKeyStruct";
 import { AccessKeyTableRow } from "./tables/AccessKeyTableRow";
-import { AddAccessKeyDialog } from "./dialogs/AddAccessKeyDialog";
-import { useParams } from "react-router";
-import Grid2 from "@mui/material/Unstable_Grid2";
 
 type AccessKeyListPropsType = {};
 
 type AccessKeyContextValueType = {
   refetchUsersData: () => any;
 };
-
-export const AccessKeyContext = createContext<AccessKeyContextValueType>({
-  refetchUsersData: () => null,
-});
 
 const AccessKeyList: FC<AccessKeyListPropsType> = () => {
   const { id } = useParams();
@@ -61,8 +56,6 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
     [getDataLoading, isFetching]
   );
 
-  const refetchOnClick = () => refetch();
-
   const createAccessKey = () => {
     callCreateAccessKey({
       createStorageUserModel: { storageHostId: id ? +id : 0 },
@@ -79,113 +72,97 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
   };
 
   return (
-    <AccessKeyContext.Provider value={{ refetchUsersData: () => refetch() }}>
-      <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12} md={10}>
-          <Paper
-            component={Stack}
-            rowGap={2}
-            elevation={0}
-            sx={{
-              borderRadius: BORDER_RADIUS_1,
-              p: { xs: 2.5 },
-              height: "100%",
-            }}
+    <Grid2 container spacing={3} alignItems="center" justifyContent="center">
+      <Grid2 xs={12} md={10}>
+        <Paper
+          component={Stack}
+          rowGap={2}
+          elevation={0}
+          sx={{
+            borderRadius: BORDER_RADIUS_1,
+            p: { xs: 2.5 },
+            height: "100%",
+          }}
+        >
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            justifyContent="space-between"
+            alignItems="center"
+            rowGap={3}
           >
             <Stack
-              direction={{ xs: "column", md: "row" }}
-              justifyContent="space-between"
+              direction={{ xs: "column", sm: "row" }}
               alignItems="center"
-              rowGap={3}
+              spacing={2}
             >
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                alignItems="center"
-                spacing={2}
-              >
-                <Typography align="center" fontWeight={700} fontSize={18}>
-                  لیست کلید های دسترسی
-                </Typography>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Button
-                  onClick={refetchOnClick}
-                  variant="outlined"
-                  size="large"
-                  sx={{
-                    whiteSpace: "nowrap",
-                    px: 1.2,
-                    borderRadius: BORDER_RADIUS_1,
-                  }}
-                  startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
-                >
-                  بازخوانی
-                </Button>
-
-                <Button
-                  onClick={() => createAccessKey()}
-                  variant="outlined"
-                  size="large"
-                  disabled={createAccessKeyIsLoading}
-                  sx={{
-                    whiteSpace: "nowrap",
-                    px: 1.2,
-                    borderRadius: BORDER_RADIUS_1,
-                    width: "220px",
-                  }}
-                  startIcon={
-                    createAccessKeyIsLoading ? (
-                      <></>
-                    ) : (
-                      <Stack
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{
-                          width: 24,
-                          height: 24,
-                          border: ({ palette }) =>
-                            "1px solid " + palette.primary.main,
-                          borderRadius: BORDER_RADIUS_1,
-                        }}
-                      >
-                        <Add
-                          fontSize="small"
-                          sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
-                        />
-                      </Stack>
-                    )
-                  }
-                >
-                  {createAccessKeyIsLoading ? (
-                    <Skeleton variant="text" width="220px" />
-                  ) : (
-                    " ایجاد کلید دسترسی جدید"
-                  )}
-                </Button>
-              </Stack>
+              <Typography align="center" fontWeight={700} fontSize={18}>
+                لیست کلید های دسترسی
+              </Typography>
             </Stack>
-            <Divider />
-            <Box width="100%" sx={{ pt: 1.5 }}>
-              <BaseTable
-                struct={accessKeyTableStruct}
-                RowComponent={AccessKeyTableRow}
-                rows={data || []}
-                text="در حال حاضر کلید دسترسی وجود ندارد"
-                isLoading={isLoading}
-                initialOrder={9}
-              />
-            </Box>
-            {showDialog && (
-              <AddAccessKeyDialog
-                onClose={closeDialog}
-                accessKeyProp={generatedKeys.accessKey}
-                secretKeyProp={generatedKeys.secretKey}
-              />
-            )}
-          </Paper>
-        </Grid2>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Button
+                onClick={() => createAccessKey()}
+                variant="outlined"
+                size="large"
+                disabled={createAccessKeyIsLoading}
+                sx={{
+                  whiteSpace: "nowrap",
+                  px: 1.2,
+                  borderRadius: BORDER_RADIUS_1,
+                  width: "220px",
+                }}
+                startIcon={
+                  createAccessKeyIsLoading ? (
+                    <></>
+                  ) : (
+                    <Stack
+                      alignItems="center"
+                      justifyContent="center"
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        border: ({ palette }) =>
+                          "1px solid " + palette.primary.main,
+                        borderRadius: BORDER_RADIUS_1,
+                      }}
+                    >
+                      <Add
+                        fontSize="small"
+                        sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                      />
+                    </Stack>
+                  )
+                }
+              >
+                {createAccessKeyIsLoading ? (
+                  <Skeleton variant="text" width="220px" />
+                ) : (
+                  " ایجاد کلید دسترسی جدید"
+                )}
+              </Button>
+            </Stack>
+          </Stack>
+          <Divider />
+          <Box width="100%" sx={{ pt: 1.5 }}>
+            <BaseTable
+              struct={accessKeyTableStruct}
+              RowComponent={AccessKeyTableRow}
+              rows={data || []}
+              text="در حال حاضر کلید دسترسی وجود ندارد"
+              isLoading={isLoading}
+              initialOrder={9}
+            />
+          </Box>
+          {showDialog && (
+            <AddAccessKeyDialog
+              onClose={closeDialog}
+              accessKeyProp={generatedKeys.accessKey}
+              secretKeyProp={generatedKeys.secretKey}
+            />
+          )}
+        </Paper>
       </Grid2>
-    </AccessKeyContext.Provider>
+    </Grid2>
   );
 };
 

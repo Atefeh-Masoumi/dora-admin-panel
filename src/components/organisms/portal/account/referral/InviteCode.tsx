@@ -159,35 +159,37 @@ export const InviteCode: FC = () => {
               inputProps={{ dir: "ltr" }}
             />
           )}
-        </Stack>
-        <IconButton
-          onClick={() => {
-            navigator.clipboard.writeText(referralData?.referralLink as string);
-            toast.success("کد کپی شد", { position: "bottom-left" });
-          }}
-        >
-          <Copy
-            sx={{
-              "& path": {
-                stroke: ({ palette }) => palette.secondary.main,
-              },
+          <IconButton
+            onClick={() => {
+              navigator.clipboard.writeText(
+                referralData?.referralLink as string
+              );
+              toast.success("کد کپی شد", { position: "bottom-left" });
             }}
-          />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            setCode(referralData?.referralLink);
-            handleOpen();
-          }}
-        >
-          <Share
-            sx={{
-              "& path": {
-                stroke: ({ palette }) => palette.secondary.main,
-              },
+          >
+            <Copy
+              sx={{
+                "& path": {
+                  stroke: ({ palette }) => palette.secondary.main,
+                },
+              }}
+            />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setCode(referralData?.referralLink);
+              handleOpen();
             }}
-          />
-        </IconButton> */}
+          >
+            <Share
+              sx={{
+                "& path": {
+                  stroke: ({ palette }) => palette.secondary.main,
+                },
+              }}
+            />
+          </IconButton>
+        </Stack> */}
       </Grid>
 
       <ShareDialog code={code} openDialog={open} handleClose={handleClose} />

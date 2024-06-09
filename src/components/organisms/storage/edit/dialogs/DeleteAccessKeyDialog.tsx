@@ -1,10 +1,9 @@
-import { FC, useContext } from "react";
-import { Button, Dialog, Stack, Typography } from "@mui/material";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyStorageUserDeleteByIdMutation } from "src/app/services/api.generated";
-import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { AccessKeyContext } from "../AccessKeyList";
+import { Button, Dialog, Stack, Typography } from "@mui/material";
+import { FC } from "react";
+import { toast } from "react-toastify";
+import { useDeleteApiMyStorageUserDeleteByIdMutation } from "src/app/services/api.generated";
+import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteAccessKeyDialogPropsType = {
@@ -20,8 +19,6 @@ export const DeleteAccessKeyDialog: FC<DeleteAccessKeyDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
 
-  const { refetchUsersData } = useContext(AccessKeyContext);
-
   const [DeleteAccessKey, { isLoading }] =
     useDeleteApiMyStorageUserDeleteByIdMutation();
 
@@ -29,7 +26,6 @@ export const DeleteAccessKeyDialog: FC<DeleteAccessKeyDialogPropsType> = ({
     DeleteAccessKey({ id })
       .then(() => {
         toast.success(" کلید دسترسی با موفقیت حذف شد");
-        refetchUsersData();
         handleClose();
       })
       .catch((err) => {});
