@@ -66,7 +66,7 @@ export const DomainCard: FC<DomainCardPropsType> = ({
         justifyContent={{ xs: "center", md: "space-between" }}
       >
         <Stack
-          width={{ xs: "100%" }}
+          width={"100%"}
           alignItems="right"
           divider={<Divider orientation="vertical" flexItem />}
           columnGap={1}

@@ -3,7 +3,6 @@ import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { useDeleteApiMyStorageHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
-import { DataContext } from "src/pages/storage/Index";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteStorageDialogPropsType = {
@@ -17,8 +16,6 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
   handleClose,
   id,
 }) => {
-  const { refetchOnClick } = useContext(DataContext);
-
   const onClose = () => handleClose();
   const [deleteStorage, { isLoading }] =
     useDeleteApiMyStorageHostDeleteByIdMutation();
@@ -26,7 +23,6 @@ export const DeleteStorageDialog: FC<DeleteStorageDialogPropsType> = ({
   const submit = () =>
     deleteStorage({ id })
       .then(() => {
-        refetchOnClick();
         handleClose();
       })
       .catch((err) => {});

@@ -1,12 +1,5 @@
 import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
-import {
-  FC,
-  Fragment,
-  createContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
@@ -16,33 +9,22 @@ import {
   useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { DeleteCdnDialog } from "src/components/organisms/cdn/dialog/DeleteCdnDialog";
 import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-// Define the type for your context value
-type DataContextValueType = {
-  refetchOnClick: () => any;
-};
-
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-// Create the context
-export const DataContext = createContext<DataContextValueType>({
-  refetchOnClick: () => null,
-});
 const ZoneManagement: FC = () => {
   const [selectedCdn, setSelectedCdn] = useState<DnsListResponse | null>(null);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const refetchOnClick = () => refetch();
 
   const {
     data: zoneList,
@@ -110,150 +92,134 @@ const ZoneManagement: FC = () => {
   };
 
   return (
-    <DataContext.Provider value={{ refetchOnClick }}>
-      <Fragment>
+    <Fragment>
+      <Stack
+        borderRadius={BORDER_RADIUS_1}
+        bgcolor="white"
+        p={{ xs: 1.8, lg: 3 }}
+      >
         <Stack
-          borderRadius={BORDER_RADIUS_1}
-          bgcolor="white"
-          p={{ xs: 1.8, lg: 3 }}
+          direction="row"
+          spacing={1}
+          justifyContent="space-between"
+          alignItems="center"
+          px={{ xs: 2, md: 2 }}
+          sx={{
+            paddingBottom: windowDimenion.winWidth < 650 ? "10px" : "0",
+          }}
         >
-          <Stack
-            direction="row"
-            spacing={1}
-            justifyContent="space-between"
-            alignItems="center"
-            px={{ xs: 2, md: 2 }}
-            sx={{
-              paddingBottom: windowDimenion.winWidth < 650 ? "10px" : "0",
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Typography
-                variant="text1"
-                color="rgba(110, 118, 138, 1)"
-                whiteSpace="nowrap"
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Typography
+              variant="text1"
+              color="rgba(110, 118, 138, 1)"
+              whiteSpace="nowrap"
+            >
+              لیست دامنه ها
+            </Typography>
+            {windowDimenion.winWidth >= 650 ? (
+              <SearchBox
+                onChange={(text) => setSearch(text)}
+                placeholder="جستجو در نام دامنه"
+              />
+            ) : (
+              <></>
+            )}
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Button
+              variant="outlined"
+              onClick={createBtnOnClick}
+              size="large"
+              sx={{
+                whiteSpace: "nowrap",
+                px: 1.2,
+                borderRadius: BORDER_RADIUS_1,
+              }}
+              startIcon={
+                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+              }
+            >
+              افزودن دامنه جدید
+            </Button>
+          </Stack>
+        </Stack>
+        {windowDimenion.winWidth < 650 ? (
+          <SearchBox placeholder="جستجو در نام دامنه" />
+        ) : (
+          <></>
+        )}
+      </Stack>
+      <Grid container columnSpacing={1}>
+        {isLoading ? (
+          <Fragment>
+            {[...Array(12)].map((_, index) => (
+              <Grid
+                key={index}
+                item
+                xs={12}
+                sm={5.8}
+                lg={3.8}
+                sx={{ margin: "10px auto" }}
               >
-                لیست دامنه ها
-              </Typography>
-              {windowDimenion.winWidth >= 650 ? (
-                <SearchBox
-                  onChange={(text) => setSearch(text)}
-                  placeholder="جستجو در نام دامنه"
+                <Skeleton
+                  variant="rectangular"
+                  height={100}
+                  sx={{
+                    bgcolor: "secondary.light",
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
                 />
-              ) : (
-                <></>
-              )}
-            </Stack>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Button
-                onClick={refetchOnClick}
-                variant="outlined"
-                size="large"
-                sx={{
-                  whiteSpace: "nowrap",
-                  px: 1.2,
-                  borderRadius: BORDER_RADIUS_1,
-                }}
-                startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
-              >
-                بازخوانی
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={createBtnOnClick}
-                size="large"
-                sx={{
-                  whiteSpace: "nowrap",
-                  px: 1.2,
-                  borderRadius: BORDER_RADIUS_1,
-                }}
-                startIcon={
-                  <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-                }
-              >
-                افزودن دامنه جدید
-              </Button>
+              </Grid>
+            ))}
+          </Fragment>
+        ) : zoneList?.length === 0 ? (
+          <Stack py={3} sx={{ width: "100%" }}>
+            <Stack bgcolor="white" borderRadius={3}>
+              <EmptyTable text="دامنه ای وجود ندارد" />
             </Stack>
           </Stack>
-          {windowDimenion.winWidth < 650 ? (
-            <SearchBox placeholder="جستجو در نام دامنه" />
-          ) : (
-            <></>
-          )}
-        </Stack>
-        <Grid container>
-          {isLoading ? (
-            <Fragment>
-              {[...Array(12)].map((_, index) => (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  sm={5.8}
-                  lg={3.8}
-                  sx={{ margin: "10px auto" }}
-                >
-                  <Skeleton
-                    variant="rectangular"
-                    height={100}
-                    sx={{
-                      bgcolor: "secondary.light",
-                      borderRadius: BORDER_RADIUS_1,
-                    }}
-                  />
-                </Grid>
-              ))}
-            </Fragment>
-          ) : zoneList?.length === 0 ? (
-            <Stack py={3} sx={{ width: "100%" }}>
-              <Stack bgcolor="white" borderRadius={3}>
-                <EmptyTable text="دامنه ای وجود ندارد" />
-              </Stack>
-            </Stack>
-          ) : (
-            filteredList?.map((item) => {
-              return (
-                <Grid
+        ) : (
+          filteredList?.map((item) => {
+            return (
+              <Grid
+                key={item.id}
+                item
+                xs={12}
+                sm={5.8}
+                lg={4}
+                mt={1}
+                mb={1}
+                sx={{ margin: "max-content" }}
+              >
+                <DomainCard
                   key={item.id}
-                  item
-                  xs={12}
-                  sm={5.8}
-                  lg={3.8}
-                  mt={1}
-                  mr={1}
-                  mb={1}
-                  sx={{ margin: "max-content" }}
-                >
-                  <DomainCard
-                    key={item.id}
-                    domainData={item}
-                    onDeleteClick={deleteBtnOnClick}
-                    itemOnClick={cardOnClick}
-                    showStatus={false}
-                    isDomainCard={true}
-                    detailsList={[
-                      {
-                        id: item.zoneStatusId?.toString() ?? "",
-                        label: item.zoneStatus ?? "",
-                      },
-                    ]}
-                  />
-                </Grid>
-              );
-            })
-          )}
-        </Grid>
-        <DeleteCdnDialog
-          open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-          onClose={closeDialogHandler}
-          keyTitle="دامنه"
-          subTitle="برای حذف دامنه موردنظر، عبارت امنیتی زیر را وارد کنید."
-          securityPhrase={selectedCdn?.zoneName || ""}
-          onSubmit={deleteCdnHandler}
-          submitLoading={deleteCdnLoading}
-        />
-      </Fragment>
-    </DataContext.Provider>
+                  domainData={item}
+                  onDeleteClick={deleteBtnOnClick}
+                  itemOnClick={cardOnClick}
+                  showStatus={false}
+                  isDomainCard={true}
+                  detailsList={[
+                    {
+                      id: item.zoneStatusId?.toString() ?? "",
+                      label: item.zoneStatus ?? "",
+                    },
+                  ]}
+                />
+              </Grid>
+            );
+          })
+        )}
+      </Grid>
+      <DeleteCdnDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="دامنه"
+        subTitle="برای حذف دامنه موردنظر، عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedCdn?.zoneName || ""}
+        onSubmit={deleteCdnHandler}
+        submitLoading={deleteCdnLoading}
+      />
+    </Fragment>
   );
 };
 

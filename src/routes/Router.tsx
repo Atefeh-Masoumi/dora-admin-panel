@@ -203,7 +203,7 @@ const Router: FC = () => {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           <Route
@@ -213,7 +213,7 @@ const Router: FC = () => {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: true,
+              hideSidebar: false,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
@@ -363,7 +363,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرور ابری",
                   url: "/vm",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddServerContextProvider
             )}
@@ -398,7 +398,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس کوبرنتیز",
                   url: "/kubernetes",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddKubernetesContextProvider
             )}
@@ -447,7 +447,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت هاستینگ ابری",
                   url: "/web",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddWebContextProvider
             )}
@@ -482,7 +482,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت ثبت/تمدید دامنه",
                   url: "/domain",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddDomainContextProvider
             )}
@@ -517,7 +517,7 @@ const Router: FC = () => {
                   text: "بازگشت به مدیریت سرویس فضای ابری",
                   url: "/storage",
                 },
-                hideSidebar: true,
+                hideSidebar: false,
               },
               AddStorageContextProvider
             )}

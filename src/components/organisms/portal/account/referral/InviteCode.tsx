@@ -133,7 +133,7 @@ export const InviteCode: FC = () => {
             />
           </IconButton>
         </Stack>
-        <Stack
+        {/* <Stack
           direction="row"
           spacing={{ xs: 0, md: 1.5 }}
           alignItems="center"
@@ -194,7 +194,7 @@ export const InviteCode: FC = () => {
               }}
             />
           </IconButton>
-        </Stack>
+        </Stack> */}
       </Grid>
 
       <ShareDialog code={code} openDialog={open} handleClose={handleClose} />
