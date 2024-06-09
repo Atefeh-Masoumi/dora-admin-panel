@@ -31,6 +31,7 @@ const formInitialValues = {
   phoneNumber: "",
   email: "",
   password: "",
+  referralCode: "",
 };
 
 const formValidation = yup.object().shape({
@@ -54,7 +55,7 @@ const Signup: FC = () => {
   const navigate = useNavigate();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { firstName, lastName, phoneNumber, email, password },
+    { firstName, lastName, phoneNumber, email, password, referralCode },
     { setSubmitting }
   ) => {
     registerUser({
@@ -64,6 +65,7 @@ const Signup: FC = () => {
         phoneNumber,
         email,
         password,
+        referralCode,
       },
     })
       .unwrap()
@@ -164,6 +166,14 @@ const Signup: FC = () => {
                   شامل کاراکترهای خاص (نمادها) باشد
                 </Typography>
               </Stack>
+              <DorsaTextField
+                error={Boolean(errors.referralCode && touched.referralCode)}
+                helperText={touched.referralCode && errors.referralCode}
+                {...getFieldProps("referralCode")}
+                label="کد معرف (اختیاری)"
+                fullWidth
+                dir="ltr"
+              />
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
                   component="button"

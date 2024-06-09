@@ -14,7 +14,6 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { useAppSelector } from "src/app/hooks";
 import {
   createDnsRecordType,
   dnsType,
@@ -35,20 +34,19 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CreateRecordDialogPropsType = {
   id?: number;
+  dnsId: number;
   onClose: () => void;
   openDialog: boolean;
 };
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   id,
+  dnsId,
   onClose,
   openDialog,
 }) => {
   const [getInfo, { isLoading: getDetailsLoading }] =
     useLazyGetApiMyDnsRecordGetByIdQuery();
-
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
 
   const [type, setType] = useState<dnsType>("A");
 
@@ -110,7 +108,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       editDnsRecord({
         editDnsRecordModel: {
           id: id,
-          dnsHostId: cdnId,
+          dnsHostId: dnsId,
           name,
           type,
           ttl,
@@ -130,7 +128,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     } else {
       createDnsRecord({
         createDnsRecordModel: {
-          dnsHostId: cdnId,
+          dnsHostId: dnsId,
           name,
           type,
           ttl,

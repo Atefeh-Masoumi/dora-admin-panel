@@ -137,7 +137,7 @@ export const Notifications: FC = () => {
                     <Button
                       fullWidth
                       sx={{ color: "white" }}
-                      href="/portal/notifications"
+                      href="/portal/account?tab=notification"
                     >
                       نمایش تمام پیام ها
                     </Button>

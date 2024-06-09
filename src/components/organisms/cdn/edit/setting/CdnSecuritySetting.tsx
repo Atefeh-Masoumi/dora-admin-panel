@@ -11,14 +11,14 @@ import {
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CdnSecuritySettingPropsType = {
-  id: number;
+  dnsId: number;
   isHSTS: boolean | undefined;
   isHttpsRedirect: boolean | undefined;
   isNonWwwRedirect: boolean | undefined;
   loading: boolean;
 };
 export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
-  id,
+  dnsId,
   isHSTS,
   isHttpsRedirect,
   isNonWwwRedirect,
@@ -31,7 +31,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
     if (isHttpsRedirect === undefined) return;
     changeHttpsRedirect({
       changeHttpsRedirectModel: {
-        dnsHostId: id,
+        dnsHostId: dnsId,
         isHttpsRedirect: !isHttpsRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
@@ -44,7 +44,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
     if (isNonWwwRedirect === undefined) return;
     changeNonWwwRedirect({
       changeNonWwwRedirectModel: {
-        dnsHostId: id,
+        dnsHostId: dnsId,
         isNonWwwRedirect: !isNonWwwRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
@@ -55,11 +55,14 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
 
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
-    changeHSTS({ changeHstsModel: { dnsHostId: id, isHsts: !isHSTS } }).then(
-      () => {
-        toast.success("وضعیت HSTS بروز رسانی شد");
-      }
-    );
+    changeHSTS({
+      changeHstsModel: {
+        dnsHostId: dnsId,
+        isHsts: !isHSTS,
+      },
+    }).then(() => {
+      toast.success("وضعیت HSTS بروز رسانی شد");
+    });
   };
 
   const items = [

@@ -1,9 +1,9 @@
-import { FC, useContext } from "react";
-import { Button, Dialog, Stack, Typography } from "@mui/material";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useDeleteApiMyDomainHostDeleteByIdMutation } from "src/app/services/api.generated";
-import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
+import { Button, Dialog, Stack, Typography } from "@mui/material";
+import { FC } from "react";
+import { toast } from "react-toastify";
+import { useDeleteApiMyDomainHostDeleteByIdMutation } from "src/app/services/api.generated";
+import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type DeleteDomainDialogPropsType = {

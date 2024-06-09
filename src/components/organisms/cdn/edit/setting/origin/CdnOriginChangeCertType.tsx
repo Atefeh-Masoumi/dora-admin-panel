@@ -5,18 +5,18 @@ import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
 import PageLoading from "src/components/atoms/PageLoading";
-import { CdnClientCertUserCert } from "./CdnClientCertUserCert";
-import { CdnClientCert } from "./CdnClientCert";
+import { CdnOriginCertUserCert } from "./CdnOriginCertUserCert";
+import { CdnOriginCert } from "./CdnOriginCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type CdnChangeClientCertTypePropsType = {
-  id: number;
+type CdnOriginChangeCertTypePropsType = {
+  dnsId: number;
   loading: boolean | undefined;
   certTypeId: number | undefined;
 };
 
-export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
-  id,
+export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
+  dnsId,
   loading,
   certTypeId,
 }) => {
@@ -25,7 +25,10 @@ export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
-      changeClientCertTypeModel: { dnsHostId: id, zoneClientCertTypeId: type },
+      changeClientCertTypeModel: {
+        dnsHostId: dnsId,
+        zoneClientCertTypeId: type,
+      },
     });
   };
   return (
@@ -108,7 +111,11 @@ export const CdnChangeClientCertType: FC<CdnChangeClientCertTypePropsType> = ({
             </Fragment>
           )}
         </Stack>
-        {certTypeId === 1 ? <CdnClientCert /> : <CdnClientCertUserCert />}
+        {certTypeId === 1 ? (
+          <CdnOriginCert dnsId={dnsId} loading />
+        ) : (
+          <CdnOriginCertUserCert dnsId={dnsId} loading />
+        )}
       </Stack>
     </>
   );

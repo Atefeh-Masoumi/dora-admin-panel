@@ -13,18 +13,16 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type AddClientUserCertDialogPropsType = {
+type CreateOriginUserCertDialogPropsType = {
   openDialog: boolean;
   handleClose: () => void;
-  cdnId: number;
+  dnsId: number;
 };
 
-export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
-  openDialog,
-  handleClose,
-  cdnId,
-}) => {
-  const formInitialValues = { cdnId, keyPem: "", certPem: "" };
+export const CreateOriginUserCertDialog: FC<
+  CreateOriginUserCertDialogPropsType
+> = ({ openDialog, handleClose, dnsId }) => {
+  const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiMyCdnOriginCertCreateUserCertMutation();
@@ -32,7 +30,6 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
   const onClose = () => handleClose();
 
   const formValidation = yup.object().shape({
-    //zoneName: yup.string().required(""),
     keyPem: yup.string().required("این فیلد الزامیست"),
     certPem: yup.string().required("این فیلد الزامیست"),
     bundleCertPem: yup.string(),
@@ -42,9 +39,9 @@ export const AddClientUserCertDialog: FC<AddClientUserCertDialogPropsType> = ({
     { dnsHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
-    if (!cdnId || !keyPem || !certPem) return;
+    if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnOriginUserCertModel: { dnsHostId: cdnId, keyPem, certPem },
+      createCdnOriginUserCertModel: { dnsHostId: dnsId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

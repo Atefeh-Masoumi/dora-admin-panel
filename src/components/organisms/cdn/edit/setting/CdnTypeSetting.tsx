@@ -35,23 +35,26 @@ const radioItems = [
 type CdnTypeSettingPropsType = {
   zoneTypeId: number;
   loading: boolean;
-  id: number;
+  dnsId: number;
 };
 
 export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
   zoneTypeId,
   loading,
-  id,
+  dnsId,
 }) => {
   const [changeCdnType, { isLoading: loadingChange }] =
     usePutApiMyCdnHostChangeCdnTypeMutation();
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
-    changeCdnType({ changeCdnTypeModel: { dnsHostId: id, zoneTypeId } }).then(
-      () => {
-        toast.success("بروزرسانی پروتکل ارتباطی انجام شد");
-      }
-    );
+    changeCdnType({
+      changeCdnTypeModel: {
+        dnsHostId: dnsId,
+        zoneTypeId,
+      },
+    }).then(() => {
+      toast.success("بروزرسانی پروتکل ارتباطی انجام شد");
+    });
   };
 
   return (

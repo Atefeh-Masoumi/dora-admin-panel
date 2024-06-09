@@ -3,7 +3,7 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyCdnRouteListByDnsHostIdQuery } from "src/app/services/api.generated";
-import { AddLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/AddDialog";
+import { CreateLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/CreateLoadBalanceDialog";
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -14,10 +14,10 @@ type LoadBalancePropsType = {};
 const LoadBalance: FC<LoadBalancePropsType> = () => {
   const [showDialog, setShowDialog] = useState(false);
   const { id } = useParams();
-  const cdnId = Number(id) || 0;
+  const dnsId = Number(id) || 0;
 
   const { data, isLoading } = useGetApiMyCdnRouteListByDnsHostIdQuery({
-    dnsHostId: cdnId,
+    dnsHostId: dnsId,
   });
 
   const openDialog = () => setShowDialog(true);
@@ -39,7 +39,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           alignItems="center"
         >
           <Typography fontSize={18} color="secondary">
-            لیست Load Balancer ابری
+            لیست Load Balance ابری
           </Typography>
           <Button
             onClick={openDialog}
@@ -59,12 +59,16 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
             struct={loadBalanceTableStruct}
             RowComponent={LoadBalanceTableRow}
             rows={data || []}
-            text="در حال حاضر Load Balancer وجود ندارد"
+            text="در حال حاضر Load Balance وجود ندارد"
             isLoading={isLoading}
           />
         </Box>
       </Stack>
-      <AddLoadBalanceDialog openDialog={showDialog} onClose={closeDialog} />
+      <CreateLoadBalanceDialog
+        openDialog={showDialog}
+        onClose={closeDialog}
+        dnsId={dnsId}
+      />
     </>
   );
 };

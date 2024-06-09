@@ -6,7 +6,7 @@ import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/Analy
 import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
 import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalance";
 import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
-import { SSLSetting } from "src/components/organisms/cdn/edit/ssl/Ssl";
+import { CdnSetting } from "src/components/organisms/cdn/edit/setting/CdnSetting";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const EditZone: FC = () => {
@@ -20,17 +20,17 @@ const EditZone: FC = () => {
     if (pathname.includes("overview")) {
       result = `overview`;
     }
+    if (pathname.includes("setting")) {
+      result = `setting`;
+    }
     if (pathname.includes("analytics")) {
       result = `analytics`;
     }
-    if (pathname.includes("dns-record-settings")) {
-      result = `dns-record-settings`;
+    if (pathname.includes("dns-record")) {
+      result = `dns-record`;
     }
-    if (pathname.includes("ssl-tls-settings")) {
-      result = `ssl-tls-settings`;
-    }
-    if (pathname.includes("load-balance-settings")) {
-      result = `load-balance-settings`;
+    if (pathname.includes("load-balance")) {
+      result = `load-balance`;
     }
     // if (pathname.includes("api-gateway-settings")) {
     //   result = "api-gateway-settings";
@@ -49,16 +49,16 @@ const EditZone: FC = () => {
       case `overview`:
         result = <ZoneInfo />;
         break;
+      case `setting`:
+        result = <CdnSetting />;
+        break;
       case `analytics`:
         result = <AnalyticChart />;
         break;
-      case `dns-record-settings`:
+      case `dns-record`:
         result = <DnsRecord />;
         break;
-      case `ssl-tls-settings`:
-        result = <SSLSetting />;
-        break;
-      case `load-balance-settings`:
+      case `load-balance`:
         result = <LoadBalance />;
         break;
       // case "api-gateway-settings":
@@ -92,31 +92,13 @@ const EditZone: FC = () => {
           onChange={handleChange}
         >
           <DorsaTab value={`overview`} label="مشخصات دامنه" />
-          <DorsaTab value={`ssl-tls-settings`} label="تنظیمات" />
+          <DorsaTab value={`setting`} label="تنظیمات" />
           <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
-          <DorsaTab value={`dns-record-settings`} label="تنظیمات DNS Record" />
-          <DorsaTab
-            value={`load-balance-settings`}
-            label="تنظیمات Load Balance"
-          />
+          <DorsaTab value={`dns-record`} label="تنظیمات DNS Record" />
+          <DorsaTab value={`load-balance`} label="تنظیمات Load Balance" />
           {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}
         </Tabs>
       </Box>
-      {/* <Stack
-        p={2.5}
-        bgcolor="rgba(244, 95, 80, 1)"
-        direction="row"
-        borderRadius={BORDER_RADIUS_1}
-        width="100%"
-        color="white"
-        alignItems={{ xs: "start", md: "center" }}
-      >
-        <ErrorOutlineIcon />
-        <Typography variant="text14">
-          دامنه مورد نظر به دلیل بدهی مسدود می‌باشد، لطفا با پشتیبانی تماس
-          بگیرید.
-        </Typography>
-      </Stack> */}
       {renderHandler()}
     </Stack>
   );

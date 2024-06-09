@@ -16,14 +16,12 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const vmDataList = [{ label: "نوع زیرساخت:", id: "hypervisorType" }];
 
-type VmProjectIndexPropsType = any;
-
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
+const VmProjectList: FC = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedProject, setSelectedProject] =
     useState<VmProjectListResponse | null>(null);
@@ -203,4 +201,4 @@ const AVmProjectIndex: FC<VmProjectIndexPropsType> = () => {
   );
 };
 
-export default AVmProjectIndex;
+export default VmProjectList;

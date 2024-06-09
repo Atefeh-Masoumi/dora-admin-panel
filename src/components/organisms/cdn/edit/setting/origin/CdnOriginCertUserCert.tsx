@@ -1,18 +1,22 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useAppSelector } from "src/app/hooks";
 import { useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddClientUserCertDialog } from "../dialogs/AddClientUserCertDialog";
+import { CreateOriginUserCertDialog } from "../dialogs/CreateOriginUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnClientCertUserCert: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+type CdnOriginCertUserCertPropsType = {
+  dnsId: number;
+  loading?: boolean;
+};
 
+export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
+  dnsId,
+  loading,
+}) => {
   const { data: userCert, isLoading } =
-    useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery({ dnsHostId: cdnId });
+    useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery({ dnsHostId: dnsId });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);
@@ -61,10 +65,10 @@ export const CdnClientCertUserCert: FC = () => {
           )}
         </Stack>
       </Stack>
-      <AddClientUserCertDialog
+      <CreateOriginUserCertDialog
         openDialog={open}
         handleClose={handleClose}
-        cdnId={cdnId}
+        dnsId={dnsId}
       />
     </Stack>
   );

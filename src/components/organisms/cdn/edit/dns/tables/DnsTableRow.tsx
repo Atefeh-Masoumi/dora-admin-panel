@@ -72,7 +72,7 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
       />
       {openEdit && (
         <CreateRecordDialog
-          id={row.id}
+          dnsId={row.id}
           openDialog={openEdit}
           onClose={handleCloseEdit}
         />

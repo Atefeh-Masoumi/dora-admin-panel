@@ -1,38 +1,39 @@
-import { FC, useState } from "react";
-import { Button, Divider, Stack, Typography } from "@mui/material";
-import { useAppSelector } from "src/app/hooks";
-import { useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
+import type { FC } from "react";
+import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { useGetApiMyCdnOriginCertGetByDnsHostIdQuery } from "src/app/services/api.generated";
 import { TextLoading } from "src/components/molecules/TextLoading";
-import { AddEdgeUserCertDialog } from "../dialogs/AddEdgeUserCertDialog";
+import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const CdnEdgeCertUserCert: FC = () => {
-  const selectedDomain = useAppSelector((store) => store.cdn.selectedDomain);
-  const cdnId = selectedDomain?.id || 0;
+type CdnOriginCertPropsType = {
+  dnsId: number;
+  loading?: boolean;
+};
 
-  const { data: userCert, isLoading } =
-    useGetApiMyCdnEdgeCertGetUserCertByDnsHostIdQuery({ dnsHostId: cdnId });
-
-  const handleOpen = () => setOpen(true);
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
+  dnsId,
+  loading,
+}) => {
+  const { data: edgeCert, isLoading } =
+    useGetApiMyCdnOriginCertGetByDnsHostIdQuery({
+      dnsHostId: dnsId,
+    });
 
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی کاربر</Typography>
-        <Button
+        <Typography>گواهی ابر درسا</Typography>
+        <LoadingButton
           variant="outlined"
           size="large"
           sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: 1.5, border: 1 }}
           startIcon={
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
-          onClick={handleOpen}
         >
-          افزودن گواهی
-        </Button>
+          صدور گواهی
+        </LoadingButton>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
       <Stack spacing={2} px={1} color="secondary.main">
@@ -41,7 +42,7 @@ export const CdnEdgeCertUserCert: FC = () => {
           {isLoading ? (
             <TextLoading num={9} />
           ) : (
-            <Typography variant="text15">{userCert?.issuer}</Typography>
+            <Typography variant="text15">{edgeCert?.issuer}</Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">
@@ -49,7 +50,7 @@ export const CdnEdgeCertUserCert: FC = () => {
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{userCert?.expirationDate}</Typography>
+            <Typography variant="text15">{edgeCert?.expirationDate}</Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">
@@ -57,15 +58,10 @@ export const CdnEdgeCertUserCert: FC = () => {
           {isLoading ? (
             <TextLoading num={9} />
           ) : (
-            <Typography variant="text15">{userCert?.commonName}</Typography>
+            <Typography variant="text15">{edgeCert?.commonName}</Typography>
           )}
         </Stack>
       </Stack>
-      <AddEdgeUserCertDialog
-        openDialog={open}
-        handleClose={handleClose}
-        cdnId={cdnId}
-      />
     </Stack>
   );
 };

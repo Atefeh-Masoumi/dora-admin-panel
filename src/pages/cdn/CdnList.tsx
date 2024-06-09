@@ -20,7 +20,7 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-const ZoneManagement: FC = () => {
+const CdnList: FC = () => {
   const [selectedCdn, setSelectedCdn] = useState<DnsListResponse | null>(null);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [search, setSearch] = useState("");
@@ -29,7 +29,6 @@ const ZoneManagement: FC = () => {
   const {
     data: zoneList,
     isLoading: getDataLoading,
-    refetch,
     isFetching,
   } = useGetApiMyDnsHostListQuery();
 
@@ -223,4 +222,4 @@ const ZoneManagement: FC = () => {
   );
 };
 
-export default ZoneManagement;
+export default CdnList;

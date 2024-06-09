@@ -12,11 +12,11 @@ import { ZoneTableRow } from "./tables/DnsTableRow";
 
 export const DnsRecord: FC = () => {
   const { id } = useParams();
-  const cdnId = Number(id) || 0;
+  const dnsId = Number(id) || 0;
 
   const { data: zoneList, isLoading } =
     useGetApiMyDnsRecordListByDnsHostIdQuery({
-      dnsHostId: cdnId,
+      dnsHostId: dnsId,
     });
 
   const [search, setSearch] = useState("");
@@ -117,7 +117,11 @@ export const DnsRecord: FC = () => {
           />
         </Stack>
       </Stack>
-      <CreateRecordDialog openDialog={showDialog} onClose={handleClose} />
+      <CreateRecordDialog
+        openDialog={showDialog}
+        onClose={handleClose}
+        dnsId={dnsId}
+      />
     </Stack>
   );
 };

@@ -10,9 +10,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate, useParams } from "react-router";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
-type VmManagementPropsType = {};
-
-const VmManagement: FC<VmManagementPropsType> = () => {
+const VmList: FC = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -137,4 +135,4 @@ const VmManagement: FC<VmManagementPropsType> = () => {
   );
 };
 
-export default VmManagement;
+export default VmList;

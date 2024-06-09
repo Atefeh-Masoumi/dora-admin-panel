@@ -19,13 +19,12 @@ type ProxyStatusProps = { status: boolean; id: number };
 
 export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
   const [open, setOpen] = useState(false);
-
   const handleTooltipClose = () => setOpen(false);
-
   const handleTooltipOpen = () => setOpen(!open);
 
   const [changeProxyStatus, { isLoading }] =
     usePutApiMyDnsRecordChangeProxyStatusByIdMutation();
+
   const changeProxy = () => {
     if (status === undefined) return;
 
