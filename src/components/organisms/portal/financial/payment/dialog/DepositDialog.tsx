@@ -81,7 +81,7 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
     })
       .unwrap()
       .then((res) => {
-        if (paymentProviderId === 10) {
+        if (paymentProviderId === 4) {
           const mellatProviderRes = res as MellatCreatePaymentResponse;
           setMellatResponseRefId(mellatProviderRes.refId);
           setMellatResponsePhoneNumber(mellatProviderRes.phoneNumber);
