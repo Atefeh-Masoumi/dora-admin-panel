@@ -154,48 +154,79 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                   <Typography variant="text1" fontWeight="bold">
                     خرید {name}
                   </Typography>
-                  <Grid container rowSpacing={1} columnSpacing={1}>
-                    {paymentProviderListLoading ? (
-                      <CircularProgress sx={{ margin: "0 auto" }} />
-                    ) : (
-                      paymentProviderList?.map((provider) => {
-                        return (
-                          <Grid key={provider.id} item xs={5.7}>
-                            <Button
-                              onClick={() =>
-                                setFieldValue("paymentProviderId", provider.id)
+                  <Stack
+                    spacing={2}
+                    border={1}
+                    borderRadius={BORDER_RADIUS_1}
+                    borderColor="secondary.light"
+                    p={2}
+                  >
+                    <Typography variant="text14" color="secondary">
+                      درگاه پرداخت
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={
+                        paymentProviderList &&
+                        paymentProviderList?.length % 2 !== 0
+                          ? 0
+                          : 1
+                      }
+                    >
+                      {paymentProviderListLoading ? (
+                        <CircularProgress sx={{ margin: "0 auto" }} />
+                      ) : (
+                        paymentProviderList?.map((provider) => {
+                          return (
+                            <Grid
+                              key={provider.id}
+                              item
+                              xs={
+                                paymentProviderList.length % 2 !== 0 ? 12 : 5.7
                               }
-                              variant="outlined"
-                              color={
-                                paymentProvider === provider.id
-                                  ? "primary"
-                                  : "secondary"
-                              }
-                              sx={{
-                                border:
-                                  paymentProvider === provider.id
-                                    ? "2px solid #3C8AFF !important"
-                                    : 1,
-                                py: 1,
-                              }}
-                              fullWidth
                             >
-                              <Stack
-                                direction="row"
-                                spacing={1}
-                                alignItems={{ xs: "start", md: "end" }}
+                              <Button
+                                onClick={() =>
+                                  setFieldValue(
+                                    "paymentProviderId",
+                                    provider.id
+                                  )
+                                }
+                                variant="outlined"
+                                color={
+                                  paymentProvider === provider.id
+                                    ? "primary"
+                                    : "secondary"
+                                }
+                                sx={{
+                                  border:
+                                    paymentProvider === provider.id
+                                      ? "2px solid #3C8AFF !important"
+                                      : 1,
+                                  py: 1,
+                                }}
+                                fullWidth
                               >
-                                {renderProviderLogo(String(provider.photoName))}
-                                <Typography variant="text14">
-                                  {provider.name}
-                                </Typography>
-                              </Stack>
-                            </Button>
-                          </Grid>
-                        );
-                      })
-                    )}
-                  </Grid>
+                                <Stack
+                                  direction="row"
+                                  spacing={1}
+                                  alignItems={{ xs: "start", md: "end" }}
+                                >
+                                  {renderProviderLogo(
+                                    String(provider.photoName)
+                                  )}
+                                  <Typography variant="text14">
+                                    {provider.name}
+                                  </Typography>
+                                </Stack>
+                              </Button>
+                            </Grid>
+                          );
+                        })
+                      )}
+                    </Grid>
+                  </Stack>
                   <Stack
                     direction="row"
                     spacing={0.5}
