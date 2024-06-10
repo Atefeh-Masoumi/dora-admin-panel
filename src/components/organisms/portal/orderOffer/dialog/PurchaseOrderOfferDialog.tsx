@@ -138,6 +138,8 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
         {...props}
         onClose={closeDialogHandler}
         components={{ Backdrop: BlurBackdrop }}
+        maxWidth="xs"
+        fullWidth
         sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
       >
         <Formik
@@ -145,7 +147,7 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
           validationSchema={formValidation}
           onSubmit={submitHandler}
         >
-          {({ errors, touched, getFieldProps, setFieldValue }) => {
+          {({ getFieldProps, setFieldValue }) => {
             const paymentProvider = getFieldProps("paymentProviderId").value;
 
             return (
@@ -164,28 +166,13 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                     <Typography variant="text14" color="secondary">
                       درگاه پرداخت
                     </Typography>
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={
-                        paymentProviderList &&
-                        paymentProviderList?.length % 2 !== 0
-                          ? 0
-                          : 1
-                      }
-                    >
+                    <Grid container rowSpacing={1} columnSpacing={1}>
                       {paymentProviderListLoading ? (
                         <CircularProgress sx={{ margin: "0 auto" }} />
                       ) : (
                         paymentProviderList?.map((provider) => {
                           return (
-                            <Grid
-                              key={provider.id}
-                              item
-                              xs={
-                                paymentProviderList.length % 2 !== 0 ? 12 : 5.7
-                              }
-                            >
+                            <Grid key={provider.id} item xs={5.7}>
                               <Button
                                 onClick={() =>
                                   setFieldValue(
@@ -227,6 +214,7 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                       )}
                     </Grid>
                   </Stack>
+
                   <Stack
                     direction="row"
                     spacing={0.5}
