@@ -18,7 +18,9 @@ import {
   useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
 
-type SelectOSPropsType = {};
+type SelectOSPropsType = {
+  datacenterId?: number | null;
+};
 
 type OsDropDownType = {
   content: ImageListResponse[];
@@ -28,11 +30,11 @@ type OsDropDownType = {
   isSelected: boolean;
 };
 
-export const SelectOS: FC<SelectOSPropsType> = () => {
+export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } = useGetApiMyVmImageListQuery({
-    datacenterId: dataCenter?.id || 0,
+    datacenterId: datacenterId ? datacenterId : dataCenter?.id,
     hypervisorTypeId: 1,
   });
 

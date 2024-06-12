@@ -140,7 +140,7 @@ export const api = generatedApi
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
       putApiMyDnsRecordChangeProxyStatusById: {
-        invalidatesTags: () => ["EditRecordDialog", "ProxyStatus"],
+        invalidatesTags: () => ["EditRecordDialog", "ProxyStatus", "CdnRoute"],
       },
       deleteApiMyDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
@@ -172,10 +172,7 @@ export const api = generatedApi
         providesTags: () => ["CdnRoute"],
       },
       deleteApiMyCdnRouteDeleteById: {
-        invalidatesTags: () => ["CdnRoute"],
-      },
-      postApiMyCdnRouteCreate: {
-        invalidatesTags: () => ["CdnRoute"],
+        invalidatesTags: () => ["CdnRoute", "ProxyStatus"],
       },
       putApiMyCdnRouteEdit: {
         invalidatesTags: () => ["CdnRoute"],

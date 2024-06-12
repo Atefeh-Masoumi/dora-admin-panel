@@ -287,16 +287,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({ url: `/api/my/cdn/route/get/${queryArg.id}` }),
     }),
-    postApiMyCdnRouteCreate: build.mutation<
-      PostApiMyCdnRouteCreateApiResponse,
-      PostApiMyCdnRouteCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/cdn/route/create`,
-        method: "POST",
-        body: queryArg.createCdnRouteModel,
-      }),
-    }),
     putApiMyCdnRouteEdit: build.mutation<
       PutApiMyCdnRouteEditApiResponse,
       PutApiMyCdnRouteEditApiArg
@@ -962,6 +952,16 @@ export const api = createApi({
         body: queryArg.body,
       }),
     }),
+    postApiMyPortalPaymentBpmCallBack: build.mutation<
+      PostApiMyPortalPaymentBpmCallBackApiResponse,
+      PostApiMyPortalPaymentBpmCallBackApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/payment/bpm-call-back`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getApiMyPortalPaymentProviderList: build.query<
       GetApiMyPortalPaymentProviderListApiResponse,
       GetApiMyPortalPaymentProviderListApiArg
@@ -1430,6 +1430,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/vm/project/list` }),
     }),
+    getApiMyVmProjectGetById: build.query<
+      GetApiMyVmProjectGetByIdApiResponse,
+      GetApiMyVmProjectGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/project/get/${queryArg.id}` }),
+    }),
     postApiMyVmProjectCreate: build.mutation<
       PostApiMyVmProjectCreateApiResponse,
       PostApiMyVmProjectCreateApiArg
@@ -1659,13 +1665,13 @@ export const api = createApi({
         body: queryArg.createVpcHostModel,
       }),
     }),
-    postApiMyVpcHostEdit: build.mutation<
-      PostApiMyVpcHostEditApiResponse,
-      PostApiMyVpcHostEditApiArg
+    putApiMyVpcHostEditById: build.mutation<
+      PutApiMyVpcHostEditByIdApiResponse,
+      PutApiMyVpcHostEditByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/host/edit`,
-        method: "POST",
+        url: `/api/my/vpc/host/edit/${queryArg.id}`,
+        method: "PUT",
         body: queryArg.editVpcHostModel,
       }),
     }),
@@ -1756,6 +1762,14 @@ export const api = createApi({
         url: `/api/my/vpc/network/list/${queryArg.vpcHostId}`,
       }),
     }),
+    getApiMyVpcNetworkShortListByVpcHostId: build.query<
+      GetApiMyVpcNetworkShortListByVpcHostIdApiResponse,
+      GetApiMyVpcNetworkShortListByVpcHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/network/short-list/${queryArg.vpcHostId}`,
+      }),
+    }),
     postApiMyVpcNetworkCreate: build.mutation<
       PostApiMyVpcNetworkCreateApiResponse,
       PostApiMyVpcNetworkCreateApiArg
@@ -1781,25 +1795,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/vpc/vm/list/${queryArg.vpcHostId}`,
-      }),
-    }),
-    postApiMyVpcVmCreate: build.mutation<
-      PostApiMyVpcVmCreateApiResponse,
-      PostApiMyVpcVmCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vpc/vm/create`,
-        method: "POST",
-        body: queryArg.createVpcVmModel,
-      }),
-    }),
-    deleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkId: build.mutation<
-      DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiResponse,
-      DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vpc/vm/delete/${queryArg.vmHostId}/${queryArg.vpcNetworkId}`,
-        method: "DELETE",
       }),
     }),
     getApiMyPortalWalletGetBalance: build.query<
@@ -1880,6 +1875,58 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/web/host/delete/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    getApiMyPortalWebsiteAlarmList: build.query<
+      GetApiMyPortalWebsiteAlarmListApiResponse,
+      GetApiMyPortalWebsiteAlarmListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/website-alarm/list` }),
+    }),
+    getApiMyPortalWebsiteBlogList: build.query<
+      GetApiMyPortalWebsiteBlogListApiResponse,
+      GetApiMyPortalWebsiteBlogListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/website-blog/list` }),
+    }),
+    getApiMyPortalWebsiteBlogGetByLink: build.query<
+      GetApiMyPortalWebsiteBlogGetByLinkApiResponse,
+      GetApiMyPortalWebsiteBlogGetByLinkApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/website-blog/get/${queryArg.link}`,
+      }),
+    }),
+    getApiMyPortalWebsiteBlogGetRandomArticlesByLink: build.query<
+      GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiResponse,
+      GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/website-blog/get-random-articles/${queryArg.link}`,
+      }),
+    }),
+    getApiMyPortalWebsiteBlogGetHeaderArticles: build.query<
+      GetApiMyPortalWebsiteBlogGetHeaderArticlesApiResponse,
+      GetApiMyPortalWebsiteBlogGetHeaderArticlesApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/website-blog/get-header-articles` }),
+    }),
+    getApiMyPortalWebsiteBlogCommentGetById: build.query<
+      GetApiMyPortalWebsiteBlogCommentGetByIdApiResponse,
+      GetApiMyPortalWebsiteBlogCommentGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/website-blog-comment/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyPortalWebsiteBlogCommentCreate: build.mutation<
+      PostApiMyPortalWebsiteBlogCommentCreateApiResponse,
+      PostApiMyPortalWebsiteBlogCommentCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/website-blog-comment/create`,
+        method: "POST",
+        body: queryArg.createWebSiteBolgCommentModel,
       }),
     }),
     postApiMyPortalContactUsCreate: build.mutation<
@@ -2053,10 +2100,6 @@ export type GetApiMyCdnRouteGetByIdApiResponse =
   /** status 200 OK */ GetCdnRouteResponse;
 export type GetApiMyCdnRouteGetByIdApiArg = {
   id: number;
-};
-export type PostApiMyCdnRouteCreateApiResponse = unknown;
-export type PostApiMyCdnRouteCreateApiArg = {
-  createCdnRouteModel: CreateCdnRouteModel;
 };
 export type PutApiMyCdnRouteEditApiResponse = unknown;
 export type PutApiMyCdnRouteEditApiArg = {
@@ -2421,6 +2464,18 @@ export type PostApiMyPortalPaymentSepCallBackApiArg = {
     HashedCardNumber?: string;
   };
 };
+export type PostApiMyPortalPaymentBpmCallBackApiResponse = unknown;
+export type PostApiMyPortalPaymentBpmCallBackApiArg = {
+  body: {
+    RefId?: string;
+    ResCode?: number;
+    SaleOrderId?: number;
+    SaleReferenceId?: number;
+    CardHolderInfo?: string;
+    CardHolderPan?: string;
+    FinalAmount?: number;
+  };
+};
 export type GetApiMyPortalPaymentProviderListApiResponse =
   /** status 200 OK */ PaymentProviderListResponse[];
 export type GetApiMyPortalPaymentProviderListApiArg = void;
@@ -2652,6 +2707,11 @@ export type GetApiMyVmKmsGetByIdAndTypeIdApiArg = {
 export type GetApiMyVmProjectListApiResponse =
   /** status 200 OK */ VmProjectListResponse[];
 export type GetApiMyVmProjectListApiArg = void;
+export type GetApiMyVmProjectGetByIdApiResponse =
+  /** status 200 OK */ VmProjectGetResponse;
+export type GetApiMyVmProjectGetByIdApiArg = {
+  id: number;
+};
 export type PostApiMyVmProjectCreateApiResponse = unknown;
 export type PostApiMyVmProjectCreateApiArg = {
   vmProjectCreateModel: VmProjectCreateModel;
@@ -2764,8 +2824,9 @@ export type PostApiMyVpcHostCreateApiResponse = unknown;
 export type PostApiMyVpcHostCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
 };
-export type PostApiMyVpcHostEditApiResponse = unknown;
-export type PostApiMyVpcHostEditApiArg = {
+export type PutApiMyVpcHostEditByIdApiResponse = unknown;
+export type PutApiMyVpcHostEditByIdApiArg = {
+  id: number;
   editVpcHostModel: EditVpcHostModel;
 };
 export type DeleteApiMyVpcHostDeleteByIdApiResponse = unknown;
@@ -2812,6 +2873,11 @@ export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
 export type GetApiMyVpcNetworkListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
+export type GetApiMyVpcNetworkShortListByVpcHostIdApiResponse =
+  /** status 200 OK */ VpcNetworkShortListResponse[];
+export type GetApiMyVpcNetworkShortListByVpcHostIdApiArg = {
+  vpcHostId: number;
+};
 export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
@@ -2824,16 +2890,6 @@ export type GetApiMyVpcVmListByVpcHostIdApiResponse =
   /** status 200 OK */ VpcVmListResponse[];
 export type GetApiMyVpcVmListByVpcHostIdApiArg = {
   vpcHostId: number;
-};
-export type PostApiMyVpcVmCreateApiResponse = unknown;
-export type PostApiMyVpcVmCreateApiArg = {
-  createVpcVmModel: CreateVpcVmModel;
-};
-export type DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiResponse =
-  unknown;
-export type DeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdApiArg = {
-  vmHostId: number;
-  vpcNetworkId: number;
 };
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 OK */ number;
@@ -2874,6 +2930,34 @@ export type PutApiMyWebHostEditApiArg = {
 export type DeleteApiMyWebHostDeleteByIdApiResponse = unknown;
 export type DeleteApiMyWebHostDeleteByIdApiArg = {
   id: number;
+};
+export type GetApiMyPortalWebsiteAlarmListApiResponse =
+  /** status 200 OK */ WebSiteAlarmListResponse[];
+export type GetApiMyPortalWebsiteAlarmListApiArg = void;
+export type GetApiMyPortalWebsiteBlogListApiResponse =
+  /** status 200 OK */ WebSiteBolgListResponse[];
+export type GetApiMyPortalWebsiteBlogListApiArg = void;
+export type GetApiMyPortalWebsiteBlogGetByLinkApiResponse =
+  /** status 200 OK */ GetWebSiteBolgResponse;
+export type GetApiMyPortalWebsiteBlogGetByLinkApiArg = {
+  link: string;
+};
+export type GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiResponse =
+  /** status 200 OK */ GetWebSiteRandomArticleResponse[];
+export type GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiArg = {
+  link: string;
+};
+export type GetApiMyPortalWebsiteBlogGetHeaderArticlesApiResponse =
+  /** status 200 OK */ GetWebSiteHeaderArticleResponse[];
+export type GetApiMyPortalWebsiteBlogGetHeaderArticlesApiArg = void;
+export type GetApiMyPortalWebsiteBlogCommentGetByIdApiResponse =
+  /** status 200 OK */ GetWebSiteBolgCommentResponse[];
+export type GetApiMyPortalWebsiteBlogCommentGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyPortalWebsiteBlogCommentCreateApiResponse = unknown;
+export type PostApiMyPortalWebsiteBlogCommentCreateApiArg = {
+  createWebSiteBolgCommentModel: CreateWebSiteBolgCommentModel;
 };
 export type PostApiMyPortalContactUsCreateApiResponse = unknown;
 export type PostApiMyPortalContactUsCreateApiArg = {
@@ -3066,14 +3150,6 @@ export type GetCdnRouteResponse = {
   loadBalancingPolicyId?: number;
   dangerousAcceptAnyServerCertificate?: boolean;
   destinations: DestinationModel[] | null;
-};
-export type CreateCdnRouteModel = {
-  dnsHostId?: number;
-  host: string;
-  loadBalancingPolicyId: number;
-  maxConnectionsPerServer: number;
-  dangerousAcceptAnyServerCertificate: boolean;
-  destinations?: DestinationModel[] | null;
 };
 export type EditCdnRouteModel = {
   id?: number;
@@ -3630,6 +3706,8 @@ export type OfferGetResponse = {
 export type PaymentResponse = {
   status: boolean;
   location: string | null;
+  phoneNumber?: string | null;
+  refId?: string | null;
 };
 export type PaymentModel = {
   paymentProviderId?: number;
@@ -3662,6 +3740,8 @@ export type GetPaymentResponse = {
 export type CreatePaymentResponse = {
   status: boolean;
   location: string | null;
+  phoneNumber?: string | null;
+  refId?: string | null;
 };
 export type CreatePaymentModel = {
   paymentProviderId?: number;
@@ -3922,11 +4002,9 @@ export type CreateVmModel = {
   name: string;
   password?: string | null;
   publicKey?: string | null;
-  datacenterId: number;
   imageId: number;
   isPredefined: boolean;
   vmProjectId: number;
-  isPublic: boolean;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -3977,10 +4055,26 @@ export type VmProjectListResponse = {
   name: string | null;
   hypervisorType: string | null;
   hypervisorTypeId?: number;
+  datacenterId: number;
+  datacenter: string | null;
+  vpcHostId?: number | null;
+  vpcHost?: string | null;
+  isPublic: boolean;
+};
+export type VmProjectGetResponse = {
+  id: number;
+  name: string | null;
+  hypervisorTypeId: number;
+  datacenterId: number;
+  vpcHostId?: number | null;
+  isPublic: boolean;
 };
 export type VmProjectCreateModel = {
   name: string | null;
-  hypervisorTypeId: number;
+  hypervisorTypeId?: number | null;
+  datacenterId?: number | null;
+  isPublic: boolean;
+  vpcHostId?: number | null;
 };
 export type VmProjectEditModel = {
   name?: string | null;
@@ -4034,11 +4128,11 @@ export type CreateVpcGatewayNatModel = {
   natTypeId: number;
   name: string | null;
   sourceIp?: string | null;
-  sourcePort?: string | null;
   destinationIp?: string | null;
   destinationPort?: string | null;
   translateIp: string;
   vpcHostServiceId?: number | null;
+  vpcNetworkId: number;
   description?: string | null;
   isDisabled: boolean;
 };
@@ -4048,7 +4142,6 @@ export type EditVpcGatewayNatModel = {
   name: string | null;
   vpcHostServiceId?: number | null;
   sourceIp?: string | null;
-  sourcePort?: string | null;
   destinationIp?: string | null;
   destinationPort?: string | null;
   translateIp?: string | null;
@@ -4086,7 +4179,6 @@ export type CreateVpcHostModel = {
   hypervisorTypeId?: number;
 };
 export type EditVpcHostModel = {
-  id?: number;
   name: string;
 };
 export type VpcHostTranslateServiceResponse = {
@@ -4131,6 +4223,10 @@ export type VpcNetworkListResponse = {
   datacenter: string | null;
   createDate: string;
 };
+export type VpcNetworkShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type CreateVpcNetworkModel = {
   vpcHostId: number;
   name: string | null;
@@ -4149,10 +4245,6 @@ export type VpcVmListResponse = {
   ipv4?: string | null;
   vmTypeId?: number | null;
   createDate?: string;
-};
-export type CreateVpcVmModel = {
-  vpcNetworkId: number;
-  vmHostId: number;
 };
 export type WalletTransactionListResponse = {
   id: number;
@@ -4198,6 +4290,62 @@ export type CreateWebHostModel = {
 export type EditWebHostModel = {
   id: number;
   productBundleId: number;
+};
+export type WebSiteAlarmListResponse = {
+  subject?: string | null;
+  link?: string | null;
+};
+export type WebSiteBolgListResponse = {
+  link?: string | null;
+  imageLink?: string | null;
+  author?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+  createDate?: string;
+  webBolgTags?: string[] | null;
+};
+export type GetWebSiteBolgResponse = {
+  id?: number;
+  author: string | null;
+  imageLink: string | null;
+  link: string | null;
+  title: string | null;
+  subtitle: string | null;
+  text: string | null;
+  viewCount?: number;
+  loveCount?: number;
+  createDate?: string;
+  webBolgTags?: string[] | null;
+};
+export type GetWebSiteRandomArticleResponse = {
+  imageLink?: string | null;
+  link?: string | null;
+  author?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+  createDate?: string;
+};
+export type GetWebSiteHeaderArticleResponse = {
+  imageLink?: string | null;
+  author?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+  createDate?: string;
+  webBolgTags?: string[] | null;
+};
+export type GetWebSiteBolgCommentResponse = {
+  id?: number;
+  parentId?: number | null;
+  name?: string | null;
+  content?: string | null;
+  createDate?: string;
+};
+export type CreateWebSiteBolgCommentModel = {
+  id?: number;
+  parentId?: number | null;
+  name: string;
+  email: string;
+  content: string;
 };
 export type CreateContactUsModel = {
   firstName: string;
@@ -4250,7 +4398,6 @@ export const {
   usePostApiMyCdnOriginCertCreateUserCertMutation,
   useGetApiMyCdnRouteListByDnsHostIdQuery,
   useGetApiMyCdnRouteGetByIdQuery,
-  usePostApiMyCdnRouteCreateMutation,
   usePutApiMyCdnRouteEditMutation,
   useDeleteApiMyCdnRouteDeleteByIdMutation,
   useGetApiMyColocationHostListQuery,
@@ -4334,6 +4481,7 @@ export const {
   usePostApiMyPortalPaymentCreateMutation,
   usePostApiMyPortalPaymentPecCallBackMutation,
   usePostApiMyPortalPaymentSepCallBackMutation,
+  usePostApiMyPortalPaymentBpmCallBackMutation,
   useGetApiMyPortalPaymentProviderListQuery,
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalProductGetByIdQuery,
@@ -4390,6 +4538,7 @@ export const {
   usePutApiMyVmIsoUnmountMutation,
   useGetApiMyVmKmsGetByIdAndTypeIdQuery,
   useGetApiMyVmProjectListQuery,
+  useGetApiMyVmProjectGetByIdQuery,
   usePostApiMyVmProjectCreateMutation,
   usePutApiMyVmProjectEditByIdMutation,
   useDeleteApiMyVmProjectDeleteByIdMutation,
@@ -4416,7 +4565,7 @@ export const {
   useGetApiMyVpcHostListQuery,
   useGetApiMyVpcHostGetByIdQuery,
   usePostApiMyVpcHostCreateMutation,
-  usePostApiMyVpcHostEditMutation,
+  usePutApiMyVpcHostEditByIdMutation,
   useDeleteApiMyVpcHostDeleteByIdMutation,
   useGetApiMyVpcNatServiceListQuery,
   useGetApiMyVpcNatServiceGetByIdQuery,
@@ -4427,11 +4576,10 @@ export const {
   usePostApiMyVpcIpCreateMutation,
   useDeleteApiMyVpcIpDeleteByIdMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
+  useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,
   useDeleteApiMyVpcNetworkDeleteByIdMutation,
   useGetApiMyVpcVmListByVpcHostIdQuery,
-  usePostApiMyVpcVmCreateMutation,
-  useDeleteApiMyVpcVmDeleteByVmHostIdAndVpcNetworkIdMutation,
   useGetApiMyPortalWalletGetBalanceQuery,
   useGetApiMyPortalWalletTransactionListQuery,
   useGetApiMyPortalWalletTransactionBalanceUsageQuery,
@@ -4442,6 +4590,13 @@ export const {
   usePostApiMyWebHostCreateMutation,
   usePutApiMyWebHostEditMutation,
   useDeleteApiMyWebHostDeleteByIdMutation,
+  useGetApiMyPortalWebsiteAlarmListQuery,
+  useGetApiMyPortalWebsiteBlogListQuery,
+  useGetApiMyPortalWebsiteBlogGetByLinkQuery,
+  useGetApiMyPortalWebsiteBlogGetRandomArticlesByLinkQuery,
+  useGetApiMyPortalWebsiteBlogGetHeaderArticlesQuery,
+  useGetApiMyPortalWebsiteBlogCommentGetByIdQuery,
+  usePostApiMyPortalWebsiteBlogCommentCreateMutation,
   usePostApiMyPortalContactUsCreateMutation,
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,

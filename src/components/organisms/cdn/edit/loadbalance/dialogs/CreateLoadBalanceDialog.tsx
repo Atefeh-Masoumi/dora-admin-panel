@@ -26,7 +26,6 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetApiMyCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePostApiMyCdnRouteCreateMutation,
   usePutApiMyCdnRouteEditMutation,
 } from "src/app/services/api.generated";
 
@@ -133,9 +132,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   const switchChangeHandler = () =>
     setCertificateSwitch((prevState) => !prevState);
 
-  const [createLoadBalance, { isLoading: createLoadBalanceLoading }] =
-    usePostApiMyCdnRouteCreateMutation();
-
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
     usePutApiMyCdnRouteEditMutation();
 
@@ -158,24 +154,26 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
         .then(() => {
           toast.success("کلاستر با موفقیت بروز رسانی شد");
           onClose();
-        });
-    } else {
-      createLoadBalance({
-        createCdnRouteModel: {
-          dnsHostId: dnsId,
-          destinations,
-          dangerousAcceptAnyServerCertificate: certificateSwitch,
-          maxConnectionsPerServer: Number(maxConnectionsPerServer),
-          host,
-          loadBalancingPolicyId,
-        },
-      })
-        .unwrap()
-        .then(() => {
-          toast.success("کلاستر با موفقیت بروز رسانی شد");
-          onClose();
-        });
+        })
+        .catch((err) => {});
     }
+    //  else {
+    //   createLoadBalance({
+    //     createCdnRouteModel: {
+    //       dnsHostId: dnsId,
+    //       destinations,
+    //       dangerousAcceptAnyServerCertificate: certificateSwitch,
+    //       maxConnectionsPerServer: Number(maxConnectionsPerServer),
+    //       host,
+    //       loadBalancingPolicyId,
+    //     },
+    //   })
+    //     .unwrap()
+    //     .then(() => {
+    //       toast.success("کلاستر با موفقیت بروز رسانی شد");
+    //       onClose();
+    //     });
+    // }
 
     setSubmitting(false);
   };
@@ -351,7 +349,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                   <LoadingButton
                     component="button"
                     type="submit"
-                    loading={createLoadBalanceLoading || editLoadBalanceLoading}
+                    loading={editLoadBalanceLoading}
                     variant="contained"
                     sx={{ px: 3, py: 0.8 }}
                   >

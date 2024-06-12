@@ -1,22 +1,22 @@
+import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
-import { SelectDataCenter } from "src/components/organisms/vm/add/steps/SelectDataCenter";
-import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
-import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
-import { passwordValidationRegex } from "src/utils/regexUtils";
-import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
+  useGetApiMyVmProjectGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
+import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
+import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
+import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
+import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { passwordValidationRegex } from "src/utils/regexUtils";
 
 const mapConfig = {
   cpu: "CPU",
@@ -48,6 +48,9 @@ const AddVm: FC = () => {
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
+
+  const { data: vmProjectData, isLoading: vmProjectDataLoading } =
+    useGetApiMyVmProjectGetByIdQuery({ id: Number(projectId) });
 
   const navigate = useNavigate();
 
@@ -82,9 +85,7 @@ const AddVm: FC = () => {
   const submitHandler = () => {
     let validationErrorMessage = "";
 
-    if (!dataCenter || !dataCenter.id) {
-      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
-    } else if (!osVersion || !osVersion.id) {
+    if (!osVersion || !osVersion.id) {
       validationErrorMessage = "لطفا ورژن سیستم عامل را انتخاب کنید";
     } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
@@ -105,14 +106,12 @@ const AddVm: FC = () => {
           name: serverName,
           password: serverPassword,
           publicKey: null,
-          datacenterId: dataCenter?.id || 0,
           imageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-          isPublic: true,
           vmProjectId: Number(projectId),
         },
       })
@@ -148,12 +147,12 @@ const AddVm: FC = () => {
               }}
             >
               <Grid container gap={2}>
-                <Grid xs={12} item>
+                {/* <Grid xs={12} item>
                   <SelectDataCenter />
                   <Divider sx={{ margin: "50px 10px" }} />
-                </Grid>
+                </Grid> */}
                 <Grid xs={12} item>
-                  <SelectOS />
+                  <SelectOS datacenterId={vmProjectData?.datacenterId} />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
