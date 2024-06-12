@@ -41,7 +41,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           <Typography fontSize={18} color="secondary">
             لیست Load Balance ابری
           </Typography>
-          <Button
+          {/* <Button
             onClick={openDialog}
             variant="outlined"
             size="large"
@@ -51,7 +51,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
             }
           >
             افزودن کلاستر جدید
-          </Button>
+          </Button> */}
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
