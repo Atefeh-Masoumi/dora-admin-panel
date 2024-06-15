@@ -14,13 +14,16 @@ import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/Delet
 import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-const vmDataList = [{ label: "نوع زیرساخت:", id: "hypervisorType" }];
+const vmDataList = [
+  { label: "نوع زیرساخت:", id: "hypervisorType" },
+  { label: "مرکز داده:", id: "datacenter" },
+];
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
-
+  
 const VmProjectList: FC = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedProject, setSelectedProject] =
@@ -78,6 +81,10 @@ const VmProjectList: FC = () => {
 
   const cardOnClick = (project: VmProjectListResponse) => {
     navigate(`/vm/${project.id}/list`);
+  };
+
+  const getBackgroundColor = (isPublic: boolean) => {
+    return isPublic ? "green" : "red";
   };
 
   return (

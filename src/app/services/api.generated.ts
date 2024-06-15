@@ -1649,6 +1649,12 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/vpc/host/list` }),
     }),
+    getApiMyVpcHostShortList: build.query<
+      GetApiMyVpcHostShortListApiResponse,
+      GetApiMyVpcHostShortListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/host/short-list` }),
+    }),
     getApiMyVpcHostGetById: build.query<
       GetApiMyVpcHostGetByIdApiResponse,
       GetApiMyVpcHostGetByIdApiArg
@@ -2815,6 +2821,9 @@ export type PostApiMyVpcStaticRouteDeleteByIdApiArg = {
 export type GetApiMyVpcHostListApiResponse =
   /** status 200 OK */ VpcListResponse[];
 export type GetApiMyVpcHostListApiArg = void;
+export type GetApiMyVpcHostShortListApiResponse =
+  /** status 200 OK */ VpcShortListResponse[];
+export type GetApiMyVpcHostShortListApiArg = void;
 export type GetApiMyVpcHostGetByIdApiResponse =
   /** status 200 OK */ VpcResponse;
 export type GetApiMyVpcHostGetByIdApiArg = {
@@ -3750,6 +3759,7 @@ export type CreatePaymentModel = {
 export type PaymentProviderListResponse = {
   id: number;
   name: string | null;
+  isDisabled: boolean;
   photoName?: string | null;
 };
 export type ProductListResponse = {
@@ -4161,6 +4171,10 @@ export type VpcListResponse = {
   statusId: number;
   createDate: string;
 };
+export type VpcShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type VpcResponse = {
   id: number;
   datacenterId: number;
@@ -4182,7 +4196,7 @@ export type EditVpcHostModel = {
   name: string;
 };
 export type VpcHostTranslateServiceResponse = {
-  vpcHostServiceId: number;
+  id: number;
   name: string | null;
   port?: number | null;
   isTcp?: boolean;
@@ -4563,6 +4577,7 @@ export const {
   usePutApiMyVpcStaticRouteEditMutation,
   usePostApiMyVpcStaticRouteDeleteByIdMutation,
   useGetApiMyVpcHostListQuery,
+  useGetApiMyVpcHostShortListQuery,
   useGetApiMyVpcHostGetByIdQuery,
   usePostApiMyVpcHostCreateMutation,
   usePutApiMyVpcHostEditByIdMutation,

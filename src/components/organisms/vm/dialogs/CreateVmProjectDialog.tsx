@@ -10,9 +10,14 @@ import {
   MenuItem,
   Select,
   Stack,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Grid,
+  Box,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { toast } from "react-toastify";
 import {
   VmProjectCreateModel,
@@ -26,6 +31,8 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
+import asiatechImage from "src/assets/images/asiatech.png";
+import mobinNetImage from "src/assets/images/mobinnet.png";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
@@ -76,7 +83,12 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
           id: projectId,
           vmProjectEditModel: { name },
         })
-      : createVmProject({ vmProjectCreateModel: values });
+      : createVmProject({
+          vmProjectCreateModel: {
+            ...values,
+            datacenterId: Number(values.datacenterId),
+          },
+        });
 
     API.unwrap()
       .then(() => {
@@ -106,12 +118,25 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
     formik.resetForm();
   };
 
+  const getImageByName = (name: string) => {
+    switch (name) {
+      case "asiatech":
+        return asiatechImage;
+      case "mobinnet":
+        return mobinNetImage;
+      default:
+        return "";
+    }
+  };
+
   return (
     <Dialog
       {...props}
       onClose={closeDialogHandler}
       components={{ Backdrop: BlurBackdrop }}
-      sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
+      sx={{
+        "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
+      }}
     >
       <DialogTitle textAlign="center">
         {projectId ? "بروزرسانی پروژه" : "افزودن پروژه جدید"}
@@ -120,17 +145,11 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
           <Stack direction="column" rowGap={2}>
-            {/* {!projectId && (
-              <DialogContentText textAlign="center">
-                یک نام برای شناسایی پروژه خود وارد کنید.
-              </DialogContentText>
-            )} */}
             <Stack direction="column" rowGap={1}>
               <InputLabel>نام پروژه</InputLabel>
               <AlphaNumericTextField
                 formik={formik}
                 id="name"
-                size="small"
                 fullWidth
                 error={Boolean(formik.errors.name && formik.touched.name)}
                 helperText={formik.touched.name && formik.errors.name}
@@ -140,21 +159,52 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
             {!projectId && (
               <Stack direction="column" rowGap={1}>
                 <InputLabel>نام دیتاسنتر</InputLabel>
-                <Select
-                  sx={{ width: "100%" }}
+                <RadioGroup
+                  name="datacenterId"
                   value={formik.getFieldProps("datacenterId").value}
                   onChange={(event) =>
                     formik.setFieldValue("datacenterId", event.target.value)
                   }
-                  size={"small"}
-                  name={"datacenterId"}
                 >
-                  {datacenterList?.map(({ id, name }) => (
-                    <MenuItem key={id} value={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  <Grid container columnSpacing={1}>
+                    {datacenterList?.map(({ id, name, photoName }) => (
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        key={id}
+                        sx={{ textAlign: "center" }}
+                      >
+                        <FormControlLabel
+                          sx={{
+                            border: "1px solid #ccc",
+                            padding: "5px 0",
+                            borderRadius: BORDER_RADIUS_1,
+                            width: "100%",
+                            margin: { xs: " 5px 0", sm: "0 !important" },
+                          }}
+                          value={id}
+                          control={<Radio size="small" />}
+                          label={
+                            <Stack
+                              direction="row"
+                              alignItems="center"
+                              spacing={1}
+                            >
+                              <img
+                                src={getImageByName(String(photoName))}
+                                alt={String(name)}
+                                width={30}
+                                height={30}
+                              />
+                              <Box>{name}</Box>
+                            </Stack>
+                          }
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </RadioGroup>
               </Stack>
             )}
             <Divider />
