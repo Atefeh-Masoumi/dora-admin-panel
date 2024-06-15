@@ -5,6 +5,7 @@ import {
   Box,
   Chip,
   Divider,
+  Grid,
   IconButton,
   Stack,
   Typography,
@@ -51,7 +52,6 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
       rowGap={3}
       sx={{
         cursor: itemOnClick ? "pointer" : "default",
-
         position: "relative",
         borderRadius: "10px",
         backgroundColor: "#fff",
@@ -73,9 +73,17 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
           columnGap={1}
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          <Avatar sx={{ bgcolor: "customColor.neutralVeryLight" }}>
+          <Avatar
+            sx={{
+              bgcolor: `${
+                vmProjectData.isPublic
+                  ? "#38cb82"
+                  : "customColor.neutralVeryLight"
+              }`,
+            }}
+          >
             <FolderOpenIcon
-              sx={{ color: "customColor.neutralDark" }}
+              sx={{ color: `customColor.neutralDark` }}
               fontSize="medium"
             />
           </Avatar>
@@ -119,9 +127,12 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         </Stack>
       </Stack>
       <Box width="100%" sx={{ overflowX: "auto" }}>
-        <Stack columnGap={4} alignItems="start" justifyContent="space-between">
+        <Grid container>
           {detailsList.map((item, index) => (
-            <Stack
+            <Grid
+              item
+              xs={12}
+              sm={6}
               alignItems={"center"}
               width="100%"
               direction={isProjectCard ? "row" : "column"}
@@ -129,26 +140,55 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
               rowGap={0.8}
               columnGap={1}
             >
-              <Typography noWrap color="text.light">
-                {item.label}
-              </Typography>
-              <Typography
-                noWrap
-                onClick={() => {
-                  if (!item.onClick) return;
-                  item.onClick(vmProjectData);
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-around",
                 }}
+                mb={1}
               >
-                {isProjectCard ? (
-                  <Chip label={e2p(vmProjectData[item.id as any] || "--")} />
-                ) : (
-                  e2p(vmProjectData[item.id as any] || "--")
-                )}
-              </Typography>
-            </Stack>
+                <Typography noWrap color="text.light">
+                  {item.label}
+                </Typography>
+                <Typography
+                  noWrap
+                  onClick={() => {
+                    if (!item.onClick) return;
+                    item.onClick(vmProjectData);
+                  }}
+                >
+                  {item.id === "isPublic" ? (
+                    <Chip
+                      color={"default"}
+                      label={e2p(vmProjectData[item.id] || "--")}
+                    />
+                  ) : (
+                    isProjectCard && (
+                      <Chip
+                        color="default"
+                        label={e2p(vmProjectData[item.id] || "--")}
+                      />
+                    )
+                  )}
+                </Typography>
+              </Box>
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
       </Box>
+      {/* <span
+        style={{
+          position: "absolute",
+          top: "115px",
+          left: "1px",
+          width: "20px",
+          height: "20px",
+          border: "1px solid #fff",
+          borderRadius: "50%",
+          backgroundColor: "#38cb82",
+        }}
+      ></span> */}
     </Stack>
   );
 };

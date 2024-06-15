@@ -194,6 +194,7 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                                   py: 1,
                                 }}
                                 fullWidth
+                                disabled={provider?.isDisabled}
                               >
                                 <Stack
                                   direction="row"

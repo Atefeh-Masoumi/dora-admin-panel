@@ -267,6 +267,7 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                                   py: 1,
                                 }}
                                 fullWidth
+                                disabled={provider?.isDisabled}
                               >
                                 <Stack
                                   direction="row"
