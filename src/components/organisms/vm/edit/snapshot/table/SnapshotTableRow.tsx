@@ -1,12 +1,17 @@
-import { FC, Fragment, useState } from "react";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { snapShotTableStruct } from "./struct";
 import { Chip, IconButton, Stack } from "@mui/material";
-import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { FC, Fragment, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  VmSnapshotResponse,
+  useDeleteApiMyVmSnapshotDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
-import { DeleteVmSnapshotDialog } from "../../../dialogs/DeleteVmSnapshotDialog";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
+import { snapShotTableStruct } from "./struct";
 
 enum VM_SNAPSHOT_STATUS_INFO {
   ACTIVE = 1,
@@ -15,6 +20,11 @@ enum VM_SNAPSHOT_STATUS_INFO {
   WAIT = 4,
   FAIL = 5,
   DELETE = 6,
+}
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
 }
 
 const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
@@ -74,14 +84,35 @@ const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
 };
 
 export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDelete, setOpenDelete] = useState(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedSnapshot, setSelectedSnapshot] =
+    useState<VmSnapshotResponse | null>(null);
   const [openRevert, setOpenRevert] = useState(false);
-
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
 
   const handleOpenRevert = () => setOpenRevert(true);
   const handleCloseRevert = () => setOpenRevert(false);
+
+  const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
+    useDeleteApiMyVmSnapshotDeleteByIdMutation();
+
+  const deleteSnapshotRecordHandler = () =>
+    deleteItem({ id: Number(selectedSnapshot?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("حدف snapshot مورد نظر در حال بررسی است");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedSnapshot(null);
+  };
+
+  const handleOpenDelete = (snapshot: VmSnapshotResponse) => {
+    setSelectedSnapshot(snapshot);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
 
   return (
     <Fragment>
@@ -106,7 +137,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
                     </IconButton>
                   )}
 
-                  <IconButton onClick={handleOpenDelete}>
+                  <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
                   </IconButton>
                 </Stack>
@@ -139,10 +170,14 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteVmSnapshotDialog
-        id={row.id}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="Snapshot"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedSnapshot?.name || ""}
+        onSubmit={deleteSnapshotRecordHandler}
+        submitLoading={deleteSnapshotRecordLoading}
       />
       <RevertVmSnapshotDialog
         snapshotId={row.id}

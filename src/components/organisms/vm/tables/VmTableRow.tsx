@@ -1,29 +1,39 @@
-import { FC, Fragment, useMemo, useState } from "react";
 import { Button, Chip, IconButton, Stack } from "@mui/material";
-import { toast } from "react-toastify";
+import { FC, Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
+import {
+  GetRemoteConsoleResponse,
+  GetVmResponse,
+  useDeleteApiMyVmHostDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import PageLoading from "src/components/atoms/PageLoading";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { addVmTableStruct } from "./struct";
-import { DeleteVmDialog } from "../dialogs/DeleteVmDialog";
-import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
-import { GetRemoteConsoleResponse } from "src/app/services/api.generated";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
+import { addVmTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDelete, setOpenDelete] = useState(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedVm, setSelectedVm] = useState<GetVmResponse | null>(null);
   const navigate = useNavigate();
 
   const [getUrl, { isLoading: getUrlLoading }] =
     useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
 
-  const isDeactivate = useMemo(() => row["statusId"] !== 2, [row]);
+  const [deleteItem, { isLoading: deleteVmRecordLoading }] =
+    useDeleteApiMyVmHostDeleteByIdMutation();
 
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const isDeactivate = useMemo(() => row["statusId"] !== 2, [row]);
 
   const settingOnClick = () => {
     if (isDeactivate) return;
@@ -56,6 +66,25 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
       })
       .catch((err) => {});
   };
+
+  const handleOpenDelete = (vm: GetVmResponse) => {
+    setSelectedVm(vm);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedVm(null);
+  };
+
+  const deleteVmRecordHandler = () =>
+    deleteItem({ id: Number(selectedVm?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("سرور ابری با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
 
   return (
     <Fragment>
@@ -103,7 +132,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -187,10 +216,14 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteVmDialog
-        id={row["id"]}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="سرور ابری"
+        subTitle="برای حذف سرور ابری, عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedVm?.name || ""}
+        onSubmit={deleteVmRecordHandler}
+        submitLoading={deleteVmRecordLoading}
       />
     </Fragment>
   );
