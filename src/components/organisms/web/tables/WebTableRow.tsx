@@ -1,19 +1,32 @@
-import { FC, Fragment, useState } from "react";
 import { Chip, IconButton, Stack } from "@mui/material";
-import { webTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import PageLoading from "src/components/atoms/PageLoading";
-import { DeleteWebDialog } from "../dialogs/DeleteWebDialog";
-import { useLazyGetApiMyWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
+import { FC, Fragment, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { useLazyGetApiMyWebHostGetLoginSessionByIdQuery } from "src/app/services/api";
+import {
+  WebHostListResponse,
+  useDeleteApiMyWebHostDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import PageLoading from "src/components/atoms/PageLoading";
+import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { webTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const WebTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedWebHost, setSelectedWebHost] =
+    useState<WebHostListResponse | null>(null);
+
+  const [deleteItem, { isLoading: deleteDnsRecordLoading }] =
+    useDeleteApiMyWebHostDeleteByIdMutation();
 
   const navigate = useNavigate();
 
@@ -32,6 +45,25 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
           a.click();
         }
       });
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedWebHost(null);
+  };
+
+  const handleOpenDelete = (webHost: WebHostListResponse) => {
+    setSelectedWebHost(webHost);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const deleteDnsRecordHandler = () =>
+    deleteItem({ id: Number(selectedWebHost?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("سرویس هاست ابری با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
 
   return (
     <Fragment>
@@ -66,7 +98,7 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -139,10 +171,14 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteWebDialog
-        id={row["id"]}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="هاست وب ابری"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedWebHost?.domainName || ""}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
     </Fragment>
   );

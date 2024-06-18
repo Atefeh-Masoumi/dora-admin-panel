@@ -1,24 +1,33 @@
-import { FC, useState } from "react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   IconButton,
   InputAdornment,
   OutlinedInput,
   Stack,
 } from "@mui/material";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { accessKeyTableStruct } from "./AccessKeyStruct";
-import { DeleteAccessKeyDialog } from "../dialogs/DeleteAccessKeyDialog";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { FC, useState } from "react";
 import { toast } from "react-toastify";
+import {
+  StorageUserListResponse,
+  useDeleteApiMyStorageUserDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { accessKeyTableStruct } from "./AccessKeyStruct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedAccessKey, setSelectedAccessKey] =
+    useState<StorageUserListResponse | null>(null);
   const [showSecretKey, setShowSecretKey] = useState(true);
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
 
   const handleShowSecretKeyOnClick = () => {
     setShowSecretKey(!showSecretKey);
@@ -30,6 +39,28 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
       toast.success("secretKey با موفقیت کپی شد");
     });
   };
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedAccessKey(null);
+  };
+
+  const handleOpenDelete = (accessKey: StorageUserListResponse) => {
+    setSelectedAccessKey(accessKey);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const [DeleteAccessKey, { isLoading: deleteDnsRecordLoading }] =
+    useDeleteApiMyStorageUserDeleteByIdMutation();
+
+  const deleteDnsRecordHandler = () =>
+    DeleteAccessKey({ id: Number(selectedAccessKey?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success(" کلید دسترسی با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
 
   return (
     <>
@@ -48,7 +79,7 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -118,10 +149,14 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteAccessKeyDialog
-        id={row["id"]}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="کلید دسترسی"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedAccessKey?.accessKey || ""}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
     </>
   );

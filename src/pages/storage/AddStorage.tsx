@@ -53,8 +53,6 @@ const AddStorageService: FC = () => {
     ];
   }, [customConfig, productItems]);
 
-  console.log(productItems);
-
   const submitHandler = () => {
     let validationErrorMessage = "";
 

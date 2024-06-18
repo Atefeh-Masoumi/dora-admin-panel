@@ -21,6 +21,7 @@ const tags = [
   "VmHost",
   "Kubernetes",
   "Storage",
+  "WebHost",
 ];
 
 export const api = generatedApi
@@ -286,6 +287,9 @@ export const api = generatedApi
       getApiMyStorageHostGetById: {
         providesTags: () => ["Storage"],
       },
+      getApiMyStorageUserListByStorageHostId: {
+        providesTags: () => ["Storage"],
+      },
       postApiMyStorageHostCreate: {
         invalidatesTags: () => ["Storage"],
       },
@@ -294,6 +298,25 @@ export const api = generatedApi
       },
       deleteApiMyStorageHostDeleteById: {
         invalidatesTags: () => ["Storage"],
+      },
+      deleteApiMyStorageUserDeleteById: {
+        invalidatesTags: () => ["Storage"],
+      },
+      // ============================== Storage ============================== //
+      getApiMyWebHostList: {
+        providesTags: () => ["WebHost"],
+      },
+      getApiMyWebHostGetById: {
+        providesTags: () => ["WebHost"],
+      },
+      postApiMyWebHostCreate: {
+        invalidatesTags: () => ["WebHost"],
+      },
+      putApiMyWebHostEdit: {
+        invalidatesTags: () => ["WebHost"],
+      },
+      deleteApiMyWebHostDeleteById: {
+        invalidatesTags: () => ["WebHost"],
       },
     },
   });

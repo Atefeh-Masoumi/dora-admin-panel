@@ -98,6 +98,10 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
     setInputValue("");
   };
 
+  const handleClose: DialogProps["onClose"] = (event, reason) => {
+    if (reason && reason === "backdropClick") return;
+  };
+
   return (
     <Dialog
       components={{ Backdrop: BlurBackdrop }}
@@ -106,11 +110,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
       sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
       {...{
         ...props,
-        onClose: (e) => {
-          if (!props.onClose) return;
-          props.onClose(e, "backdropClick");
-          setInputValue("");
-        },
+        onClose: handleClose,
       }}
     >
       <DialogTitle textAlign="center">{`حذف ${keyTitle}`}</DialogTitle>
