@@ -73,6 +73,7 @@ const Home: FC = () => {
         rowGap={2}
         columnGap={3}
         justifyContent="space-between"
+        sx={{ height: "100%" }}
       >
         <ShortUserBill />
         <ShortTickets />

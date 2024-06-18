@@ -124,7 +124,7 @@ export const WebTableRow: FC<{ row: any }> = ({ row }) => {
                           : id === 7
                           ? "بازسازی"
                           : id === 8
-                          ? "خطا در زیرساخت"
+                          ? "خطا"
                           : id === 9
                           ? "بازسازی"
                           : id === 10

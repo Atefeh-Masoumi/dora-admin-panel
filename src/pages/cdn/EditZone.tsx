@@ -75,7 +75,6 @@ const EditZone: FC = () => {
     <Stack spacing={5} alignItems="center">
       <Box
         sx={{
-          overflow: "overlay",
           maxWidth: "100%",
           bgcolor: "white",
           py: 0.5,
@@ -90,6 +89,8 @@ const EditZone: FC = () => {
           TabIndicatorProps={{ style: { display: "none" } }}
           value={selectedTab}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <DorsaTab value={`overview`} label="مشخصات دامنه" />
           <DorsaTab value={`setting`} label="تنظیمات" />

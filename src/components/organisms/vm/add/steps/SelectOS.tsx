@@ -138,7 +138,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
               <Skeleton width="30%" />
             </Stack>
           ))}
-        {osDropDownsState.map((osDropDown) => {
+        {osDropDownsState.map((osDropDown, index) => {
           return (
             <Grid2
               xs={12}
@@ -148,6 +148,11 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
                 minWidth: { sm: 184 },
                 maxWidth: { sm: 184 },
                 height: { xs: 64, sm: 84 },
+                // marginBottom: { xs: "50px", sm: "0px" },
+                marginBottom:
+                  index === 0
+                    ? { xs: "50px", sm: "0px" }
+                    : { xs: "0px", sm: "0px" },
               }}
             >
               <Stack

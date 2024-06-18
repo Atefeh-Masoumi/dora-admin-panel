@@ -150,7 +150,7 @@ export const AddKubernetesContextProvider: FC<
         vmPassword: serverPassword,
         nodeCount: workersCount,
         productBundleId: serverConfig?.id || 0,
-        isPredefined: true,
+        isPredefined: isPredefined,
         cpu: customConfig.cpu,
         memory: customConfig.memory,
         disk: customConfig.disk,
