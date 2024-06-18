@@ -1,21 +1,52 @@
-import { FC, useState } from "react";
-import { kubernetesTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Chip, IconButton, Stack } from "@mui/material";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { DeleteKubernetesDialog } from "../dialogs/DeleteKubernetesDialog";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import {
+  KubernetesListResponse,
+  useDeleteApiMyKubernetesHostDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
+import { kubernetesTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedKubernetes, setSelectedKubernetes] =
+    useState<KubernetesListResponse | null>(null);
 
   const navigate = useNavigate();
 
   const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
+  const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
+    useDeleteApiMyKubernetesHostDeleteByIdMutation();
+
+  const deleteDnsRecordHandler = () =>
+    deleteKubernetes({ id: Number(selectedKubernetes?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedKubernetes(null);
+  };
+
+  const handleOpenDelete = (kubernetes: KubernetesListResponse) => {
+    setSelectedKubernetes(kubernetes);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
 
   return (
     <>
@@ -44,7 +75,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -73,10 +104,14 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteKubernetesDialog
-        id={row["id"]}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="سرویس کوبرنتیز"
+        subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedKubernetes?.name || ""}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
     </>
   );

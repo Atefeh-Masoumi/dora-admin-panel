@@ -9,9 +9,9 @@ import {
   useGetApiMyDnsHostListQuery,
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { DeleteCdnDialog } from "src/components/organisms/cdn/dialog/DeleteCdnDialog";
 import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -209,11 +209,11 @@ const CdnList: FC = () => {
           })
         )}
       </Grid>
-      <DeleteCdnDialog
+      <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="دامنه"
-        subTitle="برای حذف دامنه موردنظر، عبارت امنیتی زیر را وارد کنید."
+        keyTitle="پروژه"
+        subTitle="برای حذف پروژه موردنظر، عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedCdn?.zoneName || ""}
         onSubmit={deleteCdnHandler}
         submitLoading={deleteCdnLoading}

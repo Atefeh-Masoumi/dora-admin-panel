@@ -31,10 +31,7 @@ export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
     changeProxyStatus({ id })
       .unwrap()
       .then(() => toast.success("Proxy status updated"))
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
-        else toast.error(res.data[""][0]);
-      });
+      .catch((res) => {});
   };
 
   return (

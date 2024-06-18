@@ -158,7 +158,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
             </Stack>
             {!projectId && (
               <Stack direction="column" rowGap={1}>
-                <InputLabel>نام دیتاسنتر</InputLabel>
+                <InputLabel>نام مرکز داده</InputLabel>
                 <RadioGroup
                   name="datacenterId"
                   value={formik.getFieldProps("datacenterId").value}

@@ -8,9 +8,9 @@ import {
   useDeleteApiMyVmProjectDeleteByIdMutation,
   useGetApiMyVmProjectListQuery,
 } from "src/app/services/api.generated";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
-import { DeleteVmProjectDialog } from "src/components/organisms/vm/dialogs/DeleteVmProjectDialog";
 import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -23,7 +23,7 @@ enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
-  
+
 const VmProjectList: FC = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedProject, setSelectedProject] =
@@ -194,7 +194,7 @@ const VmProjectList: FC = () => {
           projectId={selectedProject?.id}
           name={selectedProject?.name}
         />
-        <DeleteVmProjectDialog
+        <DeleteDialog
           open={dialogType === DIALOG_TYPE_ENUM.DELETE}
           onClose={closeDialogHandler}
           keyTitle="پروژه"

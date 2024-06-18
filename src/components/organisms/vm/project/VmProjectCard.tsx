@@ -1,5 +1,4 @@
 import { DeleteOutline, ModeEdit } from "@mui/icons-material";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import {
   Avatar,
   Box,
@@ -12,6 +11,8 @@ import {
 } from "@mui/material";
 import { FC, useMemo } from "react";
 import { e2p } from "src/utils/e2p.utils";
+import PublicIcon from "@mui/icons-material/Public";
+import PublicOffIcon from "@mui/icons-material/PublicOff";
 
 type detailsListType = {
   label: string;
@@ -77,15 +78,22 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
             sx={{
               bgcolor: `${
                 vmProjectData.isPublic
-                  ? "#38cb82"
+                  ? "success.main"
                   : "customColor.neutralVeryLight"
               }`,
             }}
           >
-            <FolderOpenIcon
-              sx={{ color: `customColor.neutralDark` }}
-              fontSize="medium"
-            />
+            {vmProjectData.isPublic ? (
+              <PublicIcon
+                sx={{ color: `customColor.neutralDark` }}
+                fontSize="medium"
+              />
+            ) : (
+              <PublicOffIcon
+                sx={{ color: `customColor.neutralDark` }}
+                fontSize="medium"
+              />
+            )}
           </Avatar>
           <Typography
             noWrap
@@ -96,10 +104,6 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
           </Typography>
         </Stack>
         <Stack
-          alignItems="center"
-          width={{ xs: "100%", md: "fit-content" }}
-          justifyContent="end"
-          columnGap={{ xs: 0, md: 1 }}
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
           {onEditClick && (
@@ -126,69 +130,39 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
           </IconButton>
         </Stack>
       </Stack>
-      <Box width="100%" sx={{ overflowX: "auto" }}>
-        <Grid container>
-          {detailsList.map((item, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              alignItems={"center"}
-              width="100%"
-              direction={isProjectCard ? "row" : "column"}
-              key={index}
-              rowGap={0.8}
-              columnGap={1}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                }}
-                mb={1}
-              >
-                <Typography noWrap color="text.light">
-                  {item.label}
-                </Typography>
-                <Typography
-                  noWrap
-                  onClick={() => {
-                    if (!item.onClick) return;
-                    item.onClick(vmProjectData);
-                  }}
-                >
-                  {item.id === "isPublic" ? (
-                    <Chip
-                      color={"default"}
-                      label={e2p(vmProjectData[item.id] || "--")}
-                    />
-                  ) : (
-                    isProjectCard && (
-                      <Chip
-                        color="default"
-                        label={e2p(vmProjectData[item.id] || "--")}
-                      />
-                    )
-                  )}
-                </Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-      {/* <span
-        style={{
-          position: "absolute",
-          top: "115px",
-          left: "1px",
-          width: "20px",
-          height: "20px",
-          border: "1px solid #fff",
-          borderRadius: "50%",
-          backgroundColor: "#38cb82",
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: " row",
+          justifyContent: "space-between",
         }}
-      ></span> */}
+      >
+        {detailsList.map((item, index) => (
+          <Typography
+            noWrap
+            onClick={() => {
+              if (!item.onClick) return;
+              item.onClick(vmProjectData);
+            }}
+            color="text.light"
+          >
+            {item.label}{" "}
+            {item.id === "isPublic" ? (
+              <Chip
+                color={"default"}
+                label={e2p(vmProjectData[item.id] || "--")}
+              />
+            ) : (
+              isProjectCard && (
+                <Chip
+                  color="default"
+                  label={e2p(vmProjectData[item.id] || "--")}
+                />
+              )
+            )}
+          </Typography>
+        ))}
+      </Stack>
     </Stack>
   );
 };

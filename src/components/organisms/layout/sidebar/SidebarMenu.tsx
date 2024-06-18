@@ -31,7 +31,7 @@ const listItems: sidebarItemType[] = [
   },
   {
     title: "Kubernetes",
-    text: "سرویس کوبرنتیز ابری",
+    text: "سرویس کلاستر کوبرنتیز",
     Icon: KubernetesSvg,
     link: "/kubernetes",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes" }],

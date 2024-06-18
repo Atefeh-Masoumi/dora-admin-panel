@@ -1,22 +1,55 @@
-import { FC, useState } from "react";
-import { kubernetesNodesTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Button, Chip, IconButton, Stack } from "@mui/material";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router";
-import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
-import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
-import { DeleteKubernetesNodeDialog } from "../dialog/DeleteKubernetesNodeDialog";
 import { toast } from "react-toastify";
+import {
+  KubernetesNodeListResponse,
+  usePutApiMyKubernetesNodeDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
+import { kubernetesNodesTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedKuberNode, setSelectedKuberNode] =
+    useState<KubernetesNodeListResponse | null>(null);
 
   const navigate = useNavigate();
 
   const settingOnClick = () => navigate("/vm/" + row["hostId"]);
+
+  const handleOpenDelete = (kuberNode: KubernetesNodeListResponse) => {
+    setSelectedKuberNode(kuberNode);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedKuberNode(null);
+  };
+
+  const [deleteKubernetesNode, { isLoading: deleteDnsRecordLoading }] =
+    usePutApiMyKubernetesNodeDeleteByIdMutation();
+
+  const deleteDnsRecordHandler = () => {
+    deleteKubernetesNode({
+      id: Number(selectedKuberNode?.id),
+    })
+      .unwrap()
+      .then((res) => {
+        toast.success("نود کوبرنتیز با موفقیت حذف شد");
+      })
+      .catch((err) => {});
+  };
 
   return (
     <>
@@ -45,7 +78,7 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -88,10 +121,14 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteKubernetesNodeDialog
-        nodeId={row["hostId"]}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="نود کوبرنتیز"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedKuberNode?.name || ""}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
     </>
   );

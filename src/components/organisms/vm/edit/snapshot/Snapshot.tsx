@@ -1,19 +1,29 @@
-import { FC, useState } from "react";
-import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { useParams } from "react-router";
-import { useGetApiMyVmSnapshotListByVmIdQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { snapShotTableStruct } from "./table/struct";
-import { SnapshotTableRow } from "./table/SnapshotTableRow";
 import { Add, Remove } from "@mui/icons-material";
+import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
+import { useParams } from "react-router";
+import { toast } from "react-toastify";
+import {
+  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
+  useGetApiMyVmSnapshotListByVmIdQuery,
+} from "src/app/services/api.generated";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateSnapshotDialog } from "./create/CreateSnapshotDialog";
-import { DeleteAllSnapshotsDialog } from "./deleteAll/DeleteAllSnapshotDialog";
+import { SnapshotTableRow } from "./table/SnapshotTableRow";
+import { snapShotTableStruct } from "./table/struct";
 
 type SnapshotPropsType = {};
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const Snapshot: FC<SnapshotPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
   const { id } = useParams();
   const { data: snapshotList = [], isLoading: getSnapshotLoading } =
@@ -22,15 +32,25 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
     setShowCreateDialog(true);
   };
   const closeDialogHandler = () => {
+    setDialogType(null);
     setShowCreateDialog(false);
   };
 
-  const openDeleteAllDialogHandler = () => {
-    setShowDeleteAllDialog(true);
+  const handleOpenDelete = () => {
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
-  const closeDeleteAllDialogHandler = () => {
-    setShowDeleteAllDialog(false);
-  };
+
+  const [deleteAllSnapShots, { isLoading: deleteDnsRecordLoading }] =
+    useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation();
+
+  const deleteDnsRecordHandler = () =>
+    deleteAllSnapShots({ vmHostId: Number(id) })
+      .unwrap()
+      .then(() => {
+        toast.success("تمام snapshot ها بعد از بررسی حذف خواهند شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
 
   return (
     <>
@@ -54,7 +74,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
             </Button>
             {snapshotList.length > 0 && (
               <Button
-                onClick={openDeleteAllDialogHandler}
+                onClick={handleOpenDelete}
                 variant="outlined"
                 color="error"
                 startIcon={<Remove />}
@@ -81,10 +101,14 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
       />
-      <DeleteAllSnapshotsDialog
-        openDialog={showDeleteAllDialog && !!id}
-        handleClose={closeDeleteAllDialogHandler}
-        id={Number(id!)}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="Snapshot"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={`SnapShots=${id}`}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
     </>
   );

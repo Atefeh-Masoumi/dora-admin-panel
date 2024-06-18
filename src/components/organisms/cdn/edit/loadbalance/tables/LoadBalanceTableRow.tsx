@@ -1,20 +1,51 @@
-import { FC, Fragment, useState } from "react";
-import { loadBalanceTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { IconButton, Stack } from "@mui/material";
+import { FC, Fragment, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  EditCdnRouteModel,
+  useDeleteApiMyCdnRouteDeleteByIdMutation,
+} from "src/app/services/api.generated";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { DeleteLoadBalanceDialog } from "../dialogs/DeleteLoadBalanceDialog";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { CreateLoadBalanceDialog } from "../dialogs/CreateLoadBalanceDialog";
+import { loadBalanceTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
-  const handleOpenDelete = () => setOpenDelete(true);
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedCluster, setSelectedCluster] =
+    useState<EditCdnRouteModel | null>(null);
 
   const handleOpenEdit = () => setOpenEdit(true);
   const [openEdit, setOpenEdit] = useState(false);
   const handleCloseEdit = () => setOpenEdit(false);
+
+  const [deleteItem, { isLoading: deleteClusterRecordLoading }] =
+    useDeleteApiMyCdnRouteDeleteByIdMutation();
+
+  const deleteClusterRecordHandler = () =>
+    deleteItem({ id: Number(selectedCluster?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("کلاستر با موفقیت حذف شد");
+      })
+      .catch((err) => {});
+
+  const handleOpenDelete = (clusterInfo: EditCdnRouteModel) => {
+    setSelectedCluster(clusterInfo);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedCluster(null);
+  };
 
   return (
     <Fragment>
@@ -37,7 +68,7 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -49,10 +80,14 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteLoadBalanceDialog
-        id={row.id}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="Load Balance"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedCluster?.host || ""}
+        onSubmit={deleteClusterRecordHandler}
+        submitLoading={deleteClusterRecordLoading}
       />
       {openEdit && (
         <CreateLoadBalanceDialog

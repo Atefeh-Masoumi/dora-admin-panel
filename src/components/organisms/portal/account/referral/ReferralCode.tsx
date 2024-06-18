@@ -13,7 +13,6 @@ export const ReferralCode: FC = () => {
   const [referralCode, setReferralCode] = useState("");
 
   const submit = () => {
-    console.log("clicked");
     // joinReferral({ joinReferralModel: { referralCode } })
     //   .unwrap()
     //   .then(() => toast.success("کد با موفقیت ثبت شد"));

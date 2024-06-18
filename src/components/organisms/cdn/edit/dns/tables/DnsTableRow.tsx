@@ -1,21 +1,54 @@
-import { FC, Fragment, useState } from "react";
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
-import { Edit } from "src/components/atoms/svg-icons/EditSvg";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { FC, Fragment, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  GetDnsRecordResponse,
+  useDeleteApiMyDnsRecordDeleteByIdMutation,
+} from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { ProxyStatus } from "../ProxyStatus";
-import { zoneTableStruct } from "./struct";
-import { DeleteRecordDialog } from "../dialogs/DeleteRecordDialog";
 import { CreateRecordDialog } from "../dialogs/CreateRecordDialog";
+import { zoneTableStruct } from "./struct";
+
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
 
 export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
-  const handleOpenDelete = () => setOpenDelete(true);
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
+    null
+  );
 
   const handleOpenEdit = () => setOpenEdit(true);
   const [openEdit, setOpenEdit] = useState(false);
   const handleCloseEdit = () => setOpenEdit(false);
+
+  const [deleteDnsRecord, { isLoading: deleteDnsRecordLoading }] =
+    useDeleteApiMyDnsRecordDeleteByIdMutation();
+
+  const closeDialogHandler = () => {
+    setDialogType(null);
+    setSelectedDns(null);
+  };
+
+  const handleOpenDelete = (dns: GetDnsRecordResponse) => {
+    setSelectedDns(dns);
+    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+  };
+
+  const deleteDnsRecordHandler = () =>
+    deleteDnsRecord({ id: Number(selectedDns?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
+      })
+      .catch((err) => {});
 
   return (
     <Fragment>
@@ -42,7 +75,7 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
-                    onClick={handleOpenDelete}
+                    onClick={() => handleOpenDelete(row)}
                   >
                     <TrashSvg />
                   </IconButton>
@@ -65,10 +98,14 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
           );
         })}
       </DorsaTableRow>
-      <DeleteRecordDialog
-        id={row.id}
-        openDialog={openDelete}
-        handleClose={handleCloseDelete}
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="DNS"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedDns?.name || ""}
+        onSubmit={deleteDnsRecordHandler}
+        submitLoading={deleteDnsRecordLoading}
       />
       {openEdit && (
         <CreateRecordDialog

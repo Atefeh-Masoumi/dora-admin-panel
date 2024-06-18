@@ -63,7 +63,7 @@ export const NodeConfig: FC<NodeConfigPropsType> = () => {
         <Typography>کانفیگ نود خود را انتخاب کنید</Typography>
         <Stack direction="row" columnGap={2}>
           {[...Array(2)].map((_, index) => {
-            const realIdx = index + 1;
+            const realIdx = index + 1;  
             return (
               <Button
                 key={realIdx}
