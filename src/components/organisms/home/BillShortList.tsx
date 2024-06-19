@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import {
   Button,
   Divider,
@@ -8,12 +8,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import moment from "jalali-moment";
+import { FC, Fragment } from "react";
+import { useNavigate } from "react-router";
 import { useGetApiMyPortalCustomerBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
-import { useNavigate } from "react-router";
-import moment from "jalali-moment";
+import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 export const ShortUserBill: FC = () => {
@@ -42,7 +42,10 @@ export const ShortUserBill: FC = () => {
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش محاسبات
         </Typography>
-        <Button color="secondary" href="/portal/wallet/bill">
+        <Button
+          color="secondary"
+          onClick={() => navigate("/portal/wallet/bill")}
+        >
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
