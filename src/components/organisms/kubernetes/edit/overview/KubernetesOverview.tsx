@@ -26,27 +26,27 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
   );
 
   const infoList = [
-    { label: "نام کلاستر", value: data?.name || "", id: "name" },
-    { label: "مرکز داده", value: data?.datacenter || "", id: "datacenter" },
+    { label: "Status", value: data?.statusId || 0, id: "statusId" },
+    { label: "Cluster Name", value: data?.name || "", id: "name" },
+    { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
     {
-      label: "تعداد نود worker",
+      label: "Worker Node",
       value: data?.workerNode || "",
       id: "workerNode",
     },
     {
-      label: "تعداد نود master",
+      label: "Master Node",
       value: data?.masterNode || "",
       id: "masterNode",
     },
-    { label: "تاریخ ایجاد", value: data?.createDate || "", id: "createDate" },
-    { label: "تاریخ ویرایش", value: data?.modifyDate || "", id: "modifyDate" },
-    { label: "تاریخ انقضا", value: data?.expireDate || "", id: "expireDate" },
+    { label: "Create Date", value: data?.createDate || "", id: "createDate" },
+    { label: "Modify Date", value: data?.modifyDate || "", id: "modifyDate" },
+    { label: "Expire Date", value: data?.expireDate || "", id: "expireDate" },
     {
-      label: "نوع صورت حساب",
+      label: "Customer Product Status",
       value: data?.customerProductType || "",
       id: "customerProductStatus",
     },
-    { label: "وضعیت", value: data?.statusId || 0, id: "statusId" },
   ];
 
   return (
@@ -60,6 +60,7 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
             اطلاعات سرویس کوبرنتیز
           </Typography>
           <Divider flexItem />
+
           {infoList.map(({ id, label, value }) => {
             return (
               <BoxRow

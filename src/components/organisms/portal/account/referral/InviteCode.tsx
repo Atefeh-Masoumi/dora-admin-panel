@@ -70,19 +70,14 @@ export const InviteCode: FC = () => {
       <Grid alignItems="center" width="100%">
         <Stack
           direction="row"
-          // spacing={{ xs: 0, md: 1.5 }}
           alignItems="center"
           justifyContent="center"
           width="100%"
-          // px={1}
-          // mb={1}
         >
           {isLoading ? (
             <Stack direction="row" spacing={1}>
               <Skeleton
                 variant="rectangular"
-                // height={45}
-                // width={150}
                 sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
               />
             </Stack>
@@ -90,43 +85,51 @@ export const InviteCode: FC = () => {
             <DorsaTextField
               defaultValue={referralData?.referralCode}
               InputProps={{ readOnly: true }}
-              // sx={{
-              //   maxWidth: { xs: "143px", md: "200px" },
-              //   width: "150px",
-              // }}
-              inputProps={{ dir: "ltr" }}
+              inputProps={{ dir: "rtl" }}
             />
           )}
-          <IconButton
-            onClick={() => {
-              navigator.clipboard.writeText(
-                referralData?.referralCode as string
-              );
-              toast.success("کد کپی شد", { position: "bottom-left" });
+          <Box
+            sx={{
+              display: "flex",
+              backgroundColor: "#F6F7F8",
+              padding: "7px 0",
+              position: "relative",
+              right: "5px",
+              borderTopRightRadius: "10px",
+              borderBottomRightRadius: "10px",
             }}
           >
-            <Copy
-              sx={{
-                "& path": {
-                  stroke: ({ palette }) => palette.secondary.main,
-                },
+            <IconButton
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  referralData?.referralCode as string
+                );
+                toast.success("کد کپی شد", { position: "bottom-left" });
               }}
-            />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setCode(referralData?.referralCode);
-              handleOpen();
-            }}
-          >
-            <Share
-              sx={{
-                "& path": {
-                  stroke: ({ palette }) => palette.secondary.main,
-                },
+            >
+              <Copy
+                sx={{
+                  "& path": {
+                    stroke: ({ palette }) => palette.secondary.main,
+                  },
+                }}
+              />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                setCode(referralData?.referralCode);
+                handleOpen();
               }}
-            />
-          </IconButton>
+            >
+              <Share
+                sx={{
+                  "& path": {
+                    stroke: ({ palette }) => palette.secondary.main,
+                  },
+                }}
+              />
+            </IconButton>
+          </Box>
         </Stack>
         {/* <Stack
           direction="row"
