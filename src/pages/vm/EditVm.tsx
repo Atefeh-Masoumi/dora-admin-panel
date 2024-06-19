@@ -1,22 +1,22 @@
+import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
 import {
-  useContext,
   FC,
-  SyntheticEvent,
-  useState,
   ReactNode,
+  SyntheticEvent,
+  useContext,
   useEffect,
+  useState,
 } from "react";
-import { Tabs, Stack, Box, CircularProgress } from "@mui/material";
-import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { Navigate, useParams, useNavigate } from "react-router-dom";
-import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
-import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
-import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
-import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
-import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
+import { DorsaTab } from "src/components/atoms/DorsaTab";
+import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
+import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
+import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
+import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
+import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_ENUM } from "src/types/vmEnum";
 
 type TabPanelProps = {
@@ -128,9 +128,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
         }}
       >
         <Tabs
-          sx={{
-            minWidth: { xs: 550, md: 605 },
-          }}
+          sx={{ padding: "5px 30px" }}
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
           onChange={handleChange}

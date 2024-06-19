@@ -50,7 +50,7 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
 
   return (
     <Grid2 container spacing={4}>
-      <Grid2 xs={12} md={10}>
+      <Grid2 xs={12} md={8}>
         <NodeConfig />
       </Grid2>
       <Grid2 xs={12} md={4} sx={{ position: "sticky", top: 0 }}>

@@ -4,7 +4,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 export const DorsaTab = styled((props: TabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
-  margin: "0 auto !important",
+  margin: "0 20px !important",
   textTransform: "none",
   padding: "8px 8px 4px",
   minWidth: 0,

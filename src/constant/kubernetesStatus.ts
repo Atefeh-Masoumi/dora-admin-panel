@@ -27,7 +27,7 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     case 4:
       return {
         id: "Expired",
-        label: "منقضی",
+        label: "منقضی شده",
         textColor: "error.main",
         bgcolor: "error.light",
         chipColor: "error",
@@ -43,7 +43,7 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     case 6:
       return {
         id: "Wait",
-        label: "در انتظار",
+        label: "درانتظار انجام عملیات",
         textColor: "warning.main",
         bgcolor: "warning.light",
         chipColor: "warning",
@@ -59,7 +59,7 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     case 8:
       return {
         id: "Failed",
-        label: "خطا در ساخت",
+        label: "خطا",
         textColor: "error.main",
         bgcolor: "error.light",
         chipColor: "error",
@@ -67,7 +67,23 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     case 9:
       return {
         id: "WaitChangeDns",
-        label: "در انتظار تغییر NS",
+        label: "بازسازی",
+        textColor: "warning.main",
+        bgcolor: "warning.light",
+        chipColor: "warning",
+      };
+    case 10:
+      return {
+        id: "Shutdown",
+        label: "خاموش",
+        textColor: "error.main",
+        bgcolor: "error.light",
+        chipColor: "error",
+      };
+    case 11:
+      return {
+        id: "InQueue",
+        label: "در صف انتظار",
         textColor: "warning.main",
         bgcolor: "warning.light",
         chipColor: "warning",
@@ -75,7 +91,7 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     default:
       return {
         id: "Other",
-        label: "خاموش",
+        label: "خطای نامشخص",
         textColor: "error.main",
         bgcolor: "error.light",
         chipColor: "error",
