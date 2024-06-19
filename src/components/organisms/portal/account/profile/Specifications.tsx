@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Chip, Divider, Stack, Typography } from "@mui/material";
-import { RealPersonality } from "./Real";
+import { RealPersonality } from "./RealPersonality";
 import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated";
 
 export const Specifications: FC = () => {

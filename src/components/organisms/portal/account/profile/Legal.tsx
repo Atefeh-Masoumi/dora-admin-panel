@@ -20,6 +20,7 @@ import { e2p } from "src/utils/e2p.utils";
 import { p2e } from "src/utils/p2e.utils";
 import { onlyNumber } from "src/utils/priceToPersian";
 import * as yup from "yup";
+import { LegalPersonalityDetail } from "./LegalPersonality";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("نام سازمان الزامی است"),
@@ -224,25 +225,22 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
 
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} py={2.5} px={3}>
+      <LegalPersonalityDetail />
       <Stack
         direction="row"
-        sx={{ display: "flex", justifyContent: "space-between" }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "20px",
+        }}
         pt={1.5}
       >
-        <Typography
-          variant="text1"
-          fontWeight={500}
-          color="secondary"
-          sx={{ pt: 1.1, pb: 1 }}
-        >
-          تغییر اکانت به حقوقی:
-        </Typography>
         <Button
           variant="contained"
           sx={{ px: 3, py: 1, fontSize: { sm: "11px", lg: "16px" } }}
           onClick={() => setShowModal(true)}
         >
-          درخواست تغییر
+          تغییر اکانت به حقوقی
         </Button>
       </Stack>
       {showModal && (
