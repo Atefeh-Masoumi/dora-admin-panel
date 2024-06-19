@@ -43,7 +43,7 @@ export const InviteCode: FC = () => {
       width={"100%"}
     >
       <Box borderRadius="100%" border="18px solid rgba(60, 138, 255, 0.04)">
-        <Stack
+        <Stack 
           direction="row"
           alignItems="center"
           justifyContent="center"

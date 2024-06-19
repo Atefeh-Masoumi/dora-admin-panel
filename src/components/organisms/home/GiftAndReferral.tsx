@@ -64,40 +64,48 @@ export const GiftAndReferral: FC = () => {
               bgcolor={"white"}
               borderRadius={BORDER_RADIUS_1}
             >
-              <Grid item>
+              <Grid item xs={12} sm={6}>
                 <Stack direction="row">
-                  <Typography color="secondary" variant="text2">
-                    دوستان خود را دعوت کنید و تخفیف بگیرید
+                  <Typography color="secondary" fontSize={14}>
+                    با دعوت دوستان خود تخفیف بگیرید
                   </Typography>
                   <Box display={{ xs: "none", md: "flex" }}>
                     <WelcomeTooltip />
                   </Box>
                 </Stack>
               </Grid>
-              <Grid item display={"flex"}>
-                {isLoading ? (
-                  <Stack direction="row" spacing={1}>
-                    <Skeleton
-                      variant="rectangular"
-                      height={45}
-                      width={100}
-                      sx={{
-                        bgcolor: "secondary.light",
-                        borderRadius: BORDER_RADIUS_1,
-                      }}
-                    />
-                  </Stack>
-                ) : (
-                  <>
+              <Grid item xs={12} sm={6}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  width="100%"
+                >
+                  {isLoading ? (
+                    <Stack direction="row" spacing={1}>
+                      <Skeleton
+                        variant="rectangular"
+                        sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                      />
+                    </Stack>
+                  ) : (
                     <DorsaTextField
                       defaultValue={referralData?.referralCode}
                       InputProps={{ readOnly: true }}
-                      sx={{
-                        maxWidth: { xs: "100px", md: "100px" },
-                        width: "200px",
-                      }}
-                      inputProps={{ dir: "ltr" }}
+                      inputProps={{ dir: "rtl" }}
                     />
+                  )}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      backgroundColor: "#F6F7F8",
+                      padding: "7px 0",
+                      position: "relative",
+                      right: "5px",
+                      borderTopRightRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     <IconButton
                       onClick={() => {
                         navigator.clipboard.writeText(
@@ -105,7 +113,6 @@ export const GiftAndReferral: FC = () => {
                         );
                         toast.success("کد کپی شد", { position: "bottom-left" });
                       }}
-                      sx={{ padding: "15px" }}
                     >
                       <Copy
                         sx={{
@@ -115,8 +122,8 @@ export const GiftAndReferral: FC = () => {
                         }}
                       />
                     </IconButton>
-                  </>
-                )}
+                  </Box>
+                </Stack>
               </Grid>
             </Grid>
           </Stack>
