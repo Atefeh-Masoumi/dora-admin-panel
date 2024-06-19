@@ -66,7 +66,16 @@ export const GiftAndReferral: FC = () => {
             >
               <Grid item xs={12} sm={6}>
                 <Stack direction="row">
-                  <Typography color="secondary" fontSize={14}>
+                  <Typography
+                    color="secondary"
+                    fontSize={14}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      textAlign: { xs: "center !important", sm: "" },
+                      marginBottom: { xs: "10px" },
+                    }}
+                  >
                     با دعوت دوستان خود تخفیف بگیرید
                   </Typography>
                   <Box display={{ xs: "none", md: "flex" }}>
