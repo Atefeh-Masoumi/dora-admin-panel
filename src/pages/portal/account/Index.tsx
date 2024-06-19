@@ -22,7 +22,7 @@ const tabs: tabsType[] = [
     path: "profile",
   },
   {
-    title: "صورتحساب",
+    title: "اطلاعات صورتحساب",
     icon: AccountSvg,
     content: <LegalPersonality />,
     path: "legal-personality",

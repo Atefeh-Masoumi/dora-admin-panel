@@ -27,6 +27,7 @@ import {
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BlurBackdrop } from "../atoms/BlurBackdrop";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
@@ -120,8 +121,8 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
           <DialogContentText textAlign="center">{subTitle}</DialogContentText>
           <Alert variant="filled" severity="warning">
             <AlertTitle>اخطار!</AlertTitle>
-            <Typography>
-              {`توجه داشته باشید در صورت حذف ${keyTitle} مورد نظر، امکان بازگرداندن ${keyTitle} وجود ندارد.`}
+            <Typography fontSize={14}>
+              {`توجه داشته باشید در صورت حذف ${keyTitle} مورد نظر، امکان بازگردانی وجود ندارد.`}
             </Typography>
           </Alert>
           <Box width="100%">
@@ -134,6 +135,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 justifyContent: "space-between",
                 border: "1px solid #ccc",
                 borderRadius: BORDER_RADIUS_1,
+                padding: "4px 0",
               }}
             >
               <Tooltip title={securityPhrase}>
@@ -147,8 +149,16 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 </Typography>
               </Tooltip>
               <Button
-                variant="contained"
+                startIcon={<ContentCopyIcon />}
+                variant="outlined"
+                size="small"
                 onClick={() => copyText(securityPhrase)}
+                sx={{
+                  backgroundColor: "rgba(255, 255, 255, 0.25)",
+                  color: "#000",
+                  borderColor: "#ccc",
+                  marginRight: "10px",
+                }}
               >
                 کپی کردن
               </Button>

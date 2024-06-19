@@ -59,6 +59,11 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     [vmData?.powerStatus]
   );
 
+  const networkConnection = useMemo(
+    () => vmData?.networkStatus === "CONNECTED",
+    [vmData?.networkStatus]
+  );
+
   const sendUserToKmsConsole = (
     remoteConsoleObject: GetRemoteConsoleResponse
   ) => {
@@ -98,7 +103,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .catch((err) => {});
       },
       isLoading: getVmDataLoading || disconnectServerIsLoading,
-      isDisable: !powerOn,
+      isDisable: !powerOn || !networkConnection,
     },
     {
       label: "Connect Network",
@@ -111,7 +116,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .catch((err) => {});
       },
       isLoading: getVmDataLoading || connectServerIsLoading,
-      isDisable: !powerOn,
+      isDisable: !powerOn || networkConnection,
     },
     {
       label: "Stop",
@@ -137,7 +142,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
           .catch((err) => {});
       },
       isLoading: getVmDataLoading || startServerIsLoading,
-      isDisable: false,
+      isDisable: powerOn,
     },
     {
       label: "Shutdown",

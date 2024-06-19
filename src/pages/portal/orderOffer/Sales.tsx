@@ -42,7 +42,9 @@ const Sales: FC = () => {
               px={3}
               minWidth="fit-content"
             >
-              <Typography fontSize="1.5rem">{offer?.name}</Typography>
+              <Typography fontSize="1.5rem" textAlign={"center"}>
+                {offer?.name}
+              </Typography>
               <Stack
                 direction="column"
                 spacing={1}
