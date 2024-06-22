@@ -2,24 +2,13 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { columnType } from "src/components/organisms/tables/table.types";
 
 export const referralTableStruct: columnType[] = [
-  { id: "commissionDate", label: "تاریخ ثبت", type: "date" },
+  { id: "joinDate", label: "تاریخ عضویت", type: "date" },
   {
-    id: "invoiceId",
-    label: "شماره فاکتور",
-    format: priceToPersian,
-  },
-  {
-    id: "totalPrice",
-    label: "مبلغ فاکتور",
-    format: priceToPersian,
-  },
-  {
-    id: "commissionPrice",
-    label: "مبلغ کمیسیون",
-    format: priceToPersian,
-  },
-  {
-    id: "user",
+    id: "customer",
     label: "نام کاربر",
+  },
+  {
+    id: "commissionPercent",
+    label: "درصد درآمد",
   },
 ];
