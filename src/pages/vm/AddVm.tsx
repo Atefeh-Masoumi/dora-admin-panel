@@ -34,7 +34,6 @@ const mapConfig = {
 const AddVm: FC = () => {
   const { projectId } = useParams();
   const {
-    dataCenter,
     osVersion,
     serverConfig,
     serverName,
@@ -49,8 +48,9 @@ const AddVm: FC = () => {
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
 
-  const { data: vmProjectData, isLoading: vmProjectDataLoading } =
-    useGetApiMyVmProjectGetByIdQuery({ id: Number(projectId) });
+  const { data: vmProjectData } = useGetApiMyVmProjectGetByIdQuery({
+    id: Number(projectId),
+  });
 
   const navigate = useNavigate();
 
@@ -116,11 +116,11 @@ const AddVm: FC = () => {
         },
       })
         .unwrap()
-        .then((res) => {
+        .then(() => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
           navigate(`/vm/${projectId}/list`);
         })
-        .catch((err) => {});
+        .catch(() => {});
     }
   };
 

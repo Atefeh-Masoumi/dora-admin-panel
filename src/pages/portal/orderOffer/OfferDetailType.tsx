@@ -10,7 +10,6 @@ type OfferDetailType = {
   name: string;
   offerId: number | null;
 };
-
 const Sales: FC = () => {
   const [offerDetail, setOfferDetail] = useState<OfferDetailType>({
     name: "",
@@ -97,5 +96,4 @@ const Sales: FC = () => {
     </Grid>
   );
 };
-
 export default Sales;

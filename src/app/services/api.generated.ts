@@ -3236,7 +3236,6 @@ export type ConvertCustomerToLegalModel = {
   phoneNumber: string | null;
   postalCode: string | null;
   address: string | null;
-  economicNumber?: string | null;
   registrationNumber?: string | null;
   registrationDate?: string | null;
 };
@@ -4616,4 +4615,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

@@ -26,8 +26,8 @@ const validationSchema = yup.object().shape({
   name: yup.string().required("نام سازمان الزامی است"),
   nationalId: yup
     .string()
-    .required("کدملی الزامی است")
-    .max(10, "کدملی باید حداکثر 10 کاراکتر باشد"),
+    .required("شناسه ملی الزامی است")
+    .max(11, "شناسه ملی باید حداکثر 11 کاراکتر باشد"),
   phoneNumber: yup.string().required("شماره تلفن همراه الزامی است"),
   address: yup.string().required("آدرس الزامی است"),
   postalCode: yup
@@ -41,9 +41,8 @@ export const convertToLegalTypeModalTextFields: any[] = [
     label: "نام سازمان",
     id: "name",
   },
-
   {
-    label: "کدملی",
+    label: "شناسه ملی",
     id: "nationalId",
   },
   {
@@ -59,11 +58,7 @@ export const convertToLegalTypeModalTextFields: any[] = [
     id: "postalCode",
   },
   {
-    label: "شماره اقتصادی",
-    id: "economicNumber",
-  },
-  {
-    label: "شناسه ثبت",
+    label: "شماره ثبت",
     id: "registrationNumber",
   },
   {
@@ -80,7 +75,6 @@ type profileAccountFormInitialValuesType = {
   phoneNumber: string;
   postalCode: string;
   address: string;
-  economicNumber: string | null;
   registrationNumber: string | null;
   registrationDate: string | null;
 };
@@ -109,7 +103,6 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
     phoneNumber: "",
     postalCode: "",
     address: "",
-    economicNumber: null,
     registrationNumber: null,
     registrationDate: null,
   };
