@@ -87,11 +87,13 @@ export const LegalPersonalityDetail: FC<
                       size="medium"
                       sx={{
                         color:
-                          item.value && item.value === "فعال"
+                          item.value &&
+                          (item.value === "فعال" || item.value === "تایید شده")
                             ? "success.main"
                             : "warning.main",
                         bgcolor:
-                          item.value && item.value === "فعال"
+                          item.value &&
+                          (item.value === "فعال" || item.value === "تایید شده")
                             ? "success.light"
                             : "warning.light",
                       }}
