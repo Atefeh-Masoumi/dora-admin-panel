@@ -87,6 +87,9 @@ const AddNodeKubernetes = lazy(
   () => import("src/pages/kuberCluster/AddNodeKubernetes")
 );
 
+const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
+const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
+
 const mainTemplate = (
   PageComponent: FC<any>,
   templateProps?: Omit<MainTemplatePropsType, "children">,
@@ -440,6 +443,7 @@ const Router: FC = () => {
               EditWebContextProvider
             )}
           />
+
           {/* ======================================= Domain ======================================= */}
           <Route
             path="/domain"
@@ -518,6 +522,31 @@ const Router: FC = () => {
             })}
           />
         </Route>
+        {/* ======================================= VPC ======================================= */}
+        <Route
+          path="/vpc"
+          element={mainTemplate(VpcIndex, {
+            pageTitle: "مدیریت سرویس فضای ابری اختصاصی",
+          })}
+        />
+
+        <Route
+          path="/vpc/add"
+          element={mainTemplate(
+            AddVpc,
+            {
+              link: {
+                text: "بازگشت به مدیریت سرویس ابر اختصاصی",
+                url: "/vpc",
+              },
+              hideSidebar: false,
+            },
+            AddVpcContextProvider
+          )}
+        />
+
+        {/* ======================================= VPC ======================================= */}
+
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>

@@ -4,6 +4,7 @@ import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSv
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
 import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
 import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
+import { VpcSvg } from "src/components/atoms/svg-icons/VpcSvg";
 
 export const homeProductsConstantListItems = [
   {
@@ -42,10 +43,17 @@ export const homeProductsConstantListItems = [
     link: "/web",
   },
   {
-    title: "Domain Registration",
+    title: "Domain",
     text: "ثبت/تمدید دامنه",
     Icon: CdnSvg,
     bgcolor: "rgba(159, 69, 255, 0.2)",
     link: "/domain",
+  },
+  {
+    title: "VPC",
+    text: "ابر اختصاصی",
+    Icon: VpcSvg,
+    bgcolor: "rgb(252 76 6 / 20%)",
+    link: "/vpc",
   },
 ];
