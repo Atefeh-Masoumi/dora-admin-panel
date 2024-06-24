@@ -58,6 +58,13 @@ const listItems: sidebarItemType[] = [
     subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
   },
   {
+    title: "vPC",
+    text: "ابر اختصاصی",
+    Icon: CdnSvg,
+    link: "/vpc",
+    subList: [{ title: "ابر اختصاصی", link: "/vpc" }],
+  },
+  {
     Icon: WalletSvg,
     link: "/portal/wallet",
     subList: [
