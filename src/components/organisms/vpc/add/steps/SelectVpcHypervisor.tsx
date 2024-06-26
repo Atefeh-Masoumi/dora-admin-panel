@@ -1,28 +1,32 @@
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import {
-  DatacenterListResponse,
-  useGetApiMyDatacenterListQuery,
+  HypervisorTypeListResponse,
+  useGetApiMyVmHypervisorListQuery,
 } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { AddVpcContext } from "../contexts/AddVpcContext";
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { AddVpcContext } from "../contexts/AddVpcContext";
 
 type SelectVpcHypervisorPropsType = {};
 
 export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
-  const { dataCenter, setDataCenter } = useContext(AddVpcContext);
+  const { hypervisor, setHypervisor, dataCenter } = useContext(AddVpcContext);
+  const isActive = Boolean(dataCenter?.id);
 
-  const { data: dataCenterList, isLoading } = useGetApiMyDatacenterListQuery();
+  const { data: hypervisorList, isLoading } =
+    useGetApiMyVmHypervisorListQuery();
 
-  const dataCenterOnClick = (dataCenter: DatacenterListResponse) => {
-    setDataCenter(dataCenter);
+  const dataCenterOnClick = (hypervisor: HypervisorTypeListResponse) => {
+    setHypervisor(hypervisor);
   };
 
   return (
     <Stack justifyContent="center" alignItems="center" spacing={4}>
- 
+      <Typography fontSize={24} fontWeight="bold" alignItems="center">
+        زیرساخت را انتخاب کنید
+      </Typography>
       <Stack
         justifyContent="center"
         direction={{ xs: "column", sm: "row" }}
@@ -52,10 +56,10 @@ export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
               <Skeleton width="30%" />
             </Stack>
           ))}
-        {dataCenterList &&
-          dataCenterList.map((dataCenterItem) => {
-            const { id, name } = dataCenterItem;
-            const isSelected = dataCenter ? dataCenter.id === id : false;
+        {hypervisorList &&
+          hypervisorList.map((hypervisorItem) => {
+            const { id, name } = hypervisorItem;
+            const isSelected = hypervisor ? hypervisor.id === id : false;
             return (
               <Stack
                 key={id}
@@ -67,18 +71,19 @@ export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
                   borderRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
-                      isSelected
+                      isSelected && isActive
                         ? palette.primary.main
                         : "rgba(110, 118, 138, 0.12)"
                     }`,
                   overflow: "hidden",
                   p: 1,
-                  cursor: "pointer",
+                  cursor: isActive ? "pointer" : "not-allowed",
+                  opacity: isActive ? 1 : 0.5,
                 }}
                 alignItems="center"
                 justifyContent="center"
                 spacing={1}
-                onClick={() => dataCenterOnClick(dataCenterItem)}
+                onClick={() => dataCenterOnClick(hypervisorItem)}
               >
                 <Stack
                   alignItems="center"
@@ -102,7 +107,9 @@ export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
                 </Stack>
                 <Typography
                   noWrap
-                  color={isSelected ? "primary.main" : "secondary.main"}
+                  color={
+                    isSelected && isActive ? "primary.main" : "secondary.main"
+                  }
                   sx={{ transition: "150ms" }}
                   fontWeight="bold"
                 >

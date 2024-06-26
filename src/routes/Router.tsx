@@ -17,7 +17,7 @@ import AddServerContextProvider from "src/components/organisms/vm/add/contexts/A
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
-import AddVpcContextProvider from "src/components/organisms/vpc/tables/add/contexts/AddVpcContext";
+import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));

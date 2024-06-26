@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   DatacenterListResponse,
+  HypervisorTypeListResponse,
   ProductBundleListResponse,
   usePostApiMyVpcHostCreateMutation,
 } from "src/app/services/api.generated";
@@ -19,6 +20,8 @@ export type addVpcStepsType = 1 | 2 | 3;
 type AddVpcContextType = {
   dataCenter: DatacenterListResponse | null;
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
+  hypervisor: HypervisorTypeListResponse | null;
+  setHypervisor: Dispatch<SetStateAction<HypervisorTypeListResponse | null>>;
   submitHandler: () => void;
   submitLoading: boolean;
   serverConfig: ProductBundleListResponse | null;
@@ -28,6 +31,8 @@ type AddVpcContextType = {
 export const AddVpcContext = createContext<AddVpcContextType>({
   dataCenter: null,
   setDataCenter: () => {},
+  hypervisor: null,
+  setHypervisor: () => {},
   submitHandler: () => {},
   submitLoading: false,
   serverConfig: null,
@@ -44,6 +49,8 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
   const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
     null
   );
+  const [hypervisor, setHypervisor] =
+    useState<HypervisorTypeListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleListResponse | null>(null);
 
@@ -82,6 +89,8 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
       value={{
         dataCenter,
         setDataCenter,
+        hypervisor,
+        setHypervisor,
         submitHandler,
         submitLoading,
         setServerConfig,

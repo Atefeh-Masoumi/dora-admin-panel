@@ -4,8 +4,10 @@ import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/serv
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
-import { AddVpcContext } from "src/components/organisms/vpc/tables/add/contexts/AddVpcContext";
-import { SelectVpcDataCenter } from "src/components/organisms/vpc/tables/add/steps/SelectVpcDataCenter";
+import { AddVpcContext } from "src/components/organisms/vpc/add/contexts/AddVpcContext";
+import { SelectVpcConfig } from "src/components/organisms/vpc/add/steps/SelectVpcConfig";
+import { SelectVpcDataCenter } from "src/components/organisms/vpc/add/steps/SelectVpcDataCenter";
+import { SelectVpcHypervisor } from "src/components/organisms/vpc/add/steps/SelectVpcHypervisor";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 const AddVpc: FC = () => {
@@ -41,6 +43,14 @@ const AddVpc: FC = () => {
             <Grid container gap={2}>
               <Grid xs={12} item>
                 <SelectVpcDataCenter />
+                <Divider sx={{ margin: "50px 10px" }} />
+              </Grid>
+              <Grid xs={12} item>
+                <SelectVpcHypervisor />
+                <Divider sx={{ margin: "50px 10px" }} />
+              </Grid>
+              <Grid xs={12} item>
+                <SelectVpcConfig />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               {/* <Grid xs={12} item>
