@@ -46,7 +46,7 @@ const VmList: FC = () => {
 
   return (
     <>
-      <Stack
+      {/* <Stack
         p={2.5}
         mb={1}
         bgcolor="warning.main"
@@ -61,7 +61,7 @@ const VmList: FC = () => {
         <Typography variant="text14">
           استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
         </Typography>
-      </Stack>
+      </Stack> */}
       <Stack
         bgcolor="white"
         py={3}
