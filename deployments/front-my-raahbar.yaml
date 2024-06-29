@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: front-my-raahbar-v1
+  labels:
+    app: front-my-raahbar
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-my-raahbar
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: front-my-raahbar
+        version: v1
+    spec:
+      containers:
+        - name: front-my-raahbar
+          image: git.dorsa.cloud:5050/dorsacloud/frontend/front-my/front-my-raahbar:latest
+          ports:
+            - name: http-0
+              containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: dorsa-git
