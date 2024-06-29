@@ -68,7 +68,7 @@ deploy_raahba:
   needs: [package_raahbar]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl config use-context $KUBE_CONTEXT-RAAHBAR
     - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar.yaml
-    - kubectl -n raahbar rollout restart deployment front-my-v1
+    - kubectl -n raahbar rollout restart deployment front-my-raahbar-v1
   when: manual
