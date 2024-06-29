@@ -22,7 +22,7 @@ const Home: FC = () => {
 
   return (
     <>
-      <Stack
+      {/* <Stack
         p={2.5}
         mb={1}
         bgcolor="warning.main"
@@ -37,7 +37,7 @@ const Home: FC = () => {
         <Typography variant="text14">
           استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
         </Typography>
-      </Stack>
+      </Stack> */}
       {!profileCompleted && (
         <Stack
           p={3}
