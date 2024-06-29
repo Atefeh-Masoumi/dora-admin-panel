@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar"'
       when: always
     - when: never
 
@@ -27,6 +27,8 @@ package_stage:
     - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
     - docker push $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-my-stage:latest
+  only:
+    - main
 
 package_production:
   stage: package
@@ -34,6 +36,8 @@ package_production:
     - docker build -t $DOCKER_REGISTRY/front-my-production:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-production:latest .
     - docker push $DOCKER_REGISTRY/front-my-production:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-my-production:latest
+  only:
+    - main
 
 package_raahbar:
   stage: package
@@ -41,7 +45,8 @@ package_raahbar:
     - docker build -t $DOCKER_REGISTRY/front-my-raahbar:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar:latest .
     - docker push $DOCKER_REGISTRY/front-my-raahbar:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/front-my-raahbar:latest
-
+  only:
+    - raahbar
 # Stage 2 : DEPLOY
 
 deploy_stage:
@@ -52,6 +57,8 @@ deploy_stage:
     - kubectl config use-context $KUBE_CONTEXT
     - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
     - kubectl -n stage rollout restart deployment front-my-v1
+  only:
+    - main
 
 deploy_production:
   stage: deploy
@@ -62,8 +69,10 @@ deploy_production:
     - kubectl -n dorsa-cloud apply -f $CI_PROJECT_DIR/deployments/front-my-production.yaml
     - kubectl -n dorsa-cloud rollout restart deployment front-my-v1
   when: manual
+  only: 
+    - main
 
-deploy_raahba:
+deploy_raahbar:
   stage: deploy
   needs: [package_raahbar]
   script:
@@ -72,3 +81,5 @@ deploy_raahba:
     - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar.yaml
     - kubectl -n raahbar rollout restart deployment front-my-v1
   when: manual
+  only: 
+    - raahbar
