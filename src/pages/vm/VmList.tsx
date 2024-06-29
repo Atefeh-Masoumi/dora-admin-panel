@@ -8,7 +8,6 @@ import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate, useParams } from "react-router";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 const VmList: FC = () => {
   const { projectId } = useParams();

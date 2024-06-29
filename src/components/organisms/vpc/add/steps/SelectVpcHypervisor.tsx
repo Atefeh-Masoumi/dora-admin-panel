@@ -6,6 +6,8 @@ import {
 } from "src/app/services/api.generated";
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
+import vmwareImage from "src/assets/images/vmwareLogo.png";
+import openstackImage from "src/assets/images/openstack.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { AddVpcContext } from "../contexts/AddVpcContext";
 
@@ -96,7 +98,7 @@ export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
                   }}
                 >
                   <img
-                    src={id === 1 ? asiatechImage : mobinNetImage}
+                    src={id === 1 ? vmwareImage : openstackImage}
                     alt=""
                     style={{
                       verticalAlign: "center",

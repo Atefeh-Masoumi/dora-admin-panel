@@ -1,23 +1,44 @@
-import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { FC, useMemo } from "react";
+import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AddVpcTableRow } from "../tables/AddVpcTableRow";
 import { addVpcTableStruct } from "../tables/struct";
-import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
-import { AddVpcContext } from "../contexts/AddVpcContext";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type SelectVpcConfigPropsType = {};
 
 export const SelectVpcConfig: FC<SelectVpcConfigPropsType> = () => {
-  const { data: bundleList, isLoading } =
-    useGetApiMyPortalProductBundleStorageListQuery();
+  const { data: bundleList = [], isLoading } =
+    useGetApiMyPortalProductBundleListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.VPC,
+    });
+
+  const configsList = useMemo(() => {
+    if (!bundleList) return [];
+    return bundleList.map(({ id, name, price, configurations }) => {
+      const ipv4 =
+        configurations?.find((item) => item.name === "IPV4")?.quantity || 0;
+      const rules10Vpc =
+        configurations?.find((item) => item.name === "Rules10VPC")?.quantity ||
+        0;
+
+      return {
+        id,
+        name,
+        price,
+        ipv4,
+        rules10Vpc,
+      };
+    });
+  }, [bundleList]);
 
   const table = useMemo(
     () => (
       <BaseTable
         struct={addVpcTableStruct}
         RowComponent={AddVpcTableRow}
-        rows={bundleList || []}
+        rows={configsList || []}
         text=""
         isLoading={isLoading}
       />

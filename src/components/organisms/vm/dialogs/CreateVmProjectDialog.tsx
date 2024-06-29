@@ -57,8 +57,8 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
     name: name || "",
     hypervisorTypeId: 1,
     datacenterId: datacenterList && datacenterList[0].id,
-    isPublic: true,
-    vpcHostId: null,
+    // isPublic: true,
+    // vpcHostId: null,
   };
 
   const validationSchema = yup.object().shape({

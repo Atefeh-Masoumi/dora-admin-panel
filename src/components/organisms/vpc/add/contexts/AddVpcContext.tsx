@@ -1,10 +1,10 @@
 import {
-  FC,
-  createContext,
-  ReactNode,
-  useState,
   Dispatch,
+  FC,
+  ReactNode,
   SetStateAction,
+  createContext,
+  useState,
 } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -14,14 +14,32 @@ import {
   ProductBundleListResponse,
   usePostApiMyVpcHostCreateMutation,
 } from "src/app/services/api.generated";
+import { NetworkItemsType } from "../steps/SelectVpcNetwork";
 
 export type addVpcStepsType = 1 | 2 | 3;
+
+const defaultNetworkList: NetworkItemsType[] = [
+  {
+    id: 34,
+    gatewayCidr: "192.168.1.1/24",
+    name: "network1",
+  },
+  {
+    id: 23,
+    gatewayCidr: "192.168.2.1/24",
+    name: "network2",
+  },
+];
 
 type AddVpcContextType = {
   dataCenter: DatacenterListResponse | null;
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
   hypervisor: HypervisorTypeListResponse | null;
   setHypervisor: Dispatch<SetStateAction<HypervisorTypeListResponse | null>>;
+  name: string | null;
+  setName: Dispatch<SetStateAction<string | null>>;
+  selectedNetworkList: NetworkItemsType[] | null;
+  setSelectedNetworkList: any;
   submitHandler: () => void;
   submitLoading: boolean;
   serverConfig: ProductBundleListResponse | null;
@@ -33,6 +51,10 @@ export const AddVpcContext = createContext<AddVpcContextType>({
   setDataCenter: () => {},
   hypervisor: null,
   setHypervisor: () => {},
+  name: null,
+  setName: () => {},
+  selectedNetworkList: null,
+  setSelectedNetworkList: () => {},
   submitHandler: () => {},
   submitLoading: false,
   serverConfig: null,
@@ -53,6 +75,9 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
     useState<HypervisorTypeListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleListResponse | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [selectedNetworkList, setSelectedNetworkList] =
+    useState<NetworkItemsType[]>(defaultNetworkList);
 
   const navigate = useNavigate();
   const [createVpc, { isLoading: submitLoading }] =
@@ -70,10 +95,11 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
 
     createVpc({
       createVpcHostModel: {
-        name: "Hello",
-        datacenterId: dataCenter!.id!,
-        productBundleId: 100,
-        hypervisorTypeId: 100,
+        name: String(name),
+        datacenterId: Number(dataCenter?.id),
+        productBundleId: Number(serverConfig?.id),
+        hypervisorTypeId: Number(hypervisor?.id),
+        defaultNetworks: selectedNetworkList,
       },
     })
       .unwrap()
@@ -95,6 +121,10 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
         submitLoading,
         setServerConfig,
         serverConfig,
+        name,
+        setName,
+        selectedNetworkList,
+        setSelectedNetworkList,
       }}
     >
       {children}
