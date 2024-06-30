@@ -17,6 +17,7 @@ import AddServerContextProvider from "src/components/organisms/vm/add/contexts/A
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
+import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -86,6 +87,9 @@ const EditKubernetes = lazy(
 const AddNodeKubernetes = lazy(
   () => import("src/pages/kuberCluster/AddNodeKubernetes")
 );
+
+const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
+const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -440,6 +444,7 @@ const Router: FC = () => {
               EditWebContextProvider
             )}
           />
+
           {/* ======================================= Domain ======================================= */}
           <Route
             path="/domain"
@@ -518,6 +523,31 @@ const Router: FC = () => {
             })}
           />
         </Route>
+        {/* ======================================= VPC ======================================= */}
+        <Route
+          path="/vpc"
+          element={mainTemplate(VpcIndex, {
+            pageTitle: "مدیریت سرویس فضای ابری اختصاصی",
+          })}
+        />
+
+        <Route
+          path="/vpc/add"
+          element={mainTemplate(
+            AddVpc,
+            {
+              link: {
+                text: "بازگشت به مدیریت سرویس ابر اختصاصی",
+                url: "/vpc",
+              },
+              hideSidebar: false,
+            },
+            AddVpcContextProvider
+          )}
+        />
+
+        {/* ======================================= VPC ======================================= */}
+
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>

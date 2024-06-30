@@ -1,39 +1,21 @@
-import { FC, useState, useEffect } from "react";
-import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
+import { FC, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { Add } from "@mui/icons-material";
-import { AddVmTableRow } from "src/components/organisms/vm/tables/VmTableRow";
-import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate, useParams } from "react-router";
+import { Add } from "@mui/icons-material";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useNavigate } from "react-router";
+import { vpcTableStruct } from "src/components/organisms/vpc/tables/struct";
+import { VpcTableRow } from "src/components/organisms/vpc/tables/VpcTableRow";
 
-const VmList: FC = () => {
-  const { projectId } = useParams();
-  const navigate = useNavigate();
-
+const VpcList: FC = () => {
   const [search, setSearch] = useState("");
 
-  const {
-    data: vmList,
-    isLoading: getVmListLoading,
-    refetch,
-  } = useGetApiMyVmHostListByVmProjectIdQuery({
-    vmProjectId: Number(projectId),
-  });
-
-  useEffect(() => {
-    const getNotifInterval = setInterval(() => {
-      refetch();
-    }, 120 * 1000);
-    return () => {
-      clearInterval(getNotifInterval);
-    };
-  }, [refetch]);
+  const { data, isLoading } = useGetApiMyVpcHostListQuery();
 
   const filteredList =
-    vmList?.filter((item) => {
+    data?.filter((item) => {
       let result = null;
       if (item?.name) {
         result = item?.name.includes(search);
@@ -41,24 +23,33 @@ const VmList: FC = () => {
       return result;
     }) || [];
 
-  const createCloudOnClick = () => navigate(`/vm/${projectId}/add-vm`);
+  const navigate = useNavigate();
+
+  const gotToAddVpc = () => navigate("/vpc/add");
 
   return (
     <>
       {/* <Stack
-        p={2.5}
-        mb={1}
+        p={3}
+        mb={3}
         bgcolor="warning.main"
         direction="row"
-        spacing={1}
+        gap={1}
         borderRadius={BORDER_RADIUS_1}
         width="100%"
         color="white"
         alignItems={{ xs: "start", md: "center" }}
       >
         <ErrorOutlineOutlinedIcon />
-        <Typography variant="text14">
-          استفاده از ترافیک غیرمجاز پیگرد قانونی دارد.
+        <Typography>توجه:</Typography>
+        <Typography
+          fontSize={14}
+          sx={{
+            opacity: 0.9,
+          }}
+        >
+          این سرویس نسخه آزمایشی می باشد.
+          <br />
         </Typography>
       </Stack> */}
       <Stack
@@ -81,15 +72,15 @@ const VmList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرورهای ابری
+              لیست سرویس ابر اختصاصی
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام ماشین"
+              placeholder="جستجو در نام سرویس"
             />
           </Stack>
           <Button
-            onClick={createCloudOnClick}
+            onClick={gotToAddVpc}
             variant="outlined"
             size="large"
             sx={{
@@ -115,17 +106,17 @@ const VmList: FC = () => {
               </Stack>
             }
           >
-            سرور ابری جدید
+            ایجاد سرویس ابر اختصاصی
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={addVmTableStruct}
-            RowComponent={AddVmTableRow}
+            struct={vpcTableStruct}
+            RowComponent={VpcTableRow}
             rows={filteredList}
-            text="در حال حاضر سروری وجود ندارد"
-            isLoading={getVmListLoading}
+            text="در حال حاضر سرویس ابری وجود ندارد"
+            isLoading={isLoading}
             initialOrder={9}
           />
         </Box>
@@ -134,4 +125,4 @@ const VmList: FC = () => {
   );
 };
 
-export default VmList;
+export default VpcList;

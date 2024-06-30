@@ -1,29 +1,31 @@
-import { useContext, FC, useState, useEffect } from "react";
 import {
+  Box,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Skeleton,
   Stack,
   Typography,
-  Box,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
 } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
-import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
-import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { FC, useContext, useEffect, useState } from "react";
 import {
-  ImageListResponse,
+  DatacenterImageListResponse,
   useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
+import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
+import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
+import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
 };
 
 type OsDropDownType = {
-  content: ImageListResponse[];
+  content: DatacenterImageListResponse[];
   osId: number;
   os: string;
   selectedImageId: string | null;
@@ -104,6 +106,31 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
     );
   };
 
+  const dataCenterIconRenderHandler = (id: number) => {
+    switch (id) {
+      case 1:
+        return (
+          <WindowsSvg
+            sx={{
+              width: 40,
+              height: 40,
+              "&>path": {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
+          />
+        );
+      case 2:
+        return <UbuntuSvg sx={{ width: 40, height: 40 }} />;
+      case 4:
+        return <DebianSvgIcon />;
+      case 5:
+        return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      default:
+        return "";
+    }
+  };
+
   return (
     <Stack
       justifyContent="center"
@@ -145,14 +172,14 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
               sm
               key={osDropDown.osId}
               sx={{
-                minWidth: { sm: 184 },
+                minWidth: { sm: 100 },
                 maxWidth: { sm: 184 },
                 height: { xs: 64, sm: 84 },
-                // marginBottom: { xs: "50px", sm: "0px" },
-                marginBottom:
-                  index === 0
-                    ? { xs: "50px", sm: "0px" }
-                    : { xs: "0px", sm: "0px" },
+                marginBottom: { xs: "50px", sm: "20px" },
+                // marginBottom:
+                //   index === 0
+                //     ? { xs: "50px", sm: "0px" }
+                //     : { xs: "0px", sm: "0px" },
               }}
             >
               <Stack
@@ -188,7 +215,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
                     overflow: "hidden",
                   }}
                 >
-                  {osDropDown.osId === 1 ? (
+                  {/* {osDropDown.osId === 1 ? (
                     <WindowsSvg
                       sx={{
                         width: 40,
@@ -200,7 +227,8 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
                     />
                   ) : (
                     <UbuntuSvg sx={{ width: 40, height: 40 }} />
-                  )}
+                  )} */}
+                  {dataCenterIconRenderHandler(osDropDown.osId)}
                 </Box>
                 <Typography
                   noWrap

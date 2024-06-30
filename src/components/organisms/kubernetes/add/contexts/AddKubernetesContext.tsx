@@ -10,7 +10,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   DatacenterListResponse,
-  ImageListResponse,
+  // ImageListResponse,
+  DatacenterImageListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
   usePostApiMyKubernetesHostCreateMutation,
@@ -29,8 +30,8 @@ type AddKubernetesContextType = {
   setKubernetesVersion: Dispatch<SetStateAction<DatacenterListResponse | null>>;
   dataCenter: DatacenterListResponse | null;
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
-  osVersion: ImageListResponse | null;
-  setOsVersion: Dispatch<SetStateAction<ImageListResponse | null>>;
+  osVersion: DatacenterImageListResponse | null;
+  setOsVersion: Dispatch<SetStateAction<DatacenterImageListResponse | null>>;
   serverConfig: ProductBundleVmListResponse | null;
   setServerConfig: Dispatch<SetStateAction<ProductBundleVmListResponse | null>>;
   serverName: string;
@@ -97,7 +98,8 @@ export const AddKubernetesContextProvider: FC<
   const [kubernetesVersion, setKubernetesVersion] =
     useState<DatacenterListResponse | null>(null);
   const [workersCount, setWorkersCount] = useState(3);
-  const [osVersion, setOsVersion] = useState<ImageListResponse | null>(null);
+  const [osVersion, setOsVersion] =
+    useState<DatacenterImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
