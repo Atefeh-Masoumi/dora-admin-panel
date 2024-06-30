@@ -27,3 +27,14 @@ export const vpcNatTableStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "عملیات" },
 ];
+
+export const vpcNetworkStruct: columnType[] = [
+  { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "name", label: "نام شبکه", disableSort: true },
+  { id: "subnetCidr", label: "Network CIDR", disableSort: true },
+  { id: "subnetMask", label: "Subnet Mask", disableSort: true },
+  { id: "gatewayCidr", label: "Gateway IP", disableSort: true },
+  { id: "datacenter", label: "دیتاسنتر", disableSort: true },
+  { id: "createDate", label: "تاریخ ایجاد", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
+];
