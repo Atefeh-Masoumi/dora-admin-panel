@@ -90,6 +90,7 @@ const AddNodeKubernetes = lazy(
 
 const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
 const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
+const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -544,6 +545,36 @@ const Router: FC = () => {
             },
             AddVpcContextProvider
           )}
+        />
+        <Route
+          path="/vpc/:vpcId/overview"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "مشخصات سرویس",
+          })}
+        />
+        <Route
+          path="/vpc/:vpcId/network"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "لیست network ها",
+          })}
+        />
+        <Route
+          path="/vpc/:vpcId/vm"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "لیست vm ها",
+          })}
+        />
+        <Route
+          path="/vpc/:vpcId/nat"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "لیست nat ها",
+          })}
+        />
+        <Route
+          path="/vpc/:vpcId/ip"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "لیست ip ها",
+          })}
         />
 
         {/* ======================================= VPC ======================================= */}

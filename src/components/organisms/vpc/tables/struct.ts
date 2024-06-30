@@ -8,3 +8,11 @@ export const vpcTableStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "عملیات", disableSort: true },
 ];
+
+export const vpcIpTableStruct: columnType[] = [
+  { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "ip", label: "IP", disableSort: true },
+  { id: "isV4", label: "Is V4", disableSort: true },
+  { id: "isPrimary", label: "Is Primary", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
+];
