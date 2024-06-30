@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 import { useGetApiMyVpcIpListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { VpcIpTableRow } from "src/components/organisms/vpc/tables/VpcIpTableRow";
 import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
