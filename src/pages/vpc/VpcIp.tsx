@@ -59,11 +59,11 @@ export const VpcIp: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست Vpc IP
+                  لیست IP ها
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox
-                    placeholder="جستجو در نام رکورد"
+                    placeholder="جستجو "
                     onChange={(text) => setSearch(text)}
                   />
                 </Stack>

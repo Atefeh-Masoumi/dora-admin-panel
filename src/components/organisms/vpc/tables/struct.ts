@@ -16,3 +16,14 @@ export const vpcIpTableStruct: columnType[] = [
   { id: "isPrimary", label: "Is Primary", disableSort: true },
   { id: "control", label: "عملیات", disableSort: true },
 ];
+
+export const vpcNatTableStruct: columnType[] = [
+  { id: "name", label: "نام" },
+  { id: "natTypeName", label: "نوع NAT" },
+  { id: "sourceIp", label: "ip مبدا" },
+  { id: "destinationIp", label: "ip مقصد" },
+  { id: "destinationPort", label: "port مقصد" },
+  { id: "translateIp", label: "ip برگردان" },
+  { id: "createDate", label: "تاریخ ایجاد" },
+  { id: "control", label: "عملیات" },
+];
