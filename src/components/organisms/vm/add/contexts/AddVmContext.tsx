@@ -1,7 +1,7 @@
 import { FC, createContext, ReactNode, useState } from "react";
 import {
   DatacenterListResponse,
-  ImageListResponse,
+  DatacenterImageListResponse,
   ProductBundleListResponse,
 } from "src/app/services/api.generated";
 
@@ -19,8 +19,8 @@ type AddServerContextType = {
   setStep: (step: addServerStepsType) => void;
   dataCenter: DatacenterListResponse | null;
   setDataCenter: (dataCenter: DatacenterListResponse | null) => void;
-  osVersion: ImageListResponse | null;
-  setOsVersion: (osVersion: ImageListResponse | null) => void;
+  osVersion: DatacenterImageListResponse | null;
+  setOsVersion: (osVersion: DatacenterImageListResponse | null) => void;
   serverConfig: ProductBundleListResponse | null;
   setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
   serverName: string;
@@ -69,7 +69,8 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
     null
   );
-  const [osVersion, setOsVersion] = useState<ImageListResponse | null>(null);
+  const [osVersion, setOsVersion] =
+    useState<DatacenterImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleListResponse | null>(null);
   const [serverName, setServerName] = useState("");

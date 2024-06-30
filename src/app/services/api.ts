@@ -22,6 +22,7 @@ const tags = [
   "Kubernetes",
   "Storage",
   "WebHost",
+  "Vpc",
 ];
 
 export const api = generatedApi
@@ -317,6 +318,19 @@ export const api = generatedApi
       },
       deleteApiMyWebHostDeleteById: {
         invalidatesTags: () => ["WebHost"],
+      },
+      // ============================== VPC ============================== //
+      getApiMyVpcHostList: {
+        providesTags: () => ["Vpc"],
+      },
+      postApiMyVpcHostCreate: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      putApiMyVpcHostEditById: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      deleteApiMyVpcHostDeleteById: {
+        invalidatesTags: () => ["Vpc"],
       },
     },
   });

@@ -10,7 +10,7 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { FC, useContext, useEffect, useState } from "react";
 import {
-  ImageListResponse,
+  DatacenterImageListResponse,
   useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
@@ -25,7 +25,7 @@ type SelectOSPropsType = {
 };
 
 type OsDropDownType = {
-  content: ImageListResponse[];
+  content: DatacenterImageListResponse[];
   osId: number;
   os: string;
   selectedImageId: string | null;

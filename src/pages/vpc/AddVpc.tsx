@@ -8,6 +8,8 @@ import { AddVpcContext } from "src/components/organisms/vpc/add/contexts/AddVpcC
 import { SelectVpcConfig } from "src/components/organisms/vpc/add/steps/SelectVpcConfig";
 import { SelectVpcDataCenter } from "src/components/organisms/vpc/add/steps/SelectVpcDataCenter";
 import { SelectVpcHypervisor } from "src/components/organisms/vpc/add/steps/SelectVpcHypervisor";
+import SelectVpcNetwork from "src/components/organisms/vpc/add/steps/SelectVpcNetwork";
+import { SelectVpcServiceInfo } from "src/components/organisms/vpc/add/steps/SelectVpcServiceInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 const AddVpc: FC = () => {
@@ -50,30 +52,17 @@ const AddVpc: FC = () => {
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
+                <SelectVpcNetwork />
+                <Divider sx={{ margin: "50px 10px" }} />
+              </Grid>
+              <Grid xs={12} item>
                 <SelectVpcConfig />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
-              {/* <Grid xs={12} item>
-                <SelectKuberSetting />
+              <Grid xs={12} item>
+                <SelectVpcServiceInfo />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
-              <Grid xs={12} item>
-                <SelectConfigType
-                  isPredefined={isPredefined}
-                  setIsPredefined={setIsPredefined}
-                />
-                <Divider sx={{ margin: "50px 10px" }} />
-              </Grid>
-              <Grid xs={12} item>
-                <SelectKuberConfig
-                  vmBundlesList={vmBundlesList || []}
-                  vmBundlesListLoading={vmBundlesListLoading}
-                />
-                <Divider sx={{ margin: "50px 10px" }} />
-              </Grid>
-              <Grid xs={12} item>
-                <ServerKuberInfo />
-              </Grid> */}
             </Grid>
           </Stack>
         </Grid>
