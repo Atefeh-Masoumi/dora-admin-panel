@@ -1,17 +1,33 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyVpcNatListByVpcHostIdQuery } from "src/app/services/api.generated";
+import {
+  GetVpcGatewayNatResponse,
+  useGetApiMyVpcNatListByVpcHostIdQuery,
+} from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CreateRecordDialog } from "src/components/organisms/cdn/edit/dns/dialogs/CreateRecordDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateVpcIpDialog } from "src/components/organisms/vpc/dialogs/CreateVpcIpDialog";
+import { CreateNatDialog } from "src/components/organisms/vpc/dialogs/CreateNatModal";
 import { VpcNatTableRow } from "src/components/organisms/vpc/tables/VpcNatTableRow";
 import { vpcNatTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcNat: FC = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [search, setSearch] = useState("");
+  const [dialogType, setDialogType] = useState<"DELETE" | "CREATE" | null>(
+    null
+  );
+  const [selectedNat, setSelectedNat] =
+    useState<GetVpcGatewayNatResponse | null>(null);
+
+  const closeDialogs = () => {
+    setSelectedNat(null);
+    setDialogType(null);
+  };
+
   const { vpcId } = useParams();
   const vpcHostId = Number(vpcId) || 0;
 
@@ -21,13 +37,9 @@ export const VpcNat: FC = () => {
     }
   );
 
-  const [search, setSearch] = useState("");
+  const handleOpen = () => setShowDialog(true);
 
   const filteredList = vpcNatList?.filter((nat) => nat.name?.includes(search));
-
-  const handleOpen = () => setShowDialog(true);
-  const [showDialog, setShowDialog] = useState(false);
-  const handleClose = () => setShowDialog(false);
 
   return (
     <Stack
@@ -72,7 +84,7 @@ export const VpcNat: FC = () => {
               <Stack display={{ xs: "flex", md: "none" }}>
                 <Button
                   variant="outlined"
-                  onClick={handleOpen}
+                  onClick={() => setDialogType("CREATE")}
                   size="large"
                   sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
                 >
@@ -96,7 +108,7 @@ export const VpcNat: FC = () => {
           >
             <Button
               variant="outlined"
-              onClick={handleOpen}
+              onClick={() => setDialogType("CREATE")}
               size="large"
               sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
               startIcon={
@@ -119,12 +131,14 @@ export const VpcNat: FC = () => {
           />
         </Stack>
       </Stack>
-      {/* <CreateVpcIpDialog
-        open={showDialog}
-        vpcHostId={vpcHostId}
-        // openDialog={showDialog}
-        onClose={handleClose}
-      /> */}
+      <CreateNatDialog
+        maxWidth="xl"
+        fullWidth
+        open={dialogType === "CREATE"}
+        onClose={closeDialogs}
+        forceClose={() => setDialogType(null)}
+        selectedNat={selectedNat && selectedNat}
+      />
     </Stack>
   );
 };
