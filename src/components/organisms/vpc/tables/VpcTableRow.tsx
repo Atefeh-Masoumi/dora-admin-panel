@@ -32,7 +32,7 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
     deleteVpc({ id: Number(selectedVpc?.id) })
       .unwrap()
       .then(() => {
-        toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
+        toast.success("ابر اختصاصی شما با موفقیت حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});
@@ -106,8 +106,8 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="سرویس کوبرنتیز"
-        subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
+        keyTitle="ابر اختصاصی"
+        subTitle="برای حذف ابر اختصاصی, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedVpc?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteVpcLoading}
