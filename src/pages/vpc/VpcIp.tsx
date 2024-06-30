@@ -4,12 +4,12 @@ import { useParams } from "react-router";
 import { useGetApiMyVpcIpListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
+import { CreateRecordDialog } from "src/components/organisms/cdn/edit/dns/dialogs/CreateRecordDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { CreateVpcIpDialog } from "src/components/organisms/vpc/dialogs/CreateVpcIpDialog";
 import { VpcIpTableRow } from "src/components/organisms/vpc/tables/VpcIpTableRow";
 import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-// import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 // import { ZoneTableRow } from "./tables/DnsTableRow";
 
 export const VpcIp: FC = () => {
@@ -118,11 +118,12 @@ export const VpcIp: FC = () => {
           />
         </Stack>
       </Stack>
-      {/* <CreateRecordDialog
-        openDialog={showDialog}
+      <CreateVpcIpDialog
+        open={showDialog}
+        vpcHostId={vpcHostId}
+        // openDialog={showDialog}
         onClose={handleClose}
-        dnsId={dnsId}
-      /> */}
+      />
     </Stack>
   );
 };

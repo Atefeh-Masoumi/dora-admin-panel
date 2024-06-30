@@ -1,12 +1,11 @@
-import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  GetDnsRecordResponse,
-  useDeleteApiMyDnsRecordDeleteByIdMutation,
+  VpcIpListResponse,
+  useDeleteApiMyVpcIpDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -21,29 +20,25 @@ enum DIALOG_TYPE_ENUM {
 
 export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
+  const [selectedVpcIp, setSelectedVpcIp] = useState<VpcIpListResponse | null>(
     null
   );
 
-  const handleOpenEdit = () => setOpenEdit(true);
-  const [openEdit, setOpenEdit] = useState(false);
-  const handleCloseEdit = () => setOpenEdit(false);
-
-  const [deleteDnsRecord, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyDnsRecordDeleteByIdMutation();
+  const [deleteVpcIpRecord, { isLoading: deleteVpcIpRecordLoading }] =
+    useDeleteApiMyVpcIpDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedDns(null);
+    setSelectedVpcIp(null);
   };
 
-  const handleOpenDelete = (dns: GetDnsRecordResponse) => {
-    setSelectedDns(dns);
+  const handleOpenDelete = (vpcIp: VpcIpListResponse) => {
+    setSelectedVpcIp(vpcIp);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  const deleteDnsRecordHandler = () =>
-    deleteDnsRecord({ id: Number(selectedDns?.id) })
+  const deleteVpcIpRecordHandler = () =>
+    deleteVpcIpRecord({ id: Number(selectedVpcIp?.id) })
       .unwrap()
       .then(() => {
         toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
@@ -66,10 +61,7 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
               sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
               {column.id === "control" ? (
-                <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  <IconButton sx={{ borderRadius: 1 }} onClick={handleOpenEdit}>
-                    <Edit />
-                  </IconButton>
+                <Stack direction="row" justifyContent="center">
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
@@ -112,20 +104,13 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="DNS"
+        keyTitle="IP"
+        subjectTitle="مقدار"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedDns?.name || ""}
-        onSubmit={deleteDnsRecordHandler}
-        submitLoading={deleteDnsRecordLoading}
+        securityPhrase={selectedVpcIp?.ip || ""}
+        onSubmit={deleteVpcIpRecordHandler}
+        submitLoading={deleteVpcIpRecordLoading}
       />
-      {/* {openEdit && (
-        <CreateRecordDialog
-          id={row.id}
-          dnsId={row.dnsHostId}
-          openDialog={openEdit}
-          onClose={handleCloseEdit}
-        />
-      )} */}
     </Fragment>
   );
 };
