@@ -1,6 +1,6 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   VpcListResponse,
@@ -24,7 +24,7 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/vpc/" + row["id"]);
+  const settingOnClick = () => navigate(`/vpc/${row?.id}/overview`);
   const [deleteVpc, { isLoading: deleteVpcLoading }] =
     useDeleteApiMyVpcHostDeleteByIdMutation();
 

@@ -31,6 +31,7 @@ export const ManageMenu: FC = () => {
   const handleLogout = () => {
     dispatch(logoutAction());
     handleClose();
+    navigate("/");
   };
 
   const items = [
