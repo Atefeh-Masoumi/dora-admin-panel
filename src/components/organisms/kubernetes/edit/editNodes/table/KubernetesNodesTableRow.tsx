@@ -42,7 +42,7 @@ export const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
 
   const deleteDnsRecordHandler = () => {
     deleteKubernetesNode({
-      id: Number(selectedKuberNode?.id),
+      id: Number(selectedKuberNode?.hostId),
     })
       .unwrap()
       .then((res) => {
