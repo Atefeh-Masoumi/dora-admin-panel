@@ -7,7 +7,6 @@ import {
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { CreateRecordDialog } from "src/components/organisms/cdn/edit/dns/dialogs/CreateRecordDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateNatDialog } from "src/components/organisms/vpc/dialogs/CreateNatModal";
 import { VpcNatTableRow } from "src/components/organisms/vpc/tables/VpcNatTableRow";
@@ -15,11 +14,11 @@ import { vpcNatTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcNat: FC = () => {
-  const [showDialog, setShowDialog] = useState(false);
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<"DELETE" | "CREATE" | null>(
     null
   );
+
   const [selectedNat, setSelectedNat] =
     useState<GetVpcGatewayNatResponse | null>(null);
 
@@ -36,8 +35,6 @@ export const VpcNat: FC = () => {
       vpcHostId: vpcHostId,
     }
   );
-
-  const handleOpen = () => setShowDialog(true);
 
   const filteredList = vpcNatList?.filter((nat) => nat.name?.includes(search));
 
@@ -70,7 +67,7 @@ export const VpcNat: FC = () => {
               width="100%"
               alignItems="center"
             >
-              <Stack direction="row" alignItems="center" spacing={1.5}>
+              <Stack  direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
                   لیست NAT ها
                 </Typography>
@@ -132,7 +129,7 @@ export const VpcNat: FC = () => {
         </Stack>
       </Stack>
       <CreateNatDialog
-        maxWidth="xl"
+        maxWidth="md"
         fullWidth
         open={dialogType === "CREATE"}
         onClose={closeDialogs}

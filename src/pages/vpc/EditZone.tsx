@@ -90,7 +90,7 @@ const EditZone: FC = () => {
           <DorsaTab value={`network`} label="Network" />
           <DorsaTab value={`vm`} label="VM" />
           <DorsaTab value={`nat`} label="NAT" />
-          <DorsaTab value={`ip`} label="IP" />
+          <DorsaTab value={`ip`} label="Public IP" />
         </Tabs>
       </Box>
       {renderHandler()}
