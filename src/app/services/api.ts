@@ -24,6 +24,7 @@ const tags = [
   "WebHost",
   "Vpc",
   "Network",
+  "IP",
 ];
 
 export const api = generatedApi
@@ -342,6 +343,16 @@ export const api = generatedApi
       },
       deleteApiMyVpcNetworkDeleteById: {
         invalidatesTags: () => ["Network"],
+      },
+      // ============================== IP ============================== //
+      getApiMyVpcIpListByVpcHostId: {
+        providesTags: () => ["IP"],
+      },
+      postApiMyVpcIpCreate: {
+        invalidatesTags: () => ["IP"],
+      },
+      deleteApiMyVpcIpDeleteById: {
+        invalidatesTags: () => ["IP"],
       },
     },
   });
