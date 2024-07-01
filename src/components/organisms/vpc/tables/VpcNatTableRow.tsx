@@ -81,18 +81,13 @@ export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
                     <CloseIcon sx={{ fontSize: 18 }} />
                   )}
                 </Stack>
-              ) : column.id === "isPrimary" ? (
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  {row.isPrimary ? (
-                    <DownloadDoneIcon sx={{ fontSize: 18 }} />
-                  ) : (
-                    <CloseIcon sx={{ fontSize: 18 }} />
-                  )}
-                </Stack>
+              ) : column.id ===
+                ("destinationPort" || "sourcePort" || "sourceIp") ? (
+                text === 0 ? (
+                  "Any"
+                ) : (
+                  text
+                )
               ) : (
                 text
               )}
