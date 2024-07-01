@@ -15,6 +15,7 @@ import {
   usePostApiMyVpcHostCreateMutation,
 } from "src/app/services/api.generated";
 import { NetworkItemsType } from "../steps/SelectVpcNetwork";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 
 export type addVpcStepsType = 1 | 2 | 3;
 
@@ -98,7 +99,7 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
         name: String(name),
         datacenterId: Number(dataCenter?.id),
         productBundleId: Number(serverConfig?.id),
-        hypervisorTypeId: Number(hypervisor?.id),
+        hypervisorTypeId: HYPERVISOR_ENUM.VM,
         defaultNetworks: selectedNetworkList,
       },
     })

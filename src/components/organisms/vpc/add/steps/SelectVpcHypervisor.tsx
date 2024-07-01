@@ -4,10 +4,8 @@ import {
   HypervisorTypeListResponse,
   useGetApiMyVmHypervisorListQuery,
 } from "src/app/services/api.generated";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
-import vmwareImage from "src/assets/images/vmwareLogo.png";
 import openstackImage from "src/assets/images/openstack.png";
+import vmwareImage from "src/assets/images/vmwareLogo.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { AddVpcContext } from "../contexts/AddVpcContext";
 
