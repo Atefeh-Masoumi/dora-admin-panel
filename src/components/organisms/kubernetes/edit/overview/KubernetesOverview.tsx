@@ -39,9 +39,21 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
       value: data?.masterNode || "",
       id: "masterNode",
     },
-    { label: "Create Date", value: data?.createDate || "", id: "createDate" },
-    { label: "Modify Date", value: data?.modifyDate || "", id: "modifyDate" },
-    { label: "Expire Date", value: data?.expireDate || "", id: "expireDate" },
+    {
+      label: "Create Date",
+      value: data?.createDate || "----",
+      id: "createDate",
+    },
+    {
+      label: "Modify Date",
+      value: data?.modifyDate || "----",
+      id: "modifyDate",
+    },
+    {
+      label: "Expire Date",
+      value: data?.expireDate || "----",
+      id: "expireDate",
+    },
     {
       label: "Customer Product Status",
       value: data?.customerProductType || "",
