@@ -5,10 +5,10 @@ import { useGetApiMyVpcIpListByVpcHostIdQuery } from "src/app/services/api.gener
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { CreateVpcIpDialog } from "src/components/organisms/vpc/dialogs/CreateVpcIpDialog";
 import { VpcIpTableRow } from "src/components/organisms/vpc/tables/VpcIpTableRow";
 import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-// import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 // import { ZoneTableRow } from "./tables/DnsTableRow";
 
 export const VpcIp: FC = () => {
@@ -58,11 +58,11 @@ export const VpcIp: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست Vpc IP
+                  لیست IP ها
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox
-                    placeholder="جستجو در نام رکورد"
+                    placeholder="جستجو "
                     onChange={(text) => setSearch(text)}
                   />
                 </Stack>
@@ -117,11 +117,12 @@ export const VpcIp: FC = () => {
           />
         </Stack>
       </Stack>
-      {/* <CreateRecordDialog
-        openDialog={showDialog}
+      <CreateVpcIpDialog
+        open={showDialog}
+        vpcHostId={vpcHostId}
+        // openDialog={showDialog}
         onClose={handleClose}
-        dnsId={dnsId}
-      /> */}
+      />
     </Stack>
   );
 };

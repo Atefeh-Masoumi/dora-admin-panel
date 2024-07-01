@@ -31,6 +31,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
+  subjectTitle?: string;
   subTitle: string;
   securityPhrase: string;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
@@ -40,6 +41,7 @@ type DeleteDialogPropsType = DialogProps & {
 export const DeleteDialog: FC<DeleteDialogPropsType> = ({
   keyTitle,
   subTitle,
+  subjectTitle = "نام",
   securityPhrase,
   onSubmit,
   submitLoading,
@@ -126,7 +128,9 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
             </Typography>
           </Alert>
           <Box width="100%">
-            <Typography gutterBottom>نام {keyTitle}</Typography>
+            <Typography gutterBottom>
+              {subjectTitle} {keyTitle}
+            </Typography>
             <Stack
               sx={{
                 display: "flex",
@@ -165,7 +169,9 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
             </Stack>
           </Box>
           <Stack direction="column">
-            <Typography gutterBottom>محل وارد کردن نام {keyTitle}</Typography>
+            <Typography gutterBottom>
+              محل وارد کردن {subjectTitle} {keyTitle}
+            </Typography>
             <TextField
               onChange={inputOnChange}
               value={inputValue}

@@ -2,14 +2,14 @@ import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  VpcIpListResponse,
-  useDeleteApiMyVpcIpDeleteByIdMutation,
+  GetVpcGatewayNatResponse,
+  useDeleteApiMyVpcNatDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { vpcIpTableStruct } from "./struct";
+import { vpcNatTableStruct } from "./struct";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -18,37 +18,36 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
+export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVpcIp, setSelectedVpcIp] = useState<VpcIpListResponse | null>(
-    null
-  );
+  const [selectedVpcNat, setSelectedVpcNat] =
+    useState<GetVpcGatewayNatResponse | null>(null);
 
-  const [deleteVpcIpRecord, { isLoading: deleteVpcIpRecordLoading }] =
-    useDeleteApiMyVpcIpDeleteByIdMutation();
+  const [deleteVpcNatRecord, { isLoading: deleteVpcNatRecordLoading }] =
+    useDeleteApiMyVpcNatDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedVpcIp(null);
+    setSelectedVpcNat(null);
   };
 
-  const handleOpenDelete = (vpcIp: VpcIpListResponse) => {
-    setSelectedVpcIp(vpcIp);
+  const handleOpenDelete = (vpcNat: GetVpcGatewayNatResponse) => {
+    setSelectedVpcNat(vpcNat);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  const deleteVpcIpRecordHandler = () =>
-    deleteVpcIpRecord({ id: Number(selectedVpcIp?.id) })
+  const deleteVpcNatRecordHandler = () =>
+    deleteVpcNatRecord({ id: Number(selectedVpcNat?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("Nat رکورد مورد نظر حذف شد", { icon: Success });
       })
       .catch((err) => {});
 
   return (
     <Fragment>
       <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.value}>
-        {vpcIpTableStruct.map((column) => {
+        {vpcNatTableStruct.map((column) => {
           const value = row[column.id];
           const text =
             column.format && typeof value === "number"
@@ -104,12 +103,11 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="IP"
-        subjectTitle="مقدار"
+        keyTitle="NAT"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedVpcIp?.ip || ""}
-        onSubmit={deleteVpcIpRecordHandler}
-        submitLoading={deleteVpcIpRecordLoading}
+        securityPhrase={selectedVpcNat?.name || ""}
+        onSubmit={deleteVpcNatRecordHandler}
+        submitLoading={deleteVpcNatRecordLoading}
       />
     </Fragment>
   );
