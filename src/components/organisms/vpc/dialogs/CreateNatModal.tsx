@@ -120,6 +120,11 @@ export const CreateNatDialog: FC<CreateNatDialogPropsType> = ({
               </Grid>
             </Grid>
             <Divider sx={{ py: 1 }} />
+            <CreateSourceNatForm
+              forceClose={forceClose}
+              natFormik={natFormik}
+              selectedNat={selectedNat}
+            />
 
             {/* {natFormik.values.natType === NAT_TYPE.S_NAT ? (
               <CreateSourceNatForm

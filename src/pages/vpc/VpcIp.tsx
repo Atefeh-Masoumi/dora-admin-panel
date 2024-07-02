@@ -9,7 +9,6 @@ import { CreateVpcIpDialog } from "src/components/organisms/vpc/dialogs/CreateVp
 import { VpcIpTableRow } from "src/components/organisms/vpc/tables/VpcIpTableRow";
 import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-// import { ZoneTableRow } from "./tables/DnsTableRow";
 
 export const VpcIp: FC = () => {
   const { vpcId } = useParams();

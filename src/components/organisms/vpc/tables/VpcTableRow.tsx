@@ -94,6 +94,8 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "createDate" ? (
+                    text
                   ) : (
                     text || "__"
                   )}
