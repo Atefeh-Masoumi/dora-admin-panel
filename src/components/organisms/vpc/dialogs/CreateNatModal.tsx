@@ -98,6 +98,9 @@ export const CreateNatDialog: FC<CreateNatDialogPropsType> = ({
                     size="small"
                     fullWidth
                     placeholder="نام موردنظر را وارد کنید"
+                    // error={Boolean(
+                    //   natFormik.errors.name && natFormik.touched.name
+                    // )}
                   />
                 </FormControl>
               </Grid>
@@ -120,13 +123,8 @@ export const CreateNatDialog: FC<CreateNatDialogPropsType> = ({
               </Grid>
             </Grid>
             <Divider sx={{ py: 1 }} />
-            <CreateSourceNatForm
-              forceClose={forceClose}
-              natFormik={natFormik}
-              selectedNat={selectedNat}
-            />
 
-            {/* {natFormik.values.natType === NAT_TYPE.S_NAT ? (
+            {natFormik.values.natType === NAT_TYPE.S_NAT ? (
               <CreateSourceNatForm
                 forceClose={forceClose}
                 natFormik={natFormik}
@@ -138,7 +136,7 @@ export const CreateNatDialog: FC<CreateNatDialogPropsType> = ({
                 forceClose={forceClose}
                 selectedNat={selectedNat}
               />
-            )} */}
+            )}
           </>
         ) : (
           <Alert severity="info">
