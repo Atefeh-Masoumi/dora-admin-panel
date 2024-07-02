@@ -38,3 +38,12 @@ export const vpcNetworkStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد", disableSort: true },
   { id: "control", label: "عملیات", disableSort: true },
 ];
+
+export const vpcStruct: columnType[] = [
+  { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "name", label: "نام", disableSort: true },
+  { id: "datacenter", label: "دیتاسنتر", disableSort: true },
+  { id: "createDate", label: "تاریخ ایجاد", disableSort: true },
+  { id: "statusId", label: "وضعیت" },
+  { id: "control", label: "عملیات", disableSort: true },
+];

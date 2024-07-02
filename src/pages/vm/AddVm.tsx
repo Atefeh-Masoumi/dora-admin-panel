@@ -16,6 +16,7 @@ import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectCo
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
 const mapConfig = {
@@ -32,7 +33,9 @@ const mapConfig = {
 };
 
 const AddVm: FC = () => {
-  const { projectId } = useParams();
+  // VM_PUBLICITY_TYPE.VPC_VM
+  const { projectId, type } = useParams();
+
   const {
     osVersion,
     serverConfig,
@@ -146,6 +149,11 @@ const AddVm: FC = () => {
                 py: { xs: 1.8, lg: 2.25 },
               }}
             >
+              {Number(type) === VM_PUBLICITY_TYPE.VPC_VM ? (
+                <Typography>Hello</Typography>
+              ) : (
+                ""
+              )}
               <Grid container gap={2}>
                 {/* <Grid xs={12} item>
                   <SelectDataCenter />

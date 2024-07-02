@@ -576,7 +576,12 @@ const Router: FC = () => {
             pageTitle: "لیست ip ها",
           })}
         />
-
+        <Route
+          path="/vm/:type/:projectId/create"
+          element={mainTemplate(AddVm, {
+            pageTitle: "ایجاد سرور مجازی جدید",
+          })}
+        />
         {/* ======================================= VPC ======================================= */}
 
         <Route path="*" element={<Navigate to="/account/login" />} />
