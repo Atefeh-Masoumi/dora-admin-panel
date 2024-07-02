@@ -28,6 +28,7 @@ import {
 } from "src/constant/vpc";
 import { formikOnSubmitType } from "src/types/form.type";
 import { CreateSourceNatForm } from "../forms/CreateSourceNatForm";
+import { CreateDestinationNatForm } from "../forms/CreateDestinationNatForm";
 
 type CreateNatDialogPropsType = DialogProps & {
   selectedNat: GetVpcGatewayNatResponse | null;

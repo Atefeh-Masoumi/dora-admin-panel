@@ -96,7 +96,7 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
 
     createVpc({
       createVpcHostModel: {
-        name: String(name),
+        name: name as string,
         datacenterId: Number(dataCenter?.id),
         productBundleId: Number(serverConfig?.id),
         hypervisorTypeId: HYPERVISOR_ENUM.VM,
