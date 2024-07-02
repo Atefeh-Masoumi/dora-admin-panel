@@ -49,11 +49,11 @@ export const homeProductsConstantListItems = [
     bgcolor: "rgba(159, 69, 255, 0.2)",
     link: "/domain",
   },
-  {
-    title: "VPC",
-    text: "ابر اختصاصی",
-    Icon: VpcSvg,
-    bgcolor: "rgb(252 76 6 / 20%)",
-    link: "/vpc",
-  },
+  // {
+  //   title: "VPC",
+  //   text: "ابر اختصاصی",
+  //   Icon: VpcSvg,
+  //   bgcolor: "rgb(252 76 6 / 20%)",
+  //   link: "/vpc",
+  // },
 ];
