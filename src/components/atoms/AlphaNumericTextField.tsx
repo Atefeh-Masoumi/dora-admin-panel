@@ -68,6 +68,7 @@ export const AlphaNumericTextField: FC<AlphaNumericTextFieldPropsType> = ({
     },
     [enableE2p, formik, id, isNumber, isPrice]
   );
+  console.log(formik);
 
   return (
     <CacheProvider value={createEmotionCache("ltr")}>
