@@ -24,7 +24,6 @@ const tags = [
   "WebHost",
   "Vpc",
   "Network",
-  "VpcNat",
 ];
 
 export const api = generatedApi
@@ -343,16 +342,6 @@ export const api = generatedApi
       },
       deleteApiMyVpcNetworkDeleteById: {
         invalidatesTags: () => ["Network"],
-      },
-      // ============================== VPC NAT ============================== //
-      getApiMyVpcNatListByVpcHostId: {
-        providesTags: () => ["VpcNat"],
-      },
-      postApiMyVpcNatCreateDnat: {
-        invalidatesTags: () => ["VpcNat"],
-      },
-      postApiMyVpcNatCreateSnat: {
-        invalidatesTags: () => ["VpcNat"],
       },
     },
   });

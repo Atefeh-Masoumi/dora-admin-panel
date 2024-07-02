@@ -1,6 +1,7 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { FC, useContext, useMemo } from "react";
+import { FC, useContext, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
@@ -13,9 +14,11 @@ import ServiceReceipt, {
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
+import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
 const mapConfig = {
@@ -32,7 +35,14 @@ const mapConfig = {
 };
 
 const AddVm: FC = () => {
+  const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
+  const [selectedNetwork, setSelectedNetwork] = useState<
+    string | number | null
+  >(null);
   const { projectId } = useParams();
+  const [searchParams] = useSearchParams();
+  const vmType = searchParams.get("vmType");
+
   const {
     osVersion,
     serverConfig,
@@ -113,6 +123,8 @@ const AddVm: FC = () => {
           memory: customConfig.memory,
           disk: customConfig.disk,
           vmProjectId: Number(projectId),
+          vpcHostNetworkId: Number(selectedNetwork),
+          ipAddress: String(selectedIp),
         },
       })
         .unwrap()
@@ -122,6 +134,14 @@ const AddVm: FC = () => {
         })
         .catch(() => {});
     }
+  };
+
+  const handleSelectedIpOnChange = (ip: string | number | null) => {
+    setSelectedIp(ip);
+  };
+
+  const handleSelectedNetworkOnChange = (network: string | number | null) => {
+    setSelectedNetwork(network);
   };
 
   return (
@@ -146,11 +166,16 @@ const AddVm: FC = () => {
                 py: { xs: 1.8, lg: 2.25 },
               }}
             >
+              {Number(vmType) === VM_PUBLICITY_TYPE.VPC_VM && (
+                <Grid xs={12} item>
+                  <SelectNetworkIpForVpc
+                    handleSelectedNetwork={handleSelectedNetworkOnChange}
+                    handleSelectedIp={handleSelectedIpOnChange}
+                  />
+                  <Divider sx={{ mt: 3, mb: 3 }} />
+                </Grid>
+              )}
               <Grid container gap={2}>
-                {/* <Grid xs={12} item>
-                  <SelectDataCenter />
-                  <Divider sx={{ margin: "50px 10px" }} />
-                </Grid> */}
                 <Grid xs={12} item>
                   <SelectOS datacenterId={vmProjectData?.datacenterId} />
                   <Divider sx={{ mt: 10 }} />

@@ -42,6 +42,7 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then(() => {
         toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
+        closeDialogHandler();
       })
       .catch((err) => {});
 

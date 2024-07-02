@@ -1,25 +1,17 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
 import { AddVpcContext } from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 import { SelectVpcConfig } from "src/components/organisms/vpc/add/steps/SelectVpcConfig";
 import { SelectVpcDataCenter } from "src/components/organisms/vpc/add/steps/SelectVpcDataCenter";
-import { SelectVpcHypervisor } from "src/components/organisms/vpc/add/steps/SelectVpcHypervisor";
 import SelectVpcNetwork from "src/components/organisms/vpc/add/steps/SelectVpcNetwork";
 import { SelectVpcServiceInfo } from "src/components/organisms/vpc/add/steps/SelectVpcServiceInfo";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 const AddVpc: FC = () => {
-  const { submitHandler, submitLoading, dataCenter, serverConfig } =
+  const { submitHandler, submitLoading, serverConfig } =
     useContext(AddVpcContext);
-
-  const { data: vpcBundlesList, isLoading: vpcBundlesListLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.VPC,
-    });
 
   return (
     <>
@@ -47,10 +39,10 @@ const AddVpc: FC = () => {
                 <SelectVpcDataCenter />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
-              <Grid xs={12} item>
+              {/* <Grid xs={12} item>
                 <SelectVpcHypervisor />
                 <Divider sx={{ margin: "50px 10px" }} />
-              </Grid>
+              </Grid> */}
               <Grid xs={12} item>
                 <SelectVpcNetwork />
                 <Divider sx={{ margin: "50px 10px" }} />

@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   Alert,
   Dialog,
@@ -14,21 +13,21 @@ import {
   Typography,
 } from "@mui/material";
 import { FormikProps, useFormik } from "formik";
-import { formikOnSubmitType } from "src/types/form.type";
+import { FC } from "react";
 import { useParams } from "react-router";
-import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import {
   GetVpcGatewayNatResponse,
   useGetApiMyVpcIpListByVpcHostIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
 } from "src/app/services/api.generated";
-import { CreateSourceNatForm } from "../forms/CreateSourceNatForm";
-import { CreateDestinationNatForm } from "../forms/CreateDestinationNatForm";
+import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import {
   NAT_TYPE,
   natFormikInitialValuesType,
   natNameAndTypeValidationSchema,
 } from "src/constant/vpc";
+import { formikOnSubmitType } from "src/types/form.type";
+import { CreateSourceNatForm } from "../forms/CreateSourceNatForm";
 
 type CreateNatDialogPropsType = DialogProps & {
   selectedNat: GetVpcGatewayNatResponse | null;
