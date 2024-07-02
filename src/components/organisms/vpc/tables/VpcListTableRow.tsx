@@ -100,7 +100,7 @@ export const VpcListListTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="Vpc"
+        keyTitle="VM"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedVpc?.name || ""}
         onSubmit={deleteVpcRecordHandler}

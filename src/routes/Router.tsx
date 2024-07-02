@@ -577,7 +577,7 @@ const Router: FC = () => {
           })}
         />
         <Route
-          path="/vm/:type/:projectId/create"
+          path="/vm/:projectId/:type/add-vm"
           element={mainTemplate(AddVm, {
             pageTitle: "ایجاد سرور مجازی جدید",
           })}

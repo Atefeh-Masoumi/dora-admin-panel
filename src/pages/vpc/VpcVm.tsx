@@ -2,6 +2,7 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
+  useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcHostGetByIdQuery,
   useGetApiMyVpcHostListQuery,
 } from "src/app/services/api.generated";
@@ -20,20 +21,29 @@ export const VpcVm: FC = () => {
   const { vpcId } = useParams();
   const vpcHostId = Number(vpcId) || 0;
 
-  const { data: vpcList, isLoading } = useGetApiMyVpcHostListQuery();
   const { data: vmInfo, isLoading: vpcInfoLoading } =
     useGetApiMyVpcHostGetByIdQuery({
       id: Number(vpcHostId),
     });
 
+  const { data: vpcVmList, isLoading } =
+    useGetApiMyVmHostListByVmProjectIdQuery(
+      {
+        vmProjectId: Number(vmInfo?.vpcHostProjectId),
+      },
+      {
+        skip: !vmInfo?.vpcHostProjectId,
+      }
+    );
+
   const [search, setSearch] = useState("");
 
-  const filteredList = vpcList?.filter((vpc) => vpc.name?.includes(search));
+  const filteredList = vpcVmList?.filter((vpc) => vpc.name?.includes(search));
 
   const handleNavigatetoVm = () => {
     if (!vmInfo?.vpcHostProjectId) return;
     navigate(
-      `/vm/${VM_PUBLICITY_TYPE.VPC_VM}/${vmInfo?.vpcHostProjectId}/create`
+      `/vm/${vmInfo?.vpcHostProjectId}/add-vm?vmType=${VM_PUBLICITY_TYPE.VPC_VM}`
     );
   };
 
