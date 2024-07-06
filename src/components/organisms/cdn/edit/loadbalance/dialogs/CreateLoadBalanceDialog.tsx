@@ -188,7 +188,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
         fullWidth
         PaperProps={{
           sx: { borderRadius: BORDER_RADIUS_1 },
-        }}
+        }} 
       >
         {getDetailsLoading && <PageLoading />}
         <DialogTitle fontWeight="bold" variant="text1">

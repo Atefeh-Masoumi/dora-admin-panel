@@ -577,6 +577,12 @@ const Router: FC = () => {
           })}
         />
         <Route
+          path="/vpc/:vpcId/loadBalancer"
+          element={mainTemplate(VpcEditZone, {
+            pageTitle: "لیست loadBalancer ها",
+          })}
+        />
+        <Route
           path="/vm/:projectId/:type/add-vm"
           element={mainTemplate(AddVm, {
             pageTitle: "ایجاد سرور مجازی جدید",
