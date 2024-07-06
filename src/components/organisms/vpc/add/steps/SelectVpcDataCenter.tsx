@@ -90,14 +90,16 @@ export const SelectVpcDataCenter: FC<SelectKuberDataCenterPropsType> = () => {
                     filter: isSelected ? "grayscale(0)" : "grayscale(100%)",
                     height: "41px",
                     overflow: "hidden",
+                    display: "flex",
+                    margin: "0 auto",
                   }}
                 >
                   <img
                     src={id === 1 ? asiatechImage : mobinNetImage}
-                    alt=""
+                    alt="datacenter-icon"
                     style={{
                       verticalAlign: "center",
-                      width: "100%",
+                      width: "50px",
                       height: "100%",
                     }}
                   />
