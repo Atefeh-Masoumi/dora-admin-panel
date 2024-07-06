@@ -24,7 +24,8 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate(`/vpc/${row?.id}/overview`);
+  const settingOnClick = () =>
+    navigate(`/vpc/${row?.id}/overview?projectId=${row?.vpcHostProjectId}`);
   const [deleteVpc, { isLoading: deleteVpcLoading }] =
     useDeleteApiMyVpcHostDeleteByIdMutation();
 

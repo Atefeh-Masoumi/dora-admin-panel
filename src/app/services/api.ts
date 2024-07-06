@@ -137,7 +137,7 @@ export const api = generatedApi
         providesTags: () => ["EditRecordDialog"],
       },
       postApiMyDnsRecordCreate: {
-        invalidatesTags: () => ["DNSRecordSetting"],
+        invalidatesTags: () => ["DNSRecordSetting", "CdnRoute"],
       },
       putApiMyDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],

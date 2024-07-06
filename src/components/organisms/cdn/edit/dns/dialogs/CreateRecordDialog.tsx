@@ -124,7 +124,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .then(() => {
           toast.success("رکورد مورد نظر با موفقیت بروز شد");
           onClose();
-        });
+        })
+        .catch(() => {});
     } else {
       createDnsRecord({
         createDnsRecordModel: {
@@ -144,7 +145,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .then(() => {
           toast.success("رکورد جدید با موفقیت ایجاد شد");
           onClose();
-        });
+        })
+        .catch(() => {});
     }
 
     setSubmitting(false);
