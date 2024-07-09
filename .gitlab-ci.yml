@@ -1,0 +1,82 @@
+workflow:
+  # This specifies the valid branches for this workflow
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar"'
+      when: always
+    - when: never
+
+default:
+  tags: 
+    - frontend
+
+stages:
+  - package
+  - deploy
+
+variables:
+  KUBE_CONTEXT_DORSA: cloud-computing/core/front-my-core:dorsa-front-my
+  KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-my-front-agent
+  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
+
+## Stage 1 : PACKAGE
+
+package_stage:
+  stage: package
+  script:
+    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-stage
+  only:
+    - main
+
+package_dorsa_prod:
+  stage: package
+  script:
+    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
+  only:
+    - main
+
+package_raahbar_prod:
+  stage: package
+  script:
+    - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
+  only:
+    - raahbar
+
+# Stage 2 : DEPLOY
+
+deploy_stage:
+  stage: deploy
+  needs: [package_stage]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
+    - kubectl -n stage rollout restart deployment front-my-v1
+  only:
+    - main
+
+deploy_dorsa:
+  stage: deploy
+  needs: [package_dorsa_prod]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl -n dorsa-cloud apply -f $CI_PROJECT_DIR/deployments/front-my-production.yaml
+    - kubectl -n dorsa-cloud rollout restart deployment front-my-v1
+  when: manual
+  only: 
+    - main
+
+deploy_raahbar:
+  stage: deploy
+  needs: [package_raahbar_prod]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
+    - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar.yaml
+    - kubectl -n raahbar rollout restart deployment front-my-v1
+  when: manual
+  only: 
+    - raahbar
