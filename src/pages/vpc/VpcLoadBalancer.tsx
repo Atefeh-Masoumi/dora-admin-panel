@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyVpcLoadBalancerGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVpcLoadBalancerGetVirtualServersByIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -16,14 +16,14 @@ export const VpcLoadBalancer: FC = () => {
   const vpcHostId = Number(vpcId) || 0;
 
   const { data: vpcLoadBalancerList, isLoading } =
-    useGetApiMyVpcLoadBalancerGetByIdQuery({
+    useGetApiMyVpcLoadBalancerGetVirtualServersByIdQuery({
       id: vpcHostId,
     });
 
   const [search, setSearch] = useState("");
 
-  const filteredList = vpcLoadBalancerList?.virtualServers?.filter(
-    (loadBalancer) => loadBalancer.name?.includes(search)
+  const filteredList = vpcLoadBalancerList?.filter((loadBalancer) =>
+    loadBalancer.name?.includes(search)
   );
 
   const openDialogHandler = () => {

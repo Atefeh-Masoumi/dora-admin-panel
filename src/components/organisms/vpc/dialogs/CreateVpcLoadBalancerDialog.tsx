@@ -21,7 +21,7 @@ import {
   DestinationModel,
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcIpListByVpcHostIdQuery,
-  usePostApiMyVpcLoadBalancerCreateMutation,
+  usePostApiMyVpcLoadBalancerCreateVirtualServerMutation,
 } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -103,7 +103,7 @@ export const CreateVpcLoadBalancerDialog: FC<
     });
 
   const [createVpcLoadBalancer, { isLoading: createVpcLoadBalancerLoading }] =
-    usePostApiMyVpcLoadBalancerCreateMutation();
+    usePostApiMyVpcLoadBalancerCreateVirtualServerMutation();
 
   const addDestinationInput = () =>
     setDestinations((prevState) => {

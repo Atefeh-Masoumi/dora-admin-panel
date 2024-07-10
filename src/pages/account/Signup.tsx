@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 import { Form, Formik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Captcha } from "src/components/molecules/Captcha";
+import { captchaRegex } from "src/utils/regexUtils";
 
 const passValidationHandler = (value: string) =>
   !value ? false : passwordValidatorRegex.test(value);
@@ -32,6 +34,7 @@ const formInitialValues = {
   email: "",
   password: "",
   referralCode: "",
+  captchaCode: "",
 };
 
 const formValidation = yup.object().shape({
@@ -44,10 +47,12 @@ const formValidation = yup.object().shape({
     .test("Password validation", "Password is not valid", (value) =>
       passValidationHandler(value as string)
     ),
+  captchaCode: yup.string().required("عبارت امنیتی الزامی است"),
   referralCode: yup.string(),
 });
 
 const Signup: FC = () => {
+  const [captchaKey, setCaptchaKey] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const [registerUser, { isLoading }] = usePostApiMyAccountRegisterMutation();
@@ -55,9 +60,22 @@ const Signup: FC = () => {
   const navigate = useNavigate();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { firstName, lastName, phoneNumber, email, password, referralCode },
+    {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      password,
+      referralCode,
+      captchaCode,
+    },
     { setSubmitting }
   ) => {
+    if (!captchaRegex.test(captchaCode)) {
+      toast.error("ساختار عبارت امنیتی وارد شده صحیح نمی‌باشد");
+      setSubmitting(false);
+      return;
+    }
     registerUser({
       registerModel: {
         firstName,
@@ -66,6 +84,8 @@ const Signup: FC = () => {
         email,
         password,
         referralCode,
+        captchaKey: captchaKey,
+        captchaCode: captchaCode,
       },
     })
       .unwrap()
@@ -147,6 +167,11 @@ const Signup: FC = () => {
                   ),
                 }}
                 inputProps={{ dir: "ltr" }}
+              />
+              <Captcha
+                error={errors.captchaCode}
+                touched={touched.captchaCode}
+                setCaptchaKey={setCaptchaKey}
               />
               <Stack
                 direction="column"

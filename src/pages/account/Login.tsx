@@ -23,8 +23,6 @@ import { captchaRegex } from "src/utils/regexUtils";
 
 const formInitialValues = { email: "", password: "" };
 
-
-
 const formValidation = yup.object().shape({
   email: emailValidator.required("ایمیل الزامیست!"),
   password: passwordValidator.required("گذرواژه الزامیست!"),
@@ -44,10 +42,6 @@ const Login: FC = () => {
     { email, password },
     { setSubmitting }
   ) => {
-    if (needCaptcha && !captchaRegex.test(captchaCode)) {
-      toast.error("ساختار عبارت امنیتی وارد شده صحیح نمی‌باشد");
-      return;
-    }
     loginUser({
       loginModel: {
         email,
@@ -120,13 +114,7 @@ const Login: FC = () => {
               <Button color="secondary" sx={{ fontSize: 14 }} href="./forget">
                 رمز عبور خود را فراموش کرده اید؟
               </Button>
-              {needCaptcha && (
-                <Captcha
-                  captchaCode={captchaCode}
-                  setCaptchaCode={setCaptchaCode}
-                  setCaptchaKey={setCaptchaKey}
-                />
-              )}
+              {needCaptcha && <Captcha setCaptchaKey={setCaptchaKey} />}
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
                   loading={isLoading}
