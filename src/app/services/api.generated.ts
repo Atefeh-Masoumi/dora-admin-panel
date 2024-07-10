@@ -1258,6 +1258,20 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
+    getApiMyPortalUserLogList: build.query<
+      GetApiMyPortalUserLogListApiResponse,
+      GetApiMyPortalUserLogListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/user-log/list`,
+        params: {
+          Action: queryArg.action,
+          Controller: queryArg.controller,
+          PageNumber: queryArg.pageNumber,
+          PageSize: queryArg.pageSize,
+        },
+      }),
+    }),
     getApiMyVmHostListByVmProjectId: build.query<
       GetApiMyVmHostListByVmProjectIdApiResponse,
       GetApiMyVmHostListByVmProjectIdApiArg
@@ -1682,30 +1696,30 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyVpcLoadBalancerGetById: build.query<
-      GetApiMyVpcLoadBalancerGetByIdApiResponse,
-      GetApiMyVpcLoadBalancerGetByIdApiArg
+    getApiMyVpcLoadBalancerGetVirtualServersById: build.query<
+      GetApiMyVpcLoadBalancerGetVirtualServersByIdApiResponse,
+      GetApiMyVpcLoadBalancerGetVirtualServersByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/get/${queryArg.id}`,
+        url: `/api/my/vpc/load-balancer/get-virtual-servers/${queryArg.id}`,
       }),
     }),
-    postApiMyVpcLoadBalancerCreate: build.mutation<
-      PostApiMyVpcLoadBalancerCreateApiResponse,
-      PostApiMyVpcLoadBalancerCreateApiArg
+    postApiMyVpcLoadBalancerCreateVirtualServer: build.mutation<
+      PostApiMyVpcLoadBalancerCreateVirtualServerApiResponse,
+      PostApiMyVpcLoadBalancerCreateVirtualServerApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/create`,
+        url: `/api/my/vpc/load-balancer/create-virtual-server`,
         method: "POST",
-        body: queryArg.createLoadBalancerModel,
+        body: queryArg.createVirtualServerModel,
       }),
     }),
-    deleteApiMyVpcLoadBalancerDeleteById: build.mutation<
-      DeleteApiMyVpcLoadBalancerDeleteByIdApiResponse,
-      DeleteApiMyVpcLoadBalancerDeleteByIdApiArg
+    deleteApiMyVpcLoadBalancerDeleteVirtualServerById: build.mutation<
+      DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiResponse,
+      DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/delete/${queryArg.id}`,
+        url: `/api/my/vpc/load-balancer/delete-virtual-server/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1733,6 +1747,16 @@ export const api = createApi({
         url: `/api/my/vpc/network/create`,
         method: "POST",
         body: queryArg.createVpcNetworkModel,
+      }),
+    }),
+    postApiMyVpcNetworkEditVmNetwork: build.mutation<
+      PostApiMyVpcNetworkEditVmNetworkApiResponse,
+      PostApiMyVpcNetworkEditVmNetworkApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/network/edit-vm-network`,
+        method: "POST",
+        body: queryArg.editVmNetworkModel,
       }),
     }),
     deleteApiMyVpcNetworkDeleteById: build.mutation<
@@ -2658,6 +2682,14 @@ export type DeleteApiMyStorageUserDeleteByIdApiResponse = unknown;
 export type DeleteApiMyStorageUserDeleteByIdApiArg = {
   id: number;
 };
+export type GetApiMyPortalUserLogListApiResponse =
+  /** status 200 OK */ LogUserResponseListPagedResponse;
+export type GetApiMyPortalUserLogListApiArg = {
+  action?: string;
+  controller?: string;
+  pageNumber?: number;
+  pageSize?: number;
+};
 export type GetApiMyVmHostListByVmProjectIdApiResponse =
   /** status 200 OK */ VmListResponse[];
 export type GetApiMyVmHostListByVmProjectIdApiArg = {
@@ -2866,17 +2898,18 @@ export type DeleteApiMyVpcNatDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNatDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVpcLoadBalancerGetByIdApiResponse =
-  /** status 200 OK */ LoadBalancerResponse;
-export type GetApiMyVpcLoadBalancerGetByIdApiArg = {
+export type GetApiMyVpcLoadBalancerGetVirtualServersByIdApiResponse =
+  /** status 200 OK */ VirtualServerResponse[];
+export type GetApiMyVpcLoadBalancerGetVirtualServersByIdApiArg = {
   id: number;
 };
-export type PostApiMyVpcLoadBalancerCreateApiResponse = unknown;
-export type PostApiMyVpcLoadBalancerCreateApiArg = {
-  createLoadBalancerModel: CreateLoadBalancerModel;
+export type PostApiMyVpcLoadBalancerCreateVirtualServerApiResponse = unknown;
+export type PostApiMyVpcLoadBalancerCreateVirtualServerApiArg = {
+  createVirtualServerModel: CreateVirtualServerModel;
 };
-export type DeleteApiMyVpcLoadBalancerDeleteByIdApiResponse = unknown;
-export type DeleteApiMyVpcLoadBalancerDeleteByIdApiArg = {
+export type DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiResponse =
+  unknown;
+export type DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
@@ -2892,6 +2925,10 @@ export type GetApiMyVpcNetworkShortListByVpcHostIdApiArg = {
 export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
+};
+export type PostApiMyVpcNetworkEditVmNetworkApiResponse = unknown;
+export type PostApiMyVpcNetworkEditVmNetworkApiArg = {
+  editVmNetworkModel: EditVmNetworkModel;
 };
 export type DeleteApiMyVpcNetworkDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNetworkDeleteByIdApiArg = {
@@ -3056,9 +3093,13 @@ export type RegisterModel = {
   email: string;
   password: string;
   referralCode?: string | null;
+  captchaKey?: string;
+  captchaCode: string | null;
 };
 export type ForgotModel = {
   email: string;
+  captchaKey?: string;
+  captchaCode: string | null;
 };
 export type ForgotConfirmModel = {
   email: string;
@@ -4020,6 +4061,25 @@ export type CreateStorageUserResponse = {
 export type CreateStorageUserModel = {
   storageHostId: number;
 };
+export type LogUserResponse = {
+  id?: number;
+  userId?: string | null;
+  activityDate?: string;
+  source?: string | null;
+  controller?: string | null;
+  action?: string | null;
+  userAgent?: string | null;
+  userIp?: string | null;
+  referrer?: string | null;
+  data?: string | null;
+};
+export type LogUserResponseListPagedResponse = {
+  pageNumber?: number;
+  pageSize?: number;
+  totalPages?: number;
+  totalRecords?: number;
+  data?: LogUserResponse[] | null;
+};
 export type VmListResponse = {
   id?: number;
   name: string | null;
@@ -4269,6 +4329,7 @@ export type ServerPoolMemberResponse = {
   name: string | null;
 };
 export type VirtualServerResponse = {
+  virtualServerId: number;
   ip: string | null;
   name: string | null;
   port: number;
@@ -4276,18 +4337,14 @@ export type VirtualServerResponse = {
   algorithmTypeName: string | null;
   serverPoolMembers?: ServerPoolMemberResponse[] | null;
 };
-export type LoadBalancerResponse = {
-  loadBalancerName?: string | null;
-  virtualServers?: VirtualServerResponse[] | null;
-};
 export type PoolMemberModel = {
   vmHostId: number;
   port: number;
 };
-export type CreateLoadBalancerModel = {
+export type CreateVirtualServerModel = {
   vpcHostGatewayId: number;
   vpcHostGatewayIpId: number;
-  serverPoolPort: number;
+  virtualServerPort: number;
   algorithmTypeId: number;
   poolMembers: PoolMemberModel[] | null;
 };
@@ -4309,6 +4366,11 @@ export type CreateVpcNetworkModel = {
   vpcHostId: number;
   name: string | null;
   gatewayCidr: string | null;
+};
+export type EditVmNetworkModel = {
+  vpcHostId: number;
+  vmHostId: number;
+  vpcHostNetworkId: number;
 };
 export type VpcHostTranslateServiceResponse = {
   id: number;
@@ -4604,6 +4666,7 @@ export const {
   useGetApiMyStorageUserListByStorageHostIdQuery,
   usePostApiMyStorageUserCreateMutation,
   useDeleteApiMyStorageUserDeleteByIdMutation,
+  useGetApiMyPortalUserLogListQuery,
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVmHostShortListByHypervisorTypeIdQuery,
   useGetApiMyVmHostGetByIdQuery,
@@ -4653,12 +4716,13 @@ export const {
   usePutApiMyVpcNatIncreaseSequenceMutation,
   usePutApiMyVpcNatDecreaseSequenceMutation,
   useDeleteApiMyVpcNatDeleteByIdMutation,
-  useGetApiMyVpcLoadBalancerGetByIdQuery,
-  usePostApiMyVpcLoadBalancerCreateMutation,
-  useDeleteApiMyVpcLoadBalancerDeleteByIdMutation,
+  useGetApiMyVpcLoadBalancerGetVirtualServersByIdQuery,
+  usePostApiMyVpcLoadBalancerCreateVirtualServerMutation,
+  useDeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,
+  usePostApiMyVpcNetworkEditVmNetworkMutation,
   useDeleteApiMyVpcNetworkDeleteByIdMutation,
   useGetApiMyVpcStaticRouteListByVpcHostIdQuery,
   useGetApiMyVpcStaticRouteGetByIdQuery,

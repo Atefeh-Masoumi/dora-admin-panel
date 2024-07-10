@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Form, Formik } from "formik";
@@ -9,29 +9,39 @@ import { AuthTemplate } from "src/components/templates/AuthTemplate";
 import { usePostApiMyAccountForgotMutation } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { emailValidator } from "src/utils/formValidator";
+import { Captcha } from "src/components/molecules/Captcha";
 
-const formInitialValues = { email: "" };
+const formInitialValues = { email: "", captchaCode: "" };
 
 const formValidation = yup.object().shape({
   email: emailValidator.required("ایمیل الزامیست!"),
+  captchaCode: yup.string().required("عبارت امنیتی الزامی است"),
 });
 
 type ForgetPassPropsType = { goNext: () => void };
 
 export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
+  const [captchaKey, setCaptchaKey] = useState("");
   const [sendMail, { isLoading }] = usePostApiMyAccountForgotMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { email },
+    { email, captchaCode },
     { setSubmitting }
   ) => {
     if (!email) return;
-    sendMail({ forgotModel: { email } })
+    sendMail({
+      forgotModel: {
+        email,
+        captchaKey: captchaKey,
+        captchaCode: captchaCode,
+      },
+    })
       .unwrap()
       .then(() => {
         toast.success("کد تایید بصورت ایمیل ارسال شد");
         goNext();
-      });
+      })
+      .catch(() => {});
     setSubmitting(false);
   };
 
@@ -56,6 +66,11 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
                   fullWidth
                   {...getFieldProps("email")}
                   inputProps={{ dir: "ltr" }}
+                />
+                <Captcha
+                  error={errors.captchaCode}
+                  touched={touched.captchaCode}
+                  setCaptchaKey={setCaptchaKey}
                 />
               </Stack>
               <LoadingButton

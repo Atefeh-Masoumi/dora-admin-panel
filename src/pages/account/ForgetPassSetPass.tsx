@@ -76,7 +76,8 @@ export const ForgetPasswordSetPass: FC<ForgetPasswordSetPassPropsType> = ({
         toast.success("گذرواژه با موفقیت بروز رسانی شد");
         dispatch(resetForgetPasswordStateAction());
         navigate("/account/login");
-      });
+      })
+      .catch(() => {});
   };
 
   return (

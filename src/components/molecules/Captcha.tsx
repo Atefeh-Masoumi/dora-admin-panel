@@ -1,4 +1,3 @@
-import { Dispatch, FC, useMemo, SetStateAction, memo, useEffect } from "react";
 import { RefreshOutlined } from "@mui/icons-material";
 import {
   CircularProgress,
@@ -9,16 +8,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useFormikContext } from "formik";
+import { Dispatch, FC, SetStateAction, memo, useEffect, useMemo } from "react";
 import { useGetApiMyAccountCaptchaQuery } from "src/app/services/api.generated";
 
 type CaptchaPropsType = {
-  captchaCode: string;
-  setCaptchaCode: Dispatch<SetStateAction<string>>;
   setCaptchaKey: Dispatch<SetStateAction<string>>;
+  error?: string;
+  touched?: boolean;
 };
 
 export const Captcha: FC<CaptchaPropsType> = memo(
-  ({ captchaCode, setCaptchaCode, setCaptchaKey }) => {
+  ({ setCaptchaKey, error, touched }) => {
     const {
       data: captchaData,
       isLoading: getCaptchaLoading,
@@ -27,6 +28,8 @@ export const Captcha: FC<CaptchaPropsType> = memo(
     } = useGetApiMyAccountCaptchaQuery(undefined, {
       pollingInterval: 2 * 60 * 1000,
     });
+
+    const { getFieldProps } = useFormikContext();
 
     useEffect(() => {
       if (
@@ -84,13 +87,14 @@ export const Captcha: FC<CaptchaPropsType> = memo(
             )}
           </Stack>
           <TextField
-            value={captchaCode}
-            onChange={(e) => setCaptchaCode(e.target.value)}
+            {...getFieldProps("captchaCode")}
             className="rtlPlaceHolder"
             size="small"
             label="کد امنیتی"
             fullWidth
-            sx={{ width: { xs: "100%", md: 150 }, direction: "rtl" }}
+            sx={{ width: { xs: "100%", md: 150 }, direction: "ltr" }}
+            error={Boolean(error && touched)}
+            helperText={touched && error}
           />
         </Stack>
         <Divider flexItem />
