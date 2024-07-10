@@ -100,17 +100,7 @@ export const baseQuery: BaseQueryFn<
       return { error };
     }
 
-    toast.error(
-      message + `\n (status code: ${error.status})` ||
-        `\n ${defaultErrorMessage}`
-    );
-    console.log(
-      message
-        ? error.status
-          ? message + ` (status code: ${error.status})`
-          : message
-        : defaultErrorMessage
-    );
+    toast.error(message || `\n ${defaultErrorMessage}`);
 
     return { error };
   }
