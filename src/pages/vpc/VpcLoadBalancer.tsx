@@ -14,12 +14,11 @@ import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyVpcLoadBalancerGetVirtualServersByIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVpcLoadBalancerDialog } from "src/components/organisms/vpc/dialogs/CreateVpcLoadBalancerDialog";
 import { vpcLoadBalanceStruct } from "src/components/organisms/vpc/tables/struct";
 import { VpcLoadBalanceListTableRow } from "src/components/organisms/vpc/tables/VpcLoadBalanceListTableRow";
-import { VpcNetworkListTableRow } from "src/components/organisms/vpc/tables/VpcNetworkListTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcLoadBalancer: FC = () => {
@@ -116,37 +115,41 @@ export const VpcLoadBalancer: FC = () => {
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack py={1.5}>
-          {/* <BaseTable
-            struct={vpcLoadBalanceStruct}
-            RowComponent={VpcLoadBalanceListTableRow}
-            rows={filteredList || []}
-            text="در حال حاضر رکورد وجود ندارد"
-            isLoading={isLoading}
-          /> */}
           <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
-                  {vpcLoadBalanceStruct.map((item, index) => {
-                    return (
-                      <TableCell align="center" key={index}>
-                        {item.label}
-                      </TableCell>
-                    );
-                  })}
+                  {filteredList &&
+                    filteredList.length > 0 &&
+                    vpcLoadBalanceStruct.map((item, index) => {
+                      return (
+                        <TableCell align="center" key={index}>
+                          {item.label}
+                        </TableCell>
+                      );
+                    })}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredList &&
-                  filteredList.map((item, index) => (
-                    <VpcLoadBalanceListTableRow
-                      rowBgColor={
-                        (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
-                      }
-                      key={index}
-                      rowData={item}
-                    />
-                  ))}
+                {filteredList && filteredList?.length === 0 ? (
+                  <EmptyTable text={"در حال حاضر رکورد وجود ندارد"} />
+                ) : (
+                  <>
+                    {filteredList?.map((item, index) => {
+                      return (
+                        <VpcLoadBalanceListTableRow
+                          rowBgColor={
+                            (index + 1) % 2 === 0
+                              ? ""
+                              : "rgba(240, 247, 255, 1)"
+                          }
+                          key={index}
+                          rowData={item}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </TableBody>
             </Table>
           </TableContainer>

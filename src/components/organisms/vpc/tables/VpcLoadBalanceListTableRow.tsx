@@ -14,9 +14,9 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { useDeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdMutation } from "src/app/services/api.generated";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcLoadBalancerPollMembersTableStruct } from "./struct";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -61,41 +61,8 @@ export const VpcLoadBalanceListTableRow: FC<
       })
       .catch((err) => {});
 
-  const poolMemberItems = rowData?.serverPoolMembers;
-
   return (
     <Fragment>
-      {/* <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.value}>
-        {vpcLoadBalanceStruct.map((column) => {
-          const value = row[column.id];
-          const text =
-            column.format && typeof value === "number"
-              ? column.format(value)
-              : value;
-
-          return (
-            <DorsaTableCell
-              key={column.id}
-              align="center"
-              sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
-            >
-              {column.id === "control" ? (
-                <Stack direction="row" spacing={0.6} maxWidth="fit-content">
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    color="error"
-                    onClick={() => handleOpenDelete(row)}
-                  >
-                    <TrashSvg />
-                  </IconButton>
-                </Stack>
-              ) : (
-                text
-              )}
-            </DorsaTableCell>
-          );
-        })}
-      </DorsaTableRow> */}
       <TableRow
         sx={{
           "& > *": { borderBottom: "unset" },
@@ -149,16 +116,18 @@ export const VpcLoadBalanceListTableRow: FC<
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {poolMemberItems.length > 0
-                    ? poolMemberItems?.map((item: any, index: any) => {
-                        return (
-                          <TableRow key={index}>
-                            <TableCell align="center">{item.ip}</TableCell>
-                            <TableCell align="center">{item.name}</TableCell>
-                            <TableCell align="center">{item.port}</TableCell>
-                          </TableRow>
-                        );
-                      })
+                  {rowData?.serverPoolMembers.length > 0
+                    ? rowData?.serverPoolMembers?.map(
+                        (item: any, index: any) => {
+                          return (
+                            <TableRow key={index}>
+                              <TableCell align="center">{item.ip}</TableCell>
+                              <TableCell align="center">{item.name}</TableCell>
+                              <TableCell align="center">{item.port}</TableCell>
+                            </TableRow>
+                          );
+                        }
+                      )
                     : ""}
                 </TableBody>
               </Table>
