@@ -5,10 +5,11 @@ type DorsaTextFieldProps = {
   mode?: "white" | "black";
   error?: boolean;
   password?: boolean;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>; // Add this line
 };
 
 export const DorsaTextField = styled(TextField)<DorsaTextFieldProps>(
-  ({ mode = "black", error }) => ({
+  ({ mode = "black", error, inputProps }) => ({
     "&> .MuiInputBase-root": {
       ...(!error && {
         backgroundColor:
@@ -19,6 +20,7 @@ export const DorsaTextField = styled(TextField)<DorsaTextFieldProps>(
         "& fieldset": { border: "none" },
       }),
       fontSize: "14px",
+      ...inputProps,
     },
   })
 );

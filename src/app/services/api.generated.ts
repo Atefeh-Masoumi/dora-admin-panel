@@ -2396,6 +2396,7 @@ export type PostApiMyPortalIssueCreateApiArg = {
     Content: string;
     BusinessUnitId: number;
     IssueSubjectId: number;
+    IssuePriorityId: number;
     CustomerProductId?: number;
     ProductId?: number;
     Attachment?: Blob;

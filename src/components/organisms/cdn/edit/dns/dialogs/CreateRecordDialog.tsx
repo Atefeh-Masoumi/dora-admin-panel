@@ -179,7 +179,6 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
               <Stack spacing={3}>
                 <Stack direction="row" spacing={3}>
                   <DorsaTextField
-                    inputProps={{ fontSize: "20px !important" }}
                     select
                     fullWidth
                     label="Type"
@@ -207,7 +206,6 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                     ))}
                   </DorsaTextField>
                   <DorsaTextField
-                    inputProps={{ fontSize: "20px !important" }}
                     select
                     fullWidth
                     label="TTL"

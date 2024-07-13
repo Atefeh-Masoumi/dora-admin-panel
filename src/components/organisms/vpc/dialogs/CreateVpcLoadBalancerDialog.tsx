@@ -13,10 +13,11 @@ import {
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Form, Formik } from "formik";
+import { useFormik } from "formik";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   DestinationModel,
   useGetApiMyVmHostListByVmProjectIdQuery,
@@ -28,7 +29,6 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import PageLoading from "src/components/atoms/PageLoading";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 
 type InitialValuesType = {
@@ -36,7 +36,7 @@ type InitialValuesType = {
   vpcHostGatewayIpId: number | null;
   serverPoolPort: number | null;
   algorithmTypeId: number | null;
-  poolMembers: any[] | null;
+  poolMembers: { vmHostId: number; port: number }[];
 };
 
 const loadBalancePolicyArray = [
@@ -83,13 +83,6 @@ export const CreateVpcLoadBalancerDialog: FC<
     vpcHostGatewayId: null,
     id: null,
   });
-  const [initialValues, setInitialValues] = useState<InitialValuesType>({
-    vpcHostGatewayId: null,
-    vpcHostGatewayIpId: null,
-    serverPoolPort: null,
-    algorithmTypeId: null,
-    poolMembers: [],
-  });
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
 
   const { data: vpcIpList, isLoading: vpcIpListLoading } =
@@ -105,12 +98,48 @@ export const CreateVpcLoadBalancerDialog: FC<
   const [createVpcLoadBalancer, { isLoading: createVpcLoadBalancerLoading }] =
     usePostApiMyVpcLoadBalancerCreateVirtualServerMutation();
 
-  const addDestinationInput = () =>
+  const formik = useFormik<InitialValuesType>({
+    initialValues: {
+      vpcHostGatewayId: null,
+      vpcHostGatewayIpId: null,
+      serverPoolPort: null,
+      algorithmTypeId: null,
+      poolMembers: [],
+    },
+    validationSchema: formValidation,
+    onSubmit: (values, { setSubmitting }) => {
+      createVpcLoadBalancer({
+        createVirtualServerModel: {
+          vpcHostGatewayId: Number(selectedGateway?.vpcHostGatewayId),
+          vpcHostGatewayIpId: Number(selectedGateway?.id),
+          virtualServerPort: Number(values.serverPoolPort),
+          algorithmTypeId: Number(values.algorithmTypeId),
+          poolMembers: values.poolMembers,
+        },
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("با موفقیت ساخته شد");
+          onClose();
+        })
+        .catch(() => {});
+
+      setSubmitting(false);
+    },
+    enableReinitialize: true,
+  });
+
+  const addDestinationInput = () => {
     setDestinations((prevState) => {
       let result = [...prevState];
       result.push({ address: "" });
       return result;
     });
+    formik.setFieldValue("poolMembers", [
+      ...formik.values.poolMembers,
+      { vmHostId: null, port: null },
+    ]);
+  };
 
   const removeDestinationInput = (index: number) => {
     setDestinations((prevState) => {
@@ -118,19 +147,37 @@ export const CreateVpcLoadBalancerDialog: FC<
       result.splice(index, 1);
       return result;
     });
+    formik.setFieldValue(
+      "poolMembers",
+      formik.values.poolMembers.filter((_, i) => i !== index)
+    );
   };
 
-  const handleMenuItemClick = (vpcHostGatewayId: number, id: number) => {
+  const handleVpcListItemClick = (vpcHostGatewayId: number, id: number) => {
     setSelectedGateway({ vpcHostGatewayId, id });
   };
 
-  const submitHandler: formikOnSubmitType<InitialValuesType> = (
-    values,
-    { setSubmitting }
-  ) => {
-    console.log(values);
+  const handleVmChange = (index: number, vmHostId: number) => {
+    const updatedPoolMembers = [...formik.values.poolMembers];
+    updatedPoolMembers[index] = { ...updatedPoolMembers[index], vmHostId };
+    formik.setFieldValue("poolMembers", updatedPoolMembers);
+  };
 
-    setSubmitting(false);
+  const handlePortChange = (index: number, port: number) => {
+    const updatedPoolMembers = [...formik.values.poolMembers];
+    updatedPoolMembers[index] = { ...updatedPoolMembers[index], port };
+    formik.setFieldValue("poolMembers", updatedPoolMembers);
+  };
+
+  const getAvailableVms = (index: number) => {
+    const selectedVmIds = formik.values.poolMembers.map(
+      (member) => member.vmHostId
+    );
+    return vmHostList?.filter(
+      (vm) =>
+        !selectedVmIds.includes(Number(vm.id)) ||
+        vm.id === formik.values.poolMembers[index]?.vmHostId
+    );
   };
 
   return (
@@ -149,212 +196,203 @@ export const CreateVpcLoadBalancerDialog: FC<
         <DialogTitle fontWeight="bold" variant="text1">
           ایجاد LoadBalancer
         </DialogTitle>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={formValidation}
-          onSubmit={submitHandler}
-          enableReinitialize
-        >
-          {({ errors, touched, getFieldProps }) => (
-            <Form autoComplete="on">
-              <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
-                <Grid2 container spacing={3}>
-                  <Grid2 xs={12} sm={6}>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      select
-                      fullWidth
-                      label="Gateway IP"
-                      error={Boolean(
-                        errors.vpcHostGatewayIpId && touched.vpcHostGatewayIpId
-                      )}
-                      helperText={errors.vpcHostGatewayIpId}
-                      {...getFieldProps("vpcHostGatewayIpId")}
-                    >
-                      {vpcIpList?.map(
-                        ({ id, ip, isV4, isPrimary, vpcHostGatewayId }) => {
-                          return (
-                            <MenuItem
-                              onClick={() =>
-                                handleMenuItemClick(
-                                  Number(vpcHostGatewayId),
-                                  Number(id)
-                                )
-                              }
-                              key={id}
-                              value={id}
-                              sx={{
-                                borderRadius: 1,
-                                backgroundColor: "#F3F4F6",
-                                m: 0.5,
-                                py: 1.5,
-                                color: "secondary",
-                                "&: focus": {
-                                  color: "rgba(60, 138, 255, 1)",
-                                  backgroundColor: "rgba(60, 138, 255, 0.1)",
-                                },
-                              }}
-                            >
-                              {ip}
-                            </MenuItem>
-                          );
+        <form onSubmit={formik.handleSubmit} autoComplete="on">
+          <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
+            <Grid2 container spacing={3}>
+              <Grid2 xs={12} sm={6}>
+                <DorsaTextField
+                  select
+                  fullWidth
+                  label="Gateway IP"
+                  error={Boolean(
+                    formik.errors.vpcHostGatewayIpId &&
+                      formik.touched.vpcHostGatewayIpId
+                  )}
+                  helperText={formik.errors.vpcHostGatewayIpId}
+                  {...formik.getFieldProps("vpcHostGatewayIpId")}
+                >
+                  {vpcIpList?.map(
+                    ({ id, ip, isV4, isPrimary, vpcHostGatewayId }) => (
+                      <MenuItem
+                        onClick={() =>
+                          handleVpcListItemClick(
+                            Number(vpcHostGatewayId),
+                            Number(id)
+                          )
                         }
-                      )}
-                    </DorsaTextField>
-                  </Grid2>
-                  <Grid2 xs={12} sm={6}>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      select
-                      fullWidth
-                      label="نوع توزیع"
-                      error={Boolean(
-                        errors.algorithmTypeId && touched.algorithmTypeId
-                      )}
-                      helperText={errors.algorithmTypeId}
-                      {...getFieldProps("algorithmTypeId")}
-                    >
-                      {loadBalancePolicyArray.map(({ label, value }) => (
-                        <MenuItem
-                          key={value}
-                          value={value}
-                          sx={{
-                            borderRadius: 1,
-                            backgroundColor: "#F3F4F6",
-                            m: 0.5,
-                            py: 1.5,
-                            color: "secondary",
-                            "&: focus": {
-                              color: "rgba(60, 138, 255, 1)",
-                              backgroundColor: "rgba(60, 138, 255, 0.1)",
-                            },
-                          }}
-                        >
-                          {label}
-                        </MenuItem>
-                      ))}
-                    </DorsaTextField>
-                  </Grid2>
-                  <Grid2 xs={12}>
-                    <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
-                      fullWidth
-                      label="پورت"
-                      error={Boolean(
-                        errors.serverPoolPort && touched.serverPoolPort
-                      )}
-                      helperText={errors.serverPoolPort}
-                      {...getFieldProps("serverPoolPort")}
-                    />
-                  </Grid2>
-                </Grid2>
-                <Divider />
-                <Stack spacing={3}>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography
-                      sx={{ color: ({ palette }) => palette.grey[800] }}
-                    >
-                      آدرس‌ها
-                    </Typography>
-                    <Button
-                      variant="text"
-                      color="secondary"
+                        key={id}
+                        value={id}
+                        sx={{
+                          borderRadius: 1,
+                          backgroundColor: "#F3F4F6",
+                          m: 0.5,
+                          py: 1.5,
+                          color: "secondary",
+                          "&: focus": {
+                            color: "rgba(60, 138, 255, 1)",
+                            backgroundColor: "rgba(60, 138, 255, 0.1)",
+                          },
+                        }}
+                      >
+                        {ip}
+                      </MenuItem>
+                    )
+                  )}
+                </DorsaTextField>
+              </Grid2>
+              <Grid2 xs={12} sm={6}>
+                <DorsaTextField
+                  select
+                  fullWidth
+                  label="نوع توزیع"
+                  error={Boolean(
+                    formik.errors.algorithmTypeId &&
+                      formik.touched.algorithmTypeId
+                  )}
+                  helperText={formik.errors.algorithmTypeId}
+                  {...formik.getFieldProps("algorithmTypeId")}
+                >
+                  {loadBalancePolicyArray.map(({ label, value }) => (
+                    <MenuItem
+                      key={value}
+                      value={value}
                       sx={{
-                        color: "primary.main",
-                        justifyContent: "space-between",
-                        py: 1,
-                        fontSize: "16px",
+                        borderRadius: 1,
+                        backgroundColor: "#F3F4F6",
+                        m: 0.5,
+                        py: 1.5,
+                        color: "secondary",
+                        "&: focus": {
+                          color: "rgba(60, 138, 255, 1)",
+                          backgroundColor: "rgba(60, 138, 255, 0.1)",
+                        },
                       }}
-                      startIcon={<Add />}
-                      onClick={addDestinationInput}
-                      disabled={vmHostList?.length === destinations.length}
                     >
-                      اضافه کردن
-                    </Button>
-                  </Stack>
-                  <Grid container columnSpacing={1} alignItems={"center"}>
-                    {destinations.map(({ address }, index) => (
-                      <>
-                        <Grid item xs={7} mb={2}>
-                          <DorsaTextField
-                            key={index}
-                            inputProps={{ fontSize: "20px !important" }}
-                            select
-                            fullWidth
-                            label={"vm" + (index + 1)}
-                            // error={Boolean(
-                            //   errors.algorithmTypeId && touched.algorithmTypeId
-                            // )}
-                            // helperText={errors.algorithmTypeId}
-                            {...getFieldProps("algorithmTypeId")}
-                          >
-                            {vmHostList?.map(({ id, name }) => (
-                              <MenuItem
-                                key={id}
-                                value={id}
-                                sx={{
-                                  borderRadius: 1,
-                                  backgroundColor: "#F3F4F6",
-                                  m: 0.5,
-                                  py: 1.5,
-                                  color: "secondary",
-                                  "&: focus": {
-                                    color: "rgba(60, 138, 255, 1)",
-                                    backgroundColor: "rgba(60, 138, 255, 0.1)",
-                                  },
-                                }}
-                              >
-                                {name}
-                              </MenuItem>
-                            ))}
-                          </DorsaTextField>
-                        </Grid>
-                        <Grid item xs={3} mb={2}>
-                          <DorsaTextField
-                            inputProps={{ fontSize: "20px !important" }}
-                            fullWidth
-                            label="پورت"
-                            // {...getFieldProps("serverPoolPort")}
-                          />
-                        </Grid>
-                        <Grid item xs={1} mb={2}>
-                          <IconButton
-                            onClick={() => removeDestinationInput(index)}
-                          >
-                            <TrashSvg />
-                          </IconButton>
-                        </Grid>
-                      </>
-                    ))}
-                  </Grid>
-                </Stack>
-                <DialogActions>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ px: 3, py: 0.8 }}
-                    onClick={onClose}
-                  >
-                    انصراف
-                  </Button>
-                  <LoadingButton
-                    component="button"
-                    type="submit"
-                    loading={createVpcLoadBalancerLoading}
-                    variant="contained"
-                    sx={{ px: 3, py: 0.8 }}
-                  >
-                    ذخیره
-                  </LoadingButton>
-                </DialogActions>
+                      {label}
+                    </MenuItem>
+                  ))}
+                </DorsaTextField>
+              </Grid2>
+              <Grid2 xs={12}>
+                <DorsaTextField
+                  fullWidth
+                  label="Server Pool Port"
+                  error={Boolean(
+                    formik.errors.serverPoolPort &&
+                      formik.touched.serverPoolPort
+                  )}
+                  helperText={formik.errors.serverPoolPort}
+                  {...formik.getFieldProps("serverPoolPort")}
+                  inputProps={{
+                    maxLength: 5,
+                  }}
+                />
+              </Grid2>
+            </Grid2>
+            <Divider />
+            <Stack spacing={3}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography sx={{ color: ({ palette }) => palette.grey[800] }}>
+                  آدرس‌ها
+                </Typography>
+                <Button
+                  variant="text"
+                  color="secondary"
+                  sx={{
+                    color: "primary.main",
+                    justifyContent: "space-between",
+                    py: 1,
+                    fontSize: "16px",
+                  }}
+                  startIcon={<Add />}
+                  onClick={addDestinationInput}
+                  disabled={vmHostList?.length === destinations.length}
+                >
+                  اضافه کردن
+                </Button>
               </Stack>
-            </Form>
-          )}
-        </Formik>
+              <Grid container columnSpacing={1} alignItems={"center"}>
+                {destinations.map((destination, index) => (
+                  <>
+                    <Grid item xs={7} mb={2}>
+                      <DorsaTextField
+                        key={index}
+                        select
+                        fullWidth
+                        label={"vm" + (index + 1)}
+                        value={formik.values.poolMembers[index]?.vmHostId || ""}
+                        onChange={(e) =>
+                          handleVmChange(index, Number(e.target.value))
+                        }
+                      >
+                        {getAvailableVms(index)?.map(({ id, name }) => (
+                          <MenuItem
+                            key={id}
+                            value={id}
+                            sx={{
+                              borderRadius: 1,
+                              backgroundColor: "#F3F4F6",
+                              m: 0.5,
+                              py: 1.5,
+                              color: "secondary",
+                              "&: focus": {
+                                color: "rgba(60, 138, 255, 1)",
+                                backgroundColor: "rgba(60, 138, 255, 0.1)",
+                              },
+                            }}
+                          >
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </DorsaTextField>
+                    </Grid>
+                    <Grid item xs={3} mb={2}>
+                      <DorsaTextField
+                        inputProps={{
+                          maxLength: 5,
+                        }}
+                        fullWidth
+                        label="Port"
+                        value={formik.values.poolMembers[index]?.port || ""}
+                        onChange={(e) =>
+                          handlePortChange(index, Number(e.target.value))
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={1} mb={2}>
+                      <IconButton onClick={() => removeDestinationInput(index)}>
+                        <TrashSvg />
+                      </IconButton>
+                    </Grid>
+                  </>
+                ))}
+              </Grid>
+            </Stack>
+            <DialogActions>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={onClose}
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={createVpcLoadBalancerLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </DialogActions>
+          </Stack>
+        </form>
       </Dialog>
     </>
   );

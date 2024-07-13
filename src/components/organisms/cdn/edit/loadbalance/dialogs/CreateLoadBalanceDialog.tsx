@@ -188,7 +188,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
         fullWidth
         PaperProps={{
           sx: { borderRadius: BORDER_RADIUS_1 },
-        }} 
+        }}
       >
         {getDetailsLoading && <PageLoading />}
         <DialogTitle fontWeight="bold" variant="text1">
@@ -206,7 +206,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                 <Grid2 container spacing={3}>
                   <Grid2 xs={12} sm={6}>
                     <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
                       fullWidth
                       label="نام هاست"
                       error={Boolean(errors.host && touched.host)}
@@ -216,7 +215,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                   </Grid2>
                   <Grid2 xs={12} sm={6}>
                     <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
                       select
                       fullWidth
                       label="نوع توزیع"
@@ -250,7 +248,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                   </Grid2>
                   <Grid2 xs={12}>
                     <DorsaTextField
-                      inputProps={{ fontSize: "20px !important" }}
                       fullWidth
                       label="حداکثر کانکشن هر سرور"
                       error={Boolean(
@@ -291,7 +288,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                   {destinations.map(({ address }, index) => (
                     <DorsaTextField
                       key={index}
-                      inputProps={{ fontSize: "20px !important" }}
                       fullWidth
                       label={"سرور " + (index + 1)}
                       value={address}
