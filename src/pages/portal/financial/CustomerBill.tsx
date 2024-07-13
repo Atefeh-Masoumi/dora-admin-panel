@@ -36,8 +36,6 @@ const Bill: FC = () => {
   const productList = bill?.customerProductBills || [];
   const token = useAppSelector((state) => state.auth?.accessToken);
 
-  console.log(productList);
-
   const payBill = [
     { label: "جمع کل", value: bill?.netPrice },
     { label: "مالیات بر ارزش افزوده", value: bill?.vat },
