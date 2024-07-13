@@ -85,7 +85,7 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
         <form onSubmit={formik.handleSubmit}>
           <Stack direction="column" rowGap={3} pt={2}>
             <DialogContentText textAlign="center">
-              یک نام برای شناسایی پروژه خود وارد کنید.
+              یک نام برای شناسایی Network خود مشخص کنید.
             </DialogContentText>
 
             <AlphaNumericTextField
