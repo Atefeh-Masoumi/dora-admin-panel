@@ -188,7 +188,6 @@ const AddTicket: FC = () => {
               </Stack>
             ) : (
               <DorsaTextField
-                inputProps={{ fontSize: "20px !important" }}
                 select
                 fullWidth
                 label="واحد *"
@@ -229,7 +228,6 @@ const AddTicket: FC = () => {
               </Stack>
             ) : (
               <DorsaTextField
-                inputProps={{ fontSize: "20px !important" }}
                 select
                 fullWidth
                 label="محصول *"
@@ -270,7 +268,6 @@ const AddTicket: FC = () => {
               </Stack>
             ) : (
               <DorsaTextField
-                inputProps={{ fontSize: "20px !important" }}
                 select
                 fullWidth
                 label="محصولات کاربر"
@@ -311,7 +308,6 @@ const AddTicket: FC = () => {
           </Box>
           {/* Title */}
           <DorsaTextField
-            inputProps={{ fontSize: "20px !important" }}
             select
             fullWidth
             label="عنوان *"

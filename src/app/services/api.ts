@@ -24,6 +24,7 @@ const tags = [
   "WebHost",
   "Vpc",
   "Network",
+  "LoadBalance",
 ];
 
 export const api = generatedApi
@@ -342,6 +343,16 @@ export const api = generatedApi
       },
       deleteApiMyVpcNetworkDeleteById: {
         invalidatesTags: () => ["Network"],
+      },
+      // ============================== VPC LoadBalance ============================== //
+      getApiMyVpcLoadBalancerGetVirtualServersById: {
+        providesTags: () => ["LoadBalance"],
+      },
+      postApiMyVpcLoadBalancerCreateVirtualServer: {
+        invalidatesTags: () => ["LoadBalance"],
+      },
+      deleteApiMyVpcLoadBalancerDeleteVirtualServerById: {
+        invalidatesTags: () => ["LoadBalance"],
       },
     },
   });

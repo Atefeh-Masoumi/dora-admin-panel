@@ -6,7 +6,8 @@ import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVpcLoadBalancerDialog } from "src/components/organisms/vpc/dialogs/CreateVpcLoadBalancerDialog";
-import { vpcNetworkStruct } from "src/components/organisms/vpc/tables/struct";
+import { vpcLoadBalanceStruct } from "src/components/organisms/vpc/tables/struct";
+import { VpcLoadBalanceListTableRow } from "src/components/organisms/vpc/tables/VpcLoadBalanceListTableRow";
 import { VpcNetworkListTableRow } from "src/components/organisms/vpc/tables/VpcNetworkListTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -105,8 +106,8 @@ export const VpcLoadBalancer: FC = () => {
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack py={1.5}>
           <BaseTable
-            struct={vpcNetworkStruct}
-            RowComponent={VpcNetworkListTableRow}
+            struct={vpcLoadBalanceStruct}
+            RowComponent={VpcLoadBalanceListTableRow}
             rows={filteredList || []}
             text="در حال حاضر رکورد وجود ندارد"
             isLoading={isLoading}

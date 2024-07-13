@@ -47,3 +47,12 @@ export const vpcStruct: columnType[] = [
   { id: "statusId", label: "وضعیت" },
   { id: "control", label: "عملیات", disableSort: true },
 ];
+
+export const vpcLoadBalanceStruct: columnType[] = [
+  { id: "virtualServerId", label: "شماره شناسه", disableSort: true },
+  { id: "name", label: "نام", disableSort: true },
+  { id: "port", label: "PORT", disableSort: true },
+  { id: "algorithmTypeName", label: "نوع توزیع", disableSort: true },
+  { id: "ip", label: "IP" },
+  { id: "control", label: "عملیات", disableSort: true },
+];

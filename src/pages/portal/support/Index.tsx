@@ -64,7 +64,6 @@ const Support: FC = () => {
         <Stack direction="row" alignItems="center" spacing={1}>
           <Box component="form" width={{ xs: "160px", md: "185px" }}>
             <DorsaTextField
-              inputProps={{ fontSize: "20px !important" }}
               select
               fullWidth
               value={ticket}
