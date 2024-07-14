@@ -8,6 +8,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate } from "react-router";
 import { vpcTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { VpcTableRow } from "src/components/organisms/vpc/tables/VpcTableRow";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 const VpcList: FC = () => {
   const [search, setSearch] = useState("");
@@ -29,7 +30,7 @@ const VpcList: FC = () => {
 
   return (
     <>
-      {/* <Stack
+      <Stack
         p={3}
         mb={3}
         bgcolor="warning.main"
@@ -51,7 +52,7 @@ const VpcList: FC = () => {
           این سرویس نسخه آزمایشی می باشد.
           <br />
         </Typography>
-      </Stack> */}
+      </Stack>
       <Stack
         bgcolor="white"
         py={3}
