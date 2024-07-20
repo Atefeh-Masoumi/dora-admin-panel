@@ -1,20 +1,16 @@
-import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import { FC, useContext, useMemo } from "react";
+import { useGetApiMyPortalProductBundleVmListQuery } from "src/app/services/api.generated";
+import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { AddServerContext } from "../contexts/AddVmContext";
-import ReverseSlider from "src/components/atoms/ReverseSlider";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.VM,
-    });
+  const { data, isLoading } = useGetApiMyPortalProductBundleVmListQuery();
 
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddServerContext);
@@ -68,42 +64,18 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     },
   ];
 
-  const configsList = useMemo(() => {
-    if (!data) return [];
-    return data.map(({ id, name, price, configurations }) => {
-      const cpu =
-        configurations?.find((item) => item.name === "CPU")?.quantity || 0;
-      const memory =
-        configurations?.find((item) => item.name === "Memory")?.quantity || 0;
-      const disk =
-        configurations?.find((item) => item.name === "Disk")?.quantity || 0;
-      const ipv4 =
-        configurations?.find((item) => item.name === "IPV4")?.quantity || 0;
-
-      return {
-        id,
-        name,
-        cpu,
-        memory,
-        disk,
-        ipv4,
-        price,
-      };
-    });
-  }, [data]);
-
   const table = useMemo(
     () => (
       <BaseTable
         struct={productBundleTableStruct}
         RowComponent={ProductBundleTableRow}
-        rows={configsList || []}
+        rows={data || []}
         text=""
         isLoading={isLoading}
         rowsPerPage={5}
       />
     ),
-    [configsList, isLoading]
+    [isLoading]
   );
 
   return (

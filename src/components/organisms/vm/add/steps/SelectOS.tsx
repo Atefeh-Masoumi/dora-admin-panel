@@ -19,6 +19,8 @@ import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
 import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
@@ -37,7 +39,8 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
 
   const { data: osImagesList, isLoading } = useGetApiMyVmImageListQuery({
     datacenterId: datacenterId ? datacenterId : dataCenter?.id,
-    hypervisorTypeId: 1,
+    productId: PRODUCT_CATEGORY_ENUM.VM,
+    hypervisorTypeId: HYPERVISOR_ENUM.VM,
   });
 
   const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(

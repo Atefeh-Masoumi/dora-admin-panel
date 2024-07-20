@@ -1,17 +1,16 @@
-import { FC, useContext, useEffect, useMemo } from "react";
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/steps/SelectKuberDataCenter";
-import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
-import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
-import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
-import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+import { FC, useContext, useEffect, useMemo } from "react";
+import { useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery } from "src/app/services/api";
+import { useGetApiMyPortalProductBundleKuberClusterListQuery } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
+import { AddKubernetesContext } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+import { SelectKuberConfig } from "src/components/organisms/kubernetes/add/steps/SelectKuberConfig";
+import { SelectKuberDataCenter } from "src/components/organisms/kubernetes/add/steps/SelectKuberDataCenter";
+import { SelectKuberSetting } from "src/components/organisms/kubernetes/add/steps/SelectKuberSetting";
+import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/ServerKuberInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
-import { useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery } from "src/app/services/api";
 
 const mapConfig = {
   cpu: "CPU",
@@ -45,13 +44,11 @@ const AddKubernetes: FC = () => {
     productItemPrices,
   } = useContext(AddKubernetesContext);
 
-  const { data: vmBundlesList, isLoading: vmBundlesListLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
-    });
-
   const [getKubernetesPrice] =
     useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery();
+
+  const { data: vmBundlesList, isLoading: vmBundlesListLoading } =
+    useGetApiMyPortalProductBundleKuberClusterListQuery();
 
   useEffect(() => {
     if (isPredefined && !serverConfig?.id) return;
@@ -191,10 +188,7 @@ const AddKubernetes: FC = () => {
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
-                <SelectKuberConfig
-                  vmBundlesList={vmBundlesList || []}
-                  vmBundlesListLoading={vmBundlesListLoading}
-                />
+                <SelectKuberConfig />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>

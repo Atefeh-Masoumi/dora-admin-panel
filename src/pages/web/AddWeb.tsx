@@ -75,7 +75,7 @@ const AddWeb: FC = () => {
               <Grid container gap={2}>
                 <Grid xs={12} item>
                   <SelectDomain />
-                  <Divider sx={{ margin: "50px 10px" }} />
+                  <Divider sx={{ margin: "50px 10px" }} /> 
                 </Grid>
                 <Grid xs={12} item>
                   <SelectDataCenter />

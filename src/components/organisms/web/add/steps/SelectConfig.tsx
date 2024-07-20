@@ -2,7 +2,10 @@ import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { useGetApiMyPortalProductBundleListByProductIdQuery } from "src/app/services/api.generated";
+import {
+  useGetApiMyPortalProductBundleListByProductIdQuery,
+  useGetApiMyPortalProductBundleWebListQuery,
+} from "src/app/services/api.generated";
 import { AddWabHostTableRow } from "../tables/AddWabTableRow";
 import { addWebTableStruct } from "../tables/struct";
 
@@ -10,9 +13,7 @@ type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.WEB,
-    });
+    useGetApiMyPortalProductBundleWebListQuery();
 
   const table = useMemo(
     () => (
@@ -24,7 +25,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
         isLoading={isLoading}
       />
     ),
-    [configsList, isLoading]
+    [isLoading]
   );
 
   return (

@@ -10,7 +10,8 @@ import ReverseSlider from "src/components/atoms/ReverseSlider";
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data: bundleList, isLoading } = useGetApiMyPortalProductBundleStorageListQuery();
+  const { data: bundleList, isLoading } =
+    useGetApiMyPortalProductBundleStorageListQuery();
 
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddStorageContext);
@@ -28,21 +29,6 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       ],
     },
   ];
-
-  // const configsList = useMemo(() => {
-  //   if (!data) return [];
-  //   return data.map(({ id, name, price, configurations }) => {
-  //     const disk =
-  //       configurations?.find((item) => item.name === "Disk")?.quantity || 0;
-
-  //     return {
-  //       id,
-  //       name,
-  //       disk,
-  //       price,
-  //     };
-  //   });
-  // }, [data]);
 
   const table = useMemo(
     () => (

@@ -2,9 +2,8 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { columnType } from "src/components/organisms/tables/table.types";
 
 export const addWebTableStruct: columnType[] = [
-  { id: "productBundleId", label: "" },
+  { id: "id", label: "" },
   { id: "name", label: "نام سرویس" },
-  { id: "description", label: "توضیحات" },
   {
     id: "price",
     label: "قیمت (ماهیانه)",

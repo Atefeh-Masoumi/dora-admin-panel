@@ -1,12 +1,4 @@
 import {
-  FC,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
-import {
   FormControl,
   InputLabel,
   MenuItem,
@@ -16,10 +8,20 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  FC,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
+import {
   DatacenterListResponse,
-  useGetApiMyKubernetesImageListByDatacenterIdQuery,
+  useGetApiMyDatacenterImageListQuery,
   useGetApiMyKubernetesVersionListQuery,
 } from "src/app/services/api.generated";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { Counter } from "./Counter";
 
@@ -57,13 +59,11 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
     setKubernetesVersion(enhancedValue);
   };
 
-  const { data: osVersionsList = [] } =
-    useGetApiMyKubernetesImageListByDatacenterIdQuery(
-      {
-        datacenterId: dataCenter?.id || 1,
-      },
-      { skip: !dataCenter }
-    );
+  const { data: osVersionsList = [] } = useGetApiMyDatacenterImageListQuery({
+    datacenterId: dataCenter?.id || 1,
+    productId: PRODUCT_CATEGORY_ENUM.Kubernetes,
+    hypervisorTypeId: HYPERVISOR_ENUM.VM,
+  });
 
   useEffect(() => {
     if (

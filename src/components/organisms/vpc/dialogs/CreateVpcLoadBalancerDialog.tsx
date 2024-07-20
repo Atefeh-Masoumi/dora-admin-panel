@@ -22,7 +22,7 @@ import {
   DestinationModel,
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcIpListByVpcHostIdQuery,
-  usePostApiMyVpcLoadBalancerCreateVirtualServerMutation,
+  usePostApiMyVpcLoadBalancerCreateMutation,
 } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -96,7 +96,7 @@ export const CreateVpcLoadBalancerDialog: FC<
     });
 
   const [createVpcLoadBalancer, { isLoading: createVpcLoadBalancerLoading }] =
-    usePostApiMyVpcLoadBalancerCreateVirtualServerMutation();
+    usePostApiMyVpcLoadBalancerCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -109,10 +109,10 @@ export const CreateVpcLoadBalancerDialog: FC<
     validationSchema: formValidation,
     onSubmit: (values, { setSubmitting }) => {
       createVpcLoadBalancer({
-        createVirtualServerModel: {
+        createVpcHostLbModel: {
           vpcHostGatewayId: Number(selectedGateway?.vpcHostGatewayId),
           vpcHostGatewayIpId: Number(selectedGateway?.id),
-          virtualServerPort: Number(values.serverPoolPort),
+          vpcHostLbPort: Number(values.serverPoolPort),
           algorithmTypeId: Number(values.algorithmTypeId),
           poolMembers: values.poolMembers,
         },
