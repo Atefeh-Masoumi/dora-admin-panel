@@ -1,9 +1,9 @@
+import { AxiosRequestConfig } from "axios";
 import {
   api as generatedApi,
-  PostApiMyPortalIssueItemCreateApiResponse,
   PostApiMyPortalIssueCreateApiArg,
+  PostApiMyPortalIssueItemCreateApiResponse,
 } from "./api.generated";
-import { AxiosRequestConfig } from "axios";
 
 const tags = [
   "Profile",
@@ -25,6 +25,7 @@ const tags = [
   "Vpc",
   "Network",
   "LoadBalance",
+  "PublicIP",
 ];
 
 export const api = generatedApi
@@ -345,14 +346,24 @@ export const api = generatedApi
         invalidatesTags: () => ["Network"],
       },
       // ============================== VPC LoadBalance ============================== //
-      getApiMyVpcLoadBalancerGetVirtualServersById: {
+      getApiMyVpcLoadBalancerListById: {
         providesTags: () => ["LoadBalance"],
       },
-      postApiMyVpcLoadBalancerCreateVirtualServer: {
+      postApiMyVpcLoadBalancerCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      deleteApiMyVpcLoadBalancerDeleteVirtualServerById: {
+      deleteApiMyVpcLoadBalancerDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
+      },
+      // ============================== VPC Public IP ============================== //
+      getApiMyVpcIpListByVpcHostId: {
+        providesTags: () => ["PublicIP"],
+      },
+      postApiMyVpcIpCreate: {
+        invalidatesTags: () => ["PublicIP"],
+      },
+      deleteApiMyVpcIpDeleteById: {
+        invalidatesTags: () => ["PublicIP"],
       },
     },
   });

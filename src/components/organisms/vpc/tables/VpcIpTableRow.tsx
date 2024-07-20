@@ -41,7 +41,7 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
     deleteVpcIpRecord({ id: Number(selectedVpcIp?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("IP مورد نظر حذف شد", { icon: Success });
         closeDialogHandler();
       })
       .catch((err) => {});

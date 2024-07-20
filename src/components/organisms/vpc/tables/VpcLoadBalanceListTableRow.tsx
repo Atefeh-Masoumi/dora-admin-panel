@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import { useDeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyVpcLoadBalancerDeleteByIdMutation } from "src/app/services/api.generated";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -38,7 +38,7 @@ export const VpcLoadBalanceListTableRow: FC<
   const [
     deleteLoadBalanceRecord,
     { isLoading: deleteLoadBalanceRecordLoading },
-  ] = useDeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdMutation();
+  ] = useDeleteApiMyVpcLoadBalancerDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);

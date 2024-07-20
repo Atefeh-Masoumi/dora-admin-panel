@@ -1,21 +1,18 @@
-import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import { ProductBundleListResponse } from "src/app/services/api.generated";
+import { FC, useContext, useMemo } from "react";
+import { useGetApiMyPortalProductBundleKuberClusterListQuery } from "src/app/services/api.generated";
+import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
-import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
-import ReverseSlider from "src/components/atoms/ReverseSlider";
+import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
 
-type SelectKuberConfigPropsType = {
-  vmBundlesList: ProductBundleListResponse[];
-  vmBundlesListLoading: boolean;
-};
+type SelectKuberConfigPropsType = {};
 
-export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
-  vmBundlesList,
-  vmBundlesListLoading,
-}) => {
+export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
+  const { data: vmBundlesList, isLoading: vmBundlesListLoading } =
+    useGetApiMyPortalProductBundleKuberClusterListQuery();
+
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddKubernetesContext);
 
@@ -67,41 +64,17 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = ({
     },
   ];
 
-  const configsList = useMemo(() => {
-    if (!vmBundlesList) return [];
-    return vmBundlesList.map(({ id, name, price, configurations }) => {
-      const cpu =
-        configurations?.find((item) => item.name === "CPU")?.quantity || 0;
-      const memory =
-        configurations?.find((item) => item.name === "Memory")?.quantity || 0;
-      const disk =
-        configurations?.find((item) => item.name === "Disk")?.quantity || 0;
-      const ipv4 =
-        configurations?.find((item) => item.name === "IPV4")?.quantity || 0;
-
-      return {
-        id,
-        name,
-        cpu,
-        memory,
-        disk,
-        ipv4,
-        price,
-      };
-    });
-  }, [vmBundlesList]);
-
   const table = useMemo(
     () => (
       <BaseTable
         struct={productBundleTableStruct}
         RowComponent={KuberServerConfigTableRow}
-        rows={configsList}
+        rows={vmBundlesList as any}
         text=""
         isLoading={vmBundlesListLoading}
       />
     ),
-    [configsList, vmBundlesListLoading]
+    [vmBundlesListLoading]
   );
 
   return (

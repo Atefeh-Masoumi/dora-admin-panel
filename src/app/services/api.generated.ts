@@ -468,14 +468,15 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/datacenter/list` }),
     }),
-    getApiMyVmImageList: build.query<
-      GetApiMyVmImageListApiResponse,
-      GetApiMyVmImageListApiArg
+    getApiMyDatacenterImageList: build.query<
+      GetApiMyDatacenterImageListApiResponse,
+      GetApiMyDatacenterImageListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/image/list`,
+        url: `/api/my/datacenter/image/list`,
         params: {
           DatacenterId: queryArg.datacenterId,
+          ProductId: queryArg.productId,
           HypervisorTypeId: queryArg.hypervisorTypeId,
         },
       }),
@@ -803,6 +804,59 @@ export const api = createApi({
         body: queryArg.issueSubjectSelectListModel,
       }),
     }),
+    getApiMyKubernetesCloudDeploymentList: build.query<
+      GetApiMyKubernetesCloudDeploymentListApiResponse,
+      GetApiMyKubernetesCloudDeploymentListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/cloud/deployment/list` }),
+    }),
+    getApiMyKubernetesCloudHostList: build.query<
+      GetApiMyKubernetesCloudHostListApiResponse,
+      GetApiMyKubernetesCloudHostListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/cloud/host/list` }),
+    }),
+    postApiMyKubernetesCloudHostCreate: build.mutation<
+      PostApiMyKubernetesCloudHostCreateApiResponse,
+      PostApiMyKubernetesCloudHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/create`,
+        method: "POST",
+        body: queryArg.createKuberCloudHostModel,
+      }),
+    }),
+    postApiMyKubernetesCloudHostEdit: build.mutation<
+      PostApiMyKubernetesCloudHostEditApiResponse,
+      PostApiMyKubernetesCloudHostEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/edit`,
+        method: "POST",
+        body: queryArg.editKuberCloudHostModel,
+      }),
+    }),
+    deleteApiMyKubernetesCloudHostDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudHostDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    getApiMyKubernetesCloudImageList: build.query<
+      GetApiMyKubernetesCloudImageListApiResponse,
+      GetApiMyKubernetesCloudImageListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/cloud/image/list` }),
+    }),
+    getApiMyKubernetesCloudCategoryList: build.query<
+      GetApiMyKubernetesCloudCategoryListApiResponse,
+      GetApiMyKubernetesCloudCategoryListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/cloud/category/list` }),
+    }),
     getApiMyKubernetesHostList: build.query<
       GetApiMyKubernetesHostListApiResponse,
       GetApiMyKubernetesHostListApiArg
@@ -1019,6 +1073,20 @@ export const api = createApi({
       GetApiMyPortalProductBundleWebListApiArg
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/web-list` }),
+    }),
+    getApiMyPortalProductBundleKuberClusterList: build.query<
+      GetApiMyPortalProductBundleKuberClusterListApiResponse,
+      GetApiMyPortalProductBundleKuberClusterListApiArg
+    >({
+      query: () => ({
+        url: `/api/my/portal/product-bundle/kuber-cluster-list`,
+      }),
+    }),
+    getApiMyPortalProductBundleVpcList: build.query<
+      GetApiMyPortalProductBundleVpcListApiResponse,
+      GetApiMyPortalProductBundleVpcListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/product-bundle/vpc-list` }),
     }),
     getApiMyPortalProductItemListByProductId: build.query<
       GetApiMyPortalProductItemListByProductIdApiResponse,
@@ -1402,6 +1470,19 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/vm/hypervisor/list` }),
     }),
+    getApiMyVmImageList: build.query<
+      GetApiMyVmImageListApiResponse,
+      GetApiMyVmImageListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/image/list`,
+        params: {
+          DatacenterId: queryArg.datacenterId,
+          ProductId: queryArg.productId,
+          HypervisorTypeId: queryArg.hypervisorTypeId,
+        },
+      }),
+    }),
     getApiMyVmIsoListByDatacenterId: build.query<
       GetApiMyVmIsoListByDatacenterIdApiResponse,
       GetApiMyVmIsoListByDatacenterIdApiArg
@@ -1696,30 +1777,30 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyVpcLoadBalancerGetVirtualServersById: build.query<
-      GetApiMyVpcLoadBalancerGetVirtualServersByIdApiResponse,
-      GetApiMyVpcLoadBalancerGetVirtualServersByIdApiArg
+    getApiMyVpcLoadBalancerListById: build.query<
+      GetApiMyVpcLoadBalancerListByIdApiResponse,
+      GetApiMyVpcLoadBalancerListByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/get-virtual-servers/${queryArg.id}`,
+        url: `/api/my/vpc/load-balancer/list/${queryArg.id}`,
       }),
     }),
-    postApiMyVpcLoadBalancerCreateVirtualServer: build.mutation<
-      PostApiMyVpcLoadBalancerCreateVirtualServerApiResponse,
-      PostApiMyVpcLoadBalancerCreateVirtualServerApiArg
+    postApiMyVpcLoadBalancerCreate: build.mutation<
+      PostApiMyVpcLoadBalancerCreateApiResponse,
+      PostApiMyVpcLoadBalancerCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/create-virtual-server`,
+        url: `/api/my/vpc/load-balancer/create`,
         method: "POST",
-        body: queryArg.createVirtualServerModel,
+        body: queryArg.createVpcHostLbModel,
       }),
     }),
-    deleteApiMyVpcLoadBalancerDeleteVirtualServerById: build.mutation<
-      DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiResponse,
-      DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiArg
+    deleteApiMyVpcLoadBalancerDeleteById: build.mutation<
+      DeleteApiMyVpcLoadBalancerDeleteByIdApiResponse,
+      DeleteApiMyVpcLoadBalancerDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balancer/delete-virtual-server/${queryArg.id}`,
+        url: `/api/my/vpc/load-balancer/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -2248,10 +2329,11 @@ export type GetApiMyDashboardFinancialApiArg = void;
 export type GetApiMyDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyDatacenterListApiArg = void;
-export type GetApiMyVmImageListApiResponse =
+export type GetApiMyDatacenterImageListApiResponse =
   /** status 200 OK */ DatacenterImageListResponse[];
-export type GetApiMyVmImageListApiArg = {
+export type GetApiMyDatacenterImageListApiArg = {
   datacenterId?: number;
+  productId?: number;
   hypervisorTypeId?: number;
 };
 export type GetApiMyDatacenterIpListByIdApiResponse =
@@ -2427,6 +2509,29 @@ export type PostApiMyPortalIssueSubjectSelectListApiResponse =
 export type PostApiMyPortalIssueSubjectSelectListApiArg = {
   issueSubjectSelectListModel: IssueSubjectSelectListModel;
 };
+export type GetApiMyKubernetesCloudDeploymentListApiResponse = unknown;
+export type GetApiMyKubernetesCloudDeploymentListApiArg = void;
+export type GetApiMyKubernetesCloudHostListApiResponse =
+  /** status 200 OK */ KuberCloudHostResponse[];
+export type GetApiMyKubernetesCloudHostListApiArg = void;
+export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudHostCreateApiArg = {
+  createKuberCloudHostModel: CreateKuberCloudHostModel;
+};
+export type PostApiMyKubernetesCloudHostEditApiResponse = unknown;
+export type PostApiMyKubernetesCloudHostEditApiArg = {
+  editKuberCloudHostModel: EditKuberCloudHostModel;
+};
+export type DeleteApiMyKubernetesCloudHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudHostDeleteByIdApiArg = {
+  id: number;
+};
+export type GetApiMyKubernetesCloudImageListApiResponse =
+  /** status 200 OK */ KuberCloudImageCategoryResponse[];
+export type GetApiMyKubernetesCloudImageListApiArg = void;
+export type GetApiMyKubernetesCloudCategoryListApiResponse =
+  /** status 200 OK */ KuberCloudImageCategoryResponse[];
+export type GetApiMyKubernetesCloudCategoryListApiArg = void;
 export type GetApiMyKubernetesHostListApiResponse =
   /** status 200 OK */ KubernetesListResponse[];
 export type GetApiMyKubernetesHostListApiArg = void;
@@ -2567,6 +2672,12 @@ export type GetApiMyPortalProductBundleStorageListApiArg = void;
 export type GetApiMyPortalProductBundleWebListApiResponse =
   /** status 200 OK */ ProductBundleWebListResponse[];
 export type GetApiMyPortalProductBundleWebListApiArg = void;
+export type GetApiMyPortalProductBundleKuberClusterListApiResponse =
+  /** status 200 OK */ ProductBundleKuberClusterListResponse[];
+export type GetApiMyPortalProductBundleKuberClusterListApiArg = void;
+export type GetApiMyPortalProductBundleVpcListApiResponse =
+  /** status 200 OK */ ProductBundleVpcListResponse[];
+export type GetApiMyPortalProductBundleVpcListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 OK */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
@@ -2753,6 +2864,13 @@ export type PutApiMyVmHostStopByIdApiArg = {
 export type GetApiMyVmHypervisorListApiResponse =
   /** status 200 OK */ HypervisorTypeListResponse[];
 export type GetApiMyVmHypervisorListApiArg = void;
+export type GetApiMyVmImageListApiResponse =
+  /** status 200 OK */ DatacenterImageListResponse[];
+export type GetApiMyVmImageListApiArg = {
+  datacenterId?: number;
+  productId?: number;
+  hypervisorTypeId?: number;
+};
 export type GetApiMyVmIsoListByDatacenterIdApiResponse =
   /** status 200 OK */ IsoListResponse[];
 export type GetApiMyVmIsoListByDatacenterIdApiArg = {
@@ -2899,18 +3017,17 @@ export type DeleteApiMyVpcNatDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNatDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVpcLoadBalancerGetVirtualServersByIdApiResponse =
-  /** status 200 OK */ VirtualServerResponse[];
-export type GetApiMyVpcLoadBalancerGetVirtualServersByIdApiArg = {
+export type GetApiMyVpcLoadBalancerListByIdApiResponse =
+  /** status 200 OK */ VpcHostLbResponse[];
+export type GetApiMyVpcLoadBalancerListByIdApiArg = {
   id: number;
 };
-export type PostApiMyVpcLoadBalancerCreateVirtualServerApiResponse = unknown;
-export type PostApiMyVpcLoadBalancerCreateVirtualServerApiArg = {
-  createVirtualServerModel: CreateVirtualServerModel;
+export type PostApiMyVpcLoadBalancerCreateApiResponse = unknown;
+export type PostApiMyVpcLoadBalancerCreateApiArg = {
+  createVpcHostLbModel: CreateVpcHostLbModel;
 };
-export type DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiResponse =
-  unknown;
-export type DeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdApiArg = {
+export type DeleteApiMyVpcLoadBalancerDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVpcLoadBalancerDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyVpcNetworkListByVpcHostIdApiResponse =
@@ -3428,9 +3545,9 @@ export type DatacenterListResponse = {
   photoName?: string | null;
 };
 export type DatacenterImageListResponse = {
-  id?: number;
+  id: number;
   name: string | null;
-  osId?: number;
+  osId: number;
   os: string | null;
 };
 export type DatacenterIpListResponse = {
@@ -3713,6 +3830,35 @@ export type IssueSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
 };
+export type KuberCloudHostResponse = {
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  statusId: number;
+  createDate: string;
+};
+export type CreateKuberCloudHostModel = {
+  name: string;
+  datacenterId: number;
+  isPredefined: boolean;
+  productBundleId?: number | null;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
+  tenPods?: number | null;
+};
+export type EditKuberCloudHostModel = {
+  id: number;
+  cpu: number;
+  memory: number;
+  disk: number;
+  tenPods: number;
+};
+export type KuberCloudImageCategoryResponse = {
+  id: number;
+  name: string | null;
+};
 export type KubernetesListResponse = {
   id: number;
   datacenter: string | null;
@@ -3877,22 +4023,38 @@ export type ProductBundleVmListResponse = {
   id: number;
   name: string | null;
   price: number;
-  cpu: number;
-  memory: number;
-  disk: number;
+  vCpu: number;
+  vMemory: number;
+  vDisk: number;
   ipv4: number;
 };
 export type ProductBundleStorageListResponse = {
   id: number;
   name: string | null;
   price: number;
-  disk: number;
+  vDisk: number;
 };
 export type ProductBundleWebListResponse = {
   id: number;
   name: string | null;
   price: number;
   quantity?: number;
+};
+export type ProductBundleKuberClusterListResponse = {
+  id: number;
+  name: string | null;
+  price: number;
+  vCpu: number;
+  vMemory: number;
+  vDisk: number;
+  ipv4: number;
+};
+export type ProductBundleVpcListResponse = {
+  id: number;
+  name: string | null;
+  price: number;
+  rules10: number;
+  ipv4: number;
 };
 export type ProductItemListResponse = {
   id: number;
@@ -4099,21 +4261,21 @@ export type GetVmResponse = {
   id: number;
   datacenterId: number;
   name: string | null;
+  operatingSystem: string | null;
+  operatingSystemId: number;
   status: string | null;
-  statusId?: number;
+  statusId: number;
   cpu: number;
   memory: number;
   disk: number;
   macAddress?: string | null;
   ip?: string | null;
-  operatingSystem: string | null;
-  operatingSystemId: number;
   powerStatus?: string | null;
   networkStatus?: string | null;
   isCluster?: boolean;
   isMaster?: boolean;
-  vmTypeId?: number;
-  vmType: string | null;
+  isPublic?: boolean;
+  hypervisorTypeId: number;
   createDate: string;
   modifyDate: string;
 };
@@ -4324,28 +4486,28 @@ export type EditIncreaseSequenceVpcGatewayNatModel = {
   id: number;
   vpcHostId: number;
 };
-export type ServerPoolMemberResponse = {
+export type VpcHostLbPoolResponse = {
   ip: string | null;
   port: number;
   name: string | null;
 };
-export type VirtualServerResponse = {
-  virtualServerId: number;
+export type VpcHostLbResponse = {
+  vpcHostLbId: number;
   ip: string | null;
   name: string | null;
   port: number;
-  serverPoolAlgorithmTypeId: number;
-  algorithmTypeName: string | null;
-  serverPoolMembers?: ServerPoolMemberResponse[] | null;
+  vpcHostLbTypeId: number;
+  vpcHostLbTypeName: string | null;
+  vpcHostLbPools?: VpcHostLbPoolResponse[] | null;
 };
 export type PoolMemberModel = {
   vmHostId: number;
   port: number;
 };
-export type CreateVirtualServerModel = {
+export type CreateVpcHostLbModel = {
   vpcHostGatewayId: number;
   vpcHostGatewayIpId: number;
-  virtualServerPort: number;
+  vpcHostLbPort: number;
   algorithmTypeId: number;
   poolMembers: PoolMemberModel[] | null;
 };
@@ -4570,7 +4732,7 @@ export const {
   useGetApiMyDashboardUsageByCategoryIdQuery,
   useGetApiMyDashboardFinancialQuery,
   useGetApiMyDatacenterListQuery,
-  useGetApiMyVmImageListQuery,
+  useGetApiMyDatacenterImageListQuery,
   useGetApiMyDatacenterIpListByIdQuery,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,
   useGetApiMyDnsHostListQuery,
@@ -4611,6 +4773,13 @@ export const {
   useGetApiMyPortalIssueItemDownloadByIdQuery,
   useGetApiMyPortalIssueSubjectListQuery,
   usePostApiMyPortalIssueSubjectSelectListMutation,
+  useGetApiMyKubernetesCloudDeploymentListQuery,
+  useGetApiMyKubernetesCloudHostListQuery,
+  usePostApiMyKubernetesCloudHostCreateMutation,
+  usePostApiMyKubernetesCloudHostEditMutation,
+  useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
+  useGetApiMyKubernetesCloudImageListQuery,
+  useGetApiMyKubernetesCloudCategoryListQuery,
   useGetApiMyKubernetesHostListQuery,
   useGetApiMyKubernetesHostGetByIdQuery,
   usePostApiMyKubernetesHostCreateMutation,
@@ -4639,6 +4808,8 @@ export const {
   useGetApiMyPortalProductBundleVmListQuery,
   useGetApiMyPortalProductBundleStorageListQuery,
   useGetApiMyPortalProductBundleWebListQuery,
+  useGetApiMyPortalProductBundleKuberClusterListQuery,
+  useGetApiMyPortalProductBundleVpcListQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useGetApiMyPortalProfileGetQuery,
@@ -4683,6 +4854,7 @@ export const {
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostStopByIdMutation,
   useGetApiMyVmHypervisorListQuery,
+  useGetApiMyVmImageListQuery,
   useGetApiMyVmIsoListByDatacenterIdQuery,
   usePutApiMyVmIsoMountMutation,
   usePutApiMyVmIsoUnmountMutation,
@@ -4717,9 +4889,9 @@ export const {
   usePutApiMyVpcNatIncreaseSequenceMutation,
   usePutApiMyVpcNatDecreaseSequenceMutation,
   useDeleteApiMyVpcNatDeleteByIdMutation,
-  useGetApiMyVpcLoadBalancerGetVirtualServersByIdQuery,
-  usePostApiMyVpcLoadBalancerCreateVirtualServerMutation,
-  useDeleteApiMyVpcLoadBalancerDeleteVirtualServerByIdMutation,
+  useGetApiMyVpcLoadBalancerListByIdQuery,
+  usePostApiMyVpcLoadBalancerCreateMutation,
+  useDeleteApiMyVpcLoadBalancerDeleteByIdMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   usePostApiMyVpcNetworkCreateMutation,

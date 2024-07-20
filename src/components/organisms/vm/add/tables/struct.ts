@@ -4,9 +4,9 @@ import { columnType } from "../../../tables/table.types";
 export const productBundleTableStruct: columnType[] = [
   { id: "id", label: "" },
   { id: "name", label: "نام سروریس" },
-  { id: "cpu", label: "CPU" },
-  { id: "memory", label: "Memory" },
-  { id: "disk", label: "Disk" },
+  { id: "vCpu", label: "CPU" },
+  { id: "vMemory", label: "Memory" },
+  { id: "vDisk", label: "Disk" },
   { id: "ipv4", label: "IPv4" },
   {
     id: "price",
