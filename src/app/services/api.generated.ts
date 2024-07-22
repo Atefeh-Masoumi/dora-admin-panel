@@ -2527,7 +2527,7 @@ export type DeleteApiMyKubernetesCloudHostDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyKubernetesCloudImageListApiResponse =
-  /** status 200 OK */ KuberCloudImageCategoryResponse[];
+  /** status 200 OK */ KuberCloudImageResponse[];
 export type GetApiMyKubernetesCloudImageListApiArg = void;
 export type GetApiMyKubernetesCloudCategoryListApiResponse =
   /** status 200 OK */ KuberCloudImageCategoryResponse[];
@@ -3854,6 +3854,20 @@ export type EditKuberCloudHostModel = {
   memory: number;
   disk: number;
   tenPods: number;
+};
+export type KuberCloudImageTagResponse = {
+  kuberCloudImageTagId: number;
+  name: string | null;
+};
+export type KuberCloudImageResponse = {
+  id: number;
+  datacenterId: number;
+  kuberCloudImageCategoryId: number;
+  name: string | null;
+  path: string | null;
+  subtitle?: string | null;
+  description?: string | null;
+  kuberCloudImageTags?: KuberCloudImageTagResponse[] | null;
 };
 export type KuberCloudImageCategoryResponse = {
   id: number;

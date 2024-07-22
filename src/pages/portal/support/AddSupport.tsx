@@ -29,10 +29,17 @@ import {
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
+const priorityLevel = [
+  { id: 1, name: "کم" },
+  { id: 2, name: "معمولی" },
+  { id: 3, name: "زیاد" },
+];
+
 const AddTicket: FC = () => {
   const navigate = useNavigate();
 
   const [businessUnitId, setBusinessUnitId] = useState<number>();
+  const [ticketPriorityLevel, setTicketPriorityLevel] = useState<number>();
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetApiMyPortalBusinessUnitListQuery();
 
@@ -121,6 +128,7 @@ const AddTicket: FC = () => {
     formData.append("content", content);
     formData.append("businessUnitId", businessUnitId.toString());
     formData.append("issueSubjectId", title.toString());
+    formData.append("issuePriorityId", ticketPriorityLevel?.toString()!);
     productId && formData.append("productId", productId.toString());
     if (selectedApiCloudCustomerProduct !== 0) {
       formData.append(
@@ -339,6 +347,36 @@ const AddTicket: FC = () => {
               </MenuItem>
             ))}
           </DorsaTextField>
+          {/* Priority */}
+          <Box component="form" width="100%">
+            <DorsaTextField
+              select
+              fullWidth
+              label="اولویت تیکت *"
+              value={ticketPriorityLevel || ""}
+              onChange={(e) => setTicketPriorityLevel(+e.target.value)}
+            >
+              {priorityLevel.map((option) => (
+                <MenuItem
+                  key={option.id}
+                  value={option.id}
+                  sx={{
+                    borderRadius: 1,
+                    backgroundColor: "#F3F4F6",
+                    m: 0.5,
+                    py: 1.5,
+                    color: "secondary",
+                    "&: focus": {
+                      color: "rgba(60, 138, 255, 1)",
+                      backgroundColor: "rgba(60, 138, 255, 0.1)",
+                    },
+                  }}
+                >
+                  {option.name}
+                </MenuItem>
+              ))}
+            </DorsaTextField>
+          </Box>
           <DorsaTextField
             onChange={(e) => setContent(e.target.value)}
             label="متن تیکت *"
