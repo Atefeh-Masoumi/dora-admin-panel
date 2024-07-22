@@ -4,13 +4,14 @@ import { useGetApiMyPortalProductBundleVmListQuery } from "src/app/services/api.
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
-import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { AddServerContext } from "../contexts/AddVmContext";
+import { productBundleTableStruct } from "../tables/struct";
 
 type SelectConfigPropsType = {};
 
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
-  const { data, isLoading } = useGetApiMyPortalProductBundleVmListQuery();
+  const { data: productBundleVmList, isLoading: productBundleVmListLoading } =
+    useGetApiMyPortalProductBundleVmListQuery();
 
   const { isPredefined, customConfig, setCustomConfig } =
     useContext(AddServerContext);
@@ -69,13 +70,13 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       <BaseTable
         struct={productBundleTableStruct}
         RowComponent={ProductBundleTableRow}
-        rows={data || []}
+        rows={productBundleVmList || []}
         text=""
-        isLoading={isLoading}
+        isLoading={productBundleVmListLoading}
         rowsPerPage={5}
       />
     ),
-    [isLoading]
+    [productBundleVmList, productBundleVmListLoading]
   );
 
   return (
