@@ -1,14 +1,14 @@
-import { FC, useState } from "react";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { SearchBox } from "src/components/molecules/SearchBox";
 import { Add } from "@mui/icons-material";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router";
+import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
+import { SearchBox } from "src/components/molecules/SearchBox";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { vpcTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { VpcTableRow } from "src/components/organisms/vpc/tables/VpcTableRow";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const VpcList: FC = () => {
   const [search, setSearch] = useState("");

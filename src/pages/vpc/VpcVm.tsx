@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router";
 import {
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcHostGetByIdQuery,
-  useGetApiMyVpcHostListQuery,
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -43,7 +42,7 @@ export const VpcVm: FC = () => {
   const handleNavigatetoVm = () => {
     if (!vmInfo?.vpcHostProjectId) return;
     navigate(
-      `/vm/${vmInfo?.vpcHostProjectId}/add-vm?vmType=${VM_PUBLICITY_TYPE.VPC_VM}`
+      `/vm/${vmInfo?.vpcHostProjectId}/add-vm?vmType=${VM_PUBLICITY_TYPE.VPC_VM}&vpcId=${vpcId}`
     );
   };
 

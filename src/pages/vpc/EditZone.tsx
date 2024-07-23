@@ -1,15 +1,15 @@
 import { Box, Stack, Tabs } from "@mui/material";
 import { FC, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { VpcNetwork } from "./VpcNetwork";
-import { VpcVm } from "./VpcVm";
-import { VpcNat } from "./VpcNat";
 import { VpcIp } from "./VpcIp";
-import { VpcOverview } from "./VpcOverview";
 import { VpcLoadBalancer } from "./VpcLoadBalancer";
-import { useSearchParams } from "react-router-dom";
+import { VpcNat } from "./VpcNat";
+import { VpcNetwork } from "./VpcNetwork";
+import { VpcOverview } from "./VpcOverview";
+import { VpcVm } from "./VpcVm";
 
 const EditZone: FC = () => {
   const { vpcId } = useParams();
@@ -44,7 +44,7 @@ const EditZone: FC = () => {
   }, [pathname]);
 
   const handleChange = (_: SyntheticEvent, newValue: string) => {
-    navigate(`/vpc/${vpcId}/${newValue}?projectId=${projectId}`);
+    navigate(`/vpc/${vpcId}/${newValue}?projectId=${projectId}&vpcId=${vpcId}`);
   };
 
   const renderHandler = () => {

@@ -115,35 +115,33 @@ export const ManageMenu: FC = () => {
           <MenuList sx={{ backgroundColor: "rgba(32, 32, 32, 1)" }}>
             <Stack p={1.5} spacing={1}>
               {items.map((item, index) => (
-                <>
-                  <MenuItem
-                    key={item.id}
-                    disableRipple
-                    sx={{ borderRadius: BORDER_RADIUS_1, m: 1, py: 2 }}
-                    onClick={() => {
-                      item.function ? item.function() : handleClose();
-                      item.link ? navigate(item.link) : handleClose();
-                      handleClose();
-                    }}
+                <MenuItem
+                  key={item.id}
+                  disableRipple
+                  sx={{ borderRadius: BORDER_RADIUS_1, m: 1, py: 2 }}
+                  onClick={() => {
+                    item.function ? item.function() : handleClose();
+                    item.link ? navigate(item.link) : handleClose();
+                    handleClose();
+                  }}
+                >
+                  <Stack
+                    direction="row"
+                    alignItems="start"
+                    spacing={1}
+                    py={0.5}
                   >
-                    <Stack
-                      direction="row"
-                      alignItems="start"
-                      spacing={1}
-                      py={0.5}
+                    <item.icon />
+                    <Typography
+                      color={item.value === "logout" ? "#d32f2f" : "unset"}
                     >
-                      <item.icon />
-                      <Typography
-                        color={item.value === "logout" ? "#d32f2f" : "unset"}
-                      >
-                        {item.label}
-                      </Typography>
-                    </Stack>
-                  </MenuItem>
+                      {item.label}
+                    </Typography>
+                  </Stack>
                   {index === items.length - 2 && (
                     <Divider sx={{ bgcolor: "secondary.main" }} />
                   )}
-                </>
+                </MenuItem>
               ))}
             </Stack>
           </MenuList>
