@@ -10,12 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
-import {
-  useGetApiMyVmProjectGetByIdQuery,
-  useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
-} from "src/app/services/api.generated";
-import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
+import { useSearchParams } from "react-router-dom";
+import { useGetApiMyVpcNetworkShortListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { ipValidation } from "src/utils/regex.utils";
 
 type SelectNetworkIpForVpcPropsType = {
@@ -27,19 +23,16 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
   handleSelectedNetwork,
   handleSelectedIp,
 }) => {
-  const { projectId, type } = useParams();
+  const [searchParams] = useSearchParams();
+  const vpcId = searchParams.get("vpcId");
   const [selectedIp, setSelectedIp] = useState("");
   const [selectedNetworkId, setSelectedNetworkId] = useState<number | null>(
     null
   );
 
-  const { data: vmProjectInfo } = useGetApiMyVmProjectGetByIdQuery({
-    id: Number(projectId),
-  });
-
   const { data: vpcNetworkList = [] } =
     useGetApiMyVpcNetworkShortListByVpcHostIdQuery({
-      vpcHostId: vmProjectInfo?.vpcHostId || 0,
+      vpcHostId: Number(vpcId) || 0,
     });
 
   return (
@@ -86,7 +79,6 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
           </FormControl>
         </Stack>
       </Box>
-
       <Box sx={{ width: "100%", p: 2 }}>
         <Stack direction="column" rowGap={2}>
           <Typography fontSize={24} fontWeight="bold">
