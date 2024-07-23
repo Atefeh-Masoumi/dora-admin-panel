@@ -86,7 +86,7 @@ export const ShortTickets: FC = () => {
                       justifyContent="space-between"
                       key={id}
                       sx={{
-                        p: { xs: 1, md: 1.5 },
+                        p: 1,
                         borderRadius: {
                           xs: BORDER_RADIUS_1,
                           md: BORDER_RADIUS_2,
