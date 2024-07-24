@@ -37,7 +37,7 @@ export const ShortUserBill: FC = () => {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        sx={{ pb: 1.3 }}
+        sx={{ pb: 1.5 }}
       >
         <Typography variant="text1" fontWeight={500} color="secondary">
           گزارش محاسبات
@@ -49,7 +49,7 @@ export const ShortUserBill: FC = () => {
           <Typography variant="text9">مشاهده همه</Typography>
         </Button>
       </Stack>
-      <Divider sx={{ borderColor: "rgba(91, 104, 119, 0.1)", mb: 1.3 }} />
+      <Divider sx={{ borderColor: "rgba(91, 104, 119, 0.1)", mb: 1 }} />
       <Stack
         rowGap={{ xs: 1, md: 1.5, lg: 1.8 }}
         justifyContent="space-between"
