@@ -4,13 +4,9 @@ import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
-
-const cost = {
-  cpu: 600000,
-  memory: 500000,
-  disk: 45000,
-  ipv4: 600000,
-};
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
+import { useNavigate } from "react-router";
 
 const receiptImage = (
   <Box
@@ -103,35 +99,22 @@ const spaceBetweenCircles = 6;
 const spaceBetweenChains = 4;
 
 type ReceiptPropsType = {
-  memory: number;
-  cpu: number;
-  disk: number;
-  ipv4: number;
-  ipv6: number;
-  server: number;
+  storage: number;
 };
 
-const Receipt: FC<ReceiptPropsType> = ({
-  memory,
-  cpu,
-  disk,
-  ipv4,
-  ipv6,
-  server,
-}) => {
+const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
+  const navigate = useNavigate();
+  const { data: storageData } =
+    useGetApiMyPortalProductItemListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
+    });
   const [receiptWidth, setReceiptWidth] = useState(0);
 
   const monthHours = 24 * 30;
-  const memoryPrice = memory * cost.memory;
-  const cpuPrice = cpu * cost.cpu;
-  const diskPrice = disk * cost.disk;
-  const ipv4Price = ipv4 * cost.ipv4;
-
-  const monthlyAmountPrice = memoryPrice + cpuPrice + diskPrice + ipv4Price;
-
+  const storagePrice = storageData && storage * storageData[0]?.price;
+  const monthlyAmountPrice = storagePrice!;
   const hourlyAmountPrice = (monthlyAmountPrice / monthHours).toFixed();
-
-  const totalPrice = monthlyAmountPrice * server;
+  const totalPrice = monthlyAmountPrice;
 
   const receiptRef = useRef(null);
 
@@ -271,14 +254,10 @@ const Receipt: FC<ReceiptPropsType> = ({
         <Stack rowGap={1} sx={{ width: "100%" }}>
           {topBoxRow_3section("تخمین مبلغ ساعتی", "تعداد منابع", "مبلغ (ریال)")}
           {topBoxRow_3section(
-            "Memory (GB)",
-            memory,
-            priceToPersian(memoryPrice)
+            "Disk (GB)",
+            storage,
+            priceToPersian(Number(storagePrice))
           )}
-          {topBoxRow_3section("CPU (Core)", cpu, priceToPersian(cpuPrice))}
-          {topBoxRow_3section("Disk (GB)", disk, priceToPersian(diskPrice))}
-          {topBoxRow_3section("IPv4", ipv4, priceToPersian(ipv4Price))}
-          {topBoxRow_3section("IPv6", ipv6, "رایگان")}
           <Divider
             orientation="horizontal"
             flexItem
@@ -287,12 +266,9 @@ const Receipt: FC<ReceiptPropsType> = ({
               my: 1,
             }}
           />
+          {topBoxRow_2section("مبلغ ساعتی ", priceToPersian(hourlyAmountPrice))}
           {topBoxRow_2section(
-            "مبلغ ساعتی ماشین",
-            priceToPersian(hourlyAmountPrice)
-          )}
-          {topBoxRow_2section(
-            "مبلغ ماهیانه (۳۰ روزه) ماشین",
+            "مبلغ ماهیانه (۳۰ روزه) ",
             priceToPersian(monthlyAmountPrice)
           )}
         </Stack>
@@ -300,7 +276,6 @@ const Receipt: FC<ReceiptPropsType> = ({
       {divider}
       <Stack sx={{ p: 2.4 }} rowGap={3}>
         <Stack rowGap={1}>
-          {topBoxRow_2section("ماشین مجازی", priceToPersian(server))}
           <Stack
             sx={{ width: "100%" }}
             direction="row"
@@ -317,12 +292,13 @@ const Receipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          href="/vm/add-vm"
+          // href="/storage/addStorageService"
+          onClick={() => navigate("/storage/addStorageService")}
           size="large"
-          sx={{ py: 2 }}
+          sx={{ padding: "5px" }}
           fullWidth
         >
-          ایجاد سرور ابری
+          ایجاد ذخیره‌ساز ابری
         </Button>
       </Stack>
       {bottomCircles}
@@ -330,4 +306,4 @@ const Receipt: FC<ReceiptPropsType> = ({
   );
 };
 
-export default Receipt;
+export default StorageReceipt;

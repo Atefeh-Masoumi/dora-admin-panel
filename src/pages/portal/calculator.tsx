@@ -1,39 +1,55 @@
-import { FC } from "react";
-import { useState } from "react";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { TabContext, TabPanel } from "@mui/lab";
+import { Container, Stack, Tabs, Typography } from "@mui/material";
+import { FC, SyntheticEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { DorsaTab } from "src/components/atoms/DorsaTab";
+import { DnsCostEstimator } from "src/components/organisms/portal/calculator/DnsCostEstimator";
+import { KubernetesCostEstimator } from "src/components/organisms/portal/calculator/KubernetesCostEstimator";
+import { StorageCostEstimator } from "src/components/organisms/portal/calculator/StorageCostEstimator";
+import { VmCostEstimator } from "src/components/organisms/portal/calculator/VmCostEstimator";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import Receipt from "src/components/organisms/portal/calculator/Receipt";
-import ServiceSpecifications from "src/components/organisms/portal/calculator/ServiceSpecifications";
 
-const servicesList = [
-  "Server",
-  "Storage",
-  "Kubernetes",
-  "DNS",
-  "CDN",
-  "Domain",
-  "Web Host",
-];
+const a11yProps = (index: number) => {
+  return {
+    id: `calculator-tab-${index}`,
+    "aria-controls": `calculator-tabpanel-${index}`,
+  };
+};
 
 const Calculator: FC = () => {
-  const [selectedService, setSelectedService] = useState("Server");
-  const [serverCount, setServerCount] = useState(1);
-  const [cpuCount, setCpuCount] = useState(1);
-  const [memoryCount, setMemoryCount] = useState(1);
-  const [diskCount, setDiskCount] = useState(25);
-  const [ipv4Count, setIpv4Count] = useState(1);
-  const [ipv6Count, setIpv6Count] = useState(1);
+  const { tab } = useParams<{ tab?: string }>();
+  const navigate = useNavigate();
+  const [value, setValue] = useState(tab || "1");
 
-  const servicesClickHandler = (service: string) => setSelectedService(service);
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    navigate(`?tab=${newValue}`);
+  };
+
+  useEffect(() => {
+    if (tab && tab !== value) {
+      setValue(tab);
+    }
+  }, [tab, value]);
+
+  useEffect(() => {
+    const initialTab = new URLSearchParams(window.location.search).get("tab");
+    if (initialTab) {
+      setValue(initialTab);
+    }
+  }, []);
 
   return (
     <Stack
       bgcolor="white"
       py={1}
       px={1}
-      width="100%"
       borderRadius={3}
       direction="column"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}
     >
       <Stack
         direction="row"
@@ -49,102 +65,48 @@ const Calculator: FC = () => {
           خدمات ابری
         </Typography>
       </Stack>
-      <Typography
-        variant="text2"
-        fontWeight={500}
-        color="#797979"
-        align="center"
-      >
-        سرویس مورد نیاز خود را انتخاب و فقط برای چیزی که واقعا استفاده می کنید
-        هزینه کنید.
-      </Typography>
-      <Box sx={{ width: "100%", overflow: "overlay" }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
+      <TabContext value={value}>
+        <Container
           sx={{
-            width: {
-              xs: "620px",
-              sm: "550px",
-              md: "580px",
-              lg: "610px",
-              xl: "650px",
-            },
-            border: "1px solid #E6E6E6",
+            display: "flex",
+            justifyContent: "center",
+            mt: 2,
+            border: "1px solid #DCE7FD",
             borderRadius: BORDER_RADIUS_1,
-            p: 0.5,
-            mx: "auto",
-            mt: 8,
-            mb: 7,
-          }}
-          columnGap={1}
-        >
-          {servicesList.map((item, index) => {
-            const isSelected = item === selectedService;
-            return (
-              <Button
-                disabled={index !== 0}
-                onClick={() => servicesClickHandler(item)}
-                size="large"
-                key={index}
-                variant={index === 0 ? "contained" : "text"}
-                sx={{
-                  py: 2,
-                  color: isSelected ? "white" : "#6E768ACC",
-                  bgcolor: isSelected ? undefined : "transparent",
-                  boxShadow: isSelected ? undefined : "none",
-                  "&:hover": {
-                    bgcolor: ({ palette }) =>
-                      isSelected ? palette.primary.main : "transparent",
-                    boxShadow: isSelected ? undefined : "none",
-                  },
-                }}
-              >
-                {item}
-              </Button>
-            );
-          })}
-        </Stack>
-      </Box>
-      <Box sx={{ overflow: "overlay" }}>
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          gap={1}
-          justifyContent="space-between"
-          sx={{
-            maxWidth: "1045px",
-            mx: "auto",
+            width: "70%",
           }}
         >
-          <Box sx={{ width: { xs: "100%", md: "635px" } }}>
-            <ServiceSpecifications
-              serverCount={serverCount}
-              cpuCount={cpuCount}
-              memoryCount={memoryCount}
-              diskCount={diskCount}
-              ipv4Count={ipv4Count}
-              ipv6Count={ipv6Count}
-              setServerCount={setServerCount}
-              setCpuCount={setCpuCount}
-              setMemoryCount={setMemoryCount}
-              setDiskCount={setDiskCount}
-              setIpv4Count={setIpv4Count}
-              setIpv6Count={setIpv6Count}
-            />
-          </Box>
-          <Box sx={{ width: { xs: "100%", md: "378px", overflow: "hidden" } }}>
-            <Receipt
-              server={serverCount}
-              memory={memoryCount}
-              cpu={cpuCount}
-              disk={diskCount}
-              ipv4={ipv4Count}
-              ipv6={ipv6Count}
-            />
-          </Box>
-        </Stack>
-      </Box>
+          <Tabs
+            variant="fullWidth"
+            sx={{
+              width: "100%",
+              bgcolor: "white",
+              py: 0.5,
+              borderRadius: BORDER_RADIUS_1,
+            }}
+            TabIndicatorProps={{ style: { display: "none" } }}
+            value={value}
+            onChange={handleChange}
+          >
+            <DorsaTab {...a11yProps(1)} label="سرور ابری" value="1" />
+            <DorsaTab {...a11yProps(2)} label="کلاستر کوبرنتیز" value="2" />
+            <DorsaTab {...a11yProps(3)} label="DNS ابری" value="3" />
+            <DorsaTab {...a11yProps(4)} label="ذخیره‌ساز ابری" value="4" />
+          </Tabs>
+        </Container>
+        <TabPanel value="1" sx={{ p: 0, my: 3 }}>
+          <VmCostEstimator />
+        </TabPanel>
+        <TabPanel value="2" sx={{ p: 0, my: 3 }}>
+          <KubernetesCostEstimator />
+        </TabPanel>
+        <TabPanel value="3" sx={{ p: 0, my: 3 }}>
+          <DnsCostEstimator />
+        </TabPanel>
+        <TabPanel value="4" sx={{ p: 0, my: 3 }}>
+          <StorageCostEstimator />
+        </TabPanel>
+      </TabContext>
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import {
   Button,
   Divider,
@@ -8,13 +8,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import moment from "jalali-moment";
-import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
+import { FC, Fragment } from "react";
 import { useNavigate } from "react-router";
-import { CustomTooltip } from "../portal/account/notification/tables/NotificationTableRow";
 import { useGetApiMyPortalIssueShortListQuery } from "src/app/services/api.generated";
+import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
+import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
+import { CustomTooltip } from "../portal/account/notification/tables/NotificationTableRow";
 
 export const ShortTickets: FC = () => {
   const { data: tickets, isLoading } = useGetApiMyPortalIssueShortListQuery();
@@ -28,7 +28,7 @@ export const ShortTickets: FC = () => {
         px: { xs: 1.8, lg: 2 },
         py: { xs: 1.8, lg: 2.25 },
         borderRadius: BORDER_RADIUS_1,
-        height: { xs: "80%", sm: "65%" },
+        height: { xs: "80%", sm: "50%" },
       }}
     >
       <Stack
