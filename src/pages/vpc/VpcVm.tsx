@@ -9,8 +9,8 @@ import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateNetworkRecordModal } from "src/components/organisms/vpc/dialogs/CreateNetworkRecordModal";
-import { vpcStruct } from "src/components/organisms/vpc/tables/struct";
-import { VpcListListTableRow } from "src/components/organisms/vpc/tables/VpcListTableRow";
+import { vpcVmStruct } from "src/components/organisms/vpc/tables/struct";
+import { VpcVmTableRow } from "src/components/organisms/vpc/tables/VpcVmTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 
@@ -81,7 +81,7 @@ export const VpcVm: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست VM ها
+                  لیست سرورهای مجازی
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox
@@ -121,8 +121,8 @@ export const VpcVm: FC = () => {
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack py={1.5}>
           <BaseTable
-            struct={vpcStruct}
-            RowComponent={VpcListListTableRow}
+            struct={vpcVmStruct}
+            RowComponent={VpcVmTableRow}
             rows={filteredList || []}
             text="در حال حاضر رکورد وجود ندارد"
             isLoading={isLoading}

@@ -116,14 +116,13 @@ export const CreateNatDialog: FC<CreateNatDialogPropsType> = ({
                     label="Type"
                     sx={{ paddingBottom: "3.5px" }}
                   >
-                    <MenuItem value={NAT_TYPE.S_NAT}>Source Nat</MenuItem>
-                    <MenuItem value={NAT_TYPE.D_NAT}>Destination Nat</MenuItem>
+                    <MenuItem value={NAT_TYPE.S_NAT}>SNAT</MenuItem>
+                    <MenuItem value={NAT_TYPE.D_NAT}>DNAT</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
             </Grid>
             <Divider sx={{ py: 1 }} />
-
             {natFormik.values.natType === NAT_TYPE.S_NAT ? (
               <CreateSourceNatForm
                 forceClose={forceClose}

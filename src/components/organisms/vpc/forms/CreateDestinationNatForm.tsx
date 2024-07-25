@@ -139,6 +139,118 @@ export const CreateDestinationNatForm: FC<
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container pt={2} rowGap={2} justifyContent="space-between">
+        <Grid item xs={12} md={5.8} lg={3.5}>
+          <Stack
+            pt={0}
+            mt={0}
+            rowGap={3}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Stack
+              justifyContent="center"
+              width="100%"
+              borderBottom="1px solid rgba(0, 0, 0, 0.23)"
+            >
+              <Typography variant="text4" textAlign="end">
+                Source
+              </Typography>
+            </Stack>
+            <Stack width="100%" direction="column" rowGap={1}>
+              <Stack width="100%" direction="column" rowGap={1}>
+                <FormControl fullWidth>
+                  <TextField
+                    fullWidth
+                    {...formik.getFieldProps("sourceIp")}
+                    focused
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          border: ` rgba(0, 0, 0, 0.23) 1px solid`,
+                        },
+                      },
+                    }}
+                    size="small"
+                    label="Source IP"
+                    error={Boolean(
+                      formik.errors.sourceIp && formik.touched.sourceIp
+                    )}
+                    helperText={
+                      formik.touched.sourceIp && formik.errors.sourceIp
+                    }
+                  />
+                </FormControl>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Grid>
+
+        <Grid item xs={12} md={5.8} lg={3.5}>
+          <Stack
+            pt={0}
+            mt={0}
+            rowGap={3}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Stack
+              justifyContent="center"
+              width="100%"
+              borderBottom="1px solid rgba(0, 0, 0, 0.23)"
+            >
+              <Typography variant="text4" textAlign="end">
+                Gateway
+              </Typography>
+            </Stack>
+            <Stack width="100%" direction="column" rowGap={2}>
+              <FormControl>
+                <InputLabel id="translate-select">Translate Ip</InputLabel>
+                <Select
+                  {...formik.getFieldProps("translateIp")}
+                  size="small"
+                  labelId="translate-select"
+                  id="translate-select"
+                  label="Translate Ip"
+                  sx={{ paddingBottom: "3.5px" }}
+                >
+                  {vpcIpList?.map((item, index) => (
+                    <MenuItem key={index} value={item.ip!}>
+                      {item.ip}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  {...formik.getFieldProps("destinationPort")}
+                  size="small"
+                  label="Translate Port"
+                  focused
+                  error={Boolean(
+                    formik.errors.destinationPort &&
+                      formik.touched.destinationPort
+                  )}
+                  helperText={
+                    formik.touched.destinationPort &&
+                    formik.errors.destinationPort
+                  }
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        border: ` rgba(0, 0, 0, 0.23) 1px solid`,
+                      },
+                    },
+                  }}
+                />
+              </FormControl>
+            </Stack>
+          </Stack>
+        </Grid>
+
         <Grid item xs={12} md={12} lg={3.5}>
           <Stack
             pt={0}
@@ -197,71 +309,6 @@ export const CreateDestinationNatForm: FC<
                   }}
                 />
               </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  {...formik.getFieldProps("destinationPort")}
-                  size="small"
-                  label="Destination Port"
-                  focused
-                  error={Boolean(
-                    formik.errors.destinationPort &&
-                      formik.touched.destinationPort
-                  )}
-                  helperText={
-                    formik.touched.destinationPort &&
-                    formik.errors.destinationPort
-                  }
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "&.Mui-focused fieldset": {
-                        border: ` rgba(0, 0, 0, 0.23) 1px solid`,
-                      },
-                    },
-                  }}
-                />
-              </FormControl>
-            </Stack>
-          </Stack>
-        </Grid>
-
-        <Grid item xs={12} md={5.8} lg={3.5}>
-          <Stack
-            pt={0}
-            mt={0}
-            rowGap={3}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Stack
-              justifyContent="center"
-              width="100%"
-              borderBottom="1px solid rgba(0, 0, 0, 0.23)"
-            >
-              <Typography variant="text4" textAlign="end">
-                Gateway
-              </Typography>
-            </Stack>
-            <Stack width="100%" direction="column" rowGap={2}>
-              <FormControl>
-                <InputLabel id="translate-select">Translate Ip</InputLabel>
-                <Select
-                  {...formik.getFieldProps("translateIp")}
-                  size="small"
-                  labelId="translate-select"
-                  id="translate-select"
-                  label="Translate Ip"
-                  sx={{ paddingBottom: "3.5px" }}
-                >
-                  {vpcIpList?.map((item, index) => (
-                    <MenuItem key={index} value={item.ip!}>
-                      {item.ip}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
               <FormControl
                 sx={{
                   direction: "rtl",
@@ -279,53 +326,6 @@ export const CreateDestinationNatForm: FC<
                   formik={formik}
                 />
               </FormControl>
-            </Stack>
-          </Stack>
-        </Grid>
-
-        <Grid item xs={12} md={5.8} lg={3.5}>
-          <Stack
-            pt={0}
-            mt={0}
-            rowGap={3}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Stack
-              justifyContent="center"
-              width="100%"
-              borderBottom="1px solid rgba(0, 0, 0, 0.23)"
-            >
-              <Typography variant="text4" textAlign="end">
-                Source
-              </Typography>
-            </Stack>
-            <Stack width="100%" direction="column" rowGap={1}>
-              <Stack width="100%" direction="column" rowGap={1}>
-                <FormControl fullWidth>
-                  <TextField
-                    fullWidth
-                    {...formik.getFieldProps("sourceIp")}
-                    focused
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          border: ` rgba(0, 0, 0, 0.23) 1px solid`,
-                        },
-                      },
-                    }}
-                    size="small"
-                    label="Source IP"
-                    error={Boolean(
-                      formik.errors.sourceIp && formik.touched.sourceIp
-                    )}
-                    helperText={
-                      formik.touched.sourceIp && formik.errors.sourceIp
-                    }
-                  />
-                </FormControl>
-              </Stack>
             </Stack>
           </Stack>
         </Grid>

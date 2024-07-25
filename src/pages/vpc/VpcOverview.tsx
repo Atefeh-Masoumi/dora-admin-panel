@@ -103,8 +103,13 @@ export const VpcOverview: FC<VpcOverviewPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
-            title="vpc Name"
+            title="vPC Name"
             value={vpcData?.name}
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Datacenter"
+            value={vpcData?.datacenter}
             isLoading={isLoading}
           />
           <BoxRow

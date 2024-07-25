@@ -44,9 +44,9 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
       <Box sx={{ width: "100%", p: 2 }}>
         <Stack direction="column" rowGap={2}>
           <Typography fontSize={24} fontWeight="bold">
-            شبکه
+            انتخاب شبکه
           </Typography>
-          <Divider flexItem sx={{ borderWidth: 1.5 }} />
+          <Divider sx={{ mb: 1 }} />
           <Typography color="text.light">
             لطفا Network موردنظر خود را انتخاب کنید.
           </Typography>
@@ -82,9 +82,9 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
       <Box sx={{ width: "100%", p: 2 }}>
         <Stack direction="column" rowGap={2}>
           <Typography fontSize={24} fontWeight="bold">
-            IP
+            آدرس IP
           </Typography>
-          <Divider flexItem sx={{ borderWidth: 1.5 }} />
+          <Divider sx={{ mb: 1 }} />
           <Typography color="text.light">
             لطفا IP موردنظر خود را انتخاب کنید.
           </Typography>
