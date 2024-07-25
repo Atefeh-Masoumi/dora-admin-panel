@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import { useDeleteApiMyVpcLoadBalancerDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyVpcLoadBalanceDeleteByIdMutation } from "src/app/services/api.generated";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -38,7 +38,7 @@ export const VpcLoadBalanceListTableRow: FC<
   const [
     deleteLoadBalanceRecord,
     { isLoading: deleteLoadBalanceRecordLoading },
-  ] = useDeleteApiMyVpcLoadBalancerDeleteByIdMutation();
+  ] = useDeleteApiMyVpcLoadBalanceDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -71,16 +71,16 @@ export const VpcLoadBalanceListTableRow: FC<
           },
         }}
       >
-        <TableCell align="center">{rowData?.virtualServerId}</TableCell>
+        <TableCell align="center">{rowData?.id}</TableCell>
+        <TableCell align="center">{rowData?.ip}</TableCell>
         <TableCell align="center">{rowData?.name}</TableCell>
         <TableCell align="center">{rowData?.port}</TableCell>
-        <TableCell align="center">{rowData?.algorithmTypeName}</TableCell>
-        <TableCell align="center">{rowData?.ip}</TableCell>
+        <TableCell align="center">{rowData?.VpcHostLbType}</TableCell>
         <TableCell align="center">
           <IconButton
             sx={{ borderRadius: 1 }}
             color="error"
-            onClick={() => handleOpenDelete(rowData?.virtualServerId)}
+            onClick={() => handleOpenDelete(rowData?.id)}
           >
             <TrashSvg />
           </IconButton>
@@ -116,18 +116,16 @@ export const VpcLoadBalanceListTableRow: FC<
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rowData?.serverPoolMembers.length > 0
-                    ? rowData?.serverPoolMembers?.map(
-                        (item: any, index: any) => {
-                          return (
-                            <TableRow key={index}>
-                              <TableCell align="center">{item.ip}</TableCell>
-                              <TableCell align="center">{item.name}</TableCell>
-                              <TableCell align="center">{item.port}</TableCell>
-                            </TableRow>
-                          );
-                        }
-                      )
+                  {rowData?.VpcHostLbNodes.length > 0
+                    ? rowData?.VpcHostLbNodes?.map((item: any, index: any) => {
+                        return (
+                          <TableRow key={index}>
+                            <TableCell align="center">{item.name}</TableCell>
+                            <TableCell align="center">{item.ip}</TableCell>
+                            <TableCell align="center">{item.port}</TableCell>
+                          </TableRow>
+                        );
+                      })
                     : ""}
                 </TableBody>
               </Table>

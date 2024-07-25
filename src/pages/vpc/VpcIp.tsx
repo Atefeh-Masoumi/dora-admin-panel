@@ -57,7 +57,7 @@ export const VpcIp: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست IP ها
+                  لیست Public IP ها
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox

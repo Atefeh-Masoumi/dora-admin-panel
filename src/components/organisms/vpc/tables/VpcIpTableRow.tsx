@@ -1,10 +1,6 @@
 import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import {
-  VpcIpListResponse,
-  useDeleteApiMyVpcIpDeleteByIdMutation,
-} from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -12,6 +8,10 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcIpTableStruct } from "./struct";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import CloseIcon from "@mui/icons-material/Close";
+import {
+  VpcIpListResponse,
+  useDeleteApiMyVpcIpDeleteByIdMutation,
+} from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",

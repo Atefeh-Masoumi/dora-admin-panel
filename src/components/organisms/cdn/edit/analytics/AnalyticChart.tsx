@@ -19,7 +19,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyCdnHostGetAnalyticByDnsHostIdAndPeriodIdQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
@@ -50,7 +50,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     data: userAnalytics,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiMyCdnAnalyticGetByDnsHostIdAndPeriodIdQuery({
+  } = useGetApiMyCdnHostGetAnalyticByDnsHostIdAndPeriodIdQuery({
     dnsHostId: dnsId,
     periodId: categoryId + 1,
   });

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyVpcLoadBalancerListByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVpcLoadBalanceListByIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -26,15 +26,15 @@ export const VpcLoadBalancer: FC = () => {
   const { vpcId } = useParams();
   const vpcHostId = Number(vpcId) || 0;
 
-  const { data: vpcLoadBalancerList, isLoading } =
-    useGetApiMyVpcLoadBalancerListByIdQuery({
+  const { data: vpcLoadBalanceList, isLoading } =
+    useGetApiMyVpcLoadBalanceListByIdQuery({
       id: vpcHostId,
     });
 
   const [search, setSearch] = useState("");
 
-  const filteredList = vpcLoadBalancerList?.filter((loadBalancer) =>
-    loadBalancer.name?.includes(search)
+  const filteredList = vpcLoadBalanceList?.filter((loadBalance) =>
+    loadBalance.name?.includes(search)
   );
 
   const openDialogHandler = () => {
@@ -76,7 +76,7 @@ export const VpcLoadBalancer: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست LoadBalancer
+                  لیست LoadBalance
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox

@@ -22,7 +22,7 @@ import {
   DestinationModel,
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcIpListByVpcHostIdQuery,
-  usePostApiMyVpcLoadBalancerCreateMutation,
+  usePostApiMyVpcLoadBalanceCreateMutation,
 } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -79,8 +79,7 @@ export const CreateVpcLoadBalancerDialog: FC<
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const { vpcId } = useParams();
-  const [selectedGateway, setSelectedGateway] = useState<any>({
-    vpcHostGatewayId: null,
+  const [selectedGatewayIp, setSelectedGatewayIp] = useState<any>({
     id: null,
   });
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
@@ -96,7 +95,7 @@ export const CreateVpcLoadBalancerDialog: FC<
     });
 
   const [createVpcLoadBalancer, { isLoading: createVpcLoadBalancerLoading }] =
-    usePostApiMyVpcLoadBalancerCreateMutation();
+    usePostApiMyVpcLoadBalanceCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -110,11 +109,10 @@ export const CreateVpcLoadBalancerDialog: FC<
     onSubmit: (values, { setSubmitting }) => {
       createVpcLoadBalancer({
         createVpcHostLbModel: {
-          vpcHostGatewayId: Number(selectedGateway?.vpcHostGatewayId),
-          vpcHostGatewayIpId: Number(selectedGateway?.id),
+          vpcHostGatewayIpId: Number(selectedGatewayIp?.id),
           vpcHostLbPort: Number(values.serverPoolPort),
-          algorithmTypeId: Number(values.algorithmTypeId),
-          poolMembers: values.poolMembers,
+          vpcHostLbTypeId: Number(values.algorithmTypeId),
+          vpcHostLbNodes: values.poolMembers,
         },
       })
         .unwrap()
@@ -153,8 +151,8 @@ export const CreateVpcLoadBalancerDialog: FC<
     );
   };
 
-  const handleVpcListItemClick = (vpcHostGatewayId: number, id: number) => {
-    setSelectedGateway({ vpcHostGatewayId, id });
+  const handleVpcListItemClick = (id: number) => {
+    setSelectedGatewayIp({ id });
   };
 
   const handleVmChange = (index: number, vmHostId: number) => {
@@ -211,33 +209,26 @@ export const CreateVpcLoadBalancerDialog: FC<
                   helperText={formik.errors.vpcHostGatewayIpId}
                   {...formik.getFieldProps("vpcHostGatewayIpId")}
                 >
-                  {vpcIpList?.map(
-                    ({ id, ip, isV4, isPrimary, vpcHostGatewayId }) => (
-                      <MenuItem
-                        onClick={() =>
-                          handleVpcListItemClick(
-                            Number(vpcHostGatewayId),
-                            Number(id)
-                          )
-                        }
-                        key={id}
-                        value={id}
-                        sx={{
-                          borderRadius: 1,
-                          backgroundColor: "#F3F4F6",
-                          m: 0.5,
-                          py: 1.5,
-                          color: "secondary",
-                          "&: focus": {
-                            color: "rgba(60, 138, 255, 1)",
-                            backgroundColor: "rgba(60, 138, 255, 0.1)",
-                          },
-                        }}
-                      >
-                        {ip}
-                      </MenuItem>
-                    )
-                  )}
+                  {vpcIpList?.map(({ id, ip, isV4, isPrimary }) => (
+                    <MenuItem
+                      onClick={() => handleVpcListItemClick(Number(id))}
+                      key={id}
+                      value={id}
+                      sx={{
+                        borderRadius: 1,
+                        backgroundColor: "#F3F4F6",
+                        m: 0.5,
+                        py: 1.5,
+                        color: "secondary",
+                        "&: focus": {
+                          color: "rgba(60, 138, 255, 1)",
+                          backgroundColor: "rgba(60, 138, 255, 0.1)",
+                        },
+                      }}
+                    >
+                      {ip}
+                    </MenuItem>
+                  ))}
                 </DorsaTextField>
               </Grid2>
               <Grid2 xs={12} sm={6}>

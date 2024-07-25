@@ -7,8 +7,6 @@ import {
   DialogTitle,
   Divider,
   InputLabel,
-  MenuItem,
-  Select,
   Stack,
   Radio,
   RadioGroup,
@@ -56,7 +54,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   const initialValues: VmProjectCreateModel = {
     name: name || "",
     hypervisorTypeId: 1,
-    datacenterId: datacenterList && datacenterList[0].id,
+    datacenterId: (datacenterList && datacenterList[0].id) || 0,
     // isPublic: true,
     // vpcHostId: null,
   };

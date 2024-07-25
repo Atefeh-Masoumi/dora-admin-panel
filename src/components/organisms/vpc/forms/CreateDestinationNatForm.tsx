@@ -1,9 +1,7 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
-  Chip,
-  Divider,
   FormControl,
   Grid,
   InputLabel,
@@ -11,8 +9,6 @@ import {
   Select,
   TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FormikProps, useFormik } from "formik";
@@ -24,7 +20,6 @@ import {
   useGetApiMyVpcNatServiceListQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   usePostApiMyVpcNatCreateDnatMutation,
-  usePutApiMyVpcNatEditMutation,
 } from "src/app/services/api.generated";
 import {
   CustomCreate_D_NatInitialValueType,
@@ -46,10 +41,6 @@ export const CreateDestinationNatForm: FC<
   const [vpcNetworkId, setVpcNetworkId] = useState<number | "">("");
   const [vpcIp, setVpcIp] = useState<string | "">("");
 
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"));
-  const isLg = useMediaQuery(theme.breakpoints.up("lg"));
-
   const { vpcId } = useParams();
   const { name: natName } = natFormik.values;
 
@@ -63,15 +54,7 @@ export const CreateDestinationNatForm: FC<
     });
   const { data: natServiceList } = useGetApiMyVpcNatServiceListQuery();
 
-  const [createVpcNat, { isLoading: createNatLoading }] =
-    usePostApiMyVpcNatCreateDnatMutation();
-  const [editVpcNat, { isLoading: editNatLoading }] =
-    usePutApiMyVpcNatEditMutation();
-
-  const isLoading = useMemo(
-    () => createNatLoading || editNatLoading,
-    [createNatLoading, editNatLoading]
-  );
+  const [createVpcNat, { isLoading }] = usePostApiMyVpcNatCreateDnatMutation();
 
   const initialValues: CustomCreate_D_NatInitialValueType = {
     vpcHostId: Number(vpcId!),
@@ -89,17 +72,6 @@ export const CreateDestinationNatForm: FC<
 
   const onSubmit: any = (values: any, { resetForm }: any) => {
     if (selectedNat?.id) {
-      editVpcNat({
-        editVpcGatewayNatModel: {
-          ...values,
-        },
-      })
-        .unwrap()
-        .then((res) => {
-          resetForm();
-        })
-        .catch((err) => {});
-    } else {
       createVpcNat({
         createVpcGatewayDnatModel: {
           ...values,

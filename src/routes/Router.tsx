@@ -555,31 +555,31 @@ const Router: FC = () => {
         <Route
           path="/vpc/:vpcId/network"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "لیست network ها",
+            pageTitle: "مدیریت شبکه ها",
           })}
         />
         <Route
           path="/vpc/:vpcId/vm"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "لیست vm ها",
+            pageTitle: "مدیریت سرور ها",
           })}
         />
         <Route
           path="/vpc/:vpcId/nat"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "لیست nat ها",
+            pageTitle: "مدیریت NAT ها",
           })}
         />
         <Route
           path="/vpc/:vpcId/ip"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "لیست ip ها",
+            pageTitle: "مدیریت Public IP ها",
           })}
         />
         <Route
           path="/vpc/:vpcId/loadBalancer"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "لیست loadBalancer ها",
+            pageTitle: "مدیریت Load Balance ها",
           })}
         />
         <Route

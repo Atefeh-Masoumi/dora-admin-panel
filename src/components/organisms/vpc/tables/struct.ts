@@ -10,7 +10,7 @@ export const vpcTableStruct: columnType[] = [
 ];
 
 export const vpcIpTableStruct: columnType[] = [
-  { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "id", label: "شماره شناسه", invisibility: true, disableSort: true },
   { id: "ip", label: "IP", disableSort: true },
   { id: "isV4", label: "Is V4", disableSort: true },
   { id: "isPrimary", label: "Is Primary", disableSort: true },
@@ -41,26 +41,26 @@ export const vpcNetworkStruct: columnType[] = [
 
 export const vpcVmStruct: columnType[] = [
   { id: "id", label: "شماره شناسه", disableSort: true },
-  { id: "name", label: "نام", disableSort: true },
+  { id: "name", label: "Name", disableSort: true },
   { id: "ipv4", label: "IP Address", disableSort: true },
-  { id: "datacenter", label: "دیتاسنتر", disableSort: true },
+  { id: "datacenter", label: "Datacenter", disableSort: true },
   { id: "createDate", label: "تاریخ ایجاد", disableSort: true },
   { id: "statusId", label: "وضعیت" },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const vpcLoadBalanceStruct: columnType[] = [
-  { id: "virtualServerId", label: "شماره شناسه", disableSort: true },
-  { id: "name", label: "نام", disableSort: true },
+  { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "name", label: "Name", disableSort: true },
   { id: "port", label: "PORT", disableSort: true },
-  { id: "algorithmTypeName", label: "نوع توزیع", disableSort: true },
   { id: "ip", label: "IP" },
+  { id: "vpcHostLbType", label: "Type", disableSort: true },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const vpcLoadBalancerPollMembersTableStruct: columnType[] = [
   { id: "ip", label: "IP" },
-  { id: "name", label: "نام" },
+  { id: "name", label: "Name" },
   { id: "port", label: "Port" },
   { id: "control", label: "", disableSort: true },
 ];

@@ -63,7 +63,7 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
   ) => {
     if (createVpcNatServiceLoading) return;
     createVpcNatService({
-      createVpcNatServiceModel: {
+      createVpcTranslateModel: {
         vpcHostId: values.vpcHostId!,
         serviceName: values.serviceName!,
         port: values.port || 0,

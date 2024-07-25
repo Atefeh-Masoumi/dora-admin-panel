@@ -346,13 +346,13 @@ export const api = generatedApi
         invalidatesTags: () => ["Network"],
       },
       // ============================== VPC LoadBalance ============================== //
-      getApiMyVpcLoadBalancerListById: {
+      getApiMyVpcLoadBalanceListById: {
         providesTags: () => ["LoadBalance"],
       },
-      postApiMyVpcLoadBalancerCreate: {
+      postApiMyVpcLoadBalanceCreate: {
         invalidatesTags: () => ["LoadBalance"],
       },
-      deleteApiMyVpcLoadBalancerDeleteById: {
+      deleteApiMyVpcLoadBalanceDeleteById: {
         invalidatesTags: () => ["LoadBalance"],
       },
       // ============================== VPC Public IP ============================== //
