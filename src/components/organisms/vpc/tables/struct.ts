@@ -25,7 +25,7 @@ export const vpcNatTableStruct: columnType[] = [
   { id: "destinationPort", label: "Destination Port" },
   { id: "translateIp", label: "Gatway IP" },
   { id: "createDate", label: "Create Date" },
-  { id: "control", label: "" },
+  { id: "control", label: "", disableSort: true },
 ];
 
 export const vpcNetworkStruct: columnType[] = [
@@ -62,4 +62,5 @@ export const vpcLoadBalancerPollMembersTableStruct: columnType[] = [
   { id: "ip", label: "IP" },
   { id: "name", label: "نام" },
   { id: "port", label: "Port" },
+  { id: "control", label: "", disableSort: true },
 ];
