@@ -28,7 +28,7 @@ export const onlyNumber = (text: string) =>
  * @returns string with fa numbers and commas
  */
 export const priceToPersian: (price: number | string) => string = (price) => {
-  if (price < 0) {
+  if (Number(price) < 0) {
     const reverse = String(price).substring(1);
     return (
       Math.ceil(Number(reverse))

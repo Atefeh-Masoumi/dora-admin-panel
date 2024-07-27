@@ -154,15 +154,10 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
               </Tooltip>
               <Button
                 startIcon={<ContentCopyIcon />}
-                variant="outlined"
+                variant="contained"
                 size="small"
                 onClick={() => copyText(securityPhrase)}
-                sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.25)",
-                  color: "#000",
-                  borderColor: "#ccc",
-                  marginRight: "10px",
-                }}
+                sx={{ marginRight: "5px" }}
               >
                 کپی کردن
               </Button>

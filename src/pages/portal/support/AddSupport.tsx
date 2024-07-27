@@ -21,6 +21,7 @@ import {
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueSubjectSelectListMutation,
   GetApiMyPortalCustomerProductListByProductIdApiResponse,
+  useGetApiMyPortalIssueListQuery,
 } from "src/app/services/api.generated";
 import {
   useCustomCreateIssueMutation,
@@ -418,14 +419,19 @@ const AddTicket: FC = () => {
             </Stack>
             <Button
               color="primary"
-              variant="outlined"
+              variant="contained"
               component="label"
               startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                <Add
+                  sx={{
+                    "& path": { stroke: "rgba(255, 255, 255, 1)" },
+                    marginBottom: "2px",
+                  }}
+                />
               }
               sx={{ px: 2 }}
             >
-              <Typography fontSize="14px" fontWeight="400">
+              <Typography fontSize="15px" fontWeight="500">
                 انتخاب
               </Typography>
               <Input

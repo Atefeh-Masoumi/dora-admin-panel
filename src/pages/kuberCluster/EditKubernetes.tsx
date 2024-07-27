@@ -39,7 +39,7 @@ const EditKubernetes: FC = () => {
   }, []);
 
   return (
-    <TabContext value={value}>
+    <TabContext value={value}> 
       <Container maxWidth="xs">
         <Tabs
           variant="fullWidth"

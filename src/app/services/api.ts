@@ -26,6 +26,7 @@ const tags = [
   "Network",
   "LoadBalance",
   "PublicIP",
+  "Issue",
 ];
 
 export const api = generatedApi
@@ -112,6 +113,9 @@ export const api = generatedApi
       },
       getApiMyPortalIssueList: {
         providesTags: () => ["Support"],
+      },
+      customCreateIssue: {
+        invalidatesTags: () => ["Support"],
       },
       postApiMyPortalIssueCreate: {
         invalidatesTags: () => ["Support"],

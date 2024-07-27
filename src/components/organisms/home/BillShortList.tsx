@@ -30,7 +30,7 @@ export const ShortUserBill: FC = () => {
         px: { xs: 1.8, lg: 2 },
         py: { xs: 1.8, lg: 2.25 },
         borderRadius: BORDER_RADIUS_1,
-        height: { xs: "80%", sm: "65%" },
+        height: { xs: "80%", sm: "50%" },
       }}
     >
       <Stack
@@ -67,7 +67,7 @@ export const ShortUserBill: FC = () => {
             ))}
           </Stack>
         ) : (
-          <Stack spacing={2}>
+          <Stack spacing={1.7}>
             <Fragment>
               {reports?.length === 0 ? (
                 <Stack direction="row" justifyContent="center" py={5}>
