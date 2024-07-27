@@ -31,16 +31,16 @@ import {
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
 const priorityLevel = [
-  { id: 1, name: "کم" },
-  { id: 2, name: "معمولی" },
-  { id: 3, name: "زیاد" },
+  { id: 1, name: "مهم" },
+  { id: 2, name: "زیاد" },
+  { id: 3, name: "ضروری" },
 ];
 
 const AddTicket: FC = () => {
   const navigate = useNavigate();
 
   const [businessUnitId, setBusinessUnitId] = useState<number>();
-  const [ticketPriorityLevel, setTicketPriorityLevel] = useState<number>();
+  const [ticketPriorityLevel, setTicketPriorityLevel] = useState<number>(1);
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetApiMyPortalBusinessUnitListQuery();
 
