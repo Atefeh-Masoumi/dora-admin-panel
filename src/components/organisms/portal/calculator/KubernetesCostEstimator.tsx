@@ -10,8 +10,6 @@ export const KubernetesCostEstimator: FC = () => {
   const [cpuCount, setCpuCount] = useState(1);
   const [memoryCount, setMemoryCount] = useState(1);
   const [diskCount, setDiskCount] = useState(25);
-  const [ipv4Count, setIpv4Count] = useState(1);
-  const [ipv6Count, setIpv6Count] = useState(1);
 
   const [callKuberData] =
     useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery();
@@ -21,9 +19,10 @@ export const KubernetesCostEstimator: FC = () => {
       workerNodeCount: Number(workerNodes),
     })
       .then((res) => setData(res.data))
-      .catch((err) => {});
+      .catch(() => {});
   }, [workerNodes]);
 
+  // master cpu count
   const masterCpuCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
@@ -31,6 +30,8 @@ export const KubernetesCostEstimator: FC = () => {
       )?.quantity || 0,
     [data]
   );
+
+  // master memory count
   const masterMemoryCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
@@ -38,6 +39,8 @@ export const KubernetesCostEstimator: FC = () => {
       )?.quantity || 0,
     [data]
   );
+
+  // master disk count
   const masterDiskCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
@@ -86,8 +89,7 @@ export const KubernetesCostEstimator: FC = () => {
   const masterResourceList = [
     {
       name: "تعداد نودهای master",
-      // value: data?.masterNodesInfo?.masterNodeCount || 0,
-      value: 1,
+      value: data?.masterNodesInfo?.masterNodeCount || 0,
       disabled: true,
       min: 1,
       max: 3,
@@ -95,8 +97,7 @@ export const KubernetesCostEstimator: FC = () => {
     },
     {
       name: "CPU (Core)",
-      // value: masterCpuCount,
-      value: 2,
+      value: masterCpuCount,
       disabled: true,
       min: 2,
       max: 48,
@@ -104,8 +105,7 @@ export const KubernetesCostEstimator: FC = () => {
     },
     {
       name: "Memory (GB)",
-      // value: masterMemoryCount,
-      value: 4,
+      value: masterMemoryCount,
       disabled: true,
       min: 4,
       max: 128,
@@ -113,8 +113,7 @@ export const KubernetesCostEstimator: FC = () => {
     },
     {
       name: "Disk (GB)",
-      // value: masterDiskCount,
-      value: 50,
+      value: masterDiskCount,
       disabled: true,
       min: 50,
       max: 1000,
@@ -148,12 +147,12 @@ export const KubernetesCostEstimator: FC = () => {
           <Box sx={{ width: { xs: "100%", md: "378px", overflow: "hidden" } }}>
             <KubernetesReceipt
               workerNodes={workerNodes}
-              memory={memoryCount}
-              cpu={cpuCount}
-              disk={diskCount}
-              kuberData={data}
-              ipv4={ipv4Count}
-              ipv6={ipv6Count}
+              memoryCount={memoryCount}
+              cpuCount={cpuCount}
+              diskCount={diskCount}
+              masterCpuCount={masterCpuCount}
+              masterMemoryCount={masterMemoryCount}
+              masterDiskCount={masterDiskCount}
             />
           </Box>
         </Stack>

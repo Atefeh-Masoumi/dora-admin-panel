@@ -1,12 +1,12 @@
-import type { FC } from "react";
-import { useState, useEffect, useRef, useMemo } from "react";
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { priceToPersian } from "src/utils/priceToPersian";
-import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
+import type { FC } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
+import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 const receiptImage = (
   <Box
@@ -266,10 +266,10 @@ const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
               my: 1,
             }}
           />
-          {topBoxRow_2section("مبلغ ساعتی ", priceToPersian(hourlyAmountPrice))}
+          {topBoxRow_2section("مبلغ ساعتی ", hourlyAmountPrice)}
           {topBoxRow_2section(
             "مبلغ ماهیانه (۳۰ روزه) ",
-            priceToPersian(monthlyAmountPrice)
+            String(monthlyAmountPrice)
           )}
         </Stack>
       </Stack>

@@ -2,6 +2,7 @@ import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery } from "src/app/services/api";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -67,21 +68,23 @@ const topBoxRow_3section = (
   </Stack>
 );
 
-const topBoxRow_2section = (txt1: string, txt2: string) => (
-  <Stack
-    sx={{ width: "100%" }}
-    direction="row"
-    alignItems="center"
-    justifyContent="space-between"
-  >
-    <Typography variant="text13" color="#6E768A" sx={{ width: "180px" }}>
-      {txt1}
-    </Typography>
-    <Typography variant="text13" color="#6E768A" align="right">
-      {priceToPersian(txt2)}
-    </Typography>
-  </Stack>
-);
+const topBoxRow_2section = (txt1: string, txt2: string) => {
+  return (
+    <Stack
+      sx={{ width: "100%" }}
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+    >
+      <Typography variant="text13" color="#6E768A" sx={{ width: "180px" }}>
+        {txt1}
+      </Typography>
+      <Typography variant="text13" color="#6E768A" align="right">
+        {priceToPersian(txt2)}
+      </Typography>
+    </Stack>
+  );
+};
 
 const circles = {
   width: 20,
@@ -98,65 +101,146 @@ const spaceBetweenChains = 4;
 
 type ReceiptPropsType = {
   workerNodes: number;
-  memory: number;
-  cpu: number;
-  disk: number;
-  ipv4: number;
-  ipv6: number;
-  kuberData: any;
+  memoryCount: number;
+  cpuCount: number;
+  diskCount: number;
+  masterCpuCount: number;
+  masterMemoryCount: number;
+  masterDiskCount: number;
 };
 
 const KubernetesReceipt: FC<ReceiptPropsType> = ({
   workerNodes,
-  memory,
-  cpu,
-  disk,
-  ipv4,
-  ipv6,
-  kuberData,
+  memoryCount,
+  cpuCount,
+  diskCount,
+  masterCpuCount,
+  masterMemoryCount,
+  masterDiskCount,
 }) => {
   const navigate = useNavigate();
+  const [data, setData] = useState<any>([]);
   const [receiptWidth, setReceiptWidth] = useState(0);
-  const kubervmProductItemsData = kuberData.vmProductItemsPrice;
 
   const monthHours = 24 * 30;
 
+  const [callKuberData] =
+    useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery();
+
+  useEffect(() => {
+    callKuberData({
+      workerNodeCount: Number(workerNodes),
+    })
+      .then((res) => setData(res.data))
+      .catch(() => {});
+  }, [workerNodes]);
+
+  const kubernetesVmProductItemsData = data.vmProductItemsPrice;
+
+  // // master cpu count
+  // const masterCpuCount = useMemo(
+  //   () =>
+  //     data?.masterNodesInfo?.masterVmSpecs?.find(
+  //       (item: any) => item.productItemId === 1
+  //     )?.quantity || 0,
+  //   [data]
+  // );
+
+  // // master memory count
+  // const masterMemoryCount = useMemo(
+  //   () =>
+  //     data?.masterNodesInfo?.masterVmSpecs?.find(
+  //       (item: any) => item.productItemId === 2
+  //     )?.quantity || 0,
+  //   [data]
+  // );
+
+  // // master disk count
+  // const masterDiskCount = useMemo(
+  //   () =>
+  //     data?.masterNodesInfo?.masterVmSpecs?.find(
+  //       (item: any) => item.productItemId === 3
+  //     )?.quantity || 0,
+  //   [data]
+  // );
+
   // cpu price
-  const singleCpuPrice = kubervmProductItemsData?.find(
+  const singleCpuPrice = kubernetesVmProductItemsData?.find(
     (item: any) => item.name === "vCPU"
   )?.price;
-  const cpuPrice = cpu * singleCpuPrice!;
+  const cpuPrice = cpuCount * singleCpuPrice!;
 
   // disk price
-  const singleDiskPrice = kubervmProductItemsData?.find(
+  const singleDiskPrice = kubernetesVmProductItemsData?.find(
     (item: any) => item.name === "vDisk"
   )?.price;
-  const diskPrice = disk * singleDiskPrice!;
+  const diskPrice = diskCount * singleDiskPrice!;
 
   // memory price
-  const singleMemoryPrice = kubervmProductItemsData?.find(
+  const singleMemoryPrice = kubernetesVmProductItemsData?.find(
     (item: any) => item.name === "vMemory"
   )?.price;
-  const memoryPrice = memory * singleMemoryPrice!;
+  const memoryPrice = memoryCount * singleMemoryPrice!;
 
-  // ipv4 price
-  const singleIPV4Price = kubervmProductItemsData?.find(
-    (item: any) => item.name === "IPV4"
-  )?.price;
-  const ipv4Price = ipv4 * singleIPV4Price!;
+  const workerItemList: any = useMemo(
+    () => [
+      {
+        title: "CPU (Core)",
+        count: cpuCount,
+        value: cpuPrice * cpuCount,
+      },
+      {
+        title: "Memory (GB)",
+        count: memoryCount,
+        value: memoryPrice * memoryCount,
+      },
+      {
+        title: "Disk (GB)",
+        count: diskCount,
+        value: diskPrice * diskCount,
+      },
+    ],
+    [cpuCount, cpuPrice, diskCount, diskPrice, memoryCount, memoryPrice]
+  );
 
-  // ipv6 price
-  const singleIPV6Price = kubervmProductItemsData?.find(
-    (item: any) => item.name === "IPV6"
-  )?.price;
-  const ipv6Price = ipv6 * singleIPV6Price!;
+  const workerMonthlyPrice = useMemo(
+    () =>
+      workerItemList.reduce(
+        (accumulator: any, currentValue: any) =>
+          accumulator + (currentValue.value as number),
+        0
+      ) * workerNodes,
+    [workerItemList, workerNodes]
+  );
 
-  const monthlyAmountPrice =
-    memoryPrice + cpuPrice + diskPrice + ipv4Price + ipv6Price;
+  const masterItemList = useMemo(
+    () => [
+      cpuPrice * masterCpuCount,
+      memoryPrice * masterMemoryCount,
+      diskPrice * masterDiskCount,
+    ],
+    [
+      cpuPrice,
+      diskPrice,
+      masterCpuCount,
+      masterDiskCount,
+      masterMemoryCount,
+      memoryPrice,
+    ]
+  );
+
+  const masterMonthlyPrice = useMemo(
+    () =>
+      masterItemList.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      ) * (data?.masterNodesInfo?.masterNodeCount || 0),
+    [data?.masterNodesInfo?.masterNodeCount, masterItemList]
+  );
+
+  const monthlyAmountPrice = memoryPrice + cpuPrice + diskPrice;
 
   const hourlyAmountPrice = (monthlyAmountPrice / monthHours).toFixed();
-
-  const totalPrice = 10;
 
   const receiptRef = useRef(null);
 
@@ -176,6 +260,18 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
       window.removeEventListener("resize", onWidthChange);
     };
   }, []);
+
+  const totalMonthlyPrice = useMemo(
+    () =>
+      workerMonthlyPrice +
+      masterMonthlyPrice +
+      (data?.masterNodesInfo?.kubernetesManagementItemPrice || 0),
+    [
+      data?.masterNodesInfo?.kubernetesManagementItemPrice,
+      masterMonthlyPrice,
+      workerMonthlyPrice,
+    ]
+  );
 
   const circleCount = useMemo(() => {
     if (receiptWidth === 0 || !receiptWidth) return 0;
@@ -295,11 +391,17 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
         </Typography>
         <Stack rowGap={1} sx={{ width: "100%" }}>
           {topBoxRow_3section("تخمین مبلغ ساعتی", "تعداد منابع", "مبلغ (ریال)")}
-          {/* {topBoxRow_3section(
+          {topBoxRow_3section("CPU (Core)", cpuCount, priceToPersian(cpuPrice))}
+          {topBoxRow_3section(
+            "Memory (GB)",
+            memoryCount,
+            priceToPersian(memoryPrice)
+          )}
+          {topBoxRow_3section(
             "Disk (GB)",
-            storage,
-            priceToPersian(Number(storagePrice))
-          )} */}
+            diskCount,
+            priceToPersian(diskPrice)
+          )}
           <Divider
             orientation="horizontal"
             flexItem
@@ -308,10 +410,16 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
               my: 1,
             }}
           />
-          {topBoxRow_2section("مبلغ ساعتی ", priceToPersian(hourlyAmountPrice))}
           {topBoxRow_2section(
-            "مبلغ ماهیانه (۳۰ روزه) ",
-            priceToPersian(monthlyAmountPrice)
+            "هزینه نگهداری",
+            data?.masterNodesInfo?.kubernetesManagementItemPrice
+          )}
+          {topBoxRow_2section("هزینه نودهای مستر", String(masterMonthlyPrice))}
+          {topBoxRow_2section("هزینه نودهای ورکر", String(workerMonthlyPrice))}
+          {topBoxRow_2section("مبلغ ساعتی ", String(hourlyAmountPrice))}
+          {topBoxRow_2section(
+            "مبلغ ماهیانه (۳۰ روزه)",
+            String(totalMonthlyPrice)
           )}
         </Stack>
       </Stack>
@@ -328,19 +436,18 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
               مبلغ کل فاکتور
             </Typography>
             <Typography variant="text13" color="#6E768A" fontWeight={700}>
-              {priceToPersian(totalPrice)} ریال
+              {priceToPersian(totalMonthlyPrice)} ریال
             </Typography>
           </Stack>
         </Stack>
         <Button
           variant="contained"
-          // href="/storage/addStorageService"
-          onClick={() => navigate("/storage/addStorageService")}
+          onClick={() => navigate("/kubernetes/add")}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
         >
-          ایجاد ذخیره‌ساز ابری
+          ایجاد کلاستر کوبرنتیز
         </Button>
       </Stack>
       {bottomCircles}

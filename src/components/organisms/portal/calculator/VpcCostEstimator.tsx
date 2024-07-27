@@ -1,19 +1,28 @@
 import { Box, Grid, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import DnsReceipt from "./DnsReceipt";
 import ServiceSpecifications from "./ServiceSpecifications";
+import VpcReceipt from "./VpcReceipt";
 
-export const DnsCostEstimator: FC = () => {
-  const [dnsRecord, setDnsRecord] = useState(10000);
+export const VpcCostEstimator: FC = () => {
+  const [ipCount, setIpCount] = useState(1);
+  const [rulesCount, setRulesCount] = useState(10);
 
   const resourceList = [
     {
-      name: "DNS رکورد",
-      value: dnsRecord,
-      onChange: setDnsRecord,
-      min: 10000,
-      max: 1000000,
-      step: 10000,
+      name: "IPV4",
+      value: ipCount,
+      onChange: setIpCount,
+      min: 1,
+      max: 10,
+      step: 1,
+    },
+    {
+      name: "Rules(10)",
+      value: rulesCount,
+      onChange: setRulesCount,
+      min: 10,
+      max: 100,
+      step: 10,
     },
   ];
 
@@ -38,7 +47,7 @@ export const DnsCostEstimator: FC = () => {
             <ServiceSpecifications resourceList={resourceList} />
           </Box>
           <Box sx={{ width: { xs: "100%", md: "378px", overflow: "hidden" } }}>
-            <DnsReceipt dnsRecord={dnsRecord} />
+            <VpcReceipt ipCount={ipCount} rulesCount={rulesCount} />
           </Box>
         </Stack>
       </Box>

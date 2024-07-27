@@ -1,5 +1,12 @@
 import { TabContext, TabPanel } from "@mui/lab";
-import { Container, Stack, Tabs, Typography } from "@mui/material";
+import {
+  Container,
+  Stack,
+  Tabs,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { FC, SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
@@ -7,6 +14,7 @@ import { DnsCostEstimator } from "src/components/organisms/portal/calculator/Dns
 import { KubernetesCostEstimator } from "src/components/organisms/portal/calculator/KubernetesCostEstimator";
 import { StorageCostEstimator } from "src/components/organisms/portal/calculator/StorageCostEstimator";
 import { VmCostEstimator } from "src/components/organisms/portal/calculator/VmCostEstimator";
+import { VpcCostEstimator } from "src/components/organisms/portal/calculator/VpcCostEstimator";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const a11yProps = (index: number) => {
@@ -20,6 +28,8 @@ const Calculator: FC = () => {
   const { tab } = useParams<{ tab?: string }>();
   const navigate = useNavigate();
   const [value, setValue] = useState(tab || "1");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -70,14 +80,15 @@ const Calculator: FC = () => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            mt: 2,
+            // mt: 2,
+            margin: "10px auto",
             border: "1px solid #DCE7FD",
             borderRadius: BORDER_RADIUS_1,
-            width: "70%",
+            width: "80%",
           }}
         >
           <Tabs
-            variant="fullWidth"
+            variant={isMobile ? "scrollable" : "fullWidth"}
             sx={{
               width: "100%",
               bgcolor: "white",
@@ -92,6 +103,7 @@ const Calculator: FC = () => {
             <DorsaTab {...a11yProps(2)} label="کلاستر کوبرنتیز" value="2" />
             <DorsaTab {...a11yProps(3)} label="DNS ابری" value="3" />
             <DorsaTab {...a11yProps(4)} label="ذخیره‌ساز ابری" value="4" />
+            <DorsaTab {...a11yProps(5)} label="VPC" value="5" />
           </Tabs>
         </Container>
         <TabPanel value="1" sx={{ p: 0, my: 3 }}>
@@ -105,6 +117,9 @@ const Calculator: FC = () => {
         </TabPanel>
         <TabPanel value="4" sx={{ p: 0, my: 3 }}>
           <StorageCostEstimator />
+        </TabPanel>
+        <TabPanel value="5" sx={{ p: 0, my: 3 }}>
+          <VpcCostEstimator />
         </TabPanel>
       </TabContext>
     </Stack>

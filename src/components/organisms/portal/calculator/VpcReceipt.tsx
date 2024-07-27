@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -99,21 +99,31 @@ const spaceBetweenCircles = 6;
 const spaceBetweenChains = 4;
 
 type ReceiptPropsType = {
-  dnsRecord: number;
+  ipCount: number;
+  rulesCount: number;
 };
 
-const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
-  const { data: dnsData } = useGetApiMyPortalProductItemListByProductIdQuery({
-    productId: PRODUCT_CATEGORY_ENUM.DNS,
+const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
+  const navigate = useNavigate();
+  const { data: vpcData } = useGetApiMyPortalProductItemListByProductIdQuery({
+    productId: PRODUCT_CATEGORY_ENUM.VPC,
   });
   const [receiptWidth, setReceiptWidth] = useState(0);
-  const navigate = useNavigate();
 
   const monthHours = 24 * 30;
-  const dnsPrice = dnsData && dnsRecord * dnsData[0]?.price;
-  const monthlyAmountPrice = dnsPrice!;
+
+  // ip price
+  const vpcIpv4 = vpcData?.find((item) => item.name === "VPC IPV4");
+  const vpcIpv4Price = vpcData && ipCount * vpcIpv4?.price!;
+
+  // rule10 price
+  const vpc10Rules = vpcData?.find((item) => item.name === "VPC 10 Rules");
+  const vpc10RulesPrice = vpcData && rulesCount * vpc10Rules?.price!;
+
+  const monthlyAmountPrice = vpcIpv4Price! + vpc10RulesPrice!;
   const hourlyAmountPrice = (monthlyAmountPrice / monthHours).toFixed();
   const totalPrice = monthlyAmountPrice;
+
   const receiptRef = useRef(null);
 
   const onWidthChange = () => {
@@ -251,7 +261,16 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
         </Typography>
         <Stack rowGap={1} sx={{ width: "100%" }}>
           {topBoxRow_3section("تخمین مبلغ ساعتی", "تعداد منابع", "مبلغ (ریال)")}
-          {topBoxRow_3section("DNS Record", dnsRecord, String(dnsPrice))}
+          {topBoxRow_3section(
+            "IPV4",
+            ipCount,
+            priceToPersian(Number(vpcIpv4Price))
+          )}
+          {topBoxRow_3section(
+            "Rules(10)",
+            ipCount,
+            priceToPersian(Number(vpc10RulesPrice))
+          )}
           <Divider
             orientation="horizontal"
             flexItem
@@ -260,10 +279,10 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
               my: 1,
             }}
           />
-          {topBoxRow_2section("مبلغ ساعتی", priceToPersian(hourlyAmountPrice))}
+          {topBoxRow_2section("مبلغ ساعتی ", hourlyAmountPrice)}
           {topBoxRow_2section(
-            "مبلغ ماهیانه (۳۰ روزه)",
-            priceToPersian(monthlyAmountPrice)
+            "مبلغ ماهیانه (۳۰ روزه) ",
+            String(monthlyAmountPrice)
           )}
         </Stack>
       </Stack>
@@ -286,14 +305,12 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
         </Stack>
         <Button
           variant="contained"
-          onClick={() => {
-            navigate("/cdn/add-domain");
-          }}
+          onClick={() => navigate("/vpc/add")}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
         >
-          ایجاد DNS ابری
+          ایجاد VPC
         </Button>
       </Stack>
       {bottomCircles}
@@ -301,4 +318,4 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
   );
 };
 
-export default DnsReceipt;
+export default VpcReceipt;

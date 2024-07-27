@@ -1,20 +1,12 @@
-import type { FC } from "react";
-import { useState, useEffect, useRef, useMemo } from "react";
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { priceToPersian } from "src/utils/priceToPersian";
-import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
-import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import type { FC } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-
-const cost = {
-  cpu: 600000,
-  memory: 500000,
-  disk: 45000,
-  ipv4: 600000,
-  ipv6: 0,
-};
+import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
+import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { priceToPersian } from "src/utils/priceToPersian";
 
 const receiptImage = (
   <Box
@@ -123,7 +115,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
   ipv6,
   server,
 }) => {
-  const navigte = useNavigate();
+  const navigate = useNavigate();
   const { data: vmData } = useGetApiMyPortalProductItemListByProductIdQuery({
     productId: PRODUCT_CATEGORY_ENUM.VM,
   });
@@ -346,7 +338,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
         <Button
           variant="contained"
           // href="/vm/add-vm"
-          onClick={() => navigte("/vm/add-vm")}
+          onClick={() => navigate("/vm/add-vm")}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
