@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
 import { logoutAction } from "../slice/authSlice";
 import { RootStateType } from "../store";
+import { navigateTo } from "src/utils/navigate";
 
 const defaultErrorMessage =
   "مشکلی پیش آمده است، لطفاً چند دقیقه دیگر دوباره امتحان کنید";
@@ -86,6 +87,10 @@ export const baseQuery: BaseQueryFn<
 
     if (error.status >= 500) {
       toast.error(message || defaultErrorMessage);
+      return { error };
+    }
+    if (error.status === 403) {
+      navigateTo("/forbidden");
       return { error };
     }
     if (error.status === 404) {

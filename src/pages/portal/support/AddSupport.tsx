@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, FC, SetStateAction } from "react";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -9,24 +9,23 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
 import { AxiosProgressEvent } from "axios";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import {
-  IssueSubjectListResponse,
-  useGetApiMyPortalBusinessUnitListQuery,
-  useGetApiMyPortalProductListQuery,
-  usePostApiMyPortalIssueSubjectSelectListMutation,
-  GetApiMyPortalCustomerProductListByProductIdApiResponse,
-  useGetApiMyPortalIssueListQuery,
-} from "src/app/services/api.generated";
+import { FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import {
   useCustomCreateIssueMutation,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
 } from "src/app/services/api";
+import {
+  GetApiMyPortalCustomerProductListByProductIdApiResponse,
+  IssueSubjectListResponse,
+  useGetApiMyPortalBusinessUnitListQuery,
+  useGetApiMyPortalProductListQuery,
+  usePostApiMyPortalIssueSubjectSelectListMutation,
+} from "src/app/services/api.generated";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { Add } from "src/components/atoms/svg-icons/AddSvg";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
