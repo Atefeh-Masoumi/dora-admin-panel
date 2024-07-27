@@ -89,7 +89,7 @@ export const VmCostEstimator: FC = () => {
               cpu={cpuCount}
               disk={diskCount}
               ipv4={ipv4Count}
-              ipv6={ipv6Count}
+              ipv6={ipv6Count} 
             />
           </Box>
         </Stack>

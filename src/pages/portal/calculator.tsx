@@ -84,7 +84,7 @@ const Calculator: FC = () => {
             margin: "10px auto",
             border: "1px solid #DCE7FD",
             borderRadius: BORDER_RADIUS_1,
-            width: "80%",
+            width: "70%",
           }}
         >
           <Tabs
