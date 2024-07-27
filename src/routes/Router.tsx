@@ -18,9 +18,11 @@ import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/
 import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
+import { NavigateSetter } from "src/utils/navigate";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
+const Forbidden = lazy(() => import("src/pages/Forbidden"));
 
 const Login = lazy(() => import("src/pages/account/Login"));
 const TwoFactorLogin = lazy(() => import("src/pages/account/TwoFactorLogin"));
@@ -113,6 +115,7 @@ const mainTemplate = (
 const Router: FC = () => {
   return (
     <BrowserRouter>
+      <NavigateSetter />
       <Routes>
         <Route path="/account/login" element={<Login />} />
         <Route path="/account/two-factor-login" element={<TwoFactorLogin />} />
@@ -520,6 +523,12 @@ const Router: FC = () => {
           <Route
             path="*"
             element={mainTemplate(NotFound, {
+              pageTitle: " موردی یافت نشد!",
+            })}
+          />
+          <Route
+            path="/forbidden"
+            element={mainTemplate(Forbidden, {
               pageTitle: " موردی یافت نشد!",
             })}
           />

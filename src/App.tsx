@@ -1,12 +1,12 @@
-import type { FC } from "react";
 import { CacheProvider } from "@emotion/react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import createEmotionCache from "src/createEmotionCache";
-import "react-toastify/dist/ReactToastify.css";
-import "./assets/css/style.css";
-import Router from "src/routes/Router";
+import type { FC } from "react";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import theme from "src/configs/theme";
+import createEmotionCache from "src/createEmotionCache";
+import Router from "src/routes/Router";
+import "./assets/css/style.css";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
