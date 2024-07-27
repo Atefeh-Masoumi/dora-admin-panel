@@ -307,13 +307,10 @@ const VmReceipt: FC<ReceiptPropsType> = ({
               my: 1,
             }}
           />
-          {topBoxRow_2section(
-            "مبلغ ساعتی ماشین",
-            priceToPersian(hourlyAmountPrice)
-          )}
+          {topBoxRow_2section("مبلغ ساعتی ماشین", hourlyAmountPrice)}
           {topBoxRow_2section(
             "مبلغ ماهیانه (۳۰ روزه) ماشین",
-            priceToPersian(monthlyAmountPrice)
+            String(monthlyAmountPrice)
           )}
         </Stack>
       </Stack>
@@ -337,8 +334,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          // href="/vm/add-vm"
-          onClick={() => navigate("/vm/add-vm")}
+          onClick={() => navigate("/vm")}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
