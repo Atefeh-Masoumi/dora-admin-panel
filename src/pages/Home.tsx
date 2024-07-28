@@ -75,8 +75,8 @@ const Home: FC = () => {
         justifyContent="space-between"
         sx={{ height: "100%" }}
       >
-        <ShortUserBill />
-        <ShortTickets />
+        {/* <ShortUserBill /> */}
+        {/* <ShortTickets /> */}
       </Stack>
     </>
   );
