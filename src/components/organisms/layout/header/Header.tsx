@@ -18,6 +18,7 @@ import { CalculatorSvg } from "src/components/atoms/svg-icons/CalculatorSvg";
 import { HeadphoneSvg } from "src/components/atoms/svg-icons/HeadphoneSvg";
 import { Notifications } from "./Notifications";
 import { ManageMenu } from "./ManageMenu";
+import { useSearchParams } from "react-router-dom";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -39,7 +40,12 @@ const Header: FC<HeaderPropsType> = ({
   >();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { id: kubernetesID } = useParams();
+  const { projectId } = useParams();
+  const vpcId = searchParams.get("vpcId");
+
+  const param = useParams();
 
   const goToCalculator = () => navigate("/portal/calculator");
 
@@ -134,7 +140,13 @@ const Header: FC<HeaderPropsType> = ({
     let href = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
-        href = `/kubernetes/${kubernetesID}` || "back";
+        href = `/kubernetes/${kubernetesID}`;
+        break;
+      case BACK_URL_HINTS_ENUM.ADD_VM:
+        href =
+          !projectId || !vpcId
+            ? `/vm/${projectId}/list`
+            : `/vpc/${vpcId}/vm?projectId=${projectId}&vpcId=${vpcId}`;
         break;
       default:
         href = url;

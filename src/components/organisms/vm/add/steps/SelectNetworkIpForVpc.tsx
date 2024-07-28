@@ -48,7 +48,7 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
           </Typography>
           <Divider sx={{ mb: 1 }} />
           <Typography color="text.light">
-            لطفا Network موردنظر خود را انتخاب کنید.
+            لطفا Network را انتخاب کنید.
           </Typography>
           <FormControl
             sx={{
@@ -85,9 +85,7 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
             آدرس IP
           </Typography>
           <Divider sx={{ mb: 1 }} />
-          <Typography color="text.light">
-            لطفا IP موردنظر خود را انتخاب کنید.
-          </Typography>
+          <Typography color="text.light">لطفا IP را انتخاب کنید.</Typography>
           <TextField
             value={selectedIp}
             onChange={(event) => {

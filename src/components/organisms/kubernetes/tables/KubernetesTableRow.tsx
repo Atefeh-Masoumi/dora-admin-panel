@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
   useDeleteApiMyKubernetesHostDeleteByIdMutation,
+  useGetApiMyKubernetesHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -22,6 +23,11 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetes, setSelectedKubernetes] =
     useState<KubernetesListResponse | null>(null);
+  const {
+    data: kubernetesList,
+    isLoading: kubernetesListLoading,
+    refetch: refetchKubernetesList,
+  } = useGetApiMyKubernetesHostListQuery({} as any, { skip: true });
 
   const navigate = useNavigate();
 
@@ -35,6 +41,7 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
         closeDialogHandler();
+        refetchKubernetesList();
       })
       .catch((err) => {});
 

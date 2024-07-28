@@ -67,11 +67,11 @@ export const VmCostEstimator: FC = () => {
       container
       mt={3}
       justifyContent="space-between"
-      sx={{ width: "90%", margin: "0 auto" }}
+      sx={{ margin: "0 auto" }}
     >
       <Box sx={{ overflow: "overlay" }}>
         <Stack
-          direction={{ xs: "column", md: "row" }}
+          direction={{ xs: "column", sm: "row" }}
           gap={1}
           justifyContent="space-between"
           sx={{
@@ -89,7 +89,7 @@ export const VmCostEstimator: FC = () => {
               cpu={cpuCount}
               disk={diskCount}
               ipv4={ipv4Count}
-              ipv6={ipv6Count} 
+              ipv6={ipv6Count}
             />
           </Box>
         </Stack>

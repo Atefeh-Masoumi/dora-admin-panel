@@ -75,53 +75,54 @@ const Calculator: FC = () => {
           خدمات ابری
         </Typography>
       </Stack>
-      <TabContext value={value}>
-        <Container
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            // mt: 2,
-            margin: "10px auto",
-            border: "1px solid #DCE7FD",
-            borderRadius: BORDER_RADIUS_1,
-            width: "70%",
-          }}
-        >
-          <Tabs
-            variant={isMobile ? "scrollable" : "fullWidth"}
+      <Stack sx={{ width: { xs: "100%", lg: "60%" } }}>
+        <TabContext value={value}>
+          <Container
             sx={{
-              width: "100%",
-              bgcolor: "white",
-              py: 0.5,
+              display: "flex",
+              justifyContent: "center",
+              // mt: 2,
+              margin: "10px auto",
+              border: "1px solid #DCE7FD",
               borderRadius: BORDER_RADIUS_1,
             }}
-            TabIndicatorProps={{ style: { display: "none" } }}
-            value={value}
-            onChange={handleChange}
           >
-            <DorsaTab {...a11yProps(1)} label="سرور ابری" value="1" />
-            <DorsaTab {...a11yProps(2)} label="کلاستر کوبرنتیز" value="2" />
-            <DorsaTab {...a11yProps(3)} label="DNS ابری" value="3" />
-            <DorsaTab {...a11yProps(4)} label="ذخیره‌ساز ابری" value="4" />
-            <DorsaTab {...a11yProps(5)} label="VPC" value="5" />
-          </Tabs>
-        </Container>
-        <TabPanel value="1" sx={{ p: 0, my: 3 }}>
-          <VmCostEstimator />
-        </TabPanel>
-        <TabPanel value="2" sx={{ p: 0, my: 3 }}>
-          <KubernetesCostEstimator />
-        </TabPanel>
-        <TabPanel value="3" sx={{ p: 0, my: 3 }}>
-          <DnsCostEstimator />
-        </TabPanel>
-        <TabPanel value="4" sx={{ p: 0, my: 3 }}>
-          <StorageCostEstimator />
-        </TabPanel>
-        <TabPanel value="5" sx={{ p: 0, my: 3 }}>
-          <VpcCostEstimator />
-        </TabPanel>
-      </TabContext>
+            <Tabs
+              variant={isMobile ? "scrollable" : "fullWidth"}
+              sx={{
+                width: "100%",
+                bgcolor: "white",
+                py: 0.5,
+                borderRadius: BORDER_RADIUS_1,
+              }}
+              TabIndicatorProps={{ style: { display: "none" } }}
+              value={value}
+              onChange={handleChange}
+            >
+              <DorsaTab {...a11yProps(1)} label="سرور ابری" value="1" />
+              <DorsaTab {...a11yProps(2)} label="کلاستر کوبرنتیز" value="2" />
+              <DorsaTab {...a11yProps(3)} label="DNS ابری" value="3" />
+              <DorsaTab {...a11yProps(4)} label="ذخیره‌ساز ابری" value="4" />
+              <DorsaTab {...a11yProps(5)} label="VPC" value="5" />
+            </Tabs>
+          </Container>
+          <TabPanel value="1" sx={{ p: 0, my: 3 }}>
+            <VmCostEstimator />
+          </TabPanel>
+          <TabPanel value="2" sx={{ p: 0, my: 3 }}>
+            <KubernetesCostEstimator />
+          </TabPanel>
+          <TabPanel value="3" sx={{ p: 0, my: 3 }}>
+            <DnsCostEstimator />
+          </TabPanel>
+          <TabPanel value="4" sx={{ p: 0, my: 3 }}>
+            <StorageCostEstimator />
+          </TabPanel>
+          <TabPanel value="5" sx={{ p: 0, my: 3 }}>
+            <VpcCostEstimator />
+          </TabPanel>
+        </TabContext>
+      </Stack>
     </Stack>
   );
 };
