@@ -130,7 +130,7 @@ const AddVm: FC = () => {
         .unwrap()
         .then(() => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
-          navigate(`/vm/${projectId}/list`);
+          navigate(-1);
         })
         .catch(() => {});
     }

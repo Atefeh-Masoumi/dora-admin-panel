@@ -31,7 +31,7 @@ export const VpcCostEstimator: FC = () => {
       container
       mt={3}
       justifyContent="space-between"
-      sx={{ width: "90%", margin: "0 auto" }}
+      sx={{ margin: "0 auto" }}
     >
       <Box sx={{ overflow: "overlay" }}>
         <Stack

@@ -343,7 +343,7 @@ const Router: FC = () => {
               {
                 link: {
                   text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm",
+                  url: BACK_URL_HINTS_ENUM.ADD_VM,
                 },
                 hideSidebar: false,
               },

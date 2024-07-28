@@ -212,8 +212,8 @@ const CdnList: FC = () => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="پروژه"
-        subTitle="برای حذف پروژه موردنظر، عبارت امنیتی زیر را وارد کنید."
+        keyTitle="دامنه"
+        subTitle="برای حذف دامنه موردنظر، عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedCdn?.zoneName || ""}
         onSubmit={deleteCdnHandler}
         submitLoading={deleteCdnLoading}
