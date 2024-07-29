@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useFormik } from "formik";
+import { FormikErrors, useFormik } from "formik";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -65,7 +65,20 @@ const loadBalancePolicyArray = [
 const formValidation = yup.object().shape({
   algorithmTypeId: yup.number().nullable().required("نوع توزیع را انتخاب کنید"),
   vpcHostGatewayIpId: yup.number().nullable().required("IP را انتخاب کنید"),
-  serverPoolPort: yup.number().nullable().required("پورت را وارد کنید"),
+  serverPoolPort: yup.number().nullable().required("Port را وارد کنید"),
+  poolMembers: yup
+    .array()
+    .of(
+      yup.object().shape({
+        vmHostId: yup.number().nullable().required("VM را وارد کنید"),
+        port: yup
+          .number()
+          .nullable()
+          .required("Port را وارد کنید")
+          .max(65535, "Port must be less than 65536"),
+      })
+    )
+    .min(1, "حداقل یک Pool Member نیاز است"),
 });
 
 type CreateVpcLoadBalancerDialogPropsType = {
@@ -309,7 +322,7 @@ export const CreateVpcLoadBalancerDialog: FC<
               <Grid container columnSpacing={1} alignItems={"center"}>
                 {destinations.map((destination, index) => (
                   <>
-                    <Grid item xs={7} mb={2}>
+                    <Grid item xs={6} mb={2}>
                       <DorsaTextField
                         key={index}
                         select
@@ -318,6 +331,22 @@ export const CreateVpcLoadBalancerDialog: FC<
                         value={formik.values.poolMembers[index]?.vmHostId || ""}
                         onChange={(e) =>
                           handleVmChange(index, Number(e.target.value))
+                        }
+                        error={Boolean(
+                          (
+                            formik.errors.poolMembers?.[index] as FormikErrors<{
+                              vmHostId: number;
+                              port: number;
+                            }>
+                          )?.vmHostId
+                        )}
+                        helperText={
+                          (
+                            formik.errors.poolMembers?.[index] as FormikErrors<{
+                              vmHostId: number;
+                              port: number;
+                            }>
+                          )?.vmHostId
                         }
                       >
                         {getAvailableVms(index)?.map(({ id, name }) => (
@@ -341,7 +370,7 @@ export const CreateVpcLoadBalancerDialog: FC<
                         ))}
                       </DorsaTextField>
                     </Grid>
-                    <Grid item xs={3} mb={2}>
+                    <Grid item xs={4} mb={2}>
                       <DorsaTextField
                         inputProps={{
                           maxLength: 5,
@@ -351,6 +380,22 @@ export const CreateVpcLoadBalancerDialog: FC<
                         value={formik.values.poolMembers[index]?.port || ""}
                         onChange={(e) =>
                           handlePortChange(index, Number(e.target.value))
+                        }
+                        error={Boolean(
+                          (
+                            formik.errors.poolMembers?.[index] as FormikErrors<{
+                              vmHostId: number;
+                              port: number;
+                            }>
+                          )?.port
+                        )}
+                        helperText={
+                          (
+                            formik.errors.poolMembers?.[index] as FormikErrors<{
+                              vmHostId: number;
+                              port: number;
+                            }>
+                          )?.port
                         }
                       />
                     </Grid>
