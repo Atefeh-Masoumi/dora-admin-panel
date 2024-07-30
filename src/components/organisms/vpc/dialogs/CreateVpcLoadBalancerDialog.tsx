@@ -75,7 +75,7 @@ const formValidation = yup.object().shape({
           .number()
           .nullable()
           .required("Port را وارد کنید")
-          .max(65535, "Port must be less than 65536"),
+          .max(65535, "پورت باید کوچک‌تر از ۶۵۵۳۶ باید"),
       })
     )
     .min(1, "حداقل یک Pool Member نیاز است"),
