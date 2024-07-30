@@ -172,6 +172,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                         sm={6}
                         key={id}
                         sx={{ textAlign: "center" }}
+                        mt={1}
                       >
                         <FormControlLabel
                           sx={{

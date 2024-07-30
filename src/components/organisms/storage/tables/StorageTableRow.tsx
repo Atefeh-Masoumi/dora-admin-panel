@@ -149,7 +149,7 @@ export const StorageTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="سرویس ابری"
+        keyTitle="فضای ابری"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedStorage?.name || ""}
         onSubmit={deleteDnsRecordHandler}
