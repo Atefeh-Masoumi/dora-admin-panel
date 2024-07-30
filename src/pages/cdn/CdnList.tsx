@@ -1,4 +1,11 @@
-import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -147,68 +154,74 @@ const CdnList: FC = () => {
         ) : (
           <></>
         )}
-      </Stack>
-      <Grid container columnSpacing={1}>
-        {isLoading ? (
-          <Fragment>
-            {[...Array(12)].map((_, index) => (
-              <Grid
-                key={index}
-                item
-                xs={12}
-                sm={5.8}
-                lg={3.8}
-                sx={{ margin: "10px auto" }}
-              >
-                <Skeleton
-                  variant="rectangular"
-                  height={100}
-                  sx={{
-                    bgcolor: "secondary.light",
-                    borderRadius: BORDER_RADIUS_1,
-                  }}
-                />
-              </Grid>
-            ))}
-          </Fragment>
-        ) : zoneList?.length === 0 ? (
-          <Stack py={3} sx={{ width: "100%" }}>
-            <Stack bgcolor="white" borderRadius={3}>
-              <EmptyTable text="دامنه ای وجود ندارد" />
+        <Divider sx={{ margin: "20px 0" }} />
+        <Grid container columnSpacing={1}>
+          {isLoading ? (
+            <Fragment>
+              {[...Array(12)].map((_, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={5.8}
+                  lg={3.8}
+                  sx={{ margin: "10px auto" }}
+                >
+                  <Skeleton
+                    variant="rectangular"
+                    height={100}
+                    sx={{
+                      bgcolor: "secondary.light",
+                      borderRadius: BORDER_RADIUS_1,
+                    }}
+                  />
+                </Grid>
+              ))}
+            </Fragment>
+          ) : zoneList?.length === 0 ? (
+            <Stack py={3} sx={{ width: "100%" }}>
+              <Stack bgcolor="white" borderRadius={3}>
+                <EmptyTable text="در حال حاضر دامنه ای وجود ندارد" />
+              </Stack>
             </Stack>
-          </Stack>
-        ) : (
-          filteredList?.map((item) => {
-            return (
-              <Grid
-                key={item.id}
-                item
-                xs={12}
-                sm={5.8}
-                lg={4}
-                mt={1}
-                mb={1}
-                sx={{ margin: "max-content" }}
-              >
-                <DomainCard
+          ) : (
+            filteredList?.map((item) => {
+              return (
+                <Grid
                   key={item.id}
-                  domainData={item}
-                  onDeleteClick={deleteBtnOnClick}
-                  itemOnClick={cardOnClick}
-                  showStatus={false}
-                  isDomainCard={true}
-                  detailsList={[
-                    {
-                      id: item.zoneStatusId?.toString() ?? "",
-                      label: item.zoneStatus ?? "",
-                    },
-                  ]}
-                />
-              </Grid>
-            );
-          })
-        )}
-      </Grid>
+                  item
+                  xs={12}
+                  sm={5.8}
+                  lg={4}
+                  mt={1}
+                  mb={1}
+                  sx={{
+                    margin: "max-content",
+                    borderRadius: BORDER_RADIUS_1,
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                  }}
+                >
+                  <DomainCard
+                    key={item.id}
+                    domainData={item}
+                    onDeleteClick={deleteBtnOnClick}
+                    itemOnClick={cardOnClick}
+                    showStatus={false}
+                    isDomainCard={true}
+                    detailsList={[
+                      {
+                        id: item.zoneStatusId?.toString() ?? "",
+                        label: item.zoneStatus ?? "",
+                      },
+                    ]}
+                  />
+                </Grid>
+              );
+            })
+          )}
+        </Grid>
+      </Stack>
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}

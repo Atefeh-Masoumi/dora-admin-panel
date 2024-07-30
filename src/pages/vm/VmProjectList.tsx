@@ -1,5 +1,12 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -129,65 +136,70 @@ const VmProjectList: FC = () => {
               </Button>
             </Stack>
           </Stack>
-        </Stack>
-
-        <Grid container columnSpacing={1}>
-          {VmProjectListLoading ? (
-            <Fragment>
-              {[...Array(12)].map((_, index) => (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  sm={5.8}
-                  lg={3.8}
-                  sx={{ margin: "10px auto" }}
-                >
-                  <Skeleton
-                    variant="rectangular"
-                    height={100}
-                    sx={{
-                      bgcolor: "secondary.light",
-                      borderRadius: BORDER_RADIUS_1,
-                    }}
-                  />
-                </Grid>
-              ))}
-            </Fragment>
-          ) : vmProjectList?.length === 0 ? (
-            <Stack py={3} sx={{ width: "100%" }}>
-              <Stack bgcolor="white" borderRadius={3}>
-                <EmptyTable text="پروژه‌ای وجود ندارد" />
+          <Divider sx={{ margin: "20px 0" }} />
+          <Grid container columnSpacing={1}>
+            {VmProjectListLoading ? (
+              <Fragment>
+                {[...Array(12)].map((_, index) => (
+                  <Grid
+                    key={index}
+                    item
+                    xs={12}
+                    sm={5.8}
+                    lg={3.8}
+                    sx={{ margin: "10px auto" }}
+                  >
+                    <Skeleton
+                      variant="rectangular"
+                      height={100}
+                      sx={{
+                        bgcolor: "secondary.light",
+                        borderRadius: BORDER_RADIUS_1,
+                      }}
+                    />
+                  </Grid>
+                ))}
+              </Fragment>
+            ) : vmProjectList?.length === 0 ? (
+              <Stack py={3} sx={{ width: "100%" }}>
+                <Stack bgcolor="white" borderRadius={3}>
+                  <EmptyTable text="در حال حاضر پروژه‌ای وجود ندارد" />
+                </Stack>
               </Stack>
-            </Stack>
-          ) : (
-            vmProjectList?.map((item) => {
-              return (
-                <Grid
-                  key={item.id}
-                  item
-                  xs={12}
-                  sm={5.8}
-                  lg={4}
-                  mt={1}
-                  mb={1}
-                  sx={{ margin: "max-content" }}
-                >
-                  <VmProjectCard
+            ) : (
+              vmProjectList?.map((item) => {
+                return (
+                  <Grid
                     key={item.id}
-                    vmProjectData={item}
-                    onEditClick={editBtnOnClick}
-                    onDeleteClick={deleteBtnOnClick}
-                    itemOnClick={cardOnClick}
-                    detailsList={vmDataList}
-                    showStatus={false}
-                    isProjectCard={true}
-                  />
-                </Grid>
-              );
-            })
-          )}
-        </Grid>
+                    item
+                    xs={12}
+                    sm={5.8}
+                    lg={4}
+                    mt={1}
+                    mb={1}
+                    sx={{
+                      margin: "max-content",
+                      borderRadius: BORDER_RADIUS_1,
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+                    }}
+                  >
+                    <VmProjectCard
+                      key={item.id}
+                      vmProjectData={item}
+                      onEditClick={editBtnOnClick}
+                      onDeleteClick={deleteBtnOnClick}
+                      itemOnClick={cardOnClick}
+                      detailsList={vmDataList}
+                      showStatus={false}
+                      isProjectCard={true}
+                    />
+                  </Grid>
+                );
+              })
+            )}
+          </Grid>
+        </Stack>
         <CreateVmProjectDialog
           open={dialogType === DIALOG_TYPE_ENUM.CREATE}
           onClose={closeDialogHandler}

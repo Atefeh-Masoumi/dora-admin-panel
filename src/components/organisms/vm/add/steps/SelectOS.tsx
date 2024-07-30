@@ -11,6 +11,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { FC, useContext, useEffect, useState } from "react";
 import {
   DatacenterImageListResponse,
+  useGetApiMyDatacenterImageListQuery,
   useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
@@ -37,11 +38,13 @@ type OsDropDownType = {
 export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
-  const { data: osImagesList, isLoading } = useGetApiMyVmImageListQuery({
-    datacenterId: datacenterId ? datacenterId : dataCenter?.id,
-    productId: PRODUCT_CATEGORY_ENUM.VM,
-    hypervisorTypeId: HYPERVISOR_ENUM.VM,
-  });
+  const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
+    {
+      datacenterId: datacenterId ? datacenterId : dataCenter?.id,
+      productId: PRODUCT_CATEGORY_ENUM.VM,
+      hypervisorTypeId: HYPERVISOR_ENUM.VM,
+    }
+  );
 
   const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(
     []
