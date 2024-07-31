@@ -537,7 +537,7 @@ const Router: FC = () => {
         <Route
           path="/vpc"
           element={mainTemplate(VpcIndex, {
-            pageTitle: "مدیریت سرویس فضای ابری اختصاصی",
+            pageTitle: "مدیریت سرویس ابر اختصاصی",
           })}
         />
 

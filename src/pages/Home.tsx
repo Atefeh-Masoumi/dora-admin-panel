@@ -66,7 +66,7 @@ const Home: FC = () => {
       )}
       <Products />
       <Wallet />
-      <Stack
+      {/* <Stack
         direction={{ xs: "column", md: "row" }}
         py={0.2}
         alignItems="start"
@@ -75,9 +75,9 @@ const Home: FC = () => {
         justifyContent="space-between"
         sx={{ height: "100%" }}
       >
-        {/* <ShortUserBill /> */}
-        {/* <ShortTickets /> */}
-      </Stack>
+        <ShortUserBill />
+        <ShortTickets />
+      </Stack> */}
     </>
   );
 };
