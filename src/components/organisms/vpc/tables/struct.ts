@@ -51,9 +51,9 @@ export const vpcVmStruct: columnType[] = [
 
 export const vpcLoadBalanceStruct: columnType[] = [
   { id: "id", label: "شماره شناسه", disableSort: true },
+  { id: "ip", label: "IP" },
   { id: "name", label: "Name", disableSort: true },
   { id: "port", label: "PORT", disableSort: true },
-  { id: "ip", label: "IP" },
   { id: "vpcHostLbType", label: "Type", disableSort: true },
   { id: "control", label: "", disableSort: true },
 ];
@@ -62,5 +62,4 @@ export const vpcLoadBalancerPollMembersTableStruct: columnType[] = [
   { id: "ip", label: "IP" },
   { id: "name", label: "Name" },
   { id: "port", label: "Port" },
-  { id: "control", label: "", disableSort: true },
 ];
