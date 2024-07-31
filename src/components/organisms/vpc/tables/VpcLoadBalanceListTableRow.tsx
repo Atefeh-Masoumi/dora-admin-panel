@@ -75,7 +75,7 @@ export const VpcLoadBalanceListTableRow: FC<
         <TableCell align="center">{rowData?.ip}</TableCell>
         <TableCell align="center">{rowData?.name}</TableCell>
         <TableCell align="center">{rowData?.port}</TableCell>
-        <TableCell align="center">{rowData?.VpcHostLbType}</TableCell>
+        <TableCell align="center">{rowData?.vpcHostLbType}</TableCell>
         <TableCell align="center">
           <IconButton
             sx={{ borderRadius: 1 }}
@@ -116,12 +116,12 @@ export const VpcLoadBalanceListTableRow: FC<
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rowData?.VpcHostLbNodes.length > 0
-                    ? rowData?.VpcHostLbNodes?.map((item: any, index: any) => {
+                  {rowData?.vpcHostLbNodes
+                    ? rowData?.vpcHostLbNodes?.map((item: any, index: any) => {
                         return (
-                          <TableRow key={index}>
-                            <TableCell align="center">{item.name}</TableCell>
+                          <TableRow key={index} sx={{ border: "none" }}>
                             <TableCell align="center">{item.ip}</TableCell>
+                            <TableCell align="center">{item.name}</TableCell>
                             <TableCell align="center">{item.port}</TableCell>
                           </TableRow>
                         );

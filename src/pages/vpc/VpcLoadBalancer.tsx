@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Skeleton,
   Stack,
   Table,
   TableBody,
@@ -76,14 +77,24 @@ export const VpcLoadBalancer: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست LoadBalance
+                  لیست Public IP ها
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox
-                    placeholder="جستجو در نام رکورد"
+                    placeholder="جستجو "
                     onChange={(text) => setSearch(text)}
                   />
                 </Stack>
+              </Stack>
+              <Stack display={{ xs: "flex", md: "none" }}>
+                <Button
+                  variant="outlined"
+                  onClick={openDialogHandler}
+                  size="large"
+                  sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
+                >
+                  افزودن LoadBalancer جدید
+                </Button>
               </Stack>
             </Stack>
             <Stack display={{ xs: "flex", md: "none" }} width="100%">
@@ -131,7 +142,18 @@ export const VpcLoadBalancer: FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredList && filteredList?.length === 0 ? (
+                {isLoading ? (
+                  <Stack spacing={1} px={2}>
+                    {[...Array(10)].map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        variant="rectangular"
+                        height={50}
+                        sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                      />
+                    ))}
+                  </Stack>
+                ) : filteredList && filteredList?.length === 0 ? (
                   <EmptyTable text={"در حال حاضر رکورد وجود ندارد"} />
                 ) : (
                   <>
