@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogProps,
   DialogTitle,
   Divider,
@@ -19,13 +18,24 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-
+import {
+  addEdge,
+  MarkerType,
+  ReactFlow,
+  reconnectEdge,
+  useEdgesState,
+  useNodesState,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { useParams } from "react-router";
-
+import CloudImage from "src/assets/images/cloudDestination.png";
+import GatewayImage from "src/assets/images/gateway.png";
+import SwitchImage from "src/assets/images/switch.png";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { formikOnSubmitType } from "src/types/form.type";
+import "./index.css";
 
 import {
   CreateVpcGatewayDnatModel,
@@ -34,9 +44,9 @@ import {
   useGetApiMyVpcTranslateListQuery,
   usePostApiMyVpcNatCreateDnatMutation,
 } from "src/app/services/api.generated";
-import { SelectNatService } from "../nat/SelectNatService";
-import * as yup from "yup";
 import { ipValidation } from "src/utils/regex.utils";
+import * as yup from "yup";
+import { SelectNatService } from "../nat/SelectNatService";
 
 const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
 
@@ -74,6 +84,108 @@ export const CreateDestinationNatDialog: FC<
   CreateDestinationNatFormPropsType
 > = ({ forceClose, ...props }) => {
   const { vpcId } = useParams();
+
+  const initialNodes = [
+    {
+      id: "1",
+      sourcePosition: "right",
+      data: {
+        label: (
+          <>
+            <img src={CloudImage} alt="cloud" className="image-icon" />
+            <div>
+              <p className="dnat-destination">Destination</p>
+            </div>
+          </>
+        ),
+      },
+      position: { x: 0, y: 0 },
+    },
+    {
+      id: "2",
+      sourcePosition: "right",
+      targetPosition: "left",
+      data: {
+        label: (
+          <>
+            <img
+              src={SwitchImage}
+              alt="switch"
+              className="gateway image-icon"
+            />
+            <div>
+              <p className="dnat-gateway">Gateway</p>
+            </div>
+          </>
+        ),
+      },
+      position: { x: 220, y: 0 },
+    },
+    {
+      id: "3",
+      sourcePosition: "right",
+      targetPosition: "left",
+      data: {
+        label: (
+          <>
+            <img src={GatewayImage} alt="switch" className="image-icon" />
+            <div>
+              <p className="dnat-source">Source</p>
+            </div>
+          </>
+        ),
+      },
+      position: { x: 450, y: 0 },
+    },
+  ];
+
+  const initialEdges = [
+    {
+      id: "horizontal-e1-2",
+      source: "1",
+      type: "smoothstep",
+      target: "2",
+      animated: true,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        width: 20,
+        height: 20,
+        color: "#1373CC",
+      },
+      style: {
+        stroke: "#1373CC",
+      },
+    },
+    {
+      id: "horizontal-e1-3",
+      source: "2",
+      type: "smoothstep",
+      target: "3",
+      animated: true,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        width: 20,
+        height: 20,
+        color: "#1373CC",
+      },
+      style: {
+        stroke: "#1373CC",
+      },
+    },
+  ];
+
+  const [nodes, _, onNodesChange] = useNodesState<any>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<any>(initialEdges);
+
+  const onReconnect = useCallback(
+    (oldEdge: any, newConnection: any) =>
+      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
+    []
+  );
+  const onConnect = useCallback(
+    (params: any) => setEdges((els) => addEdge(params, els)),
+    []
+  );
 
   const { data: vpcNetworkList, isLoading: vpcNetworkListLoading } =
     useGetApiMyVpcNetworkShortListByVpcHostIdQuery({
@@ -131,16 +243,9 @@ export const CreateDestinationNatDialog: FC<
     formik.resetForm();
   };
 
-  // if (vpcNetworkListLoading || vpcIpListLoading) {
-  //   return <Loading />;
-  // }
-
   return (
     <Dialog {...props} onClose={dialogCloseHandler}>
       <DialogTitle textAlign="center">ایجاد Destination Nat جدید</DialogTitle>
-      <DialogContentText textAlign="center">
-        یک نام برای شناسایی پروژه خود وارد کنید.
-      </DialogContentText>
       {vpcHostGatewayList &&
       vpcHostGatewayList?.length > 0 &&
       vpcNetworkList &&
@@ -167,6 +272,23 @@ export const CreateDestinationNatDialog: FC<
                     placeholder="نام موردنظر را وارد کنید"
                   />
                 </FormControl>
+              </Grid>
+              <Grid item xs={12} lg={8}>
+                <Grid sx={{ width: "100%", height: "80px" }}>
+                  <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onReconnect={onReconnect}
+                    nodesDraggable={false}
+                    nodesFocusable={false}
+                    nodesConnectable={false}
+                    fitView
+                    attributionPosition="bottom-left"
+                  ></ReactFlow>
+                </Grid>
               </Grid>
             </Grid>
 
