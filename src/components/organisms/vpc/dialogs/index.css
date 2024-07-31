@@ -1,0 +1,71 @@
+.react-flow__node {
+  border: none;
+  width: 80px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+.react-flow__panel {
+  display: none;
+}
+
+.react-flow__handle.react-flow__handle-top {
+  background-color: #fff;
+}
+
+.react-flow__handle.react-flow__handle-right {
+  background-color: #fff;
+}
+
+.react-flow__handle.react-flow__handle-left {
+  background-color: #fff;
+}
+
+.dnat-destination {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+}
+
+.dnat-gateway {
+  position: absolute;
+  right: 18px;
+  top: 43px;
+}
+
+.dnat-source {
+  position: absolute;
+  right: 22px;
+  top: 40px;
+}
+
+.snat-destination {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+}
+
+.snat-gateway {
+  position: absolute;
+  right: 18px;
+  top: 43px;
+}
+
+.snat-source {
+  position: absolute;
+  right: 22px;
+  top: 40px;
+}
+
+.image-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  padding: 5px;
+}
+
+.gateway.image-icon {
+  padding: 5px;
+}
