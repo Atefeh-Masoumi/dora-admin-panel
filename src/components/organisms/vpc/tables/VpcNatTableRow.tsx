@@ -82,9 +82,10 @@ export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
                     <CloseIcon sx={{ fontSize: 18 }} />
                   )}
                 </Stack>
-              ) : column.id ===
-                ("destinationPort" || "sourcePort" || "sourceIp") ? (
-                text === 0 ? (
+              ) : column.id === "destinationPort" ||
+                "sourcePort" ||
+                "sourceIp" ? (
+                text === 0 || !text ? (
                   "Any"
                 ) : (
                   text

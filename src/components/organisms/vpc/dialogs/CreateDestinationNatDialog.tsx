@@ -305,7 +305,9 @@ export const CreateDestinationNatDialog: FC<
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Destination" sx={{ width: "100%" }} />
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Destination</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl>
@@ -342,14 +344,13 @@ export const CreateDestinationNatDialog: FC<
                           formik.errors.destinationIp
                         }
                         fullWidth
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                       />
                     </FormControl>
                     <FormControl fullWidth>
@@ -368,14 +369,13 @@ export const CreateDestinationNatDialog: FC<
                           formik.touched.destinationPort &&
                           formik.errors.destinationPort
                         }
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                       />
                     </FormControl>
                   </Stack>
@@ -392,7 +392,9 @@ export const CreateDestinationNatDialog: FC<
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Gateway" sx={{ width: "100%" }} />
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Gateway</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl size="small">
@@ -430,7 +432,9 @@ export const CreateDestinationNatDialog: FC<
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Source" sx={{ width: "100%" }} />
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Source</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl fullWidth>
@@ -438,14 +442,13 @@ export const CreateDestinationNatDialog: FC<
                         fullWidth
                         {...formik.getFieldProps("sourceIp")}
                         focused
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                         size="small"
                         label="Source IP"
                         error={Boolean(
