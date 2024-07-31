@@ -168,7 +168,10 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Destination" sx={{ width: "100%" }} />
+                    {/* <Chip label="Destination" sx={{ width: "100%" }} /> */}
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Destination</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl fullWidth>
@@ -187,14 +190,13 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                           formik.errors.destinationIp
                         }
                         fullWidth
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                       />
                     </FormControl>
 
@@ -214,14 +216,13 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                           formik.touched.destinationPort &&
                           formik.errors.destinationPort
                         }
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                       />
                     </FormControl>
                   </Stack>
@@ -238,7 +239,9 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Gateway" sx={{ width: "100%" }} />
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Gateway</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={1}>
                     <FormControl size="small">
@@ -271,7 +274,9 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    <Chip label="Source" sx={{ width: "100%" }} />
+                    <Stack textAlign="end" borderBottom="1px solid lightgray">
+                      <Typography variant="text9">Source</Typography>
+                    </Stack>
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl>
@@ -296,14 +301,13 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                         fullWidth
                         {...formik.getFieldProps("sourceIp")}
                         focused
-                        // sx={{
-                        //   "& .MuiOutlinedInput-root": {
-                        //     "&.Mui-focused fieldset": {
-                        //       border: ({ palette }) =>
-                        //         `${palette.customColor.neutralLighter} 1px solid`,
-                        //     },
-                        //   },
-                        // }}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid lightgray",
+                            },
+                          },
+                        }}
                         size="small"
                         label="Source IP"
                         error={Boolean(
@@ -319,7 +323,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ pb: 3, px: 3 }}>
             <Grid container rowSpacing={2}>
               <Grid item xs={12} lg={6}>
                 <Stack

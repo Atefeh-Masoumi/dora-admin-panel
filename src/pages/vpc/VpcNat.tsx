@@ -128,12 +128,23 @@ export const VpcNat: FC = () => {
           <Stack display={{ xs: "none", md: "flex" }}>
             <Stack width="auto" direction="row">
               <Button
-                size="small"
+                  size="small"
                 variant="outlined"
                 onClick={() => setDialogType("CREATE")}
-                sx={{ borderTopRightRadius: "0", borderBottomRightRadius: 0 }}
+                sx={{
+                  borderTopRightRadius: "0",
+                  borderBottomRightRadius: 0,
+                  bgcolor: "primary.main",
+                  // "&:hover": {
+                  //   backgroundColor: "inherit", // Override hover background color
+                  //   color: "inherit", // Override hover text color
+                  // },
+                  "&.MuiButtonBase-root:hover": {
+                    bgcolor: "primary.main",
+                  },
+                }}
               >
-                <AddIcon />
+                <AddIcon sx={{ color: "white" }} />
               </Button>
               <FormControl
                 size="small"
