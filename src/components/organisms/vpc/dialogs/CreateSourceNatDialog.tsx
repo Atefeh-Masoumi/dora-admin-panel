@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogProps,
   DialogTitle,
   Divider,
@@ -21,78 +20,85 @@ import {
 import { Stack } from "@mui/system";
 
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { useParams } from "react-router";
+import * as yup from "yup";
+import {
+  CreateVpcGatewaySnatModel,
+  useGetApiMyVpcIpListByVpcHostIdQuery,
+  useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
+  usePostApiMyVpcNatCreateSnatMutation,
+} from "src/app/services/api.generated";
 
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { formikOnSubmitType } from "src/types/form.type";
-
-import {
-  CreateVpcGatewayDnatModel,
-  useGetApiMyVpcIpListByVpcHostIdQuery,
-  useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
-  useGetApiMyVpcTranslateListQuery,
-  usePostApiMyVpcNatCreateDnatMutation,
-} from "src/app/services/api.generated";
-import { SelectNatService } from "../nat/SelectNatService";
-import * as yup from "yup";
 import { ipValidation } from "src/utils/regex.utils";
 
 const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
 
-export const dNatInitialValueSchema = yup.object().shape({
+export const sNatInitialValueSchema = yup.object().shape({
   name: yup.string().required(VALIDATION_REQUIRED_ERROR_MESSAGE),
   vpcNetworkId: yup.number(),
   vpcHostGatewayIpId: yup.number().required(VALIDATION_REQUIRED_ERROR_MESSAGE),
-  vpcHostTranslateId: yup.number().required(VALIDATION_REQUIRED_ERROR_MESSAGE),
   sourceIp: yup
     .string()
     .matches(
       ipValidation,
       "آدرس IP که وارد کردید یک آدرس IPv4 معتبر نیست. لطفاً قالب را بررسی کنید (به عنوان مثال، 192.168.1.1)."
     )
-    .nullable(),
+    .required(VALIDATION_REQUIRED_ERROR_MESSAGE),
   destinationIp: yup
     .string()
     .matches(
       ipValidation,
       "آدرس IP که وارد کردید یک آدرس IPv4 معتبر نیست. لطفاً قالب را بررسی کنید (به عنوان مثال، 192.168.1.1)."
     )
-    .required(VALIDATION_REQUIRED_ERROR_MESSAGE),
+    .nullable(),
   destinationPort: yup
     .number()
     .typeError("مقدار را به عدد وارد کنید")
-    .required(VALIDATION_REQUIRED_ERROR_MESSAGE),
+    .nullable(),
   description: yup.string(),
 });
 
-type CreateDestinationNatFormPropsType = DialogProps & {
+type CreateSourceNatFormPropsType = DialogProps & {
   forceClose: () => void;
 };
 
-export const CreateDestinationNatDialog: FC<
-  CreateDestinationNatFormPropsType
-> = ({ forceClose, ...props }) => {
+export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
+  forceClose,
+  ...props
+}) => {
   const { vpcId } = useParams();
 
-  const { data: vpcNetworkList, isLoading: vpcNetworkListLoading } =
+  const { data: vpcNetworkList } =
     useGetApiMyVpcNetworkShortListByVpcHostIdQuery({
       vpcHostId: Number(vpcId),
     });
-  const { data: vpcHostGatewayList, isLoading: vpcIpListLoading } =
-    useGetApiMyVpcIpListByVpcHostIdQuery({
-      vpcHostId: Number(vpcId),
-    });
-  const { data: translateIpList } = useGetApiMyVpcTranslateListQuery();
+  const { data: vpcHostGatewayList } = useGetApiMyVpcIpListByVpcHostIdQuery({
+    vpcHostId: Number(vpcId),
+  });
+  const [createVpcNat, { isLoading }] = usePostApiMyVpcNatCreateSnatMutation();
 
-  const [createVpcNat, { isLoading }] = usePostApiMyVpcNatCreateDnatMutation();
+  const initialValues: CreateVpcGatewaySnatModel = {
+    vpcHostId: Number(vpcId!),
+    name: "",
+    vpcNetworkId: vpcNetworkList?.length ? vpcNetworkList[0].id : 1,
+    vpcHostGatewayIpId: vpcHostGatewayList?.length
+      ? vpcHostGatewayList[0].id
+      : 1,
+    sourceIp: "",
+    destinationIp: null,
+    destinationPort: null,
+    description: "",
+  };
 
-  const onSubmit: formikOnSubmitType<CreateVpcGatewayDnatModel> = (
+  const onSubmit: formikOnSubmitType<CreateVpcGatewaySnatModel> = (
     values,
     { resetForm }
   ) => {
     createVpcNat({
-      createVpcGatewayDnatModel: {
+      createVpcGatewaySnatModel: {
         ...values,
       },
     })
@@ -105,23 +111,9 @@ export const CreateDestinationNatDialog: FC<
       .catch((err) => {});
   };
 
-  const initialValues: CreateVpcGatewayDnatModel = {
-    vpcHostId: Number(vpcId!),
-    name: "",
-    vpcNetworkId: vpcNetworkList?.length ? vpcNetworkList[0].id : 1,
-    vpcHostGatewayIpId: vpcHostGatewayList?.length
-      ? vpcHostGatewayList[0].id
-      : 1,
-    vpcHostTranslateId: translateIpList?.length ? translateIpList[0].id : 0,
-    sourceIp: "",
-    destinationIp: "",
-    destinationPort: 7080,
-    description: "",
-  };
-
   const formik = useFormik({
     initialValues,
-    validationSchema: dNatInitialValueSchema,
+    validationSchema: sNatInitialValueSchema,
     onSubmit,
     enableReinitialize: true,
   });
@@ -131,16 +123,9 @@ export const CreateDestinationNatDialog: FC<
     formik.resetForm();
   };
 
-  // if (vpcNetworkListLoading || vpcIpListLoading) {
-  //   return <Loading />;
-  // }
-
   return (
     <Dialog {...props} onClose={dialogCloseHandler}>
-      <DialogTitle textAlign="center">ایجاد Destination Nat جدید</DialogTitle>
-      <DialogContentText textAlign="center">
-        یک نام برای شناسایی پروژه خود وارد کنید.
-      </DialogContentText>
+      <DialogTitle textAlign="center">ایجاد Source Nat جدید</DialogTitle>
       {vpcHostGatewayList &&
       vpcHostGatewayList?.length > 0 &&
       vpcNetworkList &&
@@ -158,7 +143,7 @@ export const CreateDestinationNatDialog: FC<
                   fullWidth
                   error={Boolean(formik.errors.name && formik.touched.name)}
                 >
-                  {/* <Typography>نام سرویس</Typography> */}
+                  <Typography>نام سرویس</Typography>
                   <AlphaNumericTextField
                     formik={formik}
                     id="name"
@@ -173,7 +158,7 @@ export const CreateDestinationNatDialog: FC<
             <Divider sx={{ py: 1 }} />
 
             <Grid container pt={2} rowGap={2} justifyContent="space-between">
-              <Grid item xs={12} md={5.8} lg={3.5}>
+              <Grid item xs={12} md={12} lg={3.5}>
                 <Stack
                   pt={0}
                   mt={0}
@@ -186,24 +171,6 @@ export const CreateDestinationNatDialog: FC<
                     <Chip label="Destination" sx={{ width: "100%" }} />
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
-                    <FormControl>
-                      <InputLabel id="network-select">Network</InputLabel>
-                      <Select
-                        {...formik.getFieldProps("vpcNetworkId")}
-                        size="small"
-                        labelId="network-select"
-                        id="network-select"
-                        label="Network"
-                        sx={{ paddingBottom: "3.5px" }}
-                      >
-                        {vpcNetworkList?.map((item, index) => (
-                          <MenuItem key={index} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
                     <FormControl fullWidth>
                       <TextField
                         {...formik.getFieldProps("destinationIp")}
@@ -230,6 +197,7 @@ export const CreateDestinationNatDialog: FC<
                         // }}
                       />
                     </FormControl>
+
                     <FormControl fullWidth>
                       <TextField
                         fullWidth
@@ -272,7 +240,7 @@ export const CreateDestinationNatDialog: FC<
                   <Stack justifyContent="center" width="100%">
                     <Chip label="Gateway" sx={{ width: "100%" }} />
                   </Stack>
-                  <Stack width="100%" direction="column" rowGap={2}>
+                  <Stack width="100%" direction="column" rowGap={1}>
                     <FormControl size="small">
                       <InputLabel id="gateway-select">Gateway Ip</InputLabel>
                       <Select
@@ -290,15 +258,10 @@ export const CreateDestinationNatDialog: FC<
                         ))}
                       </Select>
                     </FormControl>
-                    <SelectNatService
-                      translateIpList={translateIpList}
-                      formik={formik}
-                    />
                   </Stack>
                 </Stack>
               </Grid>
-
-              <Grid item xs={12} md={12} lg={3.5}>
+              <Grid item xs={12} md={5.8} lg={3.5}>
                 <Stack
                   pt={0}
                   mt={0}
@@ -311,6 +274,23 @@ export const CreateDestinationNatDialog: FC<
                     <Chip label="Source" sx={{ width: "100%" }} />
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
+                    <FormControl>
+                      <InputLabel id="network-select">Network</InputLabel>
+                      <Select
+                        {...formik.getFieldProps("vpcNetworkId")}
+                        size="small"
+                        labelId="network-select"
+                        id="network-select"
+                        label="Network"
+                        sx={{ paddingBottom: "3.5px" }}
+                      >
+                        {vpcNetworkList?.map((item, index) => (
+                          <MenuItem key={index} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                     <FormControl fullWidth>
                       <TextField
                         fullWidth
@@ -339,7 +319,7 @@ export const CreateDestinationNatDialog: FC<
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions sx={{ pb: 3, px: 3 }}>
+          <DialogActions>
             <Grid container rowSpacing={2}>
               <Grid item xs={12} lg={6}>
                 <Stack

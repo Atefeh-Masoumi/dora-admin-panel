@@ -23,6 +23,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import AddIcon from "@mui/icons-material/Add";
 
 import { NAT_TYPE } from "src/constant/vpc";
+import { CreateSourceNatDialog } from "src/components/organisms/vpc/dialogs/CreateSourceNatDialog";
 
 export const VpcNat: FC = () => {
   const [search, setSearch] = useState("");
@@ -170,6 +171,14 @@ export const VpcNat: FC = () => {
         maxWidth="md"
         fullWidth
         open={dialogType === "CREATE" && selectedNatType === NAT_TYPE.D_NAT}
+        onClose={closeDialogs}
+        forceClose={() => setDialogType(null)}
+      />
+
+      <CreateSourceNatDialog
+        maxWidth="md"
+        fullWidth
+        open={dialogType === "CREATE" && selectedNatType === NAT_TYPE.S_NAT}
         onClose={closeDialogs}
         forceClose={() => setDialogType(null)}
       />
