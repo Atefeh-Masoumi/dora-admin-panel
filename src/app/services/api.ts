@@ -27,6 +27,7 @@ const tags = [
   "LoadBalance",
   "PublicIP",
   "Issue",
+  "VpcNat",
 ];
 
 export const api = generatedApi
@@ -327,11 +328,57 @@ export const api = generatedApi
         invalidatesTags: () => ["WebHost"],
       },
       // ============================== VPC ============================== //
+
+      getApiMyVpcTranslateList: {
+        providesTags: () => ["Vpc", "VpcNat"],
+      },
+      getApiMyVpcStaticRouteGetById: {
+        providesTags: () => ["Vpc"],
+      },
+      getApiMyVpcStaticRouteListByVpcHostId: {
+        providesTags: () => ["Vpc"],
+      },
+      getApiMyVpcGatewayGetByVpcHostId: {
+        providesTags: () => ["Vpc"],
+      },
       getApiMyVpcHostList: {
+        providesTags: () => ["Vpc"],
+      },
+      getApiMyVpcNatGetById: {
         providesTags: () => ["Vpc"],
       },
       getApiMyVpcNatListByVpcHostId: {
         providesTags: () => ["Vpc"],
+      },
+
+      getApiMyVpcNetworkShortListByVpcHostId: {
+        providesTags: () => ["Vpc"],
+      },
+      postApiMyVpcHostCreate: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      putApiMyVpcStaticRouteEdit: {
+        invalidatesTags: () => ["Vpc"],
+      },
+
+      postApiMyVpcTranslateCreate: {
+        invalidatesTags: () => ["Vpc", "VpcNat"],
+      },
+      deleteApiMyVpcTranslateDeleteById: {
+        invalidatesTags: () => ["Vpc", "VpcNat"],
+      },
+      postApiMyVpcStaticRouteCreate: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      postApiMyVpcStaticRouteDeleteById: {
+        invalidatesTags: () => ["Vpc"],
+      },
+
+      deleteApiMyVpcHostDeleteById: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      putApiMyVpcHostEditById: {
+        invalidatesTags: () => ["Vpc"],
       },
       postApiMyVpcNatCreateDnat: {
         invalidatesTags: () => ["Vpc"],
@@ -339,15 +386,10 @@ export const api = generatedApi
       postApiMyVpcNatCreateSnat: {
         invalidatesTags: () => ["Vpc"],
       },
-      postApiMyVpcHostCreate: {
+      deleteApiMyVpcNatDeleteById: {
         invalidatesTags: () => ["Vpc"],
       },
-      putApiMyVpcHostEditById: {
-        invalidatesTags: () => ["Vpc"],
-      },
-      deleteApiMyVpcHostDeleteById: {
-        invalidatesTags: () => ["Vpc"],
-      },
+
       // ============================== VPC Network ============================== //
       getApiMyVpcNetworkListByVpcHostId: {
         providesTags: () => ["Network"],

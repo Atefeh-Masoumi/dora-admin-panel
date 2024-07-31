@@ -1,22 +1,31 @@
 import { FC, useState } from "react";
-import { Autocomplete, IconButton, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  IconButton,
+  ListItemText,
+  TextField,
+} from "@mui/material";
 import { FormikProps } from "formik";
-import AddIcon from "@mui/icons-material/Add";
-import { CustomCreate_D_NatInitialValueType } from "src/constant/vpc";
-import { GetApiMyVpcTranslateListApiResponse } from "src/app/services/api.generated";
+
 import { convertToLabelId } from "src/utils/convertToLabelId.utils";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { commonType } from "src/types/common.type";
+import { CreateVpcGatewayDnatModel, GetApiMyVpcTranslateListApiResponse, useDeleteApiMyVpcTranslateDeleteByIdMutation } from "src/app/services/api.generated";
 import { CreateNatServiceDialog } from "../dialogs/CreateNatServiceDialog";
 
 type SelectNatServicePropsType = {
-  formik: FormikProps<CustomCreate_D_NatInitialValueType>;
-  natServiceList?: GetApiMyVpcTranslateListApiResponse;
+  formik: FormikProps<CreateVpcGatewayDnatModel>;
+  translateIpList?: GetApiMyVpcTranslateListApiResponse;
 };
 
 export const SelectNatService: FC<SelectNatServicePropsType> = ({
   formik,
-  natServiceList = [],
+  translateIpList = [],
 }) => {
   const [open, setOpen] = useState<boolean>(false);
+
+  const [deleteTranslateItem] = useDeleteApiMyVpcTranslateDeleteByIdMutation();
 
   const handleOpenDialog = () => {
     setOpen(true);
@@ -25,50 +34,62 @@ export const SelectNatService: FC<SelectNatServicePropsType> = ({
   const handleCloseDialog = () => {
     setOpen(false);
   };
+
+  const handleTranslateDelete = (
+    event: React.MouseEvent<SVGSVGElement>,
+    option: { id: commonType; label: commonType }
+  ) => {
+    if (!option.id || isNaN(Number(option.id))) return;
+    deleteTranslateItem({
+      id: Number(option.id),
+    })
+      .unwrap()
+      .then((res) => {
+      })
+      .catch((err) => {});
+  };
+
   return (
     <>
       <Autocomplete
         value={
-          convertToLabelId(natServiceList).find(
-            (item) => item.id === formik.values.vpcHostServiceId
+          convertToLabelId(translateIpList).find(
+            (item) => item.id === formik.values.vpcHostTranslateId
           ) || null
         }
         isOptionEqualToValue={(option, value) => option?.id === value?.id}
         onChange={(e, value) => {
-          formik.setFieldTouched("vpcHostServiceId", true);
-          formik.setFieldValue("vpcHostServiceId", value?.id);
+          formik.setFieldTouched("vpcHostTranslateId", true);
+          formik.setFieldValue("vpcHostTranslateId", value?.id);
         }}
         size="small"
         disablePortal
-        options={convertToLabelId(natServiceList)}
+        options={convertToLabelId(translateIpList)}
+        renderOption={(props, option) => (
+          <li {...props}>
+            <ListItemText primary={option.label} />
+            <DeleteIcon
+              onClick={(event) => handleTranslateDelete(event, option)}
+            />
+          </li>
+        )}
         fullWidth
         onClick={() => {
-          formik.setFieldTouched("vpcHostServiceId", true);
+          formik.setFieldTouched("vpcHostTranslateId", true);
         }}
         onBlur={(e) => {
           formik.handleBlur(e);
-          formik.setFieldTouched("vpcHostServiceId", false);
+          formik.setFieldTouched("vpcHostTranslateId", false);
         }}
         renderInput={(params) => (
           <TextField
             {...params}
             label={"service"}
             error={Boolean(
-              formik.touched["vpcHostServiceId"] &&
-                !!formik.errors["vpcHostServiceId"]
+              formik.touched["vpcHostTranslateId"] &&
+                !!formik.errors["vpcHostTranslateId"]
             )}
-            sx={
-              {
-                //   "& .MuiInputBase-input": {
-                //     textAlign: "end",
-                //   },
-                //   "& .MuiInputLabel-root": {
-                //     width: "100%",
-                //     textAlign: "center",
-                //   },
-              }
-            }
-            helperText={formik.errors["vpcHostServiceId"]}
+            helperText={formik.errors["vpcHostTranslateId"]}
             InputProps={{
               ...params.InputProps,
               startAdornment: (
@@ -87,6 +108,8 @@ export const SelectNatService: FC<SelectNatServicePropsType> = ({
               ),
             }}
           />
+
+          // <Skeleton variant="text" sx={{ fontSize: "3rem" }} />
         )}
       />
       <CreateNatServiceDialog
