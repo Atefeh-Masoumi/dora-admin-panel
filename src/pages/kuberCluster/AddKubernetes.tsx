@@ -13,9 +13,9 @@ import { ServerKuberInfo } from "src/components/organisms/kubernetes/add/steps/S
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
 
 const mapConfig = {
-  cpu: "CPU",
-  memory: "Memory",
-  disk: "Disk",
+  cpu: "vCPU",
+  memory: "vMemory",
+  disk: "vDisk",
   ipv4: "IPV4",
   ipv6: "IPV6",
   rackUnitSpace: "Rack Space Unit",
