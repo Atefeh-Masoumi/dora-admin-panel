@@ -3,13 +3,13 @@ import { Autocomplete, IconButton, TextField } from "@mui/material";
 import { FormikProps } from "formik";
 import AddIcon from "@mui/icons-material/Add";
 import { CustomCreate_D_NatInitialValueType } from "src/constant/vpc";
-import { GetApiMyVpcNatServiceListApiResponse } from "src/app/services/api.generated";
+import { GetApiMyVpcTranslateListApiResponse } from "src/app/services/api.generated";
 import { convertToLabelId } from "src/utils/convertToLabelId.utils";
 import { CreateNatServiceDialog } from "../dialogs/CreateNatServiceDialog";
 
 type SelectNatServicePropsType = {
   formik: FormikProps<CustomCreate_D_NatInitialValueType>;
-  natServiceList?: GetApiMyVpcNatServiceListApiResponse;
+  natServiceList?: GetApiMyVpcTranslateListApiResponse;
 };
 
 export const SelectNatService: FC<SelectNatServicePropsType> = ({

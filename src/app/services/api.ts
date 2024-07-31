@@ -330,6 +330,15 @@ export const api = generatedApi
       getApiMyVpcHostList: {
         providesTags: () => ["Vpc"],
       },
+      getApiMyVpcNatListByVpcHostId: {
+        providesTags: () => ["Vpc"],
+      },
+      postApiMyVpcNatCreateDnat: {
+        invalidatesTags: () => ["Vpc"],
+      },
+      postApiMyVpcNatCreateSnat: {
+        invalidatesTags: () => ["Vpc"],
+      },
       postApiMyVpcHostCreate: {
         invalidatesTags: () => ["Vpc"],
       },
@@ -350,7 +359,7 @@ export const api = generatedApi
         invalidatesTags: () => ["Network"],
       },
       // ============================== VPC LoadBalance ============================== //
-      getApiMyVpcLoadBalanceListById: {
+      getApiMyVpcLoadBalanceListByVpcHostId: {
         providesTags: () => ["LoadBalance"],
       },
       postApiMyVpcLoadBalanceCreate: {
@@ -376,7 +385,6 @@ export const {
   useCustomCreateIssueMutation,
   useLazyGetApiMyDatacenterIpListByIdQuery,
   // useLazyGetApiMyVmImageListByDatacenterIdQuery,
-  useLazyGetApiMyVmImageListQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyCdnRouteGetByIdQuery,
   useLazyGetApiMyDnsRecordGetByIdQuery,
@@ -387,4 +395,5 @@ export const {
   useLazyGetApiMyPortalProductItemListByProductIdQuery,
   useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useLazyGetApiMyPortalReferralCustomerByReferralIdListQuery,
+  useLazyGetApiMyDatacenterImageListQuery,
 } = api;

@@ -20,7 +20,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { usePostApiMyVpcNatServiceCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVpcTranslateCreateMutation } from "src/app/services/api.generated";
 
 type CreateVpcNatServiceType = {
   vpcHostId: number;
@@ -41,7 +41,7 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
   ...props
 }) => {
   const [createVpcNatService, { isLoading: createVpcNatServiceLoading }] =
-    usePostApiMyVpcNatServiceCreateMutation();
+    usePostApiMyVpcTranslateCreateMutation();
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;

@@ -9,7 +9,7 @@ import { vpcIpTableStruct } from "./struct";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import CloseIcon from "@mui/icons-material/Close";
 import {
-  VpcIpListResponse,
+  VpcHostGatewayListResponse,
   useDeleteApiMyVpcIpDeleteByIdMutation,
 } from "src/app/services/api.generated";
 
@@ -20,7 +20,7 @@ enum DIALOG_TYPE_ENUM {
 
 export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVpcIp, setSelectedVpcIp] = useState<VpcIpListResponse | null>(
+  const [selectedVpcIp, setSelectedVpcIp] = useState<VpcHostGatewayListResponse | null>(
     null
   );
 
@@ -32,7 +32,7 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedVpcIp(null);
   };
 
-  const handleOpenDelete = (vpcIp: VpcIpListResponse) => {
+  const handleOpenDelete = (vpcIp: VpcHostGatewayListResponse) => {
     setSelectedVpcIp(vpcIp);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };

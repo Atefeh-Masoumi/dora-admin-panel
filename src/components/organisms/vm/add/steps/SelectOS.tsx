@@ -12,7 +12,6 @@ import { FC, useContext, useEffect, useState } from "react";
 import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
-  useGetApiMyVmImageListQuery,
 } from "src/app/services/api.generated";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
