@@ -1,4 +1,12 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  FormControl,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import {
@@ -8,22 +16,24 @@ import {
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateNatDialog } from "src/components/organisms/vpc/dialogs/CreateNatModal";
+import { CreateDestinationNatDialog } from "src/components/organisms/vpc/dialogs/CreateDestinationNatDialog";
 import { VpcNatTableRow } from "src/components/organisms/vpc/tables/VpcNatTableRow";
 import { vpcNatTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import AddIcon from "@mui/icons-material/Add";
+
+import { NAT_TYPE } from "src/constant/vpc";
 
 export const VpcNat: FC = () => {
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<"DELETE" | "CREATE" | null>(
     null
   );
-
-  const [selectedNat, setSelectedNat] =
-    useState<GetVpcGatewayNatResponse | null>(null);
+  const [selectedNatType, setSelectedNatType] = useState<NAT_TYPE>(
+    NAT_TYPE.D_NAT
+  );
 
   const closeDialogs = () => {
-    setSelectedNat(null);
     setDialogType(null);
   };
 
@@ -67,7 +77,7 @@ export const VpcNat: FC = () => {
               width="100%"
               alignItems="center"
             >
-              <Stack  direction="row" alignItems="center" spacing={1.5}>
+              <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
                   لیست NAT ها
                 </Typography>
@@ -79,14 +89,31 @@ export const VpcNat: FC = () => {
                 </Stack>
               </Stack>
               <Stack display={{ xs: "flex", md: "none" }}>
-                <Button
-                  variant="outlined"
-                  onClick={() => setDialogType("CREATE")}
-                  size="large"
-                  sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
-                >
-                  افزودن Nat جدید
-                </Button>
+                <Stack width="auto" direction="row">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => setDialogType("CREATE")}
+                  >
+                    <AddIcon />
+                  </Button>
+                  <FormControl size="small" fullWidth>
+                    <Select
+                      value={selectedNatType}
+                      onChange={(event) => {
+                        setSelectedNatType(Number(event.target.value));
+                        setDialogType(null);
+                      }}
+                    >
+                      <MenuItem value={NAT_TYPE.S_NAT}>
+                        افزودن SNat جدید
+                      </MenuItem>
+                      <MenuItem value={NAT_TYPE.D_NAT}>
+                        افزودن DNat جدید
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Stack>
               </Stack>
             </Stack>
             <Stack display={{ xs: "flex", md: "none" }} width="100%">
@@ -97,23 +124,34 @@ export const VpcNat: FC = () => {
               />
             </Stack>
           </Stack>
-          <Stack
-            display={{ xs: "none", md: "flex" }}
-            direction="row"
-            spacing={2}
-            alignItems="center"
-          >
-            <Button
-              variant="outlined"
-              onClick={() => setDialogType("CREATE")}
-              size="large"
-              sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-              startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-              }
-            >
-              افزودن Nat جدید
-            </Button>
+          <Stack display={{ xs: "none", md: "flex" }}>
+            <Stack width="auto" direction="row">
+              <Button
+                size="small"
+                variant="outlined"
+                onClick={() => setDialogType("CREATE")}
+                sx={{ borderTopRightRadius: "0", borderBottomRightRadius: 0 }}
+              >
+                <AddIcon />
+              </Button>
+              <FormControl
+                size="small"
+                fullWidth
+                sx={{ borderTopLeftRadius: 0 }}
+              >
+                <Select
+                  sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+                  value={selectedNatType}
+                  onChange={(event) => {
+                    setSelectedNatType(Number(event.target.value));
+                    setDialogType(null);
+                  }}
+                >
+                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNat جدید</MenuItem>
+                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNat جدید</MenuItem>
+                </Select>
+              </FormControl>
+            </Stack>
           </Stack>
         </Stack>
 
@@ -128,13 +166,12 @@ export const VpcNat: FC = () => {
           />
         </Stack>
       </Stack>
-      <CreateNatDialog
+      <CreateDestinationNatDialog
         maxWidth="md"
         fullWidth
-        open={dialogType === "CREATE"}
+        open={dialogType === "CREATE" && selectedNatType === NAT_TYPE.D_NAT}
         onClose={closeDialogs}
         forceClose={() => setDialogType(null)}
-        selectedNat={selectedNat && selectedNat}
       />
     </Stack>
   );

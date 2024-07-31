@@ -115,14 +115,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyBareMetalImageListByDatacenterId: build.query<
-      GetApiMyBareMetalImageListByDatacenterIdApiResponse,
-      GetApiMyBareMetalImageListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/bare-metal/image/list/${queryArg.datacenterId}`,
-      }),
-    }),
     getApiMyPortalBusinessUnitList: build.query<
       GetApiMyPortalBusinessUnitListApiResponse,
       GetApiMyPortalBusinessUnitListApiArg
@@ -890,14 +882,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyKubernetesImageListByDatacenterId: build.query<
-      GetApiMyKubernetesImageListByDatacenterIdApiResponse,
-      GetApiMyKubernetesImageListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubernetes/image/list/${queryArg.datacenterId}`,
-      }),
-    }),
     getApiMyKubernetesNodeListByKubernetesHostId: build.query<
       GetApiMyKubernetesNodeListByKubernetesHostIdApiResponse,
       GetApiMyKubernetesNodeListByKubernetesHostIdApiArg
@@ -1476,19 +1460,6 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/vm/hypervisor/list` }),
     }),
-    getApiMyVmImageList: build.query<
-      GetApiMyVmImageListApiResponse,
-      GetApiMyVmImageListApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/image/list`,
-        params: {
-          DatacenterId: queryArg.datacenterId,
-          ProductId: queryArg.productId,
-          HypervisorTypeId: queryArg.hypervisorTypeId,
-        },
-      }),
-    }),
     getApiMyVmIsoListByDatacenterId: build.query<
       GetApiMyVmIsoListByDatacenterIdApiResponse,
       GetApiMyVmIsoListByDatacenterIdApiArg
@@ -1698,7 +1669,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/vpc/ip/create`,
         method: "POST",
-        body: queryArg.createVpcIpModel,
+        body: queryArg.createVpcHostGatewayIpModel,
       }),
     }),
     deleteApiMyVpcIpDeleteById: build.mutation<
@@ -1744,24 +1715,22 @@ export const api = createApi({
         body: queryArg.createVpcGatewaySnatModel,
       }),
     }),
-    putApiMyVpcNatIncreaseSequence: build.mutation<
-      PutApiMyVpcNatIncreaseSequenceApiResponse,
-      PutApiMyVpcNatIncreaseSequenceApiArg
+    putApiMyVpcNatIncreaseSequenceByVpcHostIdAndId: build.mutation<
+      PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiResponse,
+      PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/nat/increase-sequence`,
+        url: `/api/my/vpc/nat/increase-sequence/${queryArg.vpcHostId}/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.editIncreaseSequenceVpcGatewayNatModel,
       }),
     }),
-    putApiMyVpcNatDecreaseSequence: build.mutation<
-      PutApiMyVpcNatDecreaseSequenceApiResponse,
-      PutApiMyVpcNatDecreaseSequenceApiArg
+    putApiMyVpcNatDecreaseSequenceByVpcHostIdAndId: build.mutation<
+      PutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdApiResponse,
+      PutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/nat/decrease-sequence`,
+        url: `/api/my/vpc/nat/decrease-sequence/${queryArg.vpcHostId}/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.editIncreaseSequenceVpcGatewayNatModel,
       }),
     }),
     deleteApiMyVpcNatDeleteById: build.mutation<
@@ -1773,12 +1742,12 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyVpcLoadBalanceListById: build.query<
-      GetApiMyVpcLoadBalanceListByIdApiResponse,
-      GetApiMyVpcLoadBalanceListByIdApiArg
+    getApiMyVpcLoadBalanceListByVpcHostId: build.query<
+      GetApiMyVpcLoadBalanceListByVpcHostIdApiResponse,
+      GetApiMyVpcLoadBalanceListByVpcHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/load-balance/list/${queryArg.id}`,
+        url: `/api/my/vpc/load-balance/list/${queryArg.vpcHostId}`,
       }),
     }),
     postApiMyVpcLoadBalanceCreate: build.mutation<
@@ -1868,7 +1837,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/vpc/static-route/create`,
         method: "POST",
-        body: queryArg.createVpcGatewaySnatModel,
+        body: queryArg.createVpcStaticRouteModel,
       }),
     }),
     putApiMyVpcStaticRouteEdit: build.mutation<
@@ -1878,7 +1847,7 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/vpc/static-route/edit`,
         method: "PUT",
-        body: queryArg.editVpcGatewayNatModel,
+        body: queryArg.editVpcStaticRouteModel,
       }),
     }),
     postApiMyVpcStaticRouteDeleteById: build.mutation<
@@ -1890,28 +1859,28 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    getApiMyVpcNatServiceList: build.query<
-      GetApiMyVpcNatServiceListApiResponse,
-      GetApiMyVpcNatServiceListApiArg
+    getApiMyVpcTranslateList: build.query<
+      GetApiMyVpcTranslateListApiResponse,
+      GetApiMyVpcTranslateListApiArg
     >({
-      query: () => ({ url: `/api/my/vpc/nat-service/list` }),
+      query: () => ({ url: `/api/my/vpc/translate/list` }),
     }),
-    postApiMyVpcNatServiceCreate: build.mutation<
-      PostApiMyVpcNatServiceCreateApiResponse,
-      PostApiMyVpcNatServiceCreateApiArg
+    postApiMyVpcTranslateCreate: build.mutation<
+      PostApiMyVpcTranslateCreateApiResponse,
+      PostApiMyVpcTranslateCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/nat-service/create`,
+        url: `/api/my/vpc/translate/create`,
         method: "POST",
         body: queryArg.createVpcTranslateModel,
       }),
     }),
-    deleteApiMyVpcNatServiceDeleteByVpcHostIdAndId: build.mutation<
-      DeleteApiMyVpcNatServiceDeleteByVpcHostIdAndIdApiResponse,
-      DeleteApiMyVpcNatServiceDeleteByVpcHostIdAndIdApiArg
+    deleteApiMyVpcTranslateDeleteById: build.mutation<
+      DeleteApiMyVpcTranslateDeleteByIdApiResponse,
+      DeleteApiMyVpcTranslateDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/nat-service/delete/${queryArg.vpcHostId}/${queryArg.id}`,
+        url: `/api/my/vpc/translate/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -2130,11 +2099,6 @@ export type PostApiMyBareMetalHostCreateApiArg = {
 export type DeleteApiMyBareMetalHostDeleteByIdApiResponse = unknown;
 export type DeleteApiMyBareMetalHostDeleteByIdApiArg = {
   id: number;
-};
-export type GetApiMyBareMetalImageListByDatacenterIdApiResponse =
-  /** status 200 OK */ BareMetalImageListResponse[];
-export type GetApiMyBareMetalImageListByDatacenterIdApiArg = {
-  datacenterId: number;
 };
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
@@ -2526,11 +2490,6 @@ export type DeleteApiMyKubernetesHostDeleteByIdApiResponse = unknown;
 export type DeleteApiMyKubernetesHostDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyKubernetesImageListByDatacenterIdApiResponse =
-  /** status 200 OK */ KubernetesImageListResponse[];
-export type GetApiMyKubernetesImageListByDatacenterIdApiArg = {
-  datacenterId: number;
-};
 export type GetApiMyKubernetesNodeListByKubernetesHostIdApiResponse =
   /** status 200 OK */ KubernetesNodeListResponse[];
 export type GetApiMyKubernetesNodeListByKubernetesHostIdApiArg = {
@@ -2845,13 +2804,6 @@ export type PutApiMyVmHostStopByIdApiArg = {
 export type GetApiMyVmHypervisorListApiResponse =
   /** status 200 OK */ HypervisorTypeListResponse[];
 export type GetApiMyVmHypervisorListApiArg = void;
-export type GetApiMyVmImageListApiResponse =
-  /** status 200 OK */ DatacenterImageListResponse[];
-export type GetApiMyVmImageListApiArg = {
-  datacenterId?: number;
-  productId?: number;
-  hypervisorTypeId?: number;
-};
 export type GetApiMyVmIsoListByDatacenterIdApiResponse =
   /** status 200 OK */ IsoListResponse[];
 export type GetApiMyVmIsoListByDatacenterIdApiArg = {
@@ -2952,13 +2904,13 @@ export type GetApiMyVpcGatewayGetByVpcHostIdApiArg = {
   vpcHostId: number;
 };
 export type GetApiMyVpcIpListByVpcHostIdApiResponse =
-  /** status 200 OK */ VpcIpListResponse[];
+  /** status 200 OK */ VpcHostGatewayListResponse[];
 export type GetApiMyVpcIpListByVpcHostIdApiArg = {
   vpcHostId: number;
 };
 export type PostApiMyVpcIpCreateApiResponse = unknown;
 export type PostApiMyVpcIpCreateApiArg = {
-  createVpcIpModel: CreateVpcIpModel;
+  createVpcHostGatewayIpModel: CreateVpcHostGatewayIpModel;
 };
 export type DeleteApiMyVpcIpDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcIpDeleteByIdApiArg = {
@@ -2982,22 +2934,24 @@ export type PostApiMyVpcNatCreateSnatApiResponse = unknown;
 export type PostApiMyVpcNatCreateSnatApiArg = {
   createVpcGatewaySnatModel: CreateVpcGatewaySnatModel;
 };
-export type PutApiMyVpcNatIncreaseSequenceApiResponse = unknown;
-export type PutApiMyVpcNatIncreaseSequenceApiArg = {
-  editIncreaseSequenceVpcGatewayNatModel: EditIncreaseSequenceVpcGatewayNatModel;
+export type PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiResponse = unknown;
+export type PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiArg = {
+  vpcHostId: number;
+  id: number;
 };
-export type PutApiMyVpcNatDecreaseSequenceApiResponse = unknown;
-export type PutApiMyVpcNatDecreaseSequenceApiArg = {
-  editIncreaseSequenceVpcGatewayNatModel: EditIncreaseSequenceVpcGatewayNatModel;
+export type PutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdApiResponse = unknown;
+export type PutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdApiArg = {
+  vpcHostId: number;
+  id: number;
 };
 export type DeleteApiMyVpcNatDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNatDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVpcLoadBalanceListByIdApiResponse =
-  /** status 200 OK */ VpcLoadBalanceListResponse[];
-export type GetApiMyVpcLoadBalanceListByIdApiArg = {
-  id: number;
+export type GetApiMyVpcLoadBalanceListByVpcHostIdApiResponse =
+  /** status 200 OK */ VpcLbListResponse[];
+export type GetApiMyVpcLoadBalanceListByVpcHostIdApiArg = {
+  vpcHostId: number;
 };
 export type PostApiMyVpcLoadBalanceCreateApiResponse = unknown;
 export type PostApiMyVpcLoadBalanceCreateApiArg = {
@@ -3041,27 +2995,26 @@ export type GetApiMyVpcStaticRouteGetByIdApiArg = {
 };
 export type PostApiMyVpcStaticRouteCreateApiResponse = unknown;
 export type PostApiMyVpcStaticRouteCreateApiArg = {
-  createVpcGatewaySnatModel: CreateVpcGatewaySnatModel;
+  createVpcStaticRouteModel: CreateVpcStaticRouteModel;
 };
 export type PutApiMyVpcStaticRouteEditApiResponse = unknown;
 export type PutApiMyVpcStaticRouteEditApiArg = {
-  editVpcGatewayNatModel: EditVpcGatewayNatModel;
+  editVpcStaticRouteModel: EditVpcStaticRouteModel;
 };
 export type PostApiMyVpcStaticRouteDeleteByIdApiResponse = unknown;
 export type PostApiMyVpcStaticRouteDeleteByIdApiArg = {
   id: number;
 };
-export type GetApiMyVpcNatServiceListApiResponse =
+export type GetApiMyVpcTranslateListApiResponse =
   /** status 200 OK */ VpcHostTranslateListResponse[];
-export type GetApiMyVpcNatServiceListApiArg = void;
-export type PostApiMyVpcNatServiceCreateApiResponse = unknown;
-export type PostApiMyVpcNatServiceCreateApiArg = {
+export type GetApiMyVpcTranslateListApiArg = void;
+export type PostApiMyVpcTranslateCreateApiResponse = unknown;
+export type PostApiMyVpcTranslateCreateApiArg = {
   createVpcTranslateModel: CreateVpcTranslateModel;
 };
-export type DeleteApiMyVpcNatServiceDeleteByVpcHostIdAndIdApiResponse = unknown;
-export type DeleteApiMyVpcNatServiceDeleteByVpcHostIdAndIdApiArg = {
+export type DeleteApiMyVpcTranslateDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVpcTranslateDeleteByIdApiArg = {
   id: number;
-  vpcHostId: number;
 };
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 OK */ number;
@@ -3234,12 +3187,6 @@ export type CreateBareMetalModel = {
   physicalMemory?: number | null;
   physicalDisk?: number | null;
   networkPort?: number | null;
-};
-export type BareMetalImageListResponse = {
-  id?: number;
-  name: string | null;
-  osId?: number;
-  os: string | null;
 };
 export type BusinessUnitListResponse = {
   id: number;
@@ -3875,12 +3822,6 @@ export type CreateKubernetesModel = {
   disk?: number | null;
   hypervisorTypeId?: number;
 };
-export type KubernetesImageListResponse = {
-  id?: number;
-  name: string | null;
-  osId: number;
-  os: string | null;
-};
 export type KubernetesNodeListResponse = {
   id: number;
   datacenter: string | null;
@@ -3936,7 +3877,7 @@ export type PaymentResponse = {
 };
 export type PaymentModel = {
   paymentProviderId?: number;
-  offerId?: number;
+  offerId: number;
 };
 export type PaymentListResponse = {
   id: number;
@@ -4271,7 +4212,7 @@ export type GetVmResponse = {
 };
 export type CreateVmModel = {
   name: string;
-  password?: string | null;
+  password: string;
   publicKey?: string | null;
   imageId: number;
   isPredefined: boolean;
@@ -4293,6 +4234,7 @@ export type RebuildVmModel = {
   id: number;
   name: string | null;
   password: string;
+  publicKey?: string | null;
   imageId: number;
 };
 export type HypervisorTypeListResponse = {
@@ -4409,13 +4351,13 @@ export type GetVpcGatewayResponse = {
   datacenterId: number;
   createDate: string;
 };
-export type VpcIpListResponse = {
+export type VpcHostGatewayListResponse = {
   id: number;
   ip: string | null;
   isV4: boolean;
   isPrimary: boolean;
 };
-export type CreateVpcIpModel = {
+export type CreateVpcHostGatewayIpModel = {
   vpcHostId: number;
 };
 export type GetVpcGatewayNatResponse = {
@@ -4437,42 +4379,37 @@ export type GetVpcGatewayNatResponse = {
 };
 export type CreateVpcGatewayDnatModel = {
   vpcHostId: number;
-  name: string | null;
-  sourceIp?: string | null;
-  destinationIp: string | null;
-  destinationPort?: number | null;
-  translateIp: string;
-  vpcHostServiceId?: number | null;
   vpcNetworkId: number;
+  vpcHostGatewayIpId: number;
+  vpcHostTranslateId: number;
+  name: string;
+  sourceIp?: string | null;
+  destinationIp: string;
+  destinationPort: number;
   description?: string | null;
 };
 export type CreateVpcGatewaySnatModel = {
   vpcHostId: number;
-  name: string | null;
-  sourceIp?: string | null;
+  vpcNetworkId: number;
+  vpcHostGatewayIpId: number;
+  name: string;
+  sourceIp: string;
   destinationIp?: string | null;
   destinationPort?: number | null;
-  translateIp: string;
-  vpcHostServiceId?: number | null;
-  vpcNetworkId: number;
   description?: string | null;
-};
-export type EditIncreaseSequenceVpcGatewayNatModel = {
-  id: number;
-  vpcHostId: number;
 };
 export type VpcHostLbNodeResponse = {
   ip: string | null;
   port: number;
   name: string | null;
 };
-export type VpcLoadBalanceListResponse = {
+export type VpcLbListResponse = {
   id: number;
   ip: string | null;
   name: string | null;
   port: number;
+  vpcHostLbType: string | null;
   vpcHostLbTypeId: number;
-  vpcHostLbTypeName: string | null;
   vpcHostLbNodes?: VpcHostLbNodeResponse[] | null;
 };
 export type VpcHostLbNodeModel = {
@@ -4509,7 +4446,14 @@ export type EditVmNetworkModel = {
   vmHostId: number;
   vpcHostNetworkId: number;
 };
-export type EditVpcGatewayNatModel = {
+export type CreateVpcStaticRouteModel = {
+  vpcHostId: number;
+  name: string | null;
+  destinationIp: string | null;
+  gatewayIp: string;
+  description?: string | null;
+};
+export type EditVpcStaticRouteModel = {
   id: number;
   vpcHostId: number;
   name: string | null;
@@ -4524,8 +4468,8 @@ export type EditVpcGatewayNatModel = {
 export type VpcHostTranslateListResponse = {
   id: number;
   name: string | null;
-  port?: number | null;
-  isTcp?: boolean;
+  port: number;
+  isTcp: boolean;
   createDate?: string;
 };
 export type CreateVpcTranslateModel = {
@@ -4667,7 +4611,6 @@ export const {
   useGetApiMyBareMetalHostGetByIdQuery,
   usePostApiMyBareMetalHostCreateMutation,
   useDeleteApiMyBareMetalHostDeleteByIdMutation,
-  useGetApiMyBareMetalImageListByDatacenterIdQuery,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
@@ -4762,7 +4705,6 @@ export const {
   useGetApiMyKubernetesHostGetByIdQuery,
   usePostApiMyKubernetesHostCreateMutation,
   useDeleteApiMyKubernetesHostDeleteByIdMutation,
-  useGetApiMyKubernetesImageListByDatacenterIdQuery,
   useGetApiMyKubernetesNodeListByKubernetesHostIdQuery,
   usePostApiMyKubernetesNodeCreateMutation,
   usePutApiMyKubernetesNodeDeleteByIdMutation,
@@ -4833,7 +4775,6 @@ export const {
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostStopByIdMutation,
   useGetApiMyVmHypervisorListQuery,
-  useGetApiMyVmImageListQuery,
   useGetApiMyVmIsoListByDatacenterIdQuery,
   usePutApiMyVmIsoMountMutation,
   usePutApiMyVmIsoUnmountMutation,
@@ -4864,10 +4805,10 @@ export const {
   useGetApiMyVpcNatGetByIdQuery,
   usePostApiMyVpcNatCreateDnatMutation,
   usePostApiMyVpcNatCreateSnatMutation,
-  usePutApiMyVpcNatIncreaseSequenceMutation,
-  usePutApiMyVpcNatDecreaseSequenceMutation,
+  usePutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdMutation,
+  usePutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdMutation,
   useDeleteApiMyVpcNatDeleteByIdMutation,
-  useGetApiMyVpcLoadBalanceListByIdQuery,
+  useGetApiMyVpcLoadBalanceListByVpcHostIdQuery,
   usePostApiMyVpcLoadBalanceCreateMutation,
   useDeleteApiMyVpcLoadBalanceDeleteByIdMutation,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
@@ -4880,9 +4821,9 @@ export const {
   usePostApiMyVpcStaticRouteCreateMutation,
   usePutApiMyVpcStaticRouteEditMutation,
   usePostApiMyVpcStaticRouteDeleteByIdMutation,
-  useGetApiMyVpcNatServiceListQuery,
-  usePostApiMyVpcNatServiceCreateMutation,
-  useDeleteApiMyVpcNatServiceDeleteByVpcHostIdAndIdMutation,
+  useGetApiMyVpcTranslateListQuery,
+  usePostApiMyVpcTranslateCreateMutation,
+  useDeleteApiMyVpcTranslateDeleteByIdMutation,
   useGetApiMyPortalWalletGetBalanceQuery,
   useGetApiMyPortalWalletTransactionListQuery,
   useGetApiMyPortalWalletTransactionBalanceUsageQuery,

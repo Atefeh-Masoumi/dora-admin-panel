@@ -40,7 +40,7 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
     if (!vpcId) return;
 
     createVpcIp({
-      createVpcIpModel: {
+      createVpcHostGatewayIpModel: {
         vpcHostId: Number(vpcId),
       },
     })

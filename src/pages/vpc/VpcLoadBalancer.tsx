@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyVpcLoadBalanceListByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVpcLoadBalanceListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -27,8 +27,8 @@ export const VpcLoadBalancer: FC = () => {
   const vpcHostId = Number(vpcId) || 0;
 
   const { data: vpcLoadBalanceList, isLoading } =
-    useGetApiMyVpcLoadBalanceListByIdQuery({
-      id: vpcHostId,
+    useGetApiMyVpcLoadBalanceListByVpcHostIdQuery({
+      vpcHostId: vpcHostId,
     });
 
   const [search, setSearch] = useState("");
