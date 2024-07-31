@@ -41,6 +41,7 @@ export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then(() => {
         toast.success("Nat رکورد مورد نظر حذف شد", { icon: Success });
+        closeDialogHandler();
       })
       .catch((err) => {});
 
