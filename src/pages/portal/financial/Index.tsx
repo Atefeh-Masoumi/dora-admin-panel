@@ -10,6 +10,7 @@ import CustomerBills from "./CustomerBills";
 import Invoices from "./Invoices";
 import Payments from "./Payments";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
+import Commission from "./Commission";
 
 const tabs: tabsType[] = [
   {
@@ -30,6 +31,12 @@ const tabs: tabsType[] = [
     icon: AccountSvg,
     content: <Payments />,
     path: "payment",
+  },
+  {
+    title: "کمیسیون",
+    icon: AccountSvg,
+    content: <Commission />,
+    path: "commission",
   },
 ];
 
