@@ -28,6 +28,7 @@ const tags = [
   "PublicIP",
   "Issue",
   "VpcNat",
+  "Accessibility",
 ];
 
 export const api = generatedApi
@@ -419,6 +420,22 @@ export const api = generatedApi
       },
       deleteApiMyVpcIpDeleteById: {
         invalidatesTags: () => ["PublicIP"],
+      },
+      // ============================== Accessibility ============================== //
+      getApiMyPortalCustomerUserList: {
+        providesTags: () => ["Accessibility"],
+      },
+      postApiMyPortalCustomerUserCreate: {
+        invalidatesTags: () => ["Accessibility"],
+      },
+      deleteApiMyPortalCustomerUserDeleteByUserId: {
+        invalidatesTags: () => ["Accessibility"],
+      },
+      postApiMyPortalCustomerUserChange: {
+        invalidatesTags: () => ["Accessibility"],
+      },
+      putApiMyPortalRoleAccessEdit: {
+        invalidatesTags: () => ["Accessibility"],
       },
     },
   });
