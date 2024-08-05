@@ -13,6 +13,7 @@ import { NotificationSetting } from "src/components/organisms/portal/account/set
 import { SecuritySetting } from "src/components/organisms/portal/account/setting/SecuritySetting";
 import { ChangePassword } from "src/components/organisms/portal/account/setting/ChangePassword";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
+import { AccessibilitySetting } from "src/components/organisms/portal/account/setting/AccessibilitySetting";
 
 const tabs: tabsType[] = [
   {
@@ -56,6 +57,12 @@ const tabs: tabsType[] = [
     icon: AccountSvg,
     content: <ChangePassword />,
     path: "change-password",
+  },
+  {
+    title: "مدیریت دسترسی",
+    icon: AccountSvg,
+    content: <AccessibilitySetting />,
+    path: "accessibility",
   },
 ];
 
