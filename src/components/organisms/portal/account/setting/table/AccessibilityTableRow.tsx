@@ -39,7 +39,7 @@ export const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
     deleteCustomerUser({ userId: selectedCustomerUser?.userId })
       .unwrap()
       .then(() => {
-        toast.success("ابر اختصاصی شما با موفقیت حذف شد");
+        toast.success("دسترسی کاربر با موفقیت حذف شد.");
         closeDialogHandler();
       })
       .catch((err) => {});
