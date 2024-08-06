@@ -1,11 +1,7 @@
+import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
-import { Box, Divider, Stack, Typography, Grid, Paper } from "@mui/material";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
-import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
-import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
-import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyStorageHostListQuery,
@@ -14,8 +10,13 @@ import {
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
+import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
+import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
+import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 const mapConfig = {
   disk: "Disk",
@@ -48,7 +49,9 @@ const AddStorageService: FC = () => {
       {
         numberOfItem: customConfig.disk || 0,
         name: mapConfig.disk || "",
-        fee: productItems?.find((x) => x.name === "CloudDisk")?.price || 0,
+        fee:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.CloudDisk)
+            ?.price || 0,
       },
     ];
   }, [customConfig, productItems]);

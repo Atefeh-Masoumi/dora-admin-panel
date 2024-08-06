@@ -6,14 +6,15 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import {
   usePutApiMyStorageHostEditMutation,
   useGetApiMyStorageHostGetByIdQuery,
+  useGetApiMyPortalProductItemListByProductIdQuery,
 } from "src/app/services/api.generated";
 
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-
-const diskUnitPrice = 45000;
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 type SelectConfigPropsType = {};
 
@@ -25,6 +26,14 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const { data } = useGetApiMyStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
+  const { data: productItems } =
+    useGetApiMyPortalProductItemListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.STORAGE,
+    });
+
+  const diskUnitPrice = productItems?.find(
+    (x) => x.id === PRODUCT_ITEM_ENUM.CloudDisk
+  )?.price;
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
     usePutApiMyStorageHostEditMutation();
@@ -47,7 +56,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   ];
 
   const totalPrice = useMemo(() => {
-    const d = diskUnitPrice * disk;
+    const d = diskUnitPrice! * disk;
     return d;
   }, [disk]);
 
