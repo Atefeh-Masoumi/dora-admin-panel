@@ -61,7 +61,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
       createStorageUserModel: { storageHostId: id ? +id : 0 },
     })
       .unwrap()
-      .then((res) => {
+      .then((res: any) => {
         setGeneratedKeys({
           accessKey: res.accessKey || "",
           secretKey: res.secretKey || "",
