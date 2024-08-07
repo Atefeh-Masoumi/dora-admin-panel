@@ -6,6 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
 import { AddServerContext } from "../contexts/AddVmContext";
 import { productBundleTableStruct } from "../tables/struct";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 type SelectConfigPropsType = {};
 
@@ -18,7 +19,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const customConfigItems = [
     {
-      id: "Disk",
+      id: PRODUCT_ITEM_ENUM.VDisk,
       label: "Disk (GB)",
       min: 25,
       max: 1000,
@@ -29,7 +30,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       },
     },
     {
-      id: "Memory",
+      id: PRODUCT_ITEM_ENUM.VMemory,
       label: "Memory (GB)",
       min: 1,
       max: 128,
@@ -41,7 +42,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       },
     },
     {
-      id: "CPU",
+      id: PRODUCT_ITEM_ENUM.VCpu,
       label: "CPU (Core)",
       min: 1,
       max: 48,
@@ -53,7 +54,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     },
 
     {
-      id: "IpV4",
+      id: PRODUCT_ITEM_ENUM.Ipv4,
       label: "Public IpV4",
       min: 1,
       max: 10,
@@ -111,10 +112,14 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
                 }}
               >
                 <ReverseSlider
-                  value={item.id === "IpV4" ? 1 : Number(item.value)}
+                  value={
+                    item.id === PRODUCT_ITEM_ENUM.Ipv4 ? 1 : Number(item.value)
+                  }
                   valueLabelDisplay="on"
                   onChange={(_, value) =>
-                    item.id === "IpV4" ? "" : item.onChange(value as number)
+                    item.id === PRODUCT_ITEM_ENUM.Ipv4
+                      ? ""
+                      : item.onChange(value as number)
                   }
                   min={item.min}
                   max={item.max}

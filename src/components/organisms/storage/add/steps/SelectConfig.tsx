@@ -6,6 +6,7 @@ import { addStorageTableStruct } from "../tables/struct";
 import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
 import { AddStorageContext } from "../contexts/AddStorageContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 type SelectConfigPropsType = {};
 
@@ -18,7 +19,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const customConfigItems = [
     {
-      id: "Disk",
+      id: PRODUCT_ITEM_ENUM.VDisk,
       label: "Disk (GB)",
       min: 50,
       max: 5000,

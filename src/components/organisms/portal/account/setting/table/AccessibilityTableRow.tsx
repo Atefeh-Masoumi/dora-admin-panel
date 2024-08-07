@@ -1,6 +1,5 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   VpcListResponse,
@@ -11,8 +10,8 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { accessibilityTableStruct } from "./accessibilityTableStruct";
 import { EditUserAccessModal } from "../dialog/EditUserAccessModal";
+import { accessibilityTableStruct } from "./accessibilityTableStruct";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",

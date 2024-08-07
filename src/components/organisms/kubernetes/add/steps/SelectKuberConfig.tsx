@@ -6,6 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { KuberServerConfigTableRow } from "../tables/KuberServerConfigTableRow";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 type SelectKuberConfigPropsType = {};
 
@@ -18,7 +19,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
 
   const customConfigItem = [
     {
-      id: "Disk",
+      id: PRODUCT_ITEM_ENUM.VDisk,
       label: "Disk (GB)",
       min: 25,
       max: 1024,
@@ -29,7 +30,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
       },
     },
     {
-      id: "Memory",
+      id: PRODUCT_ITEM_ENUM.VMemory,
       label: "Memory (GB)",
       min: 1,
       max: 128,
@@ -41,7 +42,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
       },
     },
     {
-      id: "CPU",
+      id: PRODUCT_ITEM_ENUM.VCpu,
       label: "CPU (Core)",
       min: 1,
       max: 48,
@@ -52,7 +53,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
       },
     },
     {
-      id: "IpV4",
+      id: PRODUCT_ITEM_ENUM.Ipv4,
       label: "IpV4 (GB)",
       min: 1,
       max: 10,
@@ -96,41 +97,45 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
           table
         ) : (
           <Stack gap={2}>
-            {customConfigItem.map((item, index) => (
-              <Stack
-                key={index}
-                direction={{ xs: "column-reverse", md: "row" }}
-                rowGap={1}
-                columnGap={1}
-                alignItems={{ xs: "center", md: "end" }}
-                justifyContent="center"
-                sx={{
-                  fontFamily: "roboto",
-                }}
-              >
-                <ReverseSlider
-                  value={Number(item.value)}
-                  valueLabelDisplay="on"
-                  onChange={(_, value) =>
-                    item.id === "IpV4" ? "" : item.onChange(value as number)
-                  }
-                  min={item.min}
-                  max={item.max}
-                  step={item.step}
+            {customConfigItem.map((item, index) => {
+              return (
+                <Stack
+                  key={index}
+                  direction={{ xs: "column-reverse", md: "row" }}
+                  rowGap={1}
+                  columnGap={1}
+                  alignItems={{ xs: "center", md: "end" }}
+                  justifyContent="center"
                   sx={{
-                    width: { xs: "90%", md: "70%" },
+                    fontFamily: "roboto",
                   }}
-                />
-                <Stack width={{ xs: "90%", md: "15%" }}>
-                  <Typography
-                    variant="text8"
-                    textAlign={{ xs: "start", md: "end" }}
-                  >
-                    {item.label}
-                  </Typography>
+                >
+                  <ReverseSlider
+                    value={Number(item.value)}
+                    valueLabelDisplay="on"
+                    onChange={(_, value) =>
+                      item.id === PRODUCT_ITEM_ENUM.Ipv4
+                        ? ""
+                        : item.onChange(value as number)
+                    }
+                    min={item.min}
+                    max={item.max}
+                    step={item.step}
+                    sx={{
+                      width: { xs: "90%", md: "70%" },
+                    }}
+                  />
+                  <Stack width={{ xs: "90%", md: "15%" }}>
+                    <Typography
+                      variant="text8"
+                      textAlign={{ xs: "start", md: "end" }}
+                    >
+                      {item.label}
+                    </Typography>
+                  </Stack>
                 </Stack>
-              </Stack>
-            ))}
+              );
+            })}
           </Stack>
         )}
       </Box>
