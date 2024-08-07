@@ -11,21 +11,17 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { FC, useMemo, useState } from "react";
 import { useParams } from "react-router";
+import { toast } from "react-toastify";
 import {
   useGetApiMyStorageUserListByStorageHostIdQuery,
   usePostApiMyStorageUserCreateMutation,
 } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { AddAccessKeyDialog } from "./dialogs/AddAccessKeyDialog";
 import { accessKeyTableStruct } from "./tables/AccessKeyStruct";
 import { AccessKeyTableRow } from "./tables/AccessKeyTableRow";
 
 type AccessKeyListPropsType = {};
-
-type AccessKeyContextValueType = {
-  refetchUsersData: () => any;
-};
 
 const AccessKeyList: FC<AccessKeyListPropsType> = () => {
   const { id } = useParams();
@@ -46,11 +42,6 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
 
   const closeDialog = () => setShowDialog(false);
 
-  const [generatedKeys, setGeneratedKeys] = useState({
-    accessKey: "",
-    secretKey: "",
-  });
-
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
     [getDataLoading, isFetching]
@@ -61,14 +52,11 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
       createStorageUserModel: { storageHostId: id ? +id : 0 },
     })
       .unwrap()
-      .then((res) => {
-        setGeneratedKeys({
-          accessKey: res.accessKey || "",
-          secretKey: res.secretKey || "",
-        });
+      .then(() => {
         refetch();
-        setShowDialog(true);
-      });
+        toast.success("عملیات با موفقیت انجام شد");
+      })
+      .catch(() => {});
   };
 
   return (
@@ -153,13 +141,13 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
               initialOrder={9}
             />
           </Box>
-          {showDialog && (
+          {/* {showDialog && (
             <AddAccessKeyDialog
               onClose={closeDialog}
               accessKeyProp={generatedKeys.accessKey}
               secretKeyProp={generatedKeys.secretKey}
             />
-          )}
+          )} */}
         </Paper>
       </Grid2>
     </Grid2>
