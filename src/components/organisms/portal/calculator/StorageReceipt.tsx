@@ -6,6 +6,7 @@ import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/servic
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { priceToPersian } from "src/utils/priceToPersian";
 
 const receiptImage = (
@@ -111,7 +112,9 @@ const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
   const [receiptWidth, setReceiptWidth] = useState(0);
 
   const monthHours = 24 * 30;
-  const storagePrice = storageData && storage * storageData[0]?.price;
+  const unitPrice =
+    storageData?.find((item) => item.id === PRODUCT_ITEM_ENUM.VCpu)?.price || 0;
+  const storagePrice = storageData && storage * unitPrice;
   const monthlyAmountPrice = storagePrice!;
   const hourlyAmountPrice = (monthlyAmountPrice / monthHours).toFixed();
   const totalPrice = monthlyAmountPrice;

@@ -166,21 +166,21 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
 
   // cpu price
   const singleCpuPrice = kubernetesVmProductItemsData?.find(
-    (item: any) => item.name === "vCPU"
+    (item: any) => item.id === 101
   )?.price;
   const cpuPrice = cpuCount * singleCpuPrice!;
 
-  // disk price
-  const singleDiskPrice = kubernetesVmProductItemsData?.find(
-    (item: any) => item.name === "vDisk"
-  )?.price;
-  const diskPrice = diskCount * singleDiskPrice!;
-
   // memory price
   const singleMemoryPrice = kubernetesVmProductItemsData?.find(
-    (item: any) => item.name === "vMemory"
+    (item: any) => item.id === 102
   )?.price;
   const memoryPrice = memoryCount * singleMemoryPrice!;
+
+  // disk price
+  const singleDiskPrice = kubernetesVmProductItemsData?.find(
+    (item: any) => item.id === 103
+  )?.price;
+  const diskPrice = diskCount * singleDiskPrice!;
 
   const workerItemList: any = useMemo(
     () => [

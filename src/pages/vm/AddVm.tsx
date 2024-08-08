@@ -18,21 +18,22 @@ import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/Sel
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
-const mapConfig = {
-  cpu: "CPU",
-  memory: "Memory",
-  disk: "Disk",
-  ipv4: "IPV4",
-  ipv6: "IPV6",
-  rackUnitSpace: "Rack Space Unit",
-  powerAmp: "Power (A)",
-  ipv4Count: "IPV4",
-  networkPort10G: "Network 10G Port",
-  networkPort1G: "Network 1G Port",
-};
+// const mapConfig = {
+//   cpu: "CPU",
+//   memory: "Memory",
+//   disk: "Disk",
+//   ipv4: "IPV4",
+//   ipv6: "IPV6",
+//   rackUnitSpace: "Rack Space Unit",
+//   powerAmp: "Power (A)",
+//   ipv4Count: "IPV4",
+//   networkPort10G: "Network 10G Port",
+//   networkPort1G: "Network 1G Port",
+// };
 
 const AddVm: FC = () => {
   const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
@@ -71,23 +72,39 @@ const AddVm: FC = () => {
     return [
       {
         numberOfItem: customConfig.memory || 1,
-        name: mapConfig.memory || "",
-        fee: productItems?.find((x) => x.name === mapConfig.memory)?.price || 1,
+        name:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VMemory)?.name ||
+          "",
+        fee:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VMemory)
+            ?.price || 1,
       },
       {
         numberOfItem: customConfig.cpu || 1,
-        name: mapConfig.cpu || "",
-        fee: productItems?.find((x) => x.name === mapConfig.cpu)?.price || 1,
+        name:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VCpu)?.name ||
+          "",
+        fee:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VCpu)?.price ||
+          1,
       },
       {
         numberOfItem: customConfig.disk || 25,
-        name: mapConfig.disk || "",
-        fee: productItems?.find((x) => x.name === mapConfig.disk)?.price || 25,
+        name:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VDisk)?.name ||
+          "",
+        fee:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.VDisk)?.price ||
+          25,
       },
       {
         numberOfItem: customConfig.IPV4 || 1,
-        name: mapConfig.ipv4 || "",
-        fee: productItems?.find((x) => x.name === mapConfig.ipv4)?.price || 1,
+        name:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.Ipv4)?.name ||
+          "",
+        fee:
+          productItems?.find((x) => x.id === PRODUCT_ITEM_ENUM.Ipv4)?.price ||
+          1,
       },
     ];
   }, [customConfig, productItems]);

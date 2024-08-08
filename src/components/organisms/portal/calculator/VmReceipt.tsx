@@ -125,25 +125,23 @@ const VmReceipt: FC<ReceiptPropsType> = ({
   const monthHours = 24 * 30;
 
   // cpu price
-  const singleCpuPrice = vmData?.find((item) => item.name === "vCPU")?.price;
+  const singleCpuPrice = vmData?.find((item) => item.id === 101)?.price;
   const cpuPrice = cpu * singleCpuPrice!;
 
-  // disk price
-  const singleDiskPrice = vmData?.find((item) => item.name === "vDisk")?.price;
-  const diskPrice = disk * singleDiskPrice!;
-
   // memory price
-  const singleMemoryPrice = vmData?.find(
-    (item) => item.name === "vMemory"
-  )?.price;
+  const singleMemoryPrice = vmData?.find((item) => item.id === 102)?.price;
   const memoryPrice = memory * singleMemoryPrice!;
 
+  // disk price
+  const singleDiskPrice = vmData?.find((item) => item.id === 103)?.price;
+  const diskPrice = disk * singleDiskPrice!;
+
   // ipv4 price
-  const singleIPV4Price = vmData?.find((item) => item.name === "IPV4")?.price;
+  const singleIPV4Price = vmData?.find((item) => item.id === 104)?.price;
   const ipv4Price = ipv4 * singleIPV4Price!;
 
   // ipv6 price
-  const singleIPV6Price = vmData?.find((item) => item.name === "IPV6")?.price;
+  const singleIPV6Price = vmData?.find((item) => item.id === 105)?.price;
   const ipv6Price = ipv6 * singleIPV6Price!;
 
   const monthlyAmountPrice =

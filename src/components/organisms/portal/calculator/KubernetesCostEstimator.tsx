@@ -3,6 +3,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery } from "src/app/services/api";
 import KubernetesReceipt from "./KubernetesReceipt";
 import ServiceSpecifications from "./ServiceSpecifications";
+import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
 export const KubernetesCostEstimator: FC = () => {
   const [data, setData] = useState<any>([]);
@@ -26,7 +27,7 @@ export const KubernetesCostEstimator: FC = () => {
   const masterCpuCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
-        (item: any) => item.productItemId === 1
+        (item: any) => item.productItemId === PRODUCT_ITEM_ENUM.VCpu
       )?.quantity || 0,
     [data]
   );
@@ -35,7 +36,7 @@ export const KubernetesCostEstimator: FC = () => {
   const masterMemoryCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
-        (item: any) => item.productItemId === 2
+        (item: any) => item.productItemId === PRODUCT_ITEM_ENUM.VMemory
       )?.quantity || 0,
     [data]
   );
@@ -44,7 +45,7 @@ export const KubernetesCostEstimator: FC = () => {
   const masterDiskCount = useMemo(
     () =>
       data?.masterNodesInfo?.masterVmSpecs?.find(
-        (item: any) => item.productItemId === 3
+        (item: any) => item.productItemId === PRODUCT_ITEM_ENUM.VDisk
       )?.quantity || 0,
     [data]
   );
