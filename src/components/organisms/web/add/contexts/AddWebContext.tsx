@@ -1,7 +1,7 @@
 import { FC, createContext, ReactNode, useState } from "react";
 import {
   DatacenterListResponse,
-  ProductBundleListResponse,
+  ProductBundleWebListResponse,
 } from "src/app/services/api.generated";
 
 export type addWebStepsType = 1 | 2 | 3 | 4;
@@ -13,8 +13,8 @@ type AddWebContextType = {
   setDomainName: (domainName: string) => void;
   dataCenter: DatacenterListResponse | null;
   setDataCenter: (dataCenter: DatacenterListResponse | null) => void;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleWebListResponse | null;
+  setServerConfig: (osConfig: ProductBundleWebListResponse | null) => void;
   term: boolean;
   setTerm: (term: boolean) => void;
 };
@@ -45,7 +45,7 @@ const AddWebContextProvider: FC<AddWebContextProviderPropsType> = ({
     null
   );
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleWebListResponse | null>(null);
   const [term, setTerm] = useState(false);
 
   return (

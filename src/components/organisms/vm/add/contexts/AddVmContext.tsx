@@ -2,7 +2,7 @@ import { FC, createContext, ReactNode, useState } from "react";
 import {
   DatacenterListResponse,
   DatacenterImageListResponse,
-  ProductBundleListResponse,
+  ProductBundleVmListResponse,
 } from "src/app/services/api.generated";
 
 export type addServerStepsType = 1 | 2 | 3 | 4;
@@ -21,8 +21,8 @@ type AddServerContextType = {
   setDataCenter: (dataCenter: DatacenterListResponse | null) => void;
   osVersion: DatacenterImageListResponse | null;
   setOsVersion: (osVersion: DatacenterImageListResponse | null) => void;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleVmListResponse | null;
+  setServerConfig: (osConfig: ProductBundleVmListResponse | null) => void;
   serverName: string;
   setServerName: (name: string) => void;
   serverPassword: string;
@@ -72,7 +72,7 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [osVersion, setOsVersion] =
     useState<DatacenterImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
   const [isPredefined, setIsPredefined] = useState(true);

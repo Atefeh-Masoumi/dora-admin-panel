@@ -868,6 +868,14 @@ export const api = createApi({
     >({
       query: () => ({ url: `/api/my/kubernetes/cloud/host/list` }),
     }),
+    getApiMyKubernetesCloudHostGetById: build.query<
+      GetApiMyKubernetesCloudHostGetByIdApiResponse,
+      GetApiMyKubernetesCloudHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/get/${queryArg.id}`,
+      }),
+    }),
     postApiMyKubernetesCloudHostCreate: build.mutation<
       PostApiMyKubernetesCloudHostCreateApiResponse,
       PostApiMyKubernetesCloudHostCreateApiArg
@@ -1133,14 +1141,6 @@ export const api = createApi({
         url: `/api/my/portal/product/get/${queryArg.id}`,
       }),
     }),
-    getApiMyPortalProductBundleListByProductId: build.query<
-      GetApiMyPortalProductBundleListByProductIdApiResponse,
-      GetApiMyPortalProductBundleListByProductIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/portal/product-bundle/list/${queryArg.productId}`,
-      }),
-    }),
     getApiMyPortalProductBundleVmList: build.query<
       GetApiMyPortalProductBundleVmListApiResponse,
       GetApiMyPortalProductBundleVmListApiArg
@@ -1178,6 +1178,12 @@ export const api = createApi({
       GetApiMyPortalProductBundleKuberCloudListApiArg
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/kuber-cloud-list` }),
+    }),
+    getApiMyPortalProductBundleBareMetalList: build.query<
+      GetApiMyPortalProductBundleBareMetalListApiResponse,
+      GetApiMyPortalProductBundleBareMetalListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/product-bundle/bare-metal-list` }),
     }),
     getApiMyPortalProductItemListByProductId: build.query<
       GetApiMyPortalProductItemListByProductIdApiResponse,
@@ -2585,8 +2591,13 @@ export type DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg = {
   id: number;
 };
 export type GetApiMyKubernetesCloudHostListApiResponse =
-  /** status 200 OK */ KuberCloudHostResponse[];
+  /** status 200 OK */ KuberCloudHostListResponse[];
 export type GetApiMyKubernetesCloudHostListApiArg = void;
+export type GetApiMyKubernetesCloudHostGetByIdApiResponse =
+  /** status 200 OK */ KuberCloudHostGetResponse;
+export type GetApiMyKubernetesCloudHostGetByIdApiArg = {
+  id: number;
+};
 export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudHostCreateApiArg = {
   createKuberCloudHostModel: CreateKuberCloudHostModel;
@@ -2747,11 +2758,6 @@ export type GetApiMyPortalProductGetByIdApiResponse =
 export type GetApiMyPortalProductGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyPortalProductBundleListByProductIdApiResponse =
-  /** status 200 OK */ ProductBundleListResponse[];
-export type GetApiMyPortalProductBundleListByProductIdApiArg = {
-  productId: number;
-};
 export type GetApiMyPortalProductBundleVmListApiResponse =
   /** status 200 OK */ ProductBundleVmListResponse[];
 export type GetApiMyPortalProductBundleVmListApiArg = void;
@@ -2770,6 +2776,9 @@ export type GetApiMyPortalProductBundleVpcListApiArg = void;
 export type GetApiMyPortalProductBundleKuberCloudListApiResponse =
   /** status 200 OK */ ProductBundleKuberCloudListResponse[];
 export type GetApiMyPortalProductBundleKuberCloudListApiArg = void;
+export type GetApiMyPortalProductBundleBareMetalListApiResponse =
+  /** status 200 OK */ ProductBundleBareMetalListResponse[];
+export type GetApiMyPortalProductBundleBareMetalListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 OK */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
@@ -3928,6 +3937,8 @@ export type GetKuberCloudDeploymentResponse = {
   name: string | null;
   image: string | null;
   replica: number;
+  nodePort: number;
+  servicePort: number;
   namespace: string | null;
   createDate: string;
   modifyDate: string;
@@ -3938,7 +3949,15 @@ export type CreateKuberCloudDeploymentModel = {
   namespaceId: number;
   replicaNumber?: number;
 };
-export type KuberCloudHostResponse = {
+export type KuberCloudHostListResponse = {
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  status: string | null;
+  statusId: number;
+  createDate: string;
+};
+export type KuberCloudHostGetResponse = {
   id: number;
   datacenter: string | null;
   name: string | null;
@@ -3963,7 +3982,15 @@ export type EditKuberCloudHostModel = {
   disk: number;
   tenPods: number;
 };
-export type KuberCloudImageCategoriesResponse = {
+export type KuberCloudImageTagsResponse = {
+  id: number;
+  name: string | null;
+};
+export type KuberCloudImagePortResponse = {
+  id: number;
+  name: string | null;
+};
+export type KuberCloudImageKeyResponse = {
   id: number;
   name: string | null;
 };
@@ -3973,7 +4000,10 @@ export type KuberCloudImageResponse = {
   subtitle: string | null;
   description: string | null;
   path: string | null;
-  categories: KuberCloudImageCategoriesResponse[] | null;
+  category: number;
+  tags: KuberCloudImageTagsResponse[] | null;
+  ports: KuberCloudImagePortResponse[] | null;
+  keys: KuberCloudImageKeyResponse[] | null;
 };
 export type KuberCloudImageCategoryResponse = {
   id: number;
@@ -4071,7 +4101,7 @@ export type CreateKubernetesNodeModel = {
   disk?: number | null;
 };
 export type KubernetesVersionListResponse = {
-  id?: number;
+  id: number;
   name: string | null;
 };
 export type NotificationListResponse = {
@@ -4155,17 +4185,6 @@ export type GetProductResponse = {
   description?: string | null;
   supplementaryDescription?: string | null;
 };
-export type ProductBundleConfiguration = {
-  name: string | null;
-  quantity: number;
-};
-export type ProductBundleListResponse = {
-  id: number;
-  name: string | null;
-  description: string | null;
-  price: number;
-  configurations: ProductBundleConfiguration[] | null;
-};
 export type ProductBundleVmListResponse = {
   id: number;
   name: string | null;
@@ -4211,6 +4230,16 @@ export type ProductBundleKuberCloudListResponse = {
   kuberMemory: number;
   kuberDisk: number;
   kuber10Pods: number;
+};
+export type ProductBundleBareMetalListResponse = {
+  id: number;
+  name: string | null;
+  price: number;
+  physicalCpu: number;
+  physicalMemory: number;
+  physicalDisk: number;
+  networkPort: number;
+  bareMetalIpv4: number;
 };
 export type ProductItemListResponse = {
   id: number;
@@ -4924,6 +4953,7 @@ export const {
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
   useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
   useGetApiMyKubernetesCloudHostListQuery,
+  useGetApiMyKubernetesCloudHostGetByIdQuery,
   usePostApiMyKubernetesCloudHostCreateMutation,
   usePutApiMyKubernetesCloudHostEditMutation,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
@@ -4957,13 +4987,13 @@ export const {
   useGetApiMyPortalPaymentProviderListQuery,
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalProductGetByIdQuery,
-  useGetApiMyPortalProductBundleListByProductIdQuery,
   useGetApiMyPortalProductBundleVmListQuery,
   useGetApiMyPortalProductBundleStorageListQuery,
   useGetApiMyPortalProductBundleWebListQuery,
   useGetApiMyPortalProductBundleKuberClusterListQuery,
   useGetApiMyPortalProductBundleVpcListQuery,
   useGetApiMyPortalProductBundleKuberCloudListQuery,
+  useGetApiMyPortalProductBundleBareMetalListQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useGetApiMyPortalProfileGetQuery,
@@ -5078,4 +5108,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-

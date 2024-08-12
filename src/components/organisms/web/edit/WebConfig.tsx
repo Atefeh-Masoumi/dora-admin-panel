@@ -1,26 +1,23 @@
-import { FC, useContext, useMemo } from "react";
-import { Box, Divider, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { toast } from "react-toastify";
+import { FC, useContext, useMemo } from "react";
 import { useNavigate } from "react-router";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { EditWebTableRow } from "./tables/EditWebTableRow";
-import { editWebTableStruct } from "./tables/editWebTableStruct";
+import { toast } from "react-toastify";
 import {
-  useGetApiMyPortalProductBundleListByProductIdQuery,
+  useGetApiMyPortalProductBundleWebListQuery,
   usePutApiMyWebHostEditMutation,
 } from "src/app/services/api.generated";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { EditWebContext } from "./contexts/EditWebContext";
+import { EditWebTableRow } from "./tables/EditWebTableRow";
+import { editWebTableStruct } from "./tables/editWebTableStruct";
 
 type WebConfigPropsType = {};
 
 export const WebConfig: FC<WebConfigPropsType> = () => {
   const { data: configsList, isLoading } =
-    useGetApiMyPortalProductBundleListByProductIdQuery({
-      productId: PRODUCT_CATEGORY_ENUM.WEB,
-    });
+    useGetApiMyPortalProductBundleWebListQuery();
 
   const table = useMemo(
     () => (

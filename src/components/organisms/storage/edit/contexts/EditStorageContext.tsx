@@ -1,11 +1,11 @@
 import { FC, createContext, ReactNode, useState } from "react";
-import { ProductBundleListResponse } from "src/app/services/api.generated";
+import { ProductBundleStorageListResponse } from "src/app/services/api.generated";
 
 type editStorageContextType = {
   serverId: number | null;
   setServerId: (id: number | null) => void;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleStorageListResponse | null;
+  setServerConfig: (osConfig: ProductBundleStorageListResponse | null) => void;
 };
 
 export const EditStorageContext = createContext<editStorageContextType>({
@@ -24,7 +24,7 @@ const EditStorageContextProvider: FC<EditStorageContextProviderPropsType> = ({
 }) => {
   const [serverId, setServerId] = useState<number | null>(null);
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleStorageListResponse | null>(null);
 
   return (
     <EditStorageContext.Provider
