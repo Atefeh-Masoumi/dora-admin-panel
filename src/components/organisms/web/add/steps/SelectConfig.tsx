@@ -1,11 +1,7 @@
-import { FC, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { FC, useMemo } from "react";
+import { useGetApiMyPortalProductBundleWebListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import {
-  useGetApiMyPortalProductBundleListByProductIdQuery,
-  useGetApiMyPortalProductBundleWebListQuery,
-} from "src/app/services/api.generated";
 import { AddWabHostTableRow } from "../tables/AddWabTableRow";
 import { addWebTableStruct } from "../tables/struct";
 

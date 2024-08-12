@@ -1,11 +1,11 @@
-import { FC, createContext, ReactNode, useState } from "react";
-import { ProductBundleListResponse } from "src/app/services/api.generated";
+import { createContext, FC, ReactNode, useState } from "react";
+import { ProductBundleWebListResponse } from "src/app/services/api.generated";
 
 type editWebContextType = {
   serverId: number | null;
   setServerId: (id: number | null) => void;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleWebListResponse | null;
+  setServerConfig: (osConfig: ProductBundleWebListResponse | null) => void;
 };
 
 export const EditWebContext = createContext<editWebContextType>({
@@ -24,7 +24,7 @@ const EditWebContextProvider: FC<EditWebContextProviderPropsType> = ({
 }) => {
   const [serverId, setServerId] = useState<number | null>(null);
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleWebListResponse | null>(null);
 
   return (
     <EditWebContext.Provider

@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import {
   DatacenterListResponse,
   HypervisorTypeListResponse,
-  ProductBundleListResponse,
+  ProductBundleVpcListResponse,
   usePostApiMyVpcHostCreateMutation,
 } from "src/app/services/api.generated";
 import { NetworkItemsType } from "../steps/SelectVpcNetwork";
@@ -43,8 +43,8 @@ type AddVpcContextType = {
   setSelectedNetworkList: any;
   submitHandler: () => void;
   submitLoading: boolean;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleVpcListResponse | null;
+  setServerConfig: (osConfig: ProductBundleVpcListResponse | null) => void;
 };
 
 export const AddVpcContext = createContext<AddVpcContextType>({
@@ -75,7 +75,7 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
   const [hypervisor, setHypervisor] =
     useState<HypervisorTypeListResponse | null>(null);
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleVpcListResponse | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [selectedNetworkList, setSelectedNetworkList] =
     useState<NetworkItemsType[]>(defaultNetworkList);

@@ -1,7 +1,7 @@
 import { FC, createContext, ReactNode, useState } from "react";
 import {
   DatacenterListResponse,
-  ProductBundleListResponse,
+  ProductBundleStorageListResponse,
 } from "src/app/services/api.generated";
 
 export type addStorageStepsType = 1 | 2 | 3;
@@ -15,8 +15,8 @@ type AddStorageContextType = {
   setStep: (step: addStorageStepsType) => void;
   dataCenter: DatacenterListResponse | null;
   setDataCenter: (dataCenter: DatacenterListResponse | null) => void;
-  serverConfig: ProductBundleListResponse | null;
-  setServerConfig: (osConfig: ProductBundleListResponse | null) => void;
+  serverConfig: ProductBundleStorageListResponse | null;
+  setServerConfig: (osConfig: ProductBundleStorageListResponse | null) => void;
   name: string;
   setName: (name: string) => void;
   isPredefined: boolean;
@@ -56,7 +56,7 @@ const AddStorageContextProvider: FC<AddStorageContextProviderPropsType> = ({
     null
   );
   const [serverConfig, setServerConfig] =
-    useState<ProductBundleListResponse | null>(null);
+    useState<ProductBundleStorageListResponse | null>(null);
   const [name, setName] = useState("");
   const [customConfig, setCustomConfig] = useState<StorageCustomConfigType>({
     disk: 45000,
