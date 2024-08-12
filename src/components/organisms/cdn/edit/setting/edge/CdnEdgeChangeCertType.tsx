@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiMyCdnHostChangeEdgeCertTypeMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnHostChangeEdgeCertTypeMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
@@ -21,11 +21,14 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
   certTypeId,
 }) => {
   const [changeEdge, { isLoading }] =
-    usePutApiMyCdnHostChangeEdgeCertTypeMutation();
+    usePutApiMyDnsCdnHostChangeEdgeCertTypeMutation();
   const onChangeEdge = (type: number) => {
     if (!certTypeId) return;
     changeEdge({
-      changeEdgeCertTypeModel: { dnsHostId: dnsId, zoneEdgeCertTypeId: type },
+      changeEdgeCertTypeModel: {
+        id: dnsId,
+        cdnHostEdgeCertTypeId: type,
+      },
     });
   };
 

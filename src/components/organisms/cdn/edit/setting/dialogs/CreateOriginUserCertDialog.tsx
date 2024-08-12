@@ -7,7 +7,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   CreateCdnOriginUserCertModel,
-  usePostApiMyCdnOriginCertCreateUserCertMutation,
+  usePostApiMyDnsCdnOriginCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ export const CreateOriginUserCertDialog: FC<
   const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiMyCdnOriginCertCreateUserCertMutation();
+    usePostApiMyDnsCdnOriginCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -36,12 +36,12 @@ export const CreateOriginUserCertDialog: FC<
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnOriginUserCertModel> = (
-    { dnsHostId, keyPem, certPem },
+    { dnsCdnHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnOriginUserCertModel: { dnsHostId: dnsId, keyPem, certPem },
+      createCdnOriginUserCertModel: { dnsCdnHostId: dnsId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

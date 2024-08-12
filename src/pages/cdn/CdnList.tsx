@@ -10,10 +10,10 @@ import { FC, Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
-  DnsListResponse,
+  DnsCdnListResponse,
   DomainListResponse,
-  useDeleteApiMyDnsHostDeleteByIdMutation,
-  useGetApiMyDnsHostListQuery,
+  useDeleteApiMyDnsCdnHostDeleteByIdMutation,
+  useGetApiMyDnsCdnHostListQuery,
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -28,7 +28,9 @@ enum DIALOG_TYPE_ENUM {
 }
 
 const CdnList: FC = () => {
-  const [selectedCdn, setSelectedCdn] = useState<DnsListResponse | null>(null);
+  const [selectedCdn, setSelectedCdn] = useState<DnsCdnListResponse | null>(
+    null
+  );
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ const CdnList: FC = () => {
     data: zoneList,
     isLoading: getDataLoading,
     isFetching,
-  } = useGetApiMyDnsHostListQuery();
+  } = useGetApiMyDnsCdnHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -73,7 +75,7 @@ const CdnList: FC = () => {
     };
   }, [windowDimenion]);
 
-  const deleteBtnOnClick = (cdn: DnsListResponse) => {
+  const deleteBtnOnClick = (cdn: DnsCdnListResponse) => {
     setSelectedCdn(cdn);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -84,7 +86,7 @@ const CdnList: FC = () => {
   };
 
   const [deleteCdn, { isLoading: deleteCdnLoading }] =
-    useDeleteApiMyDnsHostDeleteByIdMutation();
+    useDeleteApiMyDnsCdnHostDeleteByIdMutation();
 
   const deleteCdnHandler = () => {
     if (!selectedCdn?.id) return;

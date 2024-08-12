@@ -1,7 +1,7 @@
 import { Button, Chip, Divider, Stack, Typography } from "@mui/material";
 import { FC, useMemo } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyDnsHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnHostGetByIdQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -19,7 +19,7 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiMyDnsHostGetByIdQuery({ id: dnsId });
+  } = useGetApiMyDnsCdnHostGetByIdQuery({ id: dnsId });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,

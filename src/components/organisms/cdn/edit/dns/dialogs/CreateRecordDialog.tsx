@@ -25,10 +25,10 @@ import {
   dnsTypeValueLabelObject,
 } from "src/components/organisms/cdn/edit/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiMyDnsRecordGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
-  usePostApiMyDnsRecordCreateMutation,
-  usePutApiMyDnsRecordEditMutation,
+  usePostApiMyDnsCdnDnsRecordCreateMutation,
+  usePutApiMyDnsCdnDnsRecordEditMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -46,7 +46,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   openDialog,
 }) => {
   const [getInfo, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyDnsRecordGetByIdQuery();
+    useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery();
 
   const [type, setType] = useState<dnsType>("A");
 
@@ -94,10 +94,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   }, [getInfo, id]);
 
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
-    usePostApiMyDnsRecordCreateMutation();
+    usePostApiMyDnsCdnDnsRecordCreateMutation();
 
   const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutApiMyDnsRecordEditMutation();
+    usePutApiMyDnsCdnDnsRecordEditMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference, useProxy },
@@ -108,7 +108,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       editDnsRecord({
         editDnsRecordModel: {
           id: id,
-          dnsHostId: dnsId,
+          dnsCdnHostId: dnsId,
           name,
           type,
           ttl,
@@ -129,7 +129,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     } else {
       createDnsRecord({
         createDnsRecordModel: {
-          dnsHostId: dnsId,
+          dnsCdnHostId: dnsId,
           name,
           type,
           ttl,

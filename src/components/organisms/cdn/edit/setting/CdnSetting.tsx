@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyCdnHostGetByDnsHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnHostGetCdnByIdQuery } from "src/app/services/api.generated";
 import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/setting/CdnSecuritySetting";
 import { CdnTypeSetting } from "src/components/organisms/cdn/edit/setting/CdnTypeSetting";
 import { CdnOriginChangeCertType } from "src/components/organisms/cdn/edit/setting/origin/CdnOriginChangeCertType";
@@ -11,8 +11,8 @@ export const CdnSetting: FC = () => {
   const { id } = useParams();
   const dnsId = Number(id) || 0;
 
-  const { data: zoneData, isLoading } = useGetApiMyCdnHostGetByDnsHostIdQuery({
-    dnsHostId: dnsId,
+  const { data: zoneData, isLoading } = useGetApiMyDnsCdnHostGetCdnByIdQuery({
+    id: dnsId,
   });
   return (
     <Stack width="100%" spacing={4}>
@@ -21,7 +21,7 @@ export const CdnSetting: FC = () => {
           تنظیمات HTTPS
         </Typography>
         <CdnTypeSetting
-          zoneTypeId={zoneData?.zoneTypeId as number}
+          zoneTypeId={zoneData?.cdnHostTypeId as number}
           loading={isLoading}
           dnsId={dnsId}
         />
@@ -41,7 +41,7 @@ export const CdnSetting: FC = () => {
         <CdnEdgeChangeCertType
           dnsId={dnsId}
           loading={isLoading}
-          certTypeId={zoneData?.zoneEdgeCertTypeId}
+          certTypeId={zoneData?.cdnHostEdgeCertTypeId}
         />
       </Stack>
 
@@ -52,7 +52,7 @@ export const CdnSetting: FC = () => {
         <CdnOriginChangeCertType
           dnsId={dnsId}
           loading={isLoading}
-          certTypeId={zoneData?.zoneClientCertTypeId}
+          certTypeId={zoneData?.cdnHostOriginCertTypeId}
         />
       </Stack>
     </Stack>

@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyDnsRecordListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnDnsRecordListByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
@@ -15,8 +15,8 @@ export const DnsRecord: FC = () => {
   const dnsId = Number(id) || 0;
 
   const { data: zoneList, isLoading } =
-    useGetApiMyDnsRecordListByDnsHostIdQuery({
-      dnsHostId: dnsId,
+    useGetApiMyDnsCdnDnsRecordListByDnsCdnHostIdQuery({
+      dnsCdnHostId: dnsId,
     });
 
   const [search, setSearch] = useState("");

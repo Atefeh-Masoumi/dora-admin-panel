@@ -1,6 +1,6 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnOriginCertGetUserCertByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { CreateOriginUserCertDialog } from "../dialogs/CreateOriginUserCertDialog";
@@ -16,7 +16,9 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
   loading,
 }) => {
   const { data: userCert, isLoading } =
-    useGetApiMyCdnOriginCertGetUserCertByDnsHostIdQuery({ dnsHostId: dnsId });
+    useGetApiMyDnsCdnOriginCertGetUserCertByDnsCdnHostIdQuery({
+      dnsCdnHostId: dnsId,
+    });
 
   const handleOpen = () => setOpen(true);
   const [open, setOpen] = useState(false);

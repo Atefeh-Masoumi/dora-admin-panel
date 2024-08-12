@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { useGetApiMyCdnOriginCertGetByDnsHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -16,8 +16,8 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
   loading,
 }) => {
   const { data: edgeCert, isLoading } =
-    useGetApiMyCdnOriginCertGetByDnsHostIdQuery({
-      dnsHostId: dnsId,
+    useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery({
+      dnsCdnHostId: dnsId,
     });
 
   return (

@@ -7,7 +7,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
   CreateCdnEdgeUserCertModel,
-  usePostApiMyCdnEdgeCertCreateUserCertMutation,
+  usePostApiMyDnsCdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -27,7 +27,7 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   const formInitialValues = { dnsId, keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiMyCdnEdgeCertCreateUserCertMutation();
+    usePostApiMyDnsCdnEdgeCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -38,12 +38,12 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
-    { dnsHostId, keyPem, certPem },
+    { dnsCdnHostId, keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnEdgeUserCertModel: { dnsHostId: dnsId, keyPem, certPem },
+      createCdnEdgeUserCertModel: { dnsCdnHostId: dnsId, keyPem, certPem },
     })
       .unwrap()
       .then(() => {

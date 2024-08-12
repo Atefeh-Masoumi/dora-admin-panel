@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { CloudTrue } from "src/components/atoms/svg-icons/CloudTrueSvg";
 import { CloudFalse } from "src/components/atoms/svg-icons/CloudFalseSvg";
-import { usePutApiMyDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnDnsRecordChangeProxyStatusByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -23,7 +23,7 @@ export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
   const handleTooltipOpen = () => setOpen(!open);
 
   const [changeProxyStatus, { isLoading }] =
-    usePutApiMyDnsRecordChangeProxyStatusByIdMutation();
+    usePutApiMyDnsCdnDnsRecordChangeProxyStatusByIdMutation();
 
   const changeProxy = () => {
     if (status === undefined) return;

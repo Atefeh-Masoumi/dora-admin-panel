@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   EditCdnRouteModel,
-  useDeleteApiMyCdnRouteDeleteByIdMutation,
+  useDeleteApiMyDnsCdnRouteDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
@@ -27,7 +27,7 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   const [deleteItem, { isLoading: deleteClusterRecordLoading }] =
-    useDeleteApiMyCdnRouteDeleteByIdMutation();
+    useDeleteApiMyDnsCdnRouteDeleteByIdMutation();
 
   const deleteClusterRecordHandler = () =>
     deleteItem({ id: Number(selectedCluster?.id) })

@@ -23,10 +23,10 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiMyCdnRouteGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyDnsCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePutApiMyCdnRouteEditMutation,
+  usePutApiMyDnsCdnRouteEditMutation,
 } from "src/app/services/api.generated";
 
 type InitialValuesType = {
@@ -90,7 +90,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
   const [getDetails, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyCdnRouteGetByIdQuery();
+    useLazyGetApiMyDnsCdnRouteGetByIdQuery();
 
   useEffect(() => {
     if (!id) return;
@@ -133,7 +133,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     setCertificateSwitch((prevState) => !prevState);
 
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutApiMyCdnRouteEditMutation();
+    usePutApiMyDnsCdnRouteEditMutation();
 
   const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
@@ -160,7 +160,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     //  else {
     //   createLoadBalance({
     //     createCdnRouteModel: {
-    //       dnsHostId: dnsId,
+    //       DnsCdnHostId: dnsId,
     //       destinations,
     //       dangerousAcceptAnyServerCertificate: certificateSwitch,
     //       maxConnectionsPerServer: Number(maxConnectionsPerServer),

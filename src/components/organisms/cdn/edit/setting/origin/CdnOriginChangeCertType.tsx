@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiMyCdnHostChangeClientCertTypeMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnHostChangeOriginCertTypeMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
@@ -21,13 +21,13 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
   certTypeId,
 }) => {
   const [changeClient, { isLoading }] =
-    usePutApiMyCdnHostChangeClientCertTypeMutation();
+    usePutApiMyDnsCdnHostChangeOriginCertTypeMutation();
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
-      changeClientCertTypeModel: {
-        dnsHostId: dnsId,
-        zoneClientCertTypeId: type,
+      changeOriginCertTypeModel: {
+        id: dnsId,
+        cdnHostOriginCertTypeId: type,
       },
     });
   };

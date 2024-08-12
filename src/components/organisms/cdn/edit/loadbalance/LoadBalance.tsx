@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyCdnRouteListByDnsHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnRouteListByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { CreateLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/CreateLoadBalanceDialog";
 import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
@@ -15,8 +15,8 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
   const { id } = useParams();
   const dnsId = Number(id) || 0;
 
-  const { data, isLoading } = useGetApiMyCdnRouteListByDnsHostIdQuery({
-    dnsHostId: dnsId,
+  const { data, isLoading } = useGetApiMyDnsCdnRouteListByDnsCdnHostIdQuery({
+    dnsCdnHostId: dnsId,
   });
 
   const openDialog = () => setShowDialog(true);

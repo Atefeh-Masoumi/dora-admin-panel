@@ -9,7 +9,7 @@ const tags = [
   "Profile",
   "NotificationStatus",
   "Notification",
-  "DnsHost",
+  "DnsCdnHost",
   "DNSRecordSetting",
   "EditRecordDialog",
   "ProxyStatus",
@@ -125,83 +125,83 @@ export const api = generatedApi
       postApiMyPortalIssueItemCreate: {
         invalidatesTags: () => ["Support"],
       },
-      // ============================== DnsHost ============================== //
-      getApiMyDnsHostList: {
-        providesTags: () => ["DnsHost"],
+      // ============================== DnsCdnHost ============================== //
+      getApiMyDnsCdnHostList: {
+        providesTags: () => ["DnsCdnHost"],
       },
-      postApiMyDnsHostCreate: {
-        invalidatesTags: () => ["DnsHost"],
+      getApiMyDnsCdnHostGetCdnById: {
+        providesTags: () => ["DnsCdnHost"],
       },
-      getApiMyDnsHostGetById: {
-        providesTags: () => ["DnsHost"],
+      postApiMyDnsCdnHostCreate: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      deleteApiMyDnsHostDeleteById: {
-        invalidatesTags: () => ["DnsHost"],
+      getApiMyDnsCdnHostGetById: {
+        providesTags: () => ["DnsCdnHost"],
       },
-      getApiMyDnsRecordListByDnsHostId: {
+      deleteApiMyDnsCdnHostDeleteById: {
+        invalidatesTags: () => ["DnsCdnHost"],
+      },
+      getApiMyDnsCdnDnsRecordListByDnsCdnHostId: {
         providesTags: () => ["DNSRecordSetting", "ProxyStatus"],
       },
-      getApiMyDnsRecordGetById: {
+      getApiMyDnsCdnDnsRecordGetById: {
         providesTags: () => ["EditRecordDialog"],
       },
-      postApiMyDnsRecordCreate: {
+      postApiMyDnsCdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting", "CdnRoute"],
       },
-      putApiMyDnsRecordEdit: {
+      putApiMyDnsCdnDnsRecordEdit: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      putApiMyDnsRecordChangeProxyStatusById: {
+      putApiMyDnsCdnDnsRecordChangeProxyStatusById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus", "CdnRoute"],
       },
-      deleteApiMyDnsRecordDeleteById: {
+      deleteApiMyDnsCdnDnsRecordDeleteById: {
         invalidatesTags: () => ["DNSRecordSetting"],
       },
       // ============================== CdnHost ============================== //
-      getApiMyCdnHostGetByDnsHostId: {
-        providesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeCdnType: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      putApiMyCdnHostChangeCdnType: {
-        invalidatesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeHsts: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      putApiMyCdnHostChangeHsts: {
-        invalidatesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeHttpsRedirect: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      putApiMyCdnHostChangeHttpsRedirect: {
-        invalidatesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeNonWwwRedirect: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      putApiMyCdnHostChangeNonWwwRedirect: {
-        invalidatesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeEdgeCertType: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
-      putApiMyCdnHostChangeEdgeCertType: {
-        invalidatesTags: () => ["CdnHost"],
-      },
-      putApiMyCdnHostChangeClientCertType: {
-        invalidatesTags: () => ["CdnHost"],
+      putApiMyDnsCdnHostChangeOriginCertType: {
+        invalidatesTags: () => ["DnsCdnHost"],
       },
       // ============================== CdnRoute ============================== //
-      getApiMyCdnRouteListByDnsHostId: {
+      getApiMyDnsCdnRouteListByDnsCdnHostId: {
         providesTags: () => ["CdnRoute"],
       },
-      deleteApiMyCdnRouteDeleteById: {
+      deleteApiMyDnsCdnRouteDeleteById: {
         invalidatesTags: () => ["CdnRoute", "ProxyStatus"],
       },
-      putApiMyCdnRouteEdit: {
+      putApiMyDnsCdnRouteEdit: {
         invalidatesTags: () => ["CdnRoute"],
       },
       // ============================== CdnCert ============================== //
-      getApiMyCdnEdgeCertGetByDnsHostId: {
+      getApiMyDnsCdnEdgeCertGetByDnsCdnHostId: {
         providesTags: () => ["CdnCert"],
       },
-      getApiMyCdnEdgeCertGetUserCertByDnsHostId: {
+      getApiMyDnsCdnEdgeCertGetUserCertByDnsCdnHostId: {
         providesTags: () => ["CdnCert"],
       },
-      postApiMyCdnEdgeCertCreate: {
+      postApiMyDnsCdnEdgeCertCreate: {
         invalidatesTags: () => ["CdnCert"],
       },
-      postApiMyCdnEdgeCertCreateUserCert: {
+      postApiMyDnsCdnEdgeCertCreateUserCert: {
         invalidatesTags: () => ["CdnCert"],
       },
-      getApiMyCdnOriginCertGetByDnsHostId: {
+      getApiMyDnsCdnOriginCertGetByDnsCdnHostId: {
         providesTags: () => ["CdnCert"],
       },
       // ============================== VmHost ============================== //
@@ -445,8 +445,8 @@ export const {
   useLazyGetApiMyDatacenterIpListByIdQuery,
   // useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
-  useLazyGetApiMyCdnRouteGetByIdQuery,
-  useLazyGetApiMyDnsRecordGetByIdQuery,
+  useLazyGetApiMyDnsCdnRouteGetByIdQuery,
+  useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery,
   useLazyGetApiMyPortalPaymentGetByIdQuery,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,

@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   GetDnsRecordResponse,
-  useDeleteApiMyDnsRecordDeleteByIdMutation,
+  useDeleteApiMyDnsCdnDnsRecordDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
@@ -30,7 +30,7 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   const [deleteDnsRecord, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyDnsRecordDeleteByIdMutation();
+    useDeleteApiMyDnsCdnDnsRecordDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -110,7 +110,7 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
       {openEdit && (
         <CreateRecordDialog
           id={row.id}
-          dnsId={row.dnsHostId}
+          dnsId={row.DnsCdnHostId}
           openDialog={openEdit}
           onClose={handleCloseEdit}
         />

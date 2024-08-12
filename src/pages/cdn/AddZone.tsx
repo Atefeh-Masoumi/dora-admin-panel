@@ -7,8 +7,8 @@ import { SelectDomain } from "src/components/organisms/cdn/add/steps/SelectDomai
 import { RecordsList } from "src/components/organisms/cdn/add/steps/RecordsList";
 import { AddZoneStepper } from "src/components/organisms/cdn/add/AddStepper";
 import {
-  usePostApiMyDnsHostCheckZoneMutation,
-  usePostApiMyDnsHostCreateMutation,
+  usePostApiMyDnsCdnHostCheckMutation,
+  usePostApiMyDnsCdnHostCreateMutation,
 } from "src/app/services/api.generated";
 import {
   AddZoneContext,
@@ -28,9 +28,9 @@ const AddZone: FC = () => {
     setStep((step - 1) as addZoneStepsType);
   };
 
-  const [checkZone, { isLoading }] = usePostApiMyDnsHostCheckZoneMutation();
+  const [checkZone, { isLoading }] = usePostApiMyDnsCdnHostCheckMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
-    usePostApiMyDnsHostCreateMutation();
+    usePostApiMyDnsCdnHostCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {
@@ -44,7 +44,7 @@ const AddZone: FC = () => {
     }
 
     createCdn({
-      createDnsModel: {
+      createDnsCdnModel: {
         zoneName: domainName,
       },
     })
@@ -68,7 +68,7 @@ const AddZone: FC = () => {
           return;
         }
         checkZone({
-          checkDnsModel: {
+          checkDnsCdnModel: {
             zoneName: domainName,
           },
         })

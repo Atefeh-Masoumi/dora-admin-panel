@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  usePutApiMyCdnHostChangeHstsMutation,
-  usePutApiMyCdnHostChangeHttpsRedirectMutation,
-  usePutApiMyCdnHostChangeNonWwwRedirectMutation,
+  usePutApiMyDnsCdnHostChangeHstsMutation,
+  usePutApiMyDnsCdnHostChangeHttpsRedirectMutation,
+  usePutApiMyDnsCdnHostChangeNonWwwRedirectMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -25,39 +25,39 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   loading,
 }) => {
   const [changeHttpsRedirect, { isLoading: loadingRedirect }] =
-    usePutApiMyCdnHostChangeHttpsRedirectMutation();
+    usePutApiMyDnsCdnHostChangeHttpsRedirectMutation();
 
   const onChangeHttpsRedirect = () => {
     if (isHttpsRedirect === undefined) return;
     changeHttpsRedirect({
       changeHttpsRedirectModel: {
-        dnsHostId: dnsId,
+        id: dnsId,
         isHttpsRedirect: !isHttpsRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeNonWwwRedirect, { isLoading: loadingNonWwwRedirect }] =
-    usePutApiMyCdnHostChangeNonWwwRedirectMutation();
+    usePutApiMyDnsCdnHostChangeNonWwwRedirectMutation();
 
   const onChangeNonWwwRedirect = () => {
     if (isNonWwwRedirect === undefined) return;
     changeNonWwwRedirect({
       changeNonWwwRedirectModel: {
-        dnsHostId: dnsId,
+        id: dnsId,
         isNonWwwRedirect: !isNonWwwRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
-    usePutApiMyCdnHostChangeHstsMutation();
+    usePutApiMyDnsCdnHostChangeHstsMutation();
 
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({
       changeHstsModel: {
-        dnsHostId: dnsId,
+        id: dnsId,
         isHsts: !isHSTS,
       },
     }).then(() => {

@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
-  usePostApiMyCdnEdgeCertCreateMutation,
-  useGetApiMyCdnEdgeCertGetByDnsHostIdQuery,
+  usePostApiMyDnsCdnEdgeCertCreateMutation,
+  useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery,
 } from "src/app/services/api.generated";
 
 type CdnEdgeCertPropsType = {
@@ -17,17 +17,17 @@ type CdnEdgeCertPropsType = {
 
 export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
   const [createLicense, { isLoading: loadingCreate }] =
-    usePostApiMyCdnEdgeCertCreateMutation();
+    usePostApiMyDnsCdnEdgeCertCreateMutation();
 
   const { data: edgeCert, isLoading } =
-    useGetApiMyCdnEdgeCertGetByDnsHostIdQuery({
-      dnsHostId: dnsId,
+    useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery({
+      dnsCdnHostId: dnsId,
     });
 
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
-        dnsHostId: dnsId,
+        dnsCdnHostId: dnsId,
       },
     })
       .unwrap()
