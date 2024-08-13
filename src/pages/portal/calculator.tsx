@@ -75,7 +75,7 @@ const Calculator: FC = () => {
           خدمات ابری
         </Typography>
       </Stack>
-      <Stack sx={{ width: { xs: "100%", lg: "60%" } }}>
+      <Stack sx={{ width: { xs: "100%", lg: "85%" } }}>
         <TabContext value={value}>
           <Container
             sx={{

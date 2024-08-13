@@ -113,7 +113,8 @@ const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
 
   const monthHours = 24 * 30;
   const unitPrice =
-    storageData?.find((item) => item.id === PRODUCT_ITEM_ENUM.VCpu)?.price || 0;
+    storageData?.find((item) => item.id === PRODUCT_ITEM_ENUM.CloudDisk)
+      ?.price || 0;
   const storagePrice = storageData && storage * unitPrice;
   const monthlyAmountPrice = storagePrice!;
   const hourlyAmountPrice = (monthlyAmountPrice / monthHours).toFixed();

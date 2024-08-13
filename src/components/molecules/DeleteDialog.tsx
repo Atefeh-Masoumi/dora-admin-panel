@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BlurBackdrop } from "../atoms/BlurBackdrop";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { makeStyles } from "@mui/styles";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
@@ -37,6 +38,15 @@ type DeleteDialogPropsType = DialogProps & {
   onSubmit: MouseEventHandler<HTMLButtonElement>;
   submitLoading: boolean;
 };
+
+const useStyles = makeStyles(() => ({
+  input: {
+    textAlign: "left",
+    "&::placeholder": {
+      textAlign: "right",
+    },
+  },
+}));
 
 export const DeleteDialog: FC<DeleteDialogPropsType> = ({
   keyTitle,
@@ -48,6 +58,8 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
   ...props
 }) => {
   const [inputValue, setInputValue] = useState("");
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (props.open) return;
@@ -140,11 +152,12 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 border: "1px solid #ccc",
                 borderRadius: BORDER_RADIUS_1,
                 padding: "4px 0",
+                direction: "rtl",
               }}
             >
               <Tooltip title={securityPhrase}>
                 <Typography
-                  pl={1.2}
+                  pr={1.2}
                   maxWidth={{ xs: "60%", md: "80%" }}
                   textOverflow="ellipsis"
                   noWrap
@@ -157,7 +170,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 variant="contained"
                 size="small"
                 onClick={() => copyText(securityPhrase)}
-                sx={{ marginRight: "5px" }}
+                sx={{ marginLeft: "5px" }}
               >
                 کپی کردن
               </Button>
@@ -172,6 +185,15 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
               value={inputValue}
               size="small"
               placeholder="نام سرویس را وارد کنید"
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+              }}
+              InputLabelProps={{
+                shrink: true,
+                dir: "rtl",
+              }}
             />
           </Stack>
         </Stack>
