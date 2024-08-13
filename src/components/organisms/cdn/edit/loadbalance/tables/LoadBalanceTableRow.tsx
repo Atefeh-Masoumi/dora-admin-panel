@@ -29,14 +29,6 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteItem, { isLoading: deleteClusterRecordLoading }] =
     useDeleteApiMyDnsCdnRouteDeleteByIdMutation();
 
-  const deleteClusterRecordHandler = () =>
-    deleteItem({ id: Number(selectedCluster?.id) })
-      .unwrap()
-      .then(() => {
-        toast.success("کلاستر با موفقیت حذف شد");
-      })
-      .catch((err) => {});
-
   const handleOpenDelete = (clusterInfo: EditCdnRouteModel) => {
     setSelectedCluster(clusterInfo);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
@@ -46,6 +38,15 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
     setDialogType(null);
     setSelectedCluster(null);
   };
+
+  const deleteClusterRecordHandler = () =>
+    deleteItem({ id: Number(selectedCluster?.id) })
+      .unwrap()
+      .then(() => {
+        toast.success("Load Balance با موفقیت حذف شد");
+        closeDialogHandler();
+      })
+      .catch((err) => {});
 
   return (
     <Fragment>
