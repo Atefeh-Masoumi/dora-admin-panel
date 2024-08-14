@@ -94,6 +94,14 @@ const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
 const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
 const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 
+const KubernetesCloud = lazy(
+  () => import("src/pages/kubernetesCloud/KubernetesCloudList")
+);
+
+const AddNamespace = lazy(
+  () => import("src/pages/kubernetesCloud/add/AddNamespace")
+);
+
 const mainTemplate = (
   PageComponent: FC<any>,
   templateProps?: Omit<MainTemplatePropsType, "children">,
@@ -597,8 +605,21 @@ const Router: FC = () => {
             pageTitle: "ایجاد سرور مجازی جدید",
           })}
         />
-        {/* ======================================= VPC ======================================= */}
+        {/* ======================================= KUBERNETES CLOUD ======================================= */}
 
+        <Route
+          path="/kubernetes-cloud"
+          element={mainTemplate(KubernetesCloud, {
+            pageTitle: "مدیریت سرویس کوبرنتیز ابری",
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/add"
+          element={mainTemplate(AddNamespace, {
+            pageTitle: "ایجاد namespace جدید",
+          })}
+        />
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>
