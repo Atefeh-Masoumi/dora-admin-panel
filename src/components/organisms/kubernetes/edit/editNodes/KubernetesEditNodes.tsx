@@ -6,7 +6,7 @@ import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
 import { kubernetesNodesTableStruct } from "./table/struct";
 import { KubernetesNodesTableRow } from "./table/KubernetesNodesTableRow";
 import { useNavigate, useParams } from "react-router";
-import { useGetApiMyKubernetesNodeListByKubernetesHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesClusterNodeListByKubernetesHostIdQuery } from "src/app/services/api.generated";
 
 type KubernetesEditNodesPropsType = {};
 
@@ -14,7 +14,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
   const { data = [], isLoading } =
-    useGetApiMyKubernetesNodeListByKubernetesHostIdQuery(
+    useGetApiMyKubernetesClusterNodeListByKubernetesHostIdQuery(
       {
         kubernetesHostId: Number(kubernetesId) || 0,
       },

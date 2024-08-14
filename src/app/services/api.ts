@@ -19,7 +19,7 @@ const tags = [
   "SupportItems",
   "Support",
   "VmHost",
-  "Kubernetes",
+  "KubernetesCluster",
   "Storage",
   "WebHost",
   "Vpc",
@@ -268,27 +268,27 @@ export const api = generatedApi
       deleteApiMyVmProjectDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
-      // ============================== Kubernetes ============================== //
-      getApiMyKubernetesHostList: {
-        providesTags: () => ["Kubernetes"],
+      // ============================== KubernetesCluster ============================== //
+      getApiMyKubernetesClusterHostList: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      getApiMyKubernetesNodeListByKubernetesHostId: {
-        providesTags: () => ["Kubernetes"],
+      getApiMyKubernetesClusterNodeListByKubernetesHostId: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      getApiMyKubernetesHostGetById: {
-        providesTags: () => ["Kubernetes"],
+      getApiMyKubernetesClusterHostGetById: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      putApiMyKubernetesNodeDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
+      putApiMyKubernetesClusterNodeDeleteById: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      postApiMyKubernetesNodeCreate: {
-        invalidatesTags: () => ["Kubernetes"],
+      postApiMyKubernetesClusterNodeCreate: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      postApiMyKubernetesHostCreate: {
-        invalidatesTags: () => ["Kubernetes"],
+      postApiMyKubernetesClusterHostCreate: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      deleteApiMyKubernetesHostDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
+      deleteApiMyKubernetesClusterHostDeleteById: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       // ============================== Storage ============================== //
       getApiMyStorageHostList: {
@@ -443,7 +443,6 @@ export const api = generatedApi
 export const {
   useCustomCreateIssueMutation,
   useLazyGetApiMyDatacenterIpListByIdQuery,
-  // useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyDnsCdnRouteGetByIdQuery,
   useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery,

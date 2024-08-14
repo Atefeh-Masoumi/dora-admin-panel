@@ -18,7 +18,7 @@ import {
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterImageListQuery,
-  useGetApiMyKubernetesVersionListQuery,
+  useGetApiMyKubernetesClusterVersionListQuery,
 } from "src/app/services/api.generated";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
@@ -38,7 +38,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
     setWorkersCount,
   } = useContext(AddKubernetesContext);
 
-  const { data } = useGetApiMyKubernetesVersionListQuery();
+  const { data } = useGetApiMyKubernetesClusterVersionListQuery();
 
   const versionsList = useMemo(
     () => (data as DatacenterListResponse[]) || [],
