@@ -29,6 +29,7 @@ const tags = [
   "Issue",
   "VpcNat",
   "Accessibility",
+  "ConfigMap",
 ];
 
 export const api = generatedApi
@@ -269,25 +270,25 @@ export const api = generatedApi
         invalidatesTags: () => ["VmHost"],
       },
       // ============================== Kubernetes ============================== //
-      getApiMyKubernetesHostList: {
+      getApiMyKubernetesClusterHostList: {
         providesTags: () => ["Kubernetes"],
       },
-      getApiMyKubernetesNodeListByKubernetesHostId: {
+      getApiMyKubernetesClusterNodeListByKubernetesHostId: {
         providesTags: () => ["Kubernetes"],
       },
-      getApiMyKubernetesHostGetById: {
+      getApiMyKubernetesClusterHostGetById: {
         providesTags: () => ["Kubernetes"],
       },
-      putApiMyKubernetesNodeDeleteById: {
+      putApiMyKubernetesClusterNodeDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      postApiMyKubernetesNodeCreate: {
+      postApiMyKubernetesClusterNodeCreate: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      postApiMyKubernetesHostCreate: {
+      postApiMyKubernetesClusterHostCreate: {
         invalidatesTags: () => ["Kubernetes"],
       },
-      deleteApiMyKubernetesHostDeleteById: {
+      deleteApiMyKubernetesClusterHostDeleteById: {
         invalidatesTags: () => ["Kubernetes"],
       },
       // ============================== Storage ============================== //
@@ -436,6 +437,16 @@ export const api = generatedApi
       },
       putApiMyPortalRoleAccessEdit: {
         invalidatesTags: () => ["Accessibility"],
+      },
+      // ============================== ConfigMap ============================== //
+      getApiMyKubernetesCloudConfigmapListById: {
+        providesTags: () => ["ConfigMap"],
+      },
+      postApiMyKubernetesCloudConfigmapCreate: {
+        invalidatesTags: () => ["ConfigMap"],
+      },
+      deleteApiMyKubernetesCloudConfigmapDeleteById: {
+        invalidatesTags: () => ["ConfigMap"],
       },
     },
   });

@@ -151,13 +151,12 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 justifyContent: "space-between",
                 border: "1px solid #ccc",
                 borderRadius: BORDER_RADIUS_1,
-                padding: "4px 0",
-                direction: "rtl",
+                padding: "4px",
               }}
             >
               <Tooltip title={securityPhrase}>
                 <Typography
-                  pr={1.2}
+                  pl={1.2}
                   maxWidth={{ xs: "60%", md: "80%" }}
                   textOverflow="ellipsis"
                   noWrap
@@ -166,7 +165,6 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 </Typography>
               </Tooltip>
               <Button
-                startIcon={<ContentCopyIcon />}
                 variant="contained"
                 size="small"
                 onClick={() => copyText(securityPhrase)}
