@@ -8,6 +8,7 @@ type CounterPropsType = {
   onChange: (newValue: number) => any;
   onPlusClick: () => any;
   onMinusClick: () => any;
+  label: string;
 };
 
 export const Counter: FC<CounterPropsType> = ({
@@ -15,6 +16,7 @@ export const Counter: FC<CounterPropsType> = ({
   onChange,
   onPlusClick,
   onMinusClick,
+  label
 }) => {
   const inputOnChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
@@ -41,7 +43,7 @@ export const Counter: FC<CounterPropsType> = ({
         <Add sx={{ color: "common.white" }} />
       </IconButton>
       <TextField
-        label="تعداد نودهای کلاستر"
+        label={label}
         value={value}
         onChange={inputOnChange}
         sx={{

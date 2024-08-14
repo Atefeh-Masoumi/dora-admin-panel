@@ -68,7 +68,7 @@ const EditKubernetesCloud: FC = () => {
     SecretMap,
   ];
 
-  if (!id) return <Navigate to="/kubernetes-cloud" />;
+  if (!id) return <Navigate to={`/kubernetes-cloud`} />;
 
   return (
     <Stack

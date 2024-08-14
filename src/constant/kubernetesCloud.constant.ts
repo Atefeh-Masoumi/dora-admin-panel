@@ -1,0 +1,22 @@
+export const kubernetesAppTableHeadCells = [
+  { id: "id", label: "شماره شناسه" },
+  { id: "ip", label: "IP" },
+  { id: "isV4", label: "Is V4" },
+  { id: "isPrimary", label: "Is Primary" },
+  { label: "عملیات" },
+];
+
+export const appImageList = [
+  { id: 1, name: "mySql", src: "/assets/icons/mysql.svg" },
+  { id: 2, name: "nginx", src: "/assets/icons/nginx.svg" },
+  { id: 4, name: "mongoDb", src: "/assets/icons/mongodb.svg" },
+  { id: 5, name: ".net", src: "/assets/icons/dotnet.svg" },
+  { id: 6, name: "php", src: "/assets/icons/php.svg" },
+];
+
+//Todo : mayBe The first and second items should change their IDs
+export const staticImageCategoryList: { id: number; name: string }[] = [
+  { id: 3, name: "All" },
+  { id: 1, name: "NameSpace" },
+  { id: 2, name: "DataCenter" },
+];
