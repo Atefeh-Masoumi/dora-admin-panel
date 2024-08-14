@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
-  useDeleteApiMyKubernetesHostDeleteByIdMutation,
-  useGetApiMyKubernetesHostListQuery,
+  useDeleteApiMyKubernetesClusterHostDeleteByIdMutation,
+  useGetApiMyKubernetesClusterHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -27,13 +27,13 @@ export const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
     data: kubernetesList,
     isLoading: kubernetesListLoading,
     refetch: refetchKubernetesList,
-  } = useGetApiMyKubernetesHostListQuery({} as any, { skip: true });
+  } = useGetApiMyKubernetesClusterHostListQuery({} as any, { skip: true });
 
   const navigate = useNavigate();
 
   const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyKubernetesHostDeleteByIdMutation();
+    useDeleteApiMyKubernetesClusterHostDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
     deleteKubernetes({ id: Number(selectedKubernetes?.id) })

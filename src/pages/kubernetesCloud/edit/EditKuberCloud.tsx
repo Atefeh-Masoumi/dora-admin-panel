@@ -1,9 +1,8 @@
 import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
 import { FC, ReactNode, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { ConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
+import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudApps } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudApps";
 import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/edit/info/KubernetesCloudInfo";
 import { SecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
@@ -47,22 +46,17 @@ const EditKubernetesCloud: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Added
 
-  const { data: vmData, isLoading: getVmDataLoading } =
-    useGetApiMyVmHostGetByIdQuery({
-      id: Number(id)!,
-    });
-
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
     navigate(`?section=${newValue}`, { replace: true });
   };
 
-  const tabArray = ["مشخصات سرویس", "apps", "config map", "secret map"];
+  const tabArray = ["مشخصات سرویس", "Apps", "Config Map", "Secret Map"];
 
   const tabPanelArray = [
     KubernetesCloudInfo,
     KubernetesCloudApps,
-    ConfigMap,
+    KubernetesCloudConfigMap,
     SecretMap,
   ];
 
@@ -108,7 +102,7 @@ const EditKubernetesCloud: FC = () => {
           value={section}
           onChange={handleChange}
         >
-          {getVmDataLoading ? (
+          {false ? (
             <CircularProgress
               size={20}
               sx={{
