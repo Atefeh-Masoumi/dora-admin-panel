@@ -5,7 +5,7 @@ import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudApps } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudApps";
 import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/edit/info/KubernetesCloudInfo";
-import { SecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
+import { KubernetesCloudSecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type TabPanelProps = {
@@ -57,7 +57,7 @@ const EditKubernetesCloud: FC = () => {
     KubernetesCloudInfo,
     KubernetesCloudApps,
     KubernetesCloudConfigMap,
-    SecretMap,
+    KubernetesCloudSecretMap,
   ];
 
   if (!id) return <Navigate to="/vm" />;

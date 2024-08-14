@@ -30,6 +30,7 @@ const tags = [
   "VpcNat",
   "Accessibility",
   "ConfigMap",
+  "SecretMap",
 ];
 
 export const api = generatedApi
@@ -447,6 +448,16 @@ export const api = generatedApi
       },
       deleteApiMyKubernetesCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
+      },
+      // ============================== SecretMap ============================== //
+      getApiMyKubernetesCloudSecretList: {
+        providesTags: () => ["SecretMap"],
+      },
+      postApiMyKubernetesCloudSecretCreate: {
+        invalidatesTags: () => ["SecretMap"],
+      },
+      deleteApiMyKubernetesCloudSecretDeleteById: {
+        invalidatesTags: () => ["SecretMap"],
       },
     },
   });
