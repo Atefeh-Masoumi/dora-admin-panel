@@ -31,7 +31,7 @@ export const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
+  const settingOnClick = () => navigate("/kubernetes-cloud/" + row["id"]);
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyKubernetesHostDeleteByIdMutation();
 

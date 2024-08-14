@@ -97,9 +97,11 @@ const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 const KubernetesCloud = lazy(
   () => import("src/pages/kubernetesCloud/KubernetesCloudList")
 );
-
 const AddNamespace = lazy(
   () => import("src/pages/kubernetesCloud/add/AddNamespace")
+);
+const EditKubernetesCloud = lazy(
+  () => import("src/pages/kubernetesCloud/edit/EditKuberCloud")
 );
 
 const mainTemplate = (
@@ -618,6 +620,17 @@ const Router: FC = () => {
           path="/kubernetes-cloud/add"
           element={mainTemplate(AddNamespace, {
             pageTitle: "ایجاد namespace جدید",
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:id"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
           })}
         />
         <Route path="*" element={<Navigate to="/account/login" />} />
