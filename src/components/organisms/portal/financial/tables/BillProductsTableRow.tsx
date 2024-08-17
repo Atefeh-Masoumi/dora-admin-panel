@@ -34,7 +34,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
 
   return (
     <>
-      <TableRow
+      <TableRow 
         sx={{
           "& > *": { borderBottom: "unset" },
           "&:nth-of-type(odd)": {
