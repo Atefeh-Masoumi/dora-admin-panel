@@ -57,7 +57,7 @@ export const CreateSecretMapDialog: FC<
       envs: [],
     },
     validationSchema: formValidation,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting, resetForm }) => {
       const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
           acc[item.key] = item.value;
@@ -78,6 +78,7 @@ export const CreateSecretMapDialog: FC<
         .unwrap()
         .then(() => {
           toast.success("Secret با موفقیت ساخته شد");
+          resetForm();
           onClose();
         })
         .catch(() => {});

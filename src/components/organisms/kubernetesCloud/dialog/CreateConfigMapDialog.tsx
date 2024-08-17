@@ -57,7 +57,7 @@ export const CreateConfigMapDialog: FC<
       envs: [],
     },
     validationSchema: formValidation,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values, { setSubmitting, resetForm }) => {
       const processedEnvsToObject = values?.envs?.reduce(
         (acc: any, item: any) => {
           acc[item.key] = item.value;
@@ -77,6 +77,7 @@ export const CreateConfigMapDialog: FC<
         .unwrap()
         .then(() => {
           toast.success("Config Map با موفقیت ساخته شد");
+          resetForm();
           onClose();
         })
         .catch(() => {});

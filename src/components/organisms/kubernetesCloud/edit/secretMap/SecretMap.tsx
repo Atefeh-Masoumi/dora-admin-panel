@@ -14,22 +14,27 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { useGetApiMyKubernetesCloudSecretListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudSecretListByIdQuery } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
+import { useParams } from "react-router";
 
 type KubernetesCloudSecretMapPropsType = {};
 
 export const KubernetesCloudSecretMap: FC<
   KubernetesCloudSecretMapPropsType
 > = () => {
+  const { id: kubernetesCloudId } = useParams();
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } = useGetApiMyKubernetesCloudSecretListQuery();
+  const { data = [], isLoading } =
+    useGetApiMyKubernetesCloudSecretListByIdQuery({
+      id: Number(kubernetesCloudId),
+    });
 
   function handleOpenAddSecretMapDialog() {
     setOpenAddSecretMapDialog(true);

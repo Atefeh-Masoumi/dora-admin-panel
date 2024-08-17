@@ -13,7 +13,6 @@ import {
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  GetKuberCloudSecretResponse,
   KuberCloudSecretListResponse,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
 } from "src/app/services/api.generated";
@@ -33,7 +32,6 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   const [open, setOpen] = useState(false);
   const id = row.id!;
   const name = row.name!;
-  const secretTypeId = row.secretTypeId!;
   const createDate = row.createDate!;
   const secretList = row.secrets! || [];
 
@@ -42,8 +40,6 @@ export const KubernetesCloudSecretMapTableRow: FC<{
     selectedKubernetesCloudSecretMap,
     setSelectedKubernetesCloudSecretMap,
   ] = useState<KuberCloudSecretListResponse | null>(null);
-
-  console.log(selectedKubernetesCloudSecretMap);
 
   const [deleteSecretMap, { isLoading: deleteSecretMapLoading }] =
     useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation();
