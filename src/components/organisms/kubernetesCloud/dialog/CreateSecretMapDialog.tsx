@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubernetesCloudSecretCreateMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -40,14 +40,14 @@ type CreateVpcLoadBalancerDialogPropsType = {
   openDialog: boolean;
 };
 
-export const CreateConfigMapDialog: FC<
+export const CreateSecretMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
   const { id: namespaceId } = useParams();
   const [envs, setEnvs] = useState<any[]>([]);
 
-  const [createConfigMap, { isLoading: createConfigMapLoading }] =
-    usePostApiMyKubernetesCloudConfigmapCreateMutation();
+  const [createSecretMap, { isLoading: createSecretMapLoading }] =
+    usePostApiMyKubernetesCloudSecretCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -58,7 +58,7 @@ export const CreateConfigMapDialog: FC<
     },
     validationSchema: formValidation,
     onSubmit: (values, { setSubmitting }) => {
-      const processedEnvsToObject = values?.envs?.reduce(
+      const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
           acc[item.key] = item.value;
           return acc;
@@ -66,17 +66,18 @@ export const CreateConfigMapDialog: FC<
         {}
       );
 
-      createConfigMap({
-        createKuberCloudConfigmapModel: {
+      createSecretMap({
+        createKuberCloudSecretModel: {
           name: values.name as string,
           alias: values.alias as string,
           namespaceId: Number(namespaceId),
           envs: processedEnvsToObject,
+          secretTypeId: 1,
         },
       })
         .unwrap()
         .then(() => {
-          toast.success("Config Map با موفقیت ساخته شد");
+          toast.success("Secret با موفقیت ساخته شد");
           onClose();
         })
         .catch(() => {});
@@ -135,7 +136,7 @@ export const CreateConfigMapDialog: FC<
         }}
       >
         <DialogTitle fontWeight="bold" variant="text1">
-          ایجاد Config Map
+          ایجاد Secret
         </DialogTitle>
         <form onSubmit={formik.handleSubmit} autoComplete="on">
           <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
@@ -241,7 +242,7 @@ export const CreateConfigMapDialog: FC<
               <LoadingButton
                 component="button"
                 type="submit"
-                loading={createConfigMapLoading}
+                loading={createSecretMapLoading}
                 variant="contained"
                 sx={{ px: 3, py: 0.8 }}
               >

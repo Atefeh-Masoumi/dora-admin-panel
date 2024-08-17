@@ -59,7 +59,7 @@ const EditKubernetesCloud: FC = () => {
     navigate(`?section=${newValue}`, { replace: true });
   };
 
-  const tabArray = ["مشخصات سرویس", "Apps", "Config Map", "Secret Map"];
+  const tabArray = ["مشخصات سرویس", "Apps", "Config Map", "Secret"];
 
   const tabPanelArray = [
     KubernetesCloudInfo,
