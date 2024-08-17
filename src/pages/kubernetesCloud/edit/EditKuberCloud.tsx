@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
 import { FC, ReactNode, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudApps } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudApps";
@@ -46,6 +47,13 @@ const EditKubernetesCloud: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Added
 
+  const {
+    data: kubernetesCloudData,
+    isLoading: getKubernetesCloudDataLoading,
+  } = useGetApiMyKubernetesCloudHostGetByIdQuery({
+    id: Number(id)!,
+  });
+
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
     navigate(`?section=${newValue}`, { replace: true });
@@ -60,25 +68,7 @@ const EditKubernetesCloud: FC = () => {
     KubernetesCloudSecretMap,
   ];
 
-  if (!id) return <Navigate to="/vm" />;
-
-  let hiddenTabs: number[] = [];
-
-  //   switch (true) {
-  //     case vmData?.isCluster && vmData?.isMaster:
-  //       hiddenTabs = [
-  //         VM_ENUM.VM_REBUILD,
-  //         VM_ENUM.SNAPSHOT,
-  //         VM_ENUM.SERVER_CONFIG,
-  //       ];
-  //       break;
-  //     case vmData?.isCluster && !vmData?.isMaster:
-  //       hiddenTabs = [VM_ENUM.VM_REBUILD, VM_ENUM.SNAPSHOT];
-  //       break;
-  //     default:
-  //       hiddenTabs = [];
-  //       break;
-  //   }
+  if (!id) return <Navigate to={`/kubernetes-cloud`} />;
 
   return (
     <Stack
@@ -102,7 +92,7 @@ const EditKubernetesCloud: FC = () => {
           value={section}
           onChange={handleChange}
         >
-          {false ? (
+          {getKubernetesCloudDataLoading ? (
             <CircularProgress
               size={20}
               sx={{
@@ -110,17 +100,14 @@ const EditKubernetesCloud: FC = () => {
               }}
             />
           ) : (
-            tabArray.map(
-              (label, index) =>
-                !hiddenTabs.includes(index) && (
-                  <DorsaTab
-                    {...a11yProps(index)}
-                    label={label}
-                    key={index}
-                    onClick={() => setSection(index)}
-                  />
-                )
-            )
+            tabArray.map((label, index) => (
+              <DorsaTab
+                {...a11yProps(index)}
+                label={label}
+                key={index}
+                onClick={() => setSection(index)}
+              />
+            ))
           )}
         </Tabs>
       </Box>

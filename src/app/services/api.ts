@@ -19,7 +19,7 @@ const tags = [
   "SupportItems",
   "Support",
   "VmHost",
-  "Kubernetes",
+  "KubernetesCluster",
   "Storage",
   "WebHost",
   "Vpc",
@@ -270,27 +270,27 @@ export const api = generatedApi
       deleteApiMyVmProjectDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
-      // ============================== Kubernetes ============================== //
+      // ============================== KubernetesCluster ============================== //
       getApiMyKubernetesClusterHostList: {
-        providesTags: () => ["Kubernetes"],
+        providesTags: () => ["KubernetesCluster"],
       },
       getApiMyKubernetesClusterNodeListByKubernetesHostId: {
-        providesTags: () => ["Kubernetes"],
+        providesTags: () => ["KubernetesCluster"],
       },
       getApiMyKubernetesClusterHostGetById: {
-        providesTags: () => ["Kubernetes"],
+        providesTags: () => ["KubernetesCluster"],
       },
       putApiMyKubernetesClusterNodeDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       postApiMyKubernetesClusterNodeCreate: {
-        invalidatesTags: () => ["Kubernetes"],
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       postApiMyKubernetesClusterHostCreate: {
-        invalidatesTags: () => ["Kubernetes"],
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       deleteApiMyKubernetesClusterHostDeleteById: {
-        invalidatesTags: () => ["Kubernetes"],
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       // ============================== Storage ============================== //
       getApiMyStorageHostList: {
@@ -465,7 +465,6 @@ export const api = generatedApi
 export const {
   useCustomCreateIssueMutation,
   useLazyGetApiMyDatacenterIpListByIdQuery,
-  // useLazyGetApiMyVmImageListByDatacenterIdQuery,
   useLazyGetApiMyVmHostGetByIdQuery,
   useLazyGetApiMyDnsCdnRouteGetByIdQuery,
   useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery,

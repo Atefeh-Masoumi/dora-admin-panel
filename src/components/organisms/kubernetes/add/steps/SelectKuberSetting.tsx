@@ -159,6 +159,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
           </Select>
         </FormControl>
         <Counter
+          label="تعداد نودهای کلاستر"
           value={workersCount}
           onChange={workersCountOnChange}
           onPlusClick={addOne}

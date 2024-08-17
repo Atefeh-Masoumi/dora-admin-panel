@@ -103,7 +103,9 @@ const AddNamespace = lazy(
 const EditKubernetesCloud = lazy(
   () => import("src/pages/kubernetesCloud/edit/EditKuberCloud")
 );
-
+const CreateKubernetesCloudApp = lazy(
+  () => import("src/pages/kubernetesCloud/edit/apps/AddKubernetesCloudApp")
+);
 const mainTemplate = (
   PageComponent: FC<any>,
   templateProps?: Omit<MainTemplatePropsType, "children">,
@@ -633,6 +635,12 @@ const Router: FC = () => {
             hideSidebar: false,
           })}
         />
+
+        <Route
+          path="/kubernetes-cloud/:id/apps/create"
+          element={mainTemplate(CreateKubernetesCloudApp)}
+        />
+
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>
