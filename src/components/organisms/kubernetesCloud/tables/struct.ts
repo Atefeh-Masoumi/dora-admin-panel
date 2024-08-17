@@ -15,3 +15,11 @@ export const kubernetesCloudConfigMapTableStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "عملیات", disableSort: true },
 ];
+
+export const kubernetesCloudSecretMapTableStruct: columnType[] = [
+  { id: "id", label: "شناسه" },
+  { id: "name", label: "نام" },
+  { id: "secretTypeId", label: "تاریخ ایجاد" },
+  { id: "createDate", label: "عملیات", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
+];

@@ -54,8 +54,9 @@ export const DomainCard: FC<DomainCardPropsType> = ({
         position: "relative",
         borderRadius: BORDER_RADIUS_1,
         backgroundColor: "#fff",
-        boxShadow:
-          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+        border: "1px solid rgba(0, 0, 0, 0.12)",
+        // boxShadow:
+        //   "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
       }}
       px={1}
       py={2}
