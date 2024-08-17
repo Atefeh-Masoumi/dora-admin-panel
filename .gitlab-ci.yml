@@ -7,7 +7,7 @@ workflow:
 
 default:
   tags: 
-    - frontend
+    - dorsa
 
 stages:
   - package
