@@ -27,6 +27,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/AppImageListCard";
 import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectDeploymentInfo";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 const AddKubernetesCloudApp: FC = () => {
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
@@ -59,18 +60,6 @@ const AddKubernetesCloudApp: FC = () => {
     // });
   };
 
-  // export type CreateKuberCloudDeploymentModel = {
-  //   name: string;
-  //   imageTagId: number;
-  //   namespaceId: number;
-  //   keyValue?: {
-  //     [key: string]: {
-  //       [key: string]: string;
-  //     } | null;
-  //   } | null;
-  //   replicaNumber?: number;
-  // };
-
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -80,44 +69,62 @@ const AddKubernetesCloudApp: FC = () => {
 
   const theme = useTheme(),
     isMd = useMediaQuery(theme.breakpoints.up("md"));
+  // isMd = useMediaQuery(theme.breakpoints.up("lg"));
 
   if (kuberCloudImageLoading) return <PageLoading />;
 
   return (
-    <Stack direction="column" rowGap={3} p={2}>
-      <Typography variant="title2">انتخاب Image</Typography>
+    <>
+      <Typography
+        variant="title6"
+        color="secondary"
+        fontWeight="700"
+        sx={{ mb: 3 }}
+      >
+        ایجاد App جدید
+      </Typography>
 
-      <Stack direction="column" gap={2}>
-        {false ? (
-          <PageLoading />
-        ) : (
-          <AppImageListCard
-            loading={kuberCloudImageLoading}
-            list={kuberCloudImageList || []}
-            formik={formik}
-          />
-        )}
+      <Paper>
+        <Stack
+          direction="column"
+          sx={{
+            width: { xs: "100%" },
+            px: { xs: 1.8, lg: 2 },
+            py: { xs: 1.8, lg: 2.25 },
+          }}
+          gap={2}
+        >
+          {false ? (
+            <PageLoading />
+          ) : (
+            <AppImageListCard
+              loading={kuberCloudImageLoading}
+              list={kuberCloudImageList || []}
+              formik={formik}
+            />
+          )}
 
-        <Stack>
+          <Divider sx={{ margin: "50px 10px" }} />
+
           <SelectDeploymentInfo formik={formik} />
-          {/* <SelectEnvironmentVariable formik={formik} /> */}
-        </Stack>
-        <Paper sx={{ p: 2, width: "100%" }}>
-          <Stack gap={2} direction="column" sx={{ width: "100%" }}>
-            <Typography textAlign="center" variant="title2">
+
+          <Divider sx={{ margin: "50px 10px" }} />
+
+          <Stack direction="column" sx={{ width: "100%" }}>
+            <Typography fontSize={24} fontWeight="bold" textAlign="center">
               Environment Variable
+            </Typography>
+            <Typography
+              align="center"
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
+              ویژگی های موردنظر را به container اضافه کنید.
             </Typography>
             <Stack
               direction="column"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography
-                align="center"
-                sx={{ color: ({ palette }) => palette.grey[700] }}
-              >
-                ویژگی های موردنظر را به container اضافه کنید.
-              </Typography>
               <Button
                 sx={{ alignItems: "start" }}
                 variant="text"
@@ -161,17 +168,17 @@ const AddKubernetesCloudApp: FC = () => {
                     >
                       {isMd && (
                         <Grid item xs={10} md={5} lg={7}>
-                          <Stack gap={1}>
+                          <Stack direction="row" gap={1}>
                             <IconButton>
                               <DeleteOutline color="error" />
                             </IconButton>
-                            <TextField
+                            <DorsaTextField
                               sx={{
                                 background: ({ palette }) =>
                                   palette.primary.contrastText,
                               }}
                               dir="ltr"
-                              size="small"
+                              size="medium"
                               fullWidth
                               value="zahra"
                             />
@@ -189,7 +196,7 @@ const AddKubernetesCloudApp: FC = () => {
                               palette.primary.contrastText,
                           }}
                         >
-                          <FormControl fullWidth size="small">
+                          <FormControl fullWidth size="medium">
                             <Select dir="ltr" value={1}>
                               <MenuItem
                                 sx={{
@@ -230,7 +237,7 @@ const AddKubernetesCloudApp: FC = () => {
                         <FormControl
                           sx={{ bgColor: "primary.contrastText" }}
                           dir="ltr"
-                          size="small"
+                          size="medium"
                           fullWidth
                         >
                           <Select value={2} placeholder="Key">
@@ -257,7 +264,7 @@ const AddKubernetesCloudApp: FC = () => {
                               palette.primary.contrastText,
                           }}
                         >
-                          <FormControl fullWidth size="small">
+                          <FormControl fullWidth size="medium">
                             <Select dir="ltr" value={1}>
                               <MenuItem
                                 sx={{
@@ -287,17 +294,17 @@ const AddKubernetesCloudApp: FC = () => {
 
                       {!isMd && (
                         <Grid item xs={10} md={5} lg={7}>
-                          <Stack gap={1}>
+                          <Stack direction="row" gap={1}>
                             <IconButton>
                               <DeleteOutline color="error" />
                             </IconButton>
-                            <TextField
+                            <DorsaTextField
                               sx={{
                                 background: ({ palette }) =>
                                   palette.primary.contrastText,
                               }}
                               dir="ltr"
-                              size="small"
+                              size="medium"
                               fullWidth
                               value="zahra"
                             />
@@ -310,9 +317,9 @@ const AddKubernetesCloudApp: FC = () => {
               </Stack>
             </Stack>
           </Stack>
-        </Paper>
-      </Stack>
-    </Stack>
+        </Stack>
+      </Paper>
+    </>
   );
 };
 

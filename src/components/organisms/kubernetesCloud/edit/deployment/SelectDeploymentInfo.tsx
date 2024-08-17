@@ -5,7 +5,15 @@ import { Stack } from "@mui/system";
 import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 import { SelectServiceName } from "./SelectServiceName";
 import { Counter } from "src/components/organisms/kubernetes/add/steps/Counter";
-import { Paper, Typography } from "@mui/material";
+import {
+  Divider,
+  Paper,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CounterNewValueType = number | ((prevValue: number) => number);
 
@@ -16,6 +24,9 @@ type SelectDeploymentInfoPropsType = {
 export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
   formik,
 }) => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
+
   const addOne = () => {
     return formik.values.replicaNumber < 10
       ? formik.values.replicaNumber + 1
@@ -26,8 +37,6 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
       ? formik.values.replicaNumber - 1
       : formik.values.replicaNumber;
   };
-
-  console.log(formik.values);
 
   const handleCounterOnChange = (
     newValue: number | ((prevValue: number) => number)
@@ -54,30 +63,66 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
       sx={{ width: "100%" }}
     >
       <Stack width="100%">
-        <SelectServiceName
-          serviceName={formik.values.name}
-          setServiceName={(newValue) => formik.setFieldValue("name", newValue)}
-        />
-      </Stack>
-      <Paper sx={{ px: 2, py: 4, width: "100%" }}>
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
-            یک نام برای شناسایی سرویس خود انتخاب کنید
-          </Typography>
-          <Counter
-            label="Replica Number"
-            value={formik.values.replicaNumber}
-            onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
-            onPlusClick={handleCounterOnPlusClick}
-            onMinusClick={handleCounterOnMinusClick}
+        <Stack spacing={2} justifyContent="center" alignItems="center">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            alignItems="center"
+            justifyContent="center"
+            sx={{ px: 2 }}
+          >
+            <ExclamationMarkCircleSvg
+              sx={{
+                transform: "rotate(180deg)",
+                "&>path:first-of-type": {
+                  opacity: 1,
+                  stroke: ({ palette }) => palette.grey[700],
+                  strokeWidth: 1,
+                  fill: "transparent",
+                },
+              }}
+            />
+            <Typography
+              align="center"
+              sx={{ color: ({ palette }) => palette.grey[700] }}
+            >
+              یک نام برای شناسایی سرویس خود انتخاب کنید
+            </Typography>
+          </Stack>
+          <DorsaTextField
+            value={formik.values.name}
+            onChange={(e) => formik.setFieldValue("name", e.target.value)}
+            sx={{ minWidth: 300 }}
+            label="نام سرویس"
+            inputProps={{ dir: "ltr" }}
           />
         </Stack>
-      </Paper>
+      </Stack>
+
+      <Divider
+        orientation={isLargeScreen ? "horizontal" : "vertical"}
+        flexItem
+        sx={{ margin: { xs: "50px 10px", lg: 0 } }}
+      />
+
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        sx={{ width: "100%" }}
+      >
+        <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
+          تعداد مورد نظر از نمونه‌هایی که می‌خواهید به کار ببرید.
+        </Typography>
+        <Counter
+          label="Replica Number"
+          value={formik.values.replicaNumber}
+          onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
+          onPlusClick={handleCounterOnPlusClick}
+          onMinusClick={handleCounterOnMinusClick}
+        />
+      </Stack>
     </Stack>
   );
 };

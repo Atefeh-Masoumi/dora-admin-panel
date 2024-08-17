@@ -43,14 +43,14 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
         alignSelf: "flex-start",
         px: 2,
         py: 2,
-        cursor: "pointer",
+
         position: "relative",
         borderRadius: "10px",
         backgroundColor: "#fff",
         boxShadow:
           "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
         border: ({ palette }) =>
-          `1px solid ${
+          `2px solid ${
             formik.values.imageId === item.id ? palette.primary.main : "none"
           }`,
       }}
