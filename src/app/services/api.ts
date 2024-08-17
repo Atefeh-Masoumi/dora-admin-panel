@@ -29,6 +29,8 @@ const tags = [
   "Issue",
   "VpcNat",
   "Accessibility",
+  "ConfigMap",
+  "SecretMap",
 ];
 
 export const api = generatedApi
@@ -436,6 +438,26 @@ export const api = generatedApi
       },
       putApiMyPortalRoleAccessEdit: {
         invalidatesTags: () => ["Accessibility"],
+      },
+      // ============================== ConfigMap ============================== //
+      getApiMyKubernetesCloudConfigmapListById: {
+        providesTags: () => ["ConfigMap"],
+      },
+      postApiMyKubernetesCloudConfigmapCreate: {
+        invalidatesTags: () => ["ConfigMap"],
+      },
+      deleteApiMyKubernetesCloudConfigmapDeleteById: {
+        invalidatesTags: () => ["ConfigMap"],
+      },
+      // ============================== SecretMap ============================== //
+      getApiMyKubernetesCloudSecretList: {
+        providesTags: () => ["SecretMap"],
+      },
+      postApiMyKubernetesCloudSecretCreate: {
+        invalidatesTags: () => ["SecretMap"],
+      },
+      deleteApiMyKubernetesCloudSecretDeleteById: {
+        invalidatesTags: () => ["SecretMap"],
       },
     },
   });

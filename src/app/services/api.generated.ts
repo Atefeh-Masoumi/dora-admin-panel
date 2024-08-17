@@ -3980,7 +3980,7 @@ export type GetKuberCloudConfigResponse = {
 export type CreateKuberCloudConfigmapModel = {
   name: string;
   namespaceId: number;
-  date: {
+  envs: {
     [key: string]: string;
   };
   alias?: string | null;
@@ -4118,7 +4118,7 @@ export type CreateKuberCloudSecretModel = {
   name: string;
   namespaceId: number;
   secretTypeId: number;
-  date: {
+  envs: {
     [key: string]: string;
   };
   alias?: string | null;

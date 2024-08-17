@@ -75,7 +75,7 @@ const Calculator: FC = () => {
           خدمات ابری
         </Typography>
       </Stack>
-      <Stack sx={{ width: { xs: "100%", lg: "85%" } }}>
+      <Stack sx={{ width: { xs: "100%", lg: "80%" } }}>
         <TabContext value={value}>
           <Container
             sx={{
@@ -90,7 +90,7 @@ const Calculator: FC = () => {
             <Tabs
               variant={isMobile ? "scrollable" : "fullWidth"}
               sx={{
-                width: "100%",
+                width: "90%",
                 bgcolor: "white",
                 py: 0.5,
                 borderRadius: BORDER_RADIUS_1,
@@ -106,21 +106,31 @@ const Calculator: FC = () => {
               <DorsaTab {...a11yProps(5)} label="VPC" value="5" />
             </Tabs>
           </Container>
-          <TabPanel value="1" sx={{ p: 0, my: 3 }}>
-            <VmCostEstimator />
-          </TabPanel>
-          <TabPanel value="2" sx={{ p: 0, my: 3 }}>
-            <KubernetesCostEstimator />
-          </TabPanel>
-          <TabPanel value="3" sx={{ p: 0, my: 3 }}>
-            <DnsCostEstimator />
-          </TabPanel>
-          <TabPanel value="4" sx={{ p: 0, my: 3 }}>
-            <StorageCostEstimator />
-          </TabPanel>
-          <TabPanel value="5" sx={{ p: 0, my: 3 }}>
-            <VpcCostEstimator />
-          </TabPanel>
+          <Stack
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "75%",
+              margin: "0 auto",
+            }}
+          >
+            <TabPanel value="1" sx={{ p: 0, my: 3 }}>
+              <VmCostEstimator />
+            </TabPanel>
+            <TabPanel value="2" sx={{ p: 0, my: 3 }}>
+              <KubernetesCostEstimator />
+            </TabPanel>
+            <TabPanel value="3" sx={{ p: 0, my: 3 }}>
+              <DnsCostEstimator />
+            </TabPanel>
+            <TabPanel value="4" sx={{ p: 0, my: 3 }}>
+              <StorageCostEstimator />
+            </TabPanel>
+            <TabPanel value="5" sx={{ p: 0, my: 3 }}>
+              <VpcCostEstimator />
+            </TabPanel>
+          </Stack>
         </TabContext>
       </Stack>
     </Stack>

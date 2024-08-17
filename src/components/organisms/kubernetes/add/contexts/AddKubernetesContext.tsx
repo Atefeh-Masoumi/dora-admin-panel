@@ -9,9 +9,8 @@ import {
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
-  DatacenterListResponse,
-  // ImageListResponse,
   DatacenterImageListResponse,
+  DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
   usePostApiMyKubernetesClusterHostCreateMutation,
