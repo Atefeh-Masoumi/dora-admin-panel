@@ -986,11 +986,13 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/image/tag/list/${queryArg.id}`,
       }),
     }),
-    getApiMyKubernetesCloudSecretList: build.query<
-      GetApiMyKubernetesCloudSecretListApiResponse,
-      GetApiMyKubernetesCloudSecretListApiArg
+    getApiMyKubernetesCloudSecretListById: build.query<
+      GetApiMyKubernetesCloudSecretListByIdApiResponse,
+      GetApiMyKubernetesCloudSecretListByIdApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes/cloud/secret/list` }),
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/secret/list/${queryArg.id}`,
+      }),
     }),
     getApiMyKubernetesCloudSecretGetById: build.query<
       GetApiMyKubernetesCloudSecretGetByIdApiResponse,
@@ -2666,9 +2668,11 @@ export type GetApiMyKubernetesCloudImageTagListByIdApiResponse =
 export type GetApiMyKubernetesCloudImageTagListByIdApiArg = {
   id: number;
 };
-export type GetApiMyKubernetesCloudSecretListApiResponse =
+export type GetApiMyKubernetesCloudSecretListByIdApiResponse =
   /** status 200 OK */ KuberCloudSecretListResponse[];
-export type GetApiMyKubernetesCloudSecretListApiArg = void;
+export type GetApiMyKubernetesCloudSecretListByIdApiArg = {
+  id: number;
+};
 export type GetApiMyKubernetesCloudSecretGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudSecretResponse;
 export type GetApiMyKubernetesCloudSecretGetByIdApiArg = {
@@ -4035,6 +4039,7 @@ export type CreateKuberCloudHostModel = {
   name: string;
   datacenterId: number;
   isPredefined: boolean;
+  hostProjectId?: number | null;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
@@ -5018,7 +5023,7 @@ export const {
   useGetApiMyKubernetesCloudCategoryListQuery,
   useGetApiMyKubernetesCloudImageKeyGetByIdQuery,
   useGetApiMyKubernetesCloudImageTagListByIdQuery,
-  useGetApiMyKubernetesCloudSecretListQuery,
+  useGetApiMyKubernetesCloudSecretListByIdQuery,
   useGetApiMyKubernetesCloudSecretGetByIdQuery,
   usePostApiMyKubernetesCloudSecretCreateMutation,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
