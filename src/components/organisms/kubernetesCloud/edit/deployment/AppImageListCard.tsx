@@ -1,18 +1,18 @@
 import { Divider, Grid, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FC, memo, useCallback, useState } from "react";
-import { CategorySvg } from "src/components/atoms/svg-icons/CategorySvg";
 import { LoadingButton } from "@mui/lab";
-import { useNavigate } from "react-router";
 import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
 import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
+import { FormikProps } from "formik";
+import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
   list: GetApiMyKubernetesCloudImageListApiResponse;
   loading: boolean;
-  formik: any;
+  formik: FormikProps<KuberCloudAppImageType>
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({

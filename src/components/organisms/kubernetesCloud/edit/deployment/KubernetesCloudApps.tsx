@@ -27,7 +27,7 @@ export const KubernetesCloudApps: FC = () => {
   const { id } = useParams();
 
   const gotToAddKubernetes = () =>
-    navigate(`/kubernetes-cloud/:${id}/apps/create`);
+    navigate(`/kubernetes-cloud/${id}/apps/create`);
 
   return (
     <>
