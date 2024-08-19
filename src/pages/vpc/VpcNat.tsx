@@ -155,8 +155,8 @@ export const VpcNat: FC = () => {
                     setDialogType(null);
                   }}
                 >
-                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNat جدید</MenuItem>
-                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNat جدید</MenuItem>
+                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNAT</MenuItem>
+                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNAT</MenuItem>
                 </Select>
               </FormControl>
             </Stack>
