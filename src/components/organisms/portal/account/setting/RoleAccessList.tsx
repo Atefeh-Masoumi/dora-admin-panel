@@ -123,9 +123,10 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
                   defaultValue={roleAccessType[0].id}
                   sx={{
                     height: "25px",
-                    width: "140px",
+                    width: "165px",
                     "& .MuiSelect-outlined": {
                       padding: "8.5px 3px",
+                      fontSize: "10px",
                     },
                   }}
                   onChange={(e) =>
