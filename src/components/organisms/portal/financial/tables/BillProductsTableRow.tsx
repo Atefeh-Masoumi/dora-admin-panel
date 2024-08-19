@@ -36,24 +36,29 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
     <>
       <TableRow
         sx={{
-          "& > *": { borderBottom: "unset" },
+          // "& > *": { borderBottom: "unset" },
+          "& > *": { border: "none" },
           "&:nth-of-type(odd)": {
             backgroundColor: rowBgColor,
           },
         }}
       >
-        <TableCell align="center">{product}</TableCell>
-        <TableCell align="center">{customerProduct}</TableCell>
-        <TableCell align="center">
+        <TableCell sx={{ border: "none" }} align="center">
+          {product}
+        </TableCell>
+        <TableCell sx={{ border: "none" }} align="center">
+          {customerProduct}
+        </TableCell>
+        <TableCell sx={{ border: "none" }} align="center">
           {priceToPersian(customerProductPrice)}
         </TableCell>
-        <TableCell align="center" sx={{ direction: "rtl" }}>
+        <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
           {e2p(fromDate.replace(" ", " - "))}
         </TableCell>
-        <TableCell align="center" sx={{ direction: "rtl" }}>
+        <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
           {e2p(toDate.replace(" ", " - "))}
         </TableCell>
-        <TableCell>
+        <TableCell sx={{ border: "none" }}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -64,7 +69,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={6}>
+        <TableCell sx={{ padding: 0, border: "none" }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ display: "flex" }}>
               <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
@@ -86,22 +91,22 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                     ? customerProductBillItems?.map((row, index) => {
                         return (
                           <TableRow key={index}>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {row.customerProductItem}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {priceToPersian(row.quantity!)}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {priceToPersian(row.duration!)}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {priceToPersian(row.price!)}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {e2p(row.fromDate!.replace(" ", " - "))}
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell sx={{ border: "none" }} align="center">
                               {e2p(row.toDate!.replace(" ", " - "))}
                             </TableCell>
                           </TableRow>
