@@ -84,8 +84,6 @@ export const VpcLoadBalanceListTableRow: FC<
           >
             <TrashSvg />
           </IconButton>
-        </TableCell>
-        <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -94,6 +92,9 @@ export const VpcLoadBalanceListTableRow: FC<
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        {/* <TableCell>
+          
+        </TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={6}>
