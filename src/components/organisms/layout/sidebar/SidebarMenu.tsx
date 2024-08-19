@@ -6,7 +6,6 @@ import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
 import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
 import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { WalletSvg } from "src/components/atoms/svg-icons/WalletSvg";
-import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
@@ -102,7 +101,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
         }}
       >
         <ItemList listItems={listItems} />
-        <SpecialOffer />
+        {/* <SpecialOffer /> */}
       </Stack>
     </Box>
   );
