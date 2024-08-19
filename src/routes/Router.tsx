@@ -12,6 +12,7 @@ import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/Ad
 import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
@@ -620,9 +621,17 @@ const Router: FC = () => {
 
         <Route
           path="/kubernetes-cloud/add"
-          element={mainTemplate(AddNamespace, {
-            pageTitle: "ایجاد namespace جدید",
-          })}
+          element={mainTemplate(
+            AddNamespace,
+            {
+              link: {
+                text: "بازگشت به مدیریت کوبرنتیز ابری",
+                url: "/kubernetes-cloud",
+              },
+              hideSidebar: false,
+            },
+            AddKubernetesCloudContextProvider
+          )}
         />
 
         <Route
