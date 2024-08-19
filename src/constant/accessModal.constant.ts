@@ -25,11 +25,11 @@ export const roleAccessType = [
   {
     id: 1,
     englishName: "OverSystem",
-    persianName: "همه دسترسی ها",
+    persianName: "دسترسی در سطح شرکت/سازمان",
   },
   {
     id: 2,
     englishName: "OverUser",
-    persianName: "دسترسی شخصی",
+    persianName: "دسترسی در سطح کاربر",
   },
 ];

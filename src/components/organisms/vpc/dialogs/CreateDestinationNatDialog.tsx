@@ -489,7 +489,7 @@ export const CreateDestinationNatDialog: FC<
           </DialogActions>
         </form>
       ) : (
-        <Alert severity="info">
+        <Alert sx={{ margin: 3 }} severity="info">
           <Typography>لطفا ابتدا شبکه ایجاد کنید</Typography>
         </Alert>
       )}
