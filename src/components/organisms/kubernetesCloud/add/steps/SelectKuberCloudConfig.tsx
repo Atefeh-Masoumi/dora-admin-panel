@@ -62,8 +62,8 @@ export const SelectKuberCloudConfig: FC<
       label: "pods10",
       min: 10,
       max: 100,
-      step: 1,
-      value: 1,
+      step: 10,
+      value: customConfig.pods10,
       onChange: (newValue: number) => {
         setCustomConfig &&
           setCustomConfig({ ...customConfig, pods10: newValue });
