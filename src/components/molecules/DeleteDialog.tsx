@@ -190,8 +190,9 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
               }}
               InputLabelProps={{
                 shrink: true,
-                dir: "rtl",
+                dir: "ltr",
               }}
+              dir="ltr"
             />
           </Stack>
         </Stack>
