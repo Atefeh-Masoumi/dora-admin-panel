@@ -3,15 +3,8 @@ import { FormikProps } from "formik";
 
 import { Stack } from "@mui/system";
 import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
-import { SelectServiceName } from "./SelectServiceName";
 import { Counter } from "src/components/organisms/kubernetes/add/steps/Counter";
-import {
-  Divider,
-  Paper,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 

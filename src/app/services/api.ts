@@ -450,7 +450,7 @@ export const api = generatedApi
         invalidatesTags: () => ["ConfigMap"],
       },
       // ============================== SecretMap ============================== //
-      getApiMyKubernetesCloudSecretList: {
+      getApiMyKubernetesCloudSecretListById: {
         providesTags: () => ["SecretMap"],
       },
       postApiMyKubernetesCloudSecretCreate: {

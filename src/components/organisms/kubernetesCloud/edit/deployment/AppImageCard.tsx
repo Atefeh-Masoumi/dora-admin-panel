@@ -9,6 +9,7 @@ import {
   ListItemText,
   MenuItem,
   Select,
+  Stack,
   Tooltip,
 } from "@mui/material";
 import { FormikProps } from "formik";
@@ -73,17 +74,34 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
             cursor: "pointer",
             display: "flex",
             direction: "row",
-            alignItems: "center",
+            alignItems: "start",
           }}
           xs={8}
           md={8}
           onClick={onClickCardHandler}
         >
-          <ListItemAvatar>
-            <Avatar
-              src={appImageList.find((image) => image.name === item.name)?.src}
+          <Stack direction="row" height="fit-content">
+            <ListItemAvatar>
+              <Avatar
+                src={
+                  appImageList.find((image) => image.name === item.name)?.src
+                }
+              />
+            </ListItemAvatar>
+            <ListItemText
+              dir="ltr"
+              sx={{
+                m: 0,
+                "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                },
+              }}
+              primary={item.name}
+              // secondary={item.subtitle}
             />
-          </ListItemAvatar>
+          </Stack>
           <ListItemText
             dir="ltr"
             sx={{
@@ -94,8 +112,8 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
                 textOverflow: "ellipsis",
               },
             }}
-            primary={item.name}
             secondary={item.subtitle}
+            // secondary={item.subtitle}
           />
         </Grid>
 
@@ -148,7 +166,7 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
               ))}
             </Select>
           </FormControl>
-          <Tooltip sx={{ p: 0 }} placement="top" title="مطالعه مستندات">
+          <Tooltip sx={{ p: 0 }} placement="top" title={item.description}>
             <IconButton>
               <InfoSvg />
             </IconButton>

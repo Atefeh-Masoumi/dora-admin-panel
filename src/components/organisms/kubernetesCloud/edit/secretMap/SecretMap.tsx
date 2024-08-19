@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useGetApiMyKubernetesCloudSecretListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudSecretListByIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
@@ -15,7 +15,7 @@ export const KubernetesCloudSecretMap: FC<
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } = useGetApiMyKubernetesCloudSecretListQuery();
+  const { data = [], isLoading } = useGetApiMyKubernetesCloudSecretListByIdQuery({id : 10});
 
   function handleOpenAddSecretMapDialog() {
     setOpenAddSecretMapDialog(true);

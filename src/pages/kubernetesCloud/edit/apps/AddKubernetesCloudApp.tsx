@@ -18,13 +18,6 @@ import {
 import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectDeploymentInfo";
 import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectEnvironmentVariable";
 
-const tempRequiredEnvironmentVariable = [
-  { id: 112, key: "test" },
-  { id: 113, key: "test" },
-  { id: 114, key: "test" },
-  { id: 115, key: "test" },
-];
-
 const AddKubernetesCloudApp: FC = () => {
   const [keyValues, setKeyValues] = useState<VariableEnvironment[]>([]);
 
@@ -146,7 +139,9 @@ const AddKubernetesCloudApp: FC = () => {
             >
               <Stack
                 gap={2}
-                py={5}
+                // py={5}
+                // bgcolor="red"
+
                 direction="column"
                 sx={{ width: "100%", justifyContent: "center" }}
               >
