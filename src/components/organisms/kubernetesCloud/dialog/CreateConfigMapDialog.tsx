@@ -69,7 +69,7 @@ export const CreateConfigMapDialog: FC<
       createConfigMap({
         createKuberCloudConfigmapModel: {
           name: values.name as string,
-          alias: values.alias as string,
+          // alias: values.alias as string,
           namespaceId: Number(namespaceId),
           envs: processedEnvsToObject,
         },
@@ -129,7 +129,6 @@ export const CreateConfigMapDialog: FC<
         open={openDialog}
         onClose={onClose}
         components={{ Backdrop: BlurBackdrop }}
-        maxWidth="xs"
         fullWidth
         PaperProps={{
           sx: { borderRadius: BORDER_RADIUS_1 },
@@ -139,34 +138,32 @@ export const CreateConfigMapDialog: FC<
           ایجاد Config Map
         </DialogTitle>
         <form onSubmit={formik.handleSubmit} autoComplete="on">
-          <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
-            <Grid2 container spacing={3}>
-              <Grid2 xs={12}>
+          <Stack
+            px={{ xs: 1.8, md: 2 }}
+            py={{ xs: 1.8, md: 1 }}
+            spacing={{ xs: 2, md: 5 }}
+          >
+            <Grid2 container>
+              <Grid2 xs={12} md={6}>
                 <DorsaTextField
                   fullWidth
                   label="*name"
+                  size="small"
                   error={Boolean(formik.errors.name && formik.touched.name)}
                   helperText={formik.errors.name}
                   {...formik.getFieldProps("name")}
                 />
               </Grid2>
-              <Grid2 xs={12}>
-                <DorsaTextField
-                  fullWidth
-                  label="alias"
-                  {...formik.getFieldProps("alias")}
-                />
-              </Grid2>
             </Grid2>
-            <Divider />
+            <Divider sx={{ marginTop: "20px !important" }} />
             <Stack spacing={3}>
               <Stack
                 direction="row"
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <Typography sx={{ color: ({ palette }) => palette.grey[800] }}>
-                  Envs
+                <Typography fontWeight={600} mb={1}>
+                  افزودن Envs
                 </Typography>
                 <Button
                   variant="text"
@@ -175,10 +172,12 @@ export const CreateConfigMapDialog: FC<
                     color: "primary.main",
                     justifyContent: "space-between",
                     py: 1,
-                    fontSize: "16px",
+                    fontSize: "15px !important",
+                    mb: 1,
                   }}
                   startIcon={<Add />}
                   onClick={addEnvsInput}
+                  size="small"
                 >
                   اضافه کردن
                 </Button>
@@ -192,7 +191,7 @@ export const CreateConfigMapDialog: FC<
               >
                 {envs.map((_: any, index: any) => (
                   <>
-                    <Grid item xs={5} mb={2}>
+                    <Grid item xs={2} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="key"
@@ -200,9 +199,10 @@ export const CreateConfigMapDialog: FC<
                         onChange={(e) =>
                           handleKeyChange(index, String(e.target.value))
                         }
+                        size="small"
                       />
                     </Grid>
-                    <Grid item xs={5} mb={2}>
+                    <Grid item xs={9} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="value"
@@ -210,16 +210,18 @@ export const CreateConfigMapDialog: FC<
                         onChange={(e) =>
                           handleValueChange(index, String(e.target.value))
                         }
+                        size="small"
                       />
                     </Grid>
                     <Grid
                       item
-                      xs={2}
-                      mb={2}
+                      xs={1}
+                      mb={1}
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center",
+                        justifyContent: "flex-end",
+                        paddingRight: "0 !important",
                       }}
                     >
                       <IconButton onClick={() => removeEnvsInput(index)}>
