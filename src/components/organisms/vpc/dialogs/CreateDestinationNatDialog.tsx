@@ -38,7 +38,6 @@ import { formikOnSubmitType } from "src/types/form.type";
 import "./index.css";
 
 import {
-  CreateVpcGatewayDnatModel,
   useGetApiMyVpcIpListByVpcHostIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   useGetApiMyVpcTranslateListQuery,
@@ -47,6 +46,18 @@ import {
 import { ipValidation } from "src/utils/regex.utils";
 import * as yup from "yup";
 import { SelectNatService } from "../nat/SelectNatService";
+
+export type CreateVpcGatewayDnat = {
+  vpcHostId: number;
+  vpcNetworkId: number;
+  vpcHostGatewayIpId: number;
+  vpcHostTranslateId: number;
+  name: string;
+  sourceIp?: string | null;
+  destinationIp: string;
+  destinationPort: number | "";
+  description?: string | null;
+};
 
 const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
 
@@ -199,13 +210,14 @@ export const CreateDestinationNatDialog: FC<
 
   const [createVpcNat, { isLoading }] = usePostApiMyVpcNatCreateDnatMutation();
 
-  const onSubmit: formikOnSubmitType<CreateVpcGatewayDnatModel> = (
+  const onSubmit: formikOnSubmitType<CreateVpcGatewayDnat> = (
     values,
     { resetForm }
   ) => {
     createVpcNat({
       createVpcGatewayDnatModel: {
         ...values,
+        destinationPort: Number(values.destinationPort!),
       },
     })
       .unwrap()
@@ -217,7 +229,7 @@ export const CreateDestinationNatDialog: FC<
       .catch((err) => {});
   };
 
-  const initialValues: CreateVpcGatewayDnatModel = {
+  const initialValues: CreateVpcGatewayDnat = {
     vpcHostId: Number(vpcId!),
     name: "",
     vpcNetworkId: vpcNetworkList?.length ? vpcNetworkList[0].id : 1,
@@ -227,7 +239,7 @@ export const CreateDestinationNatDialog: FC<
     vpcHostTranslateId: translateIpList?.length ? translateIpList[0].id : 0,
     sourceIp: "",
     destinationIp: "",
-    destinationPort: 7080,
+    destinationPort: "",
     description: "",
   };
 
@@ -246,253 +258,256 @@ export const CreateDestinationNatDialog: FC<
   return (
     <Dialog {...props} onClose={dialogCloseHandler}>
       <DialogTitle textAlign="center">ایجاد Destination Nat جدید</DialogTitle>
-      {vpcHostGatewayList &&
-      vpcHostGatewayList?.length > 0 &&
-      vpcNetworkList &&
-      vpcNetworkList?.length > 0 ? (
-        <form onSubmit={formik.handleSubmit}>
-          <DialogContent sx={{ py: 4 }}>
-            <Grid
-              container
-              columnSpacing={1}
-              rowSpacing={2}
-              sx={{ mt: { xs: 1, lg: 0 } }}
-            >
-              <Grid item xs={12} md={6} lg={3.6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(formik.errors.name && formik.touched.name)}
-                >
-                  {/* <Typography>نام سرویس</Typography> */}
-                  <AlphaNumericTextField
-                    formik={formik}
-                    id="name"
-                    size="small"
+      {
+        // vpcHostGatewayList &&
+        // vpcHostGatewayList?.length > 0 &&
+        // vpcNetworkList &&
+        // vpcNetworkList?.length > 0
+        true ? (
+          <form onSubmit={formik.handleSubmit}>
+            <DialogContent sx={{ py: 4 }}>
+              <Grid
+                container
+                columnSpacing={1}
+                rowSpacing={2}
+                sx={{ mt: { xs: 1, lg: 0 } }}
+              >
+                <Grid item xs={12} md={6} lg={3.6}>
+                  <FormControl
                     fullWidth
-                    placeholder="نام موردنظر را وارد کنید"
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} lg={8}>
-                <Grid sx={{ width: "100%", height: "80px" }}>
-                  <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
-                    onReconnect={onReconnect}
-                    nodesDraggable={false}
-                    nodesFocusable={false}
-                    nodesConnectable={false}
-                    fitView
-                    attributionPosition="bottom-left"
-                  ></ReactFlow>
+                    error={Boolean(formik.errors.name && formik.touched.name)}
+                  >
+                    {/* <Typography>نام سرویس</Typography> */}
+                    <AlphaNumericTextField
+                      formik={formik}
+                      id="name"
+                      size="small"
+                      fullWidth
+                      placeholder="نام موردنظر را وارد کنید"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} lg={8}>
+                  <Grid sx={{ width: "100%", height: "80px" }}>
+                    <ReactFlow
+                      nodes={nodes}
+                      edges={edges}
+                      onNodesChange={onNodesChange}
+                      onEdgesChange={onEdgesChange}
+                      onConnect={onConnect}
+                      onReconnect={onReconnect}
+                      nodesDraggable={false}
+                      nodesFocusable={false}
+                      nodesConnectable={false}
+                      fitView
+                      attributionPosition="bottom-left"
+                    ></ReactFlow>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
 
-            <Divider sx={{ py: 1 }} />
+              <Divider sx={{ py: 1 }} />
 
-            <Grid container pt={2} rowGap={2} justifyContent="space-between">
-              <Grid item xs={12} md={5.8} lg={3.5}>
-                <Stack
-                  pt={0}
-                  mt={0}
-                  rowGap={3}
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Stack justifyContent="center" width="100%">
-                    <Stack textAlign="end" borderBottom="1px solid lightgray">
-                      <Typography variant="text9">Destination</Typography>
-                    </Stack>
-                  </Stack>
-                  <Stack width="100%" direction="column" rowGap={2}>
-                    <FormControl>
-                      <InputLabel id="network-select">Network</InputLabel>
-                      <Select
-                        {...formik.getFieldProps("vpcNetworkId")}
-                        size="small"
-                        labelId="network-select"
-                        id="network-select"
-                        label="Network"
-                        sx={{ paddingBottom: "3.5px" }}
-                      >
-                        {vpcNetworkList?.map((item, index) => (
-                          <MenuItem key={index} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <FormControl fullWidth>
-                      <TextField
-                        {...formik.getFieldProps("destinationIp")}
-                        value={formik.values.destinationIp ?? ""}
-                        size="small"
-                        label="Destination IP"
-                        focused
-                        error={Boolean(
-                          formik.errors.destinationIp &&
-                            formik.touched.destinationIp
-                        )}
-                        helperText={
-                          formik.touched.destinationIp &&
-                          formik.errors.destinationIp
-                        }
-                        fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                              border: "1px solid lightgray",
-                            },
-                          },
-                        }}
-                      />
-                    </FormControl>
-                    <FormControl fullWidth>
-                      <TextField
-                        fullWidth
-                        {...formik.getFieldProps("destinationPort")}
-                        value={formik.values.destinationPort ?? ""}
-                        size="small"
-                        label="Destination Port"
-                        focused
-                        error={Boolean(
-                          formik.errors.destinationPort &&
-                            formik.touched.destinationPort
-                        )}
-                        helperText={
-                          formik.touched.destinationPort &&
-                          formik.errors.destinationPort
-                        }
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                              border: "1px solid lightgray",
-                            },
-                          },
-                        }}
-                      />
-                    </FormControl>
-                  </Stack>
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={5.8} lg={3.5}>
-                <Stack
-                  pt={0}
-                  mt={0}
-                  rowGap={3}
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Stack justifyContent="center" width="100%">
-                    <Stack textAlign="end" borderBottom="1px solid lightgray">
-                      <Typography variant="text9">Gateway</Typography>
-                    </Stack>
-                  </Stack>
-                  <Stack width="100%" direction="column" rowGap={2}>
-                    <FormControl size="small">
-                      <InputLabel id="gateway-select">Gateway Ip</InputLabel>
-                      <Select
-                        {...formik.getFieldProps("vpcHostGatewayIpId")}
-                        size="small"
-                        labelId="gateway-select"
-                        id="gateway-select"
-                        label="Gateway Ip"
-                        sx={{ paddingBottom: "3.5px" }}
-                      >
-                        {vpcHostGatewayList?.map((item, index) => (
-                          <MenuItem key={index} value={item.id!}>
-                            {item.ip}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <SelectNatService
-                      translateIpList={translateIpList}
-                      formik={formik}
-                    />
-                  </Stack>
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12} lg={3.5}>
-                <Stack
-                  pt={0}
-                  mt={0}
-                  rowGap={3}
-                  direction="column"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Stack justifyContent="center" width="100%">
-                    <Stack textAlign="end" borderBottom="1px solid lightgray">
-                      <Typography variant="text9">Source</Typography>
-                    </Stack>
-                  </Stack>
-                  <Stack width="100%" direction="column" rowGap={2}>
-                    <FormControl fullWidth>
-                      <TextField
-                        fullWidth
-                        {...formik.getFieldProps("sourceIp")}
-                        focused
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                              border: "1px solid lightgray",
-                            },
-                          },
-                        }}
-                        size="small"
-                        label="Source IP"
-                        error={Boolean(
-                          formik.errors.sourceIp && formik.touched.sourceIp
-                        )}
-                        helperText={
-                          formik.touched.sourceIp && formik.errors.sourceIp
-                        }
-                      />
-                    </FormControl>
-                  </Stack>
-                </Stack>
-              </Grid>
-            </Grid>
-          </DialogContent>
-          <DialogActions sx={{ pb: 3, px: 3 }}>
-            <Grid container rowSpacing={2}>
-              <Grid item xs={12} lg={6}>
-                <Stack
-                  sx={{ width: "100%" }}
-                  direction={{ xs: "column", md: "row" }}
-                  gap={1}
-                >
-                  <LoadingButton
-                    loading={isLoading}
-                    fullWidth
-                    variant="contained"
-                    type="submit"
+              <Grid container pt={2} rowGap={2} justifyContent="space-between">
+                <Grid item xs={12} md={5.8} lg={3.5}>
+                  <Stack
+                    pt={0}
+                    mt={0}
+                    rowGap={3}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    ایجاد
-                  </LoadingButton>
-                  <Button onClick={forceClose} fullWidth variant="outlined">
-                    انصراف
-                  </Button>
-                </Stack>
+                    <Stack justifyContent="center" width="100%">
+                      <Stack textAlign="end" borderBottom="1px solid lightgray">
+                        <Typography variant="text9">Destination</Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack width="100%" direction="column" rowGap={2}>
+                      <FormControl>
+                        <InputLabel id="network-select">Network</InputLabel>
+                        <Select
+                          {...formik.getFieldProps("vpcNetworkId")}
+                          size="small"
+                          labelId="network-select"
+                          id="network-select"
+                          label="Network"
+                          sx={{ paddingBottom: "3.5px" }}
+                        >
+                          {vpcNetworkList?.map((item, index) => (
+                            <MenuItem key={index} value={item.id}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                        <TextField
+                          {...formik.getFieldProps("destinationIp")}
+                          value={formik.values.destinationIp ?? ""}
+                          size="small"
+                          label="Destination IP"
+                          focused
+                          error={Boolean(
+                            formik.errors.destinationIp &&
+                              formik.touched.destinationIp
+                          )}
+                          helperText={
+                            formik.touched.destinationIp &&
+                            formik.errors.destinationIp
+                          }
+                          fullWidth
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              "&.Mui-focused fieldset": {
+                                border: "1px solid lightgray",
+                              },
+                            },
+                          }}
+                        />
+                      </FormControl>
+                      <FormControl fullWidth>
+                        <TextField
+                          fullWidth
+                          {...formik.getFieldProps("destinationPort")}
+                          value={formik.values.destinationPort ?? ""}
+                          size="small"
+                          label="Destination Port"
+                          focused
+                          error={Boolean(
+                            formik.errors.destinationPort &&
+                              formik.touched.destinationPort
+                          )}
+                          helperText={
+                            formik.touched.destinationPort &&
+                            formik.errors.destinationPort
+                          }
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              "&.Mui-focused fieldset": {
+                                border: "1px solid lightgray",
+                              },
+                            },
+                          }}
+                        />
+                      </FormControl>
+                    </Stack>
+                  </Stack>
+                </Grid>
+
+                <Grid item xs={12} md={5.8} lg={3.5}>
+                  <Stack
+                    pt={0}
+                    mt={0}
+                    rowGap={3}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Stack justifyContent="center" width="100%">
+                      <Stack textAlign="end" borderBottom="1px solid lightgray">
+                        <Typography variant="text9">Gateway</Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack width="100%" direction="column" rowGap={2}>
+                      <FormControl size="small">
+                        <InputLabel id="gateway-select">Gateway Ip</InputLabel>
+                        <Select
+                          {...formik.getFieldProps("vpcHostGatewayIpId")}
+                          size="small"
+                          labelId="gateway-select"
+                          id="gateway-select"
+                          label="Gateway Ip"
+                          sx={{ paddingBottom: "3.5px" }}
+                        >
+                          {vpcHostGatewayList?.map((item, index) => (
+                            <MenuItem key={index} value={item.id!}>
+                              {item.ip}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <SelectNatService
+                        translateIpList={translateIpList}
+                        formik={formik}
+                      />
+                    </Stack>
+                  </Stack>
+                </Grid>
+
+                <Grid item xs={12} md={12} lg={3.5}>
+                  <Stack
+                    pt={0}
+                    mt={0}
+                    rowGap={3}
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Stack justifyContent="center" width="100%">
+                      <Stack textAlign="end" borderBottom="1px solid lightgray">
+                        <Typography variant="text9">Source</Typography>
+                      </Stack>
+                    </Stack>
+                    <Stack width="100%" direction="column" rowGap={2}>
+                      <FormControl fullWidth>
+                        <TextField
+                          fullWidth
+                          {...formik.getFieldProps("sourceIp")}
+                          focused
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              "&.Mui-focused fieldset": {
+                                border: "1px solid lightgray",
+                              },
+                            },
+                          }}
+                          size="small"
+                          label="Source IP"
+                          error={Boolean(
+                            formik.errors.sourceIp && formik.touched.sourceIp
+                          )}
+                          helperText={
+                            formik.touched.sourceIp && formik.errors.sourceIp
+                          }
+                        />
+                      </FormControl>
+                    </Stack>
+                  </Stack>
+                </Grid>
               </Grid>
-            </Grid>
-          </DialogActions>
-        </form>
-      ) : (
-        <Alert sx={{ margin: 3 }} severity="info">
-          <Typography>لطفا ابتدا شبکه ایجاد کنید</Typography>
-        </Alert>
-      )}
+            </DialogContent>
+            <DialogActions sx={{ pb: 3, px: 3 }}>
+              <Grid container rowSpacing={2}>
+                <Grid item xs={12} lg={6}>
+                  <Stack
+                    sx={{ width: "100%" }}
+                    direction={{ xs: "column", md: "row" }}
+                    gap={1}
+                  >
+                    <LoadingButton
+                      loading={isLoading}
+                      fullWidth
+                      variant="contained"
+                      type="submit"
+                    >
+                      ایجاد
+                    </LoadingButton>
+                    <Button onClick={forceClose} fullWidth variant="outlined">
+                      انصراف
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </DialogActions>
+          </form>
+        ) : (
+          <Alert sx={{ margin: 3 }} severity="info">
+            <Typography>لطفا ابتدا شبکه ایجاد کنید</Typography>
+          </Alert>
+        )
+      }
     </Dialog>
   );
 };

@@ -11,11 +11,15 @@ import { convertToLabelId } from "src/utils/convertToLabelId.utils";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { commonType } from "src/types/common.type";
-import { CreateVpcGatewayDnatModel, GetApiMyVpcTranslateListApiResponse, useDeleteApiMyVpcTranslateDeleteByIdMutation } from "src/app/services/api.generated";
+import {
+  GetApiMyVpcTranslateListApiResponse,
+  useDeleteApiMyVpcTranslateDeleteByIdMutation,
+} from "src/app/services/api.generated";
 import { CreateNatServiceDialog } from "../dialogs/CreateNatServiceDialog";
+import { CreateVpcGatewayDnat } from "../dialogs/CreateDestinationNatDialog";
 
 type SelectNatServicePropsType = {
-  formik: FormikProps<CreateVpcGatewayDnatModel>;
+  formik: FormikProps<CreateVpcGatewayDnat>;
   translateIpList?: GetApiMyVpcTranslateListApiResponse;
 };
 
@@ -44,8 +48,7 @@ export const SelectNatService: FC<SelectNatServicePropsType> = ({
       id: Number(option.id),
     })
       .unwrap()
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {});
   };
 

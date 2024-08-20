@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -301,7 +300,6 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    {/* <Chip label="Destination" sx={{ width: "100%" }} /> */}
                     <Stack textAlign="end" borderBottom="1px solid lightgray">
                       <Typography variant="text9">Destination</Typography>
                     </Stack>
