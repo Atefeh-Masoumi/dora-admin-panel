@@ -46,7 +46,7 @@ export const vpcVmStruct: columnType[] = [
   { id: "datacenter", label: "Datacenter", disableSort: true },
   { id: "createDate", label: "تاریخ ایجاد", disableSort: true },
   { id: "statusId", label: "وضعیت" },
-  { id: "control", label: "", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
 ];
 
 export const vpcLoadBalanceStruct: columnType[] = [
