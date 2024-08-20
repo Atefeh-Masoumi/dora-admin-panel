@@ -3981,18 +3981,6 @@ export type GetKuberCloudConfigResponse = {
   keyValuePairs: KeyValuePairResponse[] | null;
   createDate: string;
 };
-
-
-
-// id: number;
-// name: string | null;
-// alias: string | null;
-// description: string | null;
-// secretTypeId: number;
-// keyValuePairs: SecretKeyValuePairResponse[] | null;
-// createDate: string;
-// };
-
 export type CreateKuberCloudConfigmapModel = {
   name: string;
   namespaceId: number;
@@ -5177,4 +5165,3 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
-
