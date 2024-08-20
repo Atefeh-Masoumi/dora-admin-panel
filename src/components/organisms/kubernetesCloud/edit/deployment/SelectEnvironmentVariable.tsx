@@ -31,18 +31,14 @@ type SelectEnvironmentVariablePropsType = {
   outerIndex: number;
   item: any;
   formik: FormikProps<KuberCloudAppImageType>;
-  keyValues: VariableEnvironment[];
   setKeyValues: Dispatch<SetStateAction<VariableEnvironment[]>>;
 };
 
 export const SelectEnvironmentVariable: FC<
   SelectEnvironmentVariablePropsType
-> = ({ item, formik, outerIndex, keyValues, setKeyValues }) => {
-  const theme = useTheme(),
-    isMd = useMediaQuery(theme.breakpoints.up("md"));
-
-  const { id: kubernetesCloudNameSpaceId } = useParams();
-
+> = ({ item, formik, outerIndex, setKeyValues }) => {
+  const [resourceList, setResourceList] = useState<ResourceListType>();
+  const [keyListInResource, setKeyListInResource] = useState<any>();
   const [environmentVariable, setEnvironmentVariable] =
     useState<VariableEnvironment>({
       variableType: 1,
@@ -51,11 +47,13 @@ export const SelectEnvironmentVariable: FC<
     });
   const [needToResourceSelect, setNeedToResourceSelect] =
     useState<boolean>(false);
-  const [resourceList, setResourceList] = useState<ResourceListType>();
   const [selectedResourceItem, setSelectedResourceItem] = useState<
     number | null
   >(null);
-  const [keyListInResource, setKeyListInResource] = useState<any>();
+
+  const theme = useTheme(),
+    isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const { id: kubernetesCloudNameSpaceId } = useParams();
 
   const { data: configmapList } =
     useGetApiMyKubernetesCloudConfigmapListByIdQuery(
