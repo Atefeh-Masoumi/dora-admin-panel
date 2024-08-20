@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Divider,
   FormControl,
   Grid,
   IconButton,
@@ -9,8 +10,10 @@ import {
   ListItemText,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { FormikProps } from "formik";
 import { FC } from "react";
@@ -25,10 +28,6 @@ type AppImageCardPropsType = {
 };
 
 export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
-  const tagOnChangeHandler = (newTagId: number) => {
-    formik.setValues({ ...formik.values, tagId: newTagId, imageId: item.id });
-  };
-
   const onClickCardHandler = () => {
     if (formik.values.imageId !== item.id) {
       formik.setFieldValue("imageId", item.id);
@@ -37,142 +36,133 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
   };
 
   return (
-    <ListItem
-      // sx={{
-
+    <Stack
+      onClick={onClickCardHandler}
+      // sx={{ cursor: "pointer" }}
+      direction="column"
+      rowGap={3}
       sx={{
-        alignSelf: "flex-start",
-        px: 2,
-        py: 2,
-
+        cursor: "pointer",
         position: "relative",
         borderRadius: "10px",
         backgroundColor: "#fff",
-        boxShadow:
-          "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
         border: ({ palette }) =>
-          `2px solid ${
-            formik.values.imageId === item.id ? palette.primary.main : "none"
+          `1px solid ${
+            formik.values.imageId === item.id
+              ? palette.primary.main
+              : "rgba(0, 0, 0, 0.12)"
           }`,
+        height: 170,
       }}
-      // p: 2,
-      // ":hover": {
-      // transition: "all 1s ease",
-      // border: ({ palette }) =>
-      //   `ipx solid ${
-      //     formik.values.imageId === item.id
-      //       ? palette.customColor.primaryLighter
-      //       : "none"
-      //   }`,
-      // boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-      // },
+      p={3}
     >
-      <Grid container>
-        <Grid
-          item
-          sx={{
-            cursor: "pointer",
-            display: "flex",
-            direction: "row",
-            alignItems: "start",
-          }}
-          xs={8}
-          md={8}
-          onClick={onClickCardHandler}
-        >
-          <Stack direction="row" height="fit-content">
-            <ListItemAvatar>
+      <Stack
+        direction="row"
+        alignItems="start"
+        gap={1}
+        justifyContent={{ xs: "center", md: "space-between" }}
+      >
+        <Grid container>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <Stack
+              width={{ xs: "100%" }}
+              alignItems="right"
+              divider={<Divider orientation="vertical" flexItem />}
+              columnGap={1}
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
               <Avatar
                 src={
                   appImageList.find((image) => image.name === item.name)?.src
                 }
+                // src="/assets/icons/mysql.svg"
               />
-            </ListItemAvatar>
-            <ListItemText
-              dir="ltr"
+              <Typography
+                noWrap
+                maxWidth={{ xs: "100%", md: "70%" }}
+                textOverflow="ellipsis"
+              >
+                {item.name}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={6} sm={6} md={6} lg={6}>
+            <Stack
+              gap={1}
               sx={{
-                m: 0,
-                "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                },
-              }}
-              primary={item.name}
-              // secondary={item.subtitle}
-            />
-          </Stack>
-          <ListItemText
-            dir="ltr"
-            sx={{
-              m: 0,
-              "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              },
-            }}
-            secondary={item.subtitle}
-            // secondary={item.subtitle}
-          />
-        </Grid>
-
-        <Grid
-          item
-          xs={4}
-          md={4}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-          }}
-          gap={4}
-        >
-          <FormControl size="small">
-            <InputLabel sx={{ fontSize: "15px" }}>Version</InputLabel>
-            <Select
-              value={
-                formik.values.imageId === item.id ? formik.values.tagId : ""
-              }
-              onChange={(event) =>
-                tagOnChangeHandler(Number(event.target.value))
-              }
-              label="Version"
-              sx={{
-                height: 28,
-                width: 90,
-                "& .MuiSelect-outlined": {
-                  color: "primary.main",
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #1890FF",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #1890FF",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  border: "1px solid #1890FF",
-                },
-                "& .MuiSelect-select": {
-                  fontSize: "12px",
-                },
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "end",
               }}
             >
-              {item.tags?.map((tag) => (
-                <MenuItem key={tag.id} value={tag.id}>
-                  {tag.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Tooltip sx={{ p: 0 }} placement="top" title={item.description}>
-            <IconButton>
-              <InfoSvg />
-            </IconButton>
-          </Tooltip>
+              <Tooltip sx={{ p: 0 }} placement="top" title={item.description}>
+                <IconButton>
+                  <InfoSvg />
+                </IconButton>
+              </Tooltip>
+              <FormControl size="small">
+                <InputLabel sx={{ fontSize: "15px" }}>Version</InputLabel>
+                <Select
+                  value={
+                    formik.values.imageId === item.id ? formik.values.tagId : ""
+                  }
+                  onFocus={(event) => {
+                    event.stopPropagation(); // Stop the event from propagating to the parent
+                    formik.setFieldValue("imageId", item.id);
+                  }}
+                  onChange={(event) => {
+                    formik.setFieldValue("tagId", Number(event.target.value));
+                  }}
+                  label="Version"
+                  sx={{
+                    height: 28,
+                    width: 90,
+                    "& .MuiSelect-outlined": {
+                      color: "primary.main",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "1px solid #1890FF",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      border: "1px solid #1890FF",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      border: "1px solid #1890FF",
+                    },
+                    "& .MuiSelect-select": {
+                      fontSize: "12px",
+                    },
+                  }}
+                >
+                  {item.tags?.map((tag) => (
+                    <MenuItem key={tag.id} value={tag.id}>
+                      {tag.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-    </ListItem>
+      </Stack>
+
+      <ListItemText
+        dir="ltr"
+        sx={{
+          m: 0,
+          "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
+            // whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          },
+        }}
+        secondary={item.subtitle}
+      />
+    </Stack>
   );
 };

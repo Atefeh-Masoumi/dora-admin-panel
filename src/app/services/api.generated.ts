@@ -986,6 +986,39 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/image/tag/list/${queryArg.id}`,
       }),
     }),
+    getApiMyKubernetesCloudIngressList: build.query<
+      GetApiMyKubernetesCloudIngressListApiResponse,
+      GetApiMyKubernetesCloudIngressListApiArg
+    >({
+      query: () => ({ url: `/api/my/kubernetes/cloud/ingress/list` }),
+    }),
+    getApiMyKubernetesCloudIngressGetById: build.query<
+      GetApiMyKubernetesCloudIngressGetByIdApiResponse,
+      GetApiMyKubernetesCloudIngressGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress/get/${queryArg.id}`,
+      }),
+    }),
+    postApiMyKubernetesCloudIngressCreate: build.mutation<
+      PostApiMyKubernetesCloudIngressCreateApiResponse,
+      PostApiMyKubernetesCloudIngressCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress/create`,
+        method: "POST",
+        body: queryArg.createKuberCloudIngressModel,
+      }),
+    }),
+    deleteApiMyKubernetesCloudIngressDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
     getApiMyKubernetesCloudSecretListById: build.query<
       GetApiMyKubernetesCloudSecretListByIdApiResponse,
       GetApiMyKubernetesCloudSecretListByIdApiArg
@@ -2668,6 +2701,22 @@ export type GetApiMyKubernetesCloudImageTagListByIdApiResponse =
 export type GetApiMyKubernetesCloudImageTagListByIdApiArg = {
   id: number;
 };
+export type GetApiMyKubernetesCloudIngressListApiResponse =
+  /** status 200 OK */ KuberCloudIngressListResponse[];
+export type GetApiMyKubernetesCloudIngressListApiArg = void;
+export type GetApiMyKubernetesCloudIngressGetByIdApiResponse =
+  /** status 200 OK */ GetKuberCloudIngressResponse;
+export type GetApiMyKubernetesCloudIngressGetByIdApiArg = {
+  id: number;
+};
+export type PostApiMyKubernetesCloudIngressCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudIngressCreateApiArg = {
+  createKuberCloudIngressModel: CreateKuberCloudIngressModel;
+};
+export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg = {
+  id: number;
+};
 export type GetApiMyKubernetesCloudSecretListByIdApiResponse =
   /** status 200 OK */ KuberCloudSecretListResponse[];
 export type GetApiMyKubernetesCloudSecretListByIdApiArg = {
@@ -3966,7 +4015,7 @@ export type KuberCloudConfigListResponse = {
   id: number;
   name: string | null;
   createDate: string;
-  configtMaps: ConfigMapKeyValuePairsResponse[] | null;
+  configMaps: ConfigMapKeyValuePairsResponse[] | null;
 };
 export type KeyValuePairResponse = {
   id: number;
@@ -4068,10 +4117,11 @@ export type KuberCloudImageKeyResponse = {
 export type KuberCloudImageResponse = {
   id: number;
   name: string | null;
+  photoName: string | null;
   subtitle: string | null;
   description: string | null;
   path: string | null;
-  category: number;
+  categoryId: number;
   tags: KuberCloudImageTagsResponse[] | null;
   ports: KuberCloudImagePortResponse[] | null;
   keys: KuberCloudImageKeyResponse[] | null;
@@ -4092,6 +4142,37 @@ export type KuberCloudImageKeyListResponse = {
 export type KuberCloudImageTagListResponse = {
   id: number;
   name: string | null;
+};
+export type KuberCloudIngressListResponse = {
+  id: number;
+  name: string | null;
+  ruleCount: number;
+  createDate: string;
+  modifyDate: string;
+};
+export type RulesResponse = {
+  id: number;
+  path: string | null;
+  domainName: string | null;
+  serviceName: string | null;
+  port: number;
+  createDate: string;
+  modifiyDate: string;
+};
+export type GetKuberCloudIngressResponse = {
+  id: number;
+  name: string | null;
+  rules: RulesResponse[] | null;
+  createDate: string;
+};
+export type RuleModelRequest = {
+  domainName: string | null;
+  path: string | null;
+  kuberCloudDeployPortId: number;
+};
+export type CreateKuberCloudIngressModel = {
+  name: string;
+  rules: RuleModelRequest[];
 };
 export type SecretKeyValuePairsResponse = {
   id: number;
@@ -5023,6 +5104,10 @@ export const {
   useGetApiMyKubernetesCloudCategoryListQuery,
   useGetApiMyKubernetesCloudImageKeyGetByIdQuery,
   useGetApiMyKubernetesCloudImageTagListByIdQuery,
+  useGetApiMyKubernetesCloudIngressListQuery,
+  useGetApiMyKubernetesCloudIngressGetByIdQuery,
+  usePostApiMyKubernetesCloudIngressCreateMutation,
+  useDeleteApiMyKubernetesCloudIngressDeleteByIdMutation,
   useGetApiMyKubernetesCloudSecretListByIdQuery,
   useGetApiMyKubernetesCloudSecretGetByIdQuery,
   usePostApiMyKubernetesCloudSecretCreateMutation,
@@ -5165,3 +5250,4 @@ export const {
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyDomainWhoisGetMutation,
 } = api;
+

@@ -31,12 +31,11 @@ type SelectEnvironmentVariablePropsType = {
   outerIndex: number;
   item: any;
   formik: FormikProps<KuberCloudAppImageType>;
-  setKeyValues: Dispatch<SetStateAction<VariableEnvironment[]>>;
 };
 
 export const SelectEnvironmentVariable: FC<
   SelectEnvironmentVariablePropsType
-> = ({ item, formik, outerIndex, setKeyValues }) => {
+> = ({ item, formik, outerIndex }) => {
   const [resourceList, setResourceList] = useState<ResourceListType>();
   const [keyListInResource, setKeyListInResource] = useState<any>();
   const [environmentVariable, setEnvironmentVariable] =
@@ -71,7 +70,7 @@ export const SelectEnvironmentVariable: FC<
   );
 
   const removeDestinationInput = (index: number) => {
-    setKeyValues((prevState) => {
+    formik.setFieldValue("keyValues", (prevState: VariableEnvironment[]) => {
       let result = [...prevState];
       result.splice(index, 1);
       return result;
@@ -89,7 +88,7 @@ export const SelectEnvironmentVariable: FC<
         setResourceList(configmapList);
         const configMapList = configmapList?.find(
           (item) => item.id === selectedResourceItem
-        )?.configtMaps;
+        )?.configMaps;
         setKeyListInResource(configMapList);
         break;
       case ENVIRONMENT_TYPES.SECRET_MAP:
@@ -125,7 +124,11 @@ export const SelectEnvironmentVariable: FC<
                 <DeleteOutline color="error" />
               </IconButton>
               {needToResourceSelect ? (
-                <SelectEnvValue keyListInResource={keyListInResource || []} />
+                <SelectEnvValue
+                  environmentVariable={environmentVariable}
+                  setEnvironmentVariable={setEnvironmentVariable}
+                  keyListInResource={keyListInResource || []}
+                />
               ) : (
                 <DorsaTextField
                   sx={{
@@ -233,7 +236,11 @@ export const SelectEnvironmentVariable: FC<
               </IconButton>
 
               {needToResourceSelect ? (
-                <SelectEnvValue keyListInResource={keyListInResource || []} />
+                <SelectEnvValue
+                  environmentVariable={environmentVariable}
+                  setEnvironmentVariable={setEnvironmentVariable}
+                  keyListInResource={keyListInResource || []}
+                />
               ) : (
                 <DorsaTextField
                   sx={{

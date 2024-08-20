@@ -7,7 +7,7 @@ export const kubernetesAppTableHeadCells = [
 ];
 
 export const appImageList = [
-  { id: 1, name: "mySql", src: "/assets/icons/mysql.svg" },
+  { id: 1, name: "mysql", src: "/assets/icons/mysql.svg" },
   { id: 2, name: "nginx", src: "/assets/icons/nginx.svg" },
   { id: 4, name: "mongoDb", src: "/assets/icons/mongodb.svg" },
   { id: 5, name: ".net", src: "/assets/icons/dotnet.svg" },

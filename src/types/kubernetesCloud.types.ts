@@ -12,20 +12,19 @@ export type EnvironmentVariablesType = {
   } | null;
 };
 
+export type VariableEnvironment = {
+  variableType: number;
+  key: string;
+  value: string;
+  resource?: string;
+};
 export type KuberCloudAppImageType = {
   imageId: number | null;
   tagId: number | "";
   name: string | "";
   replicaNumber: number;
   namespaceId: number | null;
-  keyValue: EnvironmentVariablesType;
-};
-
-export type VariableEnvironment = {
-  variableType: number;
-  key: string;
-  value: string;
-  resource?: string;
+  keyValues: VariableEnvironment[];
 };
 
 export type ResourceListType =

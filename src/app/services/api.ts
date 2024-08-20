@@ -31,6 +31,7 @@ const tags = [
   "Accessibility",
   "ConfigMap",
   "SecretMap",
+  "NameSpace",
 ];
 
 export const api = generatedApi
@@ -458,6 +459,19 @@ export const api = generatedApi
       },
       deleteApiMyKubernetesCloudSecretDeleteById: {
         invalidatesTags: () => ["SecretMap"],
+      },
+      // ============================== Namespace ============================== //
+      getApiMyKubernetesCloudHostList: {
+        providesTags: () => ["Namespace"],
+      },
+      postApiMyKubernetesCloudHostCreate: {
+        invalidatesTags: () => ["Namespace"],
+      },
+      putApiMyKubernetesCloudHostEdit: {
+        invalidatesTags: () => ["Namespace"],
+      },
+      deleteApiMyKubernetesCloudHostDeleteById: {
+        invalidatesTags: () => ["Namespace"],
       },
     },
   });
