@@ -1,26 +1,45 @@
-import { IconButton, Stack } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import {
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  GetKuberCloudSecretResponse,
+  KuberCloudSecretListResponse,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
 } from "src/app/services/api.generated";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { kubernetesCloudSecretMapTableStruct } from "./struct";
+import { kubernetesSecretListTableStruct } from "./struct";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const KubernetesCloudSecretMapTableRow: FC<{ row: any }> = ({ row }) => {
+export const KubernetesCloudSecretMapTableRow: FC<{
+  row: any;
+  rowBgColor: any;
+}> = ({ row, rowBgColor }) => {
+  const [open, setOpen] = useState(false);
+  const id = row.id!;
+  const name = row.name!;
+  const createDate = row.createDate!;
+  const secretList = row.secrets! || [];
+
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [
     selectedKubernetesCloudSecretMap,
     setSelectedKubernetesCloudSecretMap,
-  ] = useState<GetKuberCloudSecretResponse | null>(null);
+  ] = useState<KuberCloudSecretListResponse | null>(null);
 
   const [deleteSecretMap, { isLoading: deleteSecretMapLoading }] =
     useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation();
@@ -29,7 +48,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{ row: any }> = ({ row }) => {
     deleteSecretMap({ id: Number(selectedKubernetesCloudSecretMap?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Secret Map با موفقیت حذف شد");
+        toast.success("Secret با موفقیت حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});
@@ -39,57 +58,84 @@ export const KubernetesCloudSecretMapTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedKubernetesCloudSecretMap(null);
   };
 
-  const handleOpenDelete = (kubernetes: GetKuberCloudSecretResponse) => {
-    setSelectedKubernetesCloudSecretMap(kubernetes);
+  const handleOpenDelete = (secret: KuberCloudSecretListResponse) => {
+    setSelectedKubernetesCloudSecretMap(secret);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
   return (
     <>
-      <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {kubernetesCloudSecretMapTableStruct.map((column) => {
-          const value = row[column.id];
-          const text = column.format ? column.format(value) : value;
-          return (
-            <DorsaTableCell
-              key={column.id}
-              align="center"
-              sx={{
-                px: column.id === "control" ? 0 : 5,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {column.id === "control" ? (
-                <Stack
-                  direction="row"
-                  spacing={0.6}
-                  maxWidth="fit-content"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    margin: "0 auto",
-                  }}
-                >
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    color="error"
-                    onClick={() => handleOpenDelete(row)}
-                  >
-                    <TrashSvg />
-                  </IconButton>
-                </Stack>
-              ) : (
-                <>{text || "__"}</>
-              )}
-            </DorsaTableCell>
-          );
-        })}
-      </DorsaTableRow>
+      <TableRow
+        sx={{
+          "& > *": { borderBottom: "unset" },
+          "&:nth-of-type(odd)": {
+            backgroundColor: rowBgColor,
+          },
+        }}
+      >
+        <TableCell align="center">{id}</TableCell>
+        <TableCell align="center">{name}</TableCell>
+        <TableCell align="center">{createDate}</TableCell>
+        <TableCell align="center">
+          <IconButton
+            sx={{ borderRadius: 1 }}
+            color="error"
+            onClick={() => handleOpenDelete(row)}
+          >
+            <TrashSvg />
+          </IconButton>
+        </TableCell>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ padding: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TableContainer sx={{ display: "flex" }}>
+              <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
+                <TableHead>
+                  <TableRow>
+                    {kubernetesSecretListTableStruct.map((item, index) => (
+                      <TableCell
+                        key={index}
+                        align="center"
+                        sx={{ bgcolor: "background.default" }}
+                      >
+                        {item.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {secretList.length > 0
+                    ? secretList?.map((item: any, index: any) => {
+                        return (
+                          <TableRow key={index}>
+                            <TableCell align="center">{item.id}</TableCell>
+                            <TableCell align="center">{item.key}</TableCell>
+                            <TableCell align="center">{item.value}</TableCell>
+                          </TableRow>
+                        );
+                      })
+                    : ""}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Collapse>
+        </TableCell>
+      </TableRow>
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="Secret Map"
-        subTitle="برای حذف Secret Map, عبارت امنیتی زیر را وارد کنید."
+        keyTitle="Secret"
+        subTitle="برای حذف Secret, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedKubernetesCloudSecretMap?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteSecretMapLoading}

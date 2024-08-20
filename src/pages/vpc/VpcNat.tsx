@@ -106,12 +106,8 @@ export const VpcNat: FC = () => {
                         setDialogType(null);
                       }}
                     >
-                      <MenuItem value={NAT_TYPE.S_NAT}>
-                        افزودن SNat جدید
-                      </MenuItem>
-                      <MenuItem value={NAT_TYPE.D_NAT}>
-                        افزودن DNat جدید
-                      </MenuItem>
+                      <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNAT</MenuItem>
+                      <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNAT</MenuItem>
                     </Select>
                   </FormControl>
                 </Stack>
@@ -128,7 +124,7 @@ export const VpcNat: FC = () => {
           <Stack display={{ xs: "none", md: "flex" }}>
             <Stack width="auto" direction="row">
               <Button
-                  size="small"
+                size="small"
                 variant="outlined"
                 onClick={() => setDialogType("CREATE")}
                 sx={{
@@ -159,8 +155,8 @@ export const VpcNat: FC = () => {
                     setDialogType(null);
                   }}
                 >
-                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNat جدید</MenuItem>
-                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNat جدید</MenuItem>
+                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNAT</MenuItem>
+                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNAT</MenuItem>
                 </Select>
               </FormControl>
             </Stack>

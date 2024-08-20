@@ -1,6 +1,7 @@
 # Stage 1
 FROM node:18-bullseye-slim AS builder
 #FROM repo.dorsa.cloud/docker/node:18-bullseye-slim AS builder
+#FROM hub.hamdocker.ir/node:18-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
@@ -29,6 +30,7 @@ RUN npm run build
 # Stage 2
 FROM nginx:1.25-alpine
 #FROM repo.dorsa.cloud/docker/nginx:1.25-alpine
+#FROM hub.hamdocker.ir/nginx:1.25-alpine
 
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/build /usr/share/nginx/html

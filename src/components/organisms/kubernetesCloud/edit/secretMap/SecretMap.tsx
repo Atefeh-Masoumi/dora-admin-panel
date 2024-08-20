@@ -1,21 +1,42 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Skeleton,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudSecretListByIdQuery } from "src/app/services/api.generated";
+
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
+import { useParams } from "react-router";
 
 type KubernetesCloudSecretMapPropsType = {};
 
 export const KubernetesCloudSecretMap: FC<
   KubernetesCloudSecretMapPropsType
 > = () => {
+  const { id: kubernetesCloudId } = useParams();
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } = useGetApiMyKubernetesCloudSecretListByIdQuery({id : 10});
+  const { data = [], isLoading } =
+    useGetApiMyKubernetesCloudSecretListByIdQuery({
+      id: Number(kubernetesCloudId),
+    });
 
   function handleOpenAddSecretMapDialog() {
     setOpenAddSecretMapDialog(true);
@@ -41,7 +62,7 @@ export const KubernetesCloudSecretMap: FC<
         rowGap={3}
       >
         <Typography fontSize={18} color="secondary">
-          لیست Secret Map
+          لیست Secret
         </Typography>
         <Button
           onClick={handleOpenAddSecretMapDialog}
@@ -70,24 +91,63 @@ export const KubernetesCloudSecretMap: FC<
             </Stack>
           }
         >
-          افزودن Secret Map
+          افزودن Secret
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
-        <BaseTable
-          struct={kubernetesCloudSecretMapTableStruct}
-          RowComponent={KubernetesCloudSecretMapTableRow}
-          rows={data}
-          text="در حال حاضر Secret Map وجود ندارد"
-          isLoading={isLoading}
-          initialOrder={9}
-        />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {data &&
+                  data.length > 0 &&
+                  kubernetesCloudSecretMapTableStruct.map((item, index) => {
+                    return (
+                      <TableCell align="center" key={index}>
+                        {item.label}
+                      </TableCell>
+                    );
+                  })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {isLoading ? (
+                <Stack spacing={1} px={2}>
+                  {[...Array(10)].map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      variant="rectangular"
+                      height={50}
+                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+                    />
+                  ))}
+                </Stack>
+              ) : data && data?.length === 0 ? (
+                <EmptyTable text={"در حال حاضر Secret وجود ندارد"} />
+              ) : (
+                <>
+                  {data?.map((item, index) => {
+                    return (
+                      <KubernetesCloudSecretMapTableRow
+                        rowBgColor={
+                          (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
+                        }
+                        key={index}
+                        row={item}
+                      />
+                    );
+                  })}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
-      {/* <CreateSecretMapDialog
+      <CreateSecretMapDialog
         openDialog={openAddSecretMapDialog}
         onClose={handleCloseAddSecretMapDialog}
-      /> */}
+      />
     </Stack>
   );
 };
