@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Button, Typography, Stack, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LockImage from "src/assets/images/Lock.svg";
 
 const Forbidden: FC = () => {
   const navigate = useNavigate();
@@ -8,20 +9,22 @@ const Forbidden: FC = () => {
   const goHome = () => navigate("/");
 
   return (
-    <Container sx={{ minHeight: "100vmin" }}>
+    <Container>
       <Stack
         direction="column"
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          height: "80vh",
         }}
         justifyContent="center"
         alignItems="center"
       >
         <Stack direction="column" justifyContent="center">
-          <Stack sx={{ margin: "0 auto" }}>
+          <Stack
+            sx={{ margin: "0 auto", display: "flex", flexDirection: "row" }}
+          >
             <Typography
               sx={{
                 fontSize: "110px !important",
@@ -32,7 +35,7 @@ const Forbidden: FC = () => {
               ۳
             </Typography>
             <img
-              src="/assets/images/Lock.svg"
+              src={LockImage}
               alt="page not found"
               style={{ width: "100px", height: "100px", margin: "0" }}
             />
@@ -57,7 +60,7 @@ const Forbidden: FC = () => {
               align="center"
               sx={{ fontSize: "20px !important", marginBottom: "10px" }}
             >
-              متاسفانه شما به این صفحه دسترسی ندارید.
+              متاسفیم, شما به این صفحه دسترسی ندارید.
             </Typography>
             <Button
               size="large"
