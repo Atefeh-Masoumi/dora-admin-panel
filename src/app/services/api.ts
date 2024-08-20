@@ -213,9 +213,9 @@ export const api = generatedApi
       getApiMyVmHostListByVmProjectId: {
         providesTags: () => ["VmHost"],
       },
-      getApiMyVmKmsGetByIdAndTypeId: {
-        providesTags: () => ["VmHost"],
-      },
+      // getApiMyVmKmsGetByIdAndTypeId: {
+      //   providesTags: () => ["VmHost"],
+      // },
       getApiMyVmHostGetById: {
         providesTags: () => ["VmHost"],
       },
