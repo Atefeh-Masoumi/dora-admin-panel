@@ -589,19 +589,19 @@ const Router: FC = () => {
         <Route
           path="/vpc/:vpcId/nat"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت NAT ها",
+            pageTitle: "مدیریت NAT",
           })}
         />
         <Route
           path="/vpc/:vpcId/ip"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت Public IP ها",
+            pageTitle: "مدیریت Public IP",
           })}
         />
         <Route
           path="/vpc/:vpcId/loadBalancer"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت Load Balance ها",
+            pageTitle: "مدیریت Load Balance",
           })}
         />
         <Route

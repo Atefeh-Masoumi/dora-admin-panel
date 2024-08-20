@@ -77,7 +77,7 @@ export const VpcLoadBalancer: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست LoadBalance ها
+                  لیست Load Balancer
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
                   <SearchBox
