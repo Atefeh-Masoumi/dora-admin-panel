@@ -20,3 +20,16 @@ export const staticImageCategoryList: { id: number; name: string }[] = [
   { id: 1, name: "NameSpace" },
   { id: 2, name: "DataCenter" },
 ];
+
+export enum ENVIRONMENT_TYPES {
+  NONE = 0,
+  CUSTOM = 1,
+  CONFIG_MAP = 2,
+  SECRET_MAP = 3,
+}
+
+export const EnvironmentType = [
+  { id: 1, label: "Custom" },
+  { id: 2, label: "Configmap" },
+  { id: 3, label: "Secret" },
+];

@@ -35,7 +35,7 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
     formik.resetForm();
   };
 
-  const onClose: DialogProps["onClose"] = (event) => {
+  const closeHandler: DialogProps["onClose"] = (event) => {
     props.onClose && props.onClose(event, "escapeKeyDown");
     formik.resetForm();
   };
@@ -53,7 +53,7 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
     })
       .unwrap()
       .then(() => {
-        onClose(new Event("submit"), "escapeKeyDown");
+        closeHandler(new Event("submit"), "escapeKeyDown");
         resetForm();
       })
       .catch(() => {});
@@ -79,7 +79,7 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
   });
 
   return (
-    <Dialog {...props} onClose={onClose}>
+    <Dialog {...props} onClose={closeHandler}>
       <DialogTitle align="center">ایجاد Network جدید</DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>

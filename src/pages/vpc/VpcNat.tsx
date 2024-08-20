@@ -9,11 +9,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import {
-  GetVpcGatewayNatResponse,
-  useGetApiMyVpcNatListByVpcHostIdQuery,
-} from "src/app/services/api.generated";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { useGetApiMyVpcNatListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateDestinationNatDialog } from "src/components/organisms/vpc/dialogs/CreateDestinationNatDialog";
@@ -95,11 +91,28 @@ export const VpcNat: FC = () => {
                     size="small"
                     variant="outlined"
                     onClick={() => setDialogType("CREATE")}
+                    sx={{
+                      borderTopRightRadius: "0",
+                      borderBottomRightRadius: 0,
+                      bgcolor: "primary.main",
+                      // "&:hover": {
+                      //   backgroundColor: "inherit", // Override hover background color
+                      //   color: "inherit", // Override hover text color
+                      // },
+                      "&.MuiButtonBase-root:hover": {
+                        bgcolor: "primary.main",
+                      },
+                    }}
                   >
-                    <AddIcon />
+                    <AddIcon sx={{ color: "white" }} />
                   </Button>
-                  <FormControl size="small" fullWidth>
+                  <FormControl
+                    size="small"
+                    fullWidth
+                    sx={{ borderTopLeftRadius: 0 }}
+                  >
                     <Select
+                      sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
                       value={selectedNatType}
                       onChange={(event) => {
                         setSelectedNatType(Number(event.target.value));

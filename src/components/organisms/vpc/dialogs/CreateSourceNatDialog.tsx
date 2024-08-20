@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -43,9 +42,12 @@ import {
 } from "@xyflow/react";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ipValidation } from "src/utils/regex.utils";
+import { ipValidation, maskRegexOnly24 } from "src/utils/regex.utils";
 
 const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
+const combinedIpRegex = new RegExp(
+  `${ipValidation.source}|${maskRegexOnly24.source}`
+);
 
 export const sNatInitialValueSchema = yup.object().shape({
   name: yup.string().required(VALIDATION_REQUIRED_ERROR_MESSAGE),
@@ -54,7 +56,7 @@ export const sNatInitialValueSchema = yup.object().shape({
   sourceIp: yup
     .string()
     .matches(
-      ipValidation,
+      combinedIpRegex,
       "آدرس IP که وارد کردید یک آدرس IPv4 معتبر نیست. لطفاً قالب را بررسی کنید (به عنوان مثال، 192.168.1.1)."
     )
     .required(VALIDATION_REQUIRED_ERROR_MESSAGE),
@@ -298,7 +300,6 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   justifyContent="center"
                 >
                   <Stack justifyContent="center" width="100%">
-                    {/* <Chip label="Destination" sx={{ width: "100%" }} /> */}
                     <Stack textAlign="end" borderBottom="1px solid lightgray">
                       <Typography variant="text9">Destination</Typography>
                     </Stack>
@@ -478,7 +479,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
           </DialogActions>
         </form>
       ) : (
-        <Alert severity="info">
+        <Alert sx={{ margin: 3 }} severity="info">
           <Typography>لطفا ابتدا شبکه ایجاد کنید</Typography>
         </Alert>
       )}
