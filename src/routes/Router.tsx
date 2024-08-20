@@ -581,7 +581,7 @@ const Router: FC = () => {
           })}
         />
         <Route
-          path="/vpc/:vpcId/vm"
+          path="/vpc/:vpcId/vpcVm"
           element={mainTemplate(VpcEditZone, {
             pageTitle: "مدیریت سرور ها",
           })}

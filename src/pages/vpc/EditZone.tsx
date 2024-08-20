@@ -28,8 +28,8 @@ const EditZone: FC = () => {
     if (pathname.includes("network")) {
       result = `network`;
     }
-    if (pathname.includes("vm")) {
-      result = `vm`;
+    if (pathname.includes("vpcVm")) {
+      result = `vpcVm`;
     }
     if (pathname.includes("nat")) {
       result = `nat`;
@@ -57,7 +57,7 @@ const EditZone: FC = () => {
       case `network`:
         result = <VpcNetwork />;
         break;
-      case `vm`:
+      case `vpcVm`:
         result = <VpcVm />;
         break;
       case `nat`:
@@ -99,7 +99,7 @@ const EditZone: FC = () => {
         >
           <DorsaTab value={`overview`} label="مشخصات سرویس" />
           <DorsaTab value={`network`} label="Network" />
-          <DorsaTab value={`vm`} label="VM" />
+          <DorsaTab value={`vpcVm`} label="VPC-VM" />
           <DorsaTab value={`nat`} label="NAT" />
           <DorsaTab value={`ip`} label="Public IP" />
           <DorsaTab value={`loadBalancer`} label="Load Balancer" />

@@ -31,7 +31,7 @@ const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
 const priorityLevel = [
   { id: 1, name: "مهم" },
-  { id: 2, name: "زیاد" },
+  { id: 2, name: "خیلی مهم" },
   { id: 3, name: "ضروری" },
 ];
 
