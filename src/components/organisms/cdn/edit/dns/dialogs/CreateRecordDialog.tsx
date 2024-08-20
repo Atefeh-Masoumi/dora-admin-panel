@@ -173,7 +173,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         onSubmit={submitHandler}
         enableReinitialize
       >
-        {({ errors, touched, getFieldProps }) => (
+        {({ errors, touched, getFieldProps, setFieldValue, values }) => (
           <Form autoComplete="on">
             <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
               <Stack spacing={3}>
@@ -289,15 +289,13 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                   justifyContent="space-between"
                   border={1}
                   borderColor={
-                    initialValues.useProxy === true
-                      ? "primary.light"
-                      : "secondary.light"
+                    values.useProxy ? "primary.light" : "secondary.light"
                   }
                   borderRadius={BORDER_RADIUS_1}
                   alignItems="center"
                   p={1.5}
                   boxShadow={
-                    initialValues.useProxy === true
+                    values.useProxy
                       ? "0px 2px 11px rgba(60, 138, 255, 0.44)"
                       : "none"
                   }
@@ -305,9 +303,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                   <Stack color="secondary.main">
                     <Typography
                       color={
-                        initialValues.useProxy === true
-                          ? "primary.main"
-                          : "secondary.main"
+                        values.useProxy ? "primary.main" : "secondary.main"
                       }
                       fontSize={16}
                     >
@@ -318,13 +314,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                     </Typography>
                   </Stack>
                   <DorsaSwitch
-                    checked={initialValues.useProxy}
-                    onChange={() =>
-                      setInitialValues((previousState) => ({
-                        ...previousState,
-                        useProxy: !previousState.useProxy,
-                      }))
-                    }
+                    checked={values.useProxy}
+                    onChange={() => setFieldValue("useProxy", !values.useProxy)}
                   />
                 </Stack>
               )}

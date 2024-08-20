@@ -20,6 +20,8 @@ export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVm, setSelectedVm] = useState<any>(null);
 
+  const navigate = useNavigate();
+
   const [deleteVmRecord, { isLoading: deleteVmRecordLoading }] =
     useDeleteApiMyVmHostDeleteByIdMutation();
 
@@ -40,6 +42,10 @@ export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
         toast.success("رکورد مورد نظر حذف شد", { icon: Success });
       })
       .catch((err) => {});
+
+  const settingOnClick = () => {
+    navigate("/vm/" + row["id"]);
+  };
 
   return (
     <Fragment>
@@ -69,6 +75,15 @@ export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
                     margin: "0 auto",
                   }}
                 >
+                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                    <Setting
+                      sx={{
+                        "&> path": {
+                          stroke: ({ palette }) => palette.grey[700],
+                        },
+                      }}
+                    />
+                  </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
