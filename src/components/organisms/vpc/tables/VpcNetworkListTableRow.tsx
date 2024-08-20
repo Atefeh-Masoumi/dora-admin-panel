@@ -36,7 +36,7 @@ export const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("Network رکورد مورد نظر حذف شد", { icon: Success });
       })
-      .catch((err) => {});
+      .catch(() => {});
 
   return (
     <Fragment>
