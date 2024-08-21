@@ -40,6 +40,7 @@ export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then(() => {
         toast.success("رکورد مورد نظر حذف شد", { icon: Success });
+        closeDialogHandler();
       })
       .catch((err) => {});
 
