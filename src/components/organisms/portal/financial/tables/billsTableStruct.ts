@@ -7,8 +7,13 @@ export const billsTableStruct: columnType[] = [
     label: "شماره صورتحساب",
   },
   {
+    id: "calculateMonth",
+    label: "ماه صورتحساب",
+    type: "date",
+  },
+  {
     id: "billDate",
-    label: "تاریخ صورتحساب",
+    label: "تاریخ و زمان صورتحساب",
     type: "date",
   },
   {
