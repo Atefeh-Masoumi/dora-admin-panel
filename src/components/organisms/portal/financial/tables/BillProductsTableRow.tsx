@@ -1,3 +1,5 @@
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Collapse,
   IconButton,
@@ -10,10 +12,8 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { CustomerProductBillModel } from "src/app/services/api.generated";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { priceToPersian } from "src/utils/priceToPersian";
 import { e2p } from "src/utils/e2p.utils";
+import { priceToPersian } from "src/utils/priceToPersian";
 import { customerProductItemsTableStruct } from "./billTableStruct";
 
 type BillProductsTableRowPropsType = {
@@ -34,7 +34,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
 
   return (
     <>
-      <TableRow 
+      <TableRow
         sx={{
           // "& > *": { borderBottom: "unset" },
           "& > *": { border: "none" },
@@ -58,7 +58,9 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
         <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
           {e2p(toDate.replace(" ", " - "))}
         </TableCell>
-        <TableCell sx={{ border: "none" }}>
+        <TableCell
+          sx={{ border: "none", borderTop: "1px solid rgba(224, 224, 224, 1)" }}
+        >
           <IconButton
             aria-label="expand row"
             size="small"
