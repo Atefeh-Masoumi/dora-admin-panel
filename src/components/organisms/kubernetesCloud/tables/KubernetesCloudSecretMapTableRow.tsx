@@ -85,7 +85,12 @@ export const KubernetesCloudSecretMapTableRow: FC<{
             <TrashSvg />
           </IconButton>
         </TableCell>
-        <TableCell>
+        <TableCell
+          align="center"
+          sx={{
+            borderTop: "1px solid rgba(224, 224, 224, 1)",
+          }}
+        >
           <IconButton
             aria-label="expand row"
             size="small"
@@ -96,7 +101,11 @@ export const KubernetesCloudSecretMapTableRow: FC<{
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={6}>
+        <TableCell
+          style={{ padding: 0 }}
+          colSpan={6}
+          sx={{ borderBottom: "none !important" }}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ display: "flex" }}>
               <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
@@ -106,7 +115,9 @@ export const KubernetesCloudSecretMapTableRow: FC<{
                       <TableCell
                         key={index}
                         align="center"
-                        sx={{ bgcolor: "background.default" }}
+                        sx={{
+                          bgcolor: "background.default",
+                        }}
                       >
                         {item.label}
                       </TableCell>
@@ -118,9 +129,24 @@ export const KubernetesCloudSecretMapTableRow: FC<{
                     ? secretList?.map((item: any, index: any) => {
                         return (
                           <TableRow key={index}>
-                            <TableCell align="center">{item.id}</TableCell>
-                            <TableCell align="center">{item.key}</TableCell>
-                            <TableCell align="center">{item.value}</TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderBottom: "none !important" }}
+                            >
+                              {item.id}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderBottom: "none !important" }}
+                            >
+                              {item.key}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderBottom: "none !important" }}
+                            >
+                              {item.value}
+                            </TableCell>
                           </TableRow>
                         );
                       })

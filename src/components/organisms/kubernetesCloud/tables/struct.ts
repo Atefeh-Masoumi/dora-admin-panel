@@ -28,3 +28,9 @@ export const kubernetesSecretListTableStruct: columnType[] = [
   { id: "key", label: "key" },
   { id: "value", label: "value" },
 ];
+
+export const kubernetesConfigListTableStruct: columnType[] = [
+  { id: "id", label: "شناسه" },
+  { id: "key", label: "key" },
+  { id: "value", label: "value" },
+];
