@@ -6,12 +6,14 @@ type SelectEnvResourcePropsType = {
   resourceList: ResourceListType | undefined;
   selectedResourceItem: number | null;
   setSelectedResourceItem: (selectedResourceItem: number | null) => void;
+  handleResourceOnChange: (resourceItem: number) => void;
 };
 
 export const SelectEnvResource: FC<SelectEnvResourcePropsType> = ({
   resourceList,
   selectedResourceItem,
   setSelectedResourceItem,
+  handleResourceOnChange,
 }) => {
   return (
     <FormControl fullWidth size="small">
@@ -21,7 +23,7 @@ export const SelectEnvResource: FC<SelectEnvResourcePropsType> = ({
         id="resource-select"
         dir="ltr"
         value={selectedResourceItem}
-        onChange={(e) => setSelectedResourceItem(Number(e.target.value))}
+        onChange={(e) => handleResourceOnChange(Number(e.target.value))}
       >
         {resourceList?.map((item, index) => (
           <MenuItem

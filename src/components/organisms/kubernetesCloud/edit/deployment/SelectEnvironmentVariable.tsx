@@ -1,4 +1,4 @@
-import { DeleteOutline } from "@mui/icons-material";
+import { FC, useState } from "react";
 import {
   Box,
   Grid,
@@ -8,14 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import { FormikProps } from "formik";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { DeleteOutline } from "@mui/icons-material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
 import {
-  KeyListInResourceType,
   KuberCloudAppImageType,
   ResourceListType,
-  VariableEnvironment,
 } from "src/types/kubernetesCloud.types";
 import { SelectEnvType } from "./envVariable/SelectEnvType";
 import { SelectEnvKey } from "./envVariable/SelectEnvKey";
@@ -28,22 +26,16 @@ import {
 import { useParams } from "react-router";
 
 type SelectEnvironmentVariablePropsType = {
-  outerIndex: number;
-  item: any;
+  mainIndex: number;
+  onDelete: (itemIndex: number) => void;
   formik: FormikProps<KuberCloudAppImageType>;
 };
 
 export const SelectEnvironmentVariable: FC<
   SelectEnvironmentVariablePropsType
-> = ({ item, formik, outerIndex }) => {
+> = ({ formik, onDelete, mainIndex }) => {
   const [resourceList, setResourceList] = useState<ResourceListType>();
   const [keyListInResource, setKeyListInResource] = useState<any>();
-  const [environmentVariable, setEnvironmentVariable] =
-    useState<VariableEnvironment>({
-      variableType: 1,
-      key: "",
-      value: "",
-    });
   const [needToResourceSelect, setNeedToResourceSelect] =
     useState<boolean>(false);
   const [selectedResourceItem, setSelectedResourceItem] = useState<
@@ -61,7 +53,6 @@ export const SelectEnvironmentVariable: FC<
       },
       { skip: !kubernetesCloudNameSpaceId }
     );
-
   const { data: secretList } = useGetApiMyKubernetesCloudSecretListByIdQuery(
     {
       id: Number(kubernetesCloudNameSpaceId),
@@ -69,37 +60,40 @@ export const SelectEnvironmentVariable: FC<
     { skip: !kubernetesCloudNameSpaceId }
   );
 
-  const removeDestinationInput = (index: number) => {
-    formik.setFieldValue("keyValues", (prevState: VariableEnvironment[]) => {
-      let result = [...prevState];
-      result.splice(index, 1);
-      return result;
-    });
-    // formik.setFieldValue(
-    //   "keyValue",
-    //   formik.values.keyValue.keyValue.filter((_, i) => i !== index)
-    // );
-  };
-
-  useEffect(() => {
-    switch (environmentVariable.variableType) {
+  const handleChangeEnvType = (newValue: number) => {
+    switch (newValue) {
       case ENVIRONMENT_TYPES.CONFIG_MAP:
         setNeedToResourceSelect(true);
         setResourceList(configmapList);
-        const configMapList = configmapList?.find(
-          (item) => item.id === selectedResourceItem
-        )?.configMaps;
-        setKeyListInResource(configMapList);
+        // const configMapList = configmapList?.find(
+        //   (item) => item.id === selectedResourceItem
+        // )?.configMaps;
+        // setKeyListInResource(configMapList);
         break;
       case ENVIRONMENT_TYPES.SECRET_MAP:
         setNeedToResourceSelect(true);
         setResourceList(secretList);
+
+        // const secretMapList = secretList?.find(
+        //   (item) => item.id === selectedResourceItem
+        // )?.secrets;
+        // setKeyListInResource(secretMapList);
+
         break;
       default:
         setNeedToResourceSelect(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [environmentVariable.variableType, selectedResourceItem]);
+
+    const handleResourceOnChang = (value: number) => {
+         // const secretMapList = secretList?.find(
+        //   (item) => item.id === selectedResourceItem
+        // )?.secrets;
+        // setKeyListInResource(secretMapList);
+      setSelectedResourceItem(value);
+    };
+
+    formik.setFieldValue(`keyValues[${mainIndex}].variableType`, newValue);
+  };
 
   return (
     <Box
@@ -120,13 +114,18 @@ export const SelectEnvironmentVariable: FC<
             lg={needToResourceSelect ? 2.5 : 4.7}
           >
             <Stack direction="row" gap={1}>
-              <IconButton onClick={() => removeDestinationInput(outerIndex)}>
+              <IconButton onClick={() => onDelete(mainIndex)}>
                 <DeleteOutline color="error" />
               </IconButton>
               {needToResourceSelect ? (
                 <SelectEnvValue
-                  environmentVariable={environmentVariable}
-                  setEnvironmentVariable={setEnvironmentVariable}
+                  value={formik.values.keyValues[mainIndex]?.value || ""}
+                  setValue={(newValue: any) =>
+                    formik.setFieldValue(
+                      `keyValues[${mainIndex}].value`,
+                      newValue
+                    )
+                  }
                   keyListInResource={keyListInResource || []}
                 />
               ) : (
@@ -138,12 +137,12 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={environmentVariable.value}
+                  value={formik.values.keyValues[mainIndex]?.value}
                   onChange={(e) =>
-                    setEnvironmentVariable((prevState) => ({
-                      ...prevState,
-                      value: e.target.value,
-                    }))
+                    formik.setFieldValue(
+                      `keyValues[${mainIndex}].value`,
+                      e.target.value
+                    )
                   }
                 />
               )}
@@ -180,8 +179,35 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              environmentVariable={environmentVariable}
-              setEnvironmentVariable={setEnvironmentVariable}
+              type={formik.values.keyValues[mainIndex]?.variableType || ""}
+              setType={(newValue: any) => {
+                switch (newValue) {
+                  case ENVIRONMENT_TYPES.CONFIG_MAP:
+                    setNeedToResourceSelect(true);
+                    setResourceList(configmapList);
+                    const configMapList = configmapList?.find(
+                      (item) => item.id === selectedResourceItem
+                    )?.configMaps;
+                    setKeyListInResource(configMapList);
+                    break;
+                  case ENVIRONMENT_TYPES.SECRET_MAP:
+                    setNeedToResourceSelect(true);
+                    setResourceList(secretList);
+                    const secretMapList = secretList?.find(
+                      (item) => item.id === selectedResourceItem
+                    )?.secrets;
+                    setKeyListInResource(secretMapList);
+
+                    break;
+                  default:
+                    setNeedToResourceSelect(false);
+                }
+
+                formik.setFieldValue(
+                  `keyValues[${mainIndex}].variableType`,
+                  newValue
+                );
+              }}
             />
           </Grid>
         )}
@@ -196,8 +222,10 @@ export const SelectEnvironmentVariable: FC<
           lg={needToResourceSelect ? 4.5 : 4.5}
         >
           <SelectEnvKey
-            environmentVariable={environmentVariable}
-            setEnvironmentVariable={setEnvironmentVariable}
+            envKey={formik.values.keyValues[mainIndex]?.envKey || ""}
+            setKey={(newValue: string) =>
+              formik.setFieldValue(`keyValues[${mainIndex}].envKey`, newValue)
+            }
           />
         </Grid>
 
@@ -212,8 +240,8 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              environmentVariable={environmentVariable}
-              setEnvironmentVariable={setEnvironmentVariable}
+              type={formik.values.keyValues[mainIndex]?.variableType || ""}
+              setType={(newValue: any) => handleChangeEnvType(newValue)}
             />
           </Grid>
         )}
@@ -224,6 +252,7 @@ export const SelectEnvironmentVariable: FC<
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
               setSelectedResourceItem={setSelectedResourceItem}
+              handleResourceOnChange={handleResourceOnChang}
             />
           </Grid>
         )}
@@ -231,14 +260,19 @@ export const SelectEnvironmentVariable: FC<
         {!isMd && (
           <Grid item xs={10} md={5} lg={needToResourceSelect ? 3 : 7}>
             <Stack direction="row" gap={1}>
-              <IconButton onClick={() => removeDestinationInput(outerIndex)}>
+              <IconButton onClick={() => onDelete(mainIndex)}>
                 <DeleteOutline color="error" />
               </IconButton>
 
               {needToResourceSelect ? (
                 <SelectEnvValue
-                  environmentVariable={environmentVariable}
-                  setEnvironmentVariable={setEnvironmentVariable}
+                  value={formik.values.keyValues[mainIndex]?.value || ""}
+                  setValue={(newValue: any) =>
+                    formik.setFieldValue(
+                      `keyValues[${mainIndex}].value`,
+                      newValue
+                    )
+                  }
                   keyListInResource={keyListInResource || []}
                 />
               ) : (
@@ -250,12 +284,12 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={environmentVariable.value}
+                  value={formik.values.keyValues[mainIndex].value}
                   onChange={(e) =>
-                    setEnvironmentVariable((prevState) => ({
-                      ...prevState,
-                      value: e.target.value,
-                    }))
+                    formik.setFieldValue(
+                      `keyValues[${mainIndex}].value`,
+                      e.target.value
+                    )
                   }
                 />
               )}

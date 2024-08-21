@@ -20,8 +20,14 @@ import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCl
 import { LoadingButton } from "@mui/lab";
 
 const AddKubernetesCloudApp: FC = () => {
-  const [keyValues, setKeyValues] = useState<VariableEnvironment[]>([]);
-
+  const [environmentVariableList, setEnvironmentVariableList] = useState<
+    {
+      variableType: number;
+      envKey: string;
+      value: string;
+      resource?: string;
+    }[]
+  >([]);
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
     useGetApiMyKubernetesCloudImageListQuery();
 
@@ -38,13 +44,43 @@ const AddKubernetesCloudApp: FC = () => {
     // });
   };
 
+  const addEnvironmentVariable = () => {
+    setEnvironmentVariableList((prevState) => {
+      let result = [...prevState];
+      result.push({ variableType: 1, envKey: "", value: "" });
+      return result;
+    });
+    formik.setFieldValue("keyValues", [
+      ...formik.values.keyValues,
+      { variableType: 1, envKey: "", value: "" },
+    ]);
+  };
+
+  const removeEnvironmentVariable = (itemIndex: number) => {
+    console.log("click");
+    console.log(formik.values.keyValues);
+    if (!formik.values.keyValues || !formik.values.keyValues[itemIndex]) {
+      return;
+    }
+
+    setEnvironmentVariableList((prevState) => {
+      let result = [...prevState];
+      result.splice(itemIndex, 1);
+      return result;
+    });
+    formik.setFieldValue(
+      "keyValues",
+      formik.values.keyValues.filter((_, i) => i !== itemIndex)
+    );
+  };
+
   const initialValues: KuberCloudAppImageType = {
     imageId: null,
     tagId: "",
     name: "",
     replicaNumber: 1,
     namespaceId: null,
-    keyValues: [{ variableType: 1, key: "", value: "" }],
+    keyValues: [],
   };
 
   const validationSchema = yup.object().shape({
@@ -59,14 +95,6 @@ const AddKubernetesCloudApp: FC = () => {
     enableReinitialize: true,
   });
 
-  const addEnvironmentVariable = () => {
-    formik.setFieldValue("keyValues", [
-      ...formik.values.keyValues,
-      { variableType: 1, key: "", value: "" },
-    ]);
-  };
-
-  console.log(formik.values.keyValues);
   if (kuberCloudImageLoading) return <PageLoading />;
 
   return (
@@ -127,42 +155,25 @@ const AddKubernetesCloudApp: FC = () => {
             </Button>
 
             <Stack
+              gap={2}
+              direction="column"
               sx={{
                 width: "100%",
                 alignSelf: "center",
+                justifyContent: "center",
+                pb: 5,
               }}
             >
-              <Stack
-                gap={2}
-                // py={5}
-                // bgcolor="red"
-
-                direction="column"
-                sx={{ width: "100%", justifyContent: "center", pb: 5 }}
-              >
-                {/* {formik.values.keyValues.map((item, index) => (
+              {environmentVariableList.map((item, index) => {
+                return (
                   <SelectEnvironmentVariable
                     key={index}
-                    item={item}
+                    onDelete={removeEnvironmentVariable}
                     formik={formik}
-                    outerIndex={index}
+                    mainIndex={index}
                   />
-                ))} */}
-
-                {Array.isArray(formik.values.keyValues) &&
-                formik.values.keyValues.length > 0 ? (
-                  formik.values.keyValues.map((item, index) => (
-                    <SelectEnvironmentVariable
-                      key={index}
-                      item={item}
-                      formik={formik}
-                      outerIndex={index}
-                    />
-                  ))
-                ) : (
-                  <></>
-                )}
-              </Stack>
+                );
+              })}
             </Stack>
           </Stack>
           <Stack
@@ -185,7 +196,6 @@ const AddKubernetesCloudApp: FC = () => {
               }}
               // onClick={goPreviousStep}
             >
-              {/* {step === 1 ? "انصراف" : "مرحله قبل"} */}
               انصراف
             </Button>
             <LoadingButton

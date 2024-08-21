@@ -4,27 +4,17 @@ import { EnvironmentType } from "src/constant/kubernetesCloud.constant";
 import { VariableEnvironment } from "src/types/kubernetesCloud.types";
 
 type SelectEnvTypePropsType = {
-  environmentVariable: VariableEnvironment;
-  setEnvironmentVariable: Dispatch<SetStateAction<VariableEnvironment>>;
+  type: any;
+  setType: any;
 };
 
 export const SelectEnvType: FC<SelectEnvTypePropsType> = ({
-  setEnvironmentVariable,
-  environmentVariable,
+  type,
+  setType,
 }) => {
   return (
     <FormControl fullWidth size="small">
-      <Select
-        dir="ltr"
-        onChange={(e) =>
-          setEnvironmentVariable({
-            variableType: Number(e.target.value),
-            key: "",
-            value: "",
-          })
-        }
-        value={environmentVariable?.variableType || 1}
-      >
+      <Select dir="ltr" onChange={(e) => setType(e.target.value)} value={type}>
         {EnvironmentType.map((item, index) => (
           <MenuItem
             key={index}

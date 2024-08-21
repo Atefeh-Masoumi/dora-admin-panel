@@ -24,7 +24,12 @@ export type KuberCloudAppImageType = {
   name: string | "";
   replicaNumber: number;
   namespaceId: number | null;
-  keyValues: VariableEnvironment[];
+  keyValues: {
+    variableType: number;
+    envKey: string;
+    value: string;
+    resource?: string;
+  }[];
 };
 
 export type ResourceListType =

@@ -4,13 +4,13 @@ import { SecretKeyValuePairsResponse } from "src/app/services/api.generated";
 import { VariableEnvironment } from "src/types/kubernetesCloud.types";
 type SelectEnvValuePropsType = {
   keyListInResource: SecretKeyValuePairsResponse[];
-  environmentVariable: VariableEnvironment;
-  setEnvironmentVariable: Dispatch<SetStateAction<VariableEnvironment>>;
+  value: any;
+  setValue: any;
 };
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
-  setEnvironmentVariable,
-  environmentVariable,
+  value,
+  setValue,
 }) => {
   return (
     <FormControl fullWidth size="small">
@@ -19,13 +19,8 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
         label="Value"
         id="value-select"
         dir="ltr"
-        onChange={(e) =>
-          setEnvironmentVariable((prevState) => ({
-            ...prevState,
-            value: e.target.value,
-          }))
-        }
-        value={environmentVariable?.value || ""}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       >
         {keyListInResource?.map((item, index) => (
           <MenuItem
