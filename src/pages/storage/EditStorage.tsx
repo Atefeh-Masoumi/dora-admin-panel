@@ -102,6 +102,8 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           {tabArray.map((label, index) => (
             <DorsaTab {...a11yProps(index)} label={label} key={index} />
