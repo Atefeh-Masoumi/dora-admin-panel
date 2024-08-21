@@ -80,19 +80,29 @@ export const SelectEnvironmentVariable: FC<
         // setKeyListInResource(secretMapList);
 
         break;
-      default:
-        setNeedToResourceSelect(false);
     }
 
-    const handleResourceOnChang = (value: number) => {
-         // const secretMapList = secretList?.find(
-        //   (item) => item.id === selectedResourceItem
-        // )?.secrets;
-        // setKeyListInResource(secretMapList);
-      setSelectedResourceItem(value);
-    };
+    formik.setFieldValue(`keyValue[${mainIndex}].variableType`, newValue);
+  };
 
-    formik.setFieldValue(`keyValues[${mainIndex}].variableType`, newValue);
+  const handleResourceOnChange = (resourceId: number) => {
+    switch (formik.values.keyValue[mainIndex].variableType) {
+      case ENVIRONMENT_TYPES.CONFIG_MAP:
+        const configMapItems = configmapList?.find(
+          (item) => item.id === resourceId
+        )?.configMaps;
+        setKeyListInResource(configMapItems);
+        break;
+
+      case ENVIRONMENT_TYPES.SECRET_MAP:
+        const secrets = secretList?.find(
+          (item) => item.id === resourceId
+        )?.secrets;
+        setKeyListInResource(secrets);
+        break;
+    }
+
+    setSelectedResourceItem(resourceId);
   };
 
   return (
@@ -119,10 +129,10 @@ export const SelectEnvironmentVariable: FC<
               </IconButton>
               {needToResourceSelect ? (
                 <SelectEnvValue
-                  value={formik.values.keyValues[mainIndex]?.value || ""}
+                  value={formik.values.keyValue[mainIndex]?.value || ""}
                   setValue={(newValue: any) =>
                     formik.setFieldValue(
-                      `keyValues[${mainIndex}].value`,
+                      `keyValue[${mainIndex}].value`,
                       newValue
                     )
                   }
@@ -137,10 +147,10 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={formik.values.keyValues[mainIndex]?.value}
+                  value={formik.values.keyValue[mainIndex]?.value}
                   onChange={(e) =>
                     formik.setFieldValue(
-                      `keyValues[${mainIndex}].value`,
+                      `keyValue[${mainIndex}].value`,
                       e.target.value
                     )
                   }
@@ -163,7 +173,8 @@ export const SelectEnvironmentVariable: FC<
             <SelectEnvResource
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
-              setSelectedResourceItem={setSelectedResourceItem}
+              // setSelectedResourceItem={setSelectedResourceItem}
+              handleResourceOnChange={handleResourceOnChange}
             />
           </Grid>
         )}
@@ -179,35 +190,8 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              type={formik.values.keyValues[mainIndex]?.variableType || ""}
-              setType={(newValue: any) => {
-                switch (newValue) {
-                  case ENVIRONMENT_TYPES.CONFIG_MAP:
-                    setNeedToResourceSelect(true);
-                    setResourceList(configmapList);
-                    const configMapList = configmapList?.find(
-                      (item) => item.id === selectedResourceItem
-                    )?.configMaps;
-                    setKeyListInResource(configMapList);
-                    break;
-                  case ENVIRONMENT_TYPES.SECRET_MAP:
-                    setNeedToResourceSelect(true);
-                    setResourceList(secretList);
-                    const secretMapList = secretList?.find(
-                      (item) => item.id === selectedResourceItem
-                    )?.secrets;
-                    setKeyListInResource(secretMapList);
-
-                    break;
-                  default:
-                    setNeedToResourceSelect(false);
-                }
-
-                formik.setFieldValue(
-                  `keyValues[${mainIndex}].variableType`,
-                  newValue
-                );
-              }}
+              type={formik.values.keyValue[mainIndex]?.variableType || ""}
+              setType={(newValue: any) => handleChangeEnvType(newValue)}
             />
           </Grid>
         )}
@@ -222,9 +206,9 @@ export const SelectEnvironmentVariable: FC<
           lg={needToResourceSelect ? 4.5 : 4.5}
         >
           <SelectEnvKey
-            envKey={formik.values.keyValues[mainIndex]?.envKey || ""}
+            envKey={formik.values.keyValue[mainIndex]?.envKey || ""}
             setKey={(newValue: string) =>
-              formik.setFieldValue(`keyValues[${mainIndex}].envKey`, newValue)
+              formik.setFieldValue(`keyValue[${mainIndex}].envKey`, newValue)
             }
           />
         </Grid>
@@ -240,7 +224,7 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              type={formik.values.keyValues[mainIndex]?.variableType || ""}
+              type={formik.values.keyValue[mainIndex]?.variableType || ""}
               setType={(newValue: any) => handleChangeEnvType(newValue)}
             />
           </Grid>
@@ -251,8 +235,7 @@ export const SelectEnvironmentVariable: FC<
             <SelectEnvResource
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
-              setSelectedResourceItem={setSelectedResourceItem}
-              handleResourceOnChange={handleResourceOnChang}
+              handleResourceOnChange={handleResourceOnChange}
             />
           </Grid>
         )}
@@ -266,10 +249,10 @@ export const SelectEnvironmentVariable: FC<
 
               {needToResourceSelect ? (
                 <SelectEnvValue
-                  value={formik.values.keyValues[mainIndex]?.value || ""}
+                  value={formik.values.keyValue[mainIndex]?.value || ""}
                   setValue={(newValue: any) =>
                     formik.setFieldValue(
-                      `keyValues[${mainIndex}].value`,
+                      `keyValue[${mainIndex}].value`,
                       newValue
                     )
                   }
@@ -284,10 +267,10 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={formik.values.keyValues[mainIndex].value}
+                  value={formik.values.keyValue[mainIndex].value}
                   onChange={(e) =>
                     formik.setFieldValue(
-                      `keyValues[${mainIndex}].value`,
+                      `keyValue[${mainIndex}].value`,
                       e.target.value
                     )
                   }

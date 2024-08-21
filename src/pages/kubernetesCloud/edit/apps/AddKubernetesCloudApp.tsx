@@ -11,13 +11,18 @@ import {
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/AppImageListCard";
-import {
-  KuberCloudAppImageType,
-  VariableEnvironment,
-} from "src/types/kubernetesCloud.types";
+import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectDeploymentInfo";
 import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectEnvironmentVariable";
 import { LoadingButton } from "@mui/lab";
+import { useParams } from "react-router";
+import { toast } from "react-toastify";
+
+interface GroupedVariables {
+  [key: number]: {
+    [envKey: string]: any;
+  };
+}
 
 const AddKubernetesCloudApp: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
@@ -25,23 +30,48 @@ const AddKubernetesCloudApp: FC = () => {
       variableType: number;
       envKey: string;
       value: string;
-      resource?: string;
     }[]
   >([]);
+
+  const { id: kubernetesCloudId } = useParams();
+
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
     useGetApiMyKubernetesCloudImageListQuery();
 
   const [createDeployment, { isLoading: createDeploymentLoading }] =
     usePostApiMyKubernetesCloudDeploymentCreateMutation();
 
-  const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = ({
-    imageId,
-    tagId,
-  }) => {
+  const handleFormikOnSubmit: formikOnSubmitType<KuberCloudAppImageType> = (
+    values
+  ) => {
+    const groupedByVariableType = values.keyValue.reduce<GroupedVariables>(
+      (acc, item) => {
+        const { variableType, envKey, value } = item;
+        if (!acc[variableType]) {
+          acc[variableType] = {};
+        }
+        acc[variableType][envKey] = value;
+        return acc;
+      },
+      {}
+    );
+
+    console.log(groupedByVariableType);
     // createDeployment({
     //   createKuberCloudDeploymentModel: {
+    //     name: values.name,
+    //     imageTagId: Number(values.imageTagId!),
+    //     namespaceId: values.namespaceId!,
+    //     keyValue: values.keyValue!,
+    //     replicaNumber: values.replicaNumber,
     //   },
-    // });
+    // })
+    //   .unwrap()
+    //   .then((res) => {
+    //     toast.success("کانتینر با موفقیت ایجاد شد");
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {});
   };
 
   const addEnvironmentVariable = () => {
@@ -50,48 +80,55 @@ const AddKubernetesCloudApp: FC = () => {
       result.push({ variableType: 1, envKey: "", value: "" });
       return result;
     });
-    formik.setFieldValue("keyValues", [
-      ...formik.values.keyValues,
+    formik.setFieldValue("keyValue", [
+      ...formik.values.keyValue,
       { variableType: 1, envKey: "", value: "" },
     ]);
   };
 
   const removeEnvironmentVariable = (itemIndex: number) => {
-    console.log("click");
-    console.log(formik.values.keyValues);
-    if (!formik.values.keyValues || !formik.values.keyValues[itemIndex]) {
+    if (!formik.values.keyValue || !formik.values.keyValue[itemIndex]) {
       return;
     }
-
     setEnvironmentVariableList((prevState) => {
       let result = [...prevState];
       result.splice(itemIndex, 1);
       return result;
     });
     formik.setFieldValue(
-      "keyValues",
-      formik.values.keyValues.filter((_, i) => i !== itemIndex)
+      "keyValue",
+      formik.values.keyValue.filter((_, i) => i !== itemIndex)
     );
   };
 
   const initialValues: KuberCloudAppImageType = {
     imageId: null,
-    tagId: "",
+    imageTagId: "",
     name: "",
     replicaNumber: 1,
-    namespaceId: null,
-    keyValues: [],
+    namespaceId: Number(kubernetesCloudId),
+    keyValue: [],
   };
 
+  // name: string;
+  // imageTagId: number;
+  // namespaceId: number;
+  // keyValue?: {
+  //   [key: string]: {
+  //     [key: string]: string;
+  //   } | null;
+  // } | null;
+  // replicaNumber?: number;
+
   const validationSchema = yup.object().shape({
-    tagId: yup.number().typeError("").nullable(),
+    imageTagId: yup.number().typeError("").nullable(),
     name: yup.string().required().min(5, ""),
   });
 
   const formik = useFormik<KuberCloudAppImageType>({
     initialValues,
     validationSchema,
-    onSubmit,
+    onSubmit: handleFormikOnSubmit,
     enableReinitialize: true,
   });
 
@@ -209,7 +246,7 @@ const AddKubernetesCloudApp: FC = () => {
                 borderRadius: "10px",
                 fontSize: "16px !important",
               }}
-              // onClick={goNextStep}
+              onClick={() => handleFormikOnSubmit}
             >
               ایجاد سرویس
             </LoadingButton>

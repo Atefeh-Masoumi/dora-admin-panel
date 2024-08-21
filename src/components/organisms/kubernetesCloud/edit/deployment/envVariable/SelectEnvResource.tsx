@@ -5,14 +5,12 @@ import { ResourceListType } from "src/types/kubernetesCloud.types";
 type SelectEnvResourcePropsType = {
   resourceList: ResourceListType | undefined;
   selectedResourceItem: number | null;
-  setSelectedResourceItem: (selectedResourceItem: number | null) => void;
-  handleResourceOnChange: (resourceItem: number) => void;
+  handleResourceOnChange: (resourceId: number) => void;
 };
 
 export const SelectEnvResource: FC<SelectEnvResourcePropsType> = ({
   resourceList,
   selectedResourceItem,
-  setSelectedResourceItem,
   handleResourceOnChange,
 }) => {
   return (

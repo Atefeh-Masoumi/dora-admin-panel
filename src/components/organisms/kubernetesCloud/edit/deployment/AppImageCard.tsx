@@ -109,7 +109,7 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
                 <InputLabel sx={{ fontSize: "15px" }}>Version</InputLabel>
                 <Select
                   value={
-                    formik.values.imageId === item.id ? formik.values.tagId : ""
+                    formik.values.imageId === item.id ? formik.values.imageTagId : ""
                   }
                   onFocus={(event) => {
                     event.stopPropagation(); // Stop the event from propagating to the parent

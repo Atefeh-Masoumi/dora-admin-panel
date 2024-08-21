@@ -1,7 +1,6 @@
+import { FC } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Dispatch, FC, SetStateAction } from "react";
 import { SecretKeyValuePairsResponse } from "src/app/services/api.generated";
-import { VariableEnvironment } from "src/types/kubernetesCloud.types";
 type SelectEnvValuePropsType = {
   keyListInResource: SecretKeyValuePairsResponse[];
   value: any;

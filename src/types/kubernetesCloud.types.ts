@@ -20,11 +20,11 @@ export type VariableEnvironment = {
 };
 export type KuberCloudAppImageType = {
   imageId: number | null;
-  tagId: number | "";
+  imageTagId: number | "";
   name: string | "";
   replicaNumber: number;
   namespaceId: number | null;
-  keyValues: {
+  keyValue: {
     variableType: number;
     envKey: string;
     value: string;
