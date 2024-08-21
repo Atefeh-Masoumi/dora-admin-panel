@@ -132,6 +132,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
           TabIndicatorProps={{ style: { display: "none" } }}
           value={section}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           {getVmDataLoading ? (
             <CircularProgress
