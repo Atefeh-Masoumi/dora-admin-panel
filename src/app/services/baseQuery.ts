@@ -60,14 +60,7 @@ export const baseQuery: BaseQueryFn<
     });
     return { data: result.data };
   } catch (axiosError) {
-    const e = axiosError as AxiosError<
-      {
-        code: number;
-        errorMessage: string[];
-        ErrorMessage: string[];
-      },
-      any
-    >;
+    const e = axiosError as AxiosError<string, any>;
 
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);
@@ -76,17 +69,11 @@ export const baseQuery: BaseQueryFn<
 
     const error = {
       status: e.response.status,
-      errorMessage:
-        e.response?.data.ErrorMessage || e.response?.data.errorMessage,
+      errorMessage: e.response?.data,
     };
 
-    let message = "";
-    error.errorMessage &&
-      error.errorMessage.length > 0 &&
-      error.errorMessage.map((item) => (message += `${item}\n`));
-
     if (error.status >= 500) {
-      toast.error(message || defaultErrorMessage);
+      toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
     if (error.status === 403) {
@@ -101,11 +88,11 @@ export const baseQuery: BaseQueryFn<
       return { error };
     }
     if (error.status === 400) {
-      toast.error(message || defaultErrorMessage);
+      toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
 
-    toast.error(message || `\n ${defaultErrorMessage}`);
+    toast.error(error.errorMessage || `\n ${defaultErrorMessage}`);
 
     return { error };
   }
