@@ -3,16 +3,16 @@ import { Stack } from "@mui/system";
 import { FC, memo, useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
-import { GetApiMyKuberCloudImageListApiResponse } from "src/app/services/api.generated";
+import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
-  list: GetApiMyKuberCloudImageListApiResponse;
+  list: GetApiMyKubernetesCloudImageListApiResponse;
   loading: boolean;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KubernetesCloudAppImageType>;
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({

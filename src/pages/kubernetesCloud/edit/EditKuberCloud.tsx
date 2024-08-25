@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
 import { FC, ReactNode, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useGetApiMyKuberCloudHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudApps } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudApps";
@@ -50,7 +50,7 @@ const EditKubernetesCloud: FC = () => {
   const {
     data: kubernetesCloudData,
     isLoading: getKubernetesCloudDataLoading,
-  } = useGetApiMyKuberCloudHostGetByIdQuery({
+  } = useGetApiMyKubernetesCloudHostGetByIdQuery({
     id: Number(id)!,
   });
 

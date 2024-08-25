@@ -831,259 +831,259 @@ export const api = createApi({
         body: queryArg.vmProjectCreateModel,
       }),
     }),
-    getApiMyKuberCloudSecretListByNamespaceId: build.query<
-      GetApiMyKuberCloudSecretListByNamespaceIdApiResponse,
-      GetApiMyKuberCloudSecretListByNamespaceIdApiArg
+    getApiMyKubernetesCloudSecretListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudSecretListByNamespaceIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/secret/list/${queryArg.namespaceId}`,
+        url: `/api/my/kubernetes-cloud/secret/list/${queryArg.namespaceId}`,
       }),
     }),
-    getApiMyKuberCloudSecretGetById: build.query<
-      GetApiMyKuberCloudSecretGetByIdApiResponse,
-      GetApiMyKuberCloudSecretGetByIdApiArg
+    getApiMyKubernetesCloudSecretGetById: build.query<
+      GetApiMyKubernetesCloudSecretGetByIdApiResponse,
+      GetApiMyKubernetesCloudSecretGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/secret/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/secret/get/${queryArg.id}`,
       }),
     }),
-    deleteApiMyKuberCloudSecretDeleteById: build.mutation<
-      DeleteApiMyKuberCloudSecretDeleteByIdApiResponse,
-      DeleteApiMyKuberCloudSecretDeleteByIdApiArg
+    deleteApiMyKubernetesCloudSecretDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudSecretDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudSecretDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/secret/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/secret/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberCloudSecretCreate: build.mutation<
-      PostApiMyKuberCloudSecretCreateApiResponse,
-      PostApiMyKuberCloudSecretCreateApiArg
+    postApiMyKubernetesCloudSecretCreate: build.mutation<
+      PostApiMyKubernetesCloudSecretCreateApiResponse,
+      PostApiMyKubernetesCloudSecretCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/secret/create`,
+        url: `/api/my/kubernetes-cloud/secret/create`,
         method: "POST",
         body: queryArg.createKuberCloudSecretModel,
       }),
     }),
-    getApiMyKuberCloudIngressList: build.query<
-      GetApiMyKuberCloudIngressListApiResponse,
-      GetApiMyKuberCloudIngressListApiArg
+    getApiMyKubernetesCloudIngressList: build.query<
+      GetApiMyKubernetesCloudIngressListApiResponse,
+      GetApiMyKubernetesCloudIngressListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cloud/ingress/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cloud/ingress/list` }),
     }),
-    getApiMyKuberCloudIngressGetById: build.query<
-      GetApiMyKuberCloudIngressGetByIdApiResponse,
-      GetApiMyKuberCloudIngressGetByIdApiArg
+    getApiMyKubernetesCloudIngressGetById: build.query<
+      GetApiMyKubernetesCloudIngressGetByIdApiResponse,
+      GetApiMyKubernetesCloudIngressGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/ingress/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/ingress/get/${queryArg.id}`,
       }),
     }),
-    deleteApiMyKuberCloudIngressDeleteById: build.mutation<
-      DeleteApiMyKuberCloudIngressDeleteByIdApiResponse,
-      DeleteApiMyKuberCloudIngressDeleteByIdApiArg
+    deleteApiMyKubernetesCloudIngressDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/ingress/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/ingress/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberCloudIngressCreate: build.mutation<
-      PostApiMyKuberCloudIngressCreateApiResponse,
-      PostApiMyKuberCloudIngressCreateApiArg
+    postApiMyKubernetesCloudIngressCreate: build.mutation<
+      PostApiMyKubernetesCloudIngressCreateApiResponse,
+      PostApiMyKubernetesCloudIngressCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/ingress/create`,
+        url: `/api/my/kubernetes-cloud/ingress/create`,
         method: "POST",
         body: queryArg.createKuberCloudIngressModel,
       }),
     }),
-    getApiMyKuberCloudCategoryList: build.query<
-      GetApiMyKuberCloudCategoryListApiResponse,
-      GetApiMyKuberCloudCategoryListApiArg
+    getApiMyKubernetesCloudCategoryList: build.query<
+      GetApiMyKubernetesCloudCategoryListApiResponse,
+      GetApiMyKubernetesCloudCategoryListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cloud/category/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cloud/category/list` }),
     }),
-    getApiMyKuberCloudImageList: build.query<
-      GetApiMyKuberCloudImageListApiResponse,
-      GetApiMyKuberCloudImageListApiArg
+    getApiMyKubernetesCloudImageList: build.query<
+      GetApiMyKubernetesCloudImageListApiResponse,
+      GetApiMyKubernetesCloudImageListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cloud/image/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cloud/image/list` }),
     }),
-    getApiMyKuberCloudHostList: build.query<
-      GetApiMyKuberCloudHostListApiResponse,
-      GetApiMyKuberCloudHostListApiArg
+    getApiMyKubernetesCloudHostList: build.query<
+      GetApiMyKubernetesCloudHostListApiResponse,
+      GetApiMyKubernetesCloudHostListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cloud/host/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cloud/host/list` }),
     }),
-    getApiMyKuberCloudHostGetById: build.query<
-      GetApiMyKuberCloudHostGetByIdApiResponse,
-      GetApiMyKuberCloudHostGetByIdApiArg
+    getApiMyKubernetesCloudHostGetById: build.query<
+      GetApiMyKubernetesCloudHostGetByIdApiResponse,
+      GetApiMyKubernetesCloudHostGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/host/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/host/get/${queryArg.id}`,
       }),
     }),
-    putApiMyKuberCloudHostEditById: build.mutation<
-      PutApiMyKuberCloudHostEditByIdApiResponse,
-      PutApiMyKuberCloudHostEditByIdApiArg
+    putApiMyKubernetesCloudHostEditById: build.mutation<
+      PutApiMyKubernetesCloudHostEditByIdApiResponse,
+      PutApiMyKubernetesCloudHostEditByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/host/edit/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/host/edit/${queryArg.id}`,
         method: "PUT",
         body: queryArg.editKuberCloudHostModel,
       }),
     }),
-    deleteApiMyKuberCloudHostDeleteById: build.mutation<
-      DeleteApiMyKuberCloudHostDeleteByIdApiResponse,
-      DeleteApiMyKuberCloudHostDeleteByIdApiArg
+    deleteApiMyKubernetesCloudHostDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudHostDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/host/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberCloudHostCreate: build.mutation<
-      PostApiMyKuberCloudHostCreateApiResponse,
-      PostApiMyKuberCloudHostCreateApiArg
+    postApiMyKubernetesCloudHostCreate: build.mutation<
+      PostApiMyKubernetesCloudHostCreateApiResponse,
+      PostApiMyKubernetesCloudHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/host/create`,
+        url: `/api/my/kubernetes-cloud/host/create`,
         method: "POST",
         body: queryArg.createKuberCloudHostModel,
       }),
     }),
-    getApiMyKuberCloudDeploymentList: build.query<
-      GetApiMyKuberCloudDeploymentListApiResponse,
-      GetApiMyKuberCloudDeploymentListApiArg
+    getApiMyKubernetesCloudDeploymentList: build.query<
+      GetApiMyKubernetesCloudDeploymentListApiResponse,
+      GetApiMyKubernetesCloudDeploymentListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cloud/deployment/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cloud/deployment/list` }),
     }),
-    getApiMyKuberCloudDeploymentGetById: build.query<
-      GetApiMyKuberCloudDeploymentGetByIdApiResponse,
-      GetApiMyKuberCloudDeploymentGetByIdApiArg
+    getApiMyKubernetesCloudDeploymentGetById: build.query<
+      GetApiMyKubernetesCloudDeploymentGetByIdApiResponse,
+      GetApiMyKubernetesCloudDeploymentGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/deployment/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/deployment/get/${queryArg.id}`,
       }),
     }),
-    deleteApiMyKuberCloudDeploymentDeleteById: build.mutation<
-      DeleteApiMyKuberCloudDeploymentDeleteByIdApiResponse,
-      DeleteApiMyKuberCloudDeploymentDeleteByIdApiArg
+    deleteApiMyKubernetesCloudDeploymentDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/deployment/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/deployment/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberCloudDeploymentCreate: build.mutation<
-      PostApiMyKuberCloudDeploymentCreateApiResponse,
-      PostApiMyKuberCloudDeploymentCreateApiArg
+    postApiMyKubernetesCloudDeploymentCreate: build.mutation<
+      PostApiMyKubernetesCloudDeploymentCreateApiResponse,
+      PostApiMyKubernetesCloudDeploymentCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/deployment/create`,
+        url: `/api/my/kubernetes-cloud/deployment/create`,
         method: "POST",
         body: queryArg.createKuberCloudDeploymentModel,
       }),
     }),
-    getApiMyKuberCloudConfigmapListByNamespaceId: build.query<
-      GetApiMyKuberCloudConfigmapListByNamespaceIdApiResponse,
-      GetApiMyKuberCloudConfigmapListByNamespaceIdApiArg
+    getApiMyKubernetesCloudConfigmapListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/configmap/list/${queryArg.namespaceId}`,
+        url: `/api/my/kubernetes-cloud/configmap/list/${queryArg.namespaceId}`,
       }),
     }),
-    getApiMyKuberCloudConfigmapGetById: build.query<
-      GetApiMyKuberCloudConfigmapGetByIdApiResponse,
-      GetApiMyKuberCloudConfigmapGetByIdApiArg
+    getApiMyKubernetesCloudConfigmapGetById: build.query<
+      GetApiMyKubernetesCloudConfigmapGetByIdApiResponse,
+      GetApiMyKubernetesCloudConfigmapGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/configmap/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/configmap/get/${queryArg.id}`,
       }),
     }),
-    deleteApiMyKuberCloudConfigmapDeleteById: build.mutation<
-      DeleteApiMyKuberCloudConfigmapDeleteByIdApiResponse,
-      DeleteApiMyKuberCloudConfigmapDeleteByIdApiArg
+    deleteApiMyKubernetesCloudConfigmapDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/configmap/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cloud/configmap/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberCloudConfigmapCreate: build.mutation<
-      PostApiMyKuberCloudConfigmapCreateApiResponse,
-      PostApiMyKuberCloudConfigmapCreateApiArg
+    postApiMyKubernetesCloudConfigmapCreate: build.mutation<
+      PostApiMyKubernetesCloudConfigmapCreateApiResponse,
+      PostApiMyKubernetesCloudConfigmapCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cloud/configmap/create`,
+        url: `/api/my/kubernetes-cloud/configmap/create`,
         method: "POST",
         body: queryArg.createKuberCloudConfigmapModel,
       }),
     }),
-    getApiMyKuberClusterVersionList: build.query<
-      GetApiMyKuberClusterVersionListApiResponse,
-      GetApiMyKuberClusterVersionListApiArg
+    getApiMyKubernetesClusterVersionList: build.query<
+      GetApiMyKubernetesClusterVersionListApiResponse,
+      GetApiMyKubernetesClusterVersionListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cluster/version/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cluster/version/list` }),
     }),
-    getApiMyKuberClusterNodeByKubernetesHostId: build.query<
-      GetApiMyKuberClusterNodeByKubernetesHostIdApiResponse,
-      GetApiMyKuberClusterNodeByKubernetesHostIdApiArg
+    getApiMyKubernetesClusterNodeByKubernetesHostId: build.query<
+      GetApiMyKubernetesClusterNodeByKubernetesHostIdApiResponse,
+      GetApiMyKubernetesClusterNodeByKubernetesHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/node/${queryArg.kubernetesHostId}`,
+        url: `/api/my/kubernetes-cluster/node/${queryArg.kubernetesHostId}`,
       }),
     }),
-    deleteApiMyKuberClusterNodeDeleteById: build.mutation<
-      DeleteApiMyKuberClusterNodeDeleteByIdApiResponse,
-      DeleteApiMyKuberClusterNodeDeleteByIdApiArg
+    deleteApiMyKubernetesClusterNodeDeleteById: build.mutation<
+      DeleteApiMyKubernetesClusterNodeDeleteByIdApiResponse,
+      DeleteApiMyKubernetesClusterNodeDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/node/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cluster/node/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberClusterNodeCreate: build.mutation<
-      PostApiMyKuberClusterNodeCreateApiResponse,
-      PostApiMyKuberClusterNodeCreateApiArg
+    postApiMyKubernetesClusterNodeCreate: build.mutation<
+      PostApiMyKubernetesClusterNodeCreateApiResponse,
+      PostApiMyKubernetesClusterNodeCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/node/create`,
+        url: `/api/my/kubernetes-cluster/node/create`,
         method: "POST",
         body: queryArg.createKubernetesNodeModel,
       }),
     }),
-    getApiMyKuberClusterHostList: build.query<
-      GetApiMyKuberClusterHostListApiResponse,
-      GetApiMyKuberClusterHostListApiArg
+    getApiMyKubernetesClusterHostList: build.query<
+      GetApiMyKubernetesClusterHostListApiResponse,
+      GetApiMyKubernetesClusterHostListApiArg
     >({
-      query: () => ({ url: `/api/my/kuber-cluster/host/list` }),
+      query: () => ({ url: `/api/my/kubernetes-cluster/host/list` }),
     }),
-    getApiMyKuberClusterHostGetById: build.query<
-      GetApiMyKuberClusterHostGetByIdApiResponse,
-      GetApiMyKuberClusterHostGetByIdApiArg
+    getApiMyKubernetesClusterHostGetById: build.query<
+      GetApiMyKubernetesClusterHostGetByIdApiResponse,
+      GetApiMyKubernetesClusterHostGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/host/get/${queryArg.id}`,
+        url: `/api/my/kubernetes-cluster/host/get/${queryArg.id}`,
       }),
     }),
-    deleteApiMyKuberClusterHostDeleteById: build.mutation<
-      DeleteApiMyKuberClusterHostDeleteByIdApiResponse,
-      DeleteApiMyKuberClusterHostDeleteByIdApiArg
+    deleteApiMyKubernetesClusterHostDeleteById: build.mutation<
+      DeleteApiMyKubernetesClusterHostDeleteByIdApiResponse,
+      DeleteApiMyKubernetesClusterHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/host/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes-cluster/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
-    postApiMyKuberClusterHostCreate: build.mutation<
-      PostApiMyKuberClusterHostCreateApiResponse,
-      PostApiMyKuberClusterHostCreateApiArg
+    postApiMyKubernetesClusterHostCreate: build.mutation<
+      PostApiMyKubernetesClusterHostCreateApiResponse,
+      PostApiMyKubernetesClusterHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kuber-cluster/host/create`,
+        url: `/api/my/kubernetes-cluster/host/create`,
         method: "POST",
         body: queryArg.createKubernetesModel,
       }),
@@ -2514,131 +2514,131 @@ export type PostApiMyHostProjectCreateApiResponse = unknown;
 export type PostApiMyHostProjectCreateApiArg = {
   vmProjectCreateModel: VmProjectCreateModel;
 };
-export type GetApiMyKuberCloudSecretListByNamespaceIdApiResponse =
+export type GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudSecretListResponse[];
-export type GetApiMyKuberCloudSecretListByNamespaceIdApiArg = {
+export type GetApiMyKubernetesCloudSecretListByNamespaceIdApiArg = {
   namespaceId: number;
 };
-export type GetApiMyKuberCloudSecretGetByIdApiResponse =
+export type GetApiMyKubernetesCloudSecretGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudSecretResponse;
-export type GetApiMyKuberCloudSecretGetByIdApiArg = {
+export type GetApiMyKubernetesCloudSecretGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyKuberCloudSecretDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberCloudSecretDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesCloudSecretDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudSecretDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberCloudSecretCreateApiResponse = unknown;
-export type PostApiMyKuberCloudSecretCreateApiArg = {
+export type PostApiMyKubernetesCloudSecretCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudSecretCreateApiArg = {
   createKuberCloudSecretModel: CreateKuberCloudSecretModel;
 };
-export type GetApiMyKuberCloudIngressListApiResponse =
+export type GetApiMyKubernetesCloudIngressListApiResponse =
   /** status 200 OK */ KuberCloudIngressListResponse[];
-export type GetApiMyKuberCloudIngressListApiArg = void;
-export type GetApiMyKuberCloudIngressGetByIdApiResponse =
+export type GetApiMyKubernetesCloudIngressListApiArg = void;
+export type GetApiMyKubernetesCloudIngressGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudIngressResponse;
-export type GetApiMyKuberCloudIngressGetByIdApiArg = {
+export type GetApiMyKubernetesCloudIngressGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyKuberCloudIngressDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberCloudIngressDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberCloudIngressCreateApiResponse = unknown;
-export type PostApiMyKuberCloudIngressCreateApiArg = {
+export type PostApiMyKubernetesCloudIngressCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudIngressCreateApiArg = {
   createKuberCloudIngressModel: CreateKuberCloudIngressModel;
 };
-export type GetApiMyKuberCloudCategoryListApiResponse =
+export type GetApiMyKubernetesCloudCategoryListApiResponse =
   /** status 200 OK */ KuberCloudImageCategoryDto[];
-export type GetApiMyKuberCloudCategoryListApiArg = void;
-export type GetApiMyKuberCloudImageListApiResponse =
+export type GetApiMyKubernetesCloudCategoryListApiArg = void;
+export type GetApiMyKubernetesCloudImageListApiResponse =
   /** status 200 OK */ KuberCloudImageResponse[];
-export type GetApiMyKuberCloudImageListApiArg = void;
-export type GetApiMyKuberCloudHostListApiResponse =
+export type GetApiMyKubernetesCloudImageListApiArg = void;
+export type GetApiMyKubernetesCloudHostListApiResponse =
   /** status 200 OK */ KuberCloudHostListResponse[];
-export type GetApiMyKuberCloudHostListApiArg = void;
-export type GetApiMyKuberCloudHostGetByIdApiResponse =
+export type GetApiMyKubernetesCloudHostListApiArg = void;
+export type GetApiMyKubernetesCloudHostGetByIdApiResponse =
   /** status 200 OK */ KuberCloudHostGetResponse;
-export type GetApiMyKuberCloudHostGetByIdApiArg = {
+export type GetApiMyKubernetesCloudHostGetByIdApiArg = {
   id: number;
 };
-export type PutApiMyKuberCloudHostEditByIdApiResponse = unknown;
-export type PutApiMyKuberCloudHostEditByIdApiArg = {
+export type PutApiMyKubernetesCloudHostEditByIdApiResponse = unknown;
+export type PutApiMyKubernetesCloudHostEditByIdApiArg = {
   id: number;
   editKuberCloudHostModel: EditKuberCloudHostModel;
 };
-export type DeleteApiMyKuberCloudHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberCloudHostDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesCloudHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudHostDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberCloudHostCreateApiResponse = unknown;
-export type PostApiMyKuberCloudHostCreateApiArg = {
+export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudHostCreateApiArg = {
   createKuberCloudHostModel: CreateKuberCloudHostModel;
 };
-export type GetApiMyKuberCloudDeploymentListApiResponse =
+export type GetApiMyKubernetesCloudDeploymentListApiResponse =
   /** status 200 OK */ KuberCloudDeploymentListResponse[];
-export type GetApiMyKuberCloudDeploymentListApiArg = void;
-export type GetApiMyKuberCloudDeploymentGetByIdApiResponse =
+export type GetApiMyKubernetesCloudDeploymentListApiArg = void;
+export type GetApiMyKubernetesCloudDeploymentGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudDeploymentResponse;
-export type GetApiMyKuberCloudDeploymentGetByIdApiArg = {
+export type GetApiMyKubernetesCloudDeploymentGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyKuberCloudDeploymentDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberCloudDeploymentDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberCloudDeploymentCreateApiResponse = unknown;
-export type PostApiMyKuberCloudDeploymentCreateApiArg = {
+export type PostApiMyKubernetesCloudDeploymentCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudDeploymentCreateApiArg = {
   createKuberCloudDeploymentModel: CreateKuberCloudDeploymentModel;
 };
-export type GetApiMyKuberCloudConfigmapListByNamespaceIdApiResponse =
+export type GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudConfigListResponse[];
-export type GetApiMyKuberCloudConfigmapListByNamespaceIdApiArg = {
+export type GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiArg = {
   namespaceId: number;
 };
-export type GetApiMyKuberCloudConfigmapGetByIdApiResponse =
+export type GetApiMyKubernetesCloudConfigmapGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudConfigResponse;
-export type GetApiMyKuberCloudConfigmapGetByIdApiArg = {
+export type GetApiMyKubernetesCloudConfigmapGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyKuberCloudConfigmapDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberCloudConfigmapDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberCloudConfigmapCreateApiResponse = unknown;
-export type PostApiMyKuberCloudConfigmapCreateApiArg = {
+export type PostApiMyKubernetesCloudConfigmapCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudConfigmapCreateApiArg = {
   createKuberCloudConfigmapModel: CreateKuberCloudConfigmapModel;
 };
-export type GetApiMyKuberClusterVersionListApiResponse =
+export type GetApiMyKubernetesClusterVersionListApiResponse =
   /** status 200 OK */ KubernetesVersionListResponse[];
-export type GetApiMyKuberClusterVersionListApiArg = void;
-export type GetApiMyKuberClusterNodeByKubernetesHostIdApiResponse =
+export type GetApiMyKubernetesClusterVersionListApiArg = void;
+export type GetApiMyKubernetesClusterNodeByKubernetesHostIdApiResponse =
   /** status 200 OK */ KubernetesNodeListResponse[];
-export type GetApiMyKuberClusterNodeByKubernetesHostIdApiArg = {
+export type GetApiMyKubernetesClusterNodeByKubernetesHostIdApiArg = {
   kubernetesHostId: number;
 };
-export type DeleteApiMyKuberClusterNodeDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberClusterNodeDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesClusterNodeDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesClusterNodeDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberClusterNodeCreateApiResponse = unknown;
-export type PostApiMyKuberClusterNodeCreateApiArg = {
+export type PostApiMyKubernetesClusterNodeCreateApiResponse = unknown;
+export type PostApiMyKubernetesClusterNodeCreateApiArg = {
   createKubernetesNodeModel: CreateKubernetesNodeModel;
 };
-export type GetApiMyKuberClusterHostListApiResponse =
+export type GetApiMyKubernetesClusterHostListApiResponse =
   /** status 200 OK */ KubernetesListResponse[];
-export type GetApiMyKuberClusterHostListApiArg = void;
-export type GetApiMyKuberClusterHostGetByIdApiResponse =
+export type GetApiMyKubernetesClusterHostListApiArg = void;
+export type GetApiMyKubernetesClusterHostGetByIdApiResponse =
   /** status 200 OK */ GetKubernetesResponse;
-export type GetApiMyKuberClusterHostGetByIdApiArg = {
+export type GetApiMyKubernetesClusterHostGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyKuberClusterHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKuberClusterHostDeleteByIdApiArg = {
+export type DeleteApiMyKubernetesClusterHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesClusterHostDeleteByIdApiArg = {
   id: number;
 };
-export type PostApiMyKuberClusterHostCreateApiResponse = unknown;
-export type PostApiMyKuberClusterHostCreateApiArg = {
+export type PostApiMyKubernetesClusterHostCreateApiResponse = unknown;
+export type PostApiMyKubernetesClusterHostCreateApiArg = {
   createKubernetesModel: CreateKubernetesModel;
 };
 export type GetApiMyObjectStorageStorageUserListByStorageHostIdApiResponse =
@@ -4892,37 +4892,37 @@ export const {
   usePutApiMyHostProjectEditByIdMutation,
   useDeleteApiMyHostProjectDeleteByIdMutation,
   usePostApiMyHostProjectCreateMutation,
-  useGetApiMyKuberCloudSecretListByNamespaceIdQuery,
-  useGetApiMyKuberCloudSecretGetByIdQuery,
-  useDeleteApiMyKuberCloudSecretDeleteByIdMutation,
-  usePostApiMyKuberCloudSecretCreateMutation,
-  useGetApiMyKuberCloudIngressListQuery,
-  useGetApiMyKuberCloudIngressGetByIdQuery,
-  useDeleteApiMyKuberCloudIngressDeleteByIdMutation,
-  usePostApiMyKuberCloudIngressCreateMutation,
-  useGetApiMyKuberCloudCategoryListQuery,
-  useGetApiMyKuberCloudImageListQuery,
-  useGetApiMyKuberCloudHostListQuery,
-  useGetApiMyKuberCloudHostGetByIdQuery,
-  usePutApiMyKuberCloudHostEditByIdMutation,
-  useDeleteApiMyKuberCloudHostDeleteByIdMutation,
-  usePostApiMyKuberCloudHostCreateMutation,
-  useGetApiMyKuberCloudDeploymentListQuery,
-  useGetApiMyKuberCloudDeploymentGetByIdQuery,
-  useDeleteApiMyKuberCloudDeploymentDeleteByIdMutation,
-  usePostApiMyKuberCloudDeploymentCreateMutation,
-  useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery,
-  useGetApiMyKuberCloudConfigmapGetByIdQuery,
-  useDeleteApiMyKuberCloudConfigmapDeleteByIdMutation,
-  usePostApiMyKuberCloudConfigmapCreateMutation,
-  useGetApiMyKuberClusterVersionListQuery,
-  useGetApiMyKuberClusterNodeByKubernetesHostIdQuery,
-  useDeleteApiMyKuberClusterNodeDeleteByIdMutation,
-  usePostApiMyKuberClusterNodeCreateMutation,
-  useGetApiMyKuberClusterHostListQuery,
-  useGetApiMyKuberClusterHostGetByIdQuery,
-  useDeleteApiMyKuberClusterHostDeleteByIdMutation,
-  usePostApiMyKuberClusterHostCreateMutation,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudSecretGetByIdQuery,
+  useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
+  usePostApiMyKubernetesCloudSecretCreateMutation,
+  useGetApiMyKubernetesCloudIngressListQuery,
+  useGetApiMyKubernetesCloudIngressGetByIdQuery,
+  useDeleteApiMyKubernetesCloudIngressDeleteByIdMutation,
+  usePostApiMyKubernetesCloudIngressCreateMutation,
+  useGetApiMyKubernetesCloudCategoryListQuery,
+  useGetApiMyKubernetesCloudImageListQuery,
+  useGetApiMyKubernetesCloudHostListQuery,
+  useGetApiMyKubernetesCloudHostGetByIdQuery,
+  usePutApiMyKubernetesCloudHostEditByIdMutation,
+  useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
+  usePostApiMyKubernetesCloudHostCreateMutation,
+  useGetApiMyKubernetesCloudDeploymentListQuery,
+  useGetApiMyKubernetesCloudDeploymentGetByIdQuery,
+  useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
+  usePostApiMyKubernetesCloudDeploymentCreateMutation,
+  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudConfigmapGetByIdQuery,
+  useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
+  usePostApiMyKubernetesCloudConfigmapCreateMutation,
+  useGetApiMyKubernetesClusterVersionListQuery,
+  useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery,
+  useDeleteApiMyKubernetesClusterNodeDeleteByIdMutation,
+  usePostApiMyKubernetesClusterNodeCreateMutation,
+  useGetApiMyKubernetesClusterHostListQuery,
+  useGetApiMyKubernetesClusterHostGetByIdQuery,
+  useDeleteApiMyKubernetesClusterHostDeleteByIdMutation,
+  usePostApiMyKubernetesClusterHostCreateMutation,
   useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery,
   useDeleteApiMyObjectStorageStorageUserDeleteByIdMutation,
   usePostApiMyObjectStorageStorageUserCreateMutation,

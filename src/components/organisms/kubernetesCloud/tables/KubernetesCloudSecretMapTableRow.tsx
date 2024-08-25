@@ -14,7 +14,7 @@ import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
   KuberCloudSecretListResponse,
-  useDeleteApiMyKuberCloudSecretDeleteByIdMutation,
+  useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -42,7 +42,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   ] = useState<KuberCloudSecretListResponse | null>(null);
 
   const [deleteSecretMap, { isLoading: deleteSecretMapLoading }] =
-    useDeleteApiMyKuberCloudSecretDeleteByIdMutation();
+    useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
     deleteSecretMap({ id: Number(selectedKubernetesCloudSecretMap?.id) })

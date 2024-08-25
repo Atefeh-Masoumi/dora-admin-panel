@@ -13,7 +13,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
 import {
   KeyListInResourceType,
-  KuberCloudAppImageType,
+  KubernetesCloudAppImageType,
   ResourceListType,
   VariableEnvironment,
 } from "src/types/kubernetesCloud.types";
@@ -22,15 +22,15 @@ import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
 import { SelectEnvResource } from "./envVariable/SelectEnvResource";
 import {
-  useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery,
-  useGetApiMyKuberCloudSecretListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
 type SelectEnvironmentVariablePropsType = {
   outerIndex: number;
   item: any;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KubernetesCloudAppImageType>;
   keyValues: VariableEnvironment[];
   setKeyValues: Dispatch<SetStateAction<VariableEnvironment[]>>;
 };
@@ -58,7 +58,7 @@ export const SelectEnvironmentVariable: FC<
   const [keyListInResource, setKeyListInResource] = useState<any>();
 
   const { data: configmapList } =
-    useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery(
+    useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
       {
         namespaceId: Number(kubernetesCloudNameSpaceId),
       },
@@ -66,7 +66,7 @@ export const SelectEnvironmentVariable: FC<
     );
 
   const { data: secretList } =
-    useGetApiMyKuberCloudSecretListByNamespaceIdQuery(
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
       {
         namespaceId: Number(kubernetesCloudNameSpaceId),
       },

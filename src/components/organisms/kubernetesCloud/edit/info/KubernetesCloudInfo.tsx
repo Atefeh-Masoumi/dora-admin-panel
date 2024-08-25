@@ -7,7 +7,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
-import { useGetApiMyKuberCloudHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
@@ -18,7 +18,7 @@ type KubernetesCloudInfoPropsType = {};
 export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
-  const { data, isLoading } = useGetApiMyKuberCloudHostGetByIdQuery(
+  const { data, isLoading } = useGetApiMyKubernetesCloudHostGetByIdQuery(
     {
       id: Number(kubernetesId) || 0,
     },

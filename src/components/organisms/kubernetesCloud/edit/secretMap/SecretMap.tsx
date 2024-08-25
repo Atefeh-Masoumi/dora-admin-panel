@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyKuberCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
@@ -32,7 +32,7 @@ export const KubernetesCloudSecretMap: FC<
     useState<boolean>(false);
 
   const { data = [], isLoading } =
-    useGetApiMyKuberCloudSecretListByNamespaceIdQuery({
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
     });
 

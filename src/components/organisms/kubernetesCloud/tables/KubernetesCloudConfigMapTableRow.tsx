@@ -14,7 +14,7 @@ import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
   GetKuberCloudConfigResponse,
-  useDeleteApiMyKuberCloudConfigmapDeleteByIdMutation,
+  useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -42,7 +42,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   ] = useState<GetKuberCloudConfigResponse | null>(null);
 
   const [deleteConfigMap, { isLoading: deleteConfigMapLoading }] =
-    useDeleteApiMyKuberCloudConfigmapDeleteByIdMutation();
+    useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
     deleteConfigMap({ id: Number(selectedKubernetesCloudConfigMap?.id) })

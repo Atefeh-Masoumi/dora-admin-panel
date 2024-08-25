@@ -4,7 +4,7 @@ export enum PRODUCT_CATEGORY_ENUM {
   CDN = 103,
   STORAGE = 104,
   KubernetesCloud = 105,
-  KuberCluster = 106,
+  KubernetesCluster = 106,
   BareMetal = 107,
   CoLocation = 108,
   VPC = 109,

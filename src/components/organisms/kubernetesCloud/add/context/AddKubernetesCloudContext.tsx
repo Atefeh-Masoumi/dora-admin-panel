@@ -12,7 +12,7 @@ import {
   DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
-  usePostApiMyKuberCloudHostCreateMutation,
+  usePostApiMyKubernetesCloudHostCreateMutation,
 } from "src/app/services/api.generated";
 
 export type kubernetesCloudCustomConfigType = {
@@ -94,7 +94,7 @@ const AddKubernetesCloudContextProvider: FC<
   const navigate = useNavigate();
 
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyKuberCloudHostCreateMutation();
+    usePostApiMyKubernetesCloudHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";

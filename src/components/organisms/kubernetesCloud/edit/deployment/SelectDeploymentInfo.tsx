@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FormikProps } from "formik";
 
 import { Stack } from "@mui/system";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
 import { Counter } from "src/components/organisms/kubernetes/add/steps/Counter";
 import { Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
@@ -11,7 +11,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 type CounterNewValueType = number | ((prevValue: number) => number);
 
 type SelectDeploymentInfoPropsType = {
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KubernetesCloudAppImageType>;
 };
 
 export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({

@@ -4,7 +4,7 @@ import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useNavigate } from "react-router";
-import { useGetApiMyKuberCloudHostListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudHostListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesCloudTableStruct } from "src/components/organisms/kubernetesCloud/tables/struct";
 import { KubernetesCloudTableRow } from "src/components/organisms/kubernetesCloud/tables/KubernetesCloudTableRow";
@@ -12,7 +12,7 @@ import { KubernetesCloudTableRow } from "src/components/organisms/kubernetesClou
 const KubernetesCloudList: FC = () => {
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyKuberCloudHostListQuery();
+  const { data, isLoading } = useGetApiMyKubernetesCloudHostListQuery();
 
   const filteredList =
     data?.filter((item) => {

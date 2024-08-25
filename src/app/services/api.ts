@@ -19,7 +19,7 @@ const tags = [
   "SupportItems",
   "Support",
   "VmHost",
-  "KuberCluster",
+  "KubernetesCluster",
   "Storage",
   "WebHost",
   "Vpc",
@@ -270,27 +270,27 @@ export const api = generatedApi
       deleteApiMyHostProjectDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
-      // ============================== KuberCluster ============================== //
-      getApiMyKuberClusterHostList: {
-        providesTags: () => ["KuberCluster"],
+      // ============================== KubernetesCluster ============================== //
+      getApiMyKubernetesClusterHostList: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      getApiMyKuberClusterNodeByKubernetesHostId: {
-        providesTags: () => ["KuberCluster"],
+      getApiMyKubernetesClusterNodeByKubernetesHostId: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      getApiMyKuberClusterHostGetById: {
-        providesTags: () => ["KuberCluster"],
+      getApiMyKubernetesClusterHostGetById: {
+        providesTags: () => ["KubernetesCluster"],
       },
-      deleteApiMyKuberClusterNodeDeleteById: {
-        invalidatesTags: () => ["KuberCluster"],
+      deleteApiMyKubernetesClusterNodeDeleteById: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      postApiMyKuberClusterNodeCreate: {
-        invalidatesTags: () => ["KuberCluster"],
+      postApiMyKubernetesClusterNodeCreate: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      postApiMyKuberClusterHostCreate: {
-        invalidatesTags: () => ["KuberCluster"],
+      postApiMyKubernetesClusterHostCreate: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
-      deleteApiMyKuberClusterHostDeleteById: {
-        invalidatesTags: () => ["KuberCluster"],
+      deleteApiMyKubernetesClusterHostDeleteById: {
+        invalidatesTags: () => ["KubernetesCluster"],
       },
       // ============================== Storage ============================== //
       getApiMyObjectStorageHostList: {
@@ -420,23 +420,23 @@ export const api = generatedApi
         invalidatesTags: () => ["Accessibility"],
       },
       // ============================== ConfigMap ============================== //
-      getApiMyKuberCloudConfigmapListByNamespaceId: {
+      getApiMyKubernetesCloudConfigmapListByNamespaceId: {
         providesTags: () => ["ConfigMap"],
       },
-      postApiMyKuberCloudConfigmapCreate: {
+      postApiMyKubernetesCloudConfigmapCreate: {
         invalidatesTags: () => ["ConfigMap"],
       },
-      deleteApiMyKuberCloudConfigmapDeleteById: {
+      deleteApiMyKubernetesCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
       },
       // ============================== SecretMap ============================== //
-      getApiMyKuberCloudSecretListByNamespaceId: {
+      getApiMyKubernetesCloudSecretListByNamespaceId: {
         providesTags: () => ["SecretMap"],
       },
-      postApiMyKuberCloudSecretCreate: {
+      postApiMyKubernetesCloudSecretCreate: {
         invalidatesTags: () => ["SecretMap"],
       },
-      deleteApiMyKuberCloudSecretDeleteById: {
+      deleteApiMyKubernetesCloudSecretDeleteById: {
         invalidatesTags: () => ["SecretMap"],
       },
     },
