@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyKubernetesCloudSecretCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKuberCloudSecretCreateMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -47,7 +47,7 @@ export const CreateSecretMapDialog: FC<
   const [envs, setEnvs] = useState<any[]>([]);
 
   const [createSecretMap, { isLoading: createSecretMapLoading }] =
-    usePostApiMyKubernetesCloudSecretCreateMutation();
+    usePostApiMyKuberCloudSecretCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {

@@ -5,7 +5,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BaseTable } from "../../../tables/BaseTable";
 import { ReferralTableRow } from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
-import { useLazyGetApiMyPortalReferralCustomerByReferralIdListQuery } from "src/app/services/api";
+import { useLazyGetApiMyPortalReferralListByReferralIdQuery } from "src/app/services/api";
 
 export const InviteList: FC = () => {
   const [customerReferralList, setCustomerReferralList] = useState<any>([]);
@@ -13,7 +13,7 @@ export const InviteList: FC = () => {
     useGetApiMyPortalReferralGetQuery();
 
   const [callCustomerReferralList, { isLoading: customerReferralListLoaidng }] =
-    useLazyGetApiMyPortalReferralCustomerByReferralIdListQuery();
+    useLazyGetApiMyPortalReferralListByReferralIdQuery();
 
   useEffect(() => {
     if (referralData?.id) {

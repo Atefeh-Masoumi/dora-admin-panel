@@ -9,7 +9,6 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
   categoryId,
   payload,
 }) => {
-  const category = categoryId === 1 ? "سرویس پیامک ابری" : "صورتحساب";
   const analyticsValue =
     payload?.[0]?.value === 0 ? "صفر" : Math.trunc(payload?.[0]?.value);
   return (
@@ -21,10 +20,10 @@ export const ChartTooltip: FC<ChartTooltipPropsType> = ({
       sx={{ bgcolor: "#202020", borderRadius: BORDER_RADIUS_1, p: 1 }}
     >
       <Typography fontSize="12px" fontWeight={500} color="white">
-        {category}
+        {categoryId === 1}
       </Typography>
       <Typography fontSize="12px" color="rgba(255, 255, 255, 0.8)">
-        {priceToPersian(analyticsValue)} {categoryId === 2 && " ریال"}
+        {priceToPersian(analyticsValue)} {categoryId === 1 && " ریال"}
       </Typography>
     </Paper>
   );

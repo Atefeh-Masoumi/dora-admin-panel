@@ -15,6 +15,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { useLazyGetApiMyDatacenterImageListQuery } from "src/app/services/api";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 
 type ChooseOSPropsType = {
   imageId: number;
@@ -33,7 +34,11 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
 
   useEffect(() => {
     if (dataCenter) {
-      getData({ datacenterId: dataCenter, hypervisorTypeId: 1 })
+      getData({
+        datacenterId: dataCenter,
+        hypervisorTypeId: 1,
+        productId: PRODUCT_CATEGORY_ENUM.VM,
+      })
         .unwrap()
         .then((res) => res && setData(res));
     }

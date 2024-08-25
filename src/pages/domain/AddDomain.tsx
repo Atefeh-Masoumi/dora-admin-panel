@@ -123,6 +123,7 @@ const AddDomain: FC = () => {
           ext: extObject.name!,
           productId: productId!,
           authCode,
+          email: "",
           name,
           country,
           province,

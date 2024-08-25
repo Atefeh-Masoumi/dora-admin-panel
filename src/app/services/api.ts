@@ -19,7 +19,7 @@ const tags = [
   "SupportItems",
   "Support",
   "VmHost",
-  "KubernetesCluster",
+  "KuberCluster",
   "Storage",
   "WebHost",
   "Vpc",
@@ -64,51 +64,51 @@ export const api = generatedApi
         invalidatesTags: () => tags,
       },
       // ============================== NotificationStatus ============================== //
-      getApiMyPortalProfileGetNotificationStatus: {
+      getApiMyAccountProfileGetNotificationStatus: {
         providesTags: () => ["NotificationStatus"],
       },
-      putApiMyPortalProfileEditPhoneNotification: {
+      putApiMyAccountProfileEditPhoneNotification: {
         invalidatesTags: () => ["NotificationStatus"],
       },
-      putApiMyPortalProfileEditEmailNotification: {
+      putApiMyAccountProfileEditEmailNotification: {
         invalidatesTags: () => ["NotificationStatus"],
       },
       // ============================== Notification ============================== //
-      getApiMyPortalNotificationShortList: {
+      getApiMyAccountNotificationShortList: {
         providesTags: () => ["Notification"],
       },
-      getApiMyPortalNotificationList: {
+      getApiMyAccountNotificationList: {
         providesTags: () => ["Notification"],
       },
-      putApiMyPortalNotificationSeenById: {
+      putApiMyAccountNotificationSeenById: {
         invalidatesTags: () => ["Notification"],
       },
       // ============================== Profile ============================== //
-      getApiMyPortalProfileGet: {
+      getApiMyAccountProfileGet: {
         providesTags: () => ["Profile"],
       },
-      getApiMyPortalCustomerGet: {
+      getApiMyAccountCustomerGet: {
         providesTags: () => ["Profile"],
       },
-      postApiMyPortalProfileConfirmPhoneNumber: {
+      postApiMyAccountProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyPortalProfileEditTwoFactor: {
+      putApiMyAccountProfileEditTwoFactor: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyPortalProfileEdit: {
+      putApiMyAccountProfileEdit: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyPortalProfileEditEmail: {
+      putApiMyAccountProfileEditEmail: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyPortalProfileEditPhoneNumber: {
+      putApiMyAccountProfileEditPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      postApiMyPortalProfileConfirmEmail: {
+      postApiMyAccountProfileConfirmEmail: {
         invalidatesTags: () => ["Profile"],
       },
-      postApiMyPortalProfileChangePassword: {
+      postApiMyAccountProfileChangePassword: {
         invalidatesTags: () => ["Profile"],
       },
       // ============================== Support ============================== //
@@ -152,10 +152,10 @@ export const api = generatedApi
       postApiMyDnsCdnDnsRecordCreate: {
         invalidatesTags: () => ["DNSRecordSetting", "CdnRoute"],
       },
-      putApiMyDnsCdnDnsRecordEdit: {
+      putApiMyDnsCdnDnsRecordEditById: {
         invalidatesTags: () => ["DNSRecordSetting", "EditRecordDialog"],
       },
-      putApiMyDnsCdnDnsRecordChangeProxyStatusById: {
+      putApiMyDnsCdnDnsRecordChangeProxyById: {
         invalidatesTags: () => ["EditRecordDialog", "ProxyStatus", "CdnRoute"],
       },
       deleteApiMyDnsCdnDnsRecordDeleteById: {
@@ -187,7 +187,7 @@ export const api = generatedApi
       deleteApiMyDnsCdnRouteDeleteById: {
         invalidatesTags: () => ["CdnRoute", "ProxyStatus"],
       },
-      putApiMyDnsCdnRouteEdit: {
+      putApiMyDnsCdnRouteEditById: {
         invalidatesTags: () => ["CdnRoute"],
       },
       // ============================== CdnCert ============================== //
@@ -207,7 +207,7 @@ export const api = generatedApi
         providesTags: () => ["CdnCert"],
       },
       // ============================== VmHost ============================== //
-      getApiMyVmProjectList: {
+      getApiMyHostProjectList: {
         providesTags: () => ["VmHost"],
       },
       getApiMyVmHostListByVmProjectId: {
@@ -219,13 +219,13 @@ export const api = generatedApi
       getApiMyVmHostGetById: {
         providesTags: () => ["VmHost"],
       },
-      getApiMyVmSnapshotListByVmId: {
+      getApiMyVmSnapshotListByVmHostId: {
         providesTags: () => ["VmHost"],
       },
       getApiMyVmSnapshotGetById: {
         providesTags: () => ["VmHost"],
       },
-      putApiMyVmSnapshotRevert: {
+      putApiMyVmSnapshotRevertById: {
         invalidatesTags: () => ["VmHost"],
       },
       postApiMyVmSnapshotCreate: {
@@ -237,7 +237,7 @@ export const api = generatedApi
       deleteApiMyVmHostDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiMyVmHostEdit: {
+      putApiMyVmHostEditById: {
         invalidatesTags: () => ["VmHost"],
       },
       deleteApiMyVmSnapshotDeleteById: {
@@ -261,57 +261,57 @@ export const api = generatedApi
       putApiMyVmHostRebootById: {
         invalidatesTags: () => ["VmHost"],
       },
-      postApiMyVmProjectCreate: {
+      postApiMyHostProjectCreate: {
         invalidatesTags: () => ["VmHost"],
       },
-      putApiMyVmProjectEditById: {
+      putApiMyHostProjectEditById: {
         invalidatesTags: () => ["VmHost"],
       },
-      deleteApiMyVmProjectDeleteById: {
+      deleteApiMyHostProjectDeleteById: {
         invalidatesTags: () => ["VmHost"],
       },
-      // ============================== KubernetesCluster ============================== //
-      getApiMyKubernetesClusterHostList: {
-        providesTags: () => ["KubernetesCluster"],
+      // ============================== KuberCluster ============================== //
+      getApiMyKuberClusterHostList: {
+        providesTags: () => ["KuberCluster"],
       },
-      getApiMyKubernetesClusterNodeListByKubernetesHostId: {
-        providesTags: () => ["KubernetesCluster"],
+      getApiMyKuberClusterNodeByKubernetesHostId: {
+        providesTags: () => ["KuberCluster"],
       },
-      getApiMyKubernetesClusterHostGetById: {
-        providesTags: () => ["KubernetesCluster"],
+      getApiMyKuberClusterHostGetById: {
+        providesTags: () => ["KuberCluster"],
       },
-      putApiMyKubernetesClusterNodeDeleteById: {
-        invalidatesTags: () => ["KubernetesCluster"],
+      deleteApiMyKuberClusterNodeDeleteById: {
+        invalidatesTags: () => ["KuberCluster"],
       },
-      postApiMyKubernetesClusterNodeCreate: {
-        invalidatesTags: () => ["KubernetesCluster"],
+      postApiMyKuberClusterNodeCreate: {
+        invalidatesTags: () => ["KuberCluster"],
       },
-      postApiMyKubernetesClusterHostCreate: {
-        invalidatesTags: () => ["KubernetesCluster"],
+      postApiMyKuberClusterHostCreate: {
+        invalidatesTags: () => ["KuberCluster"],
       },
-      deleteApiMyKubernetesClusterHostDeleteById: {
-        invalidatesTags: () => ["KubernetesCluster"],
+      deleteApiMyKuberClusterHostDeleteById: {
+        invalidatesTags: () => ["KuberCluster"],
       },
       // ============================== Storage ============================== //
-      getApiMyStorageHostList: {
+      getApiMyObjectStorageHostList: {
         providesTags: () => ["Storage"],
       },
-      getApiMyStorageHostGetById: {
+      getApiMyObjectStorageHostGetById: {
         providesTags: () => ["Storage"],
       },
-      getApiMyStorageUserListByStorageHostId: {
+      getApiMyObjectStorageStorageUserListByStorageHostId: {
         providesTags: () => ["Storage"],
       },
-      postApiMyStorageHostCreate: {
+      postApiMyObjectStorageHostCreate: {
         invalidatesTags: () => ["Storage"],
       },
-      putApiMyStorageHostEdit: {
+      putApiMyObjectStorageHostEditById: {
         invalidatesTags: () => ["Storage"],
       },
-      deleteApiMyStorageHostDeleteById: {
+      deleteApiMyObjectStorageHostDeleteById: {
         invalidatesTags: () => ["Storage"],
       },
-      deleteApiMyStorageUserDeleteById: {
+      deleteApiMyObjectStorageStorageUserDeleteById: {
         invalidatesTags: () => ["Storage"],
       },
       // ============================== Storage ============================== //
@@ -324,7 +324,7 @@ export const api = generatedApi
       postApiMyWebHostCreate: {
         invalidatesTags: () => ["WebHost"],
       },
-      putApiMyWebHostEdit: {
+      putApiMyWebHostEditById: {
         invalidatesTags: () => ["WebHost"],
       },
       deleteApiMyWebHostDeleteById: {
@@ -334,15 +334,6 @@ export const api = generatedApi
 
       getApiMyVpcTranslateList: {
         providesTags: () => ["Vpc", "VpcNat"],
-      },
-      getApiMyVpcStaticRouteGetById: {
-        providesTags: () => ["Vpc"],
-      },
-      getApiMyVpcStaticRouteListByVpcHostId: {
-        providesTags: () => ["Vpc"],
-      },
-      getApiMyVpcGatewayGetByVpcHostId: {
-        providesTags: () => ["Vpc"],
       },
       getApiMyVpcHostList: {
         providesTags: () => ["Vpc"],
@@ -360,23 +351,12 @@ export const api = generatedApi
       postApiMyVpcHostCreate: {
         invalidatesTags: () => ["Vpc"],
       },
-      putApiMyVpcStaticRouteEdit: {
-        invalidatesTags: () => ["Vpc"],
-      },
-
       postApiMyVpcTranslateCreate: {
         invalidatesTags: () => ["Vpc", "VpcNat"],
       },
       deleteApiMyVpcTranslateDeleteById: {
         invalidatesTags: () => ["Vpc", "VpcNat"],
       },
-      postApiMyVpcStaticRouteCreate: {
-        invalidatesTags: () => ["Vpc"],
-      },
-      postApiMyVpcStaticRouteDeleteById: {
-        invalidatesTags: () => ["Vpc"],
-      },
-
       deleteApiMyVpcHostDeleteById: {
         invalidatesTags: () => ["Vpc"],
       },
@@ -424,39 +404,39 @@ export const api = generatedApi
         invalidatesTags: () => ["PublicIP"],
       },
       // ============================== Accessibility ============================== //
-      getApiMyPortalCustomerUserList: {
+      getApiMyAccountCustomerUserList: {
         providesTags: () => ["Accessibility"],
       },
-      postApiMyPortalCustomerUserCreate: {
+      postApiMyAccountCustomerUserCreate: {
         invalidatesTags: () => ["Accessibility"],
       },
-      deleteApiMyPortalCustomerUserDeleteByUserId: {
+      deleteApiMyAccountCustomerUserDeleteByUserId: {
         invalidatesTags: () => ["Accessibility"],
       },
-      postApiMyPortalCustomerUserChange: {
+      postApiMyAccountCustomerUserChangeCustomer: {
         invalidatesTags: () => ["Accessibility"],
       },
-      putApiMyPortalRoleAccessEdit: {
+      putApiMyAccountRoleAccessEdit: {
         invalidatesTags: () => ["Accessibility"],
       },
       // ============================== ConfigMap ============================== //
-      getApiMyKubernetesCloudConfigmapListById: {
+      getApiMyKuberCloudConfigmapListByNamespaceId: {
         providesTags: () => ["ConfigMap"],
       },
-      postApiMyKubernetesCloudConfigmapCreate: {
+      postApiMyKuberCloudConfigmapCreate: {
         invalidatesTags: () => ["ConfigMap"],
       },
-      deleteApiMyKubernetesCloudConfigmapDeleteById: {
+      deleteApiMyKuberCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
       },
       // ============================== SecretMap ============================== //
-      getApiMyKubernetesCloudSecretListById: {
+      getApiMyKuberCloudSecretListByNamespaceId: {
         providesTags: () => ["SecretMap"],
       },
-      postApiMyKubernetesCloudSecretCreate: {
+      postApiMyKuberCloudSecretCreate: {
         invalidatesTags: () => ["SecretMap"],
       },
-      deleteApiMyKubernetesCloudSecretDeleteById: {
+      deleteApiMyKuberCloudSecretDeleteById: {
         invalidatesTags: () => ["SecretMap"],
       },
     },
@@ -471,9 +451,9 @@ export const {
   useLazyGetApiMyPortalPaymentGetByIdQuery,
   useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
   useLazyGetApiMyWebHostGetLoginSessionByIdQuery,
-  useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery,
+  useLazyGetApiMyVmKmsGetByIdQuery,
   useLazyGetApiMyPortalProductItemListByProductIdQuery,
   useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
-  useLazyGetApiMyPortalReferralCustomerByReferralIdListQuery,
+  useLazyGetApiMyPortalReferralListByReferralIdQuery,
   useLazyGetApiMyDatacenterImageListQuery,
 } = api;

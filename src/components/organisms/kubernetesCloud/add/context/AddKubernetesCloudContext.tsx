@@ -12,7 +12,7 @@ import {
   DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
-  usePostApiMyKubernetesCloudHostCreateMutation,
+  usePostApiMyKuberCloudHostCreateMutation,
 } from "src/app/services/api.generated";
 
 export type kubernetesCloudCustomConfigType = {
@@ -94,7 +94,7 @@ const AddKubernetesCloudContextProvider: FC<
   const navigate = useNavigate();
 
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyKubernetesCloudHostCreateMutation();
+    usePostApiMyKuberCloudHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -131,7 +131,7 @@ const AddKubernetesCloudContextProvider: FC<
         toast.success("سرویس namespace شما با موفقیت ایجاد شد");
         navigate("/kubernetes-cloud");
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   return (

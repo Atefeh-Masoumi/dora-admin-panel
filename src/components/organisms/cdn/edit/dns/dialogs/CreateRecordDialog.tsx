@@ -28,7 +28,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
   usePostApiMyDnsCdnDnsRecordCreateMutation,
-  usePutApiMyDnsCdnDnsRecordEditMutation,
+  usePutApiMyDnsCdnDnsRecordEditByIdMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -97,7 +97,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     usePostApiMyDnsCdnDnsRecordCreateMutation();
 
   const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutApiMyDnsCdnDnsRecordEditMutation();
+    usePutApiMyDnsCdnDnsRecordEditByIdMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference, useProxy },
@@ -106,8 +106,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     if (!name || !value) return;
     if (id) {
       editDnsRecord({
+        id: id,
         editDnsRecordModel: {
-          id: id,
           dnsCdnHostId: dnsId,
           name,
           type,

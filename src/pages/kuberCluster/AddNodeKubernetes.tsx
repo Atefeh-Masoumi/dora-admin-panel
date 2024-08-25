@@ -2,7 +2,7 @@ import { FC } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { NodeConfig } from "src/components/organisms/kubernetes/edit/editNodes/addNode/NodeConfig";
 import { useAppSelector } from "src/app/hooks";
-import { usePostApiMyKubernetesClusterNodeCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKuberClusterNodeCreateMutation } from "src/app/services/api.generated";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import ServiceReceipt, {
@@ -21,7 +21,7 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
   );
 
   const [createNode, { isLoading: createNodeLoading }] =
-    usePostApiMyKubernetesClusterNodeCreateMutation();
+    usePostApiMyKuberClusterNodeCreateMutation();
 
   const onSubmitClick = () => {
     if (!hostId || !nodeType || !vmPassword || !productBundle) {

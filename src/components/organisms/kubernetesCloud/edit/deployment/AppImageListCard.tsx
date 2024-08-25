@@ -3,16 +3,16 @@ import { Stack } from "@mui/system";
 import { FC, memo, useCallback, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
-import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/api.generated";
+import { GetApiMyKuberCloudImageListApiResponse } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
 import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
-  list: GetApiMyKubernetesCloudImageListApiResponse;
+  list: GetApiMyKuberCloudImageListApiResponse;
   loading: boolean;
-  formik: FormikProps<KuberCloudAppImageType>
+  formik: FormikProps<KuberCloudAppImageType>;
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({
@@ -26,7 +26,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
   }>(staticImageCategoryList[0]);
 
   const filterByCategory = useCallback(
-    (id: number) => list.filter((item) => item.category === id),
+    (id: number) => list.filter((item) => item.categoryId === id),
     [list]
   );
 

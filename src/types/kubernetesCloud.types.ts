@@ -1,7 +1,7 @@
 import {
-  GetApiMyKubernetesCloudConfigmapListByIdApiResponse,
-  GetApiMyKubernetesCloudSecretListByIdApiResponse,
   SecretKeyValuePairsResponse,
+  GetApiMyKuberCloudConfigmapListByNamespaceIdApiResponse,
+  GetApiMyKuberCloudSecretListByNamespaceIdApiResponse,
 } from "src/app/services/api.generated";
 
 export type EnvironmentVariablesType = {
@@ -29,8 +29,8 @@ export type VariableEnvironment = {
 };
 
 export type ResourceListType =
-  | GetApiMyKubernetesCloudConfigmapListByIdApiResponse
-  | GetApiMyKubernetesCloudSecretListByIdApiResponse;
+  | GetApiMyKuberCloudConfigmapListByNamespaceIdApiResponse
+  | GetApiMyKuberCloudSecretListByNamespaceIdApiResponse;
 
 export type KeyListInResourceType =
   | SecretKeyValuePairsResponse

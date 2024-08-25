@@ -7,7 +7,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
-import { useGetApiMyKubernetesClusterHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKuberClusterHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
@@ -18,7 +18,7 @@ type KubernetesOverviewPropsType = {};
 export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
-  const { data, isLoading } = useGetApiMyKubernetesClusterHostGetByIdQuery(
+  const { data, isLoading } = useGetApiMyKuberClusterHostGetByIdQuery(
     {
       id: Number(kubernetesId) || 0,
     },

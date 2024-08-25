@@ -11,7 +11,7 @@ import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
   StorageUserListResponse,
-  useDeleteApiMyStorageUserDeleteByIdMutation,
+  useDeleteApiMyObjectStorageStorageUserDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -51,7 +51,7 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const [DeleteAccessKey, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyStorageUserDeleteByIdMutation();
+    useDeleteApiMyObjectStorageStorageUserDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
     DeleteAccessKey({ id: Number(selectedAccessKey?.id) })
@@ -60,7 +60,7 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
         toast.success(" کلید دسترسی با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch(() => {});
 
   return (
     <>

@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { emailValidator } from "src/utils/formValidator";
 import {
-  useGetApiMyPortalProfileGetQuery,
-  usePostApiMyPortalProfileConfirmEmailMutation,
-  usePutApiMyPortalProfileEditEmailMutation,
+  useGetApiMyAccountProfileGetQuery,
+  usePostApiMyAccountProfileConfirmEmailMutation,
+  usePutApiMyAccountProfileEditEmailMutation,
 } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -33,10 +33,10 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
     null,
   ]);
 
-  const { data } = useGetApiMyPortalProfileGetQuery();
+  const { data } = useGetApiMyAccountProfileGetQuery();
 
   const [sendEmail, { isLoading }] =
-    usePutApiMyPortalProfileEditEmailMutation();
+    usePutApiMyAccountProfileEditEmailMutation();
 
   const onSubmit: formikOnSubmitType<{ email: string }> = (
     { email },
@@ -55,7 +55,7 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
-    usePostApiMyPortalProfileConfirmEmailMutation();
+    usePostApiMyAccountProfileConfirmEmailMutation();
 
   const submitConfirm = () => {
     if (haveNull) return;

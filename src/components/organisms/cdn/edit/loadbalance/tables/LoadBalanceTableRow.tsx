@@ -2,7 +2,7 @@ import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  EditCdnRouteModel,
+  CdnRouteListResponse,
   useDeleteApiMyDnsCdnRouteDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
@@ -20,7 +20,7 @@ enum DIALOG_TYPE_ENUM {
 export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedCluster, setSelectedCluster] =
-    useState<EditCdnRouteModel | null>(null);
+    useState<CdnRouteListResponse | null>(null);
 
   const handleOpenEdit = () => setOpenEdit(true);
   const [openEdit, setOpenEdit] = useState(false);
@@ -29,7 +29,7 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteItem, { isLoading: deleteClusterRecordLoading }] =
     useDeleteApiMyDnsCdnRouteDeleteByIdMutation();
 
-  const handleOpenDelete = (clusterInfo: EditCdnRouteModel) => {
+  const handleOpenDelete = (clusterInfo: CdnRouteListResponse) => {
     setSelectedCluster(clusterInfo);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };

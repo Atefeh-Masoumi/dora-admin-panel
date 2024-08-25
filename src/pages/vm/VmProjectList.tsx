@@ -12,8 +12,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   VmProjectListResponse,
-  useDeleteApiMyVmProjectDeleteByIdMutation,
-  useGetApiMyVmProjectListQuery,
+  useDeleteApiMyHostProjectDeleteByIdMutation,
+  useGetApiMyHostProjectListQuery,
 } from "src/app/services/api.generated";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
@@ -42,10 +42,10 @@ const VmProjectList: FC = () => {
     data: vmProjectList,
     isLoading: VmProjectListLoading,
     refetch,
-  } = useGetApiMyVmProjectListQuery();
+  } = useGetApiMyHostProjectListQuery();
 
   const [deleteProject, { isLoading: deleteProjectLoading }] =
-    useDeleteApiMyVmProjectDeleteByIdMutation();
+    useDeleteApiMyHostProjectDeleteByIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {

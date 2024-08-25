@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { useGetApiMyKubernetesCloudConfigmapListByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
@@ -32,9 +32,9 @@ export const KubernetesCloudConfigMap: FC<
   const { id: kubernetesCloudId } = useParams();
 
   const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudConfigmapListByIdQuery(
+    useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery(
       {
-        id: Number(kubernetesCloudId) || 0,
+        namespaceId: Number(kubernetesCloudId) || 0,
       },
       { skip: !kubernetesCloudId }
     );

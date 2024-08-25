@@ -36,8 +36,8 @@ export const homeProductsConstantListItems = [
     link: "/storage",
   },
   {
-    title: "vPC",
-    text: "ابر اختصاصی",
+    title: "Private Cloud",
+    text: "ابر اختصاصی مجازی",
     Icon: WebHostSvg,
     bgcolor: "rgba(230, 69, 80, 0.2)",
     link: "/vpc",

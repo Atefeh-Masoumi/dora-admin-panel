@@ -17,9 +17,9 @@ import { Form, Formik } from "formik";
 import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyPortalRoleAccessListByUserIdQuery,
-  useGetApiMyPortalRoleListQuery,
-  usePutApiMyPortalRoleAccessEditMutation,
+  useGetApiMyAccountRoleAccessListByUserIdQuery,
+  useGetApiMyAccountRoleListQuery,
+  usePutApiMyAccountRoleAccessEditMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { access, roleAccessType } from "src/constant/accessModal.constant";
@@ -42,15 +42,15 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
 
   const { data: roleList, isLoading: roleListIsLoading } =
-    useGetApiMyPortalRoleListQuery();
+    useGetApiMyAccountRoleListQuery();
 
   const [editCustomerUser, { isLoading: editUserIsLoading }] =
-    usePutApiMyPortalRoleAccessEditMutation();
+    usePutApiMyAccountRoleAccessEditMutation();
 
   const {
     data: currentUserRoleAccessList,
     isLoading: customerUserAccessesIsLoading,
-  } = useGetApiMyPortalRoleAccessListByUserIdQuery(
+  } = useGetApiMyAccountRoleAccessListByUserIdQuery(
     { userId },
     { skip: !userId }
   );

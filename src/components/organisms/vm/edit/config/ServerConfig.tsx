@@ -5,7 +5,7 @@ import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/cont
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { usePutApiMyVmHostEditMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmHostEditByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 
 const memoryUnitPrice = 600000;
@@ -24,7 +24,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [getData] = useLazyGetApiMyVmHostGetByIdQuery();
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiMyVmHostEditMutation();
+    usePutApiMyVmHostEditByIdMutation();
 
   useEffect(() => {
     if (serverId) {
@@ -77,11 +77,11 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const submitClickHandler = () => {
     if (!serverId) return;
     sendNewConfig({
+      id: serverId,
       editVmModel: {
         cpu,
         memory,
         disk,
-        id: serverId,
       },
     })
       .unwrap()

@@ -16,12 +16,12 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
+import { usePostApiMyKuberCloudConfigmapCreateMutation } from "src/app/services/api.generated";
 
 type InitialValuesType = {
   name: string | null;
@@ -47,7 +47,7 @@ export const CreateConfigMapDialog: FC<
   const [envs, setEnvs] = useState<any[]>([]);
 
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
-    usePostApiMyKubernetesCloudConfigmapCreateMutation();
+    usePostApiMyKuberCloudConfigmapCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {

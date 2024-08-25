@@ -22,8 +22,8 @@ import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
 import { SelectEnvResource } from "./envVariable/SelectEnvResource";
 import {
-  useGetApiMyKubernetesCloudConfigmapListByIdQuery,
-  useGetApiMyKubernetesCloudSecretListByIdQuery,
+  useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery,
+  useGetApiMyKuberCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
@@ -58,19 +58,20 @@ export const SelectEnvironmentVariable: FC<
   const [keyListInResource, setKeyListInResource] = useState<any>();
 
   const { data: configmapList } =
-    useGetApiMyKubernetesCloudConfigmapListByIdQuery(
+    useGetApiMyKuberCloudConfigmapListByNamespaceIdQuery(
       {
-        id: Number(kubernetesCloudNameSpaceId),
+        namespaceId: Number(kubernetesCloudNameSpaceId),
       },
       { skip: !kubernetesCloudNameSpaceId }
     );
 
-  const { data: secretList } = useGetApiMyKubernetesCloudSecretListByIdQuery(
-    {
-      id: Number(kubernetesCloudNameSpaceId),
-    },
-    { skip: !kubernetesCloudNameSpaceId }
-  );
+  const { data: secretList } =
+    useGetApiMyKuberCloudSecretListByNamespaceIdQuery(
+      {
+        namespaceId: Number(kubernetesCloudNameSpaceId),
+      },
+      { skip: !kubernetesCloudNameSpaceId }
+    );
 
   const removeDestinationInput = (index: number) => {
     setKeyValues((prevState) => {
@@ -91,7 +92,7 @@ export const SelectEnvironmentVariable: FC<
         setResourceList(configmapList);
         const configMapList = configmapList?.find(
           (item) => item.id === selectedResourceItem
-        )?.configtMaps;
+        )?.configMaps;
         setKeyListInResource(configMapList);
         break;
       case ENVIRONMENT_TYPES.SECRET_MAP:

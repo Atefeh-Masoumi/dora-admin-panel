@@ -6,8 +6,8 @@ import { formikOnSubmitType } from "src/types/form.type";
 import AddIcon from "@mui/icons-material/Add";
 import * as yup from "yup";
 import {
-  useGetApiMyKubernetesCloudImageListQuery,
-  usePostApiMyKubernetesCloudDeploymentCreateMutation,
+  useGetApiMyKuberCloudImageListQuery,
+  usePostApiMyKuberCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/AppImageListCard";
@@ -22,10 +22,10 @@ const AddKubernetesCloudApp: FC = () => {
   const [keyValues, setKeyValues] = useState<VariableEnvironment[]>([]);
 
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
-    useGetApiMyKubernetesCloudImageListQuery();
+    useGetApiMyKuberCloudImageListQuery();
 
   const [createDeployment, { isLoading: createDeploymentLoading }] =
-    usePostApiMyKubernetesCloudDeploymentCreateMutation();
+    usePostApiMyKuberCloudDeploymentCreateMutation();
 
   const initialValues: KuberCloudAppImageType = {
     imageId: null,

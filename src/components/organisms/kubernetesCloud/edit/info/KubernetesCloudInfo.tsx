@@ -7,7 +7,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
-import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKuberCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
@@ -18,7 +18,7 @@ type KubernetesCloudInfoPropsType = {};
 export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
-  const { data, isLoading } = useGetApiMyKubernetesCloudHostGetByIdQuery(
+  const { data, isLoading } = useGetApiMyKuberCloudHostGetByIdQuery(
     {
       id: Number(kubernetesId) || 0,
     },
@@ -44,7 +44,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
       >
         <Stack rowGap={2}>
           <Typography align="center" fontWeight={700} fontSize={18}>
-           اطلاعات سرویس کوبرنتیز ابری
+            اطلاعات سرویس کوبرنتیز ابری
           </Typography>
           <Divider flexItem />
 

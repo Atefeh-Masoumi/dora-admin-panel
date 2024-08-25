@@ -13,7 +13,7 @@ import {
   DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
-  usePostApiMyKubernetesClusterHostCreateMutation,
+  usePostApiMyKuberClusterHostCreateMutation,
 } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
@@ -117,7 +117,7 @@ export const AddKubernetesContextProvider: FC<
   const navigate = useNavigate();
 
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyKubernetesClusterHostCreateMutation();
+    usePostApiMyKuberClusterHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
