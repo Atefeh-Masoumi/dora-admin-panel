@@ -8,14 +8,14 @@ import {
 } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { NetworkItemsType } from "../steps/SelectVpcNetwork";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import {
   DatacenterListResponse,
-  HypervisorTypeListResponse,
+  HypervisorListResponse,
   ProductBundleVpcListResponse,
   usePostApiMyVpcHostCreateMutation,
 } from "src/app/services/api.generated";
-import { NetworkItemsType } from "../steps/SelectVpcNetwork";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 
 export type addVpcStepsType = 1 | 2 | 3;
 
@@ -35,8 +35,8 @@ const defaultNetworkList: NetworkItemsType[] = [
 type AddVpcContextType = {
   dataCenter: DatacenterListResponse | null;
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
-  hypervisor: HypervisorTypeListResponse | null;
-  setHypervisor: Dispatch<SetStateAction<HypervisorTypeListResponse | null>>;
+  hypervisor: HypervisorListResponse | null;
+  setHypervisor: Dispatch<SetStateAction<HypervisorListResponse | null>>;
   name: string | null;
   setName: Dispatch<SetStateAction<string | null>>;
   selectedNetworkList: NetworkItemsType[] | null;
@@ -72,8 +72,9 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
   const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
     null
   );
-  const [hypervisor, setHypervisor] =
-    useState<HypervisorTypeListResponse | null>(null);
+  const [hypervisor, setHypervisor] = useState<HypervisorListResponse | null>(
+    null
+  );
   const [serverConfig, setServerConfig] =
     useState<ProductBundleVpcListResponse | null>(null);
   const [name, setName] = useState<string | null>(null);

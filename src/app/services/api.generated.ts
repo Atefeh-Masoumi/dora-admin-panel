@@ -836,7 +836,7 @@ export const api = createApi({
       GetApiMyKubernetesCloudSecretListByNamespaceIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/secret/list/${queryArg.namespaceId}`,
+        url: `/api/my/kubernetes/cloud/secret/list/${queryArg.namespaceId}`,
       }),
     }),
     getApiMyKubernetesCloudSecretGetById: build.query<
@@ -844,7 +844,7 @@ export const api = createApi({
       GetApiMyKubernetesCloudSecretGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/secret/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/secret/get/${queryArg.id}`,
       }),
     }),
     deleteApiMyKubernetesCloudSecretDeleteById: build.mutation<
@@ -852,7 +852,7 @@ export const api = createApi({
       DeleteApiMyKubernetesCloudSecretDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/secret/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/secret/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -861,7 +861,7 @@ export const api = createApi({
       PostApiMyKubernetesCloudSecretCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/secret/create`,
+        url: `/api/my/kubernetes/cloud/secret/create`,
         method: "POST",
         body: queryArg.createKuberCloudSecretModel,
       }),
@@ -870,14 +870,14 @@ export const api = createApi({
       GetApiMyKubernetesCloudIngressListApiResponse,
       GetApiMyKubernetesCloudIngressListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cloud/ingress/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cloud/ingress/list` }),
     }),
     getApiMyKubernetesCloudIngressGetById: build.query<
       GetApiMyKubernetesCloudIngressGetByIdApiResponse,
       GetApiMyKubernetesCloudIngressGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/ingress/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/ingress/get/${queryArg.id}`,
       }),
     }),
     deleteApiMyKubernetesCloudIngressDeleteById: build.mutation<
@@ -885,7 +885,7 @@ export const api = createApi({
       DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/ingress/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/ingress/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -894,7 +894,7 @@ export const api = createApi({
       PostApiMyKubernetesCloudIngressCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/ingress/create`,
+        url: `/api/my/kubernetes/cloud/ingress/create`,
         method: "POST",
         body: queryArg.createKuberCloudIngressModel,
       }),
@@ -903,26 +903,26 @@ export const api = createApi({
       GetApiMyKubernetesCloudCategoryListApiResponse,
       GetApiMyKubernetesCloudCategoryListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cloud/category/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cloud/category/list` }),
     }),
     getApiMyKubernetesCloudImageList: build.query<
       GetApiMyKubernetesCloudImageListApiResponse,
       GetApiMyKubernetesCloudImageListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cloud/image/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cloud/image/list` }),
     }),
     getApiMyKubernetesCloudHostList: build.query<
       GetApiMyKubernetesCloudHostListApiResponse,
       GetApiMyKubernetesCloudHostListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cloud/host/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cloud/host/list` }),
     }),
     getApiMyKubernetesCloudHostGetById: build.query<
       GetApiMyKubernetesCloudHostGetByIdApiResponse,
       GetApiMyKubernetesCloudHostGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/host/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/host/get/${queryArg.id}`,
       }),
     }),
     putApiMyKubernetesCloudHostEditById: build.mutation<
@@ -930,7 +930,7 @@ export const api = createApi({
       PutApiMyKubernetesCloudHostEditByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/host/edit/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/host/edit/${queryArg.id}`,
         method: "PUT",
         body: queryArg.editKuberCloudHostModel,
       }),
@@ -940,7 +940,7 @@ export const api = createApi({
       DeleteApiMyKubernetesCloudHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/host/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -949,7 +949,7 @@ export const api = createApi({
       PostApiMyKubernetesCloudHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/host/create`,
+        url: `/api/my/kubernetes/cloud/host/create`,
         method: "POST",
         body: queryArg.createKuberCloudHostModel,
       }),
@@ -958,14 +958,14 @@ export const api = createApi({
       GetApiMyKubernetesCloudDeploymentListApiResponse,
       GetApiMyKubernetesCloudDeploymentListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cloud/deployment/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cloud/deployment/list` }),
     }),
     getApiMyKubernetesCloudDeploymentGetById: build.query<
       GetApiMyKubernetesCloudDeploymentGetByIdApiResponse,
       GetApiMyKubernetesCloudDeploymentGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/deployment/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/deployment/get/${queryArg.id}`,
       }),
     }),
     deleteApiMyKubernetesCloudDeploymentDeleteById: build.mutation<
@@ -973,7 +973,7 @@ export const api = createApi({
       DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/deployment/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/deployment/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -982,7 +982,7 @@ export const api = createApi({
       PostApiMyKubernetesCloudDeploymentCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/deployment/create`,
+        url: `/api/my/kubernetes/cloud/deployment/create`,
         method: "POST",
         body: queryArg.createKuberCloudDeploymentModel,
       }),
@@ -992,7 +992,7 @@ export const api = createApi({
       GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/configmap/list/${queryArg.namespaceId}`,
+        url: `/api/my/kubernetes/cloud/configmap/list/${queryArg.namespaceId}`,
       }),
     }),
     getApiMyKubernetesCloudConfigmapGetById: build.query<
@@ -1000,7 +1000,7 @@ export const api = createApi({
       GetApiMyKubernetesCloudConfigmapGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/configmap/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/configmap/get/${queryArg.id}`,
       }),
     }),
     deleteApiMyKubernetesCloudConfigmapDeleteById: build.mutation<
@@ -1008,7 +1008,7 @@ export const api = createApi({
       DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/configmap/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cloud/configmap/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1017,7 +1017,7 @@ export const api = createApi({
       PostApiMyKubernetesCloudConfigmapCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cloud/configmap/create`,
+        url: `/api/my/kubernetes/cloud/configmap/create`,
         method: "POST",
         body: queryArg.createKuberCloudConfigmapModel,
       }),
@@ -1026,14 +1026,14 @@ export const api = createApi({
       GetApiMyKubernetesClusterVersionListApiResponse,
       GetApiMyKubernetesClusterVersionListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cluster/version/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cluster/version/list` }),
     }),
     getApiMyKubernetesClusterNodeByKubernetesHostId: build.query<
       GetApiMyKubernetesClusterNodeByKubernetesHostIdApiResponse,
       GetApiMyKubernetesClusterNodeByKubernetesHostIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/node/${queryArg.kubernetesHostId}`,
+        url: `/api/my/kubernetes/cluster/node/${queryArg.kubernetesHostId}`,
       }),
     }),
     deleteApiMyKubernetesClusterNodeDeleteById: build.mutation<
@@ -1041,7 +1041,7 @@ export const api = createApi({
       DeleteApiMyKubernetesClusterNodeDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/node/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cluster/node/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1050,7 +1050,7 @@ export const api = createApi({
       PostApiMyKubernetesClusterNodeCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/node/create`,
+        url: `/api/my/kubernetes/cluster/node/create`,
         method: "POST",
         body: queryArg.createKubernetesNodeModel,
       }),
@@ -1059,14 +1059,14 @@ export const api = createApi({
       GetApiMyKubernetesClusterHostListApiResponse,
       GetApiMyKubernetesClusterHostListApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes-cluster/host/list` }),
+      query: () => ({ url: `/api/my/kubernetes/cluster/host/list` }),
     }),
     getApiMyKubernetesClusterHostGetById: build.query<
       GetApiMyKubernetesClusterHostGetByIdApiResponse,
       GetApiMyKubernetesClusterHostGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/host/get/${queryArg.id}`,
+        url: `/api/my/kubernetes/cluster/host/get/${queryArg.id}`,
       }),
     }),
     deleteApiMyKubernetesClusterHostDeleteById: build.mutation<
@@ -1074,7 +1074,7 @@ export const api = createApi({
       DeleteApiMyKubernetesClusterHostDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/host/delete/${queryArg.id}`,
+        url: `/api/my/kubernetes/cluster/host/delete/${queryArg.id}`,
         method: "DELETE",
       }),
     }),
@@ -1083,7 +1083,7 @@ export const api = createApi({
       PostApiMyKubernetesClusterHostCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes-cluster/host/create`,
+        url: `/api/my/kubernetes/cluster/host/create`,
         method: "POST",
         body: queryArg.createKubernetesModel,
       }),
@@ -1967,6 +1967,36 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
+    getApiMyVpcHostPrivateNetworkList: build.query<
+      GetApiMyVpcHostPrivateNetworkListApiResponse,
+      GetApiMyVpcHostPrivateNetworkListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/host/private/network/list` }),
+    }),
+    getApiMyVpcHostPrivateNetworkGetById: build.query<
+      GetApiMyVpcHostPrivateNetworkGetByIdApiResponse,
+      GetApiMyVpcHostPrivateNetworkGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/host/private/network/get/${queryArg.id}`,
+      }),
+    }),
+    getApiMyVpcHostPrivateNetworkRequestList: build.query<
+      GetApiMyVpcHostPrivateNetworkRequestListApiResponse,
+      GetApiMyVpcHostPrivateNetworkRequestListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/host/private/network/request/list` }),
+    }),
+    postApiMyVpcHostPrivateNetworkRequestCreate: build.mutation<
+      PostApiMyVpcHostPrivateNetworkRequestCreateApiResponse,
+      PostApiMyVpcHostPrivateNetworkRequestCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/host/private/network/request/create`,
+        method: "POST",
+        body: queryArg.body,
+      }),
+    }),
     getApiMyWebHostList: build.query<
       GetApiMyWebHostListApiResponse,
       GetApiMyWebHostListApiArg
@@ -2491,7 +2521,7 @@ export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
 export type GetApiMyHostHypervisorListApiResponse =
-  /** status 200 OK */ HypervisorTypeListResponse[];
+  /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
 export type GetApiMyHostProjectListApiResponse =
   /** status 200 OK */ VmProjectListResponse[];
@@ -3099,6 +3129,24 @@ export type PostApiMyVmHostCreateApiArg = {
 export type PutApiMyVmHostConnectByIdApiResponse = unknown;
 export type PutApiMyVmHostConnectByIdApiArg = {
   id: number;
+};
+export type GetApiMyVpcHostPrivateNetworkListApiResponse =
+  /** status 200 OK */ VpcHostPrivateNetworkResponse[];
+export type GetApiMyVpcHostPrivateNetworkListApiArg = void;
+export type GetApiMyVpcHostPrivateNetworkGetByIdApiResponse =
+  /** status 200 OK */ VpcHostPrivateNetworkResponse;
+export type GetApiMyVpcHostPrivateNetworkGetByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVpcHostPrivateNetworkRequestListApiResponse =
+  /** status 200 OK */ VpcHostPrivateNetworkRequestResponse[];
+export type GetApiMyVpcHostPrivateNetworkRequestListApiArg = void;
+export type PostApiMyVpcHostPrivateNetworkRequestCreateApiResponse = unknown;
+export type PostApiMyVpcHostPrivateNetworkRequestCreateApiArg = {
+  body: {
+    VpcHostId: number;
+    VpcPrivateNetworkId: number;
+  };
 };
 export type GetApiMyWebHostListApiResponse =
   /** status 200 OK */ WebHostListResponse[];
@@ -3734,7 +3782,7 @@ export type ChangeContactModel = {
   fax?: string | null;
   email: string;
 };
-export type HypervisorTypeListResponse = {
+export type HypervisorListResponse = {
   id?: number;
   name: string | null;
 };
@@ -4693,6 +4741,20 @@ export type CreateVmModel = {
   vpcHostNetworkId?: number | null;
   ipAddress?: string | null;
 };
+export type VpcHostPrivateNetworkResponse = {
+  id: number;
+  name: string | null;
+  vlanId: string | null;
+};
+export type VpcHostPrivateNetworkRequestResponse = {
+  id?: number;
+  vpcHost: string | null;
+  vpcHostPrivateNetwork: string | null;
+  vpcHostPrivateNetworkRequestStatus: string | null;
+  createDate?: string;
+  modifyDate?: string;
+  description?: string | null;
+};
 export type WebHostListResponse = {
   id?: number;
   datacenter: string | null;
@@ -5032,6 +5094,10 @@ export const {
   useDeleteApiMyVmHostDeleteByIdMutation,
   usePostApiMyVmHostCreateMutation,
   usePutApiMyVmHostConnectByIdMutation,
+  useGetApiMyVpcHostPrivateNetworkListQuery,
+  useGetApiMyVpcHostPrivateNetworkGetByIdQuery,
+  useGetApiMyVpcHostPrivateNetworkRequestListQuery,
+  usePostApiMyVpcHostPrivateNetworkRequestCreateMutation,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
   useGetApiMyWebHostGetByIdQuery,
