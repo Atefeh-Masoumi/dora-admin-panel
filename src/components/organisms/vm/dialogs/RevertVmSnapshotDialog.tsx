@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiMyVmSnapshotRevertMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmSnapshotRevertByIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router";
@@ -19,12 +19,13 @@ export const RevertVmSnapshotDialog: FC<RevertVmSnapshotDialogPropsType> = ({
   snapshotId,
 }) => {
   const onClose = () => handleClose();
-  const [revertSnapshot, { isLoading }] = usePutApiMyVmSnapshotRevertMutation();
+  const [revertSnapshot, { isLoading }] =
+    usePutApiMyVmSnapshotRevertByIdMutation();
   const navigate = useNavigate();
 
   const submit = () => {
     if (!snapshotId) return;
-    revertSnapshot({ revertSnapshotModel: { snapshotId } })
+    revertSnapshot({ id: snapshotId })
       .unwrap()
       .then(() => {
         toast.success(

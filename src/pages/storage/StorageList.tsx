@@ -2,12 +2,12 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { useGetApiMyStorageHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { StorageTableRow } from "src/components/organisms/storage/tables/StorageTableRow";
 import { storageTableStruct } from "src/components/organisms/storage/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useGetApiMyObjectStorageHostListQuery } from "src/app/services/api.generated";
 
 const StorageList: FC = () => {
   const [search, setSearch] = useState("");
@@ -16,7 +16,7 @@ const StorageList: FC = () => {
     data,
     isLoading: getDataLoading,
     isFetching,
-  } = useGetApiMyStorageHostListQuery();
+  } = useGetApiMyObjectStorageHostListQuery();
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,

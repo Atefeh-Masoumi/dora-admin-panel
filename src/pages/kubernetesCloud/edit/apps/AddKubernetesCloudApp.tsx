@@ -5,14 +5,11 @@ import { FC, useState } from "react";
 import { formikOnSubmitType } from "src/types/form.type";
 import AddIcon from "@mui/icons-material/Add";
 import * as yup from "yup";
-import {
-  useGetApiMyKubernetesCloudImageListQuery,
-  usePostApiMyKubernetesCloudDeploymentCreateMutation,
-} from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudImageListQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/AppImageListCard";
 import {
-  KuberCloudAppImageType,
+  KubernetesCloudAppImageType,
   VariableEnvironment,
 } from "src/types/kubernetesCloud.types";
 import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectDeploymentInfo";
@@ -21,13 +18,12 @@ import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCl
 const AddKubernetesCloudApp: FC = () => {
   const [keyValues, setKeyValues] = useState<VariableEnvironment[]>([]);
 
-  const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
-    useGetApiMyKubernetesCloudImageListQuery();
+  const {
+    data: KubernetesCloudImageList,
+    isLoading: KubernetesCloudImageLoading,
+  } = useGetApiMyKubernetesCloudImageListQuery();
 
-  const [createDeployment, { isLoading: createDeploymentLoading }] =
-    usePostApiMyKubernetesCloudDeploymentCreateMutation();
-
-  const initialValues: KuberCloudAppImageType = {
+  const initialValues: KubernetesCloudAppImageType = {
     imageId: null,
     tagId: "",
     name: "",
@@ -53,17 +49,17 @@ const AddKubernetesCloudApp: FC = () => {
     // ]);
   };
 
-  const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = ({
+  const onSubmit: formikOnSubmitType<KubernetesCloudAppImageType> = ({
     imageId,
     tagId,
   }) => {
     // createDeployment({
-    //   createKuberCloudDeploymentModel: {
+    //   createKubernetesCloudDeploymentModel: {
     //   },
     // });
   };
 
-  const formik = useFormik<KuberCloudAppImageType>({
+  const formik = useFormik<KubernetesCloudAppImageType>({
     initialValues,
     validationSchema,
     onSubmit,
@@ -72,7 +68,7 @@ const AddKubernetesCloudApp: FC = () => {
 
   // isMd = useMediaQuery(theme.breakpoints.up("lg"));
 
-  if (kuberCloudImageLoading) return <PageLoading />;
+  if (KubernetesCloudImageLoading) return <PageLoading />;
 
   return (
     <>
@@ -99,8 +95,8 @@ const AddKubernetesCloudApp: FC = () => {
             <PageLoading />
           ) : (
             <AppImageListCard
-              loading={kuberCloudImageLoading}
-              list={kuberCloudImageList || []}
+              loading={KubernetesCloudImageLoading}
+              list={KubernetesCloudImageList || []}
               formik={formik}
             />
           )}

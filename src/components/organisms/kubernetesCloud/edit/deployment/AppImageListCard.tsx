@@ -7,12 +7,12 @@ import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/ap
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
   list: GetApiMyKubernetesCloudImageListApiResponse;
   loading: boolean;
-  formik: FormikProps<KuberCloudAppImageType>
+  formik: FormikProps<KubernetesCloudAppImageType>;
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({
@@ -26,7 +26,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
   }>(staticImageCategoryList[0]);
 
   const filterByCategory = useCallback(
-    (id: number) => list.filter((item) => item.category === id),
+    (id: number) => list.filter((item) => item.categoryId === id),
     [list]
   );
 

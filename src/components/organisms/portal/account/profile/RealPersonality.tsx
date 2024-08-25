@@ -4,8 +4,8 @@ import { Stack, TextField } from "@mui/material";
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyPortalProfileGetQuery,
-  usePutApiMyPortalProfileEditMutation,
+  useGetApiMyAccountProfileGetQuery,
+  usePutApiMyAccountProfileEditMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -27,9 +27,9 @@ type RealPersonalityPropsType = {};
 export const RealPersonality: FC<RealPersonalityPropsType> = () => {
   const [birthDate, setBirthDate] = useState<null | Date>(null);
   const [editProfile, { isLoading: loadingEdit }] =
-    usePutApiMyPortalProfileEditMutation();
+    usePutApiMyAccountProfileEditMutation();
 
-  const { data: userInformation } = useGetApiMyPortalProfileGetQuery();
+  const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
 
   useEffect(() => {
     if (userInformation?.birthDate) {

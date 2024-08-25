@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { Chip, Divider, Stack, Typography } from "@mui/material";
 import { RealPersonality } from "./RealPersonality";
-import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyAccountProfileGetQuery } from "src/app/services/api.generated";
 
 export const Specifications: FC = () => {
-  const { data: userInformation } = useGetApiMyPortalProfileGetQuery();
+  const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
 
   return (
     <Stack

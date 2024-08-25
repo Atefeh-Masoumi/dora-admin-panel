@@ -16,8 +16,8 @@ import {
 import * as yup from "yup";
 import { FC, useEffect, useState } from "react";
 import {
-  useGetApiMyPortalRoleListQuery,
-  usePostApiMyPortalCustomerUserCreateMutation,
+  useGetApiMyAccountRoleListQuery,
+  usePostApiMyAccountCustomerUserCreateMutation,
 } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -50,10 +50,10 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
 
   const { data: roleList, isLoading: roleListIsLoading } =
-    useGetApiMyPortalRoleListQuery();
+    useGetApiMyAccountRoleListQuery();
 
   const [createCustomerUser, { isLoading: createUserIsLoading }] =
-    usePostApiMyPortalCustomerUserCreateMutation();
+    usePostApiMyAccountCustomerUserCreateMutation();
 
   const [superUser, setSuperUser] = useState(false);
   const [financialManager, setFinancialManager] = useState(false);

@@ -11,7 +11,7 @@ import mobinNetImage from "src/assets/images/mobinnet.png";
 
 type SelectKuberDataCenterPropsType = {};
 
-export const SelectKuberCloudDataCenter: FC<
+export const SelectKubernetesCloudDataCenter: FC<
   SelectKuberDataCenterPropsType
 > = () => {
   const { dataCenter, setDataCenter } = useContext(AddKubernetesCloudContext);

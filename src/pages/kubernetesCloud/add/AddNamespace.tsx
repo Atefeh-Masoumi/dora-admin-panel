@@ -5,10 +5,10 @@ import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
 import { AddKubernetesCloudContext } from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
-import { KuberCloudInfo } from "src/components/organisms/kubernetesCloud/add/steps/KuberCloudInfo";
-import { SelectKuberCloudConfigType } from "src/components/organisms/kubernetesCloud/add/steps/SelectConfigType";
-import { SelectKuberCloudConfig } from "src/components/organisms/kubernetesCloud/add/steps/SelectKuberCloudConfig";
-import { SelectKuberCloudDataCenter } from "src/components/organisms/kubernetesCloud/add/steps/SelectKuberCloudDataCenter";
+import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/add/steps/KuberCloudInfo";
+import { SelectKubernetesCloudConfigType } from "src/components/organisms/kubernetesCloud/add/steps/SelectConfigType";
+import { SelectKubernetesCloudConfig } from "src/components/organisms/kubernetesCloud/add/steps/SelectKuberCloudConfig";
+import { SelectKubernetesCloudDataCenter } from "src/components/organisms/kubernetesCloud/add/steps/SelectKuberCloudDataCenter";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
@@ -90,22 +90,22 @@ const AddNamespace: FC = () => {
           >
             <Grid container gap={2}>
               <Grid xs={12} item>
-                <SelectKuberCloudDataCenter />
+                <SelectKubernetesCloudDataCenter />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
-                <SelectKuberCloudConfigType
+                <SelectKubernetesCloudConfigType
                   isPredefined={isPredefined}
                   setIsPredefined={setIsPredefined}
                 />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
-                <SelectKuberCloudConfig />
+                <SelectKubernetesCloudConfig />
                 <Divider sx={{ margin: "50px 10px" }} />
               </Grid>
               <Grid xs={12} item>
-                <KuberCloudInfo />
+                <KubernetesCloudInfo />
               </Grid>
             </Grid>
           </Stack>

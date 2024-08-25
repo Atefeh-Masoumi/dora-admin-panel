@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  useGetApiMyStorageHostListQuery,
-  usePostApiMyStorageHostCreateMutation,
+  useGetApiMyObjectStorageHostListQuery,
+  usePostApiMyObjectStorageHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -35,14 +35,14 @@ const AddStorageService: FC = () => {
   const navigate = useNavigate();
 
   const [createStorageService, { isLoading }] =
-    usePostApiMyStorageHostCreateMutation();
+    usePostApiMyObjectStorageHostCreateMutation();
 
   const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
-  const { refetch } = useGetApiMyStorageHostListQuery();
+  const { refetch } = useGetApiMyObjectStorageHostListQuery();
 
   const mapCustomConfig = useMemo(() => {
     return [

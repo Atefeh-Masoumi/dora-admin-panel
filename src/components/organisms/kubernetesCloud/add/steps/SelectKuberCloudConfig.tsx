@@ -5,17 +5,17 @@ import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
-import { KuberCloudServerConfigTableRow } from "../tables/KuberCloudServerConfigTableRow";
+import { KubernetesCloudServerConfigTableRow } from "../tables/KuberCloudServerConfigTableRow";
 import { productBundleTableStruct } from "../tables/struct";
 
-type SelectKuberCloudConfigPropsType = {};
+type SelectKubernetesCloudConfigPropsType = {};
 
-export const SelectKuberCloudConfig: FC<
-  SelectKuberCloudConfigPropsType
+export const SelectKubernetesCloudConfig: FC<
+  SelectKubernetesCloudConfigPropsType
 > = () => {
   const {
-    data: kuberCloudBundleList,
-    isLoading: kuberCloudBundlesListLoading,
+    data: KubernetesCloudBundleList,
+    isLoading: KubernetesCloudBundlesListLoading,
   } = useGetApiMyPortalProductBundleKuberCloudListQuery();
 
   const { isPredefined, customConfig, setCustomConfig } = useContext(
@@ -75,13 +75,13 @@ export const SelectKuberCloudConfig: FC<
     () => (
       <BaseTable
         struct={productBundleTableStruct}
-        RowComponent={KuberCloudServerConfigTableRow}
-        rows={kuberCloudBundleList as any}
+        RowComponent={KubernetesCloudServerConfigTableRow}
+        rows={KubernetesCloudBundleList as any}
         text=""
-        isLoading={kuberCloudBundlesListLoading}
+        isLoading={KubernetesCloudBundlesListLoading}
       />
     ),
-    [kuberCloudBundlesListLoading]
+    [KubernetesCloudBundlesListLoading]
   );
 
   return (

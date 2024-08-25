@@ -26,7 +26,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { useLazyGetApiMyDnsCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePutApiMyDnsCdnRouteEditMutation,
+  usePutApiMyDnsCdnRouteEditByIdMutation,
 } from "src/app/services/api.generated";
 
 type InitialValuesType = {
@@ -133,7 +133,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     setCertificateSwitch((prevState) => !prevState);
 
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutApiMyDnsCdnRouteEditMutation();
+    usePutApiMyDnsCdnRouteEditByIdMutation();
 
   const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
@@ -141,8 +141,8 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   ) => {
     if (id) {
       editLoadBalance({
+        id: id,
         editCdnRouteModel: {
-          id: id,
           destinations,
           dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),

@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { useState, type FC } from "react";
-import { useGetApiMyPortalCustomerUserListQuery } from "src/app/services/api.generated";
+import { useGetApiMyAccountCustomerUserListQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -12,7 +12,7 @@ import { EditUserAccessModal } from "./dialog/EditUserAccessModal";
 export const AccessibilitySetting: FC = () => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const { data: customerUserList, isLoading: customerUserListLoading } =
-    useGetApiMyPortalCustomerUserListQuery();
+    useGetApiMyAccountCustomerUserListQuery();
 
   return (
     <>

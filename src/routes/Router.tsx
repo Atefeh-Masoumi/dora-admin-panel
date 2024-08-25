@@ -79,16 +79,16 @@ const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
 const KubernetesIndex = lazy(
-  () => import("src/pages/kuberCluster/KubernetesList")
+  () => import("src/pages/KubernetesCluster/KubernetesList")
 );
 const AddKubernetes = lazy(
-  () => import("src/pages/kuberCluster/AddKubernetes")
+  () => import("src/pages/KubernetesCluster/AddKubernetes")
 );
 const EditKubernetes = lazy(
-  () => import("src/pages/kuberCluster/EditKubernetes")
+  () => import("src/pages/KubernetesCluster/EditKubernetes")
 );
 const AddNodeKubernetes = lazy(
-  () => import("src/pages/kuberCluster/AddNodeKubernetes")
+  () => import("src/pages/KubernetesCluster/AddNodeKubernetes")
 );
 
 const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));

@@ -13,8 +13,8 @@ import { FC, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyStorageUserListByStorageHostIdQuery,
-  usePostApiMyStorageUserCreateMutation,
+  useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery,
+  usePostApiMyObjectStorageStorageUserCreateMutation,
 } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -31,12 +31,12 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyStorageUserListByStorageHostIdQuery({
+  } = useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery({
     storageHostId: id ? +id : 0,
   });
 
   const [callCreateAccessKey, { isLoading: createAccessKeyIsLoading }] =
-    usePostApiMyStorageUserCreateMutation();
+    usePostApiMyObjectStorageStorageUserCreateMutation();
 
   const [showDialog, setShowDialog] = useState(false);
 

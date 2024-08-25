@@ -4,8 +4,8 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePutApiMyStorageHostEditMutation,
-  useGetApiMyStorageHostGetByIdQuery,
+  usePutApiMyObjectStorageHostEditByIdMutation,
+  useGetApiMyObjectStorageHostGetByIdQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
 } from "src/app/services/api.generated";
 
@@ -23,7 +23,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
 
   const { id: serverId } = useParams();
 
-  const { data } = useGetApiMyStorageHostGetByIdQuery({
+  const { data } = useGetApiMyObjectStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
   const { data: productItems } =
@@ -36,7 +36,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   )?.price;
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiMyStorageHostEditMutation();
+    usePutApiMyObjectStorageHostEditByIdMutation();
 
   useEffect(() => {
     if (serverId && data) {
@@ -63,9 +63,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const submitClickHandler = () => {
     if (!serverId) return;
     sendNewConfig({
+      id: serverId ? +serverId : 0,
       editStorageHostModel: {
         disk,
-        id: serverId ? +serverId : 0,
       },
     })
       .unwrap()

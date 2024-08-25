@@ -4,7 +4,9 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
 import { productBundleTableStruct } from "./struct";
 
-export const KuberCloudServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
+export const KubernetesCloudServerConfigTableRow: FC<{ row: any }> = ({
+  row,
+}) => {
   const { serverConfig, setServerConfig } = useContext(
     AddKubernetesCloudContext
   );

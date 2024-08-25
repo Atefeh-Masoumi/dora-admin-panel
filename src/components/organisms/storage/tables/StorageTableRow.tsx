@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   StorageHostListResponse,
-  useDeleteApiMyStorageHostDeleteByIdMutation,
+  useDeleteApiMyObjectStorageHostDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -26,7 +26,7 @@ export const StorageTableRow: FC<{ row: any }> = ({ row }) => {
   const settingOnClick = () => navigate("/storage/" + row["id"]);
 
   const [deleteStorage, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyStorageHostDeleteByIdMutation();
+    useDeleteApiMyObjectStorageHostDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);

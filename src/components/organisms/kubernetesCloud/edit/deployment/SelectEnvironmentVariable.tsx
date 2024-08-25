@@ -13,7 +13,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
 import {
   KeyListInResourceType,
-  KuberCloudAppImageType,
+  KubernetesCloudAppImageType,
   ResourceListType,
   VariableEnvironment,
 } from "src/types/kubernetesCloud.types";
@@ -22,15 +22,15 @@ import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
 import { SelectEnvResource } from "./envVariable/SelectEnvResource";
 import {
-  useGetApiMyKubernetesCloudConfigmapListByIdQuery,
-  useGetApiMyKubernetesCloudSecretListByIdQuery,
+  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
 type SelectEnvironmentVariablePropsType = {
   outerIndex: number;
   item: any;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KubernetesCloudAppImageType>;
   keyValues: VariableEnvironment[];
   setKeyValues: Dispatch<SetStateAction<VariableEnvironment[]>>;
 };
@@ -58,19 +58,20 @@ export const SelectEnvironmentVariable: FC<
   const [keyListInResource, setKeyListInResource] = useState<any>();
 
   const { data: configmapList } =
-    useGetApiMyKubernetesCloudConfigmapListByIdQuery(
+    useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
       {
-        id: Number(kubernetesCloudNameSpaceId),
+        namespaceId: Number(kubernetesCloudNameSpaceId),
       },
       { skip: !kubernetesCloudNameSpaceId }
     );
 
-  const { data: secretList } = useGetApiMyKubernetesCloudSecretListByIdQuery(
-    {
-      id: Number(kubernetesCloudNameSpaceId),
-    },
-    { skip: !kubernetesCloudNameSpaceId }
-  );
+  const { data: secretList } =
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+      {
+        namespaceId: Number(kubernetesCloudNameSpaceId),
+      },
+      { skip: !kubernetesCloudNameSpaceId }
+    );
 
   const removeDestinationInput = (index: number) => {
     setKeyValues((prevState) => {
@@ -91,7 +92,7 @@ export const SelectEnvironmentVariable: FC<
         setResourceList(configmapList);
         const configMapList = configmapList?.find(
           (item) => item.id === selectedResourceItem
-        )?.configtMaps;
+        )?.configMaps;
         setKeyListInResource(configMapList);
         break;
       case ENVIRONMENT_TYPES.SECRET_MAP:

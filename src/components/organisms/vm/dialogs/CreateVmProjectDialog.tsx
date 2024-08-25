@@ -21,8 +21,8 @@ import {
   VmProjectCreateModel,
   VmProjectListResponse,
   useGetApiMyDatacenterListQuery,
-  usePostApiMyVmProjectCreateMutation,
-  usePutApiMyVmProjectEditByIdMutation,
+  usePostApiMyHostProjectCreateMutation,
+  usePutApiMyHostProjectEditByIdMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
@@ -45,9 +45,9 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   ...props
 }) => {
   const [createVmProject, { isLoading: createVmProjectLoading }] =
-    usePostApiMyVmProjectCreateMutation();
+    usePostApiMyHostProjectCreateMutation();
   const [editVmProject, { isLoading: editVmProjectLoading }] =
-    usePutApiMyVmProjectEditByIdMutation();
+    usePutApiMyHostProjectEditByIdMutation();
   const { data: datacenterList, isLoading: datacenterListLoading } =
     useGetApiMyDatacenterListQuery();
 

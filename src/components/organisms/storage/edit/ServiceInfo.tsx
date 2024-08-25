@@ -3,7 +3,7 @@ import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { useGetApiMyStorageHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyObjectStorageHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 
 type ServiceInfoPropsType = {};
@@ -15,7 +15,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
-  } = useGetApiMyStorageHostGetByIdQuery({
+  } = useGetApiMyObjectStorageHostGetByIdQuery({
     id: Number(id)!,
   });
 

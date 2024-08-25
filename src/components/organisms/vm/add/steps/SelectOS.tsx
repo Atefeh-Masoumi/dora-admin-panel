@@ -39,7 +39,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
 
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
-      datacenterId: datacenterId ? datacenterId : dataCenter?.id,
+      datacenterId: datacenterId || 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
       hypervisorTypeId: HYPERVISOR_ENUM.VM,
     }

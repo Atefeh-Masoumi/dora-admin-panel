@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  useGetApiMyVmProjectGetByIdQuery,
+  useGetApiMyHostProjectGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
@@ -59,7 +59,7 @@ const AddVm: FC = () => {
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
 
-  const { data: vmProjectData } = useGetApiMyVmProjectGetByIdQuery({
+  const { data: vmProjectData } = useGetApiMyHostProjectGetByIdQuery({
     id: Number(projectId),
   });
 

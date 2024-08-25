@@ -13,7 +13,7 @@ import {
 import { useFormik } from "formik";
 import { FC, MouseEventHandler, useState } from "react";
 import { toast } from "react-toastify";
-import { usePutApiMyPortalCustomerConvertToLegalMutation } from "src/app/services/api.generated";
+import { usePutApiMyAccountCustomerConvertToLegalMutation } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import { e2p } from "src/utils/e2p.utils";
@@ -108,7 +108,7 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
   };
 
   const [callConvertToLegal] =
-    usePutApiMyPortalCustomerConvertToLegalMutation();
+    usePutApiMyAccountCustomerConvertToLegalMutation();
 
   const onSubmit: formikOnSubmitType<profileAccountFormInitialValuesType> = (
     values,

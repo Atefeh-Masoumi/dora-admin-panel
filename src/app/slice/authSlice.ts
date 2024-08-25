@@ -71,7 +71,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.putApiMyPortalProfileEditTwoFactor.matchFulfilled,
+      api.endpoints.putApiMyAccountProfileEditTwoFactor.matchFulfilled,
       (state, actionPayload) => {
         const twoFactor =
           actionPayload.meta.arg.originalArgs.twoFactorModel.twoFactorStatus;
@@ -83,7 +83,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.putApiMyPortalProfileEdit.matchFulfilled,
+      api.endpoints.putApiMyAccountProfileEdit.matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };
@@ -92,7 +92,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.postApiMyPortalProfileConfirmPhoneNumber.matchFulfilled,
+      api.endpoints.postApiMyAccountProfileConfirmPhoneNumber.matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };
@@ -101,7 +101,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.postApiMyPortalProfileConfirmEmail.matchFulfilled,
+      api.endpoints.postApiMyAccountProfileConfirmEmail.matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };
