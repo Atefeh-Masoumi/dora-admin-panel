@@ -20,11 +20,11 @@ import { FC } from "react";
 import { KuberCloudImageResponse } from "src/app/services/api.generated";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { appImageList } from "src/constant/kubernetesCloud.constant";
-import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageCardPropsType = {
   item: KuberCloudImageResponse;
-  formik: FormikProps<KubernetesCloudAppImageType>;
+  formik: FormikProps<KuberCloudAppImageType>;
 };
 
 export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
@@ -109,7 +109,9 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
                 <InputLabel sx={{ fontSize: "15px" }}>Version</InputLabel>
                 <Select
                   value={
-                    formik.values.imageId === item.id ? formik.values.imageTagId : ""
+                    formik.values.imageId === item.id
+                      ? formik.values.imageTagId
+                      : ""
                   }
                   onFocus={(event) => {
                     event.stopPropagation(); // Stop the event from propagating to the parent
