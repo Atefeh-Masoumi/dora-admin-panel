@@ -1,7 +1,6 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { Dispatch, FC, SetStateAction } from "react";
-import { EnvironmentType } from "src/constant/kubernetesCloud.constant";
-import { VariableEnvironment } from "src/types/kubernetesCloud.types";
+import { FC } from "react";
+import { environmentType } from "src/constant/kubernetesCloud.constant";
 
 type SelectEnvTypePropsType = {
   type: any;
@@ -15,7 +14,7 @@ export const SelectEnvType: FC<SelectEnvTypePropsType> = ({
   return (
     <FormControl fullWidth size="small">
       <Select dir="ltr" onChange={(e) => setType(e.target.value)} value={type}>
-        {EnvironmentType.map((item, index) => (
+        {environmentType.map((item, index) => (
           <MenuItem
             key={index}
             sx={{

@@ -66,19 +66,10 @@ export const SelectEnvironmentVariable: FC<
       case ENVIRONMENT_TYPES.CONFIG_MAP:
         setNeedToResourceSelect(true);
         setResourceList(configmapList);
-        // const configMapList = configmapList?.find(
-        //   (item) => item.id === selectedResourceItem
-        // )?.configMaps;
-        // setKeyListInResource(configMapList);
         break;
       case ENVIRONMENT_TYPES.SECRET_MAP:
         setNeedToResourceSelect(true);
         setResourceList(secretList);
-
-        // const secretMapList = secretList?.find(
-        //   (item) => item.id === selectedResourceItem
-        // )?.secrets;
-        // setKeyListInResource(secretMapList);
 
         break;
     }
@@ -174,7 +165,6 @@ export const SelectEnvironmentVariable: FC<
             <SelectEnvResource
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
-              // setSelectedResourceItem={setSelectedResourceItem}
               handleResourceOnChange={handleResourceOnChange}
             />
           </Grid>

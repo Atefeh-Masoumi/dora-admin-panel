@@ -4,26 +4,26 @@ import {
   GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse,
 } from "src/app/services/api.generated";
 
-export type EnvironmentVariablesType = {
-  keyValue?: {
-    [key: string]: {
-      [key: string]: string;
-    } | null;
-  } | null;
-};
+// export type EnvironmentVariablesType = {
+//   keyValue?: {
+//     [key: string]: {
+//       [key: string]: string;
+//     } | null;
+//   } | null;
+// };
 
-export type KubernetesCloudAppImageType = {
-  imageId: number | null;
-  tagId: number | "";
-  name: string | "";
-  replicaNumber: number;
-  namespaceId: number | null;
-  keyValue: EnvironmentVariablesType;
-};
+// export type KubernetesCloudAppImageType = {
+//   imageId: number | null;
+//   tagId: number | "";
+//   name: string | "";
+//   replicaNumber: number;
+//   namespaceId: number | null;
+//   keyValue: EnvironmentVariablesType;
+// };
 
-export type VariableEnvironment = {
+export type VariableEnvironmentType = {
   variableType: number;
-  key: string;
+  envKey: string;
   value: string;
   resource?: string;
 };
@@ -33,12 +33,7 @@ export type KuberCloudAppImageType = {
   name: string | "";
   replicaNumber: number;
   namespaceId: number | null;
-  keyValue: {
-    variableType: number;
-    envKey: string;
-    value: string;
-    resource?: string;
-  }[];
+  keyValue: VariableEnvironmentType[];
 };
 
 export type ResourceListType =

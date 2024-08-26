@@ -20,7 +20,7 @@ export const SelectEnvResource: FC<SelectEnvResourcePropsType> = ({
         label="Resource"
         id="resource-select"
         dir="ltr"
-        value={selectedResourceItem}
+        value={selectedResourceItem || ""}
         onChange={(e) => handleResourceOnChange(Number(e.target.value))}
       >
         {resourceList?.map((item, index) => (

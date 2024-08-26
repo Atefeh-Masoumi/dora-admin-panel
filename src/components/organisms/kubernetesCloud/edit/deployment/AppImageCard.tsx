@@ -31,9 +31,11 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
   const onClickCardHandler = () => {
     if (formik.values.imageId !== item.id) {
       formik.setFieldValue("imageId", item.id);
-      formik.setFieldValue("tagId", "");
+      formik.setFieldValue("imageTagId", "");
     }
   };
+
+  // console.log(formik.values.keyValue);
 
   return (
     <Stack
@@ -118,7 +120,10 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
                     formik.setFieldValue("imageId", item.id);
                   }}
                   onChange={(event) => {
-                    formik.setFieldValue("tagId", Number(event.target.value));
+                    formik.setFieldValue(
+                      "imageTagId",
+                      Number(event.target.value)
+                    );
                   }}
                   label="Version"
                   sx={{

@@ -28,7 +28,7 @@ export enum ENVIRONMENT_TYPES {
   SECRET_MAP = 3,
 }
 
-export const EnvironmentType = [
+export const environmentType = [
   { id: 1, label: "Custom" },
   { id: 2, label: "Configmap" },
   { id: 3, label: "Secret" },
