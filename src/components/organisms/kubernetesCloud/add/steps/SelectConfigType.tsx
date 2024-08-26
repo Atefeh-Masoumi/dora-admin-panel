@@ -18,15 +18,14 @@ enum PRODUCT_TYPE_ENUM {
   CUSTOM = 2,
 }
 
-type SelectKuberCloudConfigTypeType = {
+type SelectKubernetesCloudConfigTypeType = {
   isPredefined?: boolean;
   setIsPredefined: (isPredefined: boolean) => void;
 };
 
-export const SelectKuberCloudConfigType: FC<SelectKuberCloudConfigTypeType> = ({
-  isPredefined,
-  setIsPredefined,
-}) => {
+export const SelectKubernetesCloudConfigType: FC<
+  SelectKubernetesCloudConfigTypeType
+> = ({ isPredefined, setIsPredefined }) => {
   const handleConfigTypeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const productType = event.target.value;
     setIsPredefined(Number(productType) === PRODUCT_TYPE_ENUM.PRE_DEFINED);

@@ -1,22 +1,21 @@
+import AddIcon from "@mui/icons-material/Add";
+import { LoadingButton } from "@mui/lab";
 import { Button, Divider, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
-import { formikOnSubmitType } from "src/types/form.type";
-import AddIcon from "@mui/icons-material/Add";
-import * as yup from "yup";
+import { useParams } from "react-router";
 import {
   useGetApiMyKubernetesCloudImageListQuery,
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/AppImageListCard";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectDeploymentInfo";
 import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCloud/edit/deployment/SelectEnvironmentVariable";
-import { LoadingButton } from "@mui/lab";
-import { useParams } from "react-router";
-import { toast } from "react-toastify";
+import { formikOnSubmitType } from "src/types/form.type";
+import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import * as yup from "yup";
 
 interface GroupedVariables {
   [key: number]: {
@@ -35,8 +34,10 @@ const AddKubernetesCloudApp: FC = () => {
 
   const { id: kubernetesCloudId } = useParams();
 
-  const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
-    useGetApiMyKubernetesCloudImageListQuery();
+  const {
+    data: KubernetesCloudImageList,
+    isLoading: KubernetesCloudImageLoading,
+  } = useGetApiMyKubernetesCloudImageListQuery();
 
   const [createDeployment, { isLoading: createDeploymentLoading }] =
     usePostApiMyKubernetesCloudDeploymentCreateMutation();
@@ -132,7 +133,7 @@ const AddKubernetesCloudApp: FC = () => {
     enableReinitialize: true,
   });
 
-  if (kuberCloudImageLoading) return <PageLoading />;
+  if (createDeploymentLoading) return <PageLoading />;
 
   return (
     <>
@@ -159,8 +160,8 @@ const AddKubernetesCloudApp: FC = () => {
             <PageLoading />
           ) : (
             <AppImageListCard
-              loading={kuberCloudImageLoading}
-              list={kuberCloudImageList || []}
+              loading={KubernetesCloudImageLoading}
+              list={KubernetesCloudImageList || []}
               formik={formik}
             />
           )}

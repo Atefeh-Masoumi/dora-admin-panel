@@ -131,7 +131,7 @@ const AddKubernetesCloudContextProvider: FC<
         toast.success("سرویس namespace شما با موفقیت ایجاد شد");
         navigate("/kubernetes-cloud");
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   return (

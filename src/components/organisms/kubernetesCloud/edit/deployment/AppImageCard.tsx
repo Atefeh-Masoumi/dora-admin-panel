@@ -20,11 +20,11 @@ import { FC } from "react";
 import { KuberCloudImageResponse } from "src/app/services/api.generated";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { appImageList } from "src/constant/kubernetesCloud.constant";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageCardPropsType = {
   item: KuberCloudImageResponse;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KubernetesCloudAppImageType>;
 };
 
 export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {

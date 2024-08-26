@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
   VpcListResponse,
-  useDeleteApiMyPortalCustomerUserDeleteByUserIdMutation,
+  useDeleteApiMyAccountCustomerUserDeleteByUserIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -32,7 +32,7 @@ export const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const [deleteCustomerUser, { isLoading: deleteCustomerUserLoading }] =
-    useDeleteApiMyPortalCustomerUserDeleteByUserIdMutation();
+    useDeleteApiMyAccountCustomerUserDeleteByUserIdMutation();
 
   const deleteDnsRecordHandler = () =>
     deleteCustomerUser({ userId: selectedCustomerUser?.userId })
@@ -154,7 +154,7 @@ export const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
         onClose={closeDialogHandler}
         keyTitle="دسترسی کاربر"
         subTitle="برای حذف دسترسی کاربر, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedCustomerUser?.name || ""}
+        securityPhrase={selectedCustomerUser?.userName || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteCustomerUserLoading}
       />

@@ -44,7 +44,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
       >
         <Stack rowGap={2}>
           <Typography align="center" fontWeight={700} fontSize={18}>
-           اطلاعات سرویس کوبرنتیز ابری
+            اطلاعات سرویس کوبرنتیز ابری
           </Typography>
           <Divider flexItem />
 

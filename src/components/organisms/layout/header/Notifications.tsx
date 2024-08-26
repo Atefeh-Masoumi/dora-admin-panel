@@ -15,10 +15,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useGetApiMyPortalNotificationShortListQuery } from "src/app/services/api.generated";
 import { EmptyNotificationSvg } from "src/components/atoms/svg-icons/EmptyNotifSvg";
 import { NotificationSvg } from "src/components/atoms/svg-icons/NotificationSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useGetApiMyAccountNotificationShortListQuery } from "src/app/services/api.generated";
 
 export const Notifications: FC = () => {
   const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ export const Notifications: FC = () => {
   const theme = useTheme();
 
   const { data: notifications, isLoading } =
-    useGetApiMyPortalNotificationShortListQuery();
+    useGetApiMyAccountNotificationShortListQuery();
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>

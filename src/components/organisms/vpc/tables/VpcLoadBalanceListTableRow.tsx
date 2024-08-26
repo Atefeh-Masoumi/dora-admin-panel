@@ -92,9 +92,6 @@ export const VpcLoadBalanceListTableRow: FC<
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {/* <TableCell>
-          
-        </TableCell> */}
       </TableRow>
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={6}>

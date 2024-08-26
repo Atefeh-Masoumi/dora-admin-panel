@@ -4,9 +4,9 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
 
-type KuberCloudInfoPropsType = {};
+type KubernetesCloudInfoPropsType = {};
 
-export const KuberCloudInfo: FC<KuberCloudInfoPropsType> = () => {
+export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
   const { serviceName, setServiceName } = useContext(AddKubernetesCloudContext);
 
   const nameInputChangeHandler = (

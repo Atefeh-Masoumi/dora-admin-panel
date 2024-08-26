@@ -21,7 +21,7 @@ import {
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
-import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
 import { useParams } from "react-router";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
@@ -32,7 +32,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
 
   const { serverId } = useContext(EditServerContext);
   const [getConsoleUrl, { isLoading: getConsoleUrlLoading }] =
-    useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
+    useLazyGetApiMyVmKmsGetByIdQuery();
   const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
     usePutApiMyVmHostDisconnectByIdMutation();
   const [connectServer, { isLoading: connectServerIsLoading }] =
@@ -82,7 +82,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       label: "Web Console",
       Icon: MonitorSvg,
       onClick: () => {
-        getConsoleUrl({ id: serverId || 0, typeId: 2 })
+        getConsoleUrl({ id: serverId || 0 })
           .unwrap()
           .then((res) => {
             sendUserToKmsConsole(res);

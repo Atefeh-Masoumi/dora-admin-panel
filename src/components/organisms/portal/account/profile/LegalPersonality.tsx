@@ -1,6 +1,6 @@
 import { Chip, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { useGetApiMyPortalCustomerGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyAccountCustomerGetQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { e2p } from "src/utils/e2p.utils";
 
@@ -10,7 +10,7 @@ export const LegalPersonalityDetail: FC<
   LegalPersonalityDetailPropsType
 > = () => {
   const { data, isLoading: customerInfoLoading } =
-    useGetApiMyPortalCustomerGetQuery();
+    useGetApiMyAccountCustomerGetQuery();
 
   const customerInfo = [
     {

@@ -11,6 +11,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
 import { SpecialOffer } from "./SpecialOffer";
+import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 
 type SidebarPropsType = {};
 
@@ -57,11 +58,11 @@ const listItems: sidebarItemType[] = [
   //   subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
   // },
   {
-    title: "Private Cloud (vPC)",
-    text: "ابر اختصاصی",
-    Icon: CdnSvg,
+    title: "Private Cloud (VPC)",
+    text: "ابر اختصاصی مجازی",
+    Icon: WebHostSvg,
     link: "/vpc",
-    subList: [{ title: "ابر اختصاصی", link: "/vpc" }],
+    subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
   },
   {
     Icon: WalletSvg,

@@ -2,7 +2,7 @@ import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useState, type FC } from "react";
 import { useGetApiMyPortalOfferListQuery } from "src/app/services/api.generated";
 import { Cart } from "src/components/atoms/svg-icons/CartSvg";
-import { PurchaseOrderOfferDialog } from "src/components/organisms/portal/orderOffer/dialog/PurchaseOrderOfferDialog";
+import { PurchaseOrderOfferDialog } from "src/components/organisms/portal/orderOffer/dialog/OrderOfferDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { e2p } from "src/utils/e2p.utils";
 

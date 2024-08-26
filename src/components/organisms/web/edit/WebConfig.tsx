@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductBundleWebListQuery,
-  usePutApiMyWebHostEditMutation,
+  usePutApiMyWebHostEditByIdMutation,
 } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { EditWebContext } from "./contexts/EditWebContext";
@@ -36,14 +36,14 @@ export const WebConfig: FC<WebConfigPropsType> = () => {
 
   const { serverId, serverConfig } = useContext(EditWebContext);
   const [editWebModel, { isLoading: updateLoading }] =
-    usePutApiMyWebHostEditMutation();
+    usePutApiMyWebHostEditByIdMutation();
 
   const submitHandler = () => {
     if (!serverId || !serverConfig) return;
 
     editWebModel({
+      id: serverId,
       editWebHostModel: {
-        id: serverId,
         productBundleId: serverConfig.id || 0,
       },
     })

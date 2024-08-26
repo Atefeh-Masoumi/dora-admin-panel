@@ -3,19 +3,19 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyPortalProfileGetNotificationStatusQuery,
-  usePutApiMyPortalProfileEditEmailNotificationMutation,
-  usePutApiMyPortalProfileEditPhoneNotificationMutation,
+  useGetApiMyAccountProfileGetNotificationStatusQuery,
+  usePutApiMyAccountProfileEditEmailNotificationMutation,
+  usePutApiMyAccountProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 
 export const NotificationSetting: FC = () => {
   const { data, isLoading: getDataLoading } =
-    useGetApiMyPortalProfileGetNotificationStatusQuery();
+    useGetApiMyAccountProfileGetNotificationStatusQuery();
   const [editPhoneNotify, { isLoading: editPhoneLoading }] =
-    usePutApiMyPortalProfileEditPhoneNotificationMutation();
+    usePutApiMyAccountProfileEditPhoneNotificationMutation();
   const [editEmailNotify, { isLoading: editEmailLoading }] =
-    usePutApiMyPortalProfileEditEmailNotificationMutation();
+    usePutApiMyAccountProfileEditEmailNotificationMutation();
 
   const submitPhone = () => {
     if (data?.phoneNotify === undefined) return;

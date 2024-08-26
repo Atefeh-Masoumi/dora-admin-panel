@@ -20,8 +20,8 @@ import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
 import { SelectEnvResource } from "./envVariable/SelectEnvResource";
 import {
-  useGetApiMyKubernetesCloudConfigmapListByIdQuery,
-  useGetApiMyKubernetesCloudSecretListByIdQuery,
+  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
@@ -47,9 +47,9 @@ export const SelectEnvironmentVariable: FC<
   const { id: kubernetesCloudNameSpaceId } = useParams();
 
   const { data: configmapList } =
-    useGetApiMyKubernetesCloudConfigmapListByIdQuery(
+    useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
       {
-        id: Number(kubernetesCloudNameSpaceId),
+        namespaceId: Number(kubernetesCloudNameSpaceId),
       },
       { skip: !kubernetesCloudNameSpaceId }
     );

@@ -2,12 +2,7 @@ import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery } from "src/app/services/api";
-import {
-  GetRemoteConsoleResponse,
-  GetVmResponse,
-  useDeleteApiMyVmHostDeleteByIdMutation,
-} from "src/app/services/api.generated";
+import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import PageLoading from "src/components/atoms/PageLoading";
 import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
@@ -16,6 +11,11 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 import { addVmTableStruct } from "./struct";
+import {
+  GetRemoteConsoleResponse,
+  GetVmResponse,
+  useDeleteApiMyVmHostDeleteByIdMutation,
+} from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -28,7 +28,7 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetApiMyVmKmsGetByIdAndTypeIdQuery();
+    useLazyGetApiMyVmKmsGetByIdQuery();
 
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
     useDeleteApiMyVmHostDeleteByIdMutation();
@@ -57,7 +57,6 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
     if (isDeactivate) return;
     getUrl({
       id: row["id"],
-      typeId: 2,
     })
       .unwrap()
       .then((res) => {

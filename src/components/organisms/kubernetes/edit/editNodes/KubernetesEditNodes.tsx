@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useGetApiMyKubernetesClusterNodeListByKubernetesHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesNodesTableRow } from "./table/KubernetesNodesTableRow";
@@ -14,7 +14,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
   const { data = [], isLoading } =
-    useGetApiMyKubernetesClusterNodeListByKubernetesHostIdQuery(
+    useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery(
       {
         kubernetesHostId: Number(kubernetesId) || 0,
       },

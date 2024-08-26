@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
-  useGetApiMyVmSnapshotListByVmIdQuery,
+  useGetApiMyVmSnapshotListByVmHostIdQuery,
 } from "src/app/services/api.generated";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -27,7 +27,10 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
 
   const { id } = useParams();
   const { data: snapshotList = [], isLoading: getSnapshotLoading } =
-    useGetApiMyVmSnapshotListByVmIdQuery({ vmId: Number(id) }, { skip: !id });
+    useGetApiMyVmSnapshotListByVmHostIdQuery(
+      { vmHostId: Number(id) },
+      { skip: !id }
+    );
   const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
   };

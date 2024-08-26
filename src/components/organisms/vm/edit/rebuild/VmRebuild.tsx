@@ -3,7 +3,7 @@ import { Paper, Stack, Typography } from "@mui/material";
 import { ChooseOS } from "./serverRebuildSections/ChooseOS";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { LoadingButton } from "@mui/lab";
-import { usePutApiMyVmHostRebuildMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -23,7 +23,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildMutation();
+  const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildByIdMutation();
 
   const submitHandler = () => {
     if (step === 1) {
@@ -48,8 +48,8 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     )
       return;
     rebuild({
+      id: serverId,
       rebuildVmModel: {
-        id: serverId,
         name: formik.values.serverName,
         password: formik.values.password,
         imageId,
@@ -60,7 +60,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         toast.success("درخواست با موفقیت انجام شد");
         navigate("/vm");
       })
-      .catch((err) => {});
+      .catch(() => {});
     return;
   };
 

@@ -79,16 +79,16 @@ const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
 const KubernetesIndex = lazy(
-  () => import("src/pages/kuberCluster/KubernetesList")
+  () => import("src/pages/KubernetesCluster/KubernetesList")
 );
 const AddKubernetes = lazy(
-  () => import("src/pages/kuberCluster/AddKubernetes")
+  () => import("src/pages/KubernetesCluster/AddKubernetes")
 );
 const EditKubernetes = lazy(
-  () => import("src/pages/kuberCluster/EditKubernetes")
+  () => import("src/pages/KubernetesCluster/EditKubernetes")
 );
 const AddNodeKubernetes = lazy(
-  () => import("src/pages/kuberCluster/AddNodeKubernetes")
+  () => import("src/pages/KubernetesCluster/AddNodeKubernetes")
 );
 
 const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
@@ -589,19 +589,19 @@ const Router: FC = () => {
         <Route
           path="/vpc/:vpcId/nat"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت NAT ها",
+            pageTitle: "مدیریت NAT",
           })}
         />
         <Route
           path="/vpc/:vpcId/ip"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت Public IP ها",
+            pageTitle: "مدیریت Public IP",
           })}
         />
         <Route
           path="/vpc/:vpcId/loadBalancer"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت Load Balance ها",
+            pageTitle: "مدیریت Load Balance",
           })}
         />
         <Route

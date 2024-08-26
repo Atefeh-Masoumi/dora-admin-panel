@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { type FC } from "react";
-import { useGetApiMyPortalProfileGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyAccountProfileGetQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import CustomTabComponent, {
   tabsType,
@@ -67,7 +67,7 @@ const tabs: tabsType[] = [
 ];
 
 const Account: FC = () => {
-  const { isLoading } = useGetApiMyPortalProfileGetQuery();
+  const { isLoading } = useGetApiMyAccountProfileGetQuery();
 
   return (
     <>

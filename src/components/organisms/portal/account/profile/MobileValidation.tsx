@@ -5,9 +5,9 @@ import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import {
-  useGetApiMyPortalProfileGetQuery,
-  usePostApiMyPortalProfileConfirmPhoneNumberMutation,
-  usePutApiMyPortalProfileEditPhoneNumberMutation,
+  useGetApiMyAccountProfileGetQuery,
+  usePostApiMyAccountProfileConfirmPhoneNumberMutation,
+  usePutApiMyAccountProfileEditPhoneNumberMutation,
 } from "src/app/services/api.generated";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -33,10 +33,10 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
     null,
   ]);
 
-  const { data } = useGetApiMyPortalProfileGetQuery();
+  const { data } = useGetApiMyAccountProfileGetQuery();
 
   const [sendMessage, { isLoading }] =
-    usePutApiMyPortalProfileEditPhoneNumberMutation();
+    usePutApiMyAccountProfileEditPhoneNumberMutation();
 
   const onSubmit: formikOnSubmitType<{ phoneNumber: string }> = (
     { phoneNumber },
@@ -57,7 +57,7 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
   const haveNull = confirmCode.some((code) => code === null);
 
   const [confirm, { isLoading: loadingConfirm }] =
-    usePostApiMyPortalProfileConfirmPhoneNumberMutation();
+    usePostApiMyAccountProfileConfirmPhoneNumberMutation();
 
   const submitConfirm = () => {
     if (haveNull) return;

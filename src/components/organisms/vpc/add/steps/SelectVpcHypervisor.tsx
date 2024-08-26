@@ -1,8 +1,8 @@
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import {
-  HypervisorTypeListResponse,
-  useGetApiMyVmHypervisorListQuery,
+  HypervisorListResponse,
+  useGetApiMyHostHypervisorListQuery,
 } from "src/app/services/api.generated";
 import openstackImage from "src/assets/images/openstack.png";
 import vmwareImage from "src/assets/images/vmwareLogo.png";
@@ -16,9 +16,9 @@ export const SelectVpcHypervisor: FC<SelectVpcHypervisorPropsType> = () => {
   const isActive = Boolean(dataCenter?.id);
 
   const { data: hypervisorList, isLoading } =
-    useGetApiMyVmHypervisorListQuery();
+    useGetApiMyHostHypervisorListQuery();
 
-  const dataCenterOnClick = (hypervisor: HypervisorTypeListResponse) => {
+  const dataCenterOnClick = (hypervisor: HypervisorListResponse) => {
     setHypervisor(hypervisor);
   };
 
