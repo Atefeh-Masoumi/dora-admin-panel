@@ -447,7 +447,7 @@ export const api = generatedApi
       postApiMyKubernetesCloudHostCreate: {
         invalidatesTags: () => ["Namespace"],
       },
-      putApiMyKubernetesCloudHostEdit: {
+      putApiMyKubernetesCloudHostEditById: {
         invalidatesTags: () => ["Namespace"],
       },
       deleteApiMyKubernetesCloudHostDeleteById: {

@@ -53,12 +53,13 @@ export const SelectEnvironmentVariable: FC<
       },
       { skip: !kubernetesCloudNameSpaceId }
     );
-  const { data: secretList } = useGetApiMyKubernetesCloudSecretListByIdQuery(
-    {
-      id: Number(kubernetesCloudNameSpaceId),
-    },
-    { skip: !kubernetesCloudNameSpaceId }
-  );
+  const { data: secretList } =
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+      {
+        namespaceId: Number(kubernetesCloudNameSpaceId),
+      },
+      { skip: !kubernetesCloudNameSpaceId }
+    );
 
   const handleChangeEnvType = (newValue: number) => {
     switch (newValue) {

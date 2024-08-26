@@ -228,11 +228,11 @@ export const api = createApi({
         body: queryArg.twoFactorLoginModel,
       }),
     }),
-    postApiMyAccountSsoUrl: build.mutation<
-      PostApiMyAccountSsoUrlApiResponse,
-      PostApiMyAccountSsoUrlApiArg
+    getApiMyAccountSsoUrl: build.query<
+      GetApiMyAccountSsoUrlApiResponse,
+      GetApiMyAccountSsoUrlApiArg
     >({
-      query: () => ({ url: `/api/my/account/sso-url`, method: "POST" }),
+      query: () => ({ url: `/api/my/account/sso-url` }),
     }),
     postApiMyAccountSsoLogin: build.mutation<
       PostApiMyAccountSsoLoginApiResponse,
@@ -783,6 +783,12 @@ export const api = createApi({
         method: "PUT",
         body: queryArg.changeContactModel,
       }),
+    }),
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
+    >({
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyHostHypervisorList: build.query<
       GetApiMyHostHypervisorListApiResponse,
@@ -1551,6 +1557,38 @@ export const api = createApi({
         body: queryArg.createVpcTranslateModel,
       }),
     }),
+    postApiMyVpcPrivateNetworkRequestCreate: build.mutation<
+      PostApiMyVpcPrivateNetworkRequestCreateApiResponse,
+      PostApiMyVpcPrivateNetworkRequestCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/private-network-request/create`,
+        method: "POST",
+        body: queryArg.createVpcPrivateNetworkModel,
+      }),
+    }),
+    getApiMyVpcPrivateNetworkRequestList: build.query<
+      GetApiMyVpcPrivateNetworkRequestListApiResponse,
+      GetApiMyVpcPrivateNetworkRequestListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/private-network-request/list` }),
+    }),
+    getApiMyVpcPrivateNetworkListByVpcHostId: build.query<
+      GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse,
+      GetApiMyVpcPrivateNetworkListByVpcHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/private-network/list/${queryArg.vpcHostId}`,
+      }),
+    }),
+    getApiMyVpcPrivateNetworkGetByVpcHostIdAndId: build.query<
+      GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiResponse,
+      GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/private-network/get/${queryArg.vpcHostId}/${queryArg.id}`,
+      }),
+    }),
     getApiMyVpcNetworkShortListByVpcHostId: build.query<
       GetApiMyVpcNetworkShortListByVpcHostIdApiResponse,
       GetApiMyVpcNetworkShortListByVpcHostIdApiArg
@@ -1705,7 +1743,6 @@ export const api = createApi({
       PostApiMyVpcIpCreateApiResponse,
       PostApiMyVpcIpCreateApiArg
     >({
-      query: () => ({ url: `/api/my/vpc/host/short-list` }),
       query: (queryArg) => ({
         url: `/api/my/vpc/ip/create`,
         method: "POST",
@@ -1968,36 +2005,6 @@ export const api = createApi({
         method: "PUT",
       }),
     }),
-    getApiMyVpcHostPrivateNetworkList: build.query<
-      GetApiMyVpcHostPrivateNetworkListApiResponse,
-      GetApiMyVpcHostPrivateNetworkListApiArg
-    >({
-      query: () => ({ url: `/api/my/vpc/host/private/network/list` }),
-    }),
-    getApiMyVpcHostPrivateNetworkGetById: build.query<
-      GetApiMyVpcHostPrivateNetworkGetByIdApiResponse,
-      GetApiMyVpcHostPrivateNetworkGetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vpc/host/private/network/get/${queryArg.id}`,
-      }),
-    }),
-    getApiMyVpcHostPrivateNetworkRequestList: build.query<
-      GetApiMyVpcHostPrivateNetworkRequestListApiResponse,
-      GetApiMyVpcHostPrivateNetworkRequestListApiArg
-    >({
-      query: () => ({ url: `/api/my/vpc/host/private/network/request/list` }),
-    }),
-    postApiMyVpcHostPrivateNetworkRequestCreate: build.mutation<
-      PostApiMyVpcHostPrivateNetworkRequestCreateApiResponse,
-      PostApiMyVpcHostPrivateNetworkRequestCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vpc/host/private/network/request/create`,
-        method: "POST",
-        body: queryArg.body,
-      }),
-    }),
     getApiMyWebHostList: build.query<
       GetApiMyWebHostListApiResponse,
       GetApiMyWebHostListApiArg
@@ -2037,12 +2044,6 @@ export const api = createApi({
         method: "DELETE",
       }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
-    >({
-      query: () => ({ url: `/api/my/home/index` }),
-    }),
     postApiMyWebHostCreate: build.mutation<
       PostApiMyWebHostCreateApiResponse,
       PostApiMyWebHostCreateApiArg
@@ -2062,12 +2063,6 @@ export const api = createApi({
         method: "POST",
         body: queryArg.checkWebHostDomainModel,
       }),
-    }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
-    >({
-      query: () => ({ url: `/api/my/home/index` }),
     }),
     postApiMyWebSiteNewsCreate: build.mutation<
       PostApiMyWebSiteNewsCreateApiResponse,
@@ -2249,9 +2244,9 @@ export type PostApiMyAccountTwoFactorLoginApiResponse =
 export type PostApiMyAccountTwoFactorLoginApiArg = {
   twoFactorLoginModel: TwoFactorLoginModel;
 };
-export type PostApiMyAccountSsoUrlApiResponse =
+export type GetApiMyAccountSsoUrlApiResponse =
   /** status 200 OK */ SsoLoginResponse;
-export type PostApiMyAccountSsoUrlApiArg = void;
+export type GetApiMyAccountSsoUrlApiArg = void;
 export type PostApiMyAccountSsoLoginApiResponse =
   /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountSsoLoginApiArg = {
@@ -2527,6 +2522,8 @@ export type PutApiMyDomainHostChangeContactApiResponse = unknown;
 export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyHostHypervisorListApiResponse =
   /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
@@ -2925,6 +2922,24 @@ export type PostApiMyVpcTranslateCreateApiResponse = unknown;
 export type PostApiMyVpcTranslateCreateApiArg = {
   createVpcTranslateModel: CreateVpcTranslateModel;
 };
+export type PostApiMyVpcPrivateNetworkRequestCreateApiResponse = unknown;
+export type PostApiMyVpcPrivateNetworkRequestCreateApiArg = {
+  createVpcPrivateNetworkModel: CreateVpcPrivateNetworkModel;
+};
+export type GetApiMyVpcPrivateNetworkRequestListApiResponse =
+  /** status 200 OK */ VpcPrivateNetworkRequestListResponse[];
+export type GetApiMyVpcPrivateNetworkRequestListApiArg = void;
+export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse =
+  /** status 200 OK */ VpcPrivateNetworkListResponse[];
+export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiArg = {
+  vpcHostId: number;
+};
+export type GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiResponse =
+  /** status 200 OK */ VpcPrivateNetworkListResponse;
+export type GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiArg = {
+  id: number;
+  vpcHostId: number;
+};
 export type GetApiMyVpcNetworkShortListByVpcHostIdApiResponse =
   /** status 200 OK */ VpcNetworkShortListResponse[];
 export type GetApiMyVpcNetworkShortListByVpcHostIdApiArg = {
@@ -2943,7 +2958,6 @@ export type PutApiMyVpcNetworkEditByIdApiArg = {
 export type DeleteApiMyVpcNetworkDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNetworkDeleteByIdApiArg = {
   id: number;
-  editVmNetworkModel: EditVmNetworkModel;
 };
 export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
@@ -3138,24 +3152,6 @@ export type PutApiMyVmHostConnectByIdApiResponse = unknown;
 export type PutApiMyVmHostConnectByIdApiArg = {
   id: number;
 };
-export type GetApiMyVpcHostPrivateNetworkListApiResponse =
-  /** status 200 OK */ VpcHostPrivateNetworkResponse[];
-export type GetApiMyVpcHostPrivateNetworkListApiArg = void;
-export type GetApiMyVpcHostPrivateNetworkGetByIdApiResponse =
-  /** status 200 OK */ VpcHostPrivateNetworkResponse;
-export type GetApiMyVpcHostPrivateNetworkGetByIdApiArg = {
-  id: number;
-};
-export type GetApiMyVpcHostPrivateNetworkRequestListApiResponse =
-  /** status 200 OK */ VpcHostPrivateNetworkRequestResponse[];
-export type GetApiMyVpcHostPrivateNetworkRequestListApiArg = void;
-export type PostApiMyVpcHostPrivateNetworkRequestCreateApiResponse = unknown;
-export type PostApiMyVpcHostPrivateNetworkRequestCreateApiArg = {
-  body: {
-    VpcHostId: number;
-    VpcPrivateNetworkId: number;
-  };
-};
 export type GetApiMyWebHostListApiResponse =
   /** status 200 OK */ WebHostListResponse[];
 export type GetApiMyWebHostListApiArg = void;
@@ -3186,8 +3182,6 @@ export type PostApiMyWebHostCheckDomainApiResponse = unknown;
 export type PostApiMyWebHostCheckDomainApiArg = {
   checkWebHostDomainModel: CheckWebHostDomainModel;
 };
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
 export type PostApiMyWebSiteNewsCreateApiResponse = unknown;
 export type PostApiMyWebSiteNewsCreateApiArg = {
   createNewsLetterModel: CreateNewsLetterModel;
@@ -4526,6 +4520,23 @@ export type CreateVpcTranslateModel = {
   port: number;
   description: string | null;
 };
+export type CreateVpcPrivateNetworkModel = {
+  vpcHostId: number;
+  vpcPrivateNetworkId: number;
+};
+export type VpcPrivateNetworkRequestListResponse = {
+  id?: number;
+  vpcHost: string | null;
+  vpcHostPrivateNetwork: string | null;
+  vpcHostPrivateNetworkRequestStatus: string | null;
+  createDate?: string;
+  modifyDate?: string;
+  description?: string | null;
+};
+export type VpcPrivateNetworkListResponse = {
+  id: number;
+  name: string | null;
+};
 export type VpcNetworkShortListResponse = {
   id: number;
   name: string | null;
@@ -4749,20 +4760,6 @@ export type CreateVmModel = {
   vpcHostNetworkId?: number | null;
   ipAddress?: string | null;
 };
-export type VpcHostPrivateNetworkResponse = {
-  id: number;
-  name: string | null;
-  vlanId: string | null;
-};
-export type VpcHostPrivateNetworkRequestResponse = {
-  id?: number;
-  vpcHost: string | null;
-  vpcHostPrivateNetwork: string | null;
-  vpcHostPrivateNetworkRequestStatus: string | null;
-  createDate?: string;
-  modifyDate?: string;
-  description?: string | null;
-};
 export type WebHostListResponse = {
   id?: number;
   datacenter: string | null;
@@ -4891,7 +4888,7 @@ export const {
   usePutApiMyAccountCustomerEditMutation,
   usePutApiMyAccountCustomerConvertToLegalMutation,
   usePostApiMyAccountTwoFactorLoginMutation,
-  usePostApiMyAccountSsoUrlMutation,
+  useGetApiMyAccountSsoUrlQuery,
   usePostApiMyAccountSsoLoginMutation,
   usePostApiMyAccountRegisterMutation,
   usePostApiMyAccountLogoutMutation,
@@ -4956,6 +4953,7 @@ export const {
   usePostApiMyDomainHostCheckDomainMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePutApiMyDomainHostChangeContactMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyHostHypervisorListQuery,
   useGetApiMyHostProjectListQuery,
   useGetApiMyHostProjectGetByIdQuery,
@@ -5054,6 +5052,10 @@ export const {
   useGetApiMyVpcTranslateListQuery,
   useDeleteApiMyVpcTranslateDeleteByIdMutation,
   usePostApiMyVpcTranslateCreateMutation,
+  usePostApiMyVpcPrivateNetworkRequestCreateMutation,
+  useGetApiMyVpcPrivateNetworkRequestListQuery,
+  useGetApiMyVpcPrivateNetworkListByVpcHostIdQuery,
+  useGetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePutApiMyVpcNetworkEditByIdMutation,
@@ -5102,10 +5104,6 @@ export const {
   useDeleteApiMyVmHostDeleteByIdMutation,
   usePostApiMyVmHostCreateMutation,
   usePutApiMyVmHostConnectByIdMutation,
-  useGetApiMyVpcHostPrivateNetworkListQuery,
-  useGetApiMyVpcHostPrivateNetworkGetByIdQuery,
-  useGetApiMyVpcHostPrivateNetworkRequestListQuery,
-  usePostApiMyVpcHostPrivateNetworkRequestCreateMutation,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
   useGetApiMyWebHostGetByIdQuery,
@@ -5113,7 +5111,6 @@ export const {
   useDeleteApiMyWebHostDeleteByIdMutation,
   usePostApiMyWebHostCreateMutation,
   usePostApiMyWebHostCheckDomainMutation,
-  useGetApiMyHomeIndexQuery,
   usePostApiMyWebSiteNewsCreateMutation,
   usePostApiMyWebSiteContactUsCreateMutation,
   useGetApiMyWebSiteWebsiteBlogCommentGetByIdQuery,
