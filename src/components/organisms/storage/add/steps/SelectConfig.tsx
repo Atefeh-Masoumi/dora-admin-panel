@@ -1,7 +1,7 @@
 import { FC, useContext, useMemo } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { AddStorageTableRow } from "../tables/AddStorageTableRow";
+import AddStorageTableRow from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
 import { useGetApiMyPortalProductBundleStorageListQuery } from "src/app/services/api.generated";
 import { AddStorageContext } from "../contexts/AddStorageContext";

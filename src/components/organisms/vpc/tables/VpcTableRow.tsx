@@ -11,6 +11,7 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcStatusIdentifier } from "src/constant/vpcStatus";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { vpcTableStruct } from "./struct";
 
 enum DIALOG_TYPE_ENUM {
@@ -18,7 +19,7 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
+const VpcTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVpc, setSelectedVpc] = useState<VpcListResponse | null>(null);
 
@@ -120,3 +121,5 @@ export const VpcTableRow: FC<{ row: any }> = ({ row }) => {
     </>
   );
 };
+
+export default withTableRowWrapper(VpcTableRow);

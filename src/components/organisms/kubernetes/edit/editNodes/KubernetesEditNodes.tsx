@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { KubernetesNodesTableRow } from "./table/KubernetesNodesTableRow";
+import KubernetesNodesTableRow from "./table/KubernetesNodesTableRow";
 import { kubernetesNodesTableStruct } from "./table/struct";
 
 type KubernetesEditNodesPropsType = {};

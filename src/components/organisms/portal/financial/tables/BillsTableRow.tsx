@@ -3,8 +3,9 @@ import { Chip, Stack } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useNavigate } from "react-router";
 import { billsTableStruct } from "./billsTableStruct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const BillsTableRow: FC<{ row: any }> = ({ row }) => {
+const BillsTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
   return (
     <DorsaTableRow
@@ -72,3 +73,5 @@ export const BillsTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(BillsTableRow);

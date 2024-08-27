@@ -11,13 +11,14 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { domainTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
+const DomainTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDomain, setSelectedDomain] =
     useState<DomainListResponse | null>(null);
@@ -169,3 +170,5 @@ export const DomainTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(DomainTableRow);

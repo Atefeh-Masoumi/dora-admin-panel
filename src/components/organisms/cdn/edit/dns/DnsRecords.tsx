@@ -8,7 +8,7 @@ import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/st
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
-import { ZoneTableRow } from "./tables/DnsTableRow";
+import ZoneTableRow from "./tables/DnsTableRow";
 
 export const DnsRecord: FC = () => {
   const { id } = useParams();

@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { FC, useMemo } from "react";
 import { useGetApiMyPortalProductBundleWebListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { AddWabHostTableRow } from "../tables/AddWabTableRow";
+import AddWebHostTableRow from "../tables/AddWebHostTableRow";
 import { addWebTableStruct } from "../tables/struct";
 
 type SelectConfigPropsType = {};
@@ -15,7 +15,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     () => (
       <BaseTable
         struct={addWebTableStruct}
-        RowComponent={AddWabHostTableRow}
+        RowComponent={AddWebHostTableRow}
         rows={configsList || []}
         text=""
         isLoading={isLoading}

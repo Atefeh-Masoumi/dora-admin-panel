@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { serviceTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const ServiceTableRow: FC<{ row: any }> = ({ row }) => {
+const ServiceTableRow: FC<{ row: any }> = ({ row }) => {
   return (
     <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.usedCode}>
       {serviceTableStruct.map((column) => {
@@ -22,3 +23,5 @@ export const ServiceTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(ServiceTableRow);

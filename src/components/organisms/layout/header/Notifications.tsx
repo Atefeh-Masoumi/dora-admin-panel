@@ -19,6 +19,7 @@ import { EmptyNotificationSvg } from "src/components/atoms/svg-icons/EmptyNotifS
 import { NotificationSvg } from "src/components/atoms/svg-icons/NotificationSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useGetApiMyAccountNotificationShortListQuery } from "src/app/services/api.generated";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 export const Notifications: FC = () => {
   const [open, setOpen] = useState(false);
@@ -116,7 +117,9 @@ export const Notifications: FC = () => {
                                     {notification.subject}
                                   </Typography>
                                   <Typography variant="text8">
-                                    {notification.notificationDate}
+                                    {ConvertToJalali(
+                                      String(notification.notificationDate)
+                                    )}
                                   </Typography>
                                 </Stack>
                                 <Stack>

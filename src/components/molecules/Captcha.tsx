@@ -16,15 +16,16 @@ type CaptchaPropsType = {
   setCaptchaKey: Dispatch<SetStateAction<string>>;
   error?: string;
   touched?: boolean;
+  onRefetchCaptcha?: (refetch: () => void) => void; // New prop
 };
 
 export const Captcha: FC<CaptchaPropsType> = memo(
-  ({ setCaptchaKey, error, touched }) => {
+  ({ setCaptchaKey, error, touched, onRefetchCaptcha }) => {
     const {
       data: captchaData,
       isLoading: getCaptchaLoading,
       isFetching: getCaptchaFetching,
-      refetch,
+      refetch: refetchCaptchaData,
     } = useGetApiMyAccountCaptchaQuery(undefined, {
       pollingInterval: 2 * 60 * 1000,
     });
@@ -42,6 +43,12 @@ export const Captcha: FC<CaptchaPropsType> = memo(
       setCaptchaKey(captchaData.captchaKey);
     }, [captchaData, setCaptchaKey]);
 
+    useEffect(() => {
+      if (onRefetchCaptcha) {
+        onRefetchCaptcha(refetchCaptchaData); // Pass the refetch function to the parent
+      }
+    }, [refetchCaptchaData, onRefetchCaptcha]);
+
     const isLoading = useMemo(
       () => getCaptchaFetching || getCaptchaLoading,
       [getCaptchaFetching, getCaptchaLoading]
@@ -49,11 +56,6 @@ export const Captcha: FC<CaptchaPropsType> = memo(
 
     return (
       <Stack direction="column" rowGap={2} width="100%">
-        <Divider flexItem />
-        <Typography color="text.light">
-          لطفاً برای ادامه فرآیند ورود، کد امنیتی نمایش داده شده را در بخش مورد
-          نظر وارد کنید
-        </Typography>
         <Stack
           direction={{ xs: "column", md: "row-reverse" }}
           width="100%"
@@ -68,7 +70,7 @@ export const Captcha: FC<CaptchaPropsType> = memo(
           >
             <IconButton
               disabled={isLoading}
-              onClick={refetch}
+              onClick={refetchCaptchaData}
               sx={{ width: 51, height: 51 }}
             >
               {isLoading ? (
@@ -97,7 +99,6 @@ export const Captcha: FC<CaptchaPropsType> = memo(
             helperText={touched && error}
           />
         </Stack>
-        <Divider flexItem />
       </Stack>
     );
   }

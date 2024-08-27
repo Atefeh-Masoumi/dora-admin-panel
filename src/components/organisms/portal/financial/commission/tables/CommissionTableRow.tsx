@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useNavigate } from "react-router";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { commissionTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 export const CommissionTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
@@ -53,3 +54,5 @@ export const CommissionTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(CommissionTableRow);

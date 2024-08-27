@@ -7,7 +7,7 @@ import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { vpcTableStruct } from "src/components/organisms/vpc/tables/struct";
-import { VpcTableRow } from "src/components/organisms/vpc/tables/VpcTableRow";
+import VpcTableRow from "src/components/organisms/vpc/tables/VpcTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const VpcList: FC = () => {

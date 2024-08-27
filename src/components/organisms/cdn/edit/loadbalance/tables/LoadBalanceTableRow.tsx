@@ -11,13 +11,14 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { CreateLoadBalanceDialog } from "../dialogs/CreateLoadBalanceDialog";
 import { loadBalanceTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
+const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedCluster, setSelectedCluster] =
     useState<CdnRouteListResponse | null>(null);
@@ -101,3 +102,5 @@ export const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(LoadBalanceTableRow);

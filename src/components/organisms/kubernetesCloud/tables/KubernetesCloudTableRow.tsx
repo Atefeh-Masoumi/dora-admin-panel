@@ -12,6 +12,7 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { kubernetesCloudTableStruct } from "./struct";
 
 enum DIALOG_TYPE_ENUM {
@@ -19,7 +20,7 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
+const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetes, setSelectedKubernetes] =
     useState<KubernetesListResponse | null>(null);
@@ -123,3 +124,5 @@ export const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
     </>
   );
 };
+
+export default withTableRowWrapper(KubernetesCloudTableRow);

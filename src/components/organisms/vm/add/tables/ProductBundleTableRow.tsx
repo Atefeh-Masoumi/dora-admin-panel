@@ -3,8 +3,9 @@ import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { productBundleTableStruct } from "./struct";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const ProductBundleTableRow: FC<{ row: any }> = ({ row }) => {
+const ProductBundleTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddServerContext);
 
   const isChecked = useMemo(
@@ -44,3 +45,5 @@ export const ProductBundleTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(ProductBundleTableRow);

@@ -13,13 +13,14 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { ProxyStatus } from "../ProxyStatus";
 import { CreateRecordDialog } from "../dialogs/CreateRecordDialog";
 import { zoneTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
+const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
     null
@@ -119,3 +120,5 @@ export const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(ZoneTableRow);

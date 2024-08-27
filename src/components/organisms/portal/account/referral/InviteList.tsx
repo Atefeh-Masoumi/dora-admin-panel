@@ -1,11 +1,11 @@
 import { Divider, Stack, Typography } from "@mui/material";
 import { useEffect, useState, type FC } from "react";
+import { useLazyGetApiMyPortalReferralListByReferralIdQuery } from "src/app/services/api";
 import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BaseTable } from "../../../tables/BaseTable";
-import { ReferralTableRow } from "./tables/ReferralTableRow";
+import ReferralTableRow from "./tables/ReferralTableRow";
 import { referralTableStruct } from "./tables/struct";
-import { useLazyGetApiMyPortalReferralListByReferralIdQuery } from "src/app/services/api";
 
 export const InviteList: FC = () => {
   const [customerReferralList, setCustomerReferralList] = useState<any>([]);

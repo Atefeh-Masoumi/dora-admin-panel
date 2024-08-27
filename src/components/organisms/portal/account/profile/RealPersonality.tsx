@@ -1,7 +1,10 @@
-import { FC, useEffect, useState } from "react";
+import AdapterJalali from "@date-io/date-fns-jalali";
 import { LoadingButton } from "@mui/lab";
-import { Stack, TextField } from "@mui/material";
-import { Formik, Form } from "formik";
+import { Stack } from "@mui/material";
+import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import { Form, Formik } from "formik";
+import moment, { Moment } from "jalali-moment";
+import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetApiMyAccountProfileGetQuery,
@@ -9,10 +12,8 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
+import { ConvertToGergorian } from "src/utils/convertToGregorian";
 import * as yup from "yup";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import AdapterJalali from "@date-io/date-fns-jalali";
-import moment from "jalali-moment";
 
 const validationSchema = yup.object().shape({
   firstName: yup.string().required("نام الزامیست!"),
@@ -25,7 +26,7 @@ const validationSchema = yup.object().shape({
 type RealPersonalityPropsType = {};
 
 export const RealPersonality: FC<RealPersonalityPropsType> = () => {
-  const [birthDate, setBirthDate] = useState<null | Date>(null);
+  const [birthDate, setBirthDate] = useState<null | Moment>(null);
   const [editProfile, { isLoading: loadingEdit }] =
     usePutApiMyAccountProfileEditMutation();
 
@@ -33,12 +34,11 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
 
   useEffect(() => {
     if (userInformation?.birthDate) {
-      // Convert Jalali date string to a Gregorian Date object
-      const gregorianDate = moment(
-        userInformation.birthDate,
-        "jYYYY/jMM/jDD"
-      ).toDate();
-      setBirthDate(gregorianDate);
+      const jalaliDate = moment(
+        userInformation?.birthDate,
+        "YYYY-MM-DDTHH:mm:ss"
+      );
+      setBirthDate(jalaliDate);
     }
   }, [userInformation]);
 
@@ -54,17 +54,16 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     { firstName, lastName, nationalId, address },
     { setSubmitting }
   ) => {
-    // Convert the selected Gregorian Date object back to a Jalali date string
-    const jalaliBirthDate = birthDate
-      ? moment(birthDate).format("jYYYY/jMM/jDD")
-      : "";
+    const originalDate = new Date(String(birthDate));
+    const newDate = new Date(originalDate.getFullYear(), 5, 2, 0, 0, 0);
+    const formattedDate = newDate.toISOString().slice(0, 19);
 
     editProfile({
       editProfileModel: {
         firstName,
         lastName,
         nationalId,
-        birthDate: jalaliBirthDate,
+        birthDate: formattedDate,
         address,
       },
     })
@@ -76,6 +75,8 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
       .catch((err) => {});
     setSubmitting(false);
   };
+
+  console.log(ConvertToGergorian(String(birthDate)));
 
   return (
     <Formik
@@ -122,8 +123,10 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
                 label="تاریخ تولد"
                 mask="____/__/__"
                 value={birthDate}
-                onChange={(date) => setBirthDate(date as Date)}
-                renderInput={(params) => <TextField fullWidth {...params} />}
+                onChange={(date) => setBirthDate(date as Moment)}
+                renderInput={(params) => (
+                  <DorsaTextField fullWidth {...params} />
+                )}
               />
             </LocalizationProvider>
             <DorsaTextField

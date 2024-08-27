@@ -12,13 +12,14 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcNatTableStruct } from "./struct";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import CloseIcon from "@mui/icons-material/Close";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
+const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVpcNat, setSelectedVpcNat] =
     useState<GetVpcGatewayNatResponse | null>(null);
@@ -109,3 +110,5 @@ export const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(VpcNatTableRow);

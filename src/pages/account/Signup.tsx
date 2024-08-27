@@ -14,7 +14,10 @@ import {
   passwordValidatorRegex,
   phoneNumberValidator,
 } from "src/utils/formValidator";
-import { usePostApiMyAccountRegisterMutation } from "src/app/services/api.generated";
+import {
+  useGetApiMyAccountCaptchaQuery,
+  usePostApiMyAccountRegisterMutation,
+} from "src/app/services/api.generated";
 import { useNavigate } from "react-router-dom";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
@@ -59,6 +62,13 @@ const Signup: FC = () => {
 
   const navigate = useNavigate();
 
+  const {
+    data: captchaData,
+    isLoading: getCaptchaLoading,
+    isFetching: getCaptchaFetching,
+    refetch: refetchCaptchaData,
+  } = useGetApiMyAccountCaptchaQuery();
+
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     {
       firstName,
@@ -93,12 +103,12 @@ const Signup: FC = () => {
         toast.success("شما با موفقیت ثبت نام شدید");
         navigate("/");
       })
-      .catch(
-        ({ status }: { status: number }) =>
-          (status === 401 || status === 404) &&
-          toast.error("ایمیل یا گذرواژه اشتباه است!")
-      );
+      .catch(({ status }: { status: number }) => {
+        (status === 401 || status === 404) &&
+          toast.error("ایمیل یا گذرواژه اشتباه است!");
+      });
     setSubmitting(false);
+    refetchCaptchaData();
   };
 
   return (
@@ -168,11 +178,6 @@ const Signup: FC = () => {
                 }}
                 inputProps={{ dir: "ltr" }}
               />
-              <Captcha
-                error={errors.captchaCode}
-                touched={touched.captchaCode}
-                setCaptchaKey={setCaptchaKey}
-              />
               <Stack
                 direction="column"
                 spacing={1}
@@ -198,6 +203,11 @@ const Signup: FC = () => {
                 label="کد معرف (اختیاری)"
                 fullWidth
                 dir="ltr"
+              />
+              <Captcha
+                error={errors.captchaCode}
+                touched={touched.captchaCode}
+                setCaptchaKey={setCaptchaKey}
               />
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
