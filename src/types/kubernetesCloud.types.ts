@@ -2,24 +2,8 @@ import {
   SecretKeyValuePairsResponse,
   GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiResponse,
   GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse,
+  ConfigMapKeyValuePairsResponse,
 } from "src/app/services/api.generated";
-
-// export type EnvironmentVariablesType = {
-//   keyValue?: {
-//     [key: string]: {
-//       [key: string]: string;
-//     } | null;
-//   } | null;
-// };
-
-// export type KubernetesCloudAppImageType = {
-//   imageId: number | null;
-//   tagId: number | "";
-//   name: string | "";
-//   replicaNumber: number;
-//   namespaceId: number | null;
-//   keyValue: EnvironmentVariablesType;
-// };
 
 export type VariableEnvironmentType = {
   variableType: number;
@@ -41,5 +25,7 @@ export type ResourceListType =
   | GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse;
 
 export type KeyListInResourceType =
-  | SecretKeyValuePairsResponse
-  | SecretKeyValuePairsResponse;
+  | ConfigMapKeyValuePairsResponse[]
+  | SecretKeyValuePairsResponse[]
+  | null
+  | undefined;
