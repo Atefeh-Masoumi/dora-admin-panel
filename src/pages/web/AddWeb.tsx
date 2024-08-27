@@ -7,7 +7,9 @@ import { SelectDomain } from "src/components/organisms/web/add/steps/SelectDomai
 import { SelectDataCenter } from "src/components/organisms/web/add/steps/SelectDataCenter";
 import { SelectConfig } from "src/components/organisms/web/add/steps/SelectConfig";
 import { usePostApiMyWebHostCreateMutation } from "src/app/services/api.generated";
-import ServiceReceipt, { ReceiptTypeEnum } from "src/components/molecules/ServiceReceipt";
+import ServiceReceipt, {
+  ReceiptTypeEnum,
+} from "src/components/molecules/ServiceReceipt";
 
 const AddWeb: FC = () => {
   const { domainName, dataCenter, serverConfig, term } =
@@ -75,7 +77,7 @@ const AddWeb: FC = () => {
               <Grid container gap={2}>
                 <Grid xs={12} item>
                   <SelectDomain />
-                  <Divider sx={{ margin: "50px 10px" }} /> 
+                  <Divider sx={{ margin: "50px 10px" }} />
                 </Grid>
                 <Grid xs={12} item>
                   <SelectDataCenter />

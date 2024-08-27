@@ -81,7 +81,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                 spacing={1}
                 onClick={() => dataCenterOnClick(dataCenterItem)}
               >
-                <Stack
+                {/* <Stack
                   alignItems="center"
                   justifyContent="center"
                   sx={{
@@ -100,12 +100,13 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                       height: "100%",
                     }}
                   />
-                </Stack>
+                </Stack> */}
                 <Typography
                   noWrap
                   color={isSelected ? "primary.main" : "secondary.main"}
                   sx={{ transition: "150ms" }}
                   fontWeight="bold"
+                  fontSize={20}
                 >
                   {name}
                 </Typography>

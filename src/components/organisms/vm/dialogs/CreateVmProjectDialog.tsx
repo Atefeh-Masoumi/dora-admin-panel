@@ -190,12 +190,12 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                               alignItems="center"
                               spacing={1}
                             >
-                              <img
+                              {/* <img
                                 src={getImageByName(String(photoName))}
                                 alt={String(name)}
                                 width={30}
                                 height={30}
-                              />
+                              /> */}
                               <Box>{name}</Box>
                             </Stack>
                           }
