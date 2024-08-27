@@ -1,10 +1,11 @@
-import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
+import { FC, useContext, useMemo } from "react";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { addVpcTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { AddVpcContext } from "../contexts/AddVpcContext";
+import { addVpcTableStruct } from "./struct";
 
-export const AddVpcTableRow: FC<{ row: any }> = ({ row }) => {
+const AddVpcTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddVpcContext);
 
   const isChecked = useMemo(
@@ -46,3 +47,5 @@ export const AddVpcTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(AddVpcTableRow);

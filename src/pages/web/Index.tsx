@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useGetApiMyWebHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { WebTableRow } from "src/components/organisms/web/tables/WebTableRow";
+import WebTableRow from "src/components/organisms/web/tables/WebTableRow";
 import { webTableStruct } from "src/components/organisms/web/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

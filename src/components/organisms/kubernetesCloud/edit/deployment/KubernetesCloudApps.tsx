@@ -1,14 +1,15 @@
-import { FC, useState } from "react";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { SearchBox } from "src/components/molecules/SearchBox";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useGetApiMyKubernetesCloudDeploymentListQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
+import { SearchBox } from "src/components/molecules/SearchBox";
 import { KubernetesCloudAppTableRow } from "../../tables/KubernetesCloudAppTableRow";
 import { kubernetesCloudAppTableStruct } from "../../tables/struct";
+
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+
 
 export const KubernetesCloudApps: FC = () => {
   const [search, setSearch] = useState("");

@@ -19,7 +19,7 @@ import {
   setVmPasswordAction,
 } from "src/app/slice/createNodeSlice";
 import { kubernetesNodeType } from "src/constant/kubernetesNodeType";
-import { KuberNodeConfigTableRow } from "./table/KuberNodeConfigTableRow";
+import KuberNodeConfigTableRow from "./table/KuberNodeConfigTableRow";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 

@@ -4,7 +4,7 @@ import { FC, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { useGetApiMyDomainHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { DomainTableRow } from "src/components/organisms/domain/tables/DomainTableRow";
+import DomainTableRow from "src/components/organisms/domain/tables/DomainTableRow";
 import { domainTableStruct } from "src/components/organisms/domain/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";

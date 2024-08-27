@@ -4,10 +4,9 @@ import { useGetApiMyAccountCustomerUserListQuery } from "src/app/services/api.ge
 import PageLoading from "src/components/atoms/PageLoading";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { AccessibilityTableRow } from "./table/AccessibilityTableRow";
-import { accessibilityTableStruct } from "./table/accessibilityTableStruct";
 import { CreateUserAccessModal } from "./dialog/CreateUserAccessModal";
-import { EditUserAccessModal } from "./dialog/EditUserAccessModal";
+import AccessibilityTableRow from "./table/AccessibilityTableRow";
+import { accessibilityTableStruct } from "./table/accessibilityTableStruct";
 
 export const AccessibilitySetting: FC = () => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);

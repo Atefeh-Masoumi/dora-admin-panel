@@ -10,6 +10,7 @@ import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
 import { snapShotTableStruct } from "./struct";
 
@@ -187,3 +188,5 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(SnapshotTableRow);

@@ -3,10 +3,8 @@ import { Stack } from "@mui/system";
 import { FC, useState } from "react";
 import { useGetApiMyPortalCommissionListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { CommissionTableRow } from "src/components/organisms/portal/financial/commission/tables/CommissionTableRow";
+import CommissionTableRow from "src/components/organisms/portal/financial/commission/tables/CommissionTableRow";
 import { commissionTableStruct } from "src/components/organisms/portal/financial/commission/tables/struct";
-import { BillsTableRow } from "src/components/organisms/portal/financial/tables/BillsTableRow";
-import { billsTableStruct } from "src/components/organisms/portal/financial/tables/billsTableStruct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

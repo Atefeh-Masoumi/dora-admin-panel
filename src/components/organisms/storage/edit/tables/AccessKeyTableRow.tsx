@@ -17,13 +17,14 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { accessKeyTableStruct } from "./AccessKeyStruct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
+const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedAccessKey, setSelectedAccessKey] =
     useState<StorageUserListResponse | null>(null);
@@ -161,3 +162,5 @@ export const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
     </>
   );
 };
+
+export default withTableRowWrapper(AccessKeyTableRow);

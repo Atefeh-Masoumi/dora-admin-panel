@@ -19,7 +19,7 @@ import {
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { accessKeyTableStruct } from "./tables/AccessKeyStruct";
-import { AccessKeyTableRow } from "./tables/AccessKeyTableRow";
+import AccessKeyTableRow from "./tables/AccessKeyTableRow";
 
 type AccessKeyListPropsType = {};
 

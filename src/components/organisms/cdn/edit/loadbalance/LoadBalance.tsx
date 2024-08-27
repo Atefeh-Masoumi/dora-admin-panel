@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyDnsCdnRouteListByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { CreateLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/CreateLoadBalanceDialog";
-import { LoadBalanceTableRow } from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
+import LoadBalanceTableRow from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";
 import { loadBalanceTableStruct } from "src/components/organisms/cdn/edit/loadbalance/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";

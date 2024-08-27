@@ -3,8 +3,9 @@ import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { addStorageTableStruct } from "./struct";
 import { AddStorageContext } from "../contexts/AddStorageContext";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const AddStorageTableRow: FC<{ row: any }> = ({ row }) => {
+const AddStorageTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddStorageContext);
 
   const isChecked = useMemo(
@@ -48,3 +49,5 @@ export const AddStorageTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(AddStorageTableRow);

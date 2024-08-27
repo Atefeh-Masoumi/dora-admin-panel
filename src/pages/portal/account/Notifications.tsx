@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { notificationTableStruct } from "src/components/organisms/portal/account/notification/tables/struct";
-import { NotificationTableRow } from "src/components/organisms/portal/account/notification/tables/NotificationTableRow";
+import NotificationTableRow from "src/components/organisms/portal/account/notification/tables/NotificationTableRow";
 import { useGetApiMyAccountNotificationListQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

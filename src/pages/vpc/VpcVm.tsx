@@ -10,7 +10,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateNetworkRecordModal } from "src/components/organisms/vpc/dialogs/CreateNetworkRecordModal";
 import { vpcVmStruct } from "src/components/organisms/vpc/tables/struct";
-import { VpcVmTableRow } from "src/components/organisms/vpc/tables/VpcVmTableRow";
+import VpcVmTableRow from "src/components/organisms/vpc/tables/VpcVmTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 

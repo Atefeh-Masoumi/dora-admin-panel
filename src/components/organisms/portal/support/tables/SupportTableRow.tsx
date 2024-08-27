@@ -1,9 +1,10 @@
-import { FC } from "react";
 import { Chip, Stack, Typography } from "@mui/material";
-import { supportTableStruct } from "./struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { FC } from "react";
 import { useNavigate } from "react-router";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+import { supportTableStruct } from "./struct";
 
 export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
@@ -64,3 +65,5 @@ export const SupportTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(SupportTableRow);

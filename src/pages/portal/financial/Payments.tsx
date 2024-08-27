@@ -5,7 +5,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import { paymentTableStruct } from "src/components/organisms/portal/financial/payment/tables/struct";
-import { PaymentTableRow } from "src/components/organisms/portal/financial/payment/tables/PaymentTableRow";
+import PaymentTableRow from "src/components/organisms/portal/financial/payment/tables/PaymentTableRow";
 import {
   useGetApiMyPortalPaymentListQuery,
   PaymentListResponse,

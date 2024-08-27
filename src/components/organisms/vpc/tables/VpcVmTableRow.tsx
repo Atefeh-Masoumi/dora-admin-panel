@@ -1,22 +1,23 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useDeleteApiMyVmHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
-import { vpcVmStruct } from "./struct";
 import { vpcStatusIdentifier } from "src/constant/vpcStatus";
-import { useNavigate } from "react-router";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+import { vpcVmStruct } from "./struct";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
+const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVm, setSelectedVm] = useState<any>(null);
 
@@ -125,3 +126,5 @@ export const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(VpcVmTableRow);

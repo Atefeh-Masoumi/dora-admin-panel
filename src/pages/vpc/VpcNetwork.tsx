@@ -7,7 +7,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateNetworkRecordModal } from "src/components/organisms/vpc/dialogs/CreateNetworkRecordModal";
 import { vpcNetworkStruct } from "src/components/organisms/vpc/tables/struct";
-import { VpcNetworkListTableRow } from "src/components/organisms/vpc/tables/VpcNetworkListTableRow";
+import VpcNetworkListTableRow from "src/components/organisms/vpc/tables/VpcNetworkListTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcNetwork: FC = () => {

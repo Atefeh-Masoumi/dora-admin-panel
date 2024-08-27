@@ -6,7 +6,10 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AuthTemplate } from "src/components/templates/AuthTemplate";
-import { usePostApiMyAccountForgotMutation } from "src/app/services/api.generated";
+import {
+  useGetApiMyAccountCaptchaQuery,
+  usePostApiMyAccountForgotMutation,
+} from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { emailValidator } from "src/utils/formValidator";
 import { Captcha } from "src/components/molecules/Captcha";
@@ -23,6 +26,13 @@ type ForgetPassPropsType = { goNext: () => void };
 export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
   const [captchaKey, setCaptchaKey] = useState("");
   const [sendMail, { isLoading }] = usePostApiMyAccountForgotMutation();
+
+  const {
+    data: captchaData,
+    isLoading: getCaptchaLoading,
+    isFetching: getCaptchaFetching,
+    refetch: refetchCaptchaData,
+  } = useGetApiMyAccountCaptchaQuery();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { email, captchaCode },
@@ -41,7 +51,9 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
         toast.success("کد تایید بصورت ایمیل ارسال شد");
         goNext();
       })
-      .catch(() => {});
+      .catch(() => {
+        refetchCaptchaData();
+      });
     setSubmitting(false);
   };
 

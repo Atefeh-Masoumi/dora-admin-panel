@@ -5,7 +5,7 @@ import moment from "jalali-moment";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { BillsTableRow } from "src/components/organisms/portal/financial/tables/BillsTableRow";
+import  BillsTableRow from "src/components/organisms/portal/financial/tables/BillsTableRow";
 import { billsTableStruct } from "src/components/organisms/portal/financial/tables/billsTableStruct";
 import {
   useGetApiMyPortalCustomerBillListQuery,

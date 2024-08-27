@@ -3,7 +3,7 @@ import { FC, useContext, useMemo } from "react";
 import { useGetApiMyPortalProductBundleVmListQuery } from "src/app/services/api.generated";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { ProductBundleTableRow } from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
+import ProductBundleTableRow from "src/components/organisms/vm/add/tables/ProductBundleTableRow";
 import { AddServerContext } from "../contexts/AddVmContext";
 import { productBundleTableStruct } from "../tables/struct";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";

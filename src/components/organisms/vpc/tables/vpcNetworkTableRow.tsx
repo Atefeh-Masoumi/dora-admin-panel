@@ -3,16 +3,14 @@ import { FC } from "react";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { vpcTableNetworkStruct } from "./vpcTableNetworkStruct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 export type VpcNetworkTableRowProps = {
   row: any;
   onDelete: (id: number) => void;
 };
 
-export const VpcNetworkTableRow: FC<VpcNetworkTableRowProps> = ({
-  row,
-  onDelete,
-}) => {
+const VpcNetworkTableRow: FC<VpcNetworkTableRowProps> = ({ row, onDelete }) => {
   const handleOnDelete = (item: any) => {
     onDelete(item.id);
   };
@@ -52,3 +50,5 @@ export const VpcNetworkTableRow: FC<VpcNetworkTableRowProps> = ({
     </>
   );
 };
+
+export default withTableRowWrapper(VpcNetworkTableRow);

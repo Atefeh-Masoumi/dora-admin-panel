@@ -13,7 +13,7 @@ import { useGetApiMyPortalIssueListQuery } from "src/app/services/api.generated"
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { tickets } from "src/components/organisms/portal/support/constant";
-import { SupportTableRow } from "src/components/organisms/portal/support/tables/SupportTableRow";
+import SupportTableRow from "src/components/organisms/portal/support/tables/SupportTableRow";
 import { supportTableStruct } from "src/components/organisms/portal/support/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";

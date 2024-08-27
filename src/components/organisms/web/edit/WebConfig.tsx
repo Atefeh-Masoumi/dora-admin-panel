@@ -10,7 +10,7 @@ import {
 } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { EditWebContext } from "./contexts/EditWebContext";
-import { EditWebTableRow } from "./tables/EditWebTableRow";
+import EditWebTableRow from "./tables/EditWebTableRow";
 import { editWebTableStruct } from "./tables/editWebTableStruct";
 
 type WebConfigPropsType = {};
