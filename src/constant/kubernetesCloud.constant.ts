@@ -25,7 +25,7 @@ export enum ENVIRONMENT_TYPES {
   NONE = 0,
   CUSTOM = 1,
   CONFIG_MAP = 2,
-  SECRET_MAP = 3,
+  SECRET = 3,
 }
 
 export const environmentType = [

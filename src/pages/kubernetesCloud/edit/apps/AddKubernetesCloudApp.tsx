@@ -17,12 +17,7 @@ import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCl
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-
-interface GroupedVariables {
-  [key: number]: {
-    [envKey: string]: any;
-  };
-}
+import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
 
 const AddKubernetesCloudApp: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
@@ -33,8 +28,8 @@ const AddKubernetesCloudApp: FC = () => {
     }[]
   >([]);
 
-  const { id: kubernetesCloudId } = useParams();
   const navigate = useNavigate();
+  const { id: kubernetesCloudId } = useParams();
 
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
     useGetApiMyKubernetesCloudImageListQuery();
@@ -70,33 +65,20 @@ const AddKubernetesCloudApp: FC = () => {
   };
 
   const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = (values) => {
-    const groupedByVariableType = values.keyValue.reduce<GroupedVariables>(
-      (acc, item) => {
-        const { variableType, envKey, value } = item;
-        if (!acc[variableType]) {
-          acc[variableType] = {};
-        }
-        acc[variableType][envKey] = value;
-        return acc;
-      },
-      {}
-    );
-    console.log("click");
-
-    console.log(groupedByVariableType);
     createDeployment({
       createKuberCloudDeploymentModel: {
         name: values.name,
         imageTagId: Number(values.imageTagId!),
         namespaceId: values.namespaceId!,
-        keyValue: groupedByVariableType,
+        keyValue: groupedByVariableType(values),
         replicaNumber: values.replicaNumber,
+        isPublic: true,
       },
     })
       .unwrap()
       .then((res) => {
         toast.success("کانتینر با موفقیت ایجاد شد");
-        navigate("/");
+        navigate("/kubernetes-cloud/" + kubernetesCloudId);
       })
       .catch((err) => {});
   };
@@ -173,14 +155,22 @@ const AddKubernetesCloudApp: FC = () => {
                 ویژگی های موردنظر را به container اضافه کنید.
               </Typography>
 
-              <Button
-                sx={{ alignSelf: "center", width: 100 }}
-                variant="text"
-                startIcon={<AddIcon />}
-                onClick={addEnvironmentVariable}
+              <Stack
+                px={10}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
               >
-                افزودن
-              </Button>
+                <Typography>لیست Varible ها</Typography>
+                <Button
+                  sx={{ alignSelf: "center", width: 100 }}
+                  variant="outlined"
+                  startIcon={<AddIcon />}
+                  onClick={addEnvironmentVariable}
+                >
+                  افزودن
+                </Button>
+              </Stack>
 
               <Stack
                 gap={2}
@@ -189,7 +179,7 @@ const AddKubernetesCloudApp: FC = () => {
                   width: "100%",
                   alignSelf: "center",
                   justifyContent: "center",
-                  pb: 5,
+                  py: 5,
                 }}
               >
                 {environmentVariableList.map((item, index) => {
@@ -222,7 +212,9 @@ const AddKubernetesCloudApp: FC = () => {
                   color: "rgba(110, 118, 138, 1)",
                   fontSize: "16px !important",
                 }}
-                // onClick={goPreviousStep}
+                onClick={() =>
+                  navigate("/kubernetes-cloud/" + kubernetesCloudId)
+                }
               >
                 انصراف
               </Button>

@@ -67,11 +67,15 @@ export const SelectEnvironmentVariable: FC<
         setNeedToResourceSelect(true);
         setResourceList(configmapList);
         break;
-      case ENVIRONMENT_TYPES.SECRET_MAP:
+      case ENVIRONMENT_TYPES.SECRET:
         setNeedToResourceSelect(true);
         setResourceList(secretList);
 
         break;
+
+      case ENVIRONMENT_TYPES.CUSTOM:
+        setNeedToResourceSelect(false);
+        setResourceList([]);
     }
 
     formik.setFieldValue(`keyValue[${mainIndex}].variableType`, newValue);
@@ -86,7 +90,7 @@ export const SelectEnvironmentVariable: FC<
         setKeyListInResource(configMapItems);
         break;
 
-      case ENVIRONMENT_TYPES.SECRET_MAP:
+      case ENVIRONMENT_TYPES.SECRET:
         const secrets = secretList?.find(
           (item) => item.id === resourceId
         )?.secrets;
@@ -105,7 +109,7 @@ export const SelectEnvironmentVariable: FC<
       alignSelf="center"
       px={0}
       py={{ xs: 2, md: 0 }}
-      width="90%"
+      width="100%"
     >
       <Grid justifyContent="center" container width="100%" gap={2}>
         {isMd && (
@@ -194,7 +198,7 @@ export const SelectEnvironmentVariable: FC<
           item
           xs={10}
           md={3}
-          lg={needToResourceSelect ? 4.5 : 4.5}
+          lg={2}
         >
           <SelectEnvKey
             envKey={formik.values.keyValue[mainIndex]?.envKey || ""}

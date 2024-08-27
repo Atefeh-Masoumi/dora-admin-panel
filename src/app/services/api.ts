@@ -32,6 +32,7 @@ const tags = [
   "ConfigMap",
   "SecretMap",
   "NameSpace",
+  "Deployment",
 ];
 
 export const api = generatedApi
@@ -420,7 +421,7 @@ export const api = generatedApi
       putApiMyAccountRoleAccessEdit: {
         invalidatesTags: () => ["Accessibility"],
       },
-      // ============================== ConfigMap ============================== //
+      // ============================== Kubernetes Cloud ConfigMap ============================== //
       getApiMyKubernetesCloudConfigmapListByNamespaceId: {
         providesTags: () => ["ConfigMap"],
       },
@@ -430,7 +431,7 @@ export const api = generatedApi
       deleteApiMyKubernetesCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
       },
-      // ============================== SecretMap ============================== //
+      // ============================== Kubernetes Cloud SecretMap ============================== //
       getApiMyKubernetesCloudSecretListByNamespaceId: {
         providesTags: () => ["SecretMap"],
       },
@@ -440,7 +441,7 @@ export const api = generatedApi
       deleteApiMyKubernetesCloudSecretDeleteById: {
         invalidatesTags: () => ["SecretMap"],
       },
-      // ============================== Namespace ============================== //
+      // ============================== Kubernetes Cloud Namespace ============================== //
       getApiMyKubernetesCloudHostList: {
         providesTags: () => ["Namespace"],
       },
@@ -452,6 +453,16 @@ export const api = generatedApi
       },
       deleteApiMyKubernetesCloudHostDeleteById: {
         invalidatesTags: () => ["Namespace"],
+      },
+      // ============================== Kubernetes Cloud Deployment ============================== //
+      getApiMyKubernetesCloudDeploymentList: {
+        providesTags: () => ["Deployment"],
+      },
+      deleteApiMyKubernetesCloudDeploymentDeleteById: {
+        invalidatesTags: () => ["Deployment"],
+      },
+      postApiMyKubernetesCloudDeploymentCreate: {
+        invalidatesTags: () => ["Deployment"],
       },
     },
   });

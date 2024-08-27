@@ -8,12 +8,3 @@ export const kubernetesTableStruct: columnType[] = [
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "عملیات", disableSort: true },
 ];
-
-export type KubernetesCloudHostListResponse = {
-  id: number;
-  datacenter: string | null;
-  name: string | null;
-  status: string | null;
-  statusId: number;
-  createDate: string;
-};
