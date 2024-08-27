@@ -1557,6 +1557,12 @@ export const api = createApi({
         body: queryArg.createVpcTranslateModel,
       }),
     }),
+    getApiMyVpcPrivateNetworkRequestList: build.query<
+      GetApiMyVpcPrivateNetworkRequestListApiResponse,
+      GetApiMyVpcPrivateNetworkRequestListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/private-network-request/list` }),
+    }),
     postApiMyVpcPrivateNetworkRequestCreate: build.mutation<
       PostApiMyVpcPrivateNetworkRequestCreateApiResponse,
       PostApiMyVpcPrivateNetworkRequestCreateApiArg
@@ -1566,12 +1572,6 @@ export const api = createApi({
         method: "POST",
         body: queryArg.createVpcPrivateNetworkModel,
       }),
-    }),
-    getApiMyVpcPrivateNetworkRequestList: build.query<
-      GetApiMyVpcPrivateNetworkRequestListApiResponse,
-      GetApiMyVpcPrivateNetworkRequestListApiArg
-    >({
-      query: () => ({ url: `/api/my/vpc/private-network-request/list` }),
     }),
     getApiMyVpcPrivateNetworkListByVpcHostId: build.query<
       GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse,
@@ -2922,13 +2922,13 @@ export type PostApiMyVpcTranslateCreateApiResponse = unknown;
 export type PostApiMyVpcTranslateCreateApiArg = {
   createVpcTranslateModel: CreateVpcTranslateModel;
 };
+export type GetApiMyVpcPrivateNetworkRequestListApiResponse =
+  /** status 200 OK */ VpcPrivateNetworkRequestListResponse[];
+export type GetApiMyVpcPrivateNetworkRequestListApiArg = void;
 export type PostApiMyVpcPrivateNetworkRequestCreateApiResponse = unknown;
 export type PostApiMyVpcPrivateNetworkRequestCreateApiArg = {
   createVpcPrivateNetworkModel: CreateVpcPrivateNetworkModel;
 };
-export type GetApiMyVpcPrivateNetworkRequestListApiResponse =
-  /** status 200 OK */ VpcPrivateNetworkRequestListResponse[];
-export type GetApiMyVpcPrivateNetworkRequestListApiArg = void;
 export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse =
   /** status 200 OK */ VpcPrivateNetworkListResponse[];
 export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiArg = {
@@ -4520,10 +4520,6 @@ export type CreateVpcTranslateModel = {
   port: number;
   description: string | null;
 };
-export type CreateVpcPrivateNetworkModel = {
-  vpcHostId: number;
-  vpcPrivateNetworkId: number;
-};
 export type VpcPrivateNetworkRequestListResponse = {
   id?: number;
   vpcHost: string | null;
@@ -4532,6 +4528,10 @@ export type VpcPrivateNetworkRequestListResponse = {
   createDate?: string;
   modifyDate?: string;
   description?: string | null;
+};
+export type CreateVpcPrivateNetworkModel = {
+  vpcHostId: number;
+  vpcPrivateNetworkId: number;
 };
 export type VpcPrivateNetworkListResponse = {
   id: number;
@@ -5052,8 +5052,8 @@ export const {
   useGetApiMyVpcTranslateListQuery,
   useDeleteApiMyVpcTranslateDeleteByIdMutation,
   usePostApiMyVpcTranslateCreateMutation,
-  usePostApiMyVpcPrivateNetworkRequestCreateMutation,
   useGetApiMyVpcPrivateNetworkRequestListQuery,
+  usePostApiMyVpcPrivateNetworkRequestCreateMutation,
   useGetApiMyVpcPrivateNetworkListByVpcHostIdQuery,
   useGetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
