@@ -7,12 +7,12 @@ import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/ap
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
-import { KubernetesCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
   list: GetApiMyKubernetesCloudImageListApiResponse;
   loading: boolean;
-  formik: FormikProps<KubernetesCloudAppImageType>;
+  formik: FormikProps<KuberCloudAppImageType>;
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({
@@ -61,7 +61,13 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
           ))}
         </Stack>
 
-        <Grid spacing={3} columns={10} justifyContent="center" container>
+        <Grid
+          // padding={4}
+          spacing={2}
+          columns={12}
+          justifyContent="start"
+          container
+        >
           {(() => {
             const finalList =
               selectedCategory?.id === 3
@@ -69,7 +75,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
                 : filterByCategory(selectedCategory?.id!);
             if (!!finalList.length) {
               return finalList.map((object, index) => (
-                <Grid key={index} item xs={10} sm={8} md={4} lg={3}>
+                <Grid key={index} item xs={12} sm={6} md={4} lg={4} xl={3}>
                   <AppImageCard item={object} formik={formik} />
                 </Grid>
               ));

@@ -1,4 +1,4 @@
-import { DeleteOutline } from "@mui/icons-material";
+import { FC, useState } from "react";
 import {
   Box,
   Grid,
@@ -8,14 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import { FormikProps } from "formik";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { DeleteOutline } from "@mui/icons-material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
 import {
-  KeyListInResourceType,
-  KubernetesCloudAppImageType,
+  KuberCloudAppImageType,
   ResourceListType,
-  VariableEnvironment,
 } from "src/types/kubernetesCloud.types";
 import { SelectEnvType } from "./envVariable/SelectEnvType";
 import { SelectEnvKey } from "./envVariable/SelectEnvKey";
@@ -28,34 +26,25 @@ import {
 import { useParams } from "react-router";
 
 type SelectEnvironmentVariablePropsType = {
-  outerIndex: number;
-  item: any;
-  formik: FormikProps<KubernetesCloudAppImageType>;
-  keyValues: VariableEnvironment[];
-  setKeyValues: Dispatch<SetStateAction<VariableEnvironment[]>>;
+  mainIndex: number;
+  onDelete: (itemIndex: number) => void;
+  formik: FormikProps<KuberCloudAppImageType>;
 };
 
 export const SelectEnvironmentVariable: FC<
   SelectEnvironmentVariablePropsType
-> = ({ item, formik, outerIndex, keyValues, setKeyValues }) => {
-  const theme = useTheme(),
-    isMd = useMediaQuery(theme.breakpoints.up("md"));
-
-  const { id: kubernetesCloudNameSpaceId } = useParams();
-
-  const [environmentVariable, setEnvironmentVariable] =
-    useState<VariableEnvironment>({
-      variableType: 1,
-      key: "",
-      value: "",
-    });
+> = ({ formik, onDelete, mainIndex }) => {
+  const [resourceList, setResourceList] = useState<ResourceListType>();
+  const [keyListInResource, setKeyListInResource] = useState<any>();
   const [needToResourceSelect, setNeedToResourceSelect] =
     useState<boolean>(false);
-  const [resourceList, setResourceList] = useState<ResourceListType>();
   const [selectedResourceItem, setSelectedResourceItem] = useState<
     number | null
   >(null);
-  const [keyListInResource, setKeyListInResource] = useState<any>();
+
+  const theme = useTheme(),
+    isMd = useMediaQuery(theme.breakpoints.up("md"));
+  const { id: kubernetesCloudNameSpaceId } = useParams();
 
   const { data: configmapList } =
     useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
@@ -64,7 +53,6 @@ export const SelectEnvironmentVariable: FC<
       },
       { skip: !kubernetesCloudNameSpaceId }
     );
-
   const { data: secretList } =
     useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
       {
@@ -73,37 +61,45 @@ export const SelectEnvironmentVariable: FC<
       { skip: !kubernetesCloudNameSpaceId }
     );
 
-  const removeDestinationInput = (index: number) => {
-    setKeyValues((prevState) => {
-      let result = [...prevState];
-      result.splice(index, 1);
-      return result;
-    });
-    // formik.setFieldValue(
-    //   "keyValue",
-    //   formik.values.keyValue.keyValue.filter((_, i) => i !== index)
-    // );
-  };
-
-  useEffect(() => {
-    switch (environmentVariable.variableType) {
+  const handleChangeEnvType = (newValue: number) => {
+    switch (newValue) {
       case ENVIRONMENT_TYPES.CONFIG_MAP:
         setNeedToResourceSelect(true);
         setResourceList(configmapList);
-        const configMapList = configmapList?.find(
-          (item) => item.id === selectedResourceItem
-        )?.configMaps;
-        setKeyListInResource(configMapList);
         break;
-      case ENVIRONMENT_TYPES.SECRET_MAP:
+      case ENVIRONMENT_TYPES.SECRET:
         setNeedToResourceSelect(true);
         setResourceList(secretList);
+
         break;
-      default:
+
+      case ENVIRONMENT_TYPES.CUSTOM:
         setNeedToResourceSelect(false);
+        setResourceList([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [environmentVariable.variableType, selectedResourceItem]);
+
+    formik.setFieldValue(`keyValue[${mainIndex}].variableType`, newValue);
+  };
+
+  const handleResourceOnChange = (resourceId: number) => {
+    switch (formik.values.keyValue[mainIndex].variableType) {
+      case ENVIRONMENT_TYPES.CONFIG_MAP:
+        const configMapItems = configmapList?.find(
+          (item) => item.id === resourceId
+        )?.configMaps;
+        setKeyListInResource(configMapItems);
+        break;
+
+      case ENVIRONMENT_TYPES.SECRET:
+        const secrets = secretList?.find(
+          (item) => item.id === resourceId
+        )?.secrets;
+        setKeyListInResource(secrets);
+        break;
+    }
+
+    setSelectedResourceItem(resourceId);
+  };
 
   return (
     <Box
@@ -113,7 +109,7 @@ export const SelectEnvironmentVariable: FC<
       alignSelf="center"
       px={0}
       py={{ xs: 2, md: 0 }}
-      width="90%"
+      width="100%"
     >
       <Grid justifyContent="center" container width="100%" gap={2}>
         {isMd && (
@@ -124,11 +120,20 @@ export const SelectEnvironmentVariable: FC<
             lg={needToResourceSelect ? 2.5 : 4.7}
           >
             <Stack direction="row" gap={1}>
-              <IconButton onClick={() => removeDestinationInput(outerIndex)}>
+              <IconButton onClick={() => onDelete(mainIndex)}>
                 <DeleteOutline color="error" />
               </IconButton>
               {needToResourceSelect ? (
-                <SelectEnvValue keyListInResource={keyListInResource || []} />
+                <SelectEnvValue
+                  value={formik.values.keyValue[mainIndex]?.value || ""}
+                  setValue={(newValue: any) =>
+                    formik.setFieldValue(
+                      `keyValue[${mainIndex}].value`,
+                      newValue
+                    )
+                  }
+                  keyListInResource={keyListInResource || []}
+                />
               ) : (
                 <DorsaTextField
                   sx={{
@@ -138,12 +143,12 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={environmentVariable.value}
+                  value={formik.values.keyValue[mainIndex]?.value}
                   onChange={(e) =>
-                    setEnvironmentVariable((prevState) => ({
-                      ...prevState,
-                      value: e.target.value,
-                    }))
+                    formik.setFieldValue(
+                      `keyValue[${mainIndex}].value`,
+                      e.target.value
+                    )
                   }
                 />
               )}
@@ -164,7 +169,7 @@ export const SelectEnvironmentVariable: FC<
             <SelectEnvResource
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
-              setSelectedResourceItem={setSelectedResourceItem}
+              handleResourceOnChange={handleResourceOnChange}
             />
           </Grid>
         )}
@@ -180,8 +185,8 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              environmentVariable={environmentVariable}
-              setEnvironmentVariable={setEnvironmentVariable}
+              type={formik.values.keyValue[mainIndex]?.variableType || ""}
+              setType={(newValue: any) => handleChangeEnvType(newValue)}
             />
           </Grid>
         )}
@@ -193,11 +198,13 @@ export const SelectEnvironmentVariable: FC<
           item
           xs={10}
           md={3}
-          lg={needToResourceSelect ? 4.5 : 4.5}
+          lg={2}
         >
           <SelectEnvKey
-            environmentVariable={environmentVariable}
-            setEnvironmentVariable={setEnvironmentVariable}
+            envKey={formik.values.keyValue[mainIndex]?.envKey || ""}
+            setKey={(newValue: string) =>
+              formik.setFieldValue(`keyValue[${mainIndex}].envKey`, newValue)
+            }
           />
         </Grid>
 
@@ -212,8 +219,8 @@ export const SelectEnvironmentVariable: FC<
             }}
           >
             <SelectEnvType
-              environmentVariable={environmentVariable}
-              setEnvironmentVariable={setEnvironmentVariable}
+              type={formik.values.keyValue[mainIndex]?.variableType || ""}
+              setType={(newValue: any) => handleChangeEnvType(newValue)}
             />
           </Grid>
         )}
@@ -223,7 +230,7 @@ export const SelectEnvironmentVariable: FC<
             <SelectEnvResource
               resourceList={resourceList}
               selectedResourceItem={selectedResourceItem}
-              setSelectedResourceItem={setSelectedResourceItem}
+              handleResourceOnChange={handleResourceOnChange}
             />
           </Grid>
         )}
@@ -231,12 +238,21 @@ export const SelectEnvironmentVariable: FC<
         {!isMd && (
           <Grid item xs={10} md={5} lg={needToResourceSelect ? 3 : 7}>
             <Stack direction="row" gap={1}>
-              <IconButton onClick={() => removeDestinationInput(outerIndex)}>
+              <IconButton onClick={() => onDelete(mainIndex)}>
                 <DeleteOutline color="error" />
               </IconButton>
 
               {needToResourceSelect ? (
-                <SelectEnvValue keyListInResource={keyListInResource || []} />
+                <SelectEnvValue
+                  value={formik.values.keyValue[mainIndex]?.value || ""}
+                  setValue={(newValue: any) =>
+                    formik.setFieldValue(
+                      `keyValue[${mainIndex}].value`,
+                      newValue
+                    )
+                  }
+                  keyListInResource={keyListInResource || []}
+                />
               ) : (
                 <DorsaTextField
                   sx={{
@@ -246,12 +262,12 @@ export const SelectEnvironmentVariable: FC<
                   dir="ltr"
                   size="small"
                   fullWidth
-                  value={environmentVariable.value}
+                  value={formik.values.keyValue[mainIndex].value}
                   onChange={(e) =>
-                    setEnvironmentVariable((prevState) => ({
-                      ...prevState,
-                      value: e.target.value,
-                    }))
+                    formik.setFieldValue(
+                      `keyValue[${mainIndex}].value`,
+                      e.target.value
+                    )
                   }
                 />
               )}

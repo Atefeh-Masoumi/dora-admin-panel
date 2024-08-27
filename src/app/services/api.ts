@@ -31,6 +31,8 @@ const tags = [
   "Accessibility",
   "ConfigMap",
   "SecretMap",
+  "NameSpace",
+  "Deployment",
 ];
 
 export const api = generatedApi
@@ -419,7 +421,7 @@ export const api = generatedApi
       putApiMyAccountRoleAccessEdit: {
         invalidatesTags: () => ["Accessibility"],
       },
-      // ============================== ConfigMap ============================== //
+      // ============================== Kubernetes Cloud ConfigMap ============================== //
       getApiMyKubernetesCloudConfigmapListByNamespaceId: {
         providesTags: () => ["ConfigMap"],
       },
@@ -429,7 +431,7 @@ export const api = generatedApi
       deleteApiMyKubernetesCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
       },
-      // ============================== SecretMap ============================== //
+      // ============================== Kubernetes Cloud SecretMap ============================== //
       getApiMyKubernetesCloudSecretListByNamespaceId: {
         providesTags: () => ["SecretMap"],
       },
@@ -438,6 +440,29 @@ export const api = generatedApi
       },
       deleteApiMyKubernetesCloudSecretDeleteById: {
         invalidatesTags: () => ["SecretMap"],
+      },
+      // ============================== Kubernetes Cloud Namespace ============================== //
+      getApiMyKubernetesCloudHostList: {
+        providesTags: () => ["Namespace"],
+      },
+      postApiMyKubernetesCloudHostCreate: {
+        invalidatesTags: () => ["Namespace"],
+      },
+      putApiMyKubernetesCloudHostEditById: {
+        invalidatesTags: () => ["Namespace"],
+      },
+      deleteApiMyKubernetesCloudHostDeleteById: {
+        invalidatesTags: () => ["Namespace"],
+      },
+      // ============================== Kubernetes Cloud Deployment ============================== //
+      getApiMyKubernetesCloudDeploymentList: {
+        providesTags: () => ["Deployment"],
+      },
+      deleteApiMyKubernetesCloudDeploymentDeleteById: {
+        invalidatesTags: () => ["Deployment"],
+      },
+      postApiMyKubernetesCloudDeploymentCreate: {
+        invalidatesTags: () => ["Deployment"],
       },
     },
   });

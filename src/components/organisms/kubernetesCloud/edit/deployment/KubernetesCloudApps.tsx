@@ -4,10 +4,12 @@ import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useGetApiMyKubernetesCloudDeploymentListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import KubernetesTableRow from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
-import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
+import { KubernetesCloudAppTableRow } from "../../tables/KubernetesCloudAppTableRow";
+import { kubernetesCloudAppTableStruct } from "../../tables/struct";
+
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+
 
 export const KubernetesCloudApps: FC = () => {
   const [search, setSearch] = useState("");
@@ -91,8 +93,8 @@ export const KubernetesCloudApps: FC = () => {
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={kubernetesTableStruct}
-            RowComponent={KubernetesTableRow}
+            struct={kubernetesCloudAppTableStruct}
+            RowComponent={KubernetesCloudAppTableRow}
             rows={filteredList}
             text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
             isLoading={isLoading}

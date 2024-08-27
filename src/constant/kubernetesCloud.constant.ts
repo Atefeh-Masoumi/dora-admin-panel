@@ -7,7 +7,7 @@ export const kubernetesAppTableHeadCells = [
 ];
 
 export const appImageList = [
-  { id: 1, name: "mySql", src: "/assets/icons/mysql.svg" },
+  { id: 1, name: "mysql", src: "/assets/icons/mysql.svg" },
   { id: 2, name: "nginx", src: "/assets/icons/nginx.svg" },
   { id: 4, name: "mongoDb", src: "/assets/icons/mongodb.svg" },
   { id: 5, name: ".net", src: "/assets/icons/dotnet.svg" },
@@ -25,10 +25,10 @@ export enum ENVIRONMENT_TYPES {
   NONE = 0,
   CUSTOM = 1,
   CONFIG_MAP = 2,
-  SECRET_MAP = 3,
+  SECRET = 3,
 }
 
-export const EnvironmentType = [
+export const environmentType = [
   { id: 1, label: "Custom" },
   { id: 2, label: "Configmap" },
   { id: 3, label: "Secret" },

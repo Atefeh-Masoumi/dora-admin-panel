@@ -1,16 +1,12 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { VariableEnvironment } from "src/types/kubernetesCloud.types";
 
 type SelectEnvKeyPropsType = {
-  environmentVariable: VariableEnvironment;
-  setEnvironmentVariable: Dispatch<SetStateAction<VariableEnvironment>>;
+  envKey: string;
+  setKey: (envKey: string) => void;
 };
 
-export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
-  environmentVariable,
-  setEnvironmentVariable,
-}) => {
+export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({ envKey, setKey }) => {
   return (
     <DorsaTextField
       sx={{
@@ -20,13 +16,8 @@ export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
       size="small"
       fullWidth
       placeholder="Key"
-      value={environmentVariable.key}
-      onChange={(e) =>
-        setEnvironmentVariable((prevState) => ({
-          ...prevState,
-          key: e.target.value,
-        }))
-      }
+      value={envKey}
+      onChange={(e) => setKey(e.target.value)}
     />
   );
 };

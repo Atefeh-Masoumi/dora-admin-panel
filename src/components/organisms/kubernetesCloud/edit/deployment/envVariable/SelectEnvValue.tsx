@@ -1,16 +1,26 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { FC } from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { SecretKeyValuePairsResponse } from "src/app/services/api.generated";
 type SelectEnvValuePropsType = {
   keyListInResource: SecretKeyValuePairsResponse[];
+  value: any;
+  setValue: any;
 };
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
+  value,
+  setValue,
 }) => {
   return (
     <FormControl fullWidth size="small">
       <InputLabel htmlFor="value-select">Value</InputLabel>
-      <Select label="Value" onChange={() => {}} id="value-select" dir="ltr" value="test">
+      <Select
+        label="Value"
+        id="value-select"
+        dir="ltr"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      >
         {keyListInResource?.map((item, index) => (
           <MenuItem
             key={index}

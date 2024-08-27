@@ -43,6 +43,17 @@ type CreateVpcLoadBalancerDialogPropsType = {
 export const CreateSecretMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
+  const charToBits = (char: string) => {
+    const charCode = char.charCodeAt(0);
+    return Array.from({ length: 8 }, (_, i) => (charCode >> (7 - i)) & 1);
+  };
+
+  const stringToBitArray = (text: string) => {
+    return Array.from(text).flatMap(charToBits);
+  };
+ 
+  //////////////////////////////////////////
+
   const { id: namespaceId } = useParams();
   const [envs, setEnvs] = useState<any[]>([]);
 
@@ -60,11 +71,15 @@ export const CreateSecretMapDialog: FC<
     onSubmit: (values, { setSubmitting, resetForm }) => {
       const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
-          acc[item.key] = item.value;
+          console.log(item.value, stringToBitArray(item.value).join(""));
+          acc[item.key] = stringToBitArray(item.value).join("");
+
           return acc;
         },
         {}
       );
+
+      console.log();
 
       createSecretMap({
         createKuberCloudSecretModel: {
