@@ -1,8 +1,9 @@
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { FC } from "react";
 import { referralTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const ReferralTableRow: FC<{ row: any }> = ({ row }) => {
+const ReferralTableRow: FC<{ row: any }> = ({ row }) => {
   return (
     <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.usedCode}>
       {referralTableStruct.map((column) => {
@@ -22,3 +23,5 @@ export const ReferralTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(ReferralTableRow);

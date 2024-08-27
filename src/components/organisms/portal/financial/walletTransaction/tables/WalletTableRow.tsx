@@ -2,8 +2,9 @@ import { FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { walletTableStruct } from "./struct";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const WalletTableRow: FC<{ row: any }> = ({ row }) => {
+const WalletTableRow: FC<{ row: any }> = ({ row }) => {
   return (
     <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.usedCode}>
       {walletTableStruct.map((column) => {
@@ -41,3 +42,5 @@ export const WalletTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(WalletTableRow);

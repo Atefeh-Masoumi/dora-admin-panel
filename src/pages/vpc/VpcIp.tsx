@@ -6,7 +6,7 @@ import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVpcIpDialog } from "src/components/organisms/vpc/dialogs/CreateVpcIpDialog";
-import { VpcIpTableRow } from "src/components/organisms/vpc/tables/VpcIpTableRow";
+import VpcIpTableRow from "src/components/organisms/vpc/tables/VpcIpTableRow";
 import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

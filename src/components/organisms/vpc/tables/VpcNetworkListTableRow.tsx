@@ -7,13 +7,14 @@ import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcNetworkStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
+const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<any>(null);
 
@@ -83,3 +84,5 @@ export const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(VpcNetworkListTableRow);

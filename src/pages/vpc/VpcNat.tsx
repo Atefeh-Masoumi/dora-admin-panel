@@ -1,3 +1,4 @@
+import AddIcon from "@mui/icons-material/Add";
 import {
   Button,
   Divider,
@@ -13,13 +14,12 @@ import { useGetApiMyVpcNatListByVpcHostIdQuery } from "src/app/services/api.gene
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateDestinationNatDialog } from "src/components/organisms/vpc/dialogs/CreateDestinationNatDialog";
-import { VpcNatTableRow } from "src/components/organisms/vpc/tables/VpcNatTableRow";
+import VpcNatTableRow from "src/components/organisms/vpc/tables/VpcNatTableRow";
 import { vpcNatTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import AddIcon from "@mui/icons-material/Add";
 
-import { NAT_TYPE } from "src/constant/vpc";
 import { CreateSourceNatDialog } from "src/components/organisms/vpc/dialogs/CreateSourceNatDialog";
+import { NAT_TYPE } from "src/constant/vpc";
 
 export const VpcNat: FC = () => {
   const [search, setSearch] = useState("");

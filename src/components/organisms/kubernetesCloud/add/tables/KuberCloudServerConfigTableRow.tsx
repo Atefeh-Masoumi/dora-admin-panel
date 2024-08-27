@@ -3,10 +3,9 @@ import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
 import { productBundleTableStruct } from "./struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const KubernetesCloudServerConfigTableRow: FC<{ row: any }> = ({
-  row,
-}) => {
+const KubernetesCloudServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(
     AddKubernetesCloudContext
   );
@@ -48,3 +47,5 @@ export const KubernetesCloudServerConfigTableRow: FC<{ row: any }> = ({
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(KubernetesCloudServerConfigTableRow);

@@ -1,10 +1,11 @@
-import { FC, useContext, useMemo } from "react";
 import { Checkbox } from "@mui/material";
+import { FC, useContext, useMemo } from "react";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 
-export const KuberServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
+const KuberServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(AddKubernetesContext);
 
   const isChecked = useMemo(
@@ -44,3 +45,5 @@ export const KuberServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(KuberServerConfigTableRow);

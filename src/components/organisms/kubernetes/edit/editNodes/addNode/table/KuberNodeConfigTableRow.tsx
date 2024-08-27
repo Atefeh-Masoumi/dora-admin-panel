@@ -4,8 +4,9 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { productBundleTableStruct } from "src/components/organisms/vm/add/tables/struct";
 import { setProductBundleIdAction } from "src/app/slice/createNodeSlice";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const KuberNodeConfigTableRow: FC<{ row: any }> = ({ row }) => {
+const KuberNodeConfigTableRow: FC<{ row: any }> = ({ row }) => {
   const dispatch = useAppDispatch();
 
   const productBundleId = useAppSelector(
@@ -49,3 +50,5 @@ export const KuberNodeConfigTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(KuberNodeConfigTableRow);

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { useGetApiMyKubernetesClusterHostListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesTableStruct } from "src/components/organisms/kubernetes/tables/struct";
-import { KubernetesTableRow } from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
+import KubernetesTableRow from "src/components/organisms/kubernetes/tables/KubernetesTableRow";
 
 const KubernetesList: FC = () => {
   const [search, setSearch] = useState("");

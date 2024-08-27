@@ -10,6 +10,7 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { EditUserAccessModal } from "../dialog/EditUserAccessModal";
 import { accessibilityTableStruct } from "./accessibilityTableStruct";
 
@@ -18,7 +19,7 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
+const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>(null);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
@@ -170,3 +171,5 @@ export const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
     </>
   );
 };
+
+export default withTableRowWrapper(AccessibilityTableRow);

@@ -12,17 +12,17 @@ import {
   VpcHostGatewayListResponse,
   useDeleteApiMyVpcIpDeleteByIdMutation,
 } from "src/app/services/api.generated";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
+const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVpcIp, setSelectedVpcIp] = useState<VpcHostGatewayListResponse | null>(
-    null
-  );
+  const [selectedVpcIp, setSelectedVpcIp] =
+    useState<VpcHostGatewayListResponse | null>(null);
 
   const [deleteVpcIpRecord, { isLoading: deleteVpcIpRecordLoading }] =
     useDeleteApiMyVpcIpDeleteByIdMutation();
@@ -115,3 +115,5 @@ export const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(VpcIpTableRow);

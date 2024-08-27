@@ -3,6 +3,11 @@ import { FC, Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
+import {
+  GetRemoteConsoleResponse,
+  GetVmResponse,
+  useDeleteApiMyVmHostDeleteByIdMutation,
+} from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import PageLoading from "src/components/atoms/PageLoading";
 import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
@@ -10,19 +15,15 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { addVmTableStruct } from "./struct";
-import {
-  GetRemoteConsoleResponse,
-  GetVmResponse,
-  useDeleteApiMyVmHostDeleteByIdMutation,
-} from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
+const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVm, setSelectedVm] = useState<GetVmResponse | null>(null);
   const navigate = useNavigate();
@@ -227,3 +228,5 @@ export const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
     </Fragment>
   );
 };
+
+export default withTableRowWrapper(AddVmTableRow);

@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { FC, useMemo } from "react";
 import { useGetApiMyPortalProductBundleVpcListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { AddVpcTableRow } from "../tables/AddVpcTableRow";
+import AddVpcTableRow from "../tables/AddVpcTableRow";
 import { addVpcTableStruct } from "../tables/struct";
 
 type SelectVpcConfigPropsType = {};

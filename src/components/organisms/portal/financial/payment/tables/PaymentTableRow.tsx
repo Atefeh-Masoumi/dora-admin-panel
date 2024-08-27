@@ -3,8 +3,9 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { paymentTableStruct } from "./struct";
 import { useNavigate } from "react-router";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
+const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const rowClickHandler = () => navigate("/portal/wallet/payment/" + row.id);
@@ -76,3 +77,5 @@ export const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(PaymentTableRow);

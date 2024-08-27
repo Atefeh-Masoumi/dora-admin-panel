@@ -3,8 +3,9 @@ import { Checkbox } from "@mui/material";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { editWebTableStruct } from "./editWebTableStruct";
 import { EditWebContext } from "../contexts/EditWebContext";
+import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
-export const EditWebTableRow: FC<{ row: any }> = ({ row }) => {
+const EditWebTableRow: FC<{ row: any }> = ({ row }) => {
   const { serverConfig, setServerConfig } = useContext(EditWebContext);
 
   const isChecked = useMemo(
@@ -46,3 +47,5 @@ export const EditWebTableRow: FC<{ row: any }> = ({ row }) => {
     </DorsaTableRow>
   );
 };
+
+export default withTableRowWrapper(EditWebTableRow);

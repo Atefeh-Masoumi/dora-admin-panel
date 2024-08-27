@@ -10,7 +10,7 @@ import {
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateSnapshotDialog } from "./create/CreateSnapshotDialog";
-import { SnapshotTableRow } from "./table/SnapshotTableRow";
+import SnapshotTableRow from "./table/SnapshotTableRow";
 import { snapShotTableStruct } from "./table/struct";
 
 type SnapshotPropsType = {};
