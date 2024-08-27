@@ -1,5 +1,5 @@
 import moment from "moment-jalaali";
 
-export const ConvertToJalali = (gregorianDate: string) => {
-  return moment(gregorianDate, "jalali").format("YYYY-MM-DDTHH:mm:ss");
+export const ConvertToJalali = (jalaliDate: string) => {
+  return moment(jalaliDate, "YYYY-MM-DDTHH:mm:ss").format("jYYYY/jMM/jDD");
 };
