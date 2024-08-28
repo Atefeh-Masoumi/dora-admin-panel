@@ -36,7 +36,8 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
             setCpu(res.cpu || 0);
             setDisk(res.disk || 0);
           }
-        });
+        })
+        .catch(() => {});
     }
   }, [getData, serverId]);
 
@@ -85,7 +86,8 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
       },
     })
       .unwrap()
-      .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"));
+      .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"))
+      .catch(() => {});
   };
 
   return (

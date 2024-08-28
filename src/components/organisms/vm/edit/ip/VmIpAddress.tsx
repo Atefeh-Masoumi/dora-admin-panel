@@ -125,7 +125,8 @@ export const VmIpAddress: FC<VmIpAddressPropsType> = () => {
         .unwrap()
         .then((res) => {
           res && setData(res);
-        });
+        })
+        .catch(() => {});
     }
   }, [getData, serverId]);
 
