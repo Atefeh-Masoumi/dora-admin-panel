@@ -381,7 +381,7 @@ const Router: FC = () => {
           <Route
             path="/kubernetes"
             element={mainTemplate(KubernetesIndex, {
-              pageTitle: "مدیریت سرویس کوبرنتیز",
+              pageTitle: "مدیریت سرویس کلاستر کوبرنتیز",
             })}
           />
           <Route
@@ -390,7 +390,7 @@ const Router: FC = () => {
               AddKubernetes,
               {
                 link: {
-                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
+                  text: "بازگشت به مدیریت سرویس کلاستر کوبرنتیز",
                   url: "/kubernetes",
                 },
                 hideSidebar: false,
@@ -404,7 +404,7 @@ const Router: FC = () => {
               EditKubernetes,
               {
                 link: {
-                  text: "بازگشت به مدیریت سرویس کوبرنتیز",
+                  text: "بازگشت به مدیریت سرویس کلاستر کوبرنتیز",
                   url: "/kubernetes",
                 },
                 hideSidebar: false,

@@ -12,7 +12,7 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
-import { ConvertToGergorian } from "src/utils/convertToGregorian";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
@@ -26,11 +26,19 @@ const validationSchema = yup.object().shape({
 type RealPersonalityPropsType = {};
 
 export const RealPersonality: FC<RealPersonalityPropsType> = () => {
-  const [birthDate, setBirthDate] = useState<null | Moment>(null);
+  const [birthDate, setBirthDate] = useState<any>(null);
   const [editProfile, { isLoading: loadingEdit }] =
     usePutApiMyAccountProfileEditMutation();
 
   const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
+
+  const initialValues = {
+    firstName: userInformation?.firstName || "",
+    lastName: userInformation?.lastName || "",
+    nationalId: userInformation?.nationalId || "",
+    birthDate: userInformation?.birthDate || "",
+    address: userInformation?.address || "",
+  };
 
   useEffect(() => {
     if (userInformation?.birthDate) {
@@ -42,22 +50,12 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     }
   }, [userInformation]);
 
-  const initialValues = {
-    firstName: userInformation?.firstName || "",
-    lastName: userInformation?.lastName || "",
-    nationalId: userInformation?.nationalId || "",
-    birthDate: userInformation?.birthDate || "",
-    address: userInformation?.address || "",
-  };
-
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { firstName, lastName, nationalId, address },
     { setSubmitting }
   ) => {
-    const originalDate = new Date(String(birthDate));
-    const newDate = new Date(originalDate.getFullYear(), 5, 2, 0, 0, 0);
-    const formattedDate = newDate.toISOString().slice(0, 19);
-
+    const m = moment(birthDate, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ");
+    const formattedDate = m.format("YYYY-MM-DDTHH:mm:ss");
     editProfile({
       editProfileModel: {
         firstName,
@@ -75,8 +73,6 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
       .catch((err) => {});
     setSubmitting(false);
   };
-
-  console.log(ConvertToGergorian(String(birthDate)));
 
   return (
     <Formik
@@ -123,7 +119,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
                 label="تاریخ تولد"
                 mask="____/__/__"
                 value={birthDate}
-                onChange={(date) => setBirthDate(date as Moment)}
+                onChange={(date) => setBirthDate(date)}
                 renderInput={(params) => (
                   <DorsaTextField fullWidth {...params} />
                 )}

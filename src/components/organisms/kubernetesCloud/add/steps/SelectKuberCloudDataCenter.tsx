@@ -84,7 +84,7 @@ export const SelectKubernetesCloudDataCenter: FC<
                 spacing={1}
                 onClick={() => dataCenterOnClick(dataCenterItem)}
               >
-                <Stack
+                {/* <Stack
                   alignItems="center"
                   justifyContent="center"
                   sx={{
@@ -105,12 +105,13 @@ export const SelectKubernetesCloudDataCenter: FC<
                       height: "100%",
                     }}
                   />
-                </Stack>
+                </Stack> */}
                 <Typography
                   noWrap
                   color={isSelected ? "primary.main" : "secondary.main"}
                   sx={{ transition: "150ms" }}
                   fontWeight="bold"
+                  fontSize={20}
                 >
                   {name}
                 </Typography>
