@@ -49,7 +49,7 @@ const KubernetesList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس کوبرنتیز ابری
+              لیست سرویس کلاستر کوبرنتیز
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
