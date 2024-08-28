@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { CommonSelectPropsType } from "src/types/kubernetesCloud.types";
 
-type SelectEnvKeyPropsType = {
-  envKey: string;
-  setKey: (envKey: string) => void;
-};
+type SelectEnvKeyPropsType = CommonSelectPropsType
 
-export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({ envKey, setKey }) => {
+export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
+  value,
+  onChange,
+}) => {
   return (
     <DorsaTextField
       sx={{
@@ -16,8 +17,8 @@ export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({ envKey, setKey }) => {
       size="small"
       fullWidth
       placeholder="Key"
-      value={envKey}
-      onChange={(e) => setKey(e.target.value)}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 };

@@ -1,39 +1,104 @@
 import { FC } from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { SecretKeyValuePairsResponse } from "src/app/services/api.generated";
-type SelectEnvValuePropsType = {
-  keyListInResource: SecretKeyValuePairsResponse[];
-  value: any;
-  setValue: any;
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import {
+  CommonSelectPropsType,
+  KeyListInResourceType,
+  ResourceListType,
+} from "src/types/kubernetesCloud.types";
+type SelectEnvValuePropsType = CommonSelectPropsType & {
+  keyListInResource: KeyListInResourceType;
+  isResourceSelectionRequired: boolean;
+  selectedResourceItem: number | null;
+  handleResourceOnChange: (resourceId: number) => void;
+  resourceList: ResourceListType | undefined;
 };
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
   value,
-  setValue,
+  onChange,
+  isResourceSelectionRequired,
+  selectedResourceItem,
+  handleResourceOnChange,
+  resourceList,
 }) => {
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const gridItems = [
+    {
+      label: "Value",
+      id: "value-select",
+      value: Number(value),
+      onChange: (newValue: string | number) => onChange(newValue),
+      menuList: keyListInResource,
+      menuItemKey: "key",
+    },
+    {
+      label: "Resource",
+      id: "resource-select",
+      value: selectedResourceItem || "",
+      onChange: (newValue: string | number) =>
+        handleResourceOnChange(Number(newValue)),
+      menuList: resourceList,
+      menuItemKey: "name",
+    },
+  ];
   return (
-    <FormControl fullWidth size="small">
-      <InputLabel htmlFor="value-select">Value</InputLabel>
-      <Select
-        label="Value"
-        id="value-select"
-        dir="ltr"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      >
-        {keyListInResource?.map((item, index) => (
-          <MenuItem
-            key={index}
-            sx={{
-              justifyContent: "end",
-              bgColor: "primary.contrastText",
-            }}
-            value={item.id}
-          >
-            {item.key}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <>
+      {isResourceSelectionRequired ? (
+        <Grid container spacing={2}>
+          {[...(!isSm ? gridItems.reverse() : gridItems)].map(
+            ({ label, id, value, onChange, menuList, menuItemKey }) => (
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel htmlFor="value-select">{label}</InputLabel>
+                  <Select
+                    label={label}
+                    id={id}
+                    dir="ltr"
+                    value={Number(value)}
+                    onChange={(e) => onChange(e.target.value)}
+                  >
+                    {menuList?.map((item, index) => (
+                      <MenuItem
+                        key={index}
+                        sx={{
+                          justifyContent: "end",
+                          bgColor: "primary.contrastText",
+                        }}
+                        value={item.id}
+                      >
+                        {item[menuItemKey as keyof typeof item]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )
+          )}
+        </Grid>
+      ) : (
+        <DorsaTextField
+          sx={{
+            background: ({ palette }) => palette.primary.contrastText,
+          }}
+          placeholder="Custom Value"
+          dir="ltr"
+          size="small"
+          fullWidth
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      )}
+    </>
   );
 };

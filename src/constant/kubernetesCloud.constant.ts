@@ -22,7 +22,6 @@ export const staticImageCategoryList: { id: number; name: string }[] = [
 ];
 
 export enum ENVIRONMENT_TYPES {
-  NONE = 0,
   CUSTOM = 1,
   CONFIG_MAP = 2,
   SECRET = 3,
