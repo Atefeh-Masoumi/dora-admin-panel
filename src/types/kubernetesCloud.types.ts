@@ -26,6 +26,9 @@ export type ResourceListType =
 
 export type KeyListInResourceType =
   | ConfigMapKeyValuePairsResponse[]
-  | SecretKeyValuePairsResponse[]
-  | null
-  | undefined;
+  | SecretKeyValuePairsResponse[];
+
+export type CommonSelectPropsType = {
+  value: string | number;
+  onChange: (value: string | number) => void;
+};

@@ -1,21 +1,14 @@
 import { FC, memo, useMemo, useState } from "react";
-import {
-  Box,
-  Grid,
-  IconButton,
-  Stack,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { FormikProps } from "formik";
-import { DeleteOutline } from "@mui/icons-material";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import {
+  KeyListInResourceType,
+  KuberCloudAppImageType,
+} from "src/types/kubernetesCloud.types";
 import { SelectEnvType } from "./envVariable/SelectEnvType";
 import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
-import { SelectEnvResource } from "./envVariable/SelectEnvResource";
 import {
   useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
@@ -31,13 +24,14 @@ type SelectEnvironmentVariablePropsType = {
 
 export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
   memo(({ formik, onDelete, mainIndex }) => {
-    const [keyListInResource, setKeyListInResource] = useState<any>();
+    const [keyListInResource, setKeyListInResource] =
+      useState<KeyListInResourceType>();
     const [selectedResourceItem, setSelectedResourceItem] = useState<
       number | null
     >(null);
 
     const theme = useTheme();
-    const isMd = useMediaQuery(theme.breakpoints.up("md"));
+    const isSm = useMediaQuery(theme.breakpoints.up("sm"));
     const { id: kubernetesCloudNameSpaceId } = useParams();
 
     const { data: configmapList = [] } =
@@ -81,10 +75,6 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       ]
     );
 
-    const updateEnvironmentType = (newValue: number) => {
-      formik.setFieldValue(`keyValue[${mainIndex}].variableType`, newValue);
-    };
-
     const handleResourceOnChange = (resourceId: number) => {
       const resourceType = formik.values.keyValue[mainIndex].variableType;
       const resourceItems = getResourceItems(
@@ -101,180 +91,61 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       setSelectedResourceItem(resourceId);
     };
 
+    const inputItems = [
+      {
+        Input: SelectEnvType,
+        xs: 12,
+        sm: 2.5,
+        md: 2.5,
+        lg: 2.5,
+        value: formik.values.keyValue[mainIndex]?.variableType || "",
+        onChange: (newValue: string | number) =>
+          formik.setFieldValue(`keyValue[${mainIndex}].variableType`, newValue),
+      },
+      {
+        Input: SelectEnvKey,
+        xs: 12,
+        sm: 2.5,
+        md: 2.5,
+        lg: 2.5,
+        value: formik.values.keyValue[mainIndex]?.envKey || "",
+        onChange: (newValue: string | number) =>
+          formik.setFieldValue(`keyValue[${mainIndex}].envKey`, newValue),
+      },
+      {
+        Input: SelectEnvValue,
+        xs: 12,
+        sm: 7,
+        md: 7,
+        lg: 7,
+        value: formik.values.keyValue[mainIndex]?.value || "",
+        onChange: (newValue: string | number) =>
+          formik.setFieldValue(`keyValue[${mainIndex}].value`, newValue),
+        otherProps: {
+          keyListInResource: keyListInResource || [],
+          isResourceSelectionRequired: isResourceSelectionRequired || false,
+          selectedResourceItem: selectedResourceItem,
+          resourceList: resourceList || [],
+          handleResourceOnChange,
+        },
+      },
+    ];
+
     return (
-      <Box
-        bgcolor={{
-          md: "inherit",
-        }}
-        alignSelf="center"
-        px={0}
-        py={{ xs: 2, md: 0 }}
-        width="100%"
-      >
-        <Grid justifyContent="center" container width="100%" gap={2}>
-          {isMd && (
-            <Grid
-              item
-              xs={10}
-              md={isResourceSelectionRequired ? 2.2 : 4}
-              lg={isResourceSelectionRequired ? 2.5 : 4.7}
-            >
-              <Stack direction="row" gap={1}>
-                <IconButton onClick={() => onDelete(mainIndex)}>
-                  <DeleteOutline color="error" />
-                </IconButton>
-                {isResourceSelectionRequired ? (
-                  <SelectEnvValue
-                    value={formik.values.keyValue[mainIndex]?.value || ""}
-                    setValue={(newValue: any) =>
-                      formik.setFieldValue(
-                        `keyValue[${mainIndex}].value`,
-                        newValue
-                      )
-                    }
-                    keyListInResource={keyListInResource || []}
-                  />
-                ) : (
-                  <DorsaTextField
-                    sx={{
-                      background: ({ palette }) => palette.primary.contrastText,
-                    }}
-                    placeholder="zahra"
-                    dir="ltr"
-                    size="small"
-                    fullWidth
-                    value={formik.values.keyValue[mainIndex]?.value}
-                    onChange={(e) =>
-                      formik.setFieldValue(
-                        `keyValue[${mainIndex}].value`,
-                        e.target.value
-                      )
-                    }
-                  />
-                )}
-              </Stack>
-            </Grid>
+      <Grid spacing={2} container>
+        {[...(!isSm ? inputItems.reverse() : inputItems)]
+          .reverse()
+          .map(({ Input, value, onChange, otherProps, xs, sm, md, lg }) =>
+            otherProps ? (
+              <Grid item xs={xs} sm={sm} md={md} lg={lg}>
+                <Input value={value} onChange={onChange} {...otherProps} />
+              </Grid>
+            ) : (
+              <Grid item xs={xs} sm={sm} md={md} lg={lg}>
+                <Input value={value} onChange={onChange} />
+              </Grid>
+            )
           )}
-
-          {isMd && isResourceSelectionRequired && (
-            <Grid
-              item
-              xs={10}
-              md={1.6}
-              lg={2}
-              sx={{
-                background: ({ palette }) => palette.primary.contrastText,
-              }}
-            >
-              <SelectEnvResource
-                resourceList={resourceList}
-                selectedResourceItem={selectedResourceItem}
-                handleResourceOnChange={handleResourceOnChange}
-              />
-            </Grid>
-          )}
-
-          {!isMd && (
-            <Grid
-              item
-              xs={10}
-              md={3}
-              lg={2}
-              sx={{
-                background: ({ palette }) => palette.primary.contrastText,
-              }}
-            >
-              <SelectEnvType
-                type={formik.values.keyValue[mainIndex]?.variableType || ""}
-                setType={(newValue: any) => updateEnvironmentType(newValue)}
-              />
-            </Grid>
-          )}
-
-          <Grid
-            sx={{
-              background: ({ palette }) => palette.primary.contrastText,
-            }}
-            item
-            xs={10}
-            md={3}
-            lg={2}
-          >
-            <SelectEnvKey
-              envKey={formik.values.keyValue[mainIndex]?.envKey || ""}
-              setKey={(newValue: string) =>
-                formik.setFieldValue(`keyValue[${mainIndex}].envKey`, newValue)
-              }
-            />
-          </Grid>
-
-          {isMd && (
-            <Grid
-              item
-              xs={10}
-              md={3}
-              lg={2}
-              sx={{
-                background: ({ palette }) => palette.primary.contrastText,
-              }}
-            >
-              <SelectEnvType
-                type={formik.values.keyValue[mainIndex]?.variableType || ""}
-                setType={(newValue: any) => updateEnvironmentType(newValue)}
-              />
-            </Grid>
-          )}
-
-          {!isMd && isResourceSelectionRequired && (
-            <Grid item xs={10} md={5} lg={isResourceSelectionRequired ? 3 : 7}>
-              <SelectEnvResource
-                resourceList={resourceList}
-                selectedResourceItem={selectedResourceItem}
-                handleResourceOnChange={handleResourceOnChange}
-              />
-            </Grid>
-          )}
-
-          {!isMd && (
-            <Grid item xs={10} md={5} lg={isResourceSelectionRequired ? 3 : 7}>
-              <Stack direction="row" gap={1}>
-                <IconButton onClick={() => onDelete(mainIndex)}>
-                  <DeleteOutline color="error" />
-                </IconButton>
-
-                {isResourceSelectionRequired ? (
-                  <SelectEnvValue
-                    value={formik.values.keyValue[mainIndex]?.value || ""}
-                    setValue={(newValue: any) =>
-                      formik.setFieldValue(
-                        `keyValue[${mainIndex}].value`,
-                        newValue
-                      )
-                    }
-                    keyListInResource={keyListInResource || []}
-                  />
-                ) : (
-                  <DorsaTextField
-                    sx={{
-                      background: ({ palette }) => palette.primary.contrastText,
-                    }}
-                    placeholder="Value"
-                    dir="ltr"
-                    size="small"
-                    fullWidth
-                    value={formik.values.keyValue[mainIndex].value}
-                    onChange={(e) =>
-                      formik.setFieldValue(
-                        `keyValue[${mainIndex}].value`,
-                        e.target.value
-                      )
-                    }
-                  />
-                )}
-              </Stack>
-            </Grid>
-          )}
-        </Grid>
-      </Box>
+      </Grid>
     );
   });

@@ -144,7 +144,16 @@ const AddKubernetesCloudApp: FC = () => {
 
             <Divider sx={{ margin: "50px 10px" }} />
 
-            <Stack direction="column" sx={{ width: "100%" }}>
+            <Stack
+              gap={2}
+              direction="column"
+              sx={{
+                width: "100%",
+                alignSelf: "center",
+                justifyContent: "center",
+                p: 5,
+              }}
+            >
               <Typography fontSize={24} fontWeight="bold" textAlign="center">
                 Environment Variable
               </Typography>
@@ -156,12 +165,11 @@ const AddKubernetesCloudApp: FC = () => {
               </Typography>
 
               <Stack
-                px={10}
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography>لیست Varible ها</Typography>
+                <Typography>لیست Variable ها</Typography>
                 <Button
                   sx={{ alignSelf: "center", width: 100 }}
                   variant="outlined"
@@ -171,17 +179,7 @@ const AddKubernetesCloudApp: FC = () => {
                   افزودن
                 </Button>
               </Stack>
-
-              <Stack
-                gap={2}
-                direction="column"
-                sx={{
-                  width: "100%",
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  py: 5,
-                }}
-              >
+              <Stack rowGap={{ xs: 5 , md: 2 }}>
                 {environmentVariableList.map((item, index) => {
                   return (
                     <SelectEnvironmentVariable
@@ -230,7 +228,6 @@ const AddKubernetesCloudApp: FC = () => {
                   borderRadius: "10px",
                   fontSize: "16px !important",
                 }}
-                // onClick={() => handleFormikOnSubmit}
               >
                 ایجاد سرویس
               </LoadingButton>

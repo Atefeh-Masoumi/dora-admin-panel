@@ -13,9 +13,9 @@ export const getResourceItems = (
 ) => {
   const resourceRetrievers: Record<number, () => KeyListInResourceType> = {
     [ENVIRONMENT_TYPES.CONFIG_MAP]: () =>
-      configmapList?.find((item) => item.id === resourceId)?.configMaps,
+      configmapList?.find((item) => item.id === resourceId)?.configMaps ?? [],
     [ENVIRONMENT_TYPES.SECRET]: () =>
-      secretList?.find((item) => item.id === resourceId)?.secrets,
+      secretList?.find((item) => item.id === resourceId)?.secrets ?? [],
   };
 
   return resourceRetrievers[resourceType]?.();
