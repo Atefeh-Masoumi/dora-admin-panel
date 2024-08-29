@@ -43,7 +43,7 @@ export const kubernetesStatusIdentifier = (kubernetesStatusId: number) => {
     case 6:
       return {
         id: "Wait",
-        label: "درانتظار انجام عملیات",
+        label: "در حال انجام عملیات",
         textColor: "warning.main",
         bgcolor: "warning.light",
         chipColor: "warning",
