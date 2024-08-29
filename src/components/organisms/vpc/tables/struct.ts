@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const vpcTableStruct: columnType[] = [
-  { id: "id", label: "شناسه", invisibility: true, disableSort: true },
+  { id: "id", label: "", invisibility: true, disableSort: true },
   { id: "datacenter", label: "مرکز داده" },
   { id: "name", label: "نام ماشین" },
   { id: "statusId", label: "وضعیت" },
@@ -10,7 +10,6 @@ export const vpcTableStruct: columnType[] = [
 ];
 
 export const vpcIpTableStruct: columnType[] = [
-  { id: "id", label: "شماره شناسه", invisibility: true, disableSort: true },
   { id: "ip", label: "IP", disableSort: true },
   { id: "isV4", label: "Is V4", disableSort: true },
   { id: "isPrimary", label: "Is Primary", disableSort: true },
@@ -29,7 +28,6 @@ export const vpcNatTableStruct: columnType[] = [
 ];
 
 export const vpcNetworkStruct: columnType[] = [
-  { id: "id", label: "شماره شناسه", disableSort: true },
   { id: "name", label: "Network Name", disableSort: true },
   { id: "subnetCidr", label: "Network CIDR", disableSort: true },
   { id: "subnetMask", label: "Subnet Mask", disableSort: true },
@@ -40,7 +38,6 @@ export const vpcNetworkStruct: columnType[] = [
 ];
 
 export const vpcVmStruct: columnType[] = [
-  { id: "id", label: "شماره شناسه", disableSort: true },
   { id: "name", label: "Name", disableSort: true },
   { id: "ipv4", label: "IP Address", disableSort: true },
   { id: "datacenter", label: "Datacenter", disableSort: true },
@@ -50,7 +47,6 @@ export const vpcVmStruct: columnType[] = [
 ];
 
 export const vpcLoadBalanceStruct: columnType[] = [
-  { id: "id", label: "شماره شناسه", disableSort: true },
   { id: "ip", label: "IP" },
   { id: "name", label: "Name", disableSort: true },
   { id: "port", label: "PORT", disableSort: true },

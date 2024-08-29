@@ -10,16 +10,16 @@ import {
 import { FC, Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import {
-  VmProjectListResponse,
-  useDeleteApiMyHostProjectDeleteByIdMutation,
-  useGetApiMyHostProjectListQuery,
-} from "src/app/services/api.generated";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
 import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  VmProjectListResponse,
+  useDeleteApiMyHostProjectDeleteByIdMutation,
+  useGetApiMyHostProjectListQuery,
+} from "src/app/services/api.generated";
 
 const vmDataList = [
   { label: "نوع زیرساخت:", id: "hypervisorType" },

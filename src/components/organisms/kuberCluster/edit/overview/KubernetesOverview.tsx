@@ -64,17 +64,27 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ p: 0 }}>
-      <Paper
-        sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
-        elevation={0}
-      >
-        <Stack rowGap={2}>
-          <Typography align="center" fontWeight={700} fontSize={18}>
+    <Stack
+      bgcolor="white"
+      py={2}
+      px={3}
+      borderRadius={BORDER_RADIUS_1}
+      width="100%"
+      direction="row"
+      justifyContent="center"
+    >
+      <Stack width="100%">
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          alignItems={{ xs: "start", md: "center" }}
+          justifyContent="space-between"
+        >
+          <Typography fontSize={18} color="secondary">
             اطلاعات سرویس کوبرنتیز
           </Typography>
-          <Divider flexItem />
-
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack py={1.5} spacing={2}>
           {infoList.map(({ id, label, value }) => {
             return (
               <BoxRow
@@ -107,7 +117,7 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
             );
           })}
         </Stack>
-      </Paper>
-    </Container>
+      </Stack>
+    </Stack>
   );
 };

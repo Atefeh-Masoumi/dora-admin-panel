@@ -57,7 +57,7 @@ const CustomerBill = lazy(
 const Invoices = lazy(() => import("src/pages/portal/financial/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/financial/Invoice"));
 
-const CdnIndex = lazy(() => import("src/pages/cdn/CdnList"));
+const CdnIndex = lazy(() => import("src/pages/cdn/DnsCdnList"));
 const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
@@ -269,7 +269,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/add-domain"
+            path="/cdn/add-zone"
             element={mainTemplate(
               AddZone,
               {
@@ -322,7 +322,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/cdn/add-domain"
+            path="/cdn/add-zone"
             element={mainTemplate(AddZone, {
               link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
               hideSidebar: false,

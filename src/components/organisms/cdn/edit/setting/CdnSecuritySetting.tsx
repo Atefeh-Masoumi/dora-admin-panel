@@ -91,10 +91,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
       {(loadingRedirect || loadingNonWwwRedirect || loadingHSTS) && (
         <PageLoading />
       )}
-      <Typography fontSize={24} color="secondary" fontWeight="bold">
+      <Typography fontSize={20} color="secondary" fontWeight="bold">
         تنظیمات دامنه
       </Typography>
-
+      <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Stack bgcolor="white" py={2} px={3} borderRadius={BORDER_RADIUS_1}>
         <Stack spacing={2} display={{ xs: "none", md: "flex" }}>
           {items.map(({ title, text, data, action }, index) => (
@@ -128,9 +128,9 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
                   )}
                 </Stack>
               </Stack>
-              {(index === 0 || index === 1) && (
+              {/* {(index === 0 || index === 1) && (
                 <Divider sx={{ borderColor: "secondary.light" }} />
-              )}
+              )} */}
             </Fragment>
           ))}
         </Stack>
@@ -171,9 +171,9 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
                   {text}
                 </Typography>
               </Stack>
-              {(index === 0 || index === 1) && (
+              {/* {(index === 0 || index === 1) && (
                 <Divider sx={{ borderColor: "secondary.light" }} />
-              )}
+              )} */}
             </Fragment>
           ))}
         </Stack>

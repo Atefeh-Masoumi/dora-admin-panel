@@ -46,7 +46,7 @@ const CdnList: FC = () => {
     [getDataLoading, isFetching]
   );
 
-  const createBtnOnClick = () => navigate("/cdn/add-domain");
+  const createBtnOnClick = () => navigate("/cdn/add-zone");
 
   const cardOnClick = (zone: DomainListResponse) => {
     navigate(`/cdn/${zone.id}/overview`);
@@ -211,8 +211,8 @@ const CdnList: FC = () => {
                     isDomainCard={true}
                     detailsList={[
                       {
-                        id: item.zoneStatusId?.toString() ?? "",
-                        label: item.zoneStatus ?? "",
+                        id: item.statusId?.toString() ?? "",
+                        label: item.status ?? "",
                       },
                     ]}
                   />

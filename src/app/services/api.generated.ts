@@ -3541,8 +3541,11 @@ export type DatacenterListResponse = {
 export type DnsCdnListResponse = {
   id?: number;
   zoneName: string | null;
-  zoneStatus: string | null;
-  zoneStatusId?: number;
+  isHsts: boolean;
+  isHttpsRedirect: boolean;
+  isNonWwwRedirect: boolean;
+  status: string | null;
+  statusId: number;
   createDate?: string;
 };
 export type GetDnsNsResponse = {
@@ -4104,13 +4107,11 @@ export type GetStorageHostResponse = {
 };
 export type EditStorageHostModel = {
   disk?: number;
-  storageHostTypeId?: number;
 };
 export type CreateStorageHostModel = {
   name: string;
   isPublic: boolean;
   datacenterId: number;
-  storageHostTypeId: number;
   isPredefined: boolean;
   productBundleId?: number | null;
   disk?: number | null;

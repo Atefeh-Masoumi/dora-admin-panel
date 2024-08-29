@@ -287,7 +287,7 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
         <Button
           variant="contained"
           onClick={() => {
-            navigate("/cdn/add-domain");
+            navigate("/cdn/add-zone");
           }}
           size="large"
           sx={{ padding: "5px" }}

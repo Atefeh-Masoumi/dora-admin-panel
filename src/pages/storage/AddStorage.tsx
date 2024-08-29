@@ -80,7 +80,6 @@ const AddStorageService: FC = () => {
           datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
           isPredefined: isPredefined,
-          storageHostTypeId: 2,
           disk: customConfig.disk,
         },
       })
