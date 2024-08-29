@@ -5,6 +5,7 @@ import { useGetApiMyDnsCdnHostGetByIdQuery } from "src/app/services/api.generate
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type ZoneInfoPropsType = {};
 
@@ -112,12 +113,12 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
           />
           <BoxRow
             title="Create Date"
-            value={zoneData?.createDate}
+            value={ConvertToJalali(String(zoneData?.createDate))}
             isLoading={isLoading}
-          />{" "}
+          />
           <BoxRow
             title="Last Edit Date"
-            value={zoneData?.modifyDate}
+            value={ConvertToJalali(String(zoneData?.modifyDate))}
             isLoading={isLoading}
           />
         </Stack>

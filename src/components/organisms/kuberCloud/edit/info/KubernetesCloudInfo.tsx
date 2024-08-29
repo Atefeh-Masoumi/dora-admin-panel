@@ -12,6 +12,7 @@ import { useParams } from "react-router";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type KubernetesCloudInfoPropsType = {};
 
@@ -31,7 +32,9 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
     { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
     {
       label: "Create Date",
-      value: data?.createDate || "----",
+      value: data?.createDate
+        ? ConvertToJalali(String(data?.createDate))
+        : "----",
       id: "createDate",
     },
   ];

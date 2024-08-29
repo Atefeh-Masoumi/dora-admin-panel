@@ -5,6 +5,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { useParams } from "react-router";
 import { useGetApiMyDomainHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type DomainInfoPropsType = {};
 
@@ -80,7 +81,7 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
           />
           <BoxRow
             title="Create Date"
-            value={domainData?.createDate}
+            value={ConvertToJalali(String(domainData?.createDate))}
             isLoading={isLoading}
           />
         </Paper>

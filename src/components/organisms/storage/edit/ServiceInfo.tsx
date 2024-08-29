@@ -5,6 +5,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useGetApiMyObjectStorageHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type ServiceInfoPropsType = {};
 
@@ -92,7 +93,7 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
           />
           <BoxRow
             title="Create Date"
-            value={storageData?.createDate}
+            value={ConvertToJalali(String(storageData?.createDate))}
             isLoading={isLoading}
           />
         </Paper>

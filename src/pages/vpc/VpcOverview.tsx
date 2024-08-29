@@ -5,6 +5,7 @@ import { useGetApiMyVpcHostGetByIdQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type VpcOverviewPropsType = {};
 
@@ -114,12 +115,12 @@ export const VpcOverview: FC<VpcOverviewPropsType> = () => {
           />
           <BoxRow
             title="Create Date"
-            value={vpcData?.createDate}
+            value={ConvertToJalali(String(vpcData?.createDate))}
             isLoading={isLoading}
           />{" "}
           <BoxRow
             title="Last Edit Date"
-            value={vpcData?.modifyDate}
+            value={ConvertToJalali(String(vpcData?.modifyDate))}
             isLoading={isLoading}
           />
         </Stack>
