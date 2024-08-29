@@ -1,4 +1,4 @@
-import { KuberCloudAppImageType } from "src/types/kubernetesCloud.types";
+import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
 
 interface GroupedVariables {
   [key: string]: { [key: string]: string } | null;

@@ -7,12 +7,12 @@ import {
 } from "src/components/templates/MainTemplate";
 import { PrivateRoute } from "./PrivateRoute";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
-import { AddKubernetesContextProvider } from "src/components/organisms/kubernetes/add/contexts/AddKubernetesContext";
+import { AddKubernetesContextProvider } from "src/components/organisms/kuberCluster/add/contexts/AddKubernetesContext";
 import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
 import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
-import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
+import AddKubernetesCloudContextProvider from "src/components/organisms/kuberCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
@@ -79,16 +79,14 @@ const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
 const KubernetesIndex = lazy(
-  () => import("src/pages/KubernetesCluster/KubernetesList")
+  () => import("src/pages/KubeCluster/KubernetesList")
 );
-const AddKubernetes = lazy(
-  () => import("src/pages/KubernetesCluster/AddKubernetes")
-);
+const AddKubernetes = lazy(() => import("src/pages/KubeCluster/AddKubernetes"));
 const EditKubernetes = lazy(
-  () => import("src/pages/KubernetesCluster/EditKubernetes")
+  () => import("src/pages/KubeCluster/EditKubernetes")
 );
 const AddNodeKubernetes = lazy(
-  () => import("src/pages/KubernetesCluster/AddNodeKubernetes")
+  () => import("src/pages/KubeCluster/AddNodeKubernetes")
 );
 
 const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
@@ -96,16 +94,16 @@ const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
 const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 
 const KubernetesCloud = lazy(
-  () => import("src/pages/kubernetesCloud/KubernetesCloudList")
+  () => import("src/pages/kuberCloud/KubernetesCloudList")
 );
 const AddNamespace = lazy(
-  () => import("src/pages/kubernetesCloud/add/AddNamespace")
+  () => import("src/pages/kuberCloud/add/AddNamespace")
 );
 const EditKubernetesCloud = lazy(
-  () => import("src/pages/kubernetesCloud/edit/EditKuberCloud")
+  () => import("src/pages/kuberCloud/edit/EditKuberCloud")
 );
 const AddKubernetesCloudApp = lazy(
-  () => import("src/pages/kubernetesCloud/edit/apps/AddKubernetesCloudApp")
+  () => import("src/pages/kuberCloud/edit/apps/AddKubernetesCloudApp")
 );
 const mainTemplate = (
   PageComponent: FC<any>,
