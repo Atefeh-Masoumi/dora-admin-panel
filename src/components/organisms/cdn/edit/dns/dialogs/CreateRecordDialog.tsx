@@ -275,9 +275,9 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                 )}
                 {type === "MX" && (
                   <DorsaTextField
-                    error={Boolean(errors.preference && touched.preference)}
-                    helperText={errors.preference}
-                    {...getFieldProps("preference")}
+                    error={Boolean(errors.priority && touched.priority)}
+                    helperText={errors.priority}
+                    {...getFieldProps("priority")}
                     inputProps={{ dir: "ltr" }}
                     label="Priority (0 - 65535)"
                   />
