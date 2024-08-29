@@ -61,11 +61,6 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
         : "----",
       id: "expireDate",
     },
-    {
-      label: "Customer Product Status",
-      value: data?.customerProductType || "",
-      id: "customerProductStatus",
-    },
   ];
 
   return (
