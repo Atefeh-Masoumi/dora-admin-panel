@@ -13,7 +13,6 @@ import { formikOnSubmitType } from "src/types/form.type";
 import AddIcon from "@mui/icons-material/Add";
 import * as yup from "yup";
 import {
-  KuberCloudImageKeyResponse,
   useGetApiMyKubernetesCloudImageListQuery,
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
@@ -28,8 +27,7 @@ import { toast } from "react-toastify";
 import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 const title =
-  "Create environment variables: Key (e.g. DB_HOST), Value (e.g. localhost), and Optional Resource (e.g. ConfigMap or Secret) for each requirement.";
-
+  "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
 const AddKubernetesCloudApp: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
     {
