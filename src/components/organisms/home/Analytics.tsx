@@ -4,6 +4,7 @@ import {
   Divider,
   Grid,
   MenuItem,
+  MenuList,
   Select,
   SelectChangeEvent,
   Stack,
@@ -49,15 +50,15 @@ export const Analytics: FC = () => {
             borderColor: "rgba(110, 118, 138, 0.06)",
           }}
         >
-          {analyticsCategories.map((category, index) => (
+          {analyticsCategories.map(({ category, id }) => (
             <MenuItem
               sx={{
                 mx: 0.5,
                 my: 1,
                 borderRadius: 1,
               }}
-              key={category}
-              value={index}
+              key={id}
+              value={id}
             >
               {category}
             </MenuItem>
