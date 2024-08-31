@@ -18,7 +18,7 @@ export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
       fullWidth
       placeholder="Key"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange && onChange(e.target.value)}
     />
   );
 };

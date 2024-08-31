@@ -1,11 +1,19 @@
-import { Button, Divider, Paper, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { formikOnSubmitType } from "src/types/form.type";
 import AddIcon from "@mui/icons-material/Add";
 import * as yup from "yup";
 import {
+  KuberCloudImageKeyResponse,
   useGetApiMyKubernetesCloudImageListQuery,
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
@@ -18,6 +26,9 @@ import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
+import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
+const title =
+  "Create environment variables: Key (e.g. DB_HOST), Value (e.g. localhost), and Optional Resource (e.g. ConfigMap or Secret) for each requirement.";
 
 const AddKubernetesCloudApp: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
@@ -104,6 +115,25 @@ const AddKubernetesCloudApp: FC = () => {
     enableReinitialize: true,
   });
 
+  useEffect(() => {
+    const imageItem = kuberCloudImageList?.find(
+      (item) => item.id === formik.values.imageId
+    );
+    const requiredKeyList = imageItem?.keys || [];
+    let result: {
+      variableType: number;
+      envKey: string;
+      value: string;
+    }[] = [];
+    requiredKeyList?.forEach((item) =>
+      result.push({ variableType: 1, envKey: item.name || "---", value: "" })
+    );
+    result = result.filter((item) => item && item.variableType !== undefined);
+    setEnvironmentVariableList(result);
+
+    formik.setFieldValue("keyValue", result);
+  }, [formik.values.imageId]);
+
   if (kuberCloudImageLoading) return <PageLoading />;
 
   return (
@@ -169,7 +199,14 @@ const AddKubernetesCloudApp: FC = () => {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography>لیست Variable ها</Typography>
+                <Stack direction="row" gap={1} alignItems="center">
+                  <Tooltip sx={{ p: 0 }} placement="top" title={title}>
+                    <IconButton>
+                      <InfoSvg />
+                    </IconButton>
+                  </Tooltip>
+                  <Typography>لیست Variable ها</Typography>
+                </Stack>
                 <Button
                   sx={{ alignSelf: "center", width: 100 }}
                   variant="outlined"
@@ -179,17 +216,19 @@ const AddKubernetesCloudApp: FC = () => {
                   افزودن
                 </Button>
               </Stack>
-              <Stack rowGap={{ xs: 5, md: 2 }}>
-                {environmentVariableList.map((item, index) => {
-                  return (
-                    <SelectEnvironmentVariable
-                      key={index}
-                      onDelete={removeEnvironmentVariable}
-                      formik={formik}
-                      mainIndex={index}
-                    />
-                  );
-                })}
+              <Stack rowGap={{ xs: 5, sm: 2 }}>
+                {environmentVariableList.length > 0 &&
+                  environmentVariableList.map((item, index) => {
+                    if (!item) return null;
+                    return (
+                      <SelectEnvironmentVariable
+                        key={index}
+                        onDelete={removeEnvironmentVariable}
+                        formik={formik}
+                        mainIndex={index}
+                      />
+                    );
+                  })}
               </Stack>
             </Stack>
             <Stack

@@ -2,9 +2,11 @@ import { FC } from "react";
 import {
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -14,12 +16,13 @@ import {
   KeyListInResourceType,
   ResourceListType,
 } from "src/types/kuberCloud.types";
+import { DeleteOutline } from "@mui/icons-material";
 type SelectEnvValuePropsType = CommonSelectPropsType & {
-  keyListInResource: KeyListInResourceType;
-  isResourceSelectionRequired: boolean;
-  selectedResourceItem: number | null;
-  handleResourceOnChange: (resourceId: number) => void;
-  resourceList: ResourceListType | undefined;
+  keyListInResource?: KeyListInResourceType;
+  isResourceSelectionRequired?: boolean;
+  selectedResourceItem?: number | null;
+  handleResourceOnChange?: (resourceId: number) => void;
+  resourceList?: ResourceListType;
 };
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
@@ -38,7 +41,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
       label: "Value",
       id: "value-select",
       value: Number(value),
-      onChange: (newValue: string | number) => onChange(newValue),
+      onChange: (newValue: string | number) => onChange && onChange(newValue),
       menuList: keyListInResource,
       menuItemKey: "key",
     },
@@ -47,18 +50,21 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
       id: "resource-select",
       value: selectedResourceItem || "",
       onChange: (newValue: string | number) =>
-        handleResourceOnChange(Number(newValue)),
+        handleResourceOnChange && handleResourceOnChange(Number(newValue)),
       menuList: resourceList,
       menuItemKey: "name",
     },
   ];
   return (
-    <>
+    <Stack direction="row">
+      <IconButton onClick={() => {}}>
+        <DeleteOutline color="error" />
+      </IconButton>
       {isResourceSelectionRequired ? (
         <Grid container spacing={2}>
           {[...(!isSm ? gridItems.reverse() : gridItems)].map(
             ({ label, id, value, onChange, menuList, menuItemKey }) => (
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Grid key={id} item xs={12} sm={6} md={6} lg={6}>
                 <FormControl fullWidth size="small">
                   <InputLabel htmlFor="value-select">{label}</InputLabel>
                   <Select
@@ -96,9 +102,9 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
           size="small"
           fullWidth
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange && onChange(e.target.value)}
         />
       )}
-    </>
+    </Stack>
   );
 };

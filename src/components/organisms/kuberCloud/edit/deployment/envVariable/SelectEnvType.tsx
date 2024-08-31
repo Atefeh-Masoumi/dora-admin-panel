@@ -14,7 +14,7 @@ export const SelectEnvType: FC<SelectEnvTypePropsType> = ({
       <Select
         dir="ltr"
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) => onChange && onChange(Number(e.target.value))}
       >
         {environmentType.map((item, index) => (
           <MenuItem
