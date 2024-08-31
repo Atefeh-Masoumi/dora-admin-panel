@@ -21,6 +21,7 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const Invoice: FC = () => {
   const { id } = useParams();
@@ -135,7 +136,8 @@ const Invoice: FC = () => {
                 sx={{ color: "secondary.main" }}
               >
                 <Typography variant="text13">
-                  تاریخ صورتحساب: {invoiceItem?.invoiceDate}
+                  تاریخ صورتحساب:
+                  {ConvertToJalali(String(invoiceItem?.invoiceDate))}
                 </Typography>
               </Stack>
             )}
@@ -172,7 +174,8 @@ const Invoice: FC = () => {
             <Grid container direction={{ xs: "column", md: "row" }} rowGap={1}>
               <Grid item md={4}>
                 <Typography variant="text9">
-                  تاریخ صورتحساب: {invoiceItem?.invoiceDate}
+                  تاریخ صورتحساب:{" "}
+                  {ConvertToJalali(String(invoiceItem?.invoiceDate))}
                 </Typography>
               </Grid>
             </Grid>

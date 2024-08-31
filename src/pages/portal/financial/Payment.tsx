@@ -6,6 +6,7 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { useNavigate, useParams } from "react-router";
 import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";
 import PageLoading from "src/components/atoms/PageLoading";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type PaymentCallBackPropsType = {
   handleClose: () => void;
@@ -81,7 +82,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">زمان تراکنش</Typography>
             <Typography variant="text14" dir="ltr">
-              {paymentInfo.transactionDate || ""}
+              {ConvertToJalali(String(paymentInfo.transactionDate)) || ""}
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
