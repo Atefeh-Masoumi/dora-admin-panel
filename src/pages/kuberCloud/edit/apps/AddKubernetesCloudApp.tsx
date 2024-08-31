@@ -179,7 +179,7 @@ const AddKubernetesCloudApp: FC = () => {
                   افزودن
                 </Button>
               </Stack>
-              <Stack rowGap={{ xs: 5, md: 2 }}>
+              <Stack rowGap={{ xs: 5, sm: 2 }}>
                 {environmentVariableList.map((item, index) => {
                   return (
                     <SelectEnvironmentVariable

@@ -29,6 +29,6 @@ export type KeyListInResourceType =
   | SecretKeyValuePairsResponse[];
 
 export type CommonSelectPropsType = {
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value?: string | number;
+  onChange?: (value: string | number) => void;
 };

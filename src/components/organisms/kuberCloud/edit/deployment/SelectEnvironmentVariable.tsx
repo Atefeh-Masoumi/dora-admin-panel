@@ -94,6 +94,7 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
     const inputItems = [
       {
         Input: SelectEnvType,
+        type: "input",
         xs: 12,
         sm: 2.5,
         md: 2.5,
@@ -104,6 +105,7 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       },
       {
         Input: SelectEnvKey,
+        type: "input",
         xs: 12,
         sm: 2.5,
         md: 2.5,
@@ -114,6 +116,7 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       },
       {
         Input: SelectEnvValue,
+        type: "input",
         xs: 12,
         sm: 7,
         md: 7,
