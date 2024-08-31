@@ -74,22 +74,38 @@ const AddKubernetesCloudApp: FC = () => {
   };
 
   const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = (values) => {
-    createDeployment({
-      createKuberCloudDeploymentModel: {
-        name: values.name,
-        imageTagId: Number(values.imageTagId!),
-        namespaceId: values.namespaceId!,
-        keyValue: groupedByVariableType(values),
-        replicaNumber: values.replicaNumber,
-        isPublic: true,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("کانتینر با موفقیت ایجاد شد");
-        navigate("/kubernetes-cloud/" + kubernetesCloudId);
+    let errorMessage = "";
+
+    if (!values.imageId) {
+      errorMessage = "image مورد نظر را انتخاب کنید.";
+    } else if (!values.imageTagId) {
+      errorMessage = "ورژن image خودرا انتخاب نمایید.";
+    } else if (!values.name) {
+      errorMessage = "نام سرویس خودرا وارد نمایید.";
+    } else if (values.name.trim().length < 5 || values.name.length > 50) {
+      errorMessage = "طول کارکترها باید بین ۵ تا ۵۰ کارکتر باشد";
+    }
+
+    if (errorMessage !== "") {
+      toast.error(errorMessage);
+    } else {
+      createDeployment({
+        createKuberCloudDeploymentModel: {
+          name: values.name,
+          imageTagId: Number(values.imageTagId!),
+          namespaceId: values.namespaceId!,
+          keyValue: groupedByVariableType(values),
+          replicaNumber: values.replicaNumber,
+          isPublic: true,
+        },
       })
-      .catch((err) => {});
+        .unwrap()
+        .then((res) => {
+          toast.success("کانتینر با موفقیت ایجاد شد");
+          navigate("/kubernetes-cloud/" + kubernetesCloudId);
+        })
+        .catch((err) => {});
+    }
   };
 
   const initialValues: KuberCloudAppImageType = {
@@ -101,10 +117,7 @@ const AddKubernetesCloudApp: FC = () => {
     keyValue: [],
   };
 
-  const validationSchema = yup.object().shape({
-    // imageTagId: yup.number().typeError("").nullable(),
-    // name: yup.string().required().min(5, ""),
-  });
+  const validationSchema = yup.object().shape({});
 
   const formik = useFormik<KuberCloudAppImageType>({
     initialValues,
