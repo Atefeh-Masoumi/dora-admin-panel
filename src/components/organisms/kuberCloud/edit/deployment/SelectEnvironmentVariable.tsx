@@ -50,30 +50,32 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       );
 
     const isResourceSelectionRequired = useMemo(
-      () =>
-        formik.values.keyValue[mainIndex].variableType !==
-        ENVIRONMENT_TYPES.CUSTOM,
+      () => {
+        const keyValueItem = formik.values.keyValue[mainIndex];
+        return keyValueItem
+          ? keyValueItem.variableType !== ENVIRONMENT_TYPES.CUSTOM
+          : false;
+      },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [formik.values.keyValue[mainIndex].variableType]
+      [formik.values.keyValue[mainIndex]]
     );
 
-    const resourceList = useMemo(
-      () =>
-        isResourceSelectionRequired
-          ? formik.values.keyValue[mainIndex].variableType ===
-            ENVIRONMENT_TYPES.CONFIG_MAP
-            ? configmapList
-            : secretList
-          : [],
+    const resourceList = useMemo(() => {
+      if (!formik.values.keyValue[mainIndex]) return [];
+      const variableType = formik.values.keyValue[mainIndex].variableType;
+      return isResourceSelectionRequired
+        ? variableType === ENVIRONMENT_TYPES.CONFIG_MAP
+          ? configmapList
+          : secretList
+        : [];
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [
-        isResourceSelectionRequired,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        formik.values.keyValue[mainIndex].variableType,
-        configmapList,
-        secretList,
-      ]
-    );
+    }, [
+      isResourceSelectionRequired,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      formik.values.keyValue[mainIndex],
+      configmapList,
+      secretList,
+    ]);
 
     const handleResourceOnChange = (resourceId: number) => {
       const resourceType = formik.values.keyValue[mainIndex].variableType;
@@ -138,16 +140,17 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
       <Grid spacing={2} container>
         {[...(!isSm ? inputItems.reverse() : inputItems)]
           .reverse()
-          .map(({ Input, value, onChange, otherProps, xs, sm, md, lg }) =>
-            otherProps ? (
-              <Grid item xs={xs} sm={sm} md={md} lg={lg}>
-                <Input value={value} onChange={onChange} {...otherProps} />
-              </Grid>
-            ) : (
-              <Grid item xs={xs} sm={sm} md={md} lg={lg}>
-                <Input value={value} onChange={onChange} />
-              </Grid>
-            )
+          .map(
+            ({ Input, value, onChange, otherProps, xs, sm, md, lg }, index) =>
+              otherProps ? (
+                <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
+                  <Input value={value} onChange={onChange} {...otherProps} />
+                </Grid>
+              ) : (
+                <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
+                  <Input value={value} onChange={onChange} />
+                </Grid>
+              )
           )}
       </Grid>
     );

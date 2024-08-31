@@ -64,7 +64,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
         <Grid container spacing={2}>
           {[...(!isSm ? gridItems.reverse() : gridItems)].map(
             ({ label, id, value, onChange, menuList, menuItemKey }) => (
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Grid key={id} item xs={12} sm={6} md={6} lg={6}>
                 <FormControl fullWidth size="small">
                   <InputLabel htmlFor="value-select">{label}</InputLabel>
                   <Select
