@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import {
   api as generatedApi,
   PostApiMyPortalIssueCreateApiArg,
@@ -42,15 +41,13 @@ export const api = generatedApi
         PostApiMyPortalIssueItemCreateApiResponse,
         PostApiMyPortalIssueCreateApiArg & {
           abortController?: AbortController;
-          onUploadProgress: AxiosRequestConfig["onUploadProgress"];
         }
       >({
-        query: ({ body, abortController, onUploadProgress }) => ({
+        query: ({ body, abortController }) => ({
           url: `/api/my/portal/issue/create`,
           method: "POST",
           body,
           abortController,
-          onUploadProgress,
         }),
       }),
     }),
