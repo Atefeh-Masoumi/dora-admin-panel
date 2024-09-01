@@ -50,7 +50,7 @@ export const KubernetesCloudSecretMap: FC<
       py={3}
       px={3}
       width="100%"
-      borderRadius={3}
+      borderRadius={BORDER_RADIUS_1}
       direction="column"
     >
       <Stack

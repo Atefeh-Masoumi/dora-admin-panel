@@ -15,6 +15,7 @@ import { useGetApiMyPortalIssueShortListQuery } from "src/app/services/api.gener
 import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import { CustomTooltip } from "../portal/account/notification/tables/NotificationTableRow";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 export const ShortTickets: FC = () => {
   const { data: tickets, isLoading } = useGetApiMyPortalIssueShortListQuery();
@@ -75,10 +76,6 @@ export const ShortTickets: FC = () => {
             ) : (
               <Fragment>
                 {tickets?.map(({ id, createDate, issueSubject }) => {
-                  const date = moment
-                    .from(createDate || "", "fa", "YYYY/MM/DD HH:mm:ss")
-                    .locale("fa")
-                    .format("YYYY/MM/DD");
                   return (
                     <Stack
                       direction="row"
@@ -100,7 +97,7 @@ export const ShortTickets: FC = () => {
                         fontWeight={500}
                         whiteSpace="nowrap"
                       >
-                        {date}
+                        {ConvertToJalali(String(createDate))}
                       </Typography>
                       <CustomTooltip title={issueSubject as any} arrow>
                         <Typography

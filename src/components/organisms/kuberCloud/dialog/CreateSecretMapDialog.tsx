@@ -51,11 +51,11 @@ export const CreateSecretMapDialog: FC<
   const stringToBitArray = (text: string) => {
     return Array.from(text).flatMap(charToBits);
   };
- 
+
   //////////////////////////////////////////
 
   const { id: namespaceId } = useParams();
-  const [envs, setEnvs] = useState<any[]>([]);
+  const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createSecretMap, { isLoading: createSecretMapLoading }] =
     usePostApiMyKubernetesCloudSecretCreateMutation();
@@ -150,15 +150,20 @@ export const CreateSecretMapDialog: FC<
           sx: { borderRadius: BORDER_RADIUS_1 },
         }}
       >
-        <DialogTitle fontWeight="bold" variant="text1">
-          ایجاد Secret
-        </DialogTitle>
         <form onSubmit={formik.handleSubmit} autoComplete="on">
           <Stack
             px={{ xs: 1.8, md: 2 }}
             py={{ xs: 1.8, md: 1 }}
             spacing={{ xs: 2, md: 5 }}
           >
+            <DialogTitle
+              fontWeight="bold"
+              variant="text1"
+              sx={{ padding: "10px 5px" }}
+            >
+              ایجاد Secret
+            </DialogTitle>
+            <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container spacing={3}>
               <Grid2 xs={12} md={6}>
                 <DorsaTextField
@@ -171,7 +176,6 @@ export const CreateSecretMapDialog: FC<
                 />
               </Grid2>
             </Grid2>
-            <Divider sx={{ marginTop: "20px !important" }} />
             <Stack spacing={3}>
               <Stack
                 direction="row"

@@ -42,11 +42,7 @@ const Detail: FC = () => {
 
   useEffect(() => {
     if (!issueItems || !issueItems.createDate) return;
-    const m = moment
-      .from(issueItems.createDate, "fa", "YYYY/MM/DD HH:mm:ss")
-      .locale("fa")
-      .format("YYYY/MM/DD ساعت: HH:mm");
-    setDate(m);
+    setDate(ConvertToJalali(String(issueItems.createDate)));
   }, [issueItems]);
 
   useEffect(() => {

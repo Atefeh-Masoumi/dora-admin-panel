@@ -10,7 +10,6 @@ import { kubernetesCloudAppTableStruct } from "../../tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-
 export const KubernetesCloudApps: FC = () => {
   const [search, setSearch] = useState("");
 
@@ -53,7 +52,7 @@ export const KubernetesCloudApps: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست App ها
+              لیست App
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}

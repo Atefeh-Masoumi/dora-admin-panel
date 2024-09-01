@@ -44,7 +44,7 @@ export const CreateConfigMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
   const { id: namespaceId } = useParams();
-  const [envs, setEnvs] = useState<any[]>([]);
+  const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
     usePostApiMyKubernetesCloudConfigmapCreateMutation();
@@ -76,7 +76,7 @@ export const CreateConfigMapDialog: FC<
       })
         .unwrap()
         .then(() => {
-          toast.success("Config Map با موفقیت ساخته شد");
+          toast.success("Configmap با موفقیت ساخته شد");
           resetForm();
           onClose();
         })
@@ -134,15 +134,20 @@ export const CreateConfigMapDialog: FC<
           sx: { borderRadius: BORDER_RADIUS_1 },
         }}
       >
-        <DialogTitle fontWeight="bold" variant="text1">
-          ایجاد Config Map
-        </DialogTitle>
         <form onSubmit={formik.handleSubmit} autoComplete="on">
           <Stack
             px={{ xs: 1.8, md: 2 }}
             py={{ xs: 1.8, md: 1 }}
             spacing={{ xs: 2, md: 5 }}
           >
+            <DialogTitle
+              fontWeight="bold"
+              variant="text1"
+              sx={{ padding: "10px 5px" }}
+            >
+              ایجاد Configmap
+            </DialogTitle>
+            <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container>
               <Grid2 xs={12} md={6}>
                 <DorsaTextField
@@ -155,7 +160,7 @@ export const CreateConfigMapDialog: FC<
                 />
               </Grid2>
             </Grid2>
-            <Divider sx={{ marginTop: "20px !important" }} />
+
             <Stack spacing={3}>
               <Stack
                 direction="row"
@@ -191,7 +196,7 @@ export const CreateConfigMapDialog: FC<
               >
                 {envs.map((_: any, index: any) => (
                   <>
-                    <Grid item xs={2} mb={2}>
+                    <Grid item xs={3} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="key"
@@ -202,7 +207,7 @@ export const CreateConfigMapDialog: FC<
                         size="small"
                       />
                     </Grid>
-                    <Grid item xs={9} mb={2}>
+                    <Grid item xs={8} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="value"
@@ -220,7 +225,7 @@ export const CreateConfigMapDialog: FC<
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "flex-end",
+                        justifyContent: "center",
                         paddingRight: "0 !important",
                       }}
                     >
