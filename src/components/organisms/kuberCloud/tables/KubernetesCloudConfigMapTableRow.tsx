@@ -19,6 +19,7 @@ import {
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesConfigListTableStruct } from "./struct";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -75,7 +76,9 @@ export const KubernetesCloudConfigMapTableRow: FC<{
       >
         <TableCell align="center">{id}</TableCell>
         <TableCell align="center">{name}</TableCell>
-        <TableCell align="center">{createDate}</TableCell>
+        <TableCell align="center">
+          {ConvertToJalali(String(createDate))}
+        </TableCell>
         <TableCell align="center">
           <IconButton
             sx={{ borderRadius: 1 }}
@@ -104,7 +107,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         <TableCell
           style={{ padding: 0 }}
           colSpan={6}
-          sx={{ borderBottom: "none !important" }}
+          // sx={{ borderBottom: "none !important" }}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ display: "flex" }}>
@@ -160,8 +163,8 @@ export const KubernetesCloudConfigMapTableRow: FC<{
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="Config Map"
-        subTitle="برای حذف Config Map, عبارت امنیتی زیر را وارد کنید."
+        keyTitle="Configmap"
+        subTitle="برای حذف Configmap, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedKubernetesCloudConfigMap?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteConfigMapLoading}

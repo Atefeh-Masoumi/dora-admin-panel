@@ -12,15 +12,15 @@ export const cdnDnsTableStruct: columnType[] = [
   },
   {
     id: "isHsts",
-    label: "isHsts",
+    label: "HSTS",
   },
   {
     id: "isHttpsRedirect",
-    label: "isHttpsRedirect",
+    label: "HttpsRedirection",
   },
   {
     id: "isNonWwwRedirect",
-    label: "isNonWwwRedirect",
+    label: "NonWwwRedirection",
   },
   {
     id: "statusId",
