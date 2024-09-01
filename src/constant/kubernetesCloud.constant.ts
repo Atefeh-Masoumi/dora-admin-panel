@@ -16,9 +16,9 @@ export const appImageList = [
 
 //Todo : mayBe The first and second items should change their IDs
 export const staticImageCategoryList: { id: number; name: string }[] = [
-  { id: 3, name: "All" },
-  { id: 1, name: "NameSpace" },
-  { id: 2, name: "DataCenter" },
+  // { id: 3, name: "All" },
+  { id: 1, name: "اپلیکیشن های آماده" },
+  { id: 2, name: "اختصاصی" },
 ];
 
 export enum ENVIRONMENT_TYPES {

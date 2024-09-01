@@ -23,6 +23,7 @@ type SelectEnvValuePropsType = CommonSelectPropsType & {
   selectedResourceItem?: number | null;
   handleResourceOnChange?: (resourceId: number) => void;
   resourceList?: ResourceListType;
+  onDelete: () => void;
 };
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
@@ -32,6 +33,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   selectedResourceItem,
   handleResourceOnChange,
   resourceList,
+  onDelete,
 }) => {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.up("sm"));
@@ -57,7 +59,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   ];
   return (
     <Stack direction="row">
-      <IconButton onClick={() => {}}>
+      <IconButton onClick={onDelete}>
         <DeleteOutline color="error" />
       </IconButton>
       {isResourceSelectionRequired ? (
@@ -73,6 +75,14 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
                     dir="ltr"
                     value={Number(value)}
                     onChange={(e) => onChange(e.target.value)}
+                    sx={{
+                      "& .MuiSelect-select": {
+                        fontSize: "14px",
+                      },
+                      "& .MuiMenuItem-root": {
+                        fontSize: "10px",
+                      },
+                    }}
                   >
                     {menuList?.map((item, index) => (
                       <MenuItem
