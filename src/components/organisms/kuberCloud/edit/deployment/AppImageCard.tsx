@@ -1,22 +1,12 @@
 import {
   Avatar,
   Box,
-  Divider,
-  FormControl,
   Grid,
-  IconButton,
-  InputLabel,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   MenuItem,
   Select,
-  SelectChangeEvent,
   Stack,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { FormikProps } from "formik";
 import { FC } from "react";
 import { KuberCloudImageResponse } from "src/app/services/api.generated";
@@ -73,12 +63,6 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
       sx={{
         minWidth: { sm: 100 },
         maxWidth: { sm: 184 },
-        // height: { xs: 64, sm: 84 },
-        // marginBottom: { xs: "50px", sm: "20px" },
-        // marginBottom:
-        //   index === 0
-        //     ? { xs: "50px", sm: "0px" }
-        //     : { xs: "0px", sm: "0px" },
       }}
     >
       <Stack
@@ -115,7 +99,9 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
             overflow: "hidden",
           }}
         >
-          {dataCenterIconRenderHandler(item.id)}
+          <Avatar
+            src={appImageList.find((image) => image.name === item.name)?.src}
+          />
         </Box>
         <Typography
           noWrap
