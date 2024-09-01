@@ -13,6 +13,8 @@ import {
 } from "src/app/services/api.generated";
 import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { Done } from "@mui/icons-material";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const Detail: FC = () => {
   const [file, setFile] = useState<string | Blob>();
@@ -83,10 +85,9 @@ const Detail: FC = () => {
               {id} / {issueItems?.issueSubject}
             </Typography>
             <Stack direction="row" spacing={1} color="secondary">
-              <Typography variant="text9">تاریخ ایجاد: {date}</Typography>
-              {/* <Typography variant="text9">
-                آخرین بروزرسانی: ۱۹ روز پیش
-              </Typography> */}
+              <Typography variant="text9">
+                تاریخ ایجاد: {ConvertToJalali(String(date))}
+              </Typography>
             </Stack>
           </Stack>
           <Chip
@@ -124,9 +125,9 @@ const Detail: FC = () => {
                 autoFocus
                 autoComplete="off"
                 multiline
-                rows={3}
+                rows={4}
               />
-              <Stack direction="row" spacing={1} alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="flex-end">
                 <DorsaTooltip
                   title={
                     <Stack>
@@ -147,8 +148,21 @@ const Detail: FC = () => {
                       py: { xs: 1, md: 1.5 },
                       whiteSpace: "nowrap",
                     }}
+                    disabled={Boolean(file)}
                   >
-                    <Typography>بارگذاری پیوست</Typography>
+                    {!file ? (
+                      <Typography>بارگذاری پیوست</Typography>
+                    ) : (
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        با موفقیت بارگذاری شد <Done />
+                      </Typography>
+                    )}
                     <Input
                       inputProps={{ ...dropzoneOptions }}
                       onChange={handleFileChange}

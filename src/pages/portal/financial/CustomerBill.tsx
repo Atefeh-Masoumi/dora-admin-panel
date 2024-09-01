@@ -21,6 +21,7 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
 import BillProductsTableRow from "src/components/organisms/portal/financial/tables/BillProductsTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 
@@ -44,11 +45,7 @@ const Bill: FC = () => {
   const [date, setDate] = useState("");
   useEffect(() => {
     if (!bill || !bill.billDate) return;
-    const m = moment
-      .from(bill.billDate, "fa", "YYYY/MM/DD HH:mm:ss")
-      .locale("fa")
-      .format("YYYY/MM/DD");
-    setDate(m);
+    setDate(ConvertToJalali(String(bill?.billDate)));
   }, [bill]);
 
   const downloadHandler = () => {

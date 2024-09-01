@@ -1,72 +1,152 @@
 import {
-  useContext,
-  FC,
-  useState,
-  useMemo,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from "react";
-import { Skeleton, Stack, Typography, Box } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { GetApiMyDatacenterImageListApiResponse } from "src/app/services/api.generated";
-import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
+  Box,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { FC, useContext, useEffect, useState } from "react";
+import {
+  DatacenterImageListResponse,
+  useGetApiMyDatacenterImageListQuery,
+} from "src/app/services/api.generated";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
-import { useLazyGetApiMyDatacenterImageListQuery } from "src/app/services/api";
+import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
+import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
+import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
+import { EditServerContext } from "../contexts/EditServerContext";
 
-type ChooseOSPropsType = {
-  imageId: number;
-  setImageId: Dispatch<SetStateAction<number>>;
+type SelectOSPropsType = {
+  datacenterId?: number | null;
+  imageId?: number | null;
+  setImageId?: any;
 };
 
-export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
+type OsDropDownType = {
+  content: DatacenterImageListResponse[];
+  osId: number;
+  os: string;
+  selectedImageId: string | null;
+  isSelected: boolean;
+};
+
+export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
+  imageId,
+  setImageId,
+}) => {
   const { dataCenter } = useContext(EditServerContext);
 
-  const [getData, { isLoading }] = useLazyGetApiMyDatacenterImageListQuery();
+  const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
+    {
+      datacenterId: Number(dataCenter) || 0,
+      productId: PRODUCT_CATEGORY_ENUM.VM,
+      hypervisorTypeId: HYPERVISOR_ENUM.VM,
+    }
+  );
 
-  const [data, setData] =
-    useState<GetApiMyDatacenterImageListApiResponse | null>(null);
-
-  const [osType, setOsType] = useState<number | null>(null);
+  const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(
+    []
+  );
 
   useEffect(() => {
-    if (dataCenter) {
-      getData({
-        datacenterId: dataCenter,
-        hypervisorTypeId: 1,
-        productId: PRODUCT_CATEGORY_ENUM.VM,
-      })
-        .unwrap()
-        .then((res) => res && setData(res));
-    }
-  }, [dataCenter, getData]);
+    let newOsDropDownsState: OsDropDownType[] = [];
+    osImagesList?.forEach((osImage) => {
+      const index = newOsDropDownsState.findIndex(
+        (dropDown) => dropDown.osId === osImage.osId
+      );
+      if (index !== -1) {
+        newOsDropDownsState[index].content.push(osImage);
+      } else {
+        newOsDropDownsState.push({
+          content: [{ ...osImage }],
+          osId: osImage.osId || 0,
+          os: osImage.os || "",
+          selectedImageId: osImage.id?.toString() || "",
+          isSelected: false,
+        });
+      }
+    });
+    setOsDropDownsState(newOsDropDownsState);
+    setImageId(null);
+  }, [osImagesList, setImageId]);
 
-  const osTypeClickHandler = (id: number | undefined) => id && setOsType(id);
-
-  const osVersionClickHandler = (selectedOs: number) => setImageId(selectedOs);
-
-  const osArray = useMemo(() => {
-    let result: GetApiMyDatacenterImageListApiResponse = [];
-    if (data) {
-      data.forEach((item) => {
-        const idx = result.findIndex(({ osId }) => osId === item.osId);
-        if (idx === -1) {
-          result.push(item);
+  const osTypeClickHandler = (id?: number) => {
+    setOsDropDownsState(
+      osDropDownsState.map((x) => {
+        if (x.osId !== id) {
+          return {
+            ...x,
+            isSelected: false,
+          };
         }
-      });
+        setImageId(
+          x.content.find((item) => item.id === +(x.selectedImageId || "0")) ||
+            null
+        );
+        return { ...x, isSelected: true };
+      })
+    );
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setOsDropDownsState(
+      osDropDownsState.map((dropDownState) => {
+        const selectedImageItem =
+          dropDownState.content.find(
+            (item) => item.id === +event.target.value
+          ) || null;
+
+        if (selectedImageItem) {
+          setImageId(selectedImageItem);
+          return {
+            ...dropDownState,
+            selectedImageId: event.target.value,
+            isSelected: true,
+          };
+        } else {
+          return { ...dropDownState, isSelected: false };
+        }
+      })
+    );
+  };
+
+  const dataCenterIconRenderHandler = (id: number) => {
+    switch (id) {
+      case 1:
+        return (
+          <WindowsSvg
+            sx={{
+              width: 40,
+              height: 40,
+              "&>path": {
+                fill: ({ palette }) => palette.primary.main,
+              },
+            }}
+          />
+        );
+      case 2:
+        return <UbuntuSvg sx={{ width: 40, height: 40 }} />;
+      case 4:
+        return <DebianSvgIcon />;
+      case 5:
+        return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      default:
+        return "";
     }
-    return result;
-  }, [data]);
+  };
 
   return (
     <Stack
       justifyContent="center"
       alignItems="center"
       spacing={4}
-      sx={{ px: 2, my: 4 }}
+      sx={{ px: 2 }}
     >
       <Grid2 container gap={2} justifyContent="center" width="100%">
         {isLoading &&
@@ -92,32 +172,37 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
               <Skeleton width="30%" />
             </Stack>
           ))}
-        {osArray.map((osItem) => {
-          const { id, os, osId } = osItem;
-          const isSelected = osType === osId;
+        {osDropDownsState.map((osDropDown, index) => {
           return (
             <Grid2
               xs={12}
               sm
-              key={id}
+              key={osDropDown.osId}
               sx={{
-                minWidth: { sm: 184 },
+                minWidth: { sm: 100 },
                 maxWidth: { sm: 184 },
                 height: { xs: 64, sm: 84 },
+                marginBottom: { xs: "50px", sm: "20px" },
+                // marginBottom:
+                //   index === 0
+                //     ? { xs: "50px", sm: "0px" }
+                //     : { xs: "0px", sm: "0px" },
               }}
             >
               <Stack
                 direction="row"
                 sx={{
-                  height: "100%",
+                  py: 2,
                   transition: "200ms",
-                  borderRadius: BORDER_RADIUS_1,
+                  borderTopRightRadius: BORDER_RADIUS_1,
+                  borderTopLeftRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
-                      isSelected
+                      osDropDown.isSelected
                         ? palette.primary.main
                         : "rgba(110, 118, 138, 0.12)"
                     }`,
+                  borderBottom: "0px",
                   overflow: "hidden",
                   px: 1,
                   cursor: "pointer",
@@ -125,87 +210,71 @@ export const ChooseOS: FC<ChooseOSPropsType> = ({ imageId, setImageId }) => {
                 alignItems="center"
                 justifyContent="center"
                 spacing={1}
-                onClick={() => osTypeClickHandler(osId)}
+                onClick={() => osTypeClickHandler(osDropDown.osId)}
               >
                 <Box
                   sx={{
                     transition: "150ms",
-                    filter: isSelected ? "grayscale(0)" : "grayscale(100%)",
+                    filter: osDropDown.isSelected
+                      ? "grayscale(0)"
+                      : "grayscale(100%)",
                     height: 40,
                     overflow: "hidden",
                   }}
                 >
-                  {osId === 1 ? (
-                    <WindowsSvg
-                      sx={{
-                        width: 40,
-                        height: 40,
-                        "&>path": {
-                          fill: ({ palette }) => palette.primary.main,
-                        },
-                      }}
-                    />
-                  ) : (
-                    <UbuntuSvg sx={{ width: 40, height: 40 }} />
-                  )}
+                  {dataCenterIconRenderHandler(osDropDown.osId)}
                 </Box>
                 <Typography
                   noWrap
-                  color={isSelected ? "primary.main" : "secondary.main"}
+                  color={
+                    osDropDown.isSelected ? "primary.main" : "secondary.main"
+                  }
                   sx={{ transition: "200ms" }}
                   fontWeight="bold"
                 >
-                  {os}
+                  {osDropDown.os}
                 </Typography>
               </Stack>
-            </Grid2>
-          );
-        })}
-      </Grid2>
-      <Grid2 container gap={3}>
-        {data &&
-          osType &&
-          data
-            .filter((optionItem) => optionItem.osId === osType)
-            .map((osVersionItem) => {
-              const { id, name } = osVersionItem;
-              const isSelected = id === imageId;
-              return (
-                <Grid2
-                  xs
-                  key={id}
-                  direction="row"
-                  sx={{
-                    width: "100%",
-                    minWidth: { xs: "100%", sm: 270 },
-                    transition: "200ms",
-                    borderRadius: BORDER_RADIUS_1,
+              <Select
+                value={osDropDown.selectedImageId || ""}
+                onChange={handleChange}
+                sx={{
+                  "&> fieldset": {
                     border: ({ palette }) =>
                       `2px solid ${
-                        isSelected
+                        osDropDown.isSelected
+                          ? palette.primary.main
+                          : "rgba(110, 118, 138, 0.12)"
+                      } !important`,
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderBottomRightRadius: BORDER_RADIUS_1,
+                    borderBottomLeftRadius: BORDER_RADIUS_1,
+                    borderTopLeftRadius: 0,
+                    borderTopRightRadius: 0,
+                    border: ({ palette }) =>
+                      `2px solid ${
+                        osDropDown.isSelected
                           ? palette.primary.main
                           : "rgba(110, 118, 138, 0.12)"
                       }`,
-                    overflow: "hidden",
-                    px: 1,
-                    py: 2.5,
-                    minHeight: 65,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => id && osVersionClickHandler(id)}
-                >
-                  <Typography
-                    align="center"
-                    noWrap
-                    color={isSelected ? "primary.main" : "secondary.main"}
-                    sx={{ transition: "200ms" }}
-                    fontWeight="bold"
-                  >
-                    {name}
-                  </Typography>
-                </Grid2>
-              );
-            })}
+
+                    borderTop: "1px solid",
+                  },
+                  direction: "rtl",
+                }}
+                fullWidth
+                style={{ height: 40 }}
+              >
+                {osDropDown.content.map((item) => (
+                  <MenuItem dir="ltr" key={item.id} value={item.id}>
+                    {item.name || "---"}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid2>
+          );
+        })}
       </Grid2>
     </Stack>
   );

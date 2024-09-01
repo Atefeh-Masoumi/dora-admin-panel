@@ -1,11 +1,12 @@
-import { FC, useState } from "react";
-import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
-import { IssueItemModel } from "src/app/services/api.generated";
-import { Document } from "src/components/atoms/svg-icons/DocumentSvg";
+import { Download } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { baseUrl } from "src/app/services/baseQuery";
+import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
+import { IssueItemModel } from "src/app/services/api.generated";
+import { baseUrl } from "src/app/services/baseQuery";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const downloadFileUrl = baseUrl + "/api/my/portal/issue-item/download/";
 
@@ -64,14 +65,32 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
                 <Typography variant="text9" fontWeight="bold">
                   {message.user}
                 </Typography>
-                <Typography>|</Typography>
-                <Typography variant="text9">ادمین</Typography>
               </Stack>
               <Typography variant="text4">{message.content}</Typography>
+              {message.fileName && (
+                <Tooltip title={message.fileName}>
+                  <LoadingButton
+                    loading={isLoading}
+                    onClick={downloadFile}
+                    sx={{ color: "#fff", border: "1px solid #fff" }}
+                    startIcon={
+                      <Download
+                        sx={{
+                          "& path": {
+                            color: "#fff",
+                          },
+                        }}
+                      />
+                    }
+                  >
+                    دانلود پیوست
+                  </LoadingButton>
+                </Tooltip>
+              )}
             </Stack>
             <Stack direction="row" px={1}>
               <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-                {message.issueDate}
+                {ConvertToJalali(String(message.issueDate))}
               </Typography>
             </Stack>
           </Stack>
@@ -102,7 +121,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
                 {message.user}
               </Typography>
               <Typography>|</Typography>
-              <Typography variant="text9">کاربر</Typography>
+              <Typography variant="text9">ادمین</Typography>
             </Stack>
             <Typography variant="text4">{message.content}</Typography>
             {message.fileName && (
@@ -110,8 +129,9 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
                 <LoadingButton
                   loading={isLoading}
                   onClick={downloadFile}
+                  sx={{ border: "1px solid" }}
                   startIcon={
-                    <Document
+                    <Download
                       sx={{
                         "& path": {
                           stroke: ({ palette }) => palette.secondary.main,
@@ -127,7 +147,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
           </Stack>
           <Stack direction="row" justifyContent="end" px={1}>
             <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-              {message.issueDate}
+              {ConvertToJalali(String(message.issueDate))}
             </Typography>
           </Stack>
         </Stack>

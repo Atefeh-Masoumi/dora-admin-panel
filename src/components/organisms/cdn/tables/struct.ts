@@ -3,12 +3,24 @@ import { columnType } from "../../tables/table.types";
 export const cdnDnsTableStruct: columnType[] = [
   {
     id: "id",
-    label: "",
+    label: "شناسه",
     invisibility: true,
   },
   {
     id: "zoneName",
     label: "نام سرویس",
+  },
+  {
+    id: "isHsts",
+    label: "isHsts",
+  },
+  {
+    id: "isHttpsRedirect",
+    label: "isHttpsRedirect",
+  },
+  {
+    id: "isNonWwwRedirect",
+    label: "isNonWwwRedirect",
   },
   {
     id: "statusId",

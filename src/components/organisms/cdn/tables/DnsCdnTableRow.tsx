@@ -54,6 +54,10 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
+          const isHsts = row["isHsts"];
+          const isHttpsRedirect = row["isHttpsRedirect"];
+          const isNonWwwRedirect = row["isNonWwwRedirect"];
+
           return (
             <DorsaTableCell
               key={column.id}
@@ -136,6 +140,39 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",
+                      }}
+                    />
+                  ) : column.id === "isHsts" ? (
+                    <Chip
+                      clickable={false}
+                      label={isHsts ? "فعال" : "غیرفعال"}
+                      sx={{
+                        color: isHsts ? "success.main" : "error.main",
+                        backgroundColor: isHsts
+                          ? "success.light"
+                          : "error.light",
+                      }}
+                    />
+                  ) : column.id === "isHttpsRedirect" ? (
+                    <Chip
+                      clickable={false}
+                      label={isHttpsRedirect ? "فعال" : "غیرفعال"}
+                      sx={{
+                        color: isHttpsRedirect ? "success.main" : "error.main",
+                        backgroundColor: isHttpsRedirect
+                          ? "success.light"
+                          : "error.light",
+                      }}
+                    />
+                  ) : column.id === "isNonWwwRedirect" ? (
+                    <Chip
+                      clickable={false}
+                      label={isNonWwwRedirect ? "فعال" : "غیرفعال"}
+                      sx={{
+                        color: isNonWwwRedirect ? "success.main" : "error.main",
+                        backgroundColor: isNonWwwRedirect
+                          ? "success.light"
+                          : "error.light",
                       }}
                     />
                   ) : (
