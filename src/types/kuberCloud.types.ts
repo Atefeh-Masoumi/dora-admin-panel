@@ -18,6 +18,7 @@ export type KuberCloudAppImageType = {
   replicaNumber: number;
   namespaceId: number | null;
   keyValue: VariableEnvironmentType[];
+  isPublic: boolean;
 };
 
 export type ResourceListType =
