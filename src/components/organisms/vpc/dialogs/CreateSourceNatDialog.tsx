@@ -93,7 +93,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
           <>
             <img src={SwitchImage} alt="switch" className="image-icon" />
             <div>
-              <p className="dnat-source">Source</p>
+              <p className="snat-source">Source</p>
             </div>
           </>
         ),

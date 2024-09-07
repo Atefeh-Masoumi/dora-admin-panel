@@ -147,6 +147,7 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
                       clickable={false}
                       label={isHsts ? "فعال" : "غیرفعال"}
                       sx={{
+                        borderRadius: 1,
                         color: isHsts ? "success.main" : "error.main",
                         backgroundColor: isHsts
                           ? "success.light"
@@ -158,6 +159,7 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
                       clickable={false}
                       label={isHttpsRedirect ? "فعال" : "غیرفعال"}
                       sx={{
+                        borderRadius: 1,
                         color: isHttpsRedirect ? "success.main" : "error.main",
                         backgroundColor: isHttpsRedirect
                           ? "success.light"
@@ -169,6 +171,7 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
                       clickable={false}
                       label={isNonWwwRedirect ? "فعال" : "غیرفعال"}
                       sx={{
+                        borderRadius: 1,
                         color: isNonWwwRedirect ? "success.main" : "error.main",
                         backgroundColor: isNonWwwRedirect
                           ? "success.light"

@@ -57,11 +57,11 @@ const DnsCdnList: FC = () => {
           spacing={2}
         >
           <Typography fontSize={18} color="secondary">
-            لیست سرویس دامنه ها
+            لیست زون‌ها
           </Typography>
           <SearchBox
             onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام دامنه"
+            placeholder="جستجو در نام زون‌ها"
           />
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
@@ -92,7 +92,7 @@ const DnsCdnList: FC = () => {
               </Stack>
             }
           >
-            ایجاد Zone جدید
+            ایجاد زون جدید
           </Button>
         </Stack>
       </Stack>

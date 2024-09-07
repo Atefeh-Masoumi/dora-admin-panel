@@ -104,7 +104,7 @@ export const CreateDestinationNatDialog: FC<
           <>
             <img src={CloudImage} alt="cloud" className="image-icon" />
             <div>
-              <p className="dnat-destination">Destination</p>
+              <p className="dnat-destination">Source</p>
             </div>
           </>
         ),
@@ -140,7 +140,7 @@ export const CreateDestinationNatDialog: FC<
           <>
             <img src={SwitchImage} alt="switch" className="image-icon" />
             <div>
-              <p className="dnat-source">Source</p>
+              <p className="dnat-source">Destination</p>
             </div>
           </>
         ),

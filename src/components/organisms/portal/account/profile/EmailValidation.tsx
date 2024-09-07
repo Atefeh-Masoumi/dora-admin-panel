@@ -14,6 +14,7 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { CodeField } from "src/components/atoms/CodeField";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const validationSchema = yup.object().shape({
   email: emailValidator.required("شماره موبایل الزامیست."),
@@ -87,7 +88,7 @@ export const EmailValidation: FC<EmailValidationProps> = () => {
               sx={{
                 px: { xs: 1.8, lg: 2 },
                 py: { xs: 1.8, lg: 2.25 },
-                borderRadius: 2,
+                borderRadius: BORDER_RADIUS_1,
                 backgroundColor: "white",
                 height: "100%",
               }}

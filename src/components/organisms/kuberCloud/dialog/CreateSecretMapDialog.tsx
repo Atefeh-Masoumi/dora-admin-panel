@@ -8,6 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
+  MenuItem,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,6 +24,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
+import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 
 type InitialValuesType = {
   name: string | null;
@@ -29,6 +32,7 @@ type InitialValuesType = {
   description?: string | null;
   namespaceId: number;
   envs: any;
+  secretTypeId: number | null;
 };
 
 const formValidation = yup.object().shape({
@@ -66,6 +70,7 @@ export const CreateSecretMapDialog: FC<
       alias: null,
       namespaceId: Number(namespaceId),
       envs: [],
+      secretTypeId: 1,
     },
     validationSchema: formValidation,
     onSubmit: (values, { setSubmitting, resetForm }) => {
@@ -78,8 +83,6 @@ export const CreateSecretMapDialog: FC<
         },
         {}
       );
-
-      console.log();
 
       createSecretMap({
         createKuberCloudSecretModel: {
@@ -127,17 +130,27 @@ export const CreateSecretMapDialog: FC<
     );
   };
 
-  const handleKeyChange = (index: number, key: string) => {
+  const handleKeyChangeForOpaque = (index: number, key: string) => {
     const updatedEnvs = [...formik.values.envs];
     updatedEnvs[index] = { ...updatedEnvs[index], key };
     formik.setFieldValue("envs", updatedEnvs);
   };
 
-  const handleValueChange = (index: number, value: string) => {
+  const handleValueChangeForOpaque = (index: number, value: string) => {
     const updatedEnvs = [...formik.values.envs];
     updatedEnvs[index] = { ...updatedEnvs[index], value };
     formik.setFieldValue("envs", updatedEnvs);
   };
+
+  const handleCertificateChangeForTlsInformation = (
+    index: number,
+    value: string
+  ) => {};
+
+  const handlePrivateKeyChangeTlsInformation = (
+    index: number,
+    value: string
+  ) => {};
 
   return (
     <>
@@ -164,7 +177,7 @@ export const CreateSecretMapDialog: FC<
               ایجاد Secret
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
-            <Grid2 container spacing={3}>
+            <Grid2 container spacing={1}>
               <Grid2 xs={12} md={6}>
                 <DorsaTextField
                   fullWidth
@@ -175,83 +188,286 @@ export const CreateSecretMapDialog: FC<
                   {...formik.getFieldProps("name")}
                 />
               </Grid2>
-            </Grid2>
-            <Stack spacing={3}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Typography fontWeight={600} mb={1}>
-                  افزودن Envs
-                </Typography>
-                <Button
-                  variant="text"
-                  color="secondary"
-                  sx={{
-                    color: "primary.main",
-                    justifyContent: "space-between",
-                    py: 1,
-                    fontSize: "15px !important",
-                    mb: 1,
-                  }}
-                  startIcon={<Add />}
-                  onClick={addEnvsInput}
+              <Grid2 xs={12} md={6}>
+                <Select
                   size="small"
+                  value={formik.values.secretTypeId}
+                  onChange={(event) => {
+                    formik.setFieldValue(
+                      "secretTypeId",
+                      Number(event.target.value)
+                    );
+                  }}
+                  sx={{
+                    width: "100%",
+                    "& .MuiSelect-select": {
+                      bgcolor: "rgba(110, 118, 138, 0.06)",
+                      border: "none !important",
+                      padding: "7px !important",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none !important",
+                    },
+                  }}
                 >
-                  اضافه کردن
-                </Button>
-              </Stack>
-              <Grid
-                container
-                columnSpacing={1}
-                alignItems={"center"}
-                justifyContent={"center"}
-                sx={{ direction: "rtl", margin: "0 auto" }}
-              >
-                {envs.map((_: any, index: any) => (
-                  <>
-                    <Grid item xs={2} mb={2}>
-                      <DorsaTextField
-                        fullWidth
-                        label="key"
-                        value={formik.values.envs[index]?.key || ""}
-                        onChange={(e) =>
-                          handleKeyChange(index, String(e.target.value))
-                        }
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid item xs={9} mb={2}>
-                      <DorsaTextField
-                        fullWidth
-                        label="value"
-                        value={formik.values.envs[index]?.value || ""}
-                        onChange={(e) =>
-                          handleValueChange(index, String(e.target.value))
-                        }
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={1}
-                      mb={1}
+                  {secretTypesConstants.map(({ category, id }) => (
+                    <MenuItem
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                        paddingRight: "0 !important",
+                        mx: 0.5,
+                        my: 1,
+                        borderRadius: 1,
+                        direction: "ltr",
                       }}
+                      key={id}
+                      value={id}
                     >
-                      <IconButton onClick={() => removeEnvsInput(index)}>
-                        <TrashSvg />
-                      </IconButton>
-                    </Grid>
-                  </>
-                ))}
-              </Grid>
-            </Stack>
+                      {category}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid2>
+            </Grid2>
+            {formik.values.secretTypeId === 1 && (
+              <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight={600} mb={1} ml={1}>
+                    افزودن اطلاعات
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    sx={{
+                      color: "primary.main",
+                      justifyContent: "space-between",
+                      py: 1,
+                      fontSize: "15px !important",
+                      border: "1px solid",
+                    }}
+                    startIcon={<Add />}
+                    onClick={addEnvsInput}
+                    size="small"
+                  >
+                    اضافه کردن
+                  </Button>
+                </Stack>
+                <Grid
+                  container
+                  spacing={1}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  sx={{ direction: "rtl" }}
+                >
+                  {envs.map((_: any, index: any) => (
+                    <>
+                      <Grid item xs={4} mb={2}>
+                        <DorsaTextField
+                          fullWidth
+                          label="key"
+                          value={formik.values.envs[index]?.key || ""}
+                          onChange={(e) =>
+                            handleKeyChangeForOpaque(
+                              index,
+                              String(e.target.value)
+                            )
+                          }
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={7} mb={2}>
+                        <DorsaTextField
+                          fullWidth
+                          label="value"
+                          value={formik.values.envs[index]?.value || ""}
+                          onChange={(e) =>
+                            handleValueChangeForOpaque(
+                              index,
+                              String(e.target.value)
+                            )
+                          }
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        xs={1}
+                        mb={1}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                          paddingRight: "0 !important",
+                          margin: 0,
+                          padding: 0,
+                          marginBottom: "15px !important",
+                        }}
+                      >
+                        <IconButton onClick={() => removeEnvsInput(index)}>
+                          <TrashSvg />
+                        </IconButton>
+                      </Grid>
+                    </>
+                  ))}
+                </Grid>
+              </Stack>
+            )}
+            {formik.values.secretTypeId === 2 && (
+              <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight={600} mb={1} ml={1}>
+                    افزودن اطلاعات
+                  </Typography>
+                </Stack>
+                <Grid
+                  container
+                  spacing={1}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  sx={{ direction: "rtl" }}
+                >
+                  {envs.map((_: any, index: any) => (
+                    <>
+                      <Grid item xs={12} mb={2}>
+                        <DorsaTextField
+                          fullWidth
+                          label="Certificate *"
+                          value={formik.values.envs[index]?.value || ""}
+                          onChange={(e) =>
+                            handleCertificateChangeForTlsInformation(
+                              index,
+                              String(e.target.value)
+                            )
+                          }
+                          size="small"
+                          multiline
+                          rows={4}
+                        />
+                      </Grid>
+                      <Grid item xs={12} mb={2}>
+                        <DorsaTextField
+                          fullWidth
+                          label="Private Key *"
+                          value={""}
+                          onChange={(e) =>
+                            handlePrivateKeyChangeTlsInformation(
+                              index,
+                              String(e.target.value)
+                            )
+                          }
+                          size="small"
+                          multiline
+                          rows={4}
+                        />
+                      </Grid>
+                    </>
+                  ))}
+                </Grid>
+              </Stack>
+            )}
+            {formik.values.secretTypeId === 3 && (
+              <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight={600} mb={1} ml={1}>
+                    افزودن اطلاعات
+                  </Typography>
+                </Stack>
+                <Grid
+                  container
+                  spacing={1}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  sx={{ direction: "rtl" }}
+                >
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Registry Address *"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                      placeholder="https://...."
+                    />
+                  </Grid>
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Username *"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Password *"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Email"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                    />
+                  </Grid>
+                </Grid>
+              </Stack>
+            )}
+            {formik.values.secretTypeId === 4 && (
+              <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography fontWeight={600} mb={1} ml={1}>
+                    افزودن اطلاعات
+                  </Typography>
+                </Stack>
+                <Grid
+                  container
+                  spacing={1}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  sx={{ direction: "rtl" }}
+                >
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Username *"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={6} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Password *"
+                      value={""}
+                      onChange={(e) => console.log(e.target.value)}
+                      size="small"
+                    />
+                  </Grid>
+                </Grid>
+              </Stack>
+            )}
             <DialogActions>
               <Button
                 variant="outlined"
