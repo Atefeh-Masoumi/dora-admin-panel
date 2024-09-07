@@ -1,18 +1,11 @@
 import { FC } from "react";
-import {
-  Container,
-  Typography,
-  Stack,
-  Paper,
-  Chip,
-  Divider,
-} from "@mui/material";
+import { Typography, Stack, Paper, Chip, Divider } from "@mui/material";
 import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 type KubernetesCloudInfoPropsType = {};
 
@@ -33,57 +26,80 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
     {
       label: "Create Date",
       value: data?.createDate
-        ? ConvertToJalali(String(data?.createDate))
+        ? ConvertToJalali(String(data?.createDate)).split(" ").join(" - ")
         : "----",
       id: "createDate",
     },
   ];
 
   return (
-    <Container maxWidth="md" sx={{ p: 0 }}>
-      <Paper
-        sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
-        elevation={0}
-      >
-        <Stack rowGap={2}>
-          <Typography align="center" fontWeight={700} fontSize={18}>
-            اطلاعات سرویس کوبرنتیز ابری
+    <Grid2
+      container
+      spacing={3}
+      justifyContent="space-between"
+      alignItems="stretch"
+    >
+      <Grid2 xs={12} md={6}>
+        <Paper
+          component={Stack}
+          rowGap={2}
+          elevation={0}
+          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
+        >
+          <Typography align="right" fontWeight={700} fontSize={18}>
+            Virtual Machine
           </Typography>
-          <Divider flexItem />
-
-          {infoList.map(({ id, label, value }) => {
-            return (
+          <Divider />
+          {infoList.map(({ id, label, value }) =>
+            id === "statusId" ? (
+              <BoxRow
+                title="Status"
+                component={
+                  <Chip
+                    label={label}
+                    sx={{
+                      bgcolor: ({ palette }) =>
+                        value === 2
+                          ? palette.success.light
+                          : palette.error.light,
+                      color: ({ palette }) =>
+                        value === 2 ? palette.success.main : palette.error.main,
+                      borderRadius: BORDER_RADIUS_1,
+                    }}
+                  />
+                }
+                isLoading={isLoading}
+              />
+            ) : (
               <BoxRow
                 key={id}
                 title={label}
-                component={
-                  id === "statusId" ? (
-                    <Chip
-                      clickable={false}
-                      label={kubernetesStatusIdentifier(value as number).label}
-                      color={
-                        kubernetesStatusIdentifier(value as number)
-                          .chipColor as any
-                      }
-                      sx={{
-                        bgcolor: kubernetesStatusIdentifier(value as number)
-                          .bgcolor,
-                        color: kubernetesStatusIdentifier(value as number)
-                          .textColor,
-                        py: 2.2,
-                        borderRadius: 1,
-                        fontSize: "14px",
-                      }}
-                    />
-                  ) : undefined
-                }
-                isLoading={isLoading}
                 value={value}
+                isLoading={isLoading}
               />
-            );
-          })}
-        </Stack>
-      </Paper>
-    </Container>
+            )
+          )}
+        </Paper>
+      </Grid2>
+      <Grid2 xs={12} md={6}>
+        <Paper
+          component={Stack}
+          rowGap={2}
+          elevation={0}
+          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
+        >
+          <Typography align="right" fontWeight={700} fontSize={18}>
+            Hardware
+          </Typography>
+          <Divider />
+          <BoxRow title="CPU" value={` Core`} isLoading={isLoading} />
+          <BoxRow title="Memory" value={` G`} isLoading={isLoading} />
+
+          <BoxRow title="Disk" value={` GB`} isLoading={isLoading} />
+
+          <BoxRow title="10 pods" value={` 10 pods`} isLoading={isLoading} />
+        </Paper>
+      </Grid2>
+    </Grid2>
   );
 };

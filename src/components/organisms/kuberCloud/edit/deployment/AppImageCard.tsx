@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Grid,
+  IconButton,
   MenuItem,
   Select,
   Stack,
@@ -66,9 +67,9 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
       }}
     >
       <Stack
-        direction="row"
+        direction="column"
         sx={{
-          py: 2,
+          pt: 2,
           transition: "200ms",
           borderTopRightRadius: BORDER_RADIUS_1,
           borderTopLeftRadius: BORDER_RADIUS_1,
@@ -84,38 +85,48 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
           cursor: "pointer",
         }}
         alignItems="center"
-        justifyContent="center"
+        // justifyContent="center"
         spacing={1}
         onClick={() => onClickCardHandler()}
       >
-        <Box
-          sx={{
-            transition: "150ms",
-            filter:
+        <Stack direction="row" alignItems="center">
+          <Box
+            sx={{
+              transition: "150ms",
+              filter:
+                formik.values.imageId === item.id
+                  ? "grayscale(0)"
+                  : "grayscale(100%)",
+              height: 40,
+              overflow: "hidden",
+            }}
+          >
+            <Avatar
+              src={appImageList.find((image) => image.name === item.name)?.src}
+            />
+          </Box>
+
+          <Typography
+            noWrap
+            color={
               formik.values.imageId === item.id
-                ? "grayscale(0)"
-                : "grayscale(100%)",
-            height: 40,
-            overflow: "hidden",
-          }}
-        >
-          <Avatar
-            src={appImageList.find((image) => image.name === item.name)?.src}
-          />
-        </Box>
-        <Typography
-          noWrap
-          color={
-            formik.values.imageId === item.id
-              ? "primary.main"
-              : "secondary.main"
-          }
-          sx={{ transition: "200ms" }}
-          fontWeight="bold"
-        >
-          {item.name}
-        </Typography>
+                ? "primary.main"
+                : "secondary.main"
+            }
+            sx={{ transition: "200ms" }}
+            fontWeight="bold"
+          >
+            {item.name}
+          </Typography>
+        </Stack>
+
+        <Stack maxWidth="fit-content" alignSelf="start">
+          <IconButton>
+            <InfoSvg />
+          </IconButton>
+        </Stack>
       </Stack>
+
       <Select
         value={
           formik.values.imageId === item.id
