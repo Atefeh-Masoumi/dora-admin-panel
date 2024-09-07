@@ -135,7 +135,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   };
 
   return (
-    <Dialog {...dialogProps} sx={{ "& .MuiPaper-root": { maxWidth: "750px" } }}>
+    <Dialog {...dialogProps} sx={{ "& .MuiPaper-root": { maxWidth: "850px" } }}>
       <DialogTitle align="center">افزودن کاربر جدید</DialogTitle>
       <DialogContent>
         <Stack direction="column" rowGap={2}>
@@ -156,15 +156,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   direction="column"
                   mt={2}
                 >
-                  <Stack
-                    direction="column"
-                    p={1.3}
-                    rowGap={1}
-                    columnGap={1}
-                    sx={{
-                      border: ({ palette }) => `1px solid #ccc`,
-                    }}
-                  >
+                  <Stack direction="column" p={1.3} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
                       <Typography>افزودن کاربر</Typography>
                       <Typography fontSize={12}>
@@ -183,15 +175,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       helperText={touched.userName && errors.userName}
                     />
                   </Stack>
-                  <Stack
-                    direction="column"
-                    p={1}
-                    rowGap={1}
-                    columnGap={1}
-                    sx={{
-                      border: ({ palette }) => `1px solid #ccc`,
-                    }}
-                  >
+                  <Divider flexItem />
+                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
                       <Typography>نقش های محدوده حساب</Typography>
                       <Typography fontSize={12}>
@@ -199,14 +184,13 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       </Typography>
                     </Box>
                     <Grid container py={1} rowGap={1} justifyContent="center">
-                      <Grid xs={12} md={6} item pr={{ xs: 0, md: 1 }}>
+                      <Grid xs={12} md={4} item pr={{ xs: 0, md: 1 }}>
                         <Box
                           p={1.3}
                           pt={0.1}
                           sx={{
                             width: "100%",
                             height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
                           }}
                         >
                           <FormControlLabel
@@ -230,14 +214,13 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                           </Typography>
                         </Box>
                       </Grid>
-                      <Grid xs={12} md={6} item>
+                      <Grid xs={12} md={4} item>
                         <Box
                           p={1.3}
                           pt={0.1}
                           sx={{
                             width: "100%",
                             height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
                           }}
                         >
                           <FormControlLabel
@@ -269,14 +252,13 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                           </Typography>
                         </Box>
                       </Grid>
-                      <Grid xs={12} item>
+                      <Grid xs={12} md={4} item>
                         <Box
                           p={1.3}
                           pt={0.1}
                           sx={{
                             width: "100%",
                             height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
                           }}
                         >
                           <FormControlLabel
@@ -320,7 +302,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     columnGap={1}
                     sx={{
                       display: superUser ? "none" : "flex",
-                      border: ({ palette }) => `1px solid #ccc`,
                     }}
                   >
                     <Box sx={{ width: "100%" }}>
