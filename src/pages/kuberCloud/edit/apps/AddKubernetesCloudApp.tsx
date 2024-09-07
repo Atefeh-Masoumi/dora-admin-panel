@@ -172,7 +172,13 @@ const AddKubernetesCloudApp: FC = () => {
 
             <Divider sx={{ margin: "20px 10px" }} />
 
-            <Grid justifyContent="space-between" container px={3}>
+            <Grid
+              justifyContent="space-between"
+              spacing={2}
+              // spacing={{ md: 2 }}
+              container
+              px={3}
+            >
               <Grid
                 bgcolor="#e7f0fd"
                 sx={{ borderRadius: BORDER_RADIUS_1, p: 2 }}
@@ -196,9 +202,6 @@ const AddKubernetesCloudApp: FC = () => {
                     // p: 5,
                   }}
                 >
-                  {/* <Typography fontSize={24} fontWeight="bold" textAlign="center">
-                  Environment Variable
-                </Typography> */}
                   <Typography
                     variant="text9"
                     align="center"

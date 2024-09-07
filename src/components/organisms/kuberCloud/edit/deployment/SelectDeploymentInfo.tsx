@@ -26,9 +26,6 @@ type SelectDeploymentInfoPropsType = {
 export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
   formik,
 }) => {
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
-
   const addOne = () => {
     return formik.values.replicaNumber < 10
       ? formik.values.replicaNumber + 1
@@ -66,7 +63,6 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
       <Stack width="100%">
         <Stack spacing={2} justifyContent="center" alignItems="center">
           <FormControl fullWidth>
-            <InputLabel>نام سرویس</InputLabel>
             <DorsaTextField
               value={formik.values.name}
               onChange={(e) => formik.setFieldValue("name", e.target.value)}
