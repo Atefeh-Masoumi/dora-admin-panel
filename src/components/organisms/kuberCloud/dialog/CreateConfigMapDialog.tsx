@@ -171,7 +171,7 @@ export const CreateConfigMapDialog: FC<
                   افزودن Envs
                 </Typography>
                 <Button
-                  variant="text"
+                  variant="outlined"
                   color="secondary"
                   sx={{
                     color: "primary.main",
@@ -179,6 +179,7 @@ export const CreateConfigMapDialog: FC<
                     py: 1,
                     fontSize: "15px !important",
                     mb: 1,
+                    border: "1px solid",
                   }}
                   startIcon={<Add />}
                   onClick={addEnvsInput}
@@ -196,7 +197,7 @@ export const CreateConfigMapDialog: FC<
               >
                 {envs.map((_: any, index: any) => (
                   <>
-                    <Grid item xs={3} mb={2}>
+                    <Grid item xs={4} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="key"
@@ -207,7 +208,7 @@ export const CreateConfigMapDialog: FC<
                         size="small"
                       />
                     </Grid>
-                    <Grid item xs={8} mb={2}>
+                    <Grid item xs={7} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="value"
@@ -227,6 +228,9 @@ export const CreateConfigMapDialog: FC<
                         alignItems: "center",
                         justifyContent: "center",
                         paddingRight: "0 !important",
+                        margin: 0,
+                        padding: 0,
+                        marginBottom: "15px !important",
                       }}
                     >
                       <IconButton onClick={() => removeEnvsInput(index)}>

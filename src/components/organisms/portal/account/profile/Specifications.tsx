@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Chip, Divider, Stack, Typography } from "@mui/material";
 import { RealPersonality } from "./RealPersonality";
 import { useGetApiMyAccountProfileGetQuery } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const Specifications: FC = () => {
   const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
@@ -11,7 +12,7 @@ export const Specifications: FC = () => {
       sx={{
         width: "100%",
         p: { xs: 1.8, lg: 2 },
-        borderRadius: 2,
+        borderRadius: BORDER_RADIUS_1,
         backgroundColor: "white",
       }}
       height="100%"

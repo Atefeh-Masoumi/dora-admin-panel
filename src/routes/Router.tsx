@@ -265,7 +265,7 @@ const Router: FC = () => {
           <Route
             path="/cdn"
             element={mainTemplate(CdnIndex, {
-              pageTitle: "مدیریت دامنه ها",
+              pageTitle: "مدیریت زون‌ها",
             })}
           />
           <Route
@@ -273,7 +273,7 @@ const Router: FC = () => {
             element={mainTemplate(
               AddZone,
               {
-                link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
+                link: { text: "بازگشت به مدیریت زون‌ها", url: "/cdn" },
                 hideSidebar: false,
               },
               AddZoneContextProvider
@@ -282,7 +282,7 @@ const Router: FC = () => {
           <Route
             path="/cdn/:id/overview"
             element={mainTemplate(EditZone, {
-              pageTitle: "مشخصات دامنه",
+              pageTitle: "مشخصات زون",
               // RightComponent: DomainSelect,
             })}
           />

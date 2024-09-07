@@ -2,7 +2,7 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useGetApiMyAccountCustomerGetQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
-import { ConvertToJalali } from "src/utils/convertToJalali";
+import { ConvertToJalaliWithoutTime } from "src/utils/convertToJalali";
 import { e2p } from "src/utils/e2p.utils";
 
 type LegalPersonalityDetailPropsType = {};
@@ -25,7 +25,8 @@ export const LegalPersonalityDetail: FC<
         },
         {
           title: "تاریخ ثبت/تولد :",
-          value: ConvertToJalali(String(data?.registrationDate)) ?? "",
+          value:
+            ConvertToJalaliWithoutTime(String(data?.registrationDate)) ?? "",
         },
 
         {
@@ -35,7 +36,7 @@ export const LegalPersonalityDetail: FC<
 
         {
           title: "تاریخ ایجاد :",
-          value: ConvertToJalali(String(data?.createDate)) ?? "",
+          value: ConvertToJalaliWithoutTime(String(data?.createDate)) ?? "",
         },
 
         {
@@ -44,7 +45,7 @@ export const LegalPersonalityDetail: FC<
         },
         {
           title: "تاریخ آخرین ویرایش :",
-          value: ConvertToJalali(String(data?.modifyDate)) ?? "",
+          value: ConvertToJalaliWithoutTime(String(data?.modifyDate)) ?? "",
         },
         {
           title: "شماره شناسنامه/ثبت :",

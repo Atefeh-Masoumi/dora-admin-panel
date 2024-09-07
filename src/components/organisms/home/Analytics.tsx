@@ -1,18 +1,17 @@
-import { FC, useState } from "react";
 import {
   Box,
   Divider,
   Grid,
   MenuItem,
-  MenuList,
   Select,
   SelectChangeEvent,
   Stack,
   Typography,
 } from "@mui/material";
+import { FC, useState } from "react";
+import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SampleChart } from "./charts/SampleChart";
-import { analyticsCategories } from "src/components/organisms/home/constants/homeAnalyticsConstant";
 
 export const Analytics: FC = () => {
   const [categoryId, setCategoryId] = useState(1);
