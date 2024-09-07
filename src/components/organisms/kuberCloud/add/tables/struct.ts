@@ -7,7 +7,7 @@ export const productBundleTableStruct: columnType[] = [
   { id: "kuberCpu", label: "CPU" },
   { id: "kuberMemory", label: "Memory" },
   { id: "kuberDisk", label: "Disk" },
-  { id: "kuber10Pods", label: "Pods10" },
+  { id: "kuber10Pods", label: "TenPods" },
   {
     id: "price",
     label: "قیمت (ماهیانه)",

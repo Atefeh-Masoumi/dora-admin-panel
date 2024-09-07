@@ -3,7 +3,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import { KubernetesEditNodes } from "src/components/organisms/kuberCluster/edit/editNodes/KubernetesEditNodes";
 import { KubernetesOverview } from "src/components/organisms/kuberCluster/edit/overview/KubernetesOverview";
-import { Box, Container, Stack, Tabs } from "@mui/material";
+import { Box, Stack, Tabs } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams, useNavigate } from "react-router-dom";

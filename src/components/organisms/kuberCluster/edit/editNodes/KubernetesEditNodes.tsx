@@ -24,7 +24,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
   const navigate = useNavigate();
 
   const gotToAddNode = () =>
-    kubernetesId && navigate(`/kubernetes/${kubernetesId}/add-node`);
+    kubernetesId && navigate(`/kubernetes-cluster/${kubernetesId}/add-node`);
 
   return (
     <Stack

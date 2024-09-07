@@ -10,13 +10,13 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 type KubernetesCloudInfoPropsType = {};
 
 export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
-  const { id: kubernetesId } = useParams();
+  const { kubernetesCloudId } = useParams();
 
   const { data, isLoading } = useGetApiMyKubernetesCloudHostGetByIdQuery(
     {
-      id: Number(kubernetesId) || 0,
+      id: Number(kubernetesCloudId) || 0,
     },
-    { skip: !kubernetesId }
+    { skip: !kubernetesCloudId }
   );
 
   const infoList = [
@@ -92,12 +92,28 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
             Hardware
           </Typography>
           <Divider />
-          <BoxRow title="CPU" value={` Core`} isLoading={isLoading} />
-          <BoxRow title="Memory" value={` G`} isLoading={isLoading} />
+          <BoxRow
+            title="CPU"
+            value={`${data?.cpu} Core`}
+            isLoading={isLoading}
+          />
+          <BoxRow
+            title="Memory"
+            value={`${data?.memory} G`}
+            isLoading={isLoading}
+          />
 
-          <BoxRow title="Disk" value={` GB`} isLoading={isLoading} />
+          <BoxRow
+            title="Disk"
+            value={`${data?.disk} GB`}
+            isLoading={isLoading}
+          />
 
-          <BoxRow title="10 pods" value={` 10 pods`} isLoading={isLoading} />
+          <BoxRow
+            title="Ten pods"
+            value={`${data?.tenPods} TenPods`}
+            isLoading={isLoading}
+          />
         </Paper>
       </Grid2>
     </Grid2>

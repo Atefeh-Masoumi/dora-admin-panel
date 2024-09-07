@@ -3970,9 +3970,14 @@ export type KuberCloudHostListResponse = {
 export type KuberCloudHostGetResponse = {
   id: number;
   datacenter: string | null;
+  datacenterId: number;
   name: string | null;
   status: string | null;
   statusId: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+  tenPods?: number;
   createDate: string;
 };
 export type EditKuberCloudHostModel = {

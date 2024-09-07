@@ -3,7 +3,7 @@ import { columnType } from "../../tables/table.types";
 export const kubernetesTableStruct: columnType[] = [
   {
     id: "id",
-    label: "",
+    label: "شناسه",
     invisibility: true,
   },
   {
@@ -22,5 +22,5 @@ export const kubernetesTableStruct: columnType[] = [
     id: "createDate",
     label: "تاریخ ایجاد",
   },
-  { id: "control", label: "", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
 ];

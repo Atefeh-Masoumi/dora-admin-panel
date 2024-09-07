@@ -27,7 +27,7 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
 
-  const settingOnClick = () => navigate("/kubernetes/" + row["id"]);
+  const settingOnClick = () => navigate("/kubernetes-cluster/" + row["id"]);
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyKubernetesClusterHostDeleteByIdMutation();
 

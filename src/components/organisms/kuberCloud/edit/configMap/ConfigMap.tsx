@@ -29,7 +29,7 @@ export const KubernetesCloudConfigMap: FC<
 > = () => {
   const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
     useState<boolean>(false);
-  const { id: kubernetesCloudId } = useParams();
+  const { kubernetesCloudId } = useParams();
 
   const { data = [], isLoading } =
     useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
