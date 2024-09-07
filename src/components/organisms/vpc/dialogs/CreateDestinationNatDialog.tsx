@@ -2,7 +2,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -120,7 +119,7 @@ export const CreateDestinationNatDialog: FC<
         label: (
           <>
             <img
-              src={SwitchImage}
+              src={GatewayImage}
               alt="switch"
               className="gateway image-icon"
             />
@@ -139,7 +138,7 @@ export const CreateDestinationNatDialog: FC<
       data: {
         label: (
           <>
-            <img src={GatewayImage} alt="switch" className="image-icon" />
+            <img src={SwitchImage} alt="switch" className="image-icon" />
             <div>
               <p className="dnat-source">Source</p>
             </div>

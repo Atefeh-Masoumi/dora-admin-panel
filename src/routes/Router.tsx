@@ -587,7 +587,7 @@ const Router: FC = () => {
         <Route
           path="/vpc/:vpcId/nat"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت NAT",
+            pageTitle: "مدیریت NAT/DNAT",
           })}
         />
         <Route

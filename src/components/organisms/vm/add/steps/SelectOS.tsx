@@ -24,6 +24,8 @@ import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
+  imageId?: number | null;
+  setImageId?: any;
 };
 
 type OsDropDownType = {
@@ -34,7 +36,11 @@ type OsDropDownType = {
   isSelected: boolean;
 };
 
-export const SelectOS: FC<SelectOSPropsType> = ({ datacenterId }) => {
+export const SelectOS: FC<SelectOSPropsType> = ({
+  datacenterId,
+  imageId,
+  setImageId,
+}) => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(

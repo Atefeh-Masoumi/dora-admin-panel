@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Grid,
   IconButton,
   Paper,
   Tooltip,
@@ -26,6 +27,7 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 const title =
   "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
 const AddKubernetesCloudApp: FC = () => {
@@ -96,7 +98,7 @@ const AddKubernetesCloudApp: FC = () => {
           namespaceId: values.namespaceId!,
           keyValue: groupedByVariableType(values),
           replicaNumber: values.replicaNumber,
-          isPublic: true,
+          isPublic: values.isPublic,
         },
       })
         .unwrap()
@@ -115,6 +117,7 @@ const AddKubernetesCloudApp: FC = () => {
     replicaNumber: 1,
     namespaceId: Number(kubernetesCloudId),
     keyValue: [],
+    isPublic: false,
   };
 
   const validationSchema = yup.object().shape({});
@@ -136,12 +139,13 @@ const AddKubernetesCloudApp: FC = () => {
       envKey: string;
       value: string;
     }[] = [];
+
     requiredKeyList?.forEach((item) =>
       result.push({ variableType: 1, envKey: item.name || "---", value: "" })
     );
     result = result.filter((item) => item && item.variableType !== undefined);
-    setEnvironmentVariableList(result);
 
+    setEnvironmentVariableList(result);
     formik.setFieldValue("keyValue", result);
   }, [formik.values.imageId]);
 
@@ -155,7 +159,7 @@ const AddKubernetesCloudApp: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد App جدید
+        ایجاد اپ جدید
       </Typography>
 
       <Paper>
@@ -179,75 +183,93 @@ const AddKubernetesCloudApp: FC = () => {
               />
             )}
 
-            <Divider sx={{ margin: "50px 10px" }} />
+            <Divider sx={{ margin: "20px 10px" }} />
 
-            <SelectDeploymentInfo formik={formik} />
-
-            <Divider sx={{ margin: "50px 10px" }} />
-
-            <Stack
-              gap={2}
-              direction="column"
-              sx={{
-                width: "100%",
-                alignSelf: "center",
-                justifyContent: "center",
-                p: 5,
-              }}
-            >
-              <Typography fontSize={24} fontWeight="bold" textAlign="center">
-                Environment Variable
-              </Typography>
-              <Typography
-                align="center"
-                sx={{ color: ({ palette }) => palette.grey[700] }}
+            <Grid justifyContent="space-between" container px={3}>
+              <Grid
+                bgcolor="#e7f0fd"
+                sx={{ borderRadius: BORDER_RADIUS_1, p: 2 }}
+                item
+                xs={12}
+                sm={12}
+                md={4}
+                lg={4.5}
               >
-                ویژگی های موردنظر را به container اضافه کنید.
-              </Typography>
+                <SelectDeploymentInfo formik={formik} />
+              </Grid>
 
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Stack direction="row" gap={1} alignItems="center">
-                  <Tooltip sx={{ p: 0 }} placement="top" title={title}>
-                    <IconButton>
-                      <InfoSvg />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography>لیست Variable ها</Typography>
-                </Stack>
-                <Button
-                  sx={{ alignSelf: "center", width: 100 }}
-                  variant="outlined"
-                  startIcon={<AddIcon />}
-                  onClick={addEnvironmentVariable}
+              <Grid item xs={12} sm={12} md={8} lg={7}>
+                <Stack
+                  gap={2}
+                  direction="column"
+                  sx={{
+                    width: "100%",
+                    alignSelf: "start",
+                    justifyContent: "center",
+                    // p: 5,
+                  }}
                 >
-                  افزودن
-                </Button>
-              </Stack>
-              <Stack rowGap={{ xs: 5, sm: 2 }}>
-                {environmentVariableList.length > 0 &&
-                  environmentVariableList.map((item, index) => {
-                    if (!item) return null;
-                    return (
-                      <SelectEnvironmentVariable
-                        key={index}
-                        onDelete={removeEnvironmentVariable}
-                        formik={formik}
-                        mainIndex={index}
-                      />
-                    );
-                  })}
-              </Stack>
-            </Stack>
+                  {/* <Typography fontSize={24} fontWeight="bold" textAlign="center">
+                  Environment Variable
+                </Typography> */}
+                  <Typography
+                    variant="text9"
+                    align="center"
+                    sx={{ color: ({ palette }) => palette.grey[700] }}
+                  >
+                    ویژگی های موردنظر را به container اضافه کنید.
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Stack direction="row" gap={1} alignItems="center">
+                      <Tooltip sx={{ p: 0 }} placement="top" title={title}>
+                        <IconButton>
+                          <InfoSvg />
+                        </IconButton>
+                      </Tooltip>
+                      <Typography>لیست Variable ها</Typography>
+                    </Stack>
+                    <Button
+                      sx={{ alignSelf: "center", width: 100 }}
+                      variant="outlined"
+                      startIcon={<AddIcon />}
+                      onClick={addEnvironmentVariable}
+                    >
+                      افزودن
+                    </Button>
+                  </Stack>
+                  <Stack
+                    sx={{ maxHeight: "280px", overflow: "auto", pt: 1 }}
+                    rowGap={{ xs: 5, sm: 2 }}
+                  >
+                    {environmentVariableList.length > 0 &&
+                      environmentVariableList.map((item, index) => {
+                        if (!item) return null;
+                        return (
+                          <SelectEnvironmentVariable
+                            key={index}
+                            onDelete={() => removeEnvironmentVariable(index)}
+                            formik={formik}
+                            mainIndex={index}
+                          />
+                        );
+                      })}
+                  </Stack>
+                </Stack>
+              </Grid>
+            </Grid>
+
             <Stack
               direction="row"
               justifyContent="center"
               alignItems="center"
               spacing={1}
-              px={2}
+              pt={6}
+              pb={2}
             >
               <Button
                 fullWidth

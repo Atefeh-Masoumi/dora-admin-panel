@@ -53,7 +53,7 @@ export const KubernetesCloudConfigMap: FC<
       py={3}
       px={3}
       width="100%"
-      borderRadius={3}
+      borderRadius={BORDER_RADIUS_1}
       direction="column"
     >
       <Stack
@@ -63,7 +63,7 @@ export const KubernetesCloudConfigMap: FC<
         rowGap={3}
       >
         <Typography fontSize={18} color="secondary">
-          لیست Config Map
+          لیست Configmap
         </Typography>
         <Button
           onClick={handleOpenAddConfigMapDialog}
@@ -92,7 +92,7 @@ export const KubernetesCloudConfigMap: FC<
             </Stack>
           }
         >
-          افزودن Config Map
+          افزودن Configmap
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -125,7 +125,7 @@ export const KubernetesCloudConfigMap: FC<
                   ))}
                 </Stack>
               ) : data && data?.length === 0 ? (
-                <EmptyTable text={"در حال حاضر Secret وجود ندارد"} />
+                <EmptyTable text={"در حال حاضر Configmap وجود ندارد"} />
               ) : (
                 <>
                   {data?.map((item, index) => {

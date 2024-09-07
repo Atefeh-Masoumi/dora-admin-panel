@@ -241,13 +241,25 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                   inputProps={{ dir: "ltr" }}
                   label="Name"
                 />
-                <DorsaTextField
-                  error={Boolean(errors.value && touched.value)}
-                  helperText={errors.value}
-                  {...getFieldProps("value")}
-                  inputProps={{ dir: "ltr" }}
-                  label={dnsTypeValueLabelObject[type]}
-                />
+                {type === "TXT" ? (
+                  <DorsaTextField
+                    error={Boolean(errors.value && touched.value)}
+                    helperText={errors.value}
+                    {...getFieldProps("value")}
+                    inputProps={{ dir: "ltr" }}
+                    label={dnsTypeValueLabelObject[type]}
+                    multiline
+                    rows={6}
+                  />
+                ) : (
+                  <DorsaTextField
+                    error={Boolean(errors.value && touched.value)}
+                    helperText={errors.value}
+                    {...getFieldProps("value")}
+                    inputProps={{ dir: "ltr" }}
+                    label={dnsTypeValueLabelObject[type]}
+                  />
+                )}
                 {type === "SRV" && (
                   <>
                     <DorsaTextField
