@@ -85,7 +85,7 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
           </Typography>
         </Stack>
 
-        <Stack maxWidth="fit-content" alignSelf="start">
+        <Stack mt={0} maxWidth="fit-content" alignSelf="start">
           <IconButton>
             <InfoSvg />
           </IconButton>

@@ -81,4 +81,4 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
   );
 };
 
-  export default memo(AppImageListCard);
+export default memo(AppImageListCard);

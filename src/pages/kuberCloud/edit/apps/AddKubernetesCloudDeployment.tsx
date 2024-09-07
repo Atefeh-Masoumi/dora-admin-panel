@@ -220,7 +220,7 @@ const AddKubernetesCloudDeployment: FC = () => {
                     align="center"
                     sx={{ color: ({ palette }) => palette.grey[700] }}
                   >
-                    ویژگی های موردنظر را به container اضافه کنید.
+                    متغیرهای موردنظر را اضافه کنید.
                   </Typography>
 
                   <Stack
