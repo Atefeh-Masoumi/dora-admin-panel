@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kuberCloud/edit/configMap/ConfigMap";
-import { KubernetesCloudApps } from "src/components/organisms/kuberCloud/edit/deployment/KubernetesCloudApps";
+import { KubernetesCloudDeployment } from "src/components/organisms/kuberCloud/edit/deployment/KubernetesCloudDeployment";
 import { KubernetesCloudInfo } from "src/components/organisms/kuberCloud/edit/info/KubernetesCloudInfo";
 import { KubernetesCloudSecretMap } from "src/components/organisms/kuberCloud/edit/secretMap/SecretMap";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -44,14 +44,14 @@ const a11yProps = (index: number) => {
 
 const EditKubernetesCloud: FC = () => {
   const [section, setSection] = useState(0);
-  const { id } = useParams();
-  const navigate = useNavigate(); // Added
+  const { kubernetesCloudId } = useParams();
+  const navigate = useNavigate();
 
   const {
     data: kubernetesCloudData,
     isLoading: getKubernetesCloudDataLoading,
   } = useGetApiMyKubernetesCloudHostGetByIdQuery({
-    id: Number(id)!,
+    id: Number(kubernetesCloudId)!,
   });
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -59,16 +59,23 @@ const EditKubernetesCloud: FC = () => {
     navigate(`?section=${newValue}`, { replace: true });
   };
 
-  const tabArray = ["مشخصات سرویس", "Apps", "Configmap", "Secret"];
+  const tabArray = [
+    "مشخصات سرویس",
+    "Deployments",
+    "Configmap",
+    "Secret",
+    "تغییر مشخصات سخت افزاری",
+    "Ingress",
+  ];
 
   const tabPanelArray = [
     KubernetesCloudInfo,
-    KubernetesCloudApps,
+    KubernetesCloudDeployment,
     KubernetesCloudConfigMap,
     KubernetesCloudSecretMap,
   ];
 
-  if (!id) return <Navigate to={`/kubernetes-cloud`} />;
+  if (!kubernetesCloudId) return <Navigate to={`/kubernetes-cloud`} />;
 
   return (
     <Stack
@@ -111,7 +118,7 @@ const EditKubernetesCloud: FC = () => {
           )}
         </Tabs>
       </Box>
-      {id &&
+      {kubernetesCloudId &&
         tabPanelArray.map((Component, index) => (
           <TabPanel value={section} index={index} key={index}>
             <Component />

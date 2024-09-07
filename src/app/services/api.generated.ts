@@ -872,6 +872,36 @@ export const api = createApi({
         body: queryArg.createKuberCloudSecretModel,
       }),
     }),
+    putApiMyKubernetesCloudIngressRuleEdit: build.mutation<
+      PutApiMyKubernetesCloudIngressRuleEditApiResponse,
+      PutApiMyKubernetesCloudIngressRuleEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress-rule/edit`,
+        method: "PUT",
+        body: queryArg.editKuberCloudIngressRuleModel,
+      }),
+    }),
+    deleteApiMyKubernetesCloudIngressRuleDelete: build.mutation<
+      DeleteApiMyKubernetesCloudIngressRuleDeleteApiResponse,
+      DeleteApiMyKubernetesCloudIngressRuleDeleteApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress-rule/delete`,
+        method: "DELETE",
+        body: queryArg.deleteKuberCloudIngressRuleModel,
+      }),
+    }),
+    postApiMyKubernetesCloudIngressRuleCreate: build.mutation<
+      PostApiMyKubernetesCloudIngressRuleCreateApiResponse,
+      PostApiMyKubernetesCloudIngressRuleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress-rule/create`,
+        method: "POST",
+        body: queryArg.createKuberCloudIngressRuleModel,
+      }),
+    }),
     getApiMyKubernetesCloudIngressList: build.query<
       GetApiMyKubernetesCloudIngressListApiResponse,
       GetApiMyKubernetesCloudIngressListApiArg
@@ -884,15 +914,6 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/ingress/get/${queryArg.id}`,
-      }),
-    }),
-    deleteApiMyKubernetesCloudIngressDeleteById: build.mutation<
-      DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse,
-      DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/kubernetes/cloud/ingress/delete/${queryArg.id}`,
-        method: "DELETE",
       }),
     }),
     postApiMyKubernetesCloudIngressCreate: build.mutation<
@@ -2064,82 +2085,77 @@ export const api = createApi({
         body: queryArg.checkWebHostDomainModel,
       }),
     }),
-    postApiMyWebSiteNewsCreate: build.mutation<
-      PostApiMyWebSiteNewsCreateApiResponse,
-      PostApiMyWebSiteNewsCreateApiArg
+    postApiMyPortalNewsCreate: build.mutation<
+      PostApiMyPortalNewsCreateApiResponse,
+      PostApiMyPortalNewsCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/news/create`,
+        url: `/api/my/portal/news/create`,
         method: "POST",
         body: queryArg.createNewsLetterModel,
       }),
     }),
-    postApiMyWebSiteContactUsCreate: build.mutation<
-      PostApiMyWebSiteContactUsCreateApiResponse,
-      PostApiMyWebSiteContactUsCreateApiArg
+    postApiMyPortalContactUsCreate: build.mutation<
+      PostApiMyPortalContactUsCreateApiResponse,
+      PostApiMyPortalContactUsCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/contact-us/create`,
+        url: `/api/my/portal/contact-us/create`,
         method: "POST",
         body: queryArg.createContactUsModel,
       }),
     }),
-    getApiMyWebSiteWebsiteBlogCommentGetById: build.query<
-      GetApiMyWebSiteWebsiteBlogCommentGetByIdApiResponse,
-      GetApiMyWebSiteWebsiteBlogCommentGetByIdApiArg
+    getApiMyPortalWebsiteBlogCommentGetById: build.query<
+      GetApiMyPortalWebsiteBlogCommentGetByIdApiResponse,
+      GetApiMyPortalWebsiteBlogCommentGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/website-blog-comment/get/${queryArg.id}`,
+        url: `/api/my/portal/website-blog-comment/get/${queryArg.id}`,
       }),
     }),
-    postApiMyWebSiteWebsiteBlogCommentCreate: build.mutation<
-      PostApiMyWebSiteWebsiteBlogCommentCreateApiResponse,
-      PostApiMyWebSiteWebsiteBlogCommentCreateApiArg
+    postApiMyPortalWebsiteBlogCommentCreate: build.mutation<
+      PostApiMyPortalWebsiteBlogCommentCreateApiResponse,
+      PostApiMyPortalWebsiteBlogCommentCreateApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/website-blog-comment/create`,
+        url: `/api/my/portal/website-blog-comment/create`,
         method: "POST",
         body: queryArg.createWebSiteBolgCommentModel,
       }),
     }),
-    getApiMyWebSiteWebsiteBlogList: build.query<
-      GetApiMyWebSiteWebsiteBlogListApiResponse,
-      GetApiMyWebSiteWebsiteBlogListApiArg
+    getApiMyPortalWebsiteBlogList: build.query<
+      GetApiMyPortalWebsiteBlogListApiResponse,
+      GetApiMyPortalWebsiteBlogListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/website-blog/list` }),
+    }),
+    getApiMyPortalWebsiteBlogGetRandomArticlesByLink: build.query<
+      GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiResponse,
+      GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/website-blog/list`,
-        params: { id: queryArg.id },
+        url: `/api/my/portal/website-blog/get-random-articles/${queryArg.link}`,
       }),
     }),
-    getApiMyWebSiteWebsiteBlogGetHeaderArticles: build.query<
-      GetApiMyWebSiteWebsiteBlogGetHeaderArticlesApiResponse,
-      GetApiMyWebSiteWebsiteBlogGetHeaderArticlesApiArg
+    getApiMyPortalWebsiteBlogGetHeaderArticles: build.query<
+      GetApiMyPortalWebsiteBlogGetHeaderArticlesApiResponse,
+      GetApiMyPortalWebsiteBlogGetHeaderArticlesApiArg
     >({
-      query: () => ({
-        url: `/api/my/web-site/website-blog/get-header-articles`,
-      }),
+      query: () => ({ url: `/api/my/portal/website-blog/get-header-articles` }),
     }),
-    getApiMyWebSiteWebsiteBlogGetRandomArticlesByLink: build.query<
-      GetApiMyWebSiteWebsiteBlogGetRandomArticlesByLinkApiResponse,
-      GetApiMyWebSiteWebsiteBlogGetRandomArticlesByLinkApiArg
+    getApiMyPortalWebsiteBlogGetByLink: build.query<
+      GetApiMyPortalWebsiteBlogGetByLinkApiResponse,
+      GetApiMyPortalWebsiteBlogGetByLinkApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/web-site/website-blog/get-random-articles/${queryArg.link}`,
+        url: `/api/my/portal/website-blog/get/${queryArg.link}`,
       }),
     }),
-    getApiMyWebSiteWebsiteBlogGetByLink: build.query<
-      GetApiMyWebSiteWebsiteBlogGetByLinkApiResponse,
-      GetApiMyWebSiteWebsiteBlogGetByLinkApiArg
+    getApiMyPortalWebsiteAlarmList: build.query<
+      GetApiMyPortalWebsiteAlarmListApiResponse,
+      GetApiMyPortalWebsiteAlarmListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/web-site/website-blog/get/${queryArg.link}`,
-      }),
-    }),
-    getApiMyWebSiteWebsiteAlarmList: build.query<
-      GetApiMyWebSiteWebsiteAlarmListApiResponse,
-      GetApiMyWebSiteWebsiteAlarmListApiArg
-    >({
-      query: () => ({ url: `/api/my/web-site/website-alarm/list` }),
+      query: () => ({ url: `/api/my/portal/website-alarm/list` }),
     }),
   }),
 });
@@ -2566,16 +2582,24 @@ export type PostApiMyKubernetesCloudSecretCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudSecretCreateApiArg = {
   createKuberCloudSecretModel: CreateKuberCloudSecretModel;
 };
+export type PutApiMyKubernetesCloudIngressRuleEditApiResponse = unknown;
+export type PutApiMyKubernetesCloudIngressRuleEditApiArg = {
+  editKuberCloudIngressRuleModel: EditKuberCloudIngressRuleModel;
+};
+export type DeleteApiMyKubernetesCloudIngressRuleDeleteApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudIngressRuleDeleteApiArg = {
+  deleteKuberCloudIngressRuleModel: DeleteKuberCloudIngressRuleModel;
+};
+export type PostApiMyKubernetesCloudIngressRuleCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudIngressRuleCreateApiArg = {
+  createKuberCloudIngressRuleModel: CreateKuberCloudIngressRuleModel;
+};
 export type GetApiMyKubernetesCloudIngressListApiResponse =
   /** status 200 OK */ KuberCloudIngressListResponse[];
 export type GetApiMyKubernetesCloudIngressListApiArg = void;
 export type GetApiMyKubernetesCloudIngressGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudIngressResponse;
 export type GetApiMyKubernetesCloudIngressGetByIdApiArg = {
-  id: number;
-};
-export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiResponse = unknown;
-export type DeleteApiMyKubernetesCloudIngressDeleteByIdApiArg = {
   id: number;
 };
 export type PostApiMyKubernetesCloudIngressCreateApiResponse = unknown;
@@ -3182,44 +3206,42 @@ export type PostApiMyWebHostCheckDomainApiResponse = unknown;
 export type PostApiMyWebHostCheckDomainApiArg = {
   checkWebHostDomainModel: CheckWebHostDomainModel;
 };
-export type PostApiMyWebSiteNewsCreateApiResponse = unknown;
-export type PostApiMyWebSiteNewsCreateApiArg = {
+export type PostApiMyPortalNewsCreateApiResponse = unknown;
+export type PostApiMyPortalNewsCreateApiArg = {
   createNewsLetterModel: CreateNewsLetterModel;
 };
-export type PostApiMyWebSiteContactUsCreateApiResponse = unknown;
-export type PostApiMyWebSiteContactUsCreateApiArg = {
+export type PostApiMyPortalContactUsCreateApiResponse = unknown;
+export type PostApiMyPortalContactUsCreateApiArg = {
   createContactUsModel: CreateContactUsModel;
 };
-export type GetApiMyWebSiteWebsiteBlogCommentGetByIdApiResponse =
+export type GetApiMyPortalWebsiteBlogCommentGetByIdApiResponse =
   /** status 200 OK */ GetWebSiteBolgCommentResponse[];
-export type GetApiMyWebSiteWebsiteBlogCommentGetByIdApiArg = {
+export type GetApiMyPortalWebsiteBlogCommentGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyWebSiteWebsiteBlogCommentCreateApiResponse = unknown;
-export type PostApiMyWebSiteWebsiteBlogCommentCreateApiArg = {
+export type PostApiMyPortalWebsiteBlogCommentCreateApiResponse = unknown;
+export type PostApiMyPortalWebsiteBlogCommentCreateApiArg = {
   createWebSiteBolgCommentModel: CreateWebSiteBolgCommentModel;
 };
-export type GetApiMyWebSiteWebsiteBlogListApiResponse =
+export type GetApiMyPortalWebsiteBlogListApiResponse =
   /** status 200 OK */ WebSiteBolgListResponse[];
-export type GetApiMyWebSiteWebsiteBlogListApiArg = {
-  id: number;
-};
-export type GetApiMyWebSiteWebsiteBlogGetHeaderArticlesApiResponse =
-  /** status 200 OK */ GetWebSiteHeaderArticleResponse[];
-export type GetApiMyWebSiteWebsiteBlogGetHeaderArticlesApiArg = void;
-export type GetApiMyWebSiteWebsiteBlogGetRandomArticlesByLinkApiResponse =
+export type GetApiMyPortalWebsiteBlogListApiArg = void;
+export type GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiResponse =
   /** status 200 OK */ GetWebSiteRandomArticleResponse[];
-export type GetApiMyWebSiteWebsiteBlogGetRandomArticlesByLinkApiArg = {
+export type GetApiMyPortalWebsiteBlogGetRandomArticlesByLinkApiArg = {
   link: string;
 };
-export type GetApiMyWebSiteWebsiteBlogGetByLinkApiResponse =
+export type GetApiMyPortalWebsiteBlogGetHeaderArticlesApiResponse =
+  /** status 200 OK */ GetWebSiteHeaderArticleResponse[];
+export type GetApiMyPortalWebsiteBlogGetHeaderArticlesApiArg = void;
+export type GetApiMyPortalWebsiteBlogGetByLinkApiResponse =
   /** status 200 OK */ GetWebSiteBolgResponse;
-export type GetApiMyWebSiteWebsiteBlogGetByLinkApiArg = {
+export type GetApiMyPortalWebsiteBlogGetByLinkApiArg = {
   link: string;
 };
-export type GetApiMyWebSiteWebsiteAlarmListApiResponse =
+export type GetApiMyPortalWebsiteAlarmListApiResponse =
   /** status 200 OK */ WebSiteAlarmListResponse[];
-export type GetApiMyWebSiteWebsiteAlarmListApiArg = void;
+export type GetApiMyPortalWebsiteAlarmListApiArg = void;
 export type RoleAccessTypeListResponse = {
   id: number;
   name: string | null;
@@ -3854,6 +3876,28 @@ export type CreateKuberCloudSecretModel = {
   alias?: string | null;
   description?: string | null;
 };
+export type EditKuberCloudIngressRuleModel = {
+  ingressId: number;
+  ingressRuleId: number;
+  secretId?: number;
+  domainName?: string | null;
+  path?: string | null;
+  kuberCloudDeployPortId?: number | null;
+};
+export type DeleteKuberCloudIngressRuleModel = {
+  ingressId: number;
+  ruleIds: number[];
+};
+export type IngressRuleModelRequest = {
+  domainName: string | null;
+  path: string | null;
+  kuberCloudDeployPortId: number;
+};
+export type CreateKuberCloudIngressRuleModel = {
+  ingressId: number;
+  secretId: number;
+  rules: IngressRuleModelRequest[];
+};
 export type KuberCloudIngressListResponse = {
   id: number;
   name: string | null;
@@ -3926,9 +3970,14 @@ export type KuberCloudHostListResponse = {
 export type KuberCloudHostGetResponse = {
   id: number;
   datacenter: string | null;
+  datacenterId: number;
   name: string | null;
   status: string | null;
   statusId: number;
+  cpu?: number;
+  memory?: number;
+  disk?: number;
+  tenPods?: number;
   createDate: string;
 };
 export type EditKuberCloudHostModel = {
@@ -3974,7 +4023,7 @@ export type CreateKuberCloudDeploymentModel = {
   keyValue?: {
     [key: string]: {
       [key: string]: string;
-    } | null;
+    };
   } | null;
   replicaNumber?: number;
 };
@@ -4829,14 +4878,6 @@ export type WebSiteBolgListResponse = {
   createDate?: string;
   webBolgTags?: string[] | null;
 };
-export type GetWebSiteHeaderArticleResponse = {
-  imageLink?: string | null;
-  author?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  createDate?: string;
-  webBolgTags?: string[] | null;
-};
 export type GetWebSiteRandomArticleResponse = {
   imageLink?: string | null;
   link?: string | null;
@@ -4844,6 +4885,14 @@ export type GetWebSiteRandomArticleResponse = {
   title?: string | null;
   subtitle?: string | null;
   createDate?: string;
+};
+export type GetWebSiteHeaderArticleResponse = {
+  imageLink?: string | null;
+  author?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
+  createDate?: string;
+  webBolgTags?: string[] | null;
 };
 export type GetWebSiteBolgResponse = {
   id?: number;
@@ -4965,9 +5014,11 @@ export const {
   useGetApiMyKubernetesCloudSecretGetByIdQuery,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
   usePostApiMyKubernetesCloudSecretCreateMutation,
+  usePutApiMyKubernetesCloudIngressRuleEditMutation,
+  useDeleteApiMyKubernetesCloudIngressRuleDeleteMutation,
+  usePostApiMyKubernetesCloudIngressRuleCreateMutation,
   useGetApiMyKubernetesCloudIngressListQuery,
   useGetApiMyKubernetesCloudIngressGetByIdQuery,
-  useDeleteApiMyKubernetesCloudIngressDeleteByIdMutation,
   usePostApiMyKubernetesCloudIngressCreateMutation,
   useGetApiMyKubernetesCloudCategoryListQuery,
   useGetApiMyKubernetesCloudImageListQuery,
@@ -5112,14 +5163,14 @@ export const {
   useDeleteApiMyWebHostDeleteByIdMutation,
   usePostApiMyWebHostCreateMutation,
   usePostApiMyWebHostCheckDomainMutation,
-  usePostApiMyWebSiteNewsCreateMutation,
-  usePostApiMyWebSiteContactUsCreateMutation,
-  useGetApiMyWebSiteWebsiteBlogCommentGetByIdQuery,
-  usePostApiMyWebSiteWebsiteBlogCommentCreateMutation,
-  useGetApiMyWebSiteWebsiteBlogListQuery,
-  useGetApiMyWebSiteWebsiteBlogGetHeaderArticlesQuery,
-  useGetApiMyWebSiteWebsiteBlogGetRandomArticlesByLinkQuery,
-  useGetApiMyWebSiteWebsiteBlogGetByLinkQuery,
-  useGetApiMyWebSiteWebsiteAlarmListQuery,
+  usePostApiMyPortalNewsCreateMutation,
+  usePostApiMyPortalContactUsCreateMutation,
+  useGetApiMyPortalWebsiteBlogCommentGetByIdQuery,
+  usePostApiMyPortalWebsiteBlogCommentCreateMutation,
+  useGetApiMyPortalWebsiteBlogListQuery,
+  useGetApiMyPortalWebsiteBlogGetRandomArticlesByLinkQuery,
+  useGetApiMyPortalWebsiteBlogGetHeaderArticlesQuery,
+  useGetApiMyPortalWebsiteBlogGetByLinkQuery,
+  useGetApiMyPortalWebsiteAlarmListQuery,
 } = api;
 

@@ -12,6 +12,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { kubernetesCloudAppTableStruct } from "./struct";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -99,6 +100,8 @@ export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "createDate" ? (
+                    ConvertToJalali(text)
                   ) : (
                     text || "__"
                   )}

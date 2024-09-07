@@ -41,11 +41,10 @@ const Header: FC<HeaderPropsType> = ({
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { id: kubernetesID } = useParams();
+  const { id: kubernetesClusterID } = useParams();
   const { projectId } = useParams();
   const vpcId = searchParams.get("vpcId");
-
-  const param = useParams();
+  const { kubernetesCloudId } = useParams();
 
   const goToCalculator = () => navigate("/portal/calculator");
 
@@ -140,7 +139,10 @@ const Header: FC<HeaderPropsType> = ({
     let href = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
-        href = `/kubernetes/${kubernetesID}`;
+        href = `/kubernetes-cluster/${kubernetesClusterID}`;
+        break;
+      case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
+        href = `/kubernetes-cloud/${kubernetesCloudId}`;
         break;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =

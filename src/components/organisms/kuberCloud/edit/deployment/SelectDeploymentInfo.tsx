@@ -4,9 +4,18 @@ import { FormikProps } from "formik";
 import { Stack } from "@mui/system";
 import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
 import { Counter } from "src/components/organisms/kuberCloud/add/steps/Counter";
-import { Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Divider,
+  FormControl,
+  InputLabel,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type CounterNewValueType = number | ((prevValue: number) => number);
 
@@ -17,9 +26,6 @@ type SelectDeploymentInfoPropsType = {
 export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
   formik,
 }) => {
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
-
   const addOne = () => {
     return formik.values.replicaNumber < 10
       ? formik.values.replicaNumber + 1
@@ -49,54 +55,29 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
   const handleCounterOnMinusClick = () =>
     formik.setFieldValue("replicaNumber", minusOne());
 
+  const handleSwitchIsPublic = () =>
+    formik.setFieldValue("isPublic", !formik.values.isPublic);
+
   return (
-    <Stack
-      gap={2}
-      direction={{ xs: "column", lg: "row" }}
-      sx={{ width: "100%" }}
-    >
+    <Stack gap={8} direction="column" sx={{ width: "100%" }}>
       <Stack width="100%">
         <Stack spacing={2} justifyContent="center" alignItems="center">
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            alignItems="center"
-            justifyContent="center"
-            sx={{ px: 2 }}
-          >
-            <ExclamationMarkCircleSvg
-              sx={{
-                transform: "rotate(180deg)",
-                "&>path:first-of-type": {
-                  opacity: 1,
-                  stroke: ({ palette }) => palette.grey[700],
-                  strokeWidth: 1,
-                  fill: "transparent",
-                },
+          <FormControl fullWidth>
+            <DorsaTextField
+              value={formik.values.name}
+              onChange={(e) => formik.setFieldValue("name", e.target.value)}
+              fullWidth
+              label="نام سرویس"
+              focused
+              inputProps={{
+                dir: "ltr",
+                backgroundColor: "white",
+                "& :focus": { backgroundColor: "white" },
               }}
             />
-            <Typography
-              align="center"
-              sx={{ color: ({ palette }) => palette.grey[700] }}
-            >
-              یک نام برای شناسایی سرویس خود انتخاب کنید
-            </Typography>
-          </Stack>
-          <DorsaTextField
-            value={formik.values.name}
-            onChange={(e) => formik.setFieldValue("name", e.target.value)}
-            sx={{ minWidth: 300 }}
-            label="نام سرویس"
-            inputProps={{ dir: "ltr" }}
-          />
+          </FormControl>
         </Stack>
       </Stack>
-
-      <Divider
-        orientation={isLargeScreen ? "horizontal" : "vertical"}
-        flexItem
-        sx={{ margin: { xs: "50px 10px", lg: 0 } }}
-      />
 
       <Stack
         direction="column"
@@ -105,7 +86,10 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
         spacing={2}
         sx={{ width: "100%" }}
       >
-        <Typography sx={{ color: ({ palette }) => palette.grey[700] }}>
+        <Typography
+          variant="text9"
+          sx={{ color: ({ palette }) => palette.grey[700] }}
+        >
           تعداد مورد نظر از نمونه‌هایی که می‌خواهید به کار ببرید.
         </Typography>
         <Counter
@@ -114,6 +98,36 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
           onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
           onPlusClick={handleCounterOnPlusClick}
           onMinusClick={handleCounterOnMinusClick}
+        />
+      </Stack>
+
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{
+          // border: "1px solid rgba(110, 118, 138, 0.12)",
+          borderRadius: BORDER_RADIUS_1,
+          py: 1.5,
+          px: 1,
+          backgroundColor: "white",
+          "& > *": {
+            backgroundColor: "inherit",
+          },
+          // "& .MuiStack-root": {
+          //   bgcolor: "red",
+          // },
+        }}
+      >
+        <Stack>
+          <Typography fontSize={16}>دسترسی عمومی</Typography>
+          <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
+            دسترسی عمومی از بیرون به سرویس داده شود.
+          </Typography>
+        </Stack>
+        <DorsaSwitch
+          checked={formik.values.isPublic}
+          onChange={handleSwitchIsPublic}
         />
       </Stack>
     </Stack>

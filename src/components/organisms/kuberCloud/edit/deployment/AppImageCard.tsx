@@ -1,7 +1,6 @@
 import {
   Avatar,
-  Divider,
-  FormControl,
+  Box,
   Grid,
   IconButton,
   InputLabel,
@@ -9,13 +8,13 @@ import {
   MenuItem,
   Select,
   Stack,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { FormikProps } from "formik";
 import { FC } from "react";
 import { KuberCloudImageResponse } from "src/app/services/api.generated";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { appImageList } from "src/constant/kubernetesCloud.constant";
 import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
 
@@ -28,145 +27,120 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
   const onClickCardHandler = () => {
     if (formik.values.imageId !== item.id) {
       formik.setFieldValue("imageId", item.id);
-      formik.setFieldValue("imageTagId", "");
+      formik.setFieldValue("imageTagId", item.tags?.[0].id);
     }
   };
 
-  // console.log(formik.values.keyValue);
-
   return (
-    <Stack
-      onClick={onClickCardHandler}
-      // sx={{ cursor: "pointer" }}
-      direction="column"
-      rowGap={3}
-      sx={{
-        cursor: "pointer",
-        position: "relative",
-        borderRadius: "10px",
-        backgroundColor: "#fff",
-        border: ({ palette }) =>
-          `1px solid ${
-            formik.values.imageId === item.id
-              ? palette.primary.main
-              : "rgba(0, 0, 0, 0.12)"
-          }`,
-        height: 170,
-      }}
-      p={3}
-    >
+    <Grid item xs={12} sm={3} md={2} lg={2}>
       <Stack
-        direction="row"
-        alignItems="start"
-        gap={1}
-        justifyContent={{ xs: "center", md: "space-between" }}
+        direction="column"
+        sx={{
+          pt: 2,
+          transition: "200ms",
+          borderTopRightRadius: BORDER_RADIUS_1,
+          borderTopLeftRadius: BORDER_RADIUS_1,
+          border: ({ palette }) =>
+            `1px solid ${
+              formik.values.imageId === item.id
+                ? palette.primary.main
+                : "rgba(110, 118, 138, 0.12)"
+            }`,
+          borderBottom: "0px",
+          overflow: "hidden",
+          px: 1,
+          cursor: "pointer",
+        }}
+        alignItems="center"
+        // justifyContent="center"
+        spacing={1}
+        onClick={() => onClickCardHandler()}
       >
-        <Grid container>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Stack
-              width={{ xs: "100%" }}
-              alignItems="right"
-              divider={<Divider orientation="vertical" flexItem />}
-              columnGap={1}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Avatar
-                src={
-                  appImageList.find((image) => image.name === item.name)?.src
-                }
-                // src="/assets/icons/mysql.svg"
-              />
-              <Typography
-                noWrap
-                maxWidth={{ xs: "100%", md: "70%" }}
-                textOverflow="ellipsis"
-              >
-                {item.name}
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Stack
-              gap={1}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "end",
-              }}
-            >
-              <Tooltip sx={{ p: 0 }} placement="top" title={item.description}>
-                <IconButton>
-                  <InfoSvg />
-                </IconButton>
-              </Tooltip>
-              <FormControl size="small">
-                <InputLabel sx={{ fontSize: "15px" }}>Version</InputLabel>
-                <Select
-                  value={
-                    formik.values.imageId === item.id
-                      ? formik.values.imageTagId
-                      : ""
-                  }
-                  onFocus={(event) => {
-                    event.stopPropagation(); // Stop the event from propagating to the parent
-                    formik.setFieldValue("imageId", item.id);
-                  }}
-                  onChange={(event) => {
-                    formik.setFieldValue(
-                      "imageTagId",
-                      Number(event.target.value)
-                    );
-                  }}
-                  label="Version"
-                  sx={{
-                    height: 28,
-                    width: 90,
-                    "& .MuiSelect-outlined": {
-                      color: "primary.main",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      border: "1px solid #1890FF",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      border: "1px solid #1890FF",
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      border: "1px solid #1890FF",
-                    },
-                    "& .MuiSelect-select": {
-                      fontSize: "12px",
-                    },
-                  }}
-                >
-                  {item.tags?.map((tag) => (
-                    <MenuItem key={tag.id} value={tag.id}>
-                      {tag.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-          </Grid>
-        </Grid>
+        <Stack direction="row" gap={1} alignItems="center">
+          <Box
+            sx={{
+              transition: "150ms",
+              filter:
+                formik.values.imageId === item.id
+                  ? "grayscale(0)"
+                  : "grayscale(100%)",
+              height: 40,
+              overflow: "hidden",
+            }}
+          >
+            <Avatar
+              src={appImageList.find((image) => image.name === item.name)?.src}
+            />
+          </Box>
+
+          <Typography
+            noWrap
+            color={
+              formik.values.imageId === item.id
+                ? "primary.main"
+                : "secondary.main"
+            }
+            sx={{ transition: "200ms" }}
+            fontWeight="bold"
+          >
+            {item.name}
+          </Typography>
+        </Stack>
+
+        <Stack maxWidth="fit-content" alignSelf="start">
+          <IconButton>
+            <InfoSvg />
+          </IconButton>
+        </Stack>
       </Stack>
 
-      <ListItemText
-        dir="ltr"
-        sx={{
-          m: 0,
-          "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
-            // whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          },
+      <Select
+        value={
+          formik.values.imageId === item.id
+            ? formik.values.imageTagId
+            : item.tags?.[0].id
+        }
+        onFocus={(event) => {
+          event.stopPropagation(); // Stop the event from propagating to the parent
+          formik.setFieldValue("imageId", item.id);
         }}
-        secondary={item.subtitle}
-      />
-    </Stack>
+        onChange={(event) => {
+          formik.setFieldValue("imageTagId", Number(event.target.value));
+        }}
+        sx={{
+          "&> fieldset": {
+            border: ({ palette }) =>
+              `1px solid ${
+                formik.values.imageId === item.id
+                  ? palette.primary.main
+                  : "rgba(110, 118, 138, 0.12)"
+              } !important`,
+          },
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderBottomRightRadius: BORDER_RADIUS_1,
+            borderBottomLeftRadius: BORDER_RADIUS_1,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            border: ({ palette }) =>
+              `1px solid ${
+                formik.values.imageId === item.id
+                  ? palette.primary.main
+                  : "rgba(110, 118, 138, 0.12)"
+              }`,
+
+            borderTop: "1px solid",
+          },
+          direction: "rtl",
+        }}
+        fullWidth
+        style={{ height: 40 }}
+      >
+        {item.tags?.map((item) => (
+          <MenuItem dir="ltr" key={item.id} value={item.id}>
+            {item.name || "---"}
+          </MenuItem>
+        ))}
+      </Select>
+    </Grid>
   );
 };

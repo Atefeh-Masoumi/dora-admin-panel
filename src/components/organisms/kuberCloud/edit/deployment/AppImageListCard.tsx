@@ -25,20 +25,21 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
     name: string;
   }>(staticImageCategoryList[0]);
 
-  const filterByCategory = useCallback(
-    (id: number) => list.filter((item) => item.categoryId === id),
-    [list]
-  );
+  // const filterByCategory = useCallback(
+  //   (id: number) => list.filter((item) => item.categoryId === id),
+  //   [list]
+  // );
 
   return (
     <Stack rowGap={2} direction="column" sx={{ width: "100%" }}>
       <Stack direction="column" rowGap={3}>
         <Stack textAlign="center">
           <Typography fontSize={24} fontWeight="bold" alignItems="center">
-            انتخاب Image
+            انتخاب ایمیج
           </Typography>
           <Typography
             align="center"
+            variant="text9"
             sx={{ color: ({ palette }) => palette.grey[700] }}
           >
             ساخت ساده‌ی انواع ابزارهای سازمانی و سرویس‌های آماده با یک کلیک
@@ -61,31 +62,23 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
           ))}
         </Stack>
 
-        <Grid
-          // padding={4}
-          spacing={2}
-          columns={12}
-          justifyContent="start"
-          container
-        >
-          {(() => {
-            const finalList =
-              selectedCategory?.id === 3
-                ? list
-                : filterByCategory(selectedCategory?.id!);
-            if (!!finalList.length) {
-              return finalList.map((object, index) => (
-                <Grid key={index} item xs={12} sm={6} md={4} lg={4} xl={3}>
-                  <AppImageCard item={object} formik={formik} />
-                </Grid>
-              ));
-            }
-            return <EmptyTable text="رکوردی وجود ندارد" />;
-          })()}
+        <Grid spacing={2} columns={12} justifyContent="start" container>
+          {selectedCategory.id === 1 ? (
+            (() => {
+              if (list.length > 0)
+                return list.map((object, index) => (
+                  <AppImageCard key={index} item={object} formik={formik} />
+                ));
+
+              return <EmptyTable text="رکوردی وجود ندارد" />;
+            })()
+          ) : (
+            <>zahra good girl</>
+          )}
         </Grid>
       </Stack>
     </Stack>
   );
 };
 
-export default memo(AppImageListCard);
+  export default memo(AppImageListCard);
