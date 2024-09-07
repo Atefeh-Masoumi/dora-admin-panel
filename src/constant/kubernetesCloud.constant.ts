@@ -12,9 +12,12 @@ export const appImageList = [
   { id: 4, name: "mongoDb", src: "/assets/icons/mongodb.svg" },
   { id: 5, name: ".net", src: "/assets/icons/dotnet.svg" },
   { id: 6, name: "php", src: "/assets/icons/php.svg" },
-  { id: 6, name: "grafana", src: "/assets/icons/php.svg" },
-  { id: 6, name: "redis", src: "/assets/icons/php.svg" },
-  { id: 6, name: "kibana", src: "/assets/icons/php.svg" },
+  { id: 6, name: "grafana", src: "/assets/icons/grafana.svg" },
+  { id: 6, name: "redis", src: "/assets/icons/redis.svg" },
+  { id: 6, name: "kibana", src: "/assets/icons/kibana.svg" },
+  { id: 6, name: "minio", src: "/assets/icons/minio.svg" },
+  { id: 6, name: "kafka", src: "/assets/icons/kafka.svg" },
+  { id: 6, name: "postgres", src: "/assets/icons/postgres.svg" },
 ];
 
 //Todo : mayBe The first and second items should change their IDs

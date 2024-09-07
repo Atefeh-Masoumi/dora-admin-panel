@@ -12,36 +12,9 @@ import { FormikProps } from "formik";
 import { FC } from "react";
 import { KuberCloudImageResponse } from "src/app/services/api.generated";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
-import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
-import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { appImageList } from "src/constant/kubernetesCloud.constant";
 import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
-
-const dataCenterIconRenderHandler = (id: number) => {
-  switch (id) {
-    case 1:
-      return (
-        <WindowsSvg
-          sx={{
-            width: 40,
-            height: 40,
-            "&>path": {
-              fill: ({ palette }) => palette.primary.main,
-            },
-          }}
-        />
-      );
-    case 2:
-      return <UbuntuSvg sx={{ width: 40, height: 40 }} />;
-    case 4:
-      return <UbuntuSvg sx={{ width: 40, height: 40 }} />;
-    case 5:
-      return <UbuntuSvg sx={{ width: 40, height: 40 }} />;
-    default:
-      return "";
-  }
-};
 
 type AppImageCardPropsType = {
   item: KuberCloudImageResponse;
@@ -57,15 +30,7 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
   };
 
   return (
-    <Grid
-      item
-      xs={12}
-      sm
-      sx={{
-        minWidth: { sm: 100 },
-        maxWidth: { sm: 184 },
-      }}
-    >
+    <Grid item xs={12} sm={3} md={2} lg={2}>
       <Stack
         direction="column"
         sx={{
@@ -89,7 +54,7 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
         spacing={1}
         onClick={() => onClickCardHandler()}
       >
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" gap={1} alignItems="center">
           <Box
             sx={{
               transition: "150ms",
