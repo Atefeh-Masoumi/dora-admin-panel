@@ -10,7 +10,7 @@ import { kubernetesCloudAppTableStruct } from "../../tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-export const KubernetesCloudApps: FC = () => {
+export const KubernetesCloudDeployment: FC = () => {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useGetApiMyKubernetesCloudDeploymentListQuery();
@@ -25,10 +25,10 @@ export const KubernetesCloudApps: FC = () => {
     }) || [];
 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { kubernetesCloudId } = useParams();
 
-  const gotToAddKubernetes = () =>
-    navigate(`/kubernetes-cloud/${id}/apps/create`);
+  const gotToAddKubernetesCloudDeployment = () =>
+    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/create`);
 
   return (
     <>
@@ -52,7 +52,7 @@ export const KubernetesCloudApps: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست App
+              لیست Deployment
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
@@ -60,7 +60,7 @@ export const KubernetesCloudApps: FC = () => {
             />
           </Stack>
           <Button
-            onClick={gotToAddKubernetes}
+            onClick={gotToAddKubernetesCloudDeployment}
             variant="outlined"
             size="large"
             sx={{

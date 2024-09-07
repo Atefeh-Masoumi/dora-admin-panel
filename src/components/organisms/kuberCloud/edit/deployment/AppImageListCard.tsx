@@ -62,7 +62,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
           ))}
         </Stack>
 
-        <Grid spacing={2} columns={12} justifyContent="center" container>
+        <Grid spacing={2} columns={12} justifyContent="start" container>
           {selectedCategory.id === 1 ? (
             (() => {
               if (list.length > 0)

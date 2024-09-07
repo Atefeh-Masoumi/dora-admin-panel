@@ -102,8 +102,8 @@ const AddNamespace = lazy(
 const EditKubernetesCloud = lazy(
   () => import("src/pages/kuberCloud/edit/EditKuberCloud")
 );
-const AddKubernetesCloudApp = lazy(
-  () => import("src/pages/kuberCloud/edit/apps/AddKubernetesCloudApp")
+const AddKubernetesCloudDeployment = lazy(
+  () => import("src/pages/kuberCloud/edit/apps/AddKubernetesCloudDeployment")
 );
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -375,21 +375,21 @@ const Router: FC = () => {
               EditServerContextProvider
             )}
           />
-          {/* ======================================= Kubernetes ======================================= */}
+          {/* ======================================= Kubernetes Cluster ======================================= */}
           <Route
-            path="/kubernetes"
+            path="/kubernetes-cluster"
             element={mainTemplate(KubernetesIndex, {
               pageTitle: "مدیریت سرویس کلاستر کوبرنتیز",
             })}
           />
           <Route
-            path="/kubernetes/add"
+            path="/kubernetes-cluster/add"
             element={mainTemplate(
               AddKubernetes,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کلاستر کوبرنتیز",
-                  url: "/kubernetes",
+                  url: "/kubernetes-cluster",
                 },
                 hideSidebar: false,
               },
@@ -397,13 +397,13 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/kubernetes/:id"
+            path="/kubernetes-cluster/:id"
             element={mainTemplate(
               EditKubernetes,
               {
                 link: {
                   text: "بازگشت به مدیریت سرویس کلاستر کوبرنتیز",
-                  url: "/kubernetes",
+                  url: "/kubernetes-cluster",
                 },
                 hideSidebar: false,
               },
@@ -411,7 +411,7 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/kubernetes/:id/add-node"
+            path="/kubernetes-cluster/:id/add-node"
             element={mainTemplate(
               AddNodeKubernetes,
               {
@@ -633,7 +633,7 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:id"
+          path="/kubernetes-cloud/:kubernetesCloudId"
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
@@ -644,11 +644,11 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:id/apps/create"
-          element={mainTemplate(AddKubernetesCloudApp, {
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/create"
+          element={mainTemplate(AddKubernetesCloudDeployment, {
             link: {
-              text: "بازگشت به مدیریت کوبرنتیز ها",
-              url: "/kubernetes-cloud",
+              text: "بازگشت به مدیریت deployment ها",
+              url: BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT,
             },
             hideSidebar: false,
           })}

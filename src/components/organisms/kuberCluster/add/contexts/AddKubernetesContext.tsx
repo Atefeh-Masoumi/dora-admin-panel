@@ -160,7 +160,7 @@ export const AddKubernetesContextProvider: FC<
       .unwrap()
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت ایجاد شد");
-        navigate("/kubernetes");
+        navigate("/kubernetes-cluster");
       })
       .catch((err) => {});
   };

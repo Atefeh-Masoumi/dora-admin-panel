@@ -30,7 +30,7 @@ import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 const title =
   "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
-const AddKubernetesCloudApp: FC = () => {
+const AddKubernetesCloudDeployment: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
     {
       variableType: number;
@@ -314,4 +314,4 @@ const AddKubernetesCloudApp: FC = () => {
   );
 };
 
-export default AddKubernetesCloudApp;
+export default AddKubernetesCloudDeployment;

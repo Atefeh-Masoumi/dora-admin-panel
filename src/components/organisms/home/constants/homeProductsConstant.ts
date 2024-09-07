@@ -26,7 +26,7 @@ export const homeProductsConstantListItems = [
     text: "سرویس کوبرنتیز ابری",
     Icon: KubernetesSvg,
     bgcolor: "rgba(211, 250, 240, 1)",
-    link: "/kubernetes",
+    link: "/kubernetes-cluster",
   },
   {
     title: "Object Storage",

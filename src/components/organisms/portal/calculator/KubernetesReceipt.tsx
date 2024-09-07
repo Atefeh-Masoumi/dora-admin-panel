@@ -442,7 +442,7 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          onClick={() => navigate("/kubernetes/add")}
+          onClick={() => navigate("/kubernetes-cluster/add")}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
