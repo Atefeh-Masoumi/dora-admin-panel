@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 import { CustomerProductBillModel } from "src/app/services/api.generated";
-import { e2p } from "src/utils/e2p.utils";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { customerProductItemsTableStruct } from "./billTableStruct";
 
@@ -53,10 +53,10 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
           {priceToPersian(customerProductPrice)}
         </TableCell>
         <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
-          {e2p(fromDate.replace(" ", " - "))}
+          {ConvertToJalali(String(fromDate))}
         </TableCell>
         <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
-          {e2p(toDate.replace(" ", " - "))}
+          {ConvertToJalali(String(toDate))}
         </TableCell>
         <TableCell
           sx={{ border: "none", borderTop: "1px solid rgba(224, 224, 224, 1)" }}
@@ -106,10 +106,10 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                               {priceToPersian(row.price!)}
                             </TableCell>
                             <TableCell sx={{ border: "none" }} align="center">
-                              {e2p(row.fromDate!.replace(" ", " - "))}
+                              {ConvertToJalali(String(fromDate))}
                             </TableCell>
                             <TableCell sx={{ border: "none" }} align="center">
-                              {e2p(row.toDate!.replace(" ", " - "))}
+                              {ConvertToJalali(String(toDate))}
                             </TableCell>
                           </TableRow>
                         );

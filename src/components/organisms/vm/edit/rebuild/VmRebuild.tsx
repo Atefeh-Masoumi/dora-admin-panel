@@ -1,15 +1,15 @@
-import { FC, useState, useContext } from "react";
-import { Paper, Stack, Typography } from "@mui/material";
-import { ChooseOS } from "./serverRebuildSections/ChooseOS";
-import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { LoadingButton } from "@mui/lab";
+import { Paper, Stack, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import { FC, useContext, useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
+import * as yup from "yup";
+import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
+import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 
 type VmRebuildSteps = 1 | 2;
 
@@ -18,7 +18,7 @@ type VmRebuildPropsType = {};
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const { serverId } = useContext(EditServerContext);
   const [step, setStep] = useState<VmRebuildSteps>(1);
-  const [imageId, setImageId] = useState(0);
+  const [imageId, setImageId] = useState<any>(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
       rebuildVmModel: {
         name: formik.values.serverName,
         password: formik.values.password,
-        imageId,
+        imageId: imageId.osId,
       },
     })
       .unwrap()
@@ -84,7 +84,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         لطفا ابتدا سیستم عامل مورد نظر ماشین را از زیر انتخاب کنید
       </Typography>
       {step === 1 ? (
-        <ChooseOS imageId={imageId} setImageId={setImageId} />
+        <ChooseOSForRebuild imageId={imageId} setImageId={setImageId} />
       ) : (
         <ChooseInfo
           name={name}
@@ -99,7 +99,12 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
           loading={isLoading}
           variant="contained"
           onClick={submitHandler}
-          sx={{ width: { xs: "100%", sm: "auto" }, px: { sm: 8 }, py: 2.1 }}
+          sx={{
+            width: { xs: "100%", sm: "auto" },
+            px: { sm: 8 },
+            py: 2.1,
+            mt: 2,
+          }}
         >
           ادامه
         </LoadingButton>

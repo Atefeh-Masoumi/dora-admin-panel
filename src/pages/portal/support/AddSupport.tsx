@@ -1,3 +1,4 @@
+import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,7 +10,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { AxiosProgressEvent } from "axios";
 import { FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -111,10 +111,6 @@ const AddTicket: FC = () => {
     setUploading(true);
   };
 
-  const [uploadProcessEvent, setUploadProcessEvent] = useState<
-    { loaded: number; total: number } | undefined
-  >();
-
   const abortController = useRef<AbortController | undefined>();
 
   abortController.current = new AbortController();
@@ -140,11 +136,6 @@ const AddTicket: FC = () => {
     upload({
       body: formData as any,
       abortController: abortController.current,
-      onUploadProgress: (progressEvent: AxiosProgressEvent) =>
-        setUploadProcessEvent({
-          loaded: progressEvent.loaded,
-          total: progressEvent.total || 100,
-        }),
     })
       .unwrap()
       .then(() => {
@@ -159,10 +150,6 @@ const AddTicket: FC = () => {
         }
       });
   };
-
-  const uploadPercent = uploadProcessEvent
-    ? Math.round((uploadProcessEvent.loaded * 100) / uploadProcessEvent.total)
-    : 0;
 
   return (
     <Stack py={3} spacing={2}>
@@ -453,9 +440,7 @@ const AddTicket: FC = () => {
               color="white"
             >
               <Typography fontSize="14px">{file?.name}</Typography>
-              <Typography fontSize="14px">
-                میزان پیشرفت ({uploadPercent}%)
-              </Typography>
+              <Done />
             </Stack>
           )}
 

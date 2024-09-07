@@ -83,18 +83,38 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
                   </IconButton>
                 </Stack>
               ) : column.id === "value" ? (
-                <Tooltip title={text}>
+                <Tooltip
+                  title={text}
+                  componentsProps={{
+                    popper: {
+                      sx: {
+                        "& .MuiTooltip-tooltip": {
+                          textAlign: "right",
+                        },
+                      },
+                    },
+                  }}
+                >
                   <Typography
                     variant="text9"
                     maxWidth={300}
                     textOverflow="ellipsis"
                     noWrap
+                    sx={{ direction: "rtl" }}
                   >
                     {text}
                   </Typography>
                 </Tooltip>
               ) : (
-                text
+                <Typography
+                  variant="text9"
+                  maxWidth={300}
+                  textOverflow="ellipsis"
+                  noWrap
+                  sx={{ direction: "rtl" }}
+                >
+                  {text}
+                </Typography>
               )}
             </DorsaTableCell>
           );

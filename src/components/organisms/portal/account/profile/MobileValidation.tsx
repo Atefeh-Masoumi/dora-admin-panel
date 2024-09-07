@@ -48,6 +48,7 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
       .then((res) => {
         toast.success("کد تایید به موبایل شما ارسال شد");
         setShowCodeField(true);
+        setCountDownDate(Date.now() + 120000);
       })
       .catch((err) => {});
 
@@ -68,6 +69,7 @@ export const MobileValidation: FC<MobileValidationProps> = () => {
         if (!res) return;
         setShowCodeField(false);
         toast.success("شماره با موفقیت تایید شد");
+        setConfirmCode([null, null, null, null, null, null]);
       })
       .catch((err) => {});
   };

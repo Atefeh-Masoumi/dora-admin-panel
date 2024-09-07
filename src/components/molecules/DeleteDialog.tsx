@@ -16,6 +16,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import {
   ChangeEventHandler,
   FC,
@@ -28,7 +29,6 @@ import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BlurBackdrop } from "../atoms/BlurBackdrop";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { makeStyles } from "@mui/styles";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
@@ -151,27 +151,24 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 justifyContent: "space-between",
                 border: "1px solid #ccc",
                 borderRadius: BORDER_RADIUS_1,
-                padding: "4px",
+                padding: "8px",
               }}
             >
+              <ContentCopyIcon
+                onClick={() => copyText(securityPhrase)}
+                sx={{ marginLeft: "5px", cursor: "pointer" }}
+              />
               <Tooltip title={securityPhrase}>
                 <Typography
                   pl={1.2}
                   maxWidth={{ xs: "60%", md: "80%" }}
+                  mr={1}
                   textOverflow="ellipsis"
                   noWrap
                 >
                   {securityPhrase}
                 </Typography>
               </Tooltip>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => copyText(securityPhrase)}
-                sx={{ marginLeft: "5px" }}
-              >
-                کپی کردن
-              </Button>
             </Stack>
           </Box>
           <Stack direction="column">
