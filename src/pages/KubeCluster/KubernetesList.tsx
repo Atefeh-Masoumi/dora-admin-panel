@@ -25,7 +25,7 @@ const KubernetesList: FC = () => {
 
   const navigate = useNavigate();
 
-  const gotToAddKubernetes = () => navigate("/kubernetes/add");
+  const gotToAddKubernetes = () => navigate("/kubernetes-cluster/add");
 
   return (
     <>

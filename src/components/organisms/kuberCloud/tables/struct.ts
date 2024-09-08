@@ -9,13 +9,13 @@ export const kubernetesCloudTableStruct: columnType[] = [
   { id: "control", label: "", disableSort: true },
 ];
 
-export const kubernetesCloudAppTableStruct: columnType[] = [
+export const kubernetesCloudDeploymentTableStruct: columnType[] = [
   { id: "id", label: "شناسه", invisibility: true, disableSort: true },
   { id: "name", label: "نام سرویس" },
   { id: "image", label: "نام image" },
   { id: "namespace", label: "نام namespace" },
   { id: "createDate", label: "تاریخ ایجاد" },
-  { id: "control", label: "", disableSort: true },
+  { id: "control", label: "عملیات", disableSort: true },
 ];
 
 export const kubernetesCloudConfigMapTableStruct: columnType[] = [

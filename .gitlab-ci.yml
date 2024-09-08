@@ -7,7 +7,7 @@ workflow:
 
 default:
   tags: 
-    - main-mobin-runner
+    - eu
 
 stages:
   - package

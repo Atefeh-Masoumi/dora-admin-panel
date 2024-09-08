@@ -4,13 +4,13 @@ import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useGetApiMyKubernetesCloudDeploymentListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { KubernetesCloudAppTableRow } from "../../tables/KubernetesCloudAppTableRow";
-import { kubernetesCloudAppTableStruct } from "../../tables/struct";
+import { kubernetesCloudDeploymentTableStruct } from "../../tables/struct";
 
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { KubernetesCloudDeploymentTableRow } from "../../tables/KubernetesCloudDeploymentTableRow";
 
-export const KubernetesCloudApps: FC = () => {
+export const KubernetesCloudDeployment: FC = () => {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useGetApiMyKubernetesCloudDeploymentListQuery();
@@ -25,10 +25,10 @@ export const KubernetesCloudApps: FC = () => {
     }) || [];
 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { kubernetesCloudId } = useParams();
 
-  const gotToAddKubernetes = () =>
-    navigate(`/kubernetes-cloud/${id}/apps/create`);
+  const gotToAddKubernetesCloudDeployment = () =>
+    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/create`);
 
   return (
     <>
@@ -52,7 +52,7 @@ export const KubernetesCloudApps: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست App
+              لیست Deployment
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
@@ -60,7 +60,7 @@ export const KubernetesCloudApps: FC = () => {
             />
           </Stack>
           <Button
-            onClick={gotToAddKubernetes}
+            onClick={gotToAddKubernetesCloudDeployment}
             variant="outlined"
             size="large"
             sx={{
@@ -86,16 +86,16 @@ export const KubernetesCloudApps: FC = () => {
               </Stack>
             }
           >
-            ایجاد app
+            ایجاد Deployment
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={kubernetesCloudAppTableStruct}
-            RowComponent={KubernetesCloudAppTableRow}
+            struct={kubernetesCloudDeploymentTableStruct}
+            RowComponent={KubernetesCloudDeploymentTableRow}
             rows={filteredList}
-            text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
+            text="در حال حاضر سرویسی وجود ندارد"
             isLoading={isLoading}
             initialOrder={9}
           />

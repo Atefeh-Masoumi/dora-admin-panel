@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Grid,
   IconButton,
   Paper,
   Tooltip,
@@ -26,9 +27,10 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 const title =
   "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
-const AddKubernetesCloudApp: FC = () => {
+const AddKubernetesCloudDeployment: FC = () => {
   const [environmentVariableList, setEnvironmentVariableList] = useState<
     {
       variableType: number;
@@ -74,22 +76,38 @@ const AddKubernetesCloudApp: FC = () => {
   };
 
   const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = (values) => {
-    createDeployment({
-      createKuberCloudDeploymentModel: {
-        name: values.name,
-        imageTagId: Number(values.imageTagId!),
-        namespaceId: values.namespaceId!,
-        keyValue: groupedByVariableType(values),
-        replicaNumber: values.replicaNumber,
-        isPublic: true,
-      },
-    })
-      .unwrap()
-      .then((res) => {
-        toast.success("کانتینر با موفقیت ایجاد شد");
-        navigate("/kubernetes-cloud/" + kubernetesCloudId);
+    let errorMessage = "";
+
+    if (!values.imageId) {
+      errorMessage = "image مورد نظر را انتخاب کنید.";
+    } else if (!values.imageTagId) {
+      errorMessage = "ورژن image خودرا انتخاب نمایید.";
+    } else if (!values.name) {
+      errorMessage = "نام سرویس خودرا وارد نمایید.";
+    } else if (values.name.trim().length < 5 || values.name.length > 50) {
+      errorMessage = "طول کارکترها باید بین ۵ تا ۵۰ کارکتر باشد";
+    }
+
+    if (errorMessage !== "") {
+      toast.error(errorMessage);
+    } else {
+      createDeployment({
+        createKuberCloudDeploymentModel: {
+          name: values.name,
+          imageTagId: Number(values.imageTagId!),
+          namespaceId: values.namespaceId!,
+          keyValue: groupedByVariableType(values),
+          replicaNumber: values.replicaNumber,
+          isPublic: values.isPublic,
+        },
       })
-      .catch((err) => {});
+        .unwrap()
+        .then((res) => {
+          toast.success("کانتینر با موفقیت ایجاد شد");
+          navigate("/kubernetes-cloud/" + kubernetesCloudId);
+        })
+        .catch((err) => {});
+    }
   };
 
   const initialValues: KuberCloudAppImageType = {
@@ -99,12 +117,10 @@ const AddKubernetesCloudApp: FC = () => {
     replicaNumber: 1,
     namespaceId: Number(kubernetesCloudId),
     keyValue: [],
+    isPublic: false,
   };
 
-  const validationSchema = yup.object().shape({
-    // imageTagId: yup.number().typeError("").nullable(),
-    // name: yup.string().required().min(5, ""),
-  });
+  const validationSchema = yup.object().shape({});
 
   const formik = useFormik<KuberCloudAppImageType>({
     initialValues,
@@ -123,12 +139,13 @@ const AddKubernetesCloudApp: FC = () => {
       envKey: string;
       value: string;
     }[] = [];
+
     requiredKeyList?.forEach((item) =>
       result.push({ variableType: 1, envKey: item.name || "---", value: "" })
     );
     result = result.filter((item) => item && item.variableType !== undefined);
-    setEnvironmentVariableList(result);
 
+    setEnvironmentVariableList(result);
     formik.setFieldValue("keyValue", result);
   }, [formik.values.imageId]);
 
@@ -142,7 +159,7 @@ const AddKubernetesCloudApp: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد App جدید
+        ایجاد Deployment جدید
       </Typography>
 
       <Paper>
@@ -166,75 +183,95 @@ const AddKubernetesCloudApp: FC = () => {
               />
             )}
 
-            <Divider sx={{ margin: "50px 10px" }} />
+            <Divider sx={{ margin: "20px 10px" }} />
 
-            <SelectDeploymentInfo formik={formik} />
-
-            <Divider sx={{ margin: "50px 10px" }} />
-
-            <Stack
-              gap={2}
-              direction="column"
-              sx={{
-                width: "100%",
-                alignSelf: "center",
-                justifyContent: "center",
-                p: 5,
-              }}
+            <Grid
+              justifyContent="space-between"
+              spacing={2}
+              // spacing={{ md: 2 }}
+              container
+              px={3}
             >
-              <Typography fontSize={24} fontWeight="bold" textAlign="center">
-                Environment Variable
-              </Typography>
-              <Typography
-                align="center"
-                sx={{ color: ({ palette }) => palette.grey[700] }}
+              <Grid
+                bgcolor="#e7f0fd"
+                sx={{ borderRadius: BORDER_RADIUS_1, p: 2 }}
+                item
+                xs={12}
+                sm={12}
+                md={4}
+                lg={4.5}
               >
-                ویژگی های موردنظر را به container اضافه کنید.
-              </Typography>
+                <SelectDeploymentInfo formik={formik} />
+              </Grid>
 
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Stack direction="row" gap={1} alignItems="center">
-                  <Tooltip sx={{ p: 0 }} placement="top" title={title}>
-                    <IconButton>
-                      <InfoSvg />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography>لیست Variable ها</Typography>
-                </Stack>
-                <Button
-                  sx={{ alignSelf: "center", width: 100 }}
-                  variant="outlined"
-                  startIcon={<AddIcon />}
-                  onClick={addEnvironmentVariable}
+              <Grid item xs={12} sm={12} md={8} lg={7}>
+                <Stack
+                  gap={2}
+                  direction="column"
+                  sx={{
+                    width: "100%",
+                    alignSelf: "start",
+                    justifyContent: "center",
+                  }}
                 >
-                  افزودن
-                </Button>
-              </Stack>
-              <Stack rowGap={{ xs: 5, sm: 2 }}>
-                {environmentVariableList.length > 0 &&
-                  environmentVariableList.map((item, index) => {
-                    if (!item) return null;
-                    return (
-                      <SelectEnvironmentVariable
-                        key={index}
-                        onDelete={removeEnvironmentVariable}
-                        formik={formik}
-                        mainIndex={index}
-                      />
-                    );
-                  })}
-              </Stack>
-            </Stack>
+                  <Typography
+                    variant="text9"
+                    align="center"
+                    sx={{ color: ({ palette }) => palette.grey[700] }}
+                  >
+                    متغیرهای موردنظر را اضافه کنید.
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Stack direction="row" gap={1} alignItems="center">
+                      <Tooltip sx={{ p: 0 }} placement="top" title={title}>
+                        <IconButton>
+                          <InfoSvg />
+                        </IconButton>
+                      </Tooltip>
+                      <Typography>لیست Variable ها</Typography>
+                    </Stack>
+                    <Button
+                      sx={{ alignSelf: "center", width: 100 }}
+                      variant="outlined"
+                      startIcon={<AddIcon />}
+                      onClick={addEnvironmentVariable}
+                    >
+                      افزودن
+                    </Button>
+                  </Stack>
+                  <Stack
+                    sx={{ maxHeight: "280px", overflow: "auto", pt: 1 }}
+                    rowGap={{ xs: 5, sm: 2 }}
+                  >
+                    {environmentVariableList.length > 0 &&
+                      environmentVariableList.map((item, index) => {
+                        if (!item) return null;
+                        return (
+                          <SelectEnvironmentVariable
+                            key={index}
+                            onDelete={() => removeEnvironmentVariable(index)}
+                            formik={formik}
+                            mainIndex={index}
+                          />
+                        );
+                      })}
+                  </Stack>
+                </Stack>
+              </Grid>
+            </Grid>
+
             <Stack
               direction="row"
               justifyContent="center"
               alignItems="center"
               spacing={1}
-              px={2}
+              pt={6}
+              pb={2}
             >
               <Button
                 fullWidth
@@ -276,4 +313,4 @@ const AddKubernetesCloudApp: FC = () => {
   );
 };
 
-export default AddKubernetesCloudApp;
+export default AddKubernetesCloudDeployment;

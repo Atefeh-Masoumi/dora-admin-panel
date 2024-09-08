@@ -27,7 +27,7 @@ type KubernetesCloudSecretMapPropsType = {};
 export const KubernetesCloudSecretMap: FC<
   KubernetesCloudSecretMapPropsType
 > = () => {
-  const { id: kubernetesCloudId } = useParams();
+  const { kubernetesCloudId } = useParams();
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 

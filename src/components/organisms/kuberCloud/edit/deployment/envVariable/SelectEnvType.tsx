@@ -15,6 +15,14 @@ export const SelectEnvType: FC<SelectEnvTypePropsType> = ({
         dir="ltr"
         value={value}
         onChange={(e) => onChange && onChange(Number(e.target.value))}
+        sx={{
+          "& .MuiSelect-select": {
+            fontSize: "14px",
+          },
+          "& .MuiMenuItem-root": {
+            fontSize: "10px",
+          },
+        }}
       >
         {environmentType.map((item, index) => (
           <MenuItem

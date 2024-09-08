@@ -11,16 +11,19 @@ import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
-import { kubernetesCloudAppTableStruct } from "./struct";
+import { kubernetesCloudDeploymentTableStruct } from "./struct";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
+export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
+  row,
+}) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedKubernetes, setSelectedKubernetes] =
+  const [selectedDeployment, setSelectedDeployment] =
     useState<KubernetesListResponse | null>(null);
 
   // const navigate = useNavigate();
@@ -29,7 +32,7 @@ export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
     useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation();
 
   const deleteDeploymentRecordHandler = () =>
-    deleteDeployment({ id: Number(selectedKubernetes?.id) })
+    deleteDeployment({ id: Number(selectedDeployment?.id) })
       .unwrap()
       .then(() => {
         toast.success("سرویس deployment شما با موفقیت حذف شد");
@@ -39,18 +42,18 @@ export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedKubernetes(null);
+    setSelectedDeployment(null);
   };
 
   const handleOpenDelete = (kubernetes: KubernetesListResponse) => {
-    setSelectedKubernetes(kubernetes);
+    setSelectedDeployment(kubernetes);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
   return (
     <>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {kubernetesCloudAppTableStruct.map((column) => {
+        {kubernetesCloudDeploymentTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
@@ -99,6 +102,8 @@ export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "createDate" ? (
+                    ConvertToJalali(text)
                   ) : (
                     text || "__"
                   )}
@@ -111,9 +116,9 @@ export const KubernetesCloudAppTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="سرویس کوبرنتیز"
-        subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedKubernetes?.name || ""}
+        keyTitle="سرویس Deployment"
+        subTitle="برای حذف Deployment, عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedDeployment?.name || ""}
         onSubmit={deleteDeploymentRecordHandler}
         submitLoading={deleteDeploymentRecordLoading}
       />

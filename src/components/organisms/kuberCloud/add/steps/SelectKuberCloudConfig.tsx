@@ -59,7 +59,7 @@ export const SelectKubernetesCloudConfig: FC<
     },
     {
       id: PRODUCT_ITEM_ENUM.Kuber10Pods,
-      label: "pods10",
+      label: "TenPods",
       min: 10,
       max: 100,
       step: 10,
