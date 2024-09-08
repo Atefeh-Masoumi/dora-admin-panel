@@ -1,13 +1,31 @@
-import { Divider, Grid, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  Grid,
+  Link,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
-import { FC, memo, useCallback, useState } from "react";
+import { FC, memo, useMemo, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
-import { GetApiMyKubernetesCloudImageListApiResponse } from "src/app/services/api.generated";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
 import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useParams } from "react-router";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import {
+  GetApiMyKubernetesCloudImageListApiResponse,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
+} from "src/app/services/api.generated";
+
+// Invalid name. The name can contain only lowercase letters, numbers, and hyphens (-),
+// and must start and end with a lowercase letter or number. The maximum length is 63 characters.
 
 type AppImageListCardPropsType = {
   list: GetApiMyKubernetesCloudImageListApiResponse;
@@ -20,15 +38,27 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
   loading,
   formik,
 }) => {
+  const [secret, setSecret] = useState<number | null>();
+  const [hub, setHub] = useState<string | "">("");
   const [selectedCategory, setSelectedCategory] = useState<{
     id: number;
     name: string;
   }>(staticImageCategoryList[0]);
 
-  // const filterByCategory = useCallback(
-  //   (id: number) => list.filter((item) => item.categoryId === id),
-  //   [list]
-  // );
+  const { kubernetesCloudId } = useParams();
+
+  const { data: secretList, isLoading: secretListLoading } =
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+      {
+        namespaceId: Number(kubernetesCloudId),
+      },
+      { skip: !kubernetesCloudId }
+    );
+
+  const secretListFilterByType = useMemo(
+    () => secretList?.filter((item) => item.secretTypeId === 3),
+    [secretList]
+  );
 
   return (
     <Stack rowGap={2} direction="column" sx={{ width: "100%" }}>
@@ -70,10 +100,77 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
                   <AppImageCard key={index} item={object} formik={formik} />
                 ));
 
-              return <EmptyTable text="رکوردی وجود ندارد" />;
+              return (
+                <Stack sx={{ width: "100%" }}>
+                  <EmptyTable text="رکوردی وجود ندارد" />
+                </Stack>
+              );
             })()
           ) : (
-            <>zahra good girl</>
+            <Stack gap={3} sx={{ width: "100%" }} alignItems="center">
+              <Typography>ایجاد از طریق Image Registry</Typography>
+              <Grid gap={2} justifyContent="center" container>
+                <Grid item xs={12} md={4}>
+                  <DorsaTextField
+                    fullWidth
+                    dir="ltr"
+                    label="*لینک"
+                    size="small"
+                    placeholder="https://..."
+                    // helperText={
+                    //   <FormHelperText sx={{ m: 0 }}>
+                    //     <Box display="flex" sx={{ direction: "ltr" }}>
+                    //       می توانید یک <Link href="/">سکرت</Link> ایجاد کنید
+                    //     </Box>
+                    //   </FormHelperText>
+                    // }
+                    // error={}
+                    // helperText={"zahra"}
+                    // {...formik.getFieldProps("name")}
+                  />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <FormControl fullWidth>
+                    <Select
+                      size="small"
+                      value={secret}
+                      onChange={(e) => setSecret(Number(e.target.value))}
+                      renderValue={(value) =>
+                        value !== 0 ? (
+                          value
+                        ) : (
+                          <Typography variant="text9" color="textSecondary">
+                            No Option
+                          </Typography>
+                        )
+                      }
+                      sx={{
+                        width: "100%",
+                        "& .MuiSelect-select": {
+                          bgcolor: "rgba(110, 118, 138, 0.06)",
+                          border: "none !important",
+                          padding: "7px !important",
+                        },
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          border: "none !important",
+                        },
+                      }}
+                    >
+                      {secretListFilterByType &&
+                      secretListFilterByType?.length > 0 ? (
+                        secretListFilterByType?.map(({ id, name }, index) => (
+                          <MenuItem key={index} value={id}>
+                            {name}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem value={0}>No Option</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Stack>
           )}
         </Grid>
       </Stack>
