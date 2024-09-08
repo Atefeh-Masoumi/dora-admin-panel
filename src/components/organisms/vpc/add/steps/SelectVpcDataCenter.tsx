@@ -8,6 +8,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { AddVpcContext } from "../contexts/AddVpcContext";
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
+import DomainIcon from "@mui/icons-material/Domain";
 
 type SelectKuberDataCenterPropsType = {};
 
@@ -82,7 +83,7 @@ export const SelectVpcDataCenter: FC<SelectKuberDataCenterPropsType> = () => {
                 spacing={1}
                 onClick={() => dataCenterOnClick(dataCenterItem)}
               >
-                {/* <Stack
+                <Stack
                   alignItems="center"
                   justifyContent="center"
                   sx={{
@@ -94,16 +95,8 @@ export const SelectVpcDataCenter: FC<SelectKuberDataCenterPropsType> = () => {
                     margin: "0 auto",
                   }}
                 >
-                  <img
-                    src={id === 1 ? asiatechImage : mobinNetImage}
-                    alt="datacenter-icon"
-                    style={{
-                      verticalAlign: "center",
-                      width: "50px",
-                      height: "100%",
-                    }}
-                  />
-                </Stack> */}
+                  <DomainIcon />
+                </Stack>
                 <Typography
                   noWrap
                   color={isSelected ? "primary.main" : "secondary.main"}
