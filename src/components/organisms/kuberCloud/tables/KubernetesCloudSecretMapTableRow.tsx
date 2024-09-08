@@ -19,6 +19,7 @@ import {
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesSecretListTableStruct } from "./struct";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -75,7 +76,9 @@ export const KubernetesCloudSecretMapTableRow: FC<{
       >
         <TableCell align="center">{id}</TableCell>
         <TableCell align="center">{name}</TableCell>
-        <TableCell align="center">{createDate}</TableCell>
+        <TableCell align="center">
+          {ConvertToJalali(String(createDate))}
+        </TableCell>
         <TableCell align="center">
           <IconButton
             sx={{ borderRadius: 1 }}

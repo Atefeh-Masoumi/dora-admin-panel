@@ -311,6 +311,8 @@ export const CreateSecretMapDialog: FC<
                       "secretTypeId",
                       Number(event.target.value)
                     );
+                    setEnvs([{ key: null, value: null }]);
+                    formik.setFieldValue("envs", [{ key: null, value: null }]);
                   }}
                   sx={{
                     width: "100%",
