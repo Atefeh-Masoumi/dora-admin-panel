@@ -59,9 +59,21 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
     formik.setFieldValue("isPublic", !formik.values.isPublic);
 
   return (
-    <Stack gap={8} direction="column" sx={{ width: "100%" }}>
-      <Stack width="100%">
-        <Stack spacing={2} justifyContent="center" alignItems="center">
+    <Stack gap={2} direction="column" sx={{ width: "100%" }}>
+      <Typography
+        variant="text9"
+        align="center"
+        sx={{ color: ({ palette }) => palette.grey[700] }}
+      >
+        اطلاعات سرویس
+      </Typography>
+      <Stack direction="column" gap={6}>
+        <Stack
+          width="100%"
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+        >
           <FormControl fullWidth>
             <DorsaTextField
               value={formik.values.name}
@@ -77,58 +89,54 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
             />
           </FormControl>
         </Stack>
-      </Stack>
 
-      <Stack
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-        sx={{ width: "100%" }}
-      >
-        <Typography
-          variant="text9"
-          sx={{ color: ({ palette }) => palette.grey[700] }}
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+          sx={{ width: "100%" }}
         >
-          تعداد مورد نظر از نمونه‌هایی که می‌خواهید به کار ببرید.
-        </Typography>
-        <Counter
-          label="Replica Number"
-          value={formik.values.replicaNumber}
-          onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
-          onPlusClick={handleCounterOnPlusClick}
-          onMinusClick={handleCounterOnMinusClick}
-        />
-      </Stack>
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{
-          // border: "1px solid rgba(110, 118, 138, 0.12)",
-          borderRadius: BORDER_RADIUS_1,
-          py: 1.5,
-          px: 1,
-          backgroundColor: "white",
-          "& > *": {
-            backgroundColor: "inherit",
-          },
-          // "& .MuiStack-root": {
-          //   bgcolor: "red",
-          // },
-        }}
-      >
-        <Stack>
-          <Typography fontSize={16}>دسترسی عمومی</Typography>
-          <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-            دسترسی عمومی از بیرون به سرویس داده شود.
+          <Typography
+            variant="text9"
+            sx={{ color: ({ palette }) => palette.grey[700] }}
+          >
+            تعداد مورد نظر از نمونه‌هایی که می‌خواهید به کار ببرید.
           </Typography>
+          <Counter
+            label="Replica Number"
+            value={formik.values.replicaNumber}
+            onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
+            onPlusClick={handleCounterOnPlusClick}
+            onMinusClick={handleCounterOnMinusClick}
+          />
         </Stack>
-        <DorsaSwitch
-          checked={formik.values.isPublic}
-          onChange={handleSwitchIsPublic}
-        />
+
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{
+            borderRadius: BORDER_RADIUS_1,
+            py: 1.5,
+            px: 1,
+            backgroundColor: "white",
+            "& > *": {
+              backgroundColor: "inherit",
+            },
+          }}
+        >
+          <Stack>
+            <Typography fontSize={16}>دسترسی عمومی</Typography>
+            <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
+              دسترسی عمومی از بیرون به سرویس داده شود.
+            </Typography>
+          </Stack>
+          <DorsaSwitch
+            checked={formik.values.isPublic}
+            onChange={handleSwitchIsPublic}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );

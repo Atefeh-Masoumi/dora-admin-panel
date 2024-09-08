@@ -7,6 +7,7 @@ import { KubernetesCloudConfigMap } from "src/components/organisms/kuberCloud/ed
 import { KubernetesCloudDeployment } from "src/components/organisms/kuberCloud/edit/deployment/KubernetesCloudDeployment";
 import { KubernetesCloudInfo } from "src/components/organisms/kuberCloud/edit/info/KubernetesCloudInfo";
 import { KubernetesCloudSecretMap } from "src/components/organisms/kuberCloud/edit/secretMap/SecretMap";
+import { KubernetesCloudServerConfig } from "src/components/organisms/kuberCloud/edit/serverConfig/KubernetesCloudServerConfig";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type TabPanelProps = {
@@ -73,6 +74,7 @@ const EditKubernetesCloud: FC = () => {
     KubernetesCloudDeployment,
     KubernetesCloudConfigMap,
     KubernetesCloudSecretMap,
+    KubernetesCloudServerConfig,
   ];
 
   if (!kubernetesCloudId) return <Navigate to={`/kubernetes-cloud`} />;

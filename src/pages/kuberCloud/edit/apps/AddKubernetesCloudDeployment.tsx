@@ -159,7 +159,7 @@ const AddKubernetesCloudDeployment: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد اپ جدید
+        ایجاد Deployment جدید
       </Typography>
 
       <Paper>
@@ -212,7 +212,6 @@ const AddKubernetesCloudDeployment: FC = () => {
                     width: "100%",
                     alignSelf: "start",
                     justifyContent: "center",
-                    // p: 5,
                   }}
                 >
                   <Typography
@@ -220,7 +219,7 @@ const AddKubernetesCloudDeployment: FC = () => {
                     align="center"
                     sx={{ color: ({ palette }) => palette.grey[700] }}
                   >
-                    ویژگی های موردنظر را به container اضافه کنید.
+                    متغیرهای موردنظر را اضافه کنید.
                   </Typography>
 
                   <Stack

@@ -8,6 +8,7 @@ import {
   MenuItem,
   Select,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { FormikProps } from "formik";
@@ -52,7 +53,6 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
           cursor: "pointer",
         }}
         alignItems="center"
-        // justifyContent="center"
         spacing={1}
         onClick={() => onClickCardHandler()}
       >
@@ -87,10 +87,26 @@ export const AppImageCard: FC<AppImageCardPropsType> = ({ item, formik }) => {
           </Typography>
         </Stack>
 
-        <Stack maxWidth="fit-content" alignSelf="start">
-          <IconButton>
-            <InfoSvg />
-          </IconButton>
+        <Stack
+          sx={{ mt: "0 !important" }}
+          maxWidth="fit-content"
+          alignSelf="start"
+        >
+          <Tooltip
+            dir="rtl"
+            sx={{
+              textAlign: "center",
+              "& .MuiTooltip-tooltip": {
+                textAlign: "center", // or 'left', 'right'
+                direction: "rtl",
+              },
+            }}
+            title={item.description}
+          >
+            <IconButton>
+              <InfoSvg />
+            </IconButton>
+          </Tooltip>
         </Stack>
       </Stack>
 
