@@ -1,18 +1,17 @@
 import { DeleteOutline, ModeEdit } from "@mui/icons-material";
+import PublicIcon from "@mui/icons-material/Public";
+import PublicOffIcon from "@mui/icons-material/PublicOff";
 import {
   Avatar,
-  Box,
   Chip,
   Divider,
-  Grid,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import { FC, useMemo } from "react";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { e2p } from "src/utils/e2p.utils";
-import PublicIcon from "@mui/icons-material/Public";
-import PublicOffIcon from "@mui/icons-material/PublicOff";
 
 type detailsListType = {
   label: string;
@@ -54,7 +53,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
       sx={{
         cursor: itemOnClick ? "pointer" : "default",
         position: "relative",
-        borderRadius: "10px",
+        borderRadius: BORDER_RADIUS_1,
         backgroundColor: "#fff",
         border: "1px solid rgba(0, 0, 0, 0.12)",
         // boxShadow:
@@ -154,12 +153,14 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
               <Chip
                 color={"default"}
                 label={e2p(vmProjectData[item.id] || "--")}
+                sx={{ borderRadius: BORDER_RADIUS_1 }}
               />
             ) : (
               isProjectCard && (
                 <Chip
                   color="default"
                   label={e2p(vmProjectData[item.id] || "--")}
+                  sx={{ borderRadius: BORDER_RADIUS_1 }}
                 />
               )
             )}
