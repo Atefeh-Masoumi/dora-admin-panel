@@ -40,7 +40,7 @@ const AddKubernetesCloudDeployment: FC = () => {
   >([]);
 
   const navigate = useNavigate();
-  const { id: kubernetesCloudId } = useParams();
+  const { kubernetesCloudId } = useParams();
 
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
     useGetApiMyKubernetesCloudImageListQuery();
