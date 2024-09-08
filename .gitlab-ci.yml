@@ -7,7 +7,7 @@ workflow:
 
 default:
   tags: 
-    - main-mobin-runner
+    - main-gitlab-runner
 
 stages:
   - package
