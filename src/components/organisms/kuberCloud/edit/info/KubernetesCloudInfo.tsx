@@ -50,9 +50,10 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
             Virtual Machine
           </Typography>
           <Divider />
-          {infoList.map(({ id, label, value }) =>
+          {infoList.map(({ id, label, value }, index) =>
             id === "statusId" ? (
               <BoxRow
+                key={index}
                 title="Status"
                 component={
                   <Chip
@@ -72,7 +73,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
               />
             ) : (
               <BoxRow
-                key={id}
+                key={index}
                 title={label}
                 value={value}
                 isLoading={isLoading}
