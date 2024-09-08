@@ -43,7 +43,7 @@ type CreateVpcLoadBalancerDialogPropsType = {
 export const CreateSecretMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
-  const { id: namespaceId } = useParams();
+  const { kubernetesCloudId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createSecretMap, { isLoading: createSecretMapLoading }] =
@@ -141,7 +141,7 @@ export const CreateSecretMapDialog: FC<
     initialValues: {
       name: null,
       alias: null,
-      namespaceId: Number(namespaceId),
+      namespaceId: Number(kubernetesCloudId),
       envs: [],
       secretTypeId: 1,
     },
@@ -160,7 +160,7 @@ export const CreateSecretMapDialog: FC<
         createKuberCloudSecretModel: {
           name: values.name as string,
           alias: values.alias as string,
-          namespaceId: Number(namespaceId),
+          namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
           secretTypeId: 1,
         },

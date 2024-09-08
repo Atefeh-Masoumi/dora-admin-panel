@@ -43,7 +43,7 @@ type CreateVpcLoadBalancerDialogPropsType = {
 export const CreateConfigMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
-  const { id: namespaceId } = useParams();
+  const { kubernetesCloudId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
@@ -53,7 +53,7 @@ export const CreateConfigMapDialog: FC<
     initialValues: {
       name: null,
       alias: null,
-      namespaceId: Number(namespaceId),
+      namespaceId: Number(kubernetesCloudId),
       envs: [],
     },
     validationSchema: formValidation,
@@ -70,7 +70,7 @@ export const CreateConfigMapDialog: FC<
         createKuberCloudConfigmapModel: {
           name: values.name as string,
           // alias: values.alias as string,
-          namespaceId: Number(namespaceId),
+          namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
         },
       })
