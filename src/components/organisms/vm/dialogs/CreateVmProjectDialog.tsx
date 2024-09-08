@@ -31,6 +31,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
+import DomainIcon from "@mui/icons-material/Domain";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
@@ -190,12 +191,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                               alignItems="center"
                               spacing={1}
                             >
-                              {/* <img
-                                src={getImageByName(String(photoName))}
-                                alt={String(name)}
-                                width={30}
-                                height={30}
-                              /> */}
+                              <DomainIcon />
                               <Box>{name}</Box>
                             </Stack>
                           }
