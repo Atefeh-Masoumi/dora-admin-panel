@@ -62,6 +62,8 @@ export const baseQuery: BaseQueryFn<
   } catch (axiosError) {
     const e = axiosError as AxiosError<string, any>;
 
+    console.log(e);
+
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);
       return { e };

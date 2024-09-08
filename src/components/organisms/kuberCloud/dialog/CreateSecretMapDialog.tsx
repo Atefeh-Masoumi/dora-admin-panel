@@ -35,10 +35,6 @@ type InitialValuesType = {
   secretTypeId: number | null;
 };
 
-const formValidation = yup.object().shape({
-  name: yup.string().nullable().required("نام را وارد کنید"),
-});
-
 type CreateVpcLoadBalancerDialogPropsType = {
   onClose: () => void;
   openDialog: boolean;
@@ -47,28 +43,105 @@ type CreateVpcLoadBalancerDialogPropsType = {
 export const CreateSecretMapDialog: FC<
   CreateVpcLoadBalancerDialogPropsType
 > = ({ onClose, openDialog }) => {
-  const charToBits = (char: string) => {
-    const charCode = char.charCodeAt(0);
-    return Array.from({ length: 8 }, (_, i) => (charCode >> (7 - i)) & 1);
-  };
-
-  const stringToBitArray = (text: string) => {
-    return Array.from(text).flatMap(charToBits);
-  };
-
-  //////////////////////////////////////////
-
-  const { id: namespaceId } = useParams();
+  const { kubernetesCloudId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createSecretMap, { isLoading: createSecretMapLoading }] =
     usePostApiMyKubernetesCloudSecretCreateMutation();
 
+  const formValidation = yup.object().shape({
+    name: yup.string().nullable().required("نام را وارد کنید"),
+    secretTypeId: yup.number().required(),
+    envs: yup
+      .array()
+      .when("secretTypeId", {
+        is: 1, // Opaque Secret
+        then: yup
+          .array()
+          .of(
+            yup.object().shape({
+              key: yup
+                .string()
+                .nullable()
+                .required("Key is required for secret type 1"),
+              value: yup
+                .string()
+                .nullable()
+                .required("Value is required for secret type 1"),
+            })
+          )
+          .min(1, "At least one key-value pair is required"),
+      })
+      .when("secretTypeId", {
+        is: 2, // TLS Secret
+        then: yup
+          .array()
+          .of(
+            yup.object().shape({
+              key: yup.string().oneOf(["tls.crt", "tls.key"]),
+              value: yup
+                .string()
+                .nullable()
+                .required("Certificate and private key are required"),
+            })
+          )
+          .min(2, "Certificate and private key are required"),
+      })
+      .when("secretTypeId", {
+        is: 3, // Registry Secret
+        then: yup
+          .array()
+          .of(
+            yup.object().shape({
+              key: yup
+                .string()
+                .oneOf(["registryAddress", "username", "password", "email"]),
+              value: yup
+                .string()
+                .nullable()
+                .when("key", {
+                  is: "email",
+                  then: yup.string().nullable(),
+                  otherwise: yup
+                    .string()
+                    .nullable()
+                    .required("This field is required for secret type 3"),
+                }),
+            })
+          )
+          .min(3, "Registry address, username, and password are required"),
+      })
+      .when("secretTypeId", {
+        is: 4, // Username & Password Secret
+        then: yup
+          .array()
+          .of(
+            yup.object().shape({
+              key: yup.string().oneOf(["username", "password", "email"]),
+              value: yup
+                .string()
+                .nullable()
+                .when("key", {
+                  is: "email",
+                  then: yup.string().nullable(),
+                  otherwise: yup
+                    .string()
+                    .nullable()
+                    .required(
+                      "Username and password are required for secret type 4"
+                    ),
+                }),
+            })
+          )
+          .min(2, "Username and password are required"),
+      }),
+  });
+
   const formik = useFormik<InitialValuesType>({
     initialValues: {
       name: null,
       alias: null,
-      namespaceId: Number(namespaceId),
+      namespaceId: Number(kubernetesCloudId),
       envs: [],
       secretTypeId: 1,
     },
@@ -76,8 +149,7 @@ export const CreateSecretMapDialog: FC<
     onSubmit: (values, { setSubmitting, resetForm }) => {
       const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
-          console.log(item.value, stringToBitArray(item.value).join(""));
-          acc[item.key] = stringToBitArray(item.value).join("");
+          acc[item.key] = btoa(item.value);
 
           return acc;
         },
@@ -88,7 +160,7 @@ export const CreateSecretMapDialog: FC<
         createKuberCloudSecretModel: {
           name: values.name as string,
           alias: values.alias as string,
-          namespaceId: Number(namespaceId),
+          namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
           secretTypeId: 1,
         },
@@ -130,27 +202,69 @@ export const CreateSecretMapDialog: FC<
     );
   };
 
-  const handleKeyChangeForOpaque = (index: number, key: string) => {
+  // Opaque Secret Key
+  const handleKeyForOpaque = (index: number, key: string) => {
     const updatedEnvs = [...formik.values.envs];
     updatedEnvs[index] = { ...updatedEnvs[index], key };
     formik.setFieldValue("envs", updatedEnvs);
   };
 
-  const handleValueChangeForOpaque = (index: number, value: string) => {
+  const handleValueForOpaque = (index: number, value: string) => {
     const updatedEnvs = [...formik.values.envs];
     updatedEnvs[index] = { ...updatedEnvs[index], value };
     formik.setFieldValue("envs", updatedEnvs);
   };
 
-  const handleCertificateChangeForTlsInformation = (
-    index: number,
-    value: string
-  ) => {};
+  // TLS Information Secret Key
+  const handleCertificateForTlsInformation = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[0] = { key: "tls.crt", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
 
-  const handlePrivateKeyChangeTlsInformation = (
-    index: number,
-    value: string
-  ) => {};
+  const handlePrivateKeyForTlsInformation = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[1] = { key: "tls.key", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  //  Image Registry Information Secret Key
+  const handleRegistryAddressForImageRegistry = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[0] = { key: "registryAddress", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  const handleUsernameForImageRegistry = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[1] = { key: "username", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  const handlePasswordForImageRegistry = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[2] = { key: "password", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  const handleEmailForImageRegistry = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[3] = { key: "email", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  //  Username and Password Secret Key
+  const handleUsernameForUsernameAndPassword = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[0] = { key: "username", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
+
+  const handlePasswordUsernameAndPassword = (value: string) => {
+    const updatedEnvs = [...formik.values.envs];
+    updatedEnvs[1] = { key: "password", value };
+    formik.setFieldValue("envs", updatedEnvs);
+  };
 
   return (
     <>
@@ -269,10 +383,7 @@ export const CreateSecretMapDialog: FC<
                           label="key"
                           value={formik.values.envs[index]?.key || ""}
                           onChange={(e) =>
-                            handleKeyChangeForOpaque(
-                              index,
-                              String(e.target.value)
-                            )
+                            handleKeyForOpaque(index, String(e.target.value))
                           }
                           size="small"
                         />
@@ -283,10 +394,7 @@ export const CreateSecretMapDialog: FC<
                           label="value"
                           value={formik.values.envs[index]?.value || ""}
                           onChange={(e) =>
-                            handleValueChangeForOpaque(
-                              index,
-                              String(e.target.value)
-                            )
+                            handleValueForOpaque(index, String(e.target.value))
                           }
                           size="small"
                         />
@@ -332,42 +440,36 @@ export const CreateSecretMapDialog: FC<
                   justifyContent={"center"}
                   sx={{ direction: "rtl" }}
                 >
-                  {envs.map((_: any, index: any) => (
-                    <>
-                      <Grid item xs={12} mb={2}>
-                        <DorsaTextField
-                          fullWidth
-                          label="Certificate *"
-                          value={formik.values.envs[index]?.value || ""}
-                          onChange={(e) =>
-                            handleCertificateChangeForTlsInformation(
-                              index,
-                              String(e.target.value)
-                            )
-                          }
-                          size="small"
-                          multiline
-                          rows={4}
-                        />
-                      </Grid>
-                      <Grid item xs={12} mb={2}>
-                        <DorsaTextField
-                          fullWidth
-                          label="Private Key *"
-                          value={""}
-                          onChange={(e) =>
-                            handlePrivateKeyChangeTlsInformation(
-                              index,
-                              String(e.target.value)
-                            )
-                          }
-                          size="small"
-                          multiline
-                          rows={4}
-                        />
-                      </Grid>
-                    </>
-                  ))}
+                  <Grid item xs={12} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Certificate *"
+                      value={formik.values.envs[0]?.value || ""}
+                      onChange={(e) =>
+                        handleCertificateForTlsInformation(
+                          String(e.target.value)
+                        )
+                      }
+                      size="small"
+                      multiline
+                      rows={4}
+                    />
+                  </Grid>
+                  <Grid item xs={12} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="Private Key *"
+                      value={formik.values.envs[1]?.value || ""}
+                      onChange={(e) =>
+                        handlePrivateKeyForTlsInformation(
+                          String(e.target.value)
+                        )
+                      }
+                      size="small"
+                      multiline
+                      rows={4}
+                    />
+                  </Grid>
                 </Grid>
               </Stack>
             )}
@@ -393,8 +495,12 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Registry Address *"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[0]?.value || ""}
+                      onChange={(e) =>
+                        handleRegistryAddressForImageRegistry(
+                          String(e.target.value)
+                        )
+                      }
                       size="small"
                       placeholder="https://...."
                     />
@@ -403,8 +509,10 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Username *"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[1]?.value || ""}
+                      onChange={(e) =>
+                        handleUsernameForImageRegistry(String(e.target.value))
+                      }
                       size="small"
                     />
                   </Grid>
@@ -412,8 +520,10 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Password *"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[2]?.value || ""}
+                      onChange={(e) =>
+                        handlePasswordForImageRegistry(String(e.target.value))
+                      }
                       size="small"
                     />
                   </Grid>
@@ -421,8 +531,10 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Email"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[3]?.value || ""}
+                      onChange={(e) =>
+                        handleEmailForImageRegistry(String(e.target.value))
+                      }
                       size="small"
                     />
                   </Grid>
@@ -451,8 +563,12 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Username *"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[0]?.value || ""}
+                      onChange={(e) =>
+                        handleUsernameForUsernameAndPassword(
+                          String(e.target.value)
+                        )
+                      }
                       size="small"
                     />
                   </Grid>
@@ -460,8 +576,12 @@ export const CreateSecretMapDialog: FC<
                     <DorsaTextField
                       fullWidth
                       label="Password *"
-                      value={""}
-                      onChange={(e) => console.log(e.target.value)}
+                      value={formik.values.envs[1]?.value || ""}
+                      onChange={(e) =>
+                        handlePasswordUsernameAndPassword(
+                          String(e.target.value)
+                        )
+                      }
                       size="small"
                     />
                   </Grid>
