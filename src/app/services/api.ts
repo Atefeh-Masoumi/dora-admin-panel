@@ -478,4 +478,5 @@ export const {
   useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useLazyGetApiMyPortalReferralListByReferralIdQuery,
   useLazyGetApiMyDatacenterImageListQuery,
+  useLazyGetApiMyKubernetesCloudHostGetByIdQuery,
 } = api;
