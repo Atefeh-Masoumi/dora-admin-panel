@@ -7,7 +7,7 @@ workflow:
 
 default:
   tags: 
-    - main-gitlab-runner
+    - eu
 
 stages:
   - package
