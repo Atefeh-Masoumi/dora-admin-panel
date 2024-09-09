@@ -688,7 +688,12 @@ const Router: FC = () => {
             pageTitle: "Gateway",
           })}
         />
-
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/monitoring"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            pageTitle: "monitoring",
+          })}
+        />
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>

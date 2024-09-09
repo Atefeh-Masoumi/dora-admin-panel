@@ -3,6 +3,7 @@ import { FC, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { Gateway } from "src/components/organisms/kuberCloud/edit/deployment/edit/Gateway";
+import { Monitoring } from "src/components/organisms/kuberCloud/edit/deployment/edit/Monitoring";
 import { Settings } from "src/components/organisms/kuberCloud/edit/deployment/edit/Settings";
 import { Specification } from "src/components/organisms/kuberCloud/edit/deployment/edit/Specification";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -23,6 +24,9 @@ const EditKubernetesCloudDeployment: FC = () => {
     }
     if (pathname.includes("gateway")) {
       result = `gateway`;
+    }
+    if (pathname.includes("monitoring")) {
+      result = `monitoring`;
     }
 
     return result;
@@ -46,6 +50,9 @@ const EditKubernetesCloudDeployment: FC = () => {
         break;
       case `gateway`:
         result = <Gateway />;
+        break;
+      case `monitoring`:
+        result = <Monitoring />;
         break;
       default:
         result = <Specification />;
@@ -78,6 +85,7 @@ const EditKubernetesCloudDeployment: FC = () => {
           <DorsaTab value={`specification`} label="مشخصات Deployment" />
           <DorsaTab value={`setting`} label="تغییر مشخصات نرم افزاری" />
           <DorsaTab value={`gateway`} label="gateway" />
+          <DorsaTab value={`monitoring`} label="monitoring" />
         </Tabs>
       </Box>
       {renderHandler()}
