@@ -18,7 +18,7 @@ import { getResourceItems } from "src/utils/getResourceItems.utils";
 
 type SelectEnvironmentVariablePropsType = {
   mainIndex: number;
-  onDelete:()=> void;
+  onDelete: () => void;
   formik: FormikProps<KuberCloudAppImageType>;
 };
 
