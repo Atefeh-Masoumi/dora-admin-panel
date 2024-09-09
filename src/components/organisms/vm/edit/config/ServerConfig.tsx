@@ -5,12 +5,19 @@ import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/cont
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { usePutApiMyVmHostEditByIdMutation } from "src/app/services/api.generated";
+import {
+  useGetApiMyPortalProductItemListByProductIdQuery,
+  usePutApiMyVmHostEditByIdMutation,
+} from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import {
+  PRODUCT_CATEGORY_ENUM,
+  PRODUCT_ITEMS_ENUM,
+} from "src/constant/productCategoryEnum";
 
-const memoryUnitPrice = 600000;
-const cpuUnitPrice = 500000;
-const diskUnitPrice = 45000;
+// const memoryUnitPrice = 600000;
+// const cpuUnitPrice = 500000;
+// const diskUnitPrice = 45000;
 const ipAddress = 600000;
 
 type ServerConfigPropsType = {};
@@ -20,6 +27,14 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [memory, setMemory] = useState(1);
   const [cpu, setCpu] = useState(1);
   const [disk, setDisk] = useState(25);
+  const [memoryUnitPrice, setMemoryUnitPrice] = useState(0);
+  const [cpuUnitPrice, setCpuUnitPrice] = useState(0);
+  const [diskUnitPrice, setDiskUnitPrice] = useState(0);
+
+  const { data: unitsPrice, isLoading: getUnitsPrice } =
+    useGetApiMyPortalProductItemListByProductIdQuery({
+      productId: PRODUCT_CATEGORY_ENUM.VM,
+    });
 
   const [getData] = useLazyGetApiMyVmHostGetByIdQuery();
 
@@ -40,6 +55,22 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
         .catch(() => {});
     }
   }, [getData, serverId]);
+
+  useEffect(() => {
+    if (memoryUnitPrice || cpuUnitPrice || diskUnitPrice || !unitsPrice) return;
+
+    setMemoryUnitPrice(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VMemory)
+        ?.price || 0
+    );
+    setCpuUnitPrice(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VCpu)?.price || 0
+    );
+    setDiskUnitPrice(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VDisk)?.price ||
+        0
+    );
+  }, [cpuUnitPrice, diskUnitPrice, memoryUnitPrice, unitsPrice]);
 
   const resourceList = [
     {
@@ -73,7 +104,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     const c = cpuUnitPrice * cpu;
     const d = diskUnitPrice * disk;
     return m + c + d + ipAddress;
-  }, [cpu, disk, memory]);
+  }, [cpu, cpuUnitPrice, disk, diskUnitPrice, memory, memoryUnitPrice]);
 
   const submitClickHandler = () => {
     if (!serverId) return;
