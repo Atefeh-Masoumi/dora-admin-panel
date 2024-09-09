@@ -2,7 +2,7 @@ import moment from "moment-jalaali";
 
 export const ConvertToJalali = (jalaliDate: string) => {
   return moment(jalaliDate, "YYYY-MM-DDTHH:mm:ss").format(
-    "HH:mm:ss jYYYY/jMM/jDD"
+    "HH:mm:ss - jYYYY/jMM/jDD"
   );
 };
 
