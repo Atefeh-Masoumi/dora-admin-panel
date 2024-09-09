@@ -103,7 +103,12 @@ const EditKubernetesCloud = lazy(
   () => import("src/pages/kuberCloud/edit/EditKuberCloud")
 );
 const AddKubernetesCloudDeployment = lazy(
-  () => import("src/pages/kuberCloud/edit/apps/AddKubernetesCloudDeployment")
+  () =>
+    import("src/pages/kuberCloud/edit/deployment/AddKubernetesCloudDeployment")
+);
+const EditKubernetesCloudDeployment = lazy(
+  () =>
+    import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -651,6 +656,36 @@ const Router: FC = () => {
               url: BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT,
             },
             hideSidebar: false,
+          })}
+        />
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            link: {
+              text: "بازگشت به مدیریت Deployment ها",
+              url: BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT,
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/specification"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            pageTitle: "مشخصات Deployment",
+            // RightComponent: DomainSelect,
+          })}
+        />
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/setting"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            pageTitle: "تغییر مشخصات نرم افزاری",
+          })}
+        />
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/gateway"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            pageTitle: "Gateway",
           })}
         />
 

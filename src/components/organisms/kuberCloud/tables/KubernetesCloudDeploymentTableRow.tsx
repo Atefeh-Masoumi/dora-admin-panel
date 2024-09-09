@@ -1,6 +1,6 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
@@ -26,8 +26,12 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   const [selectedDeployment, setSelectedDeployment] =
     useState<KubernetesListResponse | null>(null);
 
-  // const navigate = useNavigate();
-  // const settingOnClick = () => navigate("/kubernetes-cloud/" + row["id"]);
+  const navigate = useNavigate();
+  const { kubernetesCloudId } = useParams();
+  const settingOnClick = () =>
+    navigate(
+      "/kubernetes-cloud/" + kubernetesCloudId + "/deployment/" + row.id
+    );
   const [deleteDeployment, { isLoading: deleteDeploymentRecordLoading }] =
     useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation();
 
@@ -70,7 +74,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                   spacing={0.6}
                   maxWidth="fit-content"
                 >
-                  {/* <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
+                  <IconButton sx={{ borderRadius: 1 }} onClick={settingOnClick}>
                     <Setting
                       sx={{
                         "&> path": {
@@ -78,7 +82,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                         },
                       }}
                     />
-                  </IconButton> */}
+                  </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
