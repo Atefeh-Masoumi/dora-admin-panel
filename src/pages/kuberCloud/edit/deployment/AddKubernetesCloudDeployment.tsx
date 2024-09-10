@@ -18,10 +18,10 @@ import {
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
-import AppImageListCard from "src/components/organisms/kuberCloud/edit/deployment/AppImageListCard";
+import AppImageListCard from "src/components/organisms/kuberCloud/edit/deployment/add/AppImageListCard";
 import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
-import { SelectDeploymentInfo } from "src/components/organisms/kuberCloud/edit/deployment/SelectDeploymentInfo";
-import { SelectEnvironmentVariable } from "src/components/organisms/kuberCloud/edit/deployment/SelectEnvironmentVariable";
+import { SelectDeploymentInfo } from "src/components/organisms/kuberCloud/edit/deployment/add/SelectDeploymentInfo";
+import { SelectEnvironmentVariable } from "src/components/organisms/kuberCloud/edit/deployment/add/SelectEnvironmentVariable";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
