@@ -30,7 +30,11 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   const { kubernetesCloudId } = useParams();
   const settingOnClick = () =>
     navigate(
-      "/kubernetes-cloud/" + kubernetesCloudId + "/deployment/" + row.id
+      "/kubernetes-cloud/" +
+        kubernetesCloudId +
+        "/deployment/" +
+        row.id +
+        "/specification"
     );
   const [deleteDeployment, { isLoading: deleteDeploymentRecordLoading }] =
     useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation();
