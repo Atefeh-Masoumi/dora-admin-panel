@@ -20,6 +20,8 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesSecretListTableStruct } from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { Edit } from "@mui/icons-material";
+import { EditSecretMapDialog } from "../dialog/EditSecretMapDialog";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -30,6 +32,8 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   row: any;
   rowBgColor: any;
 }> = ({ row, rowBgColor }) => {
+  const [openEditSecretDialog, setOpenEditSecretDialog] =
+    useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const id = row.id!;
   const name = row.name!;
@@ -64,6 +68,16 @@ export const KubernetesCloudSecretMapTableRow: FC<{
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
+  function handleOpenEditSecretDialog(secret: KuberCloudSecretListResponse) {
+    console.log(secret);
+    setSelectedKubernetesCloudSecretMap(secret);
+    setOpenEditSecretDialog(true);
+  }
+
+  function handleCloseEditSecretDialog() {
+    setOpenEditSecretDialog(false);
+  }
+
   return (
     <>
       <TableRow
@@ -80,6 +94,12 @@ export const KubernetesCloudSecretMapTableRow: FC<{
           {ConvertToJalali(String(createDate))}
         </TableCell>
         <TableCell align="center">
+          <IconButton
+            sx={{ borderRadius: 1 }}
+            onClick={() => handleOpenEditSecretDialog(row)}
+          >
+            <Edit />
+          </IconButton>
           <IconButton
             sx={{ borderRadius: 1 }}
             color="error"
@@ -168,6 +188,11 @@ export const KubernetesCloudSecretMapTableRow: FC<{
         securityPhrase={selectedKubernetesCloudSecretMap?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteSecretMapLoading}
+      />
+      <EditSecretMapDialog
+        openDialog={openEditSecretDialog}
+        onClose={handleCloseEditSecretDialog}
+        secretData={selectedKubernetesCloudSecretMap}
       />
     </>
   );

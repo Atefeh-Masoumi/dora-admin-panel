@@ -35,14 +35,16 @@ type InitialValuesType = {
   secretTypeId: number | null;
 };
 
-type CreateSecretDialogPropsType = {
+type CreateVpcLoadBalancerDialogPropsType = {
   onClose: () => void;
   openDialog: boolean;
+  secretData: any;
 };
 
-export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
+export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
   onClose,
   openDialog,
+  secretData,
 }) => {
   const { kubernetesCloudId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
@@ -140,7 +142,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
-      name: null,
+      name: secretData?.name,
       alias: null,
       namespaceId: Number(kubernetesCloudId),
       envs: [],
@@ -163,7 +165,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
           alias: values.alias as string,
           namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
-          secretTypeId: Number(values.secretTypeId),
+          secretTypeId: 1,
         },
       })
         .unwrap()
@@ -267,6 +269,8 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
     formik.setFieldValue("envs", updatedEnvs);
   };
 
+  console.log(secretData?.secretTypeId);
+
   return (
     <>
       <Dialog
@@ -305,8 +309,9 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
               </Grid2>
               <Grid2 xs={12} md={6}>
                 <Select
+                  disabled
                   size="small"
-                  value={formik.values.secretTypeId}
+                  value={secretData?.secretTypeId}
                   onChange={(event) => {
                     formik.setFieldValue(
                       "secretTypeId",
@@ -344,7 +349,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 </Select>
               </Grid2>
             </Grid2>
-            {formik.values.secretTypeId === 1 && (
+            {secretData?.secretTypeId === 1 && (
               <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
                 <Stack
                   direction="row"
@@ -425,7 +430,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 </Grid>
               </Stack>
             )}
-            {formik.values.secretTypeId === 2 && (
+            {secretData?.secretTypeId === 2 && (
               <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
                 <Stack
                   direction="row"
@@ -476,7 +481,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 </Grid>
               </Stack>
             )}
-            {formik.values.secretTypeId === 3 && (
+            {secretData?.secretTypeId === 3 && (
               <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
                 <Stack
                   direction="row"
@@ -544,7 +549,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 </Grid>
               </Stack>
             )}
-            {formik.values.secretTypeId === 4 && (
+            {secretData?.secretTypeId === 4 && (
               <Stack spacing={3} sx={{ marginRight: "12px !important" }}>
                 <Stack
                   direction="row"

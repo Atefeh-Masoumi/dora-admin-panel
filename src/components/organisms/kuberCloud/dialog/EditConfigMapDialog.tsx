@@ -13,53 +13,55 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
-import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
 
 type InitialValuesType = {
   name: string | null;
   alias?: string | null;
   description?: string | null;
   namespaceId: number;
-  envs: any;
+  envs: { key: string; value: string }[];
 };
 
 const formValidation = yup.object().shape({
   name: yup.string().nullable().required("نام را وارد کنید"),
 });
 
-type CreateConfigmapDialogPropsType = {
+type EditConfigmapDialogPropsType = {
   onClose: () => void;
   openDialog: boolean;
+  configData: any;
 };
 
-export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
+export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
   onClose,
   openDialog,
+  configData,
 }) => {
   const { kubernetesCloudId } = useParams();
-  const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
     usePostApiMyKubernetesCloudConfigmapCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
-      name: null,
+      name: configData?.name || "",
       alias: null,
       namespaceId: Number(kubernetesCloudId),
-      envs: [],
+      envs: configData?.configMaps || [{ key: "", value: "" }],
     },
     validationSchema: formValidation,
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      const processedEnvsToObject = values?.envs?.reduce(
+      console.log(values);
+      const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
           acc[item.key] = item.value;
           return acc;
@@ -67,48 +69,37 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
         {}
       );
 
-      createConfigMap({
-        createKuberCloudConfigmapModel: {
-          name: values.name as string,
-          // alias: values.alias as string,
-          namespaceId: Number(kubernetesCloudId),
-          envs: processedEnvsToObject,
-        },
-      })
-        .unwrap()
-        .then(() => {
-          toast.success("Configmap با موفقیت ساخته شد");
-          resetForm();
-          onClose();
-        })
-        .catch(() => {});
+      //   createConfigMap({
+      //     createKuberCloudConfigmapModel: {
+      //       name: values.name as string,
+      //       namespaceId: Number(kubernetesCloudId),
+      //       envs: processedEnvsToObject,
+      //     },
+      //   })
+      //     .unwrap()
+      //     .then(() => {
+      //       toast.success("Configmap با موفقیت ساخته شد");
+      //       resetForm();
+      //       onClose();
+      //     })
+      //     .catch(() => {});
 
-      setSubmitting(false);
+      //   setSubmitting(false);
     },
     enableReinitialize: true,
   });
 
   const addEnvsInput = () => {
-    setEnvs((prevState: any) => {
-      let result = [...prevState];
-      result.push({ envs: "" });
-      return result;
-    });
     formik.setFieldValue("envs", [
       ...formik.values.envs,
-      { key: null, value: null },
+      { key: "", value: "" },
     ]);
   };
 
   const removeEnvsInput = (index: number) => {
-    setEnvs((prevState: any) => {
-      let result = [...prevState];
-      result.splice(index, 1);
-      return result;
-    });
     formik.setFieldValue(
       "envs",
-      formik.values.envs.filter((_: any, i: any) => i !== index)
+      formik.values.envs.filter((_, i) => i !== index)
     );
   };
 
@@ -146,7 +137,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
               variant="text1"
               sx={{ padding: "10px 5px" }}
             >
-              ایجاد Configmap
+              ویرایش Configmap
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container>
@@ -196,26 +187,24 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 justifyContent={"center"}
                 sx={{ direction: "rtl", margin: "0 auto" }}
               >
-                {envs.map((_: any, index: any) => (
+                {formik.values.envs.map((env, index) => (
                   <>
-                    <Grid item xs={4} mb={2}>
+                    <Grid item xs={4} mb={2} key={`key-${index}`}>
                       <DorsaTextField
                         fullWidth
                         label="key"
-                        value={formik.values.envs[index]?.key || ""}
-                        onChange={(e) =>
-                          handleKeyChange(index, String(e.target.value))
-                        }
+                        value={env.key}
+                        onChange={(e) => handleKeyChange(index, e.target.value)}
                         size="small"
                       />
                     </Grid>
-                    <Grid item xs={7} mb={2}>
+                    <Grid item xs={7} mb={2} key={`value-${index}`}>
                       <DorsaTextField
                         fullWidth
                         label="value"
-                        value={formik.values.envs[index]?.value || ""}
+                        value={env.value}
                         onChange={(e) =>
-                          handleValueChange(index, String(e.target.value))
+                          handleValueChange(index, e.target.value)
                         }
                         size="small"
                       />
