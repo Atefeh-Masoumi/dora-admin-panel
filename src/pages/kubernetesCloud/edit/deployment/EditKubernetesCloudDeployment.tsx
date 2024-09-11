@@ -2,10 +2,10 @@ import { Box, Stack, Tabs } from "@mui/material";
 import { FC, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { Gateway } from "src/components/organisms/kuberCloud/edit/deployment/edit/Gateway";
-import { Monitoring } from "src/components/organisms/kuberCloud/edit/deployment/edit/Monitoring";
-import { Settings } from "src/components/organisms/kuberCloud/edit/deployment/edit/Settings";
-import { Specification } from "src/components/organisms/kuberCloud/edit/deployment/edit/Specification";
+import { Gateway } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Gateway";
+import { Monitoring } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Monitoring";
+import { Settings } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Settings";
+import { Specification } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Specification";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const EditKubernetesCloudDeployment: FC = () => {
@@ -82,7 +82,7 @@ const EditKubernetesCloudDeployment: FC = () => {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <DorsaTab value={`specification`} label="مشخصات Deployment" />
+          <DorsaTab value={`specification`} label="مشخصات" />
           <DorsaTab value={`setting`} label="تغییر مشخصات نرم افزاری" />
           <DorsaTab value={`gateway`} label="gateway" />
           <DorsaTab value={`monitoring`} label="monitoring" />

@@ -18,16 +18,17 @@ import {
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
-import AppImageListCard from "src/components/organisms/kuberCloud/edit/deployment/add/AppImageListCard";
-import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
-import { SelectDeploymentInfo } from "src/components/organisms/kuberCloud/edit/deployment/add/SelectDeploymentInfo";
-import { SelectEnvironmentVariable } from "src/components/organisms/kuberCloud/edit/deployment/add/SelectEnvironmentVariable";
+import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/add/AppImageListCard";
+import { SelectDeploymentInfo } from "src/components/organisms/kubernetesCloud/edit/deployment/add/SelectDeploymentInfo";
+import { SelectEnvironmentVariable } from "src/components/organisms/kubernetesCloud/edit/deployment/add/SelectEnvironmentVariable";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { groupedByVariableType } from "src/utils/groupedByVariableType.utils";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { kuberCloudNameRegex } from "src/utils/regex.utils";
+import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 const title =
   "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
 const AddKubernetesCloudDeployment: FC = () => {
@@ -75,7 +76,9 @@ const AddKubernetesCloudDeployment: FC = () => {
     );
   };
 
-  const onSubmit: formikOnSubmitType<KuberCloudAppImageType> = (values) => {
+  const onSubmit: formikOnSubmitType<KuberCloudNamespaceImageType> = (
+    values
+  ) => {
     let errorMessage = "";
 
     if (!values.imageId) {
@@ -84,8 +87,6 @@ const AddKubernetesCloudDeployment: FC = () => {
       errorMessage = "ورژن image خودرا انتخاب نمایید.";
     } else if (!values.name) {
       errorMessage = "نام سرویس خودرا وارد نمایید.";
-    } else if (values.name.trim().length < 5 || values.name.length > 50) {
-      errorMessage = "طول کارکترها باید بین ۵ تا ۵۰ کارکتر باشد";
     }
 
     if (errorMessage !== "") {
@@ -110,7 +111,7 @@ const AddKubernetesCloudDeployment: FC = () => {
     }
   };
 
-  const initialValues: KuberCloudAppImageType = {
+  const initialValues: KuberCloudNamespaceImageType = {
     imageId: null,
     imageTagId: "",
     name: "",
@@ -120,9 +121,16 @@ const AddKubernetesCloudDeployment: FC = () => {
     isPublic: false,
   };
 
-  const validationSchema = yup.object().shape({});
+  const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .matches(
+        kuberCloudNameRegex,
+        "نام نامعتبر نام فقط می تواند شامل حروف کوچک، اعداد و خط تیره (-) باشد. و باید با یک حرف یا عدد کوچک شروع و پایان یابد. حداکثر طول 63 کاراکتر است."
+      ),
+  });
 
-  const formik = useFormik<KuberCloudAppImageType>({
+  const formik = useFormik<KuberCloudNamespaceImageType>({
     initialValues,
     validationSchema,
     onSubmit,
@@ -133,6 +141,7 @@ const AddKubernetesCloudDeployment: FC = () => {
     const imageItem = kuberCloudImageList?.find(
       (item) => item.id === formik.values.imageId
     );
+
     const requiredKeyList = imageItem?.keys || [];
     let result: {
       variableType: number;
@@ -162,7 +171,7 @@ const AddKubernetesCloudDeployment: FC = () => {
         ایجاد Deployment جدید
       </Typography>
 
-      <Paper>
+      <Paper sx={{ p: 2 }}>
         <form onSubmit={formik.handleSubmit}>
           <Stack
             direction="column"
@@ -185,13 +194,7 @@ const AddKubernetesCloudDeployment: FC = () => {
 
             <Divider sx={{ margin: "20px 10px" }} />
 
-            <Grid
-              justifyContent="space-between"
-              spacing={2}
-              // spacing={{ md: 2 }}
-              container
-              px={3}
-            >
+            <Grid justifyContent="space-between" container>
               <Grid
                 bgcolor="#e7f0fd"
                 sx={{ borderRadius: BORDER_RADIUS_1, p: 2 }}

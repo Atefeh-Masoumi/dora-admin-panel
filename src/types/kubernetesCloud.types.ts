@@ -11,7 +11,7 @@ export type VariableEnvironmentType = {
   value: string;
   resource?: string;
 };
-export type KuberCloudAppImageType = {
+export type KuberCloudNamespaceImageType = {
   imageId: number | null;
   imageTagId: number | "";
   name: string | "";

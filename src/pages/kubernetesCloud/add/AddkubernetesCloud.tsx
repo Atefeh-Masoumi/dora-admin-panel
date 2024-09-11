@@ -4,15 +4,15 @@ import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/servic
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
-import { AddKubernetesCloudContext } from "src/components/organisms/kuberCloud/add/context/AddKubernetesCloudContext";
-import { KubernetesCloudInfo } from "src/components/organisms/kuberCloud/add/steps/KuberCloudInfo";
-import { SelectKubernetesCloudConfigType } from "src/components/organisms/kuberCloud/add/steps/SelectConfigType";
-import { SelectKubernetesCloudConfig } from "src/components/organisms/kuberCloud/add/steps/SelectKuberCloudConfig";
-import { SelectKubernetesCloudDataCenter } from "src/components/organisms/kuberCloud/add/steps/SelectKuberCloudDataCenter";
+import { AddKubernetesCloudContext } from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
+import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/add/steps/KubernetesCloudInfo";
+import { SelectKubernetesCloudConfigType } from "src/components/organisms/kubernetesCloud/add/steps/SelectConfigType";
+import { SelectKubernetesCloudConfig } from "src/components/organisms/kubernetesCloud/add/steps/SelectKubernetesCloudConfig";
+import { SelectKubernetesCloudDataCenter } from "src/components/organisms/kubernetesCloud/add/steps/SelectKubernetesCloudDataCenter";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
-const AddNamespace: FC = () => {
+const AddKubernetesCloud: FC = () => {
   const {
     serverConfig,
     submitHandler,
@@ -148,4 +148,4 @@ const AddNamespace: FC = () => {
   );
 };
 
-export default AddNamespace;
+export default AddKubernetesCloud;

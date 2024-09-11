@@ -10,21 +10,23 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   CommonSelectPropsType,
   KeyListInResourceType,
   ResourceListType,
-} from "src/types/kuberCloud.types";
+} from "src/types/kubernetesCloud.types";
 import { DeleteOutline } from "@mui/icons-material";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+
 type SelectEnvValuePropsType = CommonSelectPropsType & {
   keyListInResource?: KeyListInResourceType;
   isResourceSelectionRequired?: boolean;
   selectedResourceItem?: number | null;
   handleResourceOnChange?: (resourceId: number) => void;
   resourceList?: ResourceListType;
-  onDelete: () => void;
+  onDelete?: () => void;
 };
+
 export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
   keyListInResource,
   value,

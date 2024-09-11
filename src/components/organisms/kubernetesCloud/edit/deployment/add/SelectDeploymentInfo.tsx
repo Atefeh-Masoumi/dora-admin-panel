@@ -2,25 +2,17 @@ import { FC } from "react";
 import { FormikProps } from "formik";
 
 import { Stack } from "@mui/system";
-import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
-import { Counter } from "src/components/organisms/kuberCloud/add/steps/Counter";
-import {
-  Divider,
-  FormControl,
-  InputLabel,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
+import { Counter } from "src/components/organisms/kubernetesCloud/add/steps/Counter";
+import { FormControl, FormHelperText, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 type CounterNewValueType = number | ((prevValue: number) => number);
 
 type SelectDeploymentInfoPropsType = {
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KuberCloudNamespaceImageType>;
 };
 
 export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
@@ -41,11 +33,13 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
     newValue: number | ((prevValue: number) => number)
   ) => {
     let updatedValue;
+
     if (typeof newValue === "function") {
       updatedValue = newValue(formik.values.replicaNumber);
     } else {
       updatedValue = newValue;
     }
+
     formik.setFieldValue("replicaNumber", updatedValue);
   };
 
@@ -81,6 +75,14 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
               fullWidth
               label="نام سرویس"
               focused
+              error={Boolean(formik.touched.name && formik.errors.name)}
+              helperText={
+                formik.touched.name && formik.errors.name ? (
+                  <FormHelperText sx={{ textAlign: "justify" }}>
+                    {formik.errors.name}
+                  </FormHelperText>
+                ) : null
+              }
               inputProps={{
                 dir: "ltr",
                 backgroundColor: "white",

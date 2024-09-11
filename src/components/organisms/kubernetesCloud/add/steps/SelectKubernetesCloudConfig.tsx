@@ -5,7 +5,7 @@ import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
-import KubernetesCloudServerConfigTableRow from "../tables/KuberCloudServerConfigTableRow";
+import KubernetesCloudServerConfigTableRow from "../tables/KubernetesCloudServerConfigTableRow";
 import { productBundleTableStruct } from "../tables/struct";
 
 type SelectKubernetesCloudConfigPropsType = {};

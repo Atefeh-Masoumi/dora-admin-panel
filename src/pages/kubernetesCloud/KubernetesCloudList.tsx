@@ -4,8 +4,8 @@ import { FC, useState } from "react";
 import { useNavigate } from "react-router";
 import { useGetApiMyKubernetesCloudHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import KubernetesCloudTableRow from "src/components/organisms/kuberCloud/tables/KubernetesCloudTableRow";
-import { kubernetesCloudTableStruct } from "src/components/organisms/kuberCloud/tables/struct";
+import KubernetesCloudTableRow from "src/components/organisms/kubernetesCloud/tables/KubernetesCloudTableRow";
+import { kubernetesCloudTableStruct } from "src/components/organisms/kubernetesCloud/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

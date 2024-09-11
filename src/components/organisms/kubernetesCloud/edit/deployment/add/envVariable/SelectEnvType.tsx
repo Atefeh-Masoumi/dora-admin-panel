@@ -1,7 +1,7 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { FC } from "react";
 import { environmentType } from "src/constant/kubernetesCloud.constant";
-import { CommonSelectPropsType } from "src/types/kuberCloud.types";
+import { CommonSelectPropsType } from "src/types/kubernetesCloud.types";
 
 type SelectEnvTypePropsType = CommonSelectPropsType;
 

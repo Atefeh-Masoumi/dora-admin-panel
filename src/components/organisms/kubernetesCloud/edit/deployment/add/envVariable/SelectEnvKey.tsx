@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { CommonSelectPropsType } from "src/types/kuberCloud.types";
+import { CommonSelectPropsType } from "src/types/kubernetesCloud.types";
 
 type SelectEnvKeyPropsType = CommonSelectPropsType;
 

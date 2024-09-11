@@ -15,7 +15,6 @@ import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
-import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams } from "react-router";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -23,14 +22,12 @@ import {
   GetApiMyKubernetesCloudImageListApiResponse,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
-
-// Invalid name. The name can contain only lowercase letters, numbers, and hyphens (-),
-// and must start and end with a lowercase letter or number. The maximum length is 63 characters.
+import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageListCardPropsType = {
   list: GetApiMyKubernetesCloudImageListApiResponse;
   loading: boolean;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KuberCloudNamespaceImageType>;
 };
 
 const AppImageListCard: FC<AppImageListCardPropsType> = ({

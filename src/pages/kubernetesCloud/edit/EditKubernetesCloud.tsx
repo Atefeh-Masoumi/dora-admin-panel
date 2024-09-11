@@ -3,11 +3,11 @@ import { FC, ReactNode, SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { KubernetesCloudConfigMap } from "src/components/organisms/kuberCloud/edit/configMap/ConfigMap";
-import { KubernetesCloudDeployment } from "src/components/organisms/kuberCloud/edit/deployment/KubernetesCloudDeployment";
-import { KubernetesCloudInfo } from "src/components/organisms/kuberCloud/edit/info/KubernetesCloudInfo";
-import { KubernetesCloudSecretMap } from "src/components/organisms/kuberCloud/edit/secretMap/SecretMap";
-import { KubernetesCloudServerConfig } from "src/components/organisms/kuberCloud/edit/serverConfig/KubernetesCloudServerConfig";
+import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
+import { KubernetesCloudDeployment } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudDeployment";
+import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/edit/info/KubernetesCloudInfo";
+import { KubernetesCloudSecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
+import { KubernetesCloudServerConfig } from "src/components/organisms/kubernetesCloud/edit/serverConfig/KubernetesCloudServerConfig";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type TabPanelProps = {

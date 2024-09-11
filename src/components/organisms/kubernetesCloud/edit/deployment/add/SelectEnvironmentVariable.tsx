@@ -2,10 +2,7 @@ import { FC, memo, useMemo, useState } from "react";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { FormikProps } from "formik";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
-import {
-  KeyListInResourceType,
-  KuberCloudAppImageType,
-} from "src/types/kuberCloud.types";
+
 import { SelectEnvType } from "./envVariable/SelectEnvType";
 import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
@@ -15,11 +12,12 @@ import {
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { getResourceItems } from "src/utils/getResourceItems.utils";
+import { KeyListInResourceType, KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 type SelectEnvironmentVariablePropsType = {
   mainIndex: number;
   onDelete: () => void;
-  formik: FormikProps<KuberCloudAppImageType>;
+  formik: FormikProps<KuberCloudNamespaceImageType>;
 };
 
 export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
@@ -32,21 +30,21 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
 
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-    const { id: kubernetesCloudNameSpaceId } = useParams();
+    const { kubernetesCloudId } = useParams();
 
     const { data: configmapList = [] } =
       useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
         {
-          namespaceId: Number(kubernetesCloudNameSpaceId),
+          namespaceId: Number(kubernetesCloudId),
         },
-        { skip: !kubernetesCloudNameSpaceId }
+        { skip: !kubernetesCloudId }
       );
     const { data: secretList = [] } =
       useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
         {
-          namespaceId: Number(kubernetesCloudNameSpaceId),
+          namespaceId: Number(kubernetesCloudId),
         },
-        { skip: !kubernetesCloudNameSpaceId }
+        { skip: !kubernetesCloudId }
       );
 
     const isResourceSelectionRequired = useMemo(
@@ -139,20 +137,23 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
 
     return (
       <Grid spacing={2} container>
-        {[...(!isSm ? inputItems.reverse() : inputItems)]
-          .reverse()
-          .map(
-            ({ Input, value, onChange, otherProps, xs, sm, md, lg }, index) =>
-              otherProps ? (
-                <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
-                  <Input value={value} onChange={onChange} {...otherProps} />
-                </Grid>
-              ) : (
-                <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
-                  <Input value={value} onChange={onChange} />
-                </Grid>
-              )
-          )}
+        {[...(!isSm ? inputItems.reverse() : inputItems)].reverse().map(
+          ({ Input, value, onChange, otherProps, xs, sm, md, lg }, index) => (
+            // otherProps ? (
+            <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
+              <Input
+                value={value}
+                onChange={onChange}
+                {...(otherProps || undefined)}
+              />
+            </Grid>
+          )
+          // ) : (
+          //   <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
+          //     <Input value={value} onChange={onChange} />
+          //   </Grid>
+          // )
+        )}
       </Grid>
     );
   });
