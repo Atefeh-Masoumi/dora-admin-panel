@@ -1,11 +1,11 @@
-import { KuberCloudAppImageType } from "src/types/kuberCloud.types";
+import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 interface GroupedVariables {
   [key: string]: { [key: string]: string };
 }
 
 export const groupedByVariableType = (
-  values: KuberCloudAppImageType
+  values: KuberCloudNamespaceImageType
 ): GroupedVariables =>
   values.keyValue.reduce<GroupedVariables>((acc, item) => {
     const { variableType, envKey, value } = item;

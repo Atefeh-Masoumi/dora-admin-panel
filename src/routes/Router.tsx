@@ -12,7 +12,7 @@ import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/Ad
 import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
 import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
-import AddKubernetesCloudContextProvider from "src/components/organisms/kuberCloud/add/context/AddKubernetesCloudContext";
+import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
 import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
@@ -94,21 +94,25 @@ const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
 const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 
 const KubernetesCloud = lazy(
-  () => import("src/pages/kuberCloud/KubernetesCloudList")
+  () => import("src/pages/kubernetesCloud/KubernetesCloudList")
 );
 const AddNamespace = lazy(
-  () => import("src/pages/kuberCloud/add/AddNamespace")
+  () => import("src/pages/kubernetesCloud/add/AddkubernetesCloud")
 );
 const EditKubernetesCloud = lazy(
-  () => import("src/pages/kuberCloud/edit/EditKuberCloud")
+  () => import("src/pages/kubernetesCloud/edit/EditKubernetesCloud")
 );
 const AddKubernetesCloudDeployment = lazy(
   () =>
-    import("src/pages/kuberCloud/edit/deployment/AddKubernetesCloudDeployment")
+    import(
+      "src/pages/kubernetesCloud/edit/deployment/AddKubernetesCloudDeployment"
+    )
 );
 const EditKubernetesCloudDeployment = lazy(
   () =>
-    import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
+    import(
+      "src/pages/kubernetesCloud/edit/deployment/EditKubernetesCloudDeployment"
+    )
 );
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -638,7 +642,62 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId"
+          path="/kubernetes-cloud/:kubernetesCloudId/specification"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/configmap"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/secret"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/setting"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/ingress"
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",

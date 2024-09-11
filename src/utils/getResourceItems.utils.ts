@@ -3,7 +3,7 @@ import {
   KuberCloudSecretListResponse,
 } from "src/app/services/api.generated";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
-import { KeyListInResourceType } from "src/types/kuberCloud.types";
+import { KeyListInResourceType } from "src/types/kubernetesCloud.types";
 
 export const getResourceItems = (
   resourceType: number,
