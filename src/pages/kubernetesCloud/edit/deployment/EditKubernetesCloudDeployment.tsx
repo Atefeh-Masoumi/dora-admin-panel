@@ -1,5 +1,5 @@
-import { Box, Stack, Tabs } from "@mui/material";
 import { FC, SyntheticEvent, useMemo } from "react";
+import { Box, Stack, Tabs } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { Gateway } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Gateway";

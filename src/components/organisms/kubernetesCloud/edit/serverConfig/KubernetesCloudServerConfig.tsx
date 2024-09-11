@@ -154,7 +154,7 @@ export const KubernetesCloudServerConfig: FC = () => {
   };
 
   return (
-    <>
+    <Stack width="100%">
       <Typography
         color="grey.700"
         fontSize={24}
@@ -220,6 +220,6 @@ export const KubernetesCloudServerConfig: FC = () => {
           </LoadingButton>
         </Stack>
       </Paper>
-    </>
+    </Stack>
   );
 };

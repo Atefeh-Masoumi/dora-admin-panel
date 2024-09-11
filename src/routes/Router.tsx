@@ -642,7 +642,62 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId"
+          path="/kubernetes-cloud/:kubernetesCloudId/specification"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/configmap"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/secret"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/setting"
+          element={mainTemplate(EditKubernetesCloud, {
+            link: {
+              text: "بازگشت به مدیریت کوبرنتیز ابری",
+              url: "/kubernetes-cloud",
+            },
+            hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/ingress"
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",

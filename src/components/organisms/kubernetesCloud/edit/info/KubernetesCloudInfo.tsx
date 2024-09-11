@@ -38,6 +38,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
       spacing={3}
       justifyContent="space-between"
       alignItems="stretch"
+      width="100%"
     >
       <Grid2 xs={12} md={6}>
         <Paper

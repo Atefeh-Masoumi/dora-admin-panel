@@ -1,81 +1,82 @@
-import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
-import { FC, ReactNode, SyntheticEvent, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
+import { Box, Stack, Tabs } from "@mui/material";
+import { FC, ReactNode, SyntheticEvent, useMemo, useState } from "react";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudDeployment } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudDeployment";
 import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/edit/info/KubernetesCloudInfo";
+import { KubernetesCloudIngress } from "src/components/organisms/kubernetesCloud/edit/ingress/KubernetesCloudIngress";
 import { KubernetesCloudSecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
 import { KubernetesCloudServerConfig } from "src/components/organisms/kubernetesCloud/edit/serverConfig/KubernetesCloudServerConfig";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
-type TabPanelProps = {
-  children?: ReactNode;
-  index: number;
-  value: number;
-};
-
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Box
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-      sx={{
-        minWidth: "100%",
-        maxWidth: "100%",
-      }}
-    >
-      {value === index && children}
-    </Box>
-  );
-};
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-};
-
 const EditKubernetesCloud: FC = () => {
-  const [section, setSection] = useState(0);
   const { kubernetesCloudId } = useParams();
   const navigate = useNavigate();
 
-  const {
-    data: kubernetesCloudData,
-    isLoading: getKubernetesCloudDataLoading,
-  } = useGetApiMyKubernetesCloudHostGetByIdQuery({
-    id: Number(kubernetesCloudId)!,
-  });
+  const { pathname } = useLocation();
 
-  const handleChange = (_: SyntheticEvent, newValue: number) => {
-    setSection(newValue);
-    navigate(`?section=${newValue}`, { replace: true });
+  const selectedTab = useMemo(() => {
+    let result;
+    if (pathname.includes("specification")) {
+      result = `specification`;
+    }
+    if (pathname.includes("setting")) {
+      result = `setting`;
+    }
+    if (pathname.includes("configmap")) {
+      result = `configmap`;
+    }
+    if (pathname.includes("secret")) {
+      result = `secret`;
+    }
+    if (pathname.includes("deployment")) {
+      result = `deployment`;
+    }
+    if (pathname.includes("ingress")) {
+      result = `ingress`;
+    }
+
+    return result;
+  }, [pathname]);
+
+  const handleChange = (_: SyntheticEvent, newValue: string) => {
+    navigate(`/kubernetes-cloud/${kubernetesCloudId}/${newValue}`);
   };
 
-  const tabArray = [
-    "مشخصات سرویس",
-    "Deployments",
-    "Configmap",
-    "Secret",
-    "تغییر مشخصات سخت افزاری",
-    "Ingress",
-  ];
+  const renderHandler = () => {
+    let result = <></>;
 
-  const tabPanelArray = [
-    KubernetesCloudInfo,
-    KubernetesCloudDeployment,
-    KubernetesCloudConfigMap,
-    KubernetesCloudSecretMap,
-    KubernetesCloudServerConfig,
-  ];
+    switch (selectedTab) {
+      case `specification`:
+        result = <KubernetesCloudInfo />;
+        break;
+      case `deployment`:
+        result = <KubernetesCloudDeployment />;
+        break;
+      case `configmap`:
+        result = <KubernetesCloudConfigMap />;
+        break;
+      case `secret`:
+        result = <KubernetesCloudSecretMap />;
+        break;
+      case `setting`:
+        result = <KubernetesCloudServerConfig />;
+        break;
+      case `ingress`:
+        result = <KubernetesCloudIngress />;
+        break;
+      default:
+        result = <KubernetesCloudInfo />;
+        break;
+    }
+    return result;
+  };
 
   if (!kubernetesCloudId) return <Navigate to={`/kubernetes-cloud`} />;
 
@@ -98,34 +99,20 @@ const EditKubernetesCloud: FC = () => {
         <Tabs
           sx={{ padding: "5px 30px" }}
           TabIndicatorProps={{ style: { display: "none" } }}
-          value={section}
+          value={selectedTab}
           onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
         >
-          {getKubernetesCloudDataLoading ? (
-            <CircularProgress
-              size={20}
-              sx={{
-                margin: "10px auto",
-              }}
-            />
-          ) : (
-            tabArray.map((label, index) => (
-              <DorsaTab
-                {...a11yProps(index)}
-                label={label}
-                key={index}
-                onClick={() => setSection(index)}
-              />
-            ))
-          )}
+          <DorsaTab value={`specification`} label="مشخصات" />
+          <DorsaTab value={`deployment`} label="Deployment" />
+          <DorsaTab value={`configmap`} label="Configmap" />
+          <DorsaTab value={`secret`} label="Secret" />
+          <DorsaTab value={`setting`} label="تغییر مشخصات نرم افزاری" />
+          <DorsaTab value={`ingress`} label="Ingress" />
         </Tabs>
       </Box>
-      {kubernetesCloudId &&
-        tabPanelArray.map((Component, index) => (
-          <TabPanel value={section} index={index} key={index}>
-            <Component />
-          </TabPanel>
-        ))}
+      {renderHandler()}
     </Stack>
   );
 };
