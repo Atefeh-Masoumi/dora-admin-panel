@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
+import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -24,16 +24,11 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
 
 type InitialValuesType = {
-  name: string | null;
   alias?: string | null;
   description?: string | null;
-  namespaceId: number;
   envs: { key: string; value: string }[];
+  removeEnvIds: string[];
 };
-
-const formValidation = yup.object().shape({
-  name: yup.string().nullable().required("نام را وارد کنید"),
-});
 
 type EditConfigmapDialogPropsType = {
   onClose: () => void;
@@ -48,19 +43,61 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
 }) => {
   const { kubernetesCloudId } = useParams();
 
-  const [createConfigMap, { isLoading: createConfigMapLoading }] =
-    usePostApiMyKubernetesCloudConfigmapCreateMutation();
+  const [editConfigMap, { isLoading: editConfigMapLoading }] =
+    usePutApiMyKubernetesCloudConfigmapEditMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
-      name: configData?.name || "",
       alias: null,
-      namespaceId: Number(kubernetesCloudId),
       envs: configData?.configMaps || [{ key: "", value: "" }],
+      removeEnvIds: [],
     },
-    validationSchema: formValidation,
+
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      console.log(values);
+      const submittedConfigMapsArray = values?.envs;
+      const configDataConfigMapsArray = configData?.configMaps;
+
+      const getModifiedAndNewObjects = (
+        submittedArray: any,
+        configArray: any
+      ) => {
+        const modifiedAndNew: any = [];
+
+        const configMap = new Map(
+          configArray.map((item: any) => [item.id, item])
+        );
+
+        // Check for new or modified items
+        submittedArray.forEach((submittedItem: any) => {
+          const configItem: any = configMap.get(submittedItem.id);
+
+          if (
+            !configItem ||
+            configItem.key !== submittedItem.key ||
+            configItem.value !== submittedItem.value
+          ) {
+            modifiedAndNew.push(submittedItem);
+          }
+        });
+
+        configArray.forEach((configItem: any) => {
+          const existsInSubmitted = submittedArray.some(
+            (submittedItem: any) => submittedItem.id === configItem.id
+          );
+
+          if (!existsInSubmitted) {
+            modifiedAndNew.push(configItem);
+          }
+        });
+
+        return modifiedAndNew;
+      };
+
+      const result = getModifiedAndNewObjects(
+        submittedConfigMapsArray,
+        configDataConfigMapsArray
+      );
+
       const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
           acc[item.key] = item.value;
@@ -69,22 +106,24 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
         {}
       );
 
-      //   createConfigMap({
-      //     createKuberCloudConfigmapModel: {
-      //       name: values.name as string,
-      //       namespaceId: Number(kubernetesCloudId),
-      //       envs: processedEnvsToObject,
-      //     },
+      // editConfigMap({
+      //   editKuberCloudConfigmapModel: {
+      //     configmapId: Number(configData?.id),
+      //     alias: null,
+      //     description: null,
+      //     // removeEnvIds: [],
+      //     envs: processedEnvsToObject,
+      //   },
+      // })
+      //   .unwrap()
+      //   .then(() => {
+      //     toast.success("Configmap با موفقیت ساخته شد");
+      //     resetForm();
+      //     onClose();
       //   })
-      //     .unwrap()
-      //     .then(() => {
-      //       toast.success("Configmap با موفقیت ساخته شد");
-      //       resetForm();
-      //       onClose();
-      //     })
-      //     .catch(() => {});
+      //   .catch(() => {});
 
-      //   setSubmitting(false);
+      // setSubmitting(false);
     },
     enableReinitialize: true,
   });
@@ -92,7 +131,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
   const addEnvsInput = () => {
     formik.setFieldValue("envs", [
       ...formik.values.envs,
-      { key: "", value: "" },
+      { id: 0, key: "", value: "" },
     ]);
   };
 
@@ -146,9 +185,8 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                   fullWidth
                   label="*name"
                   size="small"
-                  error={Boolean(formik.errors.name && formik.touched.name)}
-                  helperText={formik.errors.name}
-                  {...formik.getFieldProps("name")}
+                  value={configData?.name}
+                  disabled
                 />
               </Grid2>
             </Grid2>
@@ -243,7 +281,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
               <LoadingButton
                 component="button"
                 type="submit"
-                loading={createConfigMapLoading}
+                loading={editConfigMapLoading}
                 variant="contained"
                 sx={{ px: 3, py: 0.8 }}
               >

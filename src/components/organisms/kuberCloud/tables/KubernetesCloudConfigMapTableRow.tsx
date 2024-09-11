@@ -70,7 +70,6 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   };
 
   function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
-    console.log(config);
     setSelectedKubernetesCloudConfigMap(config);
     setOpenEditConfigMapDialog(true);
   }

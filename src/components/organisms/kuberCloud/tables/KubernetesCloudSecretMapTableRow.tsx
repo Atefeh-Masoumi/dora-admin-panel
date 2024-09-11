@@ -69,7 +69,6 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   };
 
   function handleOpenEditSecretDialog(secret: KuberCloudSecretListResponse) {
-    console.log(secret);
     setSelectedKubernetesCloudSecretMap(secret);
     setOpenEditSecretDialog(true);
   }
@@ -168,7 +167,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
                               align="center"
                               sx={{ borderBottom: "none !important" }}
                             >
-                              {item.value}
+                              {atob(item.value)}
                             </TableCell>
                           </TableRow>
                         );

@@ -784,11 +784,15 @@ export const api = createApi({
         body: queryArg.changeContactModel,
       }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
+    postApiMyHomeIndex: build.mutation<
+      PostApiMyHomeIndexApiResponse,
+      PostApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index` }),
+      query: (queryArg) => ({
+        url: `/api/my/home/index`,
+        method: "POST",
+        body: queryArg.createVmModel,
+      }),
     }),
     getApiMyHostHypervisorList: build.query<
       GetApiMyHostHypervisorListApiResponse,
@@ -843,6 +847,7 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/secret/list/${queryArg.namespaceId}`,
+        params: { secretTypeId: queryArg.secretTypeId },
       }),
     }),
     getApiMyKubernetesCloudSecretGetById: build.query<
@@ -851,6 +856,16 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/secret/get/${queryArg.id}`,
+      }),
+    }),
+    putApiMyKubernetesCloudSecretEdit: build.mutation<
+      PutApiMyKubernetesCloudSecretEditApiResponse,
+      PutApiMyKubernetesCloudSecretEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/secret/edit`,
+        method: "PUT",
+        body: queryArg.editKuberCloudSecretModel,
       }),
     }),
     deleteApiMyKubernetesCloudSecretDeleteById: build.mutation<
@@ -1028,6 +1043,16 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/configmap/get/${queryArg.id}`,
+      }),
+    }),
+    putApiMyKubernetesCloudConfigmapEdit: build.mutation<
+      PutApiMyKubernetesCloudConfigmapEditApiResponse,
+      PutApiMyKubernetesCloudConfigmapEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/configmap/edit`,
+        method: "PUT",
+        body: queryArg.editKuberCloudConfigmapModel,
       }),
     }),
     deleteApiMyKubernetesCloudConfigmapDeleteById: build.mutation<
@@ -2538,8 +2563,10 @@ export type PutApiMyDomainHostChangeContactApiResponse = unknown;
 export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
+export type PostApiMyHomeIndexApiResponse = unknown;
+export type PostApiMyHomeIndexApiArg = {
+  createVmModel: CreateVmModel;
+};
 export type GetApiMyHostHypervisorListApiResponse =
   /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
@@ -2568,11 +2595,16 @@ export type GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudSecretListResponse[];
 export type GetApiMyKubernetesCloudSecretListByNamespaceIdApiArg = {
   namespaceId: number;
+  secretTypeId?: number;
 };
 export type GetApiMyKubernetesCloudSecretGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudSecretResponse;
 export type GetApiMyKubernetesCloudSecretGetByIdApiArg = {
   id: number;
+};
+export type PutApiMyKubernetesCloudSecretEditApiResponse = unknown;
+export type PutApiMyKubernetesCloudSecretEditApiArg = {
+  editKuberCloudSecretModel: EditKuberCloudSecretModel;
 };
 export type DeleteApiMyKubernetesCloudSecretDeleteByIdApiResponse = unknown;
 export type DeleteApiMyKubernetesCloudSecretDeleteByIdApiArg = {
@@ -2658,6 +2690,10 @@ export type GetApiMyKubernetesCloudConfigmapGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudConfigResponse;
 export type GetApiMyKubernetesCloudConfigmapGetByIdApiArg = {
   id: number;
+};
+export type PutApiMyKubernetesCloudConfigmapEditApiResponse = unknown;
+export type PutApiMyKubernetesCloudConfigmapEditApiArg = {
+  editKuberCloudConfigmapModel: EditKuberCloudConfigmapModel;
 };
 export type DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiResponse = unknown;
 export type DeleteApiMyKubernetesCloudConfigmapDeleteByIdApiArg = {
@@ -3809,6 +3845,20 @@ export type ChangeContactModel = {
   fax?: string | null;
   email: string;
 };
+export type CreateVmModel = {
+  name: string;
+  password: string;
+  publicKey?: string | null;
+  imageId: number;
+  isPredefined: boolean;
+  vmProjectId: number;
+  productBundleId?: number | null;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
+  vpcHostNetworkId?: number | null;
+  ipAddress?: string | null;
+};
 export type HypervisorListResponse = {
   id?: number;
   name: string | null;
@@ -3865,6 +3915,17 @@ export type GetKuberCloudSecretResponse = {
   secretTypeId: number;
   keyValuePairs: SecretKeyValuePairResponse[] | null;
   createDate: string;
+};
+export type EditKuberCloudSecretModel = {
+  secretId: number;
+  alias?: string | null;
+  description?: string | null;
+  removeEnvIds?: string[] | null;
+  envs?: {
+    [key: string]: {
+      [key: string]: string;
+    };
+  } | null;
 };
 export type CreateKuberCloudSecretModel = {
   name: string;
@@ -4050,6 +4111,17 @@ export type GetKuberCloudConfigResponse = {
   description: string | null;
   keyValuePairs: KeyValuePairResponse[] | null;
   createDate: string;
+};
+export type EditKuberCloudConfigmapModel = {
+  configmapId: number;
+  alias?: string | null;
+  description?: string | null;
+  removeEnvIds?: string[] | null;
+  envs?: {
+    [key: string]: {
+      [key: string]: string;
+    };
+  } | null;
 };
 export type CreateKuberCloudConfigmapModel = {
   name: string;
@@ -4796,20 +4868,6 @@ export type EditVmModel = {
   memory: number;
   disk: number;
 };
-export type CreateVmModel = {
-  name: string;
-  password: string;
-  publicKey?: string | null;
-  imageId: number;
-  isPredefined: boolean;
-  vmProjectId: number;
-  productBundleId?: number | null;
-  cpu?: number | null;
-  memory?: number | null;
-  disk?: number | null;
-  vpcHostNetworkId?: number | null;
-  ipAddress?: string | null;
-};
 export type WebHostListResponse = {
   id?: number;
   datacenter: string | null;
@@ -5003,7 +5061,7 @@ export const {
   usePostApiMyDomainHostCheckDomainMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePutApiMyDomainHostChangeContactMutation,
-  useGetApiMyHomeIndexQuery,
+  usePostApiMyHomeIndexMutation,
   useGetApiMyHostHypervisorListQuery,
   useGetApiMyHostProjectListQuery,
   useGetApiMyHostProjectGetByIdQuery,
@@ -5012,6 +5070,7 @@ export const {
   usePostApiMyHostProjectCreateMutation,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudSecretGetByIdQuery,
+  usePutApiMyKubernetesCloudSecretEditMutation,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
   usePostApiMyKubernetesCloudSecretCreateMutation,
   usePutApiMyKubernetesCloudIngressRuleEditMutation,
@@ -5033,6 +5092,7 @@ export const {
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
   useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudConfigmapGetByIdQuery,
+  usePutApiMyKubernetesCloudConfigmapEditMutation,
   useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
   usePostApiMyKubernetesCloudConfigmapCreateMutation,
   useGetApiMyKubernetesClusterVersionListQuery,
@@ -5173,4 +5233,3 @@ export const {
   useGetApiMyPortalWebsiteBlogGetByLinkQuery,
   useGetApiMyPortalWebsiteAlarmListQuery,
 } = api;
-
