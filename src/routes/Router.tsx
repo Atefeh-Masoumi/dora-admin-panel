@@ -213,7 +213,7 @@ const Router: FC = () => {
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: -1,
               },
               hideSidebar: false,
             })}
@@ -708,7 +708,7 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId/deployment/create"
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/add"
           element={mainTemplate(AddKubernetesCloudDeployment, {
             link: {
               text: "بازگشت به مدیریت deployment ها",

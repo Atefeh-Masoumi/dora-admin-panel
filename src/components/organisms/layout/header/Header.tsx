@@ -135,7 +135,7 @@ const Header: FC<HeaderPropsType> = ({
     </>
   );
 
-  const backButtonOnClick = (url: string) => {
+  const backButtonOnClick = (url: string | number) => {
     let href: string | number = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
@@ -143,7 +143,7 @@ const Header: FC<HeaderPropsType> = ({
         break;
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
         navigate(-1);
-        break;
+        return;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =
           !projectId || !vpcId
@@ -151,10 +151,12 @@ const Header: FC<HeaderPropsType> = ({
             : `/vpc/${vpcId}/vm?projectId=${projectId}&vpcId=${vpcId}`;
         break;
       default:
-        href = url;
+        href = typeof url === "string" ? url : "";
         break;
     }
-    navigate(href);
+    if (href) {
+      navigate(href);
+    }
   };
 
   return (
