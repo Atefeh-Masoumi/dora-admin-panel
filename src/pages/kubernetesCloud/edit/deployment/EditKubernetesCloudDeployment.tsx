@@ -25,9 +25,9 @@ const EditKubernetesCloudDeployment: FC = () => {
     if (pathname.includes("gateway")) {
       result = `gateway`;
     }
-    if (pathname.includes("monitoring")) {
-      result = `monitoring`;
-    }
+    // if (pathname.includes("monitoring")) {
+    //   result = `monitoring`;
+    // }
 
     return result;
   }, [pathname]);
@@ -51,9 +51,9 @@ const EditKubernetesCloudDeployment: FC = () => {
       case `gateway`:
         result = <Gateway />;
         break;
-      case `monitoring`:
-        result = <Monitoring />;
-        break;
+      // case `monitoring`:
+      //   result = <Monitoring />;
+      //   break;
       default:
         result = <Specification />;
         break;
@@ -83,9 +83,9 @@ const EditKubernetesCloudDeployment: FC = () => {
           scrollButtons="auto"
         >
           <DorsaTab value={`specification`} label="مشخصات" />
-          <DorsaTab value={`setting`} label="تغییر مشخصات نرم افزاری" />
+          <DorsaTab value={`setting`} label="تنظیمات" />
           <DorsaTab value={`gateway`} label="gateway" />
-          <DorsaTab value={`monitoring`} label="monitoring" />
+          {/* <DorsaTab value={`monitoring`} label="monitoring" /> */}
         </Tabs>
       </Box>
       {renderHandler()}

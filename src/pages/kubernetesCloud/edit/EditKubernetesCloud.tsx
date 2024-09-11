@@ -105,10 +105,10 @@ const EditKubernetesCloud: FC = () => {
           scrollButtons="auto"
         >
           <DorsaTab value={`specification`} label="مشخصات" />
+          <DorsaTab value={`setting`} label="تغییر مشخصات سخت افزاری" />
           <DorsaTab value={`deployment`} label="Deployment" />
           <DorsaTab value={`configmap`} label="Configmap" />
           <DorsaTab value={`secret`} label="Secret" />
-          <DorsaTab value={`setting`} label="تغییر مشخصات نرم افزاری" />
           <DorsaTab value={`ingress`} label="Ingress" />
         </Tabs>
       </Box>

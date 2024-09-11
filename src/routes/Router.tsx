@@ -622,7 +622,7 @@ const Router: FC = () => {
         <Route
           path="/kubernetes-cloud"
           element={mainTemplate(KubernetesCloud, {
-            pageTitle: "مدیریت سرویس کوبرنتیز ابری",
+            pageTitle: "مدیریت کوبرنتیز ابری",
           })}
         />
 
@@ -738,7 +738,7 @@ const Router: FC = () => {
         <Route
           path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/setting"
           element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "تغییر مشخصات نرم افزاری",
+            pageTitle: "تغییر مشخصات سخت افزاری",
           })}
         />
         <Route

@@ -136,13 +136,13 @@ const Header: FC<HeaderPropsType> = ({
   );
 
   const backButtonOnClick = (url: string) => {
-    let href = "";
+    let href: string | number = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
         href = `/kubernetes-cluster/${kubernetesClusterID}`;
         break;
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
-        href = `/kubernetes-cloud/${kubernetesCloudId}`;
+        navigate(-1);
         break;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =

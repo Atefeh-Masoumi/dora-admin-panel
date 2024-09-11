@@ -25,9 +25,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
     { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
     {
       label: "Create Date",
-      value: data?.createDate
-        ? ConvertToJalali(String(data?.createDate)).split(" ").join(" - ")
-        : "----",
+      value: data?.createDate ? ConvertToJalali(String(data?.createDate)) : "",
       id: "createDate",
     },
   ];
@@ -48,7 +46,7 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
           sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         >
           <Typography align="right" fontWeight={700} fontSize={18}>
-            Virtual Machine
+            Overview
           </Typography>
           <Divider />
           {infoList.map(({ id, label, value }, index) =>
