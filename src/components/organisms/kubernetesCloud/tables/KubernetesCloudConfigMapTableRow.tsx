@@ -74,12 +74,16 @@ export const KubernetesCloudConfigMapTableRow: FC<{
           },
         }}
       >
-        <TableCell align="center">{id}</TableCell>
-        <TableCell align="center">{name}</TableCell>
-        <TableCell align="center">
+        <TableCell sx={{ border: "none" }} align="center">
+          {id}
+        </TableCell>
+        <TableCell sx={{ border: "none" }} align="center">
+          {name}
+        </TableCell>
+        <TableCell sx={{ border: "none" }} align="center">
           {ConvertToJalali(String(createDate))}
         </TableCell>
-        <TableCell align="center">
+        <TableCell sx={{ border: "none" }} align="center">
           <IconButton
             sx={{ borderRadius: 1 }}
             color="error"
@@ -87,13 +91,6 @@ export const KubernetesCloudConfigMapTableRow: FC<{
           >
             <TrashSvg />
           </IconButton>
-        </TableCell>
-        <TableCell
-          align="center"
-          sx={{
-            borderTop: "1px solid rgba(224, 224, 224, 1)",
-          }}
-        >
           <IconButton
             aria-label="expand row"
             size="small"
@@ -105,6 +102,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
       </TableRow>
       <TableRow>
         <TableCell
+          sx={{ border: "none" }}
           style={{ padding: 0 }}
           colSpan={6}
           // sx={{ borderBottom: "none !important" }}
@@ -132,22 +130,13 @@ export const KubernetesCloudConfigMapTableRow: FC<{
                     ? configList?.map((item: any, index: any) => {
                         return (
                           <TableRow key={index}>
-                            <TableCell
-                              align="center"
-                              sx={{ borderBottom: "none !important" }}
-                            >
+                            <TableCell sx={{ border: "none" }} align="center">
                               {item.id}
                             </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ borderBottom: "none !important" }}
-                            >
+                            <TableCell sx={{ border: "none" }} align="center">
                               {item.key}
                             </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ borderBottom: "none !important" }}
-                            >
+                            <TableCell sx={{ border: "none" }} align="center">
                               {item.value}
                             </TableCell>
                           </TableRow>

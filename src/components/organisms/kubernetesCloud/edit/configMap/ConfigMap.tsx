@@ -21,6 +21,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
 import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 
 type KubernetesCloudConfigMapPropsType = {};
 
@@ -100,17 +101,42 @@ export const KubernetesCloudConfigMap: FC<
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow>
+              {/* <TableRow>
                 {data &&
                   data.length > 0 &&
                   kubernetesCloudConfigMapTableStruct.map((item, index) => {
                     return (
-                      <TableCell align="center" key={index}>
+                      <TableCell
+                        sx={{ border: "none" }}
+                        align="center"
+                        key={index}
+                      >
                         {item.label}
                       </TableCell>
                     );
                   })}
-              </TableRow>
+              </TableRow> */}
+
+              <DorsaTableRow>
+                {data &&
+                  data.length > 0 &&
+                  kubernetesCloudConfigMapTableStruct.map((column, index) => {
+                    return (
+                      <DorsaTableCell
+                        key={column.id}
+                        align="center"
+                        sx={{
+                          px: 1,
+                          py: 2,
+                          whiteSpace: "nowrap",
+                          cursor: !column?.disableSort ? "pointer" : "default",
+                        }}
+                      >
+                        {column.label}
+                      </DorsaTableCell>
+                    );
+                  })}
+              </DorsaTableRow>
             </TableHead>
             <TableBody>
               {isLoading ? (
