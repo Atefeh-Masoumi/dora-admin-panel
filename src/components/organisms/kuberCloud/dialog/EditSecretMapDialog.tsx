@@ -23,6 +23,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { decodebase64 } from "src/utils/decodebase64";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
+import { toast } from "react-toastify";
 
 type InitialValuesType = {
   alias?: string | null;
@@ -53,34 +54,86 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
       secretId: secretData?.id,
     },
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      // console.log(processedSecretData);
-      // console.log(values?.envs);
+      const submittedConfigMapsArray = values?.envs;
+      const configDataConfigMapsArray = processedSecretData;
 
-      const processedEnvsToObject = values.envs.reduce(
-        (acc: any, item: any) => {
-          acc[item.key] = btoa(item.value);
+      const compareConfigMaps = (
+        originalArray: { id: number; key: string; value: string }[],
+        submittedArray: { key: string; value: string }[]
+      ) => {
+        let removeEnvIds: string[] = [];
+        let envs: { [key: string]: any } = {};
 
-          return acc;
-        },
-        {}
+        const originalLookup: {
+          [key: string]: { id: number; key: string; value: string };
+        } = originalArray.reduce(
+          (acc, item) => ({
+            ...acc,
+            [item.key]: item,
+          }),
+          {} as { [key: string]: { id: number; key: string; value: string } }
+        );
+
+        submittedArray.forEach((submittedItem) => {
+          const originalItem = originalLookup[submittedItem.key];
+
+          if (originalItem) {
+            if (originalItem.value !== submittedItem.value) {
+              envs[originalItem.id] = {
+                [submittedItem.key]: submittedItem.value,
+              };
+            }
+          } else {
+            envs["0"] = envs["0"] || {};
+            envs["0"][submittedItem.key] = submittedItem.value;
+          }
+        });
+
+        originalArray.forEach((originalItem) => {
+          const isKeyDeleted = !submittedArray.some(
+            (submittedItem) => submittedItem.key === originalItem.key
+          );
+          if (isKeyDeleted) {
+            removeEnvIds.push(String(originalItem.id));
+          }
+        });
+
+        return { removeEnvIds, envs };
+      };
+
+      const updatedConfigmap = compareConfigMaps(
+        configDataConfigMapsArray,
+        submittedConfigMapsArray
       );
 
-      // editSecretMap({
-      //   editKuberCloudSecretModel: {
-      //     alias: values.alias as string,
-      //     envs: processedEnvsToObject,
-      //     secretId: Number(values.secretId),
-      //   },
-      // })
-      //   .unwrap()
-      //   .then(() => {
-      //     toast.success("Secret با موفقیت ساخته شد");
-      //     resetForm();
-      //     onClose();
-      //   })
-      //   .catch(() => {});
+      const processedEnvsToObjectBase64: any = {};
 
-      // setSubmitting(false);
+      Object.keys(updatedConfigmap.envs).forEach((key) => {
+        processedEnvsToObjectBase64[key] = {};
+        Object.keys(updatedConfigmap.envs[key]).forEach((innerKey) => {
+          processedEnvsToObjectBase64[key][innerKey] = btoa(
+            updatedConfigmap.envs[key][innerKey]
+          );
+        });
+      });
+
+      editSecretMap({
+        editKuberCloudSecretModel: {
+          alias: values.alias as string,
+          envs: processedEnvsToObjectBase64,
+          secretId: Number(values.secretId),
+          removeEnvIds: updatedConfigmap?.removeEnvIds,
+        },
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("با موفقیت ایجاد شد");
+          resetForm();
+          onClose();
+        })
+        .catch(() => {});
+
+      setSubmitting(false);
     },
     enableReinitialize: true,
   });

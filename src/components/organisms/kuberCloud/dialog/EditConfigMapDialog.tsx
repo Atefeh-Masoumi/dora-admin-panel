@@ -57,73 +57,72 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
       const submittedConfigMapsArray = values?.envs;
       const configDataConfigMapsArray = configData?.configMaps;
 
-      const getModifiedAndNewObjects = (
-        submittedArray: any,
-        configArray: any
+      const compareConfigMaps = (
+        originalArray: { id: number; key: string; value: string }[],
+        submittedArray: { key: string; value: string }[]
       ) => {
-        const modifiedAndNew: any = [];
+        let removeEnvIds: string[] = [];
+        let envs: { [key: string]: any } = {};
 
-        const configMap = new Map(
-          configArray.map((item: any) => [item.id, item])
+        const originalLookup: {
+          [key: string]: { id: number; key: string; value: string };
+        } = originalArray.reduce(
+          (acc, item) => ({
+            ...acc,
+            [item.key]: item,
+          }),
+          {} as { [key: string]: { id: number; key: string; value: string } }
         );
 
-        // Check for new or modified items
-        submittedArray.forEach((submittedItem: any) => {
-          const configItem: any = configMap.get(submittedItem.id);
+        submittedArray.forEach((submittedItem) => {
+          const originalItem = originalLookup[submittedItem.key];
 
-          if (
-            !configItem ||
-            configItem.key !== submittedItem.key ||
-            configItem.value !== submittedItem.value
-          ) {
-            modifiedAndNew.push(submittedItem);
+          if (originalItem) {
+            if (originalItem.value !== submittedItem.value) {
+              envs[originalItem.id] = {
+                [submittedItem.key]: submittedItem.value,
+              };
+            }
+          } else {
+            envs["0"] = envs["0"] || {};
+            envs["0"][submittedItem.key] = submittedItem.value;
           }
         });
 
-        configArray.forEach((configItem: any) => {
-          const existsInSubmitted = submittedArray.some(
-            (submittedItem: any) => submittedItem.id === configItem.id
+        originalArray.forEach((originalItem) => {
+          const isKeyDeleted = !submittedArray.some(
+            (submittedItem) => submittedItem.key === originalItem.key
           );
-
-          if (!existsInSubmitted) {
-            modifiedAndNew.push(configItem);
+          if (isKeyDeleted) {
+            removeEnvIds.push(String(originalItem.id));
           }
         });
 
-        return modifiedAndNew;
+        return { removeEnvIds, envs };
       };
 
-      const result = getModifiedAndNewObjects(
-        submittedConfigMapsArray,
-        configDataConfigMapsArray
+      const updatedConfigmap = compareConfigMaps(
+        configDataConfigMapsArray,
+        submittedConfigMapsArray
       );
-
-      const processedEnvsToObject = values.envs.reduce(
-        (acc: any, item: any) => {
-          acc[item.key] = item.value;
-          return acc;
+      editConfigMap({
+        editKuberCloudConfigmapModel: {
+          configmapId: Number(configData?.id),
+          alias: null,
+          description: null,
+          removeEnvIds: updatedConfigmap.removeEnvIds,
+          envs: updatedConfigmap.envs,
         },
-        {}
-      );
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("با موفقیت آپدیت شد");
+          resetForm();
+          onClose();
+        })
+        .catch(() => {});
 
-      // editConfigMap({
-      //   editKuberCloudConfigmapModel: {
-      //     configmapId: Number(configData?.id),
-      //     alias: null,
-      //     description: null,
-      //     // removeEnvIds: [],
-      //     envs: processedEnvsToObject,
-      //   },
-      // })
-      //   .unwrap()
-      //   .then(() => {
-      //     toast.success("Configmap با موفقیت ساخته شد");
-      //     resetForm();
-      //     onClose();
-      //   })
-      //   .catch(() => {});
-
-      // setSubmitting(false);
+      setSubmitting(false);
     },
     enableReinitialize: true,
   });

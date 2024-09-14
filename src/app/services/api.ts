@@ -428,6 +428,9 @@ export const api = generatedApi
       deleteApiMyKubernetesCloudConfigmapDeleteById: {
         invalidatesTags: () => ["ConfigMap"],
       },
+      putApiMyKubernetesCloudConfigmapEdit: {
+        invalidatesTags: () => ["ConfigMap"],
+      },
       // ============================== Kubernetes Cloud SecretMap ============================== //
       getApiMyKubernetesCloudSecretListByNamespaceId: {
         providesTags: () => ["SecretMap"],
@@ -436,6 +439,9 @@ export const api = generatedApi
         invalidatesTags: () => ["SecretMap"],
       },
       deleteApiMyKubernetesCloudSecretDeleteById: {
+        invalidatesTags: () => ["SecretMap"],
+      },
+      putApiMyKubernetesCloudSecretEdit: {
         invalidatesTags: () => ["SecretMap"],
       },
       // ============================== Kubernetes Cloud Namespace ============================== //
