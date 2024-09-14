@@ -996,11 +996,13 @@ export const api = createApi({
         body: queryArg.createKuberCloudHostModel,
       }),
     }),
-    getApiMyKubernetesCloudDeploymentList: build.query<
-      GetApiMyKubernetesCloudDeploymentListApiResponse,
-      GetApiMyKubernetesCloudDeploymentListApiArg
+    getApiMyKubernetesCloudDeploymentListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudDeploymentListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudDeploymentListByNamespaceIdApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes/cloud/deployment/list` }),
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/deployment/list/${queryArg.namespaceId}`,
+      }),
     }),
     getApiMyKubernetesCloudDeploymentGetById: build.query<
       GetApiMyKubernetesCloudDeploymentGetByIdApiResponse,
@@ -1893,12 +1895,6 @@ export const api = createApi({
         body: queryArg.createSnapshotModel,
       }),
     }),
-    getApiMyVmKmsGetById: build.query<
-      GetApiMyVmKmsGetByIdApiResponse,
-      GetApiMyVmKmsGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
-    }),
     putApiMyVmIsoUnmountById: build.mutation<
       PutApiMyVmIsoUnmountByIdApiResponse,
       PutApiMyVmIsoUnmountByIdApiArg
@@ -1926,6 +1922,12 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
       }),
+    }),
+    getApiMyVmKmsGetById: build.query<
+      GetApiMyVmKmsGetByIdApiResponse,
+      GetApiMyVmKmsGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
     }),
     putApiMyVmHostStopById: build.mutation<
       PutApiMyVmHostStopByIdApiResponse,
@@ -2665,9 +2667,11 @@ export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudHostCreateApiArg = {
   createKuberCloudHostModel: CreateKuberCloudHostModel;
 };
-export type GetApiMyKubernetesCloudDeploymentListApiResponse =
+export type GetApiMyKubernetesCloudDeploymentListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudDeploymentListResponse[];
-export type GetApiMyKubernetesCloudDeploymentListApiArg = void;
+export type GetApiMyKubernetesCloudDeploymentListByNamespaceIdApiArg = {
+  namespaceId: number;
+};
 export type GetApiMyKubernetesCloudDeploymentGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudDeploymentResponse;
 export type GetApiMyKubernetesCloudDeploymentGetByIdApiArg = {
@@ -3131,11 +3135,6 @@ export type PostApiMyVmSnapshotCreateApiResponse = unknown;
 export type PostApiMyVmSnapshotCreateApiArg = {
   createSnapshotModel: CreateSnapshotModel;
 };
-export type GetApiMyVmKmsGetByIdApiResponse =
-  /** status 200 OK */ GetRemoteConsoleResponse;
-export type GetApiMyVmKmsGetByIdApiArg = {
-  id: number;
-};
 export type PutApiMyVmIsoUnmountByIdApiResponse = unknown;
 export type PutApiMyVmIsoUnmountByIdApiArg = {
   id: number;
@@ -3150,6 +3149,11 @@ export type GetApiMyVmIsoListByDatacenterIdApiResponse =
   /** status 200 OK */ IsoListResponse[];
 export type GetApiMyVmIsoListByDatacenterIdApiArg = {
   datacenterId: number;
+};
+export type GetApiMyVmKmsGetByIdApiResponse =
+  /** status 200 OK */ GetRemoteConsoleResponse;
+export type GetApiMyVmKmsGetByIdApiArg = {
+  id: number;
 };
 export type PutApiMyVmHostStopByIdApiResponse = unknown;
 export type PutApiMyVmHostStopByIdApiArg = {
@@ -3329,6 +3333,7 @@ export type GetNotificationStatusResponse = {
   emailNotify: boolean;
 };
 export type GetProfileResponse = {
+  id?: string;
   phoneNumber: string | null;
   phoneNumberConfirmed: boolean;
   email: string | null;
@@ -3342,6 +3347,9 @@ export type GetProfileResponse = {
   birthDate?: string | null;
   address?: string | null;
   isFromSso?: boolean;
+  isDisabled?: string | null;
+  createDate?: string;
+  modifyDate?: string;
 };
 export type EditPhoneNumberModel = {
   phoneNumber: string;
@@ -4807,10 +4815,6 @@ export type CreateSnapshotModel = {
   snapshotName: string;
   snapshotDescription?: string | null;
 };
-export type GetRemoteConsoleResponse = {
-  location: string | null;
-  vmTypeId: number;
-};
 export type UnmountModel = {
   vmId: number;
 };
@@ -4820,6 +4824,10 @@ export type MountModel = {
 export type IsoListResponse = {
   id?: number;
   name: string | null;
+};
+export type GetRemoteConsoleResponse = {
+  location: string | null;
+  vmTypeId: number;
 };
 export type VmShortListResponse = {
   id?: number;
@@ -5086,7 +5094,7 @@ export const {
   usePutApiMyKubernetesCloudHostEditByIdMutation,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
   usePostApiMyKubernetesCloudHostCreateMutation,
-  useGetApiMyKubernetesCloudDeploymentListQuery,
+  useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudDeploymentGetByIdQuery,
   useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
@@ -5198,10 +5206,10 @@ export const {
   useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
   useDeleteApiMyVmSnapshotDeleteByIdMutation,
   usePostApiMyVmSnapshotCreateMutation,
-  useGetApiMyVmKmsGetByIdQuery,
   usePutApiMyVmIsoUnmountByIdMutation,
   usePutApiMyVmIsoMountByIdMutation,
   useGetApiMyVmIsoListByDatacenterIdQuery,
+  useGetApiMyVmKmsGetByIdQuery,
   usePutApiMyVmHostStopByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostShutdownByIdMutation,

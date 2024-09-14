@@ -6,6 +6,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useGetApiMyWebHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 type WebInfoPropsType = {};
 
@@ -23,12 +24,7 @@ export const WebInfo: FC<WebInfoPropsType> = () => {
   const isLoading = useMemo(
     () => getStorageDataLoading || getStorageDataFetching,
     [getStorageDataFetching, getStorageDataLoading]
-  );
-
-  const isActive = useMemo(
-    () => storageData?.statusId === 2,
-    [storageData?.statusId]
-  );
+  );  
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
@@ -47,12 +43,12 @@ export const WebInfo: FC<WebInfoPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={storageData?.status}
+                label={serviceStatusIdentifier(storageData?.statusId!).label}
                 sx={{
-                  bgcolor: ({ palette }) =>
-                    isActive ? palette.success.light : palette.error.light,
-                  color: ({ palette }) =>
-                    isActive ? palette.success.main : palette.error.main,
+                  bgcolor: serviceStatusIdentifier(storageData?.statusId!)
+                    .bgColor,
+                  color: serviceStatusIdentifier(storageData?.statusId!)
+                    .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />

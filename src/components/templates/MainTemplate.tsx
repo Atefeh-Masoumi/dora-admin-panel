@@ -9,7 +9,7 @@ export const sidebarWidth = 240;
 export type MainTemplatePropsType = {
   children?: any;
   pageTitle?: string;
-  link?: { text: string; url: string };
+  link?: { text: string; url: string | number };
   RightComponent?: FC;
   hideSidebar?: boolean;
 };

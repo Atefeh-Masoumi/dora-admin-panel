@@ -90,10 +90,6 @@ const VmProjectList: FC = () => {
     navigate(`/vm/${project.id}/list`);
   };
 
-  const getBackgroundColor = (isPublic: boolean) => {
-    return isPublic ? "green" : "red";
-  };
-
   return (
     <>
       <Fragment>
