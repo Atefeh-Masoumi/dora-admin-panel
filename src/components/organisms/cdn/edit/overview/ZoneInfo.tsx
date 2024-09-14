@@ -95,10 +95,10 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={serviceStatusIdentifier(zoneData?.status!).label}
+                label={serviceStatusIdentifier(zoneData?.statusId!).label}
                 sx={{
-                  bgcolor: serviceStatusIdentifier(zoneData?.status!).bgColor,
-                  color: serviceStatusIdentifier(zoneData?.status!)
+                  bgcolor: serviceStatusIdentifier(zoneData?.statusId!).bgColor,
+                  color: serviceStatusIdentifier(zoneData?.statusId!)
                     .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
