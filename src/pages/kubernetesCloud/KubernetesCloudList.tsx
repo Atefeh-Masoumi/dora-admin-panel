@@ -91,7 +91,7 @@ const KubernetesCloudList: FC = () => {
           <BaseTable
             struct={kubernetesCloudTableStruct}
             RowComponent={KubernetesCloudTableRow}
-            rows={filteredList}
+            rows={filteredList.reverse()}
             text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
             isLoading={isLoading}
             initialOrder={9}
