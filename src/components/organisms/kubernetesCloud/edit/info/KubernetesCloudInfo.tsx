@@ -6,6 +6,7 @@ import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 type KubernetesCloudInfoPropsType = {};
 
@@ -56,14 +57,11 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
                 title="Status"
                 component={
                   <Chip
-                    label={label}
+                    label={serviceStatusIdentifier(Number(value)).label}
                     sx={{
-                      bgcolor: ({ palette }) =>
-                        value === 2
-                          ? palette.success.light
-                          : palette.error.light,
-                      color: ({ palette }) =>
-                        value === 2 ? palette.success.main : palette.error.main,
+                      bgcolor: serviceStatusIdentifier(Number(value)).bgColor,
+                      color: serviceStatusIdentifier(Number(value))
+                        .typographyColor,
                       borderRadius: BORDER_RADIUS_1,
                     }}
                   />

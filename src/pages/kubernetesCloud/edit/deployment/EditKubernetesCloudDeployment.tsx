@@ -25,9 +25,6 @@ const EditKubernetesCloudDeployment: FC = () => {
     if (pathname.includes("gateway")) {
       result = `gateway`;
     }
-    // if (pathname.includes("monitoring")) {
-    //   result = `monitoring`;
-    // }
 
     return result;
   }, [pathname]);
@@ -51,9 +48,6 @@ const EditKubernetesCloudDeployment: FC = () => {
       case `gateway`:
         result = <Gateway />;
         break;
-      // case `monitoring`:
-      //   result = <Monitoring />;
-      //   break;
       default:
         result = <Specification />;
         break;
