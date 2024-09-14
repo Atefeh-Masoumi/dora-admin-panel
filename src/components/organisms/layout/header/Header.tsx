@@ -23,7 +23,7 @@ import { useSearchParams } from "react-router-dom";
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
   title?: string;
-  link?: { text: string; url: string };
+  link?: { text: string; url: string | number };
   isScrolled?: boolean;
   RightComponent?: FC;
 };
