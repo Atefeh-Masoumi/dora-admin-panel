@@ -3928,7 +3928,7 @@ export type EditKuberCloudSecretModel = {
   secretId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: number[] | null;
+  removeEnvIds?: string[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -4124,7 +4124,7 @@ export type EditKuberCloudConfigmapModel = {
   configmapId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: number[] | null;
+  removeEnvIds?: string[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -5241,4 +5241,3 @@ export const {
   useGetApiMyPortalWebsiteBlogGetByLinkQuery,
   useGetApiMyPortalWebsiteAlarmListQuery,
 } = api;
-

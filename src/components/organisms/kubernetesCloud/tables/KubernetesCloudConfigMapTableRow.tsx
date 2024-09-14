@@ -17,13 +17,16 @@ import {
   useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+import EditIcon from "@mui/icons-material/Edit";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesConfigListTableStruct } from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
+  EDIT = "EDIT",
 }
 
 export const KubernetesCloudConfigMapTableRow: FC<{
@@ -37,6 +40,8 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   const configList = row.configMaps! || [];
 
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [openEditConfigMapDialog, setOpenEditConfigMapDialog] =
+    useState<boolean>(false);
   const [
     selectedKubernetesCloudConfigMap,
     setSelectedKubernetesCloudConfigMap,
@@ -59,10 +64,19 @@ export const KubernetesCloudConfigMapTableRow: FC<{
     setSelectedKubernetesCloudConfigMap(null);
   };
 
-  const handleOpenDelete = (config: GetKuberCloudConfigResponse) => {
+  const handleOpenDeleteModal = (config: GetKuberCloudConfigResponse) => {
     setSelectedKubernetesCloudConfigMap(config);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
+
+  function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
+    setSelectedKubernetesCloudConfigMap(config);
+    setOpenEditConfigMapDialog(true);
+  }
+
+  function handleCloseEditConfigMapDialog() {
+    setOpenEditConfigMapDialog(false);
+  }
 
   return (
     <>
@@ -86,8 +100,14 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         <TableCell sx={{ border: "none" }} align="center">
           <IconButton
             sx={{ borderRadius: 1 }}
+            onClick={() => handleOpenEditConfigMapDialog(row)}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            sx={{ borderRadius: 1 }}
             color="error"
-            onClick={() => handleOpenDelete(row)}
+            onClick={() => handleOpenDeleteModal(row)}
           >
             <TrashSvg />
           </IconButton>
@@ -101,12 +121,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell
-          sx={{ border: "none" }}
-          style={{ padding: 0 }}
-          colSpan={6}
-          // sx={{ borderBottom: "none !important" }}
-        >
+        <TableCell style={{ padding: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ display: "flex" }}>
               <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
@@ -157,6 +172,11 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         securityPhrase={selectedKubernetesCloudConfigMap?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteConfigMapLoading}
+      />
+      <EditConfigMapDialog
+        openDialog={openEditConfigMapDialog}
+        onClose={handleCloseEditConfigMapDialog}
+        configData={selectedKubernetesCloudConfigMap}
       />
     </>
   );
