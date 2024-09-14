@@ -49,7 +49,7 @@ const KubernetesCloudList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس کوبرنتیز ابری
+              لیست کوبرنتیز ابری
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
@@ -83,7 +83,7 @@ const KubernetesCloudList: FC = () => {
               </Stack>
             }
           >
-            ایجاد سرویس کوبرنتیز
+            ایجاد کوبرنتیز ابری
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -91,7 +91,7 @@ const KubernetesCloudList: FC = () => {
           <BaseTable
             struct={kubernetesCloudTableStruct}
             RowComponent={KubernetesCloudTableRow}
-            rows={filteredList}
+            rows={filteredList.reverse()}
             text="در حال حاضر سرویس کوبرنتیزی وجود ندارد"
             isLoading={isLoading}
             initialOrder={9}

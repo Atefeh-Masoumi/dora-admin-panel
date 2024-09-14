@@ -23,7 +23,7 @@ import { useSearchParams } from "react-router-dom";
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
   title?: string;
-  link?: { text: string; url: string };
+  link?: { text: string; url: string | number };
   isScrolled?: boolean;
   RightComponent?: FC;
 };
@@ -135,15 +135,15 @@ const Header: FC<HeaderPropsType> = ({
     </>
   );
 
-  const backButtonOnClick = (url: string) => {
-    let href = "";
+  const backButtonOnClick = (url: string | number) => {
+    let href: string | number = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
         href = `/kubernetes-cluster/${kubernetesClusterID}`;
         break;
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
-        href = `/kubernetes-cloud/${kubernetesCloudId}`;
-        break;
+        navigate(-1);
+        return;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =
           !projectId || !vpcId
@@ -151,10 +151,12 @@ const Header: FC<HeaderPropsType> = ({
             : `/vpc/${vpcId}/vm?projectId=${projectId}&vpcId=${vpcId}`;
         break;
       default:
-        href = url;
+        href = typeof url === "string" ? url : "";
         break;
     }
-    navigate(href);
+    if (href) {
+      navigate(href);
+    }
   };
 
   return (

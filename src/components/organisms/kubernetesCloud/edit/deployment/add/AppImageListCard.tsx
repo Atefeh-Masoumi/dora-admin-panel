@@ -3,6 +3,7 @@ import {
   FormControl,
   FormHelperText,
   Grid,
+  InputLabel,
   Link,
   MenuItem,
   Select,
@@ -111,9 +112,15 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
                   <DorsaTextField
                     fullWidth
                     dir="ltr"
-                    label="*لینک"
+                    label="آدرس ایمیج"
                     size="small"
                     placeholder="https://..."
+                    // sx={{
+                    //   // border: "0.5px solid gray",
+                    //   borderRadius: BORDER_RADIUS_1,
+                    //   border: ({ palette }: any) =>
+                    //     `1px solid ${palette.primary.light} !important`,
+                    // }}
                     // helperText={
                     //   <FormHelperText sx={{ m: 0 }}>
                     //     <Box display="flex" sx={{ direction: "ltr" }}>
@@ -126,11 +133,14 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
                     // {...formik.getFieldProps("name")}
                   />
                 </Grid>
-                <Grid item xs={12} md={2}>
-                  <FormControl fullWidth>
+                <Grid item xs={12} md={3}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel id="registry">سکرت ایمیج رجیستری</InputLabel>
                     <Select
-                      size="small"
                       value={secret}
+                      id="registry"
+                      labelId="registry-id"
+                      label="سکرت ایمیج رجیستری"
                       onChange={(e) => setSecret(Number(e.target.value))}
                       renderValue={(value) =>
                         value !== 0 ? (
@@ -145,7 +155,9 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
                         width: "100%",
                         "& .MuiSelect-select": {
                           bgcolor: "rgba(110, 118, 138, 0.06)",
-                          border: "none !important",
+
+                          border: ({ palette }) =>
+                            `0.5px solid ${palette.primary.light}`,
                           padding: "7px !important",
                         },
                         "& .MuiOutlinedInput-notchedOutline": {

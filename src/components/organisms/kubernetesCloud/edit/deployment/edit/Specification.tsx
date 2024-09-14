@@ -1,7 +1,6 @@
 import { FC, useMemo } from "react";
 import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import Grid2 from "@mui/material/Unstable_Grid2";
 import { useGetApiMyKubernetesCloudDeploymentGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { BoxRow } from "src/components/molecules/BoxRow";
@@ -10,7 +9,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 type SpecificationPropsType = {};
 
 export const Specification: FC<SpecificationPropsType> = () => {
-  const { deploymentId, kubernetesCloudId } = useParams();
+  const { deploymentId } = useParams();
 
   const {
     data: deploymentData,
@@ -40,7 +39,7 @@ export const Specification: FC<SpecificationPropsType> = () => {
           sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         >
           <Typography align="right" fontWeight={700} fontSize={18}>
-            deployment
+            Deployment
           </Typography>
           <Divider />
 
@@ -61,20 +60,12 @@ export const Specification: FC<SpecificationPropsType> = () => {
           />
           <BoxRow
             title="Create Date"
-            value={
-              ConvertToJalali(deploymentData?.createDate!)
-                .split(" ")
-                .join(" - ") || "----"
-            }
+            value={ConvertToJalali(deploymentData?.createDate!)}
             isLoading={isLoading}
           />
           <BoxRow
             title="Modify Date"
-            value={
-              ConvertToJalali(deploymentData?.modifyDate!)
-                .split(" ")
-                .join(" - ") || "----"
-            }
+            value={ConvertToJalali(deploymentData?.modifyDate!)}
             isLoading={isLoading}
           />
         </Paper>

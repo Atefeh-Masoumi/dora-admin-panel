@@ -105,7 +105,7 @@ const AddKubernetesCloudDeployment: FC = () => {
         .unwrap()
         .then((res) => {
           toast.success("کانتینر با موفقیت ایجاد شد");
-          navigate("/kubernetes-cloud/" + kubernetesCloudId);
+          navigate("/kubernetes-cloud/" + kubernetesCloudId + "/deployment");
         })
         .catch((err) => {});
     }

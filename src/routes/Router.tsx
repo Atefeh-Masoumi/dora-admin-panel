@@ -213,7 +213,7 @@ const Router: FC = () => {
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: "/portal/supports",
+                url: -1,
               },
               hideSidebar: false,
             })}
@@ -622,7 +622,7 @@ const Router: FC = () => {
         <Route
           path="/kubernetes-cloud"
           element={mainTemplate(KubernetesCloud, {
-            pageTitle: "مدیریت سرویس کوبرنتیز ابری",
+            pageTitle: "مدیریت کوبرنتیز ابری",
           })}
         />
 
@@ -708,7 +708,7 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId/deployment/create"
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/add"
           element={mainTemplate(AddKubernetesCloudDeployment, {
             link: {
               text: "بازگشت به مدیریت deployment ها",
@@ -738,7 +738,7 @@ const Router: FC = () => {
         <Route
           path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/setting"
           element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "تغییر مشخصات نرم افزاری",
+            pageTitle: "تغییر مشخصات سخت افزاری",
           })}
         />
         <Route

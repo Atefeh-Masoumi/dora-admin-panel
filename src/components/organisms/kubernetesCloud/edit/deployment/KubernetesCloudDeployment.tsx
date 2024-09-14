@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useGetApiMyKubernetesCloudDeploymentListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { kubernetesCloudDeploymentTableStruct } from "../../tables/struct";
 
@@ -13,7 +13,13 @@ import { KubernetesCloudDeploymentTableRow } from "../../tables/KubernetesCloudD
 export const KubernetesCloudDeployment: FC = () => {
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyKubernetesCloudDeploymentListQuery();
+  const navigate = useNavigate();
+  const { kubernetesCloudId } = useParams();
+
+  const { data, isLoading } =
+    useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery({
+      namespaceId: Number(kubernetesCloudId),
+    });
 
   const filteredList =
     data?.filter((item) => {
@@ -23,9 +29,6 @@ export const KubernetesCloudDeployment: FC = () => {
       }
       return result;
     }) || [];
-
-  const navigate = useNavigate();
-  const { kubernetesCloudId } = useParams();
 
   const gotToAddKubernetesCloudDeployment = () =>
     navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/create`);

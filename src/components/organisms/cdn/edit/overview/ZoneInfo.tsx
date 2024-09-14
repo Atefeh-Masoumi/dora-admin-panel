@@ -5,6 +5,7 @@ import { useGetApiMyDnsCdnHostGetByIdQuery } from "src/app/services/api.generate
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type ZoneInfoPropsType = {};
@@ -94,12 +95,11 @@ export const ZoneInfo: FC<ZoneInfoPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={zoneData?.status}
+                label={serviceStatusIdentifier(zoneData?.statusId!).label}
                 sx={{
-                  bgcolor: ({ palette }) =>
-                    isActive ? palette.success.light : palette.error.light,
-                  color: ({ palette }) =>
-                    isActive ? palette.success.main : palette.error.main,
+                  bgcolor: serviceStatusIdentifier(zoneData?.statusId!).bgColor,
+                  color: serviceStatusIdentifier(zoneData?.statusId!)
+                    .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />
