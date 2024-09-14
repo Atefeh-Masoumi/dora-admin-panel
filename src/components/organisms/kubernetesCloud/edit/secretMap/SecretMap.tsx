@@ -21,6 +21,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
+import { DorsaTableCell } from "src/components/atoms/DorsaTable";
 
 type KubernetesCloudSecretMapPropsType = {};
 
@@ -100,11 +101,20 @@ export const KubernetesCloudSecretMap: FC<
               <TableRow>
                 {data &&
                   data.length > 0 &&
-                  kubernetesCloudSecretMapTableStruct.map((item, index) => {
+                  kubernetesCloudSecretMapTableStruct.map((column, index) => {
                     return (
-                      <TableCell align="center" key={index}>
-                        {item.label}
-                      </TableCell>
+                      <DorsaTableCell
+                        key={column.id}
+                        align="center"
+                        sx={{
+                          px: 1,
+                          py: 2,
+                          whiteSpace: "nowrap",
+                          cursor: !column?.disableSort ? "pointer" : "default",
+                        }}
+                      >
+                        {column.label}
+                      </DorsaTableCell>
                     );
                   })}
               </TableRow>
