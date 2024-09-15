@@ -23,7 +23,7 @@ import {
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
-import { Counter } from "../../../kuberCloud/add/steps/Counter";
+import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 
 type SelectKuberSettingPropsType = {};
 

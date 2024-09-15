@@ -25,3 +25,5 @@ export const maskRegex =
 
 export const maskRegexOnly24 =
   /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/24$/;
+
+export const kuberCloudNameRegex = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;

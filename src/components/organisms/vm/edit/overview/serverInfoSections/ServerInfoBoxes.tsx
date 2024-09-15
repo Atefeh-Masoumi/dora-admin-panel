@@ -6,6 +6,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { BoxRow } from "src/components/molecules/BoxRow";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 type ServerInfoBoxesPropsType = {};
 
@@ -64,12 +65,11 @@ export const ServerInfoBoxes: FC<ServerInfoBoxesPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={vmData?.status}
+                label={serviceStatusIdentifier(vmData?.statusId!).label}
                 sx={{
-                  bgcolor: ({ palette }) =>
-                    isActive ? palette.success.light : palette.error.light,
-                  color: ({ palette }) =>
-                    isActive ? palette.success.main : palette.error.main,
+                  bgcolor: serviceStatusIdentifier(vmData?.statusId!).bgColor,
+                  color: serviceStatusIdentifier(vmData?.statusId!)
+                    .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />

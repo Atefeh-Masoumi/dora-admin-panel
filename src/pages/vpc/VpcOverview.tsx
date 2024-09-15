@@ -5,6 +5,7 @@ import { useGetApiMyVpcHostGetByIdQuery } from "src/app/services/api.generated";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type VpcOverviewPropsType = {};
@@ -26,8 +27,6 @@ export const VpcOverview: FC<VpcOverviewPropsType> = () => {
     () => getDataLoading || getDataFetching,
     [getDataFetching, getDataLoading]
   );
-
-  const isActive = useMemo(() => vpcData?.statusId === 2, [vpcData?.statusId]);
 
   return (
     <Stack
@@ -91,12 +90,11 @@ export const VpcOverview: FC<VpcOverviewPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={vpcData?.status}
+                label={serviceStatusIdentifier(vpcData?.statusId!).label}
                 sx={{
-                  bgcolor: ({ palette }) =>
-                    isActive ? palette.success.light : palette.error.light,
-                  color: ({ palette }) =>
-                    isActive ? palette.success.main : palette.error.main,
+                  bgcolor: serviceStatusIdentifier(vpcData?.statusId!).bgColor,
+                  color: serviceStatusIdentifier(vpcData?.statusId!)
+                    .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />
