@@ -49,9 +49,7 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
         toast.success("IP مورد نظر با موفقیت ایجاد اضافه شد");
         closeDialogHandler({}, "escapeKeyDown");
       })
-      .catch((err) => {
-        console.log({ err });
-      })
+      .catch((err) => {})
       .finally(() => {});
   };
 

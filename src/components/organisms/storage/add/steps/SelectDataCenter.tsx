@@ -8,6 +8,7 @@ import {
 import asiatechImage from "src/assets/images/asiatech.png";
 import mobinNetImage from "src/assets/images/mobinnet.png";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
+import DomainIcon from "@mui/icons-material/Domain";
 
 type SelectDataCenterPropsType = {};
 
@@ -81,7 +82,7 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                 spacing={1}
                 onClick={() => dataCenterOnClick(dataCenterItem)}
               >
-                {/* <Stack
+                <Stack
                   alignItems="center"
                   justifyContent="center"
                   sx={{
@@ -89,18 +90,12 @@ export const SelectDataCenter: FC<SelectDataCenterPropsType> = () => {
                     filter: isSelected ? "grayscale(0)" : "grayscale(100%)",
                     height: "41px",
                     overflow: "hidden",
+                    display: "flex",
+                    margin: "0 auto",
                   }}
                 >
-                  <img
-                    src={id === 1 ? asiatechImage : mobinNetImage}
-                    alt=""
-                    style={{
-                      verticalAlign: "center",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  />
-                </Stack> */}
+                  <DomainIcon />
+                </Stack>
                 <Typography
                   noWrap
                   color={isSelected ? "primary.main" : "secondary.main"}

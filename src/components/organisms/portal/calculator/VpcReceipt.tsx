@@ -268,8 +268,8 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
           )}
           {topBoxRow_3section(
             "Rules(10)",
-            ipCount,
-            priceToPersian(Number(vpc10RulesPrice))
+            rulesCount,
+            priceToPersian(Number(vpc10RulesPrice! / 10))
           )}
           <Divider
             orientation="horizontal"
@@ -282,7 +282,7 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
           {topBoxRow_2section("مبلغ ساعتی ", hourlyAmountPrice)}
           {topBoxRow_2section(
             "مبلغ ماهیانه (۳۰ روزه) ",
-            String(monthlyAmountPrice)
+            String(monthlyAmountPrice! / 10)
           )}
         </Stack>
       </Stack>
@@ -299,7 +299,7 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
               مبلغ کل فاکتور
             </Typography>
             <Typography variant="text13" color="#6E768A" fontWeight={700}>
-              {priceToPersian(totalPrice)} ریال
+              {priceToPersian(totalPrice! / 10)} ریال
             </Typography>
           </Stack>
         </Stack>
