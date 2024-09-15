@@ -5,6 +5,7 @@ import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { AddEdgeUserCertDialog } from "../dialogs/CreateEdgeUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type CdnEdgeCertPropsType = {
   dnsId: number;
@@ -55,7 +56,9 @@ export const CdnEdgeCertUserCert: FC<CdnEdgeCertPropsType> = ({
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{userCert?.expirationDate}</Typography>
+            <Typography variant="text15">
+              {ConvertToJalali(String(userCert?.expirationDate))}
+            </Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">
