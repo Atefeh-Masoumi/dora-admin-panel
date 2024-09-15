@@ -5,6 +5,7 @@ import { useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery } from "src/app/servi
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type CdnOriginCertPropsType = {
   dnsId: number;
@@ -50,7 +51,9 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{edgeCert?.expirationDate}</Typography>
+            <Typography variant="text15">
+              {ConvertToJalali(String(edgeCert?.expirationDate))}
+            </Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">

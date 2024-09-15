@@ -5,6 +5,7 @@ import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { CreateOriginUserCertDialog } from "../dialogs/CreateOriginUserCertDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type CdnOriginCertUserCertPropsType = {
   dnsId: number;
@@ -55,7 +56,9 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{userCert?.expirationDate}</Typography>
+            <Typography variant="text15">
+              {ConvertToJalali(String(userCert?.expirationDate))}
+            </Typography>
           )}
         </Stack>
         <Stack direction="row" justifyContent="space-between">

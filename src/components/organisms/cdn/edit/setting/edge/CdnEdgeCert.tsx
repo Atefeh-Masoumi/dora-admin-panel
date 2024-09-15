@@ -9,6 +9,7 @@ import {
   usePostApiMyDnsCdnEdgeCertCreateMutation,
   useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery,
 } from "src/app/services/api.generated";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type CdnEdgeCertPropsType = {
   dnsId: number;
@@ -71,7 +72,9 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
           {isLoading ? (
             <TextLoading num={8} />
           ) : (
-            <Typography variant="text15">{edgeCert?.expirationDate}</Typography>
+            <Typography variant="text15">
+              {ConvertToJalali(String(edgeCert?.expirationDate))}
+            </Typography>
           )}
         </Stack>
 
