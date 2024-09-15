@@ -414,12 +414,18 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
             "هزینه نگهداری",
             data?.masterNodesInfo?.kubernetesManagementItemPrice
           )}
-          {topBoxRow_2section("هزینه نودهای مستر", String(masterMonthlyPrice))}
-          {topBoxRow_2section("هزینه نودهای ورکر", String(workerMonthlyPrice))}
+          {topBoxRow_2section(
+            "هزینه نودهای مستر",
+            String(masterMonthlyPrice / 10)
+          )}
+          {topBoxRow_2section(
+            "هزینه نودهای ورکر",
+            String(workerMonthlyPrice / 10)
+          )}
           {topBoxRow_2section("مبلغ ساعتی ", String(hourlyAmountPrice))}
           {topBoxRow_2section(
             "مبلغ ماهیانه (۳۰ روزه)",
-            String(totalMonthlyPrice)
+            String(totalMonthlyPrice / 10)
           )}
         </Stack>
       </Stack>
@@ -436,7 +442,7 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
               مبلغ کل فاکتور
             </Typography>
             <Typography variant="text13" color="#6E768A" fontWeight={700}>
-              {priceToPersian(totalMonthlyPrice)} ریال
+              {priceToPersian(totalMonthlyPrice / 10)} ریال
             </Typography>
           </Stack>
         </Stack>
