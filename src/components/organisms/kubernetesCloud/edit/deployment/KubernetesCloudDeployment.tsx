@@ -31,7 +31,7 @@ export const KubernetesCloudDeployment: FC = () => {
     }) || [];
 
   const gotToAddKubernetesCloudDeployment = () =>
-    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/create`);
+    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/add`);
 
   return (
     <>
