@@ -1,6 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
+  Chip,
   Dialog,
   DialogContent,
   DialogContentText,
@@ -13,7 +14,10 @@ import {
 import { useFormik } from "formik";
 import { FC, MouseEventHandler, useState } from "react";
 import { toast } from "react-toastify";
-import { usePutApiMyAccountCustomerConvertToLegalMutation } from "src/app/services/api.generated";
+import {
+  useGetApiMyAccountProfileGetQuery,
+  usePutApiMyAccountCustomerConvertToLegalMutation,
+} from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import { e2p } from "src/utils/e2p.utils";
@@ -212,12 +216,53 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
 export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
   const [showModal, setShowModal] = useState(false);
 
+  const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
+
   const closeDialogHandler = () => {
     setShowModal(false);
   };
 
   return (
-    <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} py={2.5} px={3}>
+    <Stack
+      sx={{
+        width: "100%",
+        p: { xs: 1.8, lg: 2 },
+        borderRadius: BORDER_RADIUS_1,
+        backgroundColor: "white",
+      }}
+      height="100%"
+      justifyContent="space-between"
+      rowGap={{ xs: 2, md: 2 }}
+    >
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="text1" color="secondary" sx={{ p: 1 }}>
+          مشخصات صورتحساب
+        </Typography>
+        {userInformation?.idConfirmed ? (
+          <Chip
+            label="تایید شده"
+            sx={{
+              color: "rgba(13, 191, 102, 1)",
+              backgroundColor: "rgba(218, 246, 232, 1)",
+              borderRadius: 1,
+              fontSize: "14px",
+              p: 0.5,
+            }}
+          />
+        ) : (
+          <Chip
+            label="احراز هویت نشده"
+            sx={{
+              color: "rgba(244, 95, 80, 1)",
+              backgroundColor: "rgba(244, 95, 80, 0.12)",
+              borderRadius: 1,
+              fontSize: "14px",
+              p: 0.5,
+            }}
+          />
+        )}
+      </Stack>
+      <Divider variant="middle" />
       <LegalPersonalityDetail />
       <Stack
         direction="row"

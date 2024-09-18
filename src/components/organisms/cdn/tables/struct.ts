@@ -3,7 +3,7 @@ import { columnType } from "../../tables/table.types";
 export const cdnDnsTableStruct: columnType[] = [
   {
     id: "id",
-    label: "شناسه",
+    label: "",
     invisibility: true,
   },
   {

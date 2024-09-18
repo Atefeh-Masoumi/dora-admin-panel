@@ -1,33 +1,21 @@
 import { Add } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Skeleton,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery } from "src/app/services/api.generated";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
 import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
 
 type KubernetesCloudConfigMapPropsType = {};
 
 export const KubernetesCloudConfigMap: FC<
   KubernetesCloudConfigMapPropsType
 > = () => {
+  const [search, setSearch] = useState("");
   const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
     useState<boolean>(false);
   const { kubernetesCloudId } = useParams();
@@ -48,6 +36,15 @@ export const KubernetesCloudConfigMap: FC<
     setOpenAddConfigMapDialog(false);
   }
 
+  const filteredList =
+    data?.filter((item) => {
+      let result = null;
+      if (item?.name) {
+        result = item.name.toLowerCase().includes(search.toLowerCase());
+      }
+      return result;
+    }) || [];
+
   return (
     <Stack
       bgcolor="white"
@@ -58,14 +55,24 @@ export const KubernetesCloudConfigMap: FC<
       direction="column"
     >
       <Stack
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
         alignItems="center"
         rowGap={3}
       >
-        <Typography fontSize={18} color="secondary">
-          لیست Configmap
-        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography fontSize={18} color="secondary">
+            لیست کانفیگ‌مپ
+          </Typography>
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو در نام سرویس"
+          />
+        </Stack>
         <Button
           onClick={handleOpenAddConfigMapDialog}
           variant="outlined"
@@ -93,83 +100,20 @@ export const KubernetesCloudConfigMap: FC<
             </Stack>
           }
         >
-          افزودن Configmap
+          ایجاد Deployment
         </Button>
       </Stack>
+
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              {/* <TableRow>
-                {data &&
-                  data.length > 0 &&
-                  kubernetesCloudConfigMapTableStruct.map((item, index) => {
-                    return (
-                      <TableCell
-                        sx={{ border: "none" }}
-                        align="center"
-                        key={index}
-                      >
-                        {item.label}
-                      </TableCell>
-                    );
-                  })}
-              </TableRow> */}
-
-              <DorsaTableRow>
-                {data &&
-                  data.length > 0 &&
-                  kubernetesCloudConfigMapTableStruct.map((column, index) => {
-                    return (
-                      <DorsaTableCell
-                        key={column.id}
-                        align="center"
-                        sx={{
-                          px: 1,
-                          py: 2,
-                          whiteSpace: "nowrap",
-                          cursor: !column?.disableSort ? "pointer" : "default",
-                        }}
-                      >
-                        {column.label}
-                      </DorsaTableCell>
-                    );
-                  })}
-              </DorsaTableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading ? (
-                <Stack spacing={1} px={2}>
-                  {[...Array(10)].map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      variant="rectangular"
-                      height={50}
-                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                    />
-                  ))}
-                </Stack>
-              ) : data && data?.length === 0 ? (
-                <EmptyTable text={"در حال حاضر Configmap وجود ندارد"} />
-              ) : (
-                <>
-                  {data?.map((item, index) => {
-                    return (
-                      <KubernetesCloudConfigMapTableRow
-                        rowBgColor={
-                          (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
-                        }
-                        key={index}
-                        row={item}
-                      />
-                    );
-                  })}
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <BaseTable
+          struct={kubernetesCloudConfigMapTableStruct}
+          RowComponent={KubernetesCloudConfigMapTableRow}
+          rows={filteredList}
+          text="در حال حاضر سرویسی وجود ندارد"
+          isLoading={isLoading}
+          initialOrder={9}
+        />
       </Box>
       <CreateConfigMapDialog
         openDialog={openAddConfigMapDialog}

@@ -11,6 +11,7 @@ import {
   DialogProps,
   DialogTitle,
   Divider,
+  IconButton,
   Stack,
   TextField,
   Tooltip,
@@ -82,7 +83,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
       navigator.clipboard
         .writeText(text)
         .then(() => {
-          toast.success("متن با موفقیت کپی شد");
+          // toast.success("متن با موفقیت کپی شد");
         })
         .catch((err) => {});
     } else {
@@ -154,10 +155,9 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 padding: "8px",
               }}
             >
-              <ContentCopyIcon
-                onClick={() => copyText(securityPhrase)}
-                sx={{ marginLeft: "5px", cursor: "pointer" }}
-              />
+              <IconButton onClick={() => copyText(securityPhrase)}>
+                <ContentCopyIcon />
+              </IconButton>
               <Tooltip title={securityPhrase}>
                 <Typography
                   pl={1.2}
@@ -211,7 +211,8 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
             onClick={onSubmit}
             loading={submitLoading}
           >
-            {`حذف ${keyTitle}`}
+            {/* {`حذف ${keyTitle}`} */}
+            حذف
           </LoadingButton>
           <Button
             variant="text"

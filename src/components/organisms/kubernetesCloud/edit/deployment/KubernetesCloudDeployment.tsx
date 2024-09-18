@@ -25,7 +25,7 @@ export const KubernetesCloudDeployment: FC = () => {
     data?.filter((item) => {
       let result = null;
       if (item?.name) {
-        result = item?.name.includes(search);
+        result = item.name.toLowerCase().includes(search.toLowerCase());
       }
       return result;
     }) || [];
@@ -55,7 +55,7 @@ export const KubernetesCloudDeployment: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست Deployment
+              لیست دپلویمنت
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}

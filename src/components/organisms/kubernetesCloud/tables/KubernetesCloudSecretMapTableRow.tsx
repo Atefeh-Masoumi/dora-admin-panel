@@ -3,6 +3,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Collapse,
   IconButton,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -18,10 +19,14 @@ import {
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { kubernetesSecretListTableStruct } from "./struct";
+import {
+  kubernetesCloudSecretMapTableStruct,
+  kubernetesSecretListTableStruct,
+} from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
-import { Edit } from "@mui/icons-material";
 import { EditSecretMapDialog } from "../dialog/EditSecretMapDialog";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -35,9 +40,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   const [openEditSecretDialog, setOpenEditSecretDialog] =
     useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const id = row.id!;
-  const name = row.name!;
-  const createDate = row.createDate!;
+
   const secretList = row.secrets! || [];
 
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
@@ -63,7 +66,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
     setSelectedKubernetesCloudSecretMap(null);
   };
 
-  const handleOpenDelete = (secret: KuberCloudSecretListResponse) => {
+  const handleOpenDeleteModal = (secret: KuberCloudSecretListResponse) => {
     setSelectedKubernetesCloudSecretMap(secret);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -79,46 +82,65 @@ export const KubernetesCloudSecretMapTableRow: FC<{
 
   return (
     <>
-      <TableRow
+      <DorsaTableRow
+        tabIndex={-1}
         sx={{
+          backgroundColor: "white !important",
           "& > *": { borderBottom: "unset" },
-          "&:nth-of-type(odd)": {
-            backgroundColor: rowBgColor,
+          "&:nth-of-type(4n+1)": {
+            backgroundColor: "rgba(240, 247, 255, 1) !important",
           },
         }}
       >
-        <TableCell sx={{ border: "none" }} align="center">
-          {id}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          {name}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          {ConvertToJalali(String(createDate))}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          <IconButton
-            sx={{ borderRadius: 1 }}
-            onClick={() => handleOpenEditSecretDialog(row)}
-          >
-            <Edit />
-          </IconButton>
-          <IconButton
-            sx={{ borderRadius: 1 }}
-            color="error"
-            onClick={() => handleOpenDelete(row)}
-          >
-            <TrashSvg />
-          </IconButton>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-      </TableRow>
+        {kubernetesCloudSecretMapTableStruct.map((column) => {
+          const value = row[column.id];
+          const text = column.format ? column.format(value) : value;
+          const id = row["statusId"];
+          return (
+            <DorsaTableCell
+              key={id}
+              align="center"
+              sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
+            >
+              {column.id === "control" ? (
+                <Stack
+                  direction="row"
+                  justifyContent="center"
+                  spacing={0.6}
+                  maxWidth="fit-content"
+                >
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    onClick={() => handleOpenEditSecretDialog(row)}
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    color="error"
+                    onClick={() => handleOpenDeleteModal(row)}
+                  >
+                    <TrashSvg />
+                  </IconButton>
+                  <IconButton
+                    aria-label="expand row"
+                    size="small"
+                    onClick={() => setOpen(!open)}
+                  >
+                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  </IconButton>
+                </Stack>
+              ) : (
+                <>
+                  {column.id === "createDate"
+                    ? ConvertToJalali(text)
+                    : text || "__"}
+                </>
+              )}
+            </DorsaTableCell>
+          );
+        })}
+      </DorsaTableRow>
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={6} sx={{ border: "none" }}>
           <Collapse in={open} timeout="auto" unmountOnExit>

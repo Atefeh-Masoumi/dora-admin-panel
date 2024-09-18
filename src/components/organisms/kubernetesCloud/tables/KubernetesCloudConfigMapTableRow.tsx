@@ -3,6 +3,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Collapse,
   IconButton,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -10,18 +11,22 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   GetKuberCloudConfigResponse,
   useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import EditIcon from "@mui/icons-material/Edit";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { kubernetesConfigListTableStruct } from "./struct";
+import {
+  kubernetesCloudConfigMapTableStruct,
+  kubernetesConfigListTableStruct,
+} from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -35,8 +40,6 @@ export const KubernetesCloudConfigMapTableRow: FC<{
 }> = ({ row, rowBgColor }) => {
   const [open, setOpen] = useState(false);
   const id = row.id!;
-  const name = row.name!;
-  const createDate = row.createDate!;
   const configList = row.configMaps! || [];
 
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
@@ -79,49 +82,69 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   }
 
   return (
-    <>
-      <TableRow
+    <Fragment key={id}>
+      <DorsaTableRow
+        tabIndex={-1}
         sx={{
+          backgroundColor: "white !important",
           "& > *": { borderBottom: "unset" },
-          "&:nth-of-type(odd)": {
-            backgroundColor: rowBgColor,
+          "&:nth-of-type(4n+1)": {
+            backgroundColor: "rgba(240, 247, 255, 1) !important",
           },
         }}
       >
-        <TableCell sx={{ border: "none" }} align="center">
-          {id}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          {name}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          {ConvertToJalali(String(createDate))}
-        </TableCell>
-        <TableCell sx={{ border: "none" }} align="center">
-          <IconButton
-            sx={{ borderRadius: 1 }}
-            onClick={() => handleOpenEditConfigMapDialog(row)}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            sx={{ borderRadius: 1 }}
-            color="error"
-            onClick={() => handleOpenDeleteModal(row)}
-          >
-            <TrashSvg />
-          </IconButton>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-      </TableRow>
+        {kubernetesCloudConfigMapTableStruct.map((column) => {
+          const value = row[column.id];
+          const text = column.format ? column.format(value) : value;
+          const id = row["statusId"];
+          return (
+            <DorsaTableCell
+              key={id}
+              align="center"
+              sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
+            >
+              {column.id === "control" ? (
+                <Stack
+                  direction="row"
+                  justifyContent="center"
+                  spacing={0.6}
+                  maxWidth="fit-content"
+                >
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    onClick={() => handleOpenEditConfigMapDialog(row)}
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
+                    color="error"
+                    onClick={() => handleOpenDeleteModal(row)}
+                  >
+                    <TrashSvg />
+                  </IconButton>
+                  <IconButton
+                    aria-label="expand row"
+                    size="small"
+                    onClick={() => setOpen(!open)}
+                  >
+                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  </IconButton>
+                </Stack>
+              ) : (
+                <>
+                  {column.id === "createDate"
+                    ? ConvertToJalali(text)
+                    : text || "__"}
+                </>
+              )}
+            </DorsaTableCell>
+          );
+        })}
+      </DorsaTableRow>
+
       <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={6}>
+        <TableCell sx={{ border: "none", p: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <TableContainer sx={{ display: "flex" }}>
               <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
@@ -164,6 +187,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
           </Collapse>
         </TableCell>
       </TableRow>
+
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
@@ -178,6 +202,6 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         onClose={handleCloseEditConfigMapDialog}
         configData={selectedKubernetesCloudConfigMap}
       />
-    </>
+    </Fragment>
   );
 };
