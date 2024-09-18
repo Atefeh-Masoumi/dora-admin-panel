@@ -127,11 +127,11 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       },
     })
       .unwrap()
-      .then((res) => {
+      .then(() => {
         toast.success("دسترسی کاربر مورد نظر با موفقیت ایجاد گردید");
         forceClose();
       })
-      .catch((e) => {});
+      .catch(() => {});
   };
 
   return (
