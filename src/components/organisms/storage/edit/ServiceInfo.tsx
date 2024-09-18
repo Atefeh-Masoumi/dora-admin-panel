@@ -6,6 +6,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useGetApiMyObjectStorageHostGetByIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 type ServiceInfoPropsType = {};
 
@@ -51,12 +52,12 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
             title="Status"
             component={
               <Chip
-                label={storageData?.status}
+                label={serviceStatusIdentifier(storageData?.statusId!).label}
                 sx={{
-                  bgcolor: ({ palette }) =>
-                    isActive ? palette.success.light : palette.error.light,
-                  color: ({ palette }) =>
-                    isActive ? palette.success.main : palette.error.main,
+                  bgcolor: serviceStatusIdentifier(storageData?.statusId!)
+                    .bgColor,
+                  color: serviceStatusIdentifier(storageData?.statusId!)
+                    .typographyColor,
                   borderRadius: BORDER_RADIUS_1,
                 }}
               />
