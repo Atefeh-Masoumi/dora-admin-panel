@@ -1,33 +1,21 @@
 import { Add } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Skeleton,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
-import { DorsaTableCell } from "src/components/atoms/DorsaTable";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
 
 type KubernetesCloudSecretMapPropsType = {};
 
 export const KubernetesCloudSecretMap: FC<
   KubernetesCloudSecretMapPropsType
 > = () => {
+  const [search, setSearch] = useState("");
   const { kubernetesCloudId } = useParams();
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
@@ -45,6 +33,15 @@ export const KubernetesCloudSecretMap: FC<
     setOpenAddSecretMapDialog(false);
   }
 
+  const filteredList =
+    data?.filter((item) => {
+      let result = null;
+      if (item?.name) {
+        result = item.name.toLowerCase().includes(search.toLowerCase());
+      }
+      return result;
+    }) || [];
+
   return (
     <Stack
       bgcolor="white"
@@ -55,14 +52,24 @@ export const KubernetesCloudSecretMap: FC<
       direction="column"
     >
       <Stack
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
         alignItems="center"
         rowGap={3}
       >
-        <Typography fontSize={18} color="secondary">
-          لیست Secret
-        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography fontSize={18} color="secondary">
+            لیست سکرت
+          </Typography>
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو در نام سرویس"
+          />
+        </Stack>
         <Button
           onClick={handleOpenAddSecretMapDialog}
           variant="outlined"
@@ -90,67 +97,21 @@ export const KubernetesCloudSecretMap: FC<
             </Stack>
           }
         >
-          افزودن Secret
+          ایجاد Deployment
         </Button>
       </Stack>
+
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+
       <Box width="100%" sx={{ pt: 1.5 }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {data &&
-                  data.length > 0 &&
-                  kubernetesCloudSecretMapTableStruct.map((column, index) => {
-                    return (
-                      <DorsaTableCell
-                        key={column.id}
-                        align="center"
-                        sx={{
-                          px: 1,
-                          py: 2,
-                          whiteSpace: "nowrap",
-                          cursor: !column?.disableSort ? "pointer" : "default",
-                        }}
-                      >
-                        {column.label}
-                      </DorsaTableCell>
-                    );
-                  })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading ? (
-                <Stack spacing={1} px={2}>
-                  {[...Array(10)].map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      variant="rectangular"
-                      height={50}
-                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                    />
-                  ))}
-                </Stack>
-              ) : data && data?.length === 0 ? (
-                <EmptyTable text={"در حال حاضر Secret وجود ندارد"} />
-              ) : (
-                <>
-                  {data?.map((item, index) => {
-                    return (
-                      <KubernetesCloudSecretMapTableRow
-                        rowBgColor={
-                          (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
-                        }
-                        key={index}
-                        row={item}
-                      />
-                    );
-                  })}
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <BaseTable
+          struct={kubernetesCloudSecretMapTableStruct}
+          RowComponent={KubernetesCloudSecretMapTableRow}
+          rows={filteredList}
+          text="در حال حاضر سرویسی وجود ندارد"
+          isLoading={isLoading}
+          initialOrder={9}
+        />
       </Box>
       <CreateSecretMapDialog
         openDialog={openAddSecretMapDialog}
