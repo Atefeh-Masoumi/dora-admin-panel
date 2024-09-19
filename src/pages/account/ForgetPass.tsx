@@ -48,7 +48,7 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
     })
       .unwrap()
       .then(() => {
-        toast.success("کد تایید بصورت ایمیل ارسال شد");
+        toast.success("کد تایید به شماره موبایل شما ارسال شد");
         goNext();
       })
       .catch(() => {
