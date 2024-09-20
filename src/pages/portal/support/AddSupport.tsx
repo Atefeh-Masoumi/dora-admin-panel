@@ -19,7 +19,7 @@ import {
 } from "src/app/services/api";
 import {
   GetApiMyPortalCustomerProductListByProductIdApiResponse,
-  IssueSubjectListResponse,
+  IssueSubjectShortListResponse,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueSubjectSelectListMutation,
@@ -74,7 +74,9 @@ const AddTicket: FC = () => {
       },
     })
       .unwrap()
-      .then((res: SetStateAction<IssueSubjectListResponse[]>) => setList(res));
+      .then((res: SetStateAction<IssueSubjectShortListResponse[]>) =>
+        setList(res)
+      );
 
     if (productId) {
       callGetApiCloudCustomerProductList({ productId: Number(productId) })
@@ -96,7 +98,7 @@ const AddTicket: FC = () => {
 
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File>();
-  const [list, setList] = useState<IssueSubjectListResponse[]>([]);
+  const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
 
   const [upload] = useCustomCreateIssueMutation();
 

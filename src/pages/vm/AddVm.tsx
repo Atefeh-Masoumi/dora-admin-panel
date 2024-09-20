@@ -142,6 +142,7 @@ const AddVm: FC = () => {
           vmProjectId: Number(projectId),
           vpcHostNetworkId: Number(selectedNetwork),
           ipAddress: String(selectedIp),
+          storageClassTypeId: 1,
         },
       })
         .unwrap()
