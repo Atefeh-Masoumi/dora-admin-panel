@@ -167,7 +167,11 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
                 sx={{ borderRadius: BORDER_RADIUS_1 }}
               />
             ) : (
-              vmProjectData[item.id]
+              <Chip
+                color="default"
+                label={e2p(vmProjectData[item.id] || "--")}
+                sx={{ borderRadius: BORDER_RADIUS_1 }}
+              />
             )}
           </Typography>
         ))}
