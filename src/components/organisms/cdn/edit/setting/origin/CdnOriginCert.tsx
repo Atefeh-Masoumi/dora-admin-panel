@@ -52,7 +52,9 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
             <TextLoading num={8} />
           ) : (
             <Typography variant="text15">
-              {ConvertToJalali(String(edgeCert?.expirationDate))}
+              {edgeCert?.expirationDate
+                ? ConvertToJalali(String(edgeCert?.expirationDate))
+                : "---"}
             </Typography>
           )}
         </Stack>
