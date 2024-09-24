@@ -89,7 +89,7 @@ export const KubernetesCloudDeployment: FC = () => {
               </Stack>
             }
           >
-            ایجاد Deployment
+           افزودن
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
