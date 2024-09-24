@@ -26,7 +26,12 @@ export const KubernetesCloudInfo: FC<KubernetesCloudInfoPropsType> = () => {
     { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
     {
       label: "Create Date",
-      value: data?.createDate ? ConvertToJalali(String(data?.createDate)) : "",
+      value: data?.createDate
+        ? ConvertToJalali(String(data?.createDate))
+            .split(" - ")
+            .reverse()
+            .join(" - ")
+        : "",
       id: "createDate",
     },
   ];
