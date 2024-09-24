@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
@@ -197,7 +197,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 sx={{ direction: "rtl", margin: "0 auto" }}
               >
                 {envs.map((_: any, index: any) => (
-                  <>
+                  <Fragment key={index}>
                     <Grid item xs={4} mb={2}>
                       <DorsaTextField
                         fullWidth
@@ -238,7 +238,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                         <TrashSvg />
                       </IconButton>
                     </Grid>
-                  </>
+                  </Fragment>
                 ))}
               </Grid>
             </Stack>

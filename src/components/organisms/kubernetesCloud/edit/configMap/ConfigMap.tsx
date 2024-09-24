@@ -100,7 +100,7 @@ export const KubernetesCloudConfigMap: FC<
             </Stack>
           }
         >
-          ایجاد Deployment
+      افزودن
         </Button>
       </Stack>
 

@@ -33,3 +33,9 @@ export const roleAccessType = [
     persianName: "دسترسی در سطح کاربر",
   },
 ];
+
+export enum CHECK_BOX_ENUM {
+  SUPER_USER = "superUser",
+  ACCOUNT_MANAGER = "accountManager",
+  FINANCIAL_MANAGER = "financialManager",
+}

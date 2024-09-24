@@ -97,7 +97,7 @@ export const KubernetesCloudSecretMap: FC<
             </Stack>
           }
         >
-          ایجاد Deployment
+          افزودن
         </Button>
       </Stack>
 
