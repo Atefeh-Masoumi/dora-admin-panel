@@ -1,9 +1,9 @@
 export const kubernetesAppTableHeadCells = [
-  { id: "id", label: "شماره شناسه" },
+  { id: "id", label: "" },
   { id: "ip", label: "IP" },
   { id: "isV4", label: "Is V4" },
   { id: "isPrimary", label: "Is Primary" },
-  { label: "عملیات" },
+  { label: "" },
 ];
 
 export const appImageList = [

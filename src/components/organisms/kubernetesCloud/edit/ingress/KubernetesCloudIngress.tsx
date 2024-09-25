@@ -13,17 +13,17 @@ type KubernetesCloudIngressPropsType = {};
 export const KubernetesCloudIngress: FC<
   KubernetesCloudIngressPropsType
 > = () => {
-  const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
+  const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
 
   const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListQuery();
 
-  function handleOpenAddConfigMapDialog() {
-    setOpenAddConfigMapDialog(true);
+  function handleOpenAddIngressDialog() {
+    setOpenAddIngressDialog(true);
   }
 
-  function handleCloseAddConfigMapDialog() {
-    setOpenAddConfigMapDialog(false);
+  function handleCloseAddIngressDialog() {
+    setOpenAddIngressDialog(false);
   }
 
   return (
@@ -36,16 +36,26 @@ export const KubernetesCloudIngress: FC<
       direction="column"
     >
       <Stack
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
         alignItems="center"
         rowGap={3}
       >
-        <Typography fontSize={18} color="secondary">
-          لیست Ingress
-        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography fontSize={18} color="secondary">
+            لیست اینگرس
+          </Typography>
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو در نام سرویس"
+          />
+        </Stack>
         <Button
-          onClick={handleOpenAddConfigMapDialog}
+          onClick={handleOpenAddIngressDialog}
           variant="outlined"
           size="large"
           sx={{
@@ -71,7 +81,7 @@ export const KubernetesCloudIngress: FC<
             </Stack>
           }
         >
-          افزودن Ingress
+          افزودن
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

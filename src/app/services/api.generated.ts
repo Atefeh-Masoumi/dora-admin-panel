@@ -418,9 +418,9 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/datacenter/image/list`,
         params: {
-          datacenterId: queryArg.datacenterId,
-          productId: queryArg.productId,
-          hypervisorTypeId: queryArg.hypervisorTypeId,
+          DatacenterId: queryArg.datacenterId,
+          ProductId: queryArg.productId,
+          HypervisorTypeId: queryArg.hypervisorTypeId,
         },
       }),
     }),
@@ -784,15 +784,11 @@ export const api = createApi({
         body: queryArg.changeContactModel,
       }),
     }),
-    postApiMyHomeIndex: build.mutation<
-      PostApiMyHomeIndexApiResponse,
-      PostApiMyHomeIndexApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/home/index`,
-        method: "POST",
-        body: queryArg.createVmModel,
-      }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyHostHypervisorList: build.query<
       GetApiMyHostHypervisorListApiResponse,
@@ -1012,6 +1008,16 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/deployment/get/${queryArg.id}`,
       }),
     }),
+    putApiMyKubernetesCloudDeploymentEdit: build.mutation<
+      PutApiMyKubernetesCloudDeploymentEditApiResponse,
+      PutApiMyKubernetesCloudDeploymentEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/deployment/edit`,
+        method: "PUT",
+        body: queryArg.editKuberCloudDeploymentModel,
+      }),
+    }),
     deleteApiMyKubernetesCloudDeploymentDeleteById: build.mutation<
       DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiResponse,
       DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg
@@ -1225,6 +1231,12 @@ export const api = createApi({
       query: (queryArg) => ({
         url: `/api/my/portal/wallet-transaction/usage-report/${queryArg.period}`,
       }),
+    }),
+    getApiMyPortalWalletTransactionDownload: build.query<
+      GetApiMyPortalWalletTransactionDownloadApiResponse,
+      GetApiMyPortalWalletTransactionDownloadApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/wallet-transaction/download` }),
     }),
     getApiMyPortalWalletGetBalance: build.query<
       GetApiMyPortalWalletGetBalanceApiResponse,
@@ -1520,6 +1532,12 @@ export const api = createApi({
         url: `/api/my/portal/invoice/get/${queryArg.id}`,
       }),
     }),
+    getApiMyPortalInvoiceDownload: build.query<
+      GetApiMyPortalInvoiceDownloadApiResponse,
+      GetApiMyPortalInvoiceDownloadApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/invoice/download` }),
+    }),
     getApiMyPortalCustomerProductShortList: build.query<
       GetApiMyPortalCustomerProductShortListApiResponse,
       GetApiMyPortalCustomerProductShortListApiArg
@@ -1621,20 +1639,18 @@ export const api = createApi({
         body: queryArg.createVpcPrivateNetworkModel,
       }),
     }),
-    getApiMyVpcPrivateNetworkListByVpcHostId: build.query<
-      GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse,
-      GetApiMyVpcPrivateNetworkListByVpcHostIdApiArg
+    getApiMyVpcPrivateNetworkList: build.query<
+      GetApiMyVpcPrivateNetworkListApiResponse,
+      GetApiMyVpcPrivateNetworkListApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/vpc/private-network/list/${queryArg.vpcHostId}`,
-      }),
+      query: () => ({ url: `/api/my/vpc/private-network/list` }),
     }),
-    getApiMyVpcPrivateNetworkGetByVpcHostIdAndId: build.query<
-      GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiResponse,
-      GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiArg
+    getApiMyVpcPrivateNetworkGetById: build.query<
+      GetApiMyVpcPrivateNetworkGetByIdApiResponse,
+      GetApiMyVpcPrivateNetworkGetByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vpc/private-network/get/${queryArg.vpcHostId}/${queryArg.id}`,
+        url: `/api/my/vpc/private-network/get/${queryArg.id}`,
       }),
     }),
     getApiMyVpcNetworkShortListByVpcHostId: build.query<
@@ -1923,12 +1939,6 @@ export const api = createApi({
         url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
       }),
     }),
-    getApiMyVmKmsGetById: build.query<
-      GetApiMyVmKmsGetByIdApiResponse,
-      GetApiMyVmKmsGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
-    }),
     putApiMyVmHostStopById: build.mutation<
       PutApiMyVmHostStopByIdApiResponse,
       PutApiMyVmHostStopByIdApiArg
@@ -1972,6 +1982,12 @@ export const api = createApi({
         url: `/api/my/vm/host/reset/${queryArg.id}`,
         method: "PUT",
       }),
+    }),
+    getApiMyVmKmsGetById: build.query<
+      GetApiMyVmKmsGetByIdApiResponse,
+      GetApiMyVmKmsGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
     }),
     putApiMyVmHostRebuildById: build.mutation<
       PutApiMyVmHostRebuildByIdApiResponse,
@@ -2565,10 +2581,8 @@ export type PutApiMyDomainHostChangeContactApiResponse = unknown;
 export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
-export type PostApiMyHomeIndexApiResponse = unknown;
-export type PostApiMyHomeIndexApiArg = {
-  createVmModel: CreateVmModel;
-};
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyHostHypervisorListApiResponse =
   /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
@@ -2677,6 +2691,10 @@ export type GetApiMyKubernetesCloudDeploymentGetByIdApiResponse =
 export type GetApiMyKubernetesCloudDeploymentGetByIdApiArg = {
   id: number;
 };
+export type PutApiMyKubernetesCloudDeploymentEditApiResponse = unknown;
+export type PutApiMyKubernetesCloudDeploymentEditApiArg = {
+  editKuberCloudDeploymentModel: EditKuberCloudDeploymentModel;
+};
 export type DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiResponse = unknown;
 export type DeleteApiMyKubernetesCloudDeploymentDeleteByIdApiArg = {
   id: number;
@@ -2781,6 +2799,9 @@ export type GetApiMyPortalWalletTransactionUsageReportByPeriodApiResponse =
 export type GetApiMyPortalWalletTransactionUsageReportByPeriodApiArg = {
   period: number;
 };
+export type GetApiMyPortalWalletTransactionDownloadApiResponse =
+  /** status 200 OK */ WalletTransactionReportResponse;
+export type GetApiMyPortalWalletTransactionDownloadApiArg = void;
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 OK */ number;
 export type GetApiMyPortalWalletGetBalanceApiArg = void;
@@ -2852,7 +2873,7 @@ export type PostApiMyPortalPaymentSepCallBackApiArg = {
 export type PostApiMyPortalPaymentPecCallBackApiResponse = unknown;
 export type PostApiMyPortalPaymentPecCallBackApiArg = {
   body: {
-    callRequest: PecConfirmCallRequest;
+    model: PecConfirmCallRequest;
   };
 };
 export type GetApiMyPortalPaymentListApiResponse =
@@ -2888,7 +2909,7 @@ export type GetApiMyPortalOfferGetByIdApiArg = {
   id: number;
 };
 export type PostApiMyPortalIssueSubjectSelectListApiResponse =
-  /** status 200 OK */ IssueSubjectListResponse[];
+  /** status 200 OK */ IssueSubjectShortListResponse[];
 export type PostApiMyPortalIssueSubjectSelectListApiArg = {
   issueSubjectSelectListModel: IssueSubjectSelectListModel;
 };
@@ -2942,6 +2963,9 @@ export type GetApiMyPortalInvoiceGetByIdApiResponse =
 export type GetApiMyPortalInvoiceGetByIdApiArg = {
   id: number;
 };
+export type GetApiMyPortalInvoiceDownloadApiResponse =
+  /** status 200 OK */ InvoiceReportResponse;
+export type GetApiMyPortalInvoiceDownloadApiArg = void;
 export type GetApiMyPortalCustomerProductShortListApiResponse =
   /** status 200 OK */ CustomerProductShortListResponse[];
 export type GetApiMyPortalCustomerProductShortListApiArg = void;
@@ -2993,16 +3017,13 @@ export type PostApiMyVpcPrivateNetworkRequestCreateApiResponse = unknown;
 export type PostApiMyVpcPrivateNetworkRequestCreateApiArg = {
   createVpcPrivateNetworkModel: CreateVpcPrivateNetworkModel;
 };
-export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiResponse =
+export type GetApiMyVpcPrivateNetworkListApiResponse =
   /** status 200 OK */ VpcPrivateNetworkListResponse[];
-export type GetApiMyVpcPrivateNetworkListByVpcHostIdApiArg = {
-  vpcHostId: number;
-};
-export type GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiResponse =
+export type GetApiMyVpcPrivateNetworkListApiArg = void;
+export type GetApiMyVpcPrivateNetworkGetByIdApiResponse =
   /** status 200 OK */ VpcPrivateNetworkListResponse;
-export type GetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdApiArg = {
+export type GetApiMyVpcPrivateNetworkGetByIdApiArg = {
   id: number;
-  vpcHostId: number;
 };
 export type GetApiMyVpcNetworkShortListByVpcHostIdApiResponse =
   /** status 200 OK */ VpcNetworkShortListResponse[];
@@ -3150,11 +3171,6 @@ export type GetApiMyVmIsoListByDatacenterIdApiResponse =
 export type GetApiMyVmIsoListByDatacenterIdApiArg = {
   datacenterId: number;
 };
-export type GetApiMyVmKmsGetByIdApiResponse =
-  /** status 200 OK */ GetRemoteConsoleResponse;
-export type GetApiMyVmKmsGetByIdApiArg = {
-  id: number;
-};
 export type PutApiMyVmHostStopByIdApiResponse = unknown;
 export type PutApiMyVmHostStopByIdApiArg = {
   id: number;
@@ -3174,6 +3190,11 @@ export type GetApiMyVmHostShortListByHypervisorTypeIdApiArg = {
 };
 export type PutApiMyVmHostResetByIdApiResponse = unknown;
 export type PutApiMyVmHostResetByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVmKmsGetByIdApiResponse =
+  /** status 200 OK */ GetRemoteConsoleResponse;
+export type GetApiMyVmKmsGetByIdApiArg = {
   id: number;
 };
 export type PutApiMyVmHostRebuildByIdApiResponse = unknown;
@@ -3416,6 +3437,7 @@ export type GetCustomerResponse = {
   registrationNumber?: string | null;
   registrationDate?: string | null;
   phone?: string | null;
+  statusId: number;
   status: string | null;
   createDate?: string | null;
   modifyDate?: string | null;
@@ -3853,20 +3875,6 @@ export type ChangeContactModel = {
   fax?: string | null;
   email: string;
 };
-export type CreateVmModel = {
-  name: string;
-  password: string;
-  publicKey?: string | null;
-  imageId: number;
-  isPredefined: boolean;
-  vmProjectId: number;
-  productBundleId?: number | null;
-  cpu?: number | null;
-  memory?: number | null;
-  disk?: number | null;
-  vpcHostNetworkId?: number | null;
-  ipAddress?: string | null;
-};
 export type HypervisorListResponse = {
   id?: number;
   name: string | null;
@@ -3928,7 +3936,7 @@ export type EditKuberCloudSecretModel = {
   secretId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: number[] | null;
+  removeEnvIds?: string[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -3981,7 +3989,7 @@ export type RulesResponse = {
   serviceName: string | null;
   port: number;
   createDate: string;
-  modifiyDate: string;
+  modifyDate: string;
 };
 export type GetKuberCloudIngressResponse = {
   id: number;
@@ -4084,6 +4092,18 @@ export type GetKuberCloudDeploymentResponse = {
   createDate: string;
   modifyDate: string;
 };
+export type EditKuberCloudDeploymentModel = {
+  deployId: number;
+  keyValue?: {
+    [key: string]: {
+      [key: string]: string;
+    };
+  } | null;
+  envToDelete?: {
+    [key: string]: number;
+  } | null;
+  replicaNumber?: number | null;
+};
 export type CreateKuberCloudDeploymentModel = {
   name: string;
   imageTagId: number;
@@ -4124,7 +4144,7 @@ export type EditKuberCloudConfigmapModel = {
   configmapId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: number[] | null;
+  removeEnvIds?: string[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -4256,6 +4276,9 @@ export type WalletTransactionListResponse = {
 export type WalletUsageReportResponse = {
   balance: number;
   toDate: string;
+};
+export type WalletTransactionReportResponse = {
+  base64File: string | null;
 };
 export type UseVoucherModel = {
   voucherCode: string;
@@ -4453,13 +4476,17 @@ export type OfferGetResponse = {
   freeAmount: number;
   expireDate: string;
 };
-export type IssueSubjectListResponse = {
-  id: number;
+export type IssueSubjectShortListResponse = {
+  id?: number;
   name: string | null;
 };
 export type IssueSubjectSelectListModel = {
   productId?: number;
   businessUnitId?: number;
+};
+export type IssueSubjectListResponse = {
+  id: number;
+  name: string | null;
 };
 export type IssueItemModel = {
   id: number;
@@ -4565,6 +4592,9 @@ export type GetInvoiceResponse = {
   vat: number;
   invoicePrice: number;
   invoiceItems: InvoiceItemModel[] | null;
+};
+export type InvoiceReportResponse = {
+  base64File: string | null;
 };
 export type CustomerProductShortListResponse = {
   id: number;
@@ -4825,13 +4855,13 @@ export type IsoListResponse = {
   id?: number;
   name: string | null;
 };
-export type GetRemoteConsoleResponse = {
-  location: string | null;
-  vmTypeId: number;
-};
 export type VmShortListResponse = {
   id?: number;
   name: string | null;
+};
+export type GetRemoteConsoleResponse = {
+  location: string | null;
+  vmTypeId: number;
 };
 export type RebuildVmModel = {
   name: string | null;
@@ -4844,6 +4874,7 @@ export type VmListResponse = {
   name: string | null;
   status: string | null;
   statusId?: number;
+  storageClassTypeId?: number;
   datacenter: string | null;
   operatingSystem: string | null;
   ipv4?: string | null;
@@ -4855,6 +4886,7 @@ export type GetVmResponse = {
   name: string | null;
   operatingSystem: string | null;
   operatingSystemId: number;
+  storageClassTypeId?: number;
   status: string | null;
   statusId: number;
   cpu: number;
@@ -4875,6 +4907,21 @@ export type EditVmModel = {
   cpu: number;
   memory: number;
   disk: number;
+};
+export type CreateVmModel = {
+  name: string;
+  password: string;
+  publicKey?: string | null;
+  imageId: number;
+  storageClassTypeId: number;
+  isPredefined: boolean;
+  vmProjectId: number;
+  productBundleId?: number | null;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
+  vpcHostNetworkId?: number | null;
+  ipAddress?: string | null;
 };
 export type WebHostListResponse = {
   id?: number;
@@ -5069,7 +5116,7 @@ export const {
   usePostApiMyDomainHostCheckDomainMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePutApiMyDomainHostChangeContactMutation,
-  usePostApiMyHomeIndexMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyHostHypervisorListQuery,
   useGetApiMyHostProjectListQuery,
   useGetApiMyHostProjectGetByIdQuery,
@@ -5096,6 +5143,7 @@ export const {
   usePostApiMyKubernetesCloudHostCreateMutation,
   useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudDeploymentGetByIdQuery,
+  usePutApiMyKubernetesCloudDeploymentEditMutation,
   useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
   usePostApiMyKubernetesCloudDeploymentCreateMutation,
   useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
@@ -5121,6 +5169,7 @@ export const {
   usePostApiMyObjectStorageHostCreateMutation,
   useGetApiMyPortalWalletTransactionListQuery,
   useGetApiMyPortalWalletTransactionUsageReportByPeriodQuery,
+  useGetApiMyPortalWalletTransactionDownloadQuery,
   useGetApiMyPortalWalletGetBalanceQuery,
   usePostApiMyPortalVoucherUseMutation,
   useGetApiMyPortalReferralListByReferralIdQuery,
@@ -5160,6 +5209,7 @@ export const {
   usePostApiMyPortalInvoicePayMutation,
   useGetApiMyPortalInvoiceListQuery,
   useGetApiMyPortalInvoiceGetByIdQuery,
+  useGetApiMyPortalInvoiceDownloadQuery,
   useGetApiMyPortalCustomerProductShortListQuery,
   useGetApiMyPortalCustomerProductListByProductIdQuery,
   useGetApiMyPortalCustomerBillShortListQuery,
@@ -5174,8 +5224,8 @@ export const {
   usePostApiMyVpcTranslateCreateMutation,
   useGetApiMyVpcPrivateNetworkRequestListQuery,
   usePostApiMyVpcPrivateNetworkRequestCreateMutation,
-  useGetApiMyVpcPrivateNetworkListByVpcHostIdQuery,
-  useGetApiMyVpcPrivateNetworkGetByVpcHostIdAndIdQuery,
+  useGetApiMyVpcPrivateNetworkListQuery,
+  useGetApiMyVpcPrivateNetworkGetByIdQuery,
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePutApiMyVpcNetworkEditByIdMutation,
@@ -5209,12 +5259,12 @@ export const {
   usePutApiMyVmIsoUnmountByIdMutation,
   usePutApiMyVmIsoMountByIdMutation,
   useGetApiMyVmIsoListByDatacenterIdQuery,
-  useGetApiMyVmKmsGetByIdQuery,
   usePutApiMyVmHostStopByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostShutdownByIdMutation,
   useGetApiMyVmHostShortListByHypervisorTypeIdQuery,
   usePutApiMyVmHostResetByIdMutation,
+  useGetApiMyVmKmsGetByIdQuery,
   usePutApiMyVmHostRebuildByIdMutation,
   usePutApiMyVmHostRebootByIdMutation,
   useGetApiMyVmHostListByVmProjectIdQuery,
@@ -5241,4 +5291,3 @@ export const {
   useGetApiMyPortalWebsiteBlogGetByLinkQuery,
   useGetApiMyPortalWebsiteAlarmListQuery,
 } = api;
-

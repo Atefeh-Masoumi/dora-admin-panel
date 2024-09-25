@@ -33,6 +33,7 @@ package_dorsa_prod:
   script:
     - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
+  when: manual
   only:
     - main
 
@@ -41,6 +42,7 @@ package_raahbar_prod:
   script:
     - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
+  when: manual
   only:
     - raahbar
 
@@ -65,7 +67,7 @@ deploy_dorsa_prod:
     - kubectl config use-context $KUBE_CONTEXT_DORSA
     - kubectl -n dorsa-cloud apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-prod.yaml
     - kubectl -n dorsa-cloud rollout restart deployment front-my-v1
-  when: manual
+  when: on_success
   only: 
     - main
 
@@ -77,6 +79,6 @@ deploy_raahbar_prod:
     - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
     - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar-prod.yaml
     - kubectl -n raahbar rollout restart deployment front-my-v1
-  when: manual
+  when: on_success
   only: 
     - raahbar
