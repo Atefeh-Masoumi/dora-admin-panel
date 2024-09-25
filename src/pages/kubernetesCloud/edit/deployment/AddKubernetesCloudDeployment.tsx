@@ -168,7 +168,7 @@ const AddKubernetesCloudDeployment: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد Deployment جدید
+        افزودن
       </Typography>
 
       <Paper sx={{ p: 2 }}>

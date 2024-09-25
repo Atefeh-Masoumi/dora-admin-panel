@@ -25,13 +25,13 @@ export const KubernetesCloudDeployment: FC = () => {
     data?.filter((item) => {
       let result = null;
       if (item?.name) {
-        result = item?.name.includes(search);
+        result = item.name.toLowerCase().includes(search.toLowerCase());
       }
       return result;
     }) || [];
 
   const gotToAddKubernetesCloudDeployment = () =>
-    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/create`);
+    navigate(`/kubernetes-cloud/${kubernetesCloudId}/deployment/add`);
 
   return (
     <>
@@ -55,7 +55,7 @@ export const KubernetesCloudDeployment: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست Deployment
+              لیست دپلویمنت
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
@@ -89,7 +89,7 @@ export const KubernetesCloudDeployment: FC = () => {
               </Stack>
             }
           >
-            ایجاد Deployment
+           افزودن
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

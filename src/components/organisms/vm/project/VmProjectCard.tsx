@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useMemo } from "react";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { e2p } from "src/utils/e2p.utils";
 
@@ -46,6 +48,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
     return vmProjectData[statusId] === 2;
   }, [vmProjectData, statusId]);
 
+  console.log({ detailsList });
   return (
     <Stack
       direction="column"
@@ -117,7 +120,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
                 onEditClick(vmProjectData);
               }}
             >
-              <ModeEdit />
+              <Edit />
             </IconButton>
           )}
           <IconButton
@@ -128,7 +131,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
               onDeleteClick(vmProjectData);
             }}
           >
-            <DeleteOutline />
+            <TrashSvg />
           </IconButton>
         </Stack>
       </Stack>
@@ -137,10 +140,12 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
           display: "flex",
           flexDirection: " row",
           justifyContent: "space-between",
+          paddingRight: 2,
         }}
       >
         {detailsList.map((item, index) => (
           <Typography
+            key={index}
             noWrap
             onClick={() => {
               if (!item.onClick) return;
@@ -148,21 +153,25 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
             }}
             color="text.light"
           >
-            {item.label}{" "}
+            {item.label}
             {item.id === "isPublic" ? (
               <Chip
                 color={"default"}
                 label={e2p(vmProjectData[item.id] || "--")}
                 sx={{ borderRadius: BORDER_RADIUS_1 }}
               />
+            ) : isProjectCard && item.id === "hypervisorType" ? (
+              <Chip
+                color="default"
+                label={e2p(vmProjectData[item.id] || "--")}
+                sx={{ borderRadius: BORDER_RADIUS_1 }}
+              />
             ) : (
-              isProjectCard && (
-                <Chip
-                  color="default"
-                  label={e2p(vmProjectData[item.id] || "--")}
-                  sx={{ borderRadius: BORDER_RADIUS_1 }}
-                />
-              )
+              <Chip
+                color="default"
+                label={e2p(vmProjectData[item.id] || "--")}
+                sx={{ borderRadius: BORDER_RADIUS_1 }}
+              />
             )}
           </Typography>
         ))}

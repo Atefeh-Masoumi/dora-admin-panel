@@ -49,13 +49,13 @@ export const LegalPersonalityDetail: FC<
         },
         {
           title: "شماره شناسنامه/ثبت :",
-          value: data?.registrationNumber ?? "",
+          value: data?.registrationNumber ?? "---",
         },
-        {
-          id: "status",
-          title: "وضعیت :",
-          value: data?.status ?? "",
-        },
+        // {
+        //   id: "status",
+        //   title: "وضعیت :",
+        //   value: data?.status ?? "",
+        // },
       ]);
     }
   }, [data]);
@@ -91,7 +91,7 @@ export const LegalPersonalityDetail: FC<
                     >
                       {item.title}
                     </Typography>
-                    {item.id && item.id === "status" ? (
+                    {/* {item.id && item.id === "status" ? (
                       <Chip
                         label={item.value}
                         size="medium"
@@ -112,7 +112,8 @@ export const LegalPersonalityDetail: FC<
                       />
                     ) : (
                       <Typography>{e2p(item.value || "")}</Typography>
-                    )}
+                    )} */}
+                    <Typography>{e2p(item.value || "")}</Typography>
                   </>
                 </Stack>
               </Fragment>

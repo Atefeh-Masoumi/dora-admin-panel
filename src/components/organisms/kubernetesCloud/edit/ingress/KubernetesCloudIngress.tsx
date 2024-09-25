@@ -2,28 +2,30 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
+import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 
 type KubernetesCloudIngressPropsType = {};
 
 export const KubernetesCloudIngress: FC<
   KubernetesCloudIngressPropsType
 > = () => {
-  const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
+  const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
+  const [search, setSearch] = useState("");
 
   const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListQuery();
 
-  function handleOpenAddConfigMapDialog() {
-    setOpenAddConfigMapDialog(true);
+  function handleOpenAddIngressDialog() {
+    setOpenAddIngressDialog(true);
   }
 
-  function handleCloseAddConfigMapDialog() {
-    setOpenAddConfigMapDialog(false);
+  function handleCloseAddIngressDialog() {
+    setOpenAddIngressDialog(false);
   }
 
   return (
@@ -36,16 +38,26 @@ export const KubernetesCloudIngress: FC<
       direction="column"
     >
       <Stack
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
         alignItems="center"
         rowGap={3}
       >
-        <Typography fontSize={18} color="secondary">
-          لیست Ingress
-        </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography fontSize={18} color="secondary">
+            لیست اینگرس
+          </Typography>
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو در نام سرویس"
+          />
+        </Stack>
         <Button
-          onClick={handleOpenAddConfigMapDialog}
+          onClick={handleOpenAddIngressDialog}
           variant="outlined"
           size="large"
           sx={{
@@ -71,7 +83,7 @@ export const KubernetesCloudIngress: FC<
             </Stack>
           }
         >
-          افزودن Ingress
+          افزودن
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -85,9 +97,9 @@ export const KubernetesCloudIngress: FC<
           initialOrder={9}
         />
       </Box>
-      <CreateIngressDialog
-        openDialog={openAddConfigMapDialog}
-        onClose={handleCloseAddConfigMapDialog}
+      <CreateConfigMapDialog
+        openDialog={openAddIngressDialog}
+        onClose={handleCloseAddIngressDialog}
       />
     </Stack>
   );

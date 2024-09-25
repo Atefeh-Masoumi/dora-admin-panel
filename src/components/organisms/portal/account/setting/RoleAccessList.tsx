@@ -2,9 +2,9 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  Grid,
   MenuItem,
   Select,
-  Stack,
   Typography,
 } from "@mui/material";
 import { Dispatch, FC, SetStateAction, memo } from "react";
@@ -82,98 +82,92 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
 
   return (
     <>
-      {roleAccessList?.map((roleAccess) => (
-        <Stack
-          key={roleAccess.roleName}
-          px={1}
-          direction={{ xs: "column", md: "row" }}
-          sx={{
-            alignItems: "center",
-            border: ({ palette }) => `1px solid #ccc`,
-          }}
+      {roleAccessList?.map((roleAccess, index) => (
+        <Grid
+          key={index}
+          container
+          justifyContent="space-around"
+          alignItems="center"
+          columnGap={1}
+          sx={{ width: "100%" }}
         >
-          <Stack
-            flexGrow={1}
-            direction="row"
-            flexWrap="wrap"
-            justifyContent={{ xs: "center", md: "space-between" }}
-          >
-            <Stack sx={{ alignContent: "center", alignItems: "center" }}>
+          <Grid item xs={12} sm={12} md={2.5}>
+            <FormControlLabel
+              sx={{ alignItems: "center", width: "100%", mr: 0 }}
+              control={
+                <Checkbox
+                  onChange={(e) =>
+                    handleRoleChange(roleAccess.roleId, e.target.checked)
+                  }
+                  checked={roleAccess?.isRoleChecked}
+                />
+              }
+              label={
+                <Typography variant="text14" noWrap>
+                  {roleAccess.roleName}
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <FormControl fullWidth>
+              <Select
+                disabled={!roleAccess?.isRoleChecked}
+                defaultValue={roleAccessType[0].id}
+                sx={{
+                  height: "30px",
+                  "& .MuiSelect-outlined": {
+                    fontSize: "14px",
+                  },
+                }}
+                onChange={(e) =>
+                  handleRoleAccessTypeChange(roleAccess.roleId, +e.target.value)
+                }
+                value={roleAccess.roleAccessTypeId}
+              >
+                {roleAccessType.map((item) => (
+                  <MenuItem value={item.id} key={item.id}>
+                    {item.persianName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={12} md={5} display="flex" justifyContent="end">
+            {roleAccess.accessTuples.map((access) => (
               <FormControlLabel
-                sx={{ alignItems: "center", width: 150 }}
+                key={access.accessId}
+                sx={{
+                  alignItems: "center",
+                  // width: "70px",
+                  // margin: "0 7px",
+                }}
                 control={
                   <Checkbox
+                    disabled={!roleAccess?.isRoleChecked}
+                    checked={access.hasAccess}
                     onChange={(e) =>
-                      handleRoleChange(roleAccess.roleId, e.target.checked)
+                      handleAccessChange(
+                        roleAccess.roleId,
+                        access.accessId,
+                        e.target.checked
+                      )
                     }
-                    checked={roleAccess?.isRoleChecked}
+                    sx={{ paddingRight: 0 }}
                   />
                 }
                 label={
-                  <Typography sx={{ fontSize: "14px" }} noWrap>
-                    {roleAccess.roleName}
+                  <Typography
+                    color={!roleAccess?.isRoleChecked ? "grey" : ""}
+                    variant="text13"
+                  >
+                    {access.accessName}
                   </Typography>
                 }
               />
-            </Stack>
-            <Stack mt={1}>
-              <FormControl size="medium">
-                <Select
-                  disabled={!roleAccess?.isRoleChecked}
-                  defaultValue={roleAccessType[0].id}
-                  sx={{
-                    height: "25px",
-                    width: "165px",
-                    "& .MuiSelect-outlined": {
-                      padding: "8.5px 3px",
-                      fontSize: "10px",
-                    },
-                  }}
-                  onChange={(e) =>
-                    handleRoleAccessTypeChange(
-                      roleAccess.roleId,
-                      +e.target.value
-                    )
-                  }
-                  value={roleAccess.roleAccessTypeId}
-                >
-                  {roleAccessType.map((item) => (
-                    <MenuItem value={item.id} key={item.id}>
-                      {item.persianName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Stack>
-            <Stack sx={{ display: "flex", flexDirection: "row" }}>
-              {roleAccess.accessTuples.map((access) => (
-                <FormControlLabel
-                  key={access.accessId}
-                  sx={{
-                    alignItems: "center",
-                    width: "70px",
-                    margin: "0 7px",
-                  }}
-                  control={
-                    <Checkbox
-                      disabled={!roleAccess?.isRoleChecked}
-                      checked={access.hasAccess}
-                      onChange={(e) =>
-                        handleAccessChange(
-                          roleAccess.roleId,
-                          access.accessId,
-                          e.target.checked
-                        )
-                      }
-                      sx={{ paddingRight: "1px" }}
-                    />
-                  }
-                  label={access.accessName}
-                />
-              ))}
-            </Stack>
-          </Stack>
-        </Stack>
+            ))}
+          </Grid>
+        </Grid>
       ))}
     </>
   );

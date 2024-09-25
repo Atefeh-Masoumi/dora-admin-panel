@@ -21,6 +21,7 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { DomainCard } from "src/components/organisms/cdn/DomainCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -212,7 +213,8 @@ const CdnList: FC = () => {
                     detailsList={[
                       {
                         id: item.statusId?.toString() ?? "",
-                        label: item.status ?? "",
+                        label:
+                          serviceStatusIdentifier(item.statusId).label ?? "",
                       },
                     ]}
                   />

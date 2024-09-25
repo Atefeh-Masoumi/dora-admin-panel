@@ -11,17 +11,16 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import moment from "jalali-moment";
 import { useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
 import { customerProductsTableStruct } from "src/components/organisms/portal/financial/tables/billTableStruct";
 import { priceToPersian } from "src/utils/priceToPersian";
-import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
 import BillProductsTableRow from "src/components/organisms/portal/financial/tables/BillProductsTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
 
 const downloadFileUrl = baseUrl + "/api/portal/bill/download/";
 

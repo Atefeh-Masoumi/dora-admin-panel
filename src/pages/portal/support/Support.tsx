@@ -2,19 +2,18 @@ import { Fragment, FC, useState, useEffect } from "react";
 import { Button, Chip, Divider, Input, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useParams } from "react-router-dom";
-import moment from "jalali-moment";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingChat } from "src/components/organisms/portal/support/LoadingChat";
 import { DorsaTooltip } from "src/components/organisms/portal/account/referral/WelcomeTooltip";
 import { DorsaChat } from "src/components/molecules/DorsaChat";
-import {
-  useGetApiMyPortalIssueItemListByIssueIdQuery,
-  usePostApiMyPortalIssueItemCreateMutation,
-} from "src/app/services/api.generated";
 import { supportStatusIdentifier } from "src/constant/supportStatusIdentifier";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Done } from "@mui/icons-material";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import {
+  useGetApiMyPortalIssueItemListByIssueIdQuery,
+  usePostApiMyPortalIssueItemCreateMutation,
+} from "src/app/services/api.generated";
 
 const Detail: FC = () => {
   const [file, setFile] = useState<string | Blob>();

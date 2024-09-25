@@ -141,7 +141,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
             <Stack spacing={1} alignItems="start">
               <Stack spacing={1} alignItems="start" pb={2} width="100%">
                 <Typography fontSize={14} color="secondary">
-                  کد تایید ارسال شده به ایمیل را در زیر وارد کنید:
+                  کد تایید ارسال شده را وارد کنید:
                 </Typography>
                 <CodeField
                   characters={confirmCode}
@@ -149,10 +149,6 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
                 />
                 <Stack direction="column" rowGap={2} width="100%">
                   <Divider flexItem />
-                  <Typography color="text.light">
-                    لطفاً برای ادامه فرآیند ورود، کد امنیتی نمایش داده شده را در
-                    بخش مورد نظر وارد کنید
-                  </Typography>
                   <Stack
                     direction={{ xs: "column", md: "row-reverse" }}
                     width="100%"
