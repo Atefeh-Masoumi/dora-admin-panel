@@ -18,6 +18,12 @@ export const kubernetesCloudDeploymentTableStruct: columnType[] = [
   { id: "control", label: "", disableSort: true },
 ];
 
+export const kubernetesCloudDeploymentInnerListTableStruct: columnType[] = [
+  { id: "id", label: "" },
+  { id: "nodePort", label: "نود پورت" },
+  { id: "servicePort", label: "سرویس پورت" },
+];
+
 export const kubernetesCloudConfigMapTableStruct: columnType[] = [
   { id: "id", label: "" },
   { id: "name", label: "نام" },
