@@ -1,10 +1,8 @@
 import { CloudConnectionSvg } from "src/components/atoms/svg-icons/CloudConnectionSvg";
-import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
-import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
-import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
+import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
+import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
-import { VpcSvg } from "src/components/atoms/svg-icons/VpcSvg";
 
 export const homeProductsConstantListItems = [
   {
