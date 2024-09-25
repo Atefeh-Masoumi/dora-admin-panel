@@ -61,10 +61,9 @@ export const AccessibilitySetting: FC = () => {
         </Stack>
       </Stack>
       <CreateUserAccessModal
-        dialogProps={{
-          open: createModalIsOpen,
-          onClose: () => setCreateModalIsOpen(false),
-        }}
+        open={createModalIsOpen}
+        maxWidth="md"
+        onClose={() => setCreateModalIsOpen(false)}
         forceClose={() => setCreateModalIsOpen(false)}
       />
     </>
