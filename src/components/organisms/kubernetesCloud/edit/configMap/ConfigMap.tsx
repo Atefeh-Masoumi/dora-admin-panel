@@ -20,6 +20,8 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
 import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
 
 type KubernetesCloudConfigMapPropsType = {};
 

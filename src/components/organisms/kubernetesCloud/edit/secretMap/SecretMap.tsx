@@ -3,20 +3,14 @@ import {
   Box,
   Button,
   Divider,
-  Skeleton,
   Stack,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
   Typography
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
-import { DorsaTableCell } from "src/components/atoms/DorsaTable";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { SearchBox } from "src/components/molecules/SearchBox";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";

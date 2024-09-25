@@ -4,7 +4,6 @@ import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
 
@@ -49,10 +48,6 @@ export const KubernetesCloudIngress: FC<
           <Typography fontSize={18} color="secondary">
             لیست اینگرس
           </Typography>
-          <SearchBox
-            onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام سرویس"
-          />
         </Stack>
         <Button
           onClick={handleOpenAddIngressDialog}
@@ -95,10 +90,10 @@ export const KubernetesCloudIngress: FC<
           initialOrder={9}
         />
       </Box>
-      <CreateIngressDialog
+      {/* <CreateIngressDialog
         openDialog={openAddConfigMapDialog}
         onClose={handleCloseAddConfigMapDialog}
-      />
+      /> */}
     </Stack>
   );
 };
