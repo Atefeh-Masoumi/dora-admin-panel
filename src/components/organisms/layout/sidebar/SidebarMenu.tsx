@@ -1,17 +1,15 @@
 import { Box, Stack } from "@mui/material";
 import { FC } from "react";
-import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
 import { CloudConnectionSvg } from "src/components/atoms/svg-icons/CloudConnectionSvg";
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
 import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
 import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { WalletSvg } from "src/components/atoms/svg-icons/WalletSvg";
+import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
-import { SpecialOffer } from "./SpecialOffer";
-import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 
 type SidebarPropsType = {};
 
@@ -30,19 +28,19 @@ const listItems: sidebarItemType[] = [
     subList: [{ title: "مدیریت سرورها", link: "/vm" }],
   },
   {
-    title: "Kubernetes",
+    title: "Kubernetes Cluster",
     text: "سرویس کلاستر کوبرنتیز",
     Icon: KubernetesSvg,
     link: "/kubernetes-cluster",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
   },
   {
-    title: "Object Storage",
-    text: "فضای ابری",
-    Icon: ObjectStorageSvg,
-    link: "/storage",
-    subList: [{ title: "مدیریت فضای ابری", link: "/storage" }],
+    title: "Kubernetes Cloud",
+    text: "سرویس ابری کوبرنتیز",
+    Icon: WebHostSvg,
+    link: "/kubernetes-cloud",
   },
+
   // {
   //   title: "Web Hosting",
   //   text: "هاستینگ ابری",

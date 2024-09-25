@@ -1,26 +1,12 @@
 import { Add } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Skeleton,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
-import { useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery } from "src/app/services/api.generated";
-import { EmptyTable } from "src/components/molecules/EmptyTable";
+import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
-import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
-import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
+import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
+import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
+import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -29,15 +15,8 @@ export const KubernetesCloudIngress: FC<
 > = () => {
   const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
     useState<boolean>(false);
-  const { kubernetesCloudId } = useParams();
 
-  const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
-      {
-        namespaceId: Number(kubernetesCloudId) || 0,
-      },
-      { skip: !kubernetesCloudId }
-    );
+  const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListQuery();
 
   function handleOpenAddConfigMapDialog() {
     setOpenAddConfigMapDialog(true);
@@ -97,55 +76,16 @@ export const KubernetesCloudIngress: FC<
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {data &&
-                  data.length > 0 &&
-                  kubernetesCloudConfigMapTableStruct.map((item, index) => {
-                    return (
-                      <TableCell align="center" key={index}>
-                        {item.label}
-                      </TableCell>
-                    );
-                  })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading ? (
-                <Stack spacing={1} px={2}>
-                  {[...Array(10)].map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      variant="rectangular"
-                      height={50}
-                      sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                    />
-                  ))}
-                </Stack>
-              ) : data && data?.length === 0 ? (
-                <EmptyTable text={"در حال حاضر Configmap وجود ندارد"} />
-              ) : (
-                <>
-                  {data?.map((item, index) => {
-                    return (
-                      <KubernetesCloudConfigMapTableRow
-                        rowBgColor={
-                          (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
-                        }
-                        key={index}
-                        row={item}
-                      />
-                    );
-                  })}
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <BaseTable
+          struct={kubernetesCloudIngressTablrStruct}
+          RowComponent={KubernetesCloudIngressTableRow}
+          rows={data}
+          text="در حال حاضر سرویسی وجود ندارد"
+          isLoading={isLoading}
+          initialOrder={9}
+        />
       </Box>
-      <CreateConfigMapDialog
+      <CreateIngressDialog
         openDialog={openAddConfigMapDialog}
         onClose={handleCloseAddConfigMapDialog}
       />

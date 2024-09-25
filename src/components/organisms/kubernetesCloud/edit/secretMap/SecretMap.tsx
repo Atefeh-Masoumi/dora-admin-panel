@@ -7,21 +7,20 @@ import {
   Stack,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
+  Typography
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { DorsaTableCell } from "src/components/atoms/DorsaTable";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
-import { DorsaTableCell } from "src/components/atoms/DorsaTable";
 
 type KubernetesCloudSecretMapPropsType = {};
 
