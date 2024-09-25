@@ -92,13 +92,13 @@ export const KubernetesCloudSecretMapTableRow: FC<{
           },
         }}
       >
-        {kubernetesCloudSecretMapTableStruct.map((column) => {
+        {kubernetesCloudSecretMapTableStruct.map((column, index) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
-          const id = row["statusId"];
+          // const id = row["statusId"];
           return (
             <DorsaTableCell
-              key={id}
+              key={index}
               align="center"
               sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
