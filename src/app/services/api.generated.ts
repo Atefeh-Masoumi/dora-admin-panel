@@ -4139,21 +4139,33 @@ export type GetKuberCloudDeploymentEnvResponse = {
   createDate: string;
   modifyDate: string;
 };
+export type Port = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
+};
 export type KuberCloudDeploymentListResponse = {
   id: number;
   name: string | null;
   image: string | null;
   namespace: string | null;
+  ports?: Port[] | null;
   createDate: string;
+};
+export type PortResponse = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
 };
 export type GetKuberCloudDeploymentResponse = {
   id: number;
   name: string | null;
   image: string | null;
   replica: number;
-  nodePort: number;
-  servicePort: number;
   namespace: string | null;
+  ports?: PortResponse[] | null;
   createDate: string;
   modifyDate: string;
 };
