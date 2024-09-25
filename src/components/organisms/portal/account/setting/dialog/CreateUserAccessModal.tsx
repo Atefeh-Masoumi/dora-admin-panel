@@ -1,6 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
+  Button,
   Checkbox,
   Dialog,
   DialogContent,
@@ -30,8 +31,7 @@ import {
   roleAccessType,
 } from "src/constant/accessModal.constant";
 
-type CreateUserAccessModalPropsType = {
-  dialogProps: DialogProps;
+type CreateUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
 };
 
@@ -48,8 +48,8 @@ export type RoleAccessStateType = {
 }[];
 
 export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
-  dialogProps,
   forceClose,
+  ...props
 }) => {
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
 
@@ -62,6 +62,19 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [superUser, setSuperUser] = useState(false);
   const [financialManager, setFinancialManager] = useState(false);
   const [accountManager, setAccountManager] = useState(false);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
+  
+
+  const handleCheckbox = (selectAll: boolean) => {
+    setSelectAll(selectAll);
+    setAccountManager(false);
+    setFinancialManager(false);
+    if (selectAll) {
+      setSuperUser(true);
+    } else {
+      setSuperUser(false);
+    }
+  };
 
   const formValidation = yup.object().shape({
     userName: yup.string().required("نام کاربری الزامی است"),
@@ -124,6 +137,26 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       return {
         roleId: role.id,
         roleName: role.name,
+        isRoleChecked: selectAll ? true : false,
+        roleAccessTypeId: roleAccessType[0].id,
+        accessTuples: access.map((item) => {
+          return {
+            accessId: item.id,
+            hasAccess: selectAll ? true : false,
+            accessName: item.persianName,
+          };
+        }),
+      };
+    });
+
+    newRoleAccessList && setRoleAccessList(newRoleAccessList);
+  }, [selectAll]);
+
+  useEffect(() => {
+    const newRoleAccessList = roleList?.map((role) => {
+      return {
+        roleId: role.id,
+        roleName: role.name,
         isRoleChecked: false,
         roleAccessTypeId: roleAccessType[0].id,
         accessTuples: access.map((item) => {
@@ -135,22 +168,22 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         }),
       };
     });
+
     newRoleAccessList && setRoleAccessList(newRoleAccessList);
   }, [roleList]);
-
   const radioItems = [
-    {
-      id: CHECK_BOX_ENUM.SUPER_USER,
-      label: "سوپر ادمین - همه دسترسی ها",
-      text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
-      value: superUser,
-      disable: false,
-      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
-        setSuperUser(checked);
-        setAccountManager(false);
-        setFinancialManager(false);
-      },
-    },
+    // {
+    //   id: CHECK_BOX_ENUM.SUPER_USER,
+    //   label: "سوپر ادمین - همه دسترسی ها",
+    //   text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
+    //   value: superUser,
+    //   disable: false,
+    //   onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+    //     setSuperUser(checked);
+    //     setAccountManager(false);
+    //     setFinancialManager(false);
+    //   },
+    // },
     {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
       label: "مدیریت کاربران",
@@ -180,7 +213,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   ];
 
   return (
-    <Dialog {...dialogProps} sx={{ "& .MuiPaper-root": { maxWidth: "850px" } }}>
+    <Dialog {...props} sx={{ p: 3 }} fullWidth>
       <DialogTitle align="center">افزودن کاربر جدید</DialogTitle>
       <DialogContent>
         <Formik
@@ -190,7 +223,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         >
           {({ errors, touched, getFieldProps }) => {
             return (
-              <Form autoComplete="on">
+              <Form style={{ padding: 0 }} autoComplete="on">
                 <Stack
                   rowGap={2}
                   columnGap={2}
@@ -198,7 +231,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   direction="column"
                   mt={2}
                 >
-                  <Stack direction="column" p={1.3} rowGap={1} columnGap={1}>
+                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
                       <Typography fontSize={12}>
                         از اعضا دعوت کنید تا به همه یا دامنه های خاصی در حساب
@@ -233,7 +266,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                         <Grid
                           key={index}
                           xs={12}
-                          md={3.5}
+                          md={5}
                           item
 
                           // pr={{ xs: 0, md: 1 }}
@@ -286,52 +319,68 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     p={1}
                     rowGap={1}
                     columnGap={1}
-                    sx={{
-                      display: superUser ? "none" : "flex",
-                    }}
+                    // sx={{
+                    //   display: superUser ? "none" : "flex",
+                    // }}
                   >
                     <Box sx={{ width: "100%" }}>
-                      <Typography>نقش های محدوده حساب</Typography>
+                      <Typography>سطح‌های دسترسی</Typography>
+                    </Box>
+                    <Box sx={{ padding: 0, margin: 0 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={selectAll}
+                            onChange={(e, checked) => handleCheckbox(checked)}
+                          />
+                        }
+                        label="همه"
+                      />
                     </Box>
                     {roleListIsLoading || roleAccessList?.length === 0 ? (
                       <PageLoading />
                     ) : (
                       <RoleAccessList
-                        {...{ setRoleAccessList, roleAccessList }}
+                        {...{
+                          setRoleAccessList,
+                          roleAccessList,
+                        }}
                       />
                     )}
                   </Stack>
-                  <Divider
-                    sx={{ display: superUser ? "none" : "flex" }}
-                    flexItem
-                  />
+
                   <Stack
                     rowGap={1}
                     columnGap={1}
-                    sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
+                    direction="row"
+                    p={2}
+                    // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
                   >
                     <LoadingButton
-                      sx={{
-                        minWidth: "160px",
-                        flexGrow: 1,
-                      }}
+                      // sx={{
+                      //   // minWidth: "160px",
+                      //   flexGrow: 1,
+                      // }}
+
+                      sx={{ width: "28%" }}
                       type="submit"
                       loading={createUserIsLoading}
                       variant="contained"
                     >
                       تایید
                     </LoadingButton>
-                    <LoadingButton
+                    <Button
                       onClick={() => forceClose()}
-                      sx={{
-                        minWidth: "160px",
-                        flexGrow: 1,
-                      }}
+                      // sx={{
+                      //   minWidth: "160px",
+                      //   flexGrow: 1,
+                      // }}
+                      sx={{ width: "28%" }}
                       type="button"
                       variant="outlined"
                     >
                       انصراف
-                    </LoadingButton>
+                    </Button>
                   </Stack>
                 </Stack>
               </Form>
