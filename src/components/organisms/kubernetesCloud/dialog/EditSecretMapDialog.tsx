@@ -61,7 +61,7 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
         originalArray: { id: number; key: string; value: string }[],
         submittedArray: { key: string; value: string }[]
       ) => {
-        let removeEnvIds: string[] = [];
+        let removeEnvIds: number[] = [];
         let envs: { [key: string]: any } = {};
 
         const originalLookup: {
@@ -94,7 +94,7 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
             (submittedItem) => submittedItem.key === originalItem.key
           );
           if (isKeyDeleted) {
-            removeEnvIds.push(String(originalItem.id));
+            removeEnvIds.push(originalItem.id);
           }
         });
 

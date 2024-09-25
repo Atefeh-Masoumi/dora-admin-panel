@@ -27,7 +27,7 @@ type InitialValuesType = {
   alias?: string | null;
   description?: string | null;
   envs: { key: string; value: string }[];
-  removeEnvIds: string[];
+  removeEnvIds: number[];
 };
 
 type EditConfigmapDialogPropsType = {
@@ -61,7 +61,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
         originalArray: { id: number; key: string; value: string }[],
         submittedArray: { key: string; value: string }[]
       ) => {
-        let removeEnvIds: string[] = [];
+        let removeEnvIds: number[] = [];
         let envs: { [key: string]: any } = {};
 
         const originalLookup: {
@@ -94,7 +94,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
             (submittedItem) => submittedItem.key === originalItem.key
           );
           if (isKeyDeleted) {
-            removeEnvIds.push(String(originalItem.id));
+            removeEnvIds.push(originalItem.id);
           }
         });
 
