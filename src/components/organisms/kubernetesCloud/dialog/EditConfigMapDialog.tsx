@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
@@ -225,8 +225,8 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                 sx={{ direction: "rtl", margin: "0 auto" }}
               >
                 {formik.values.envs.map((env, index) => (
-                  <>
-                    <Grid item xs={4} mb={2} key={`key-${index}`}>
+                  <Fragment key={index}>
+                    <Grid item xs={4} mb={2}>
                       <DorsaTextField
                         fullWidth
                         label="key"
@@ -264,7 +264,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                         <TrashSvg />
                       </IconButton>
                     </Grid>
-                  </>
+                  </Fragment>
                 ))}
               </Grid>
             </Stack>
