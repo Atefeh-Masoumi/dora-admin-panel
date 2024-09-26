@@ -191,9 +191,6 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                         return (
                           <TableRow key={index}>
                             <TableCell sx={{ border: "none" }} align="center">
-                              {item.nodePortId}
-                            </TableCell>
-                            <TableCell sx={{ border: "none" }} align="center">
                               {item.nodePort}
                             </TableCell>
                             <TableCell sx={{ border: "none" }} align="center">
