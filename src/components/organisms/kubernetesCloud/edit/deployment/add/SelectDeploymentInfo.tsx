@@ -49,11 +49,8 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
   const handleCounterOnMinusClick = () =>
     formik.setFieldValue("replicaNumber", minusOne());
 
-  const handleSwitchIsPublic = () =>
-    formik.setFieldValue("isPublic", !formik.values.isPublic);
-
   return (
-    <Stack gap={2} direction="column" sx={{ width: "100%" }}>
+    <Stack gap={2} rowGap={6} pb={4} pt={2} direction="column" sx={{ width: "100%" }}>
       <Typography
         variant="text9"
         align="center"
@@ -111,32 +108,6 @@ export const SelectDeploymentInfo: FC<SelectDeploymentInfoPropsType> = ({
             onChange={(newValue: CounterNewValueType) => handleCounterOnChange}
             onPlusClick={handleCounterOnPlusClick}
             onMinusClick={handleCounterOnMinusClick}
-          />
-        </Stack>
-
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{
-            borderRadius: BORDER_RADIUS_1,
-            py: 1.5,
-            px: 1,
-            backgroundColor: "white",
-            "& > *": {
-              backgroundColor: "inherit",
-            },
-          }}
-        >
-          <Stack>
-            <Typography fontSize={16}>دسترسی عمومی</Typography>
-            <Typography variant="text9" color="rgba(110, 118, 138, 0.8)">
-              دسترسی عمومی از بیرون به سرویس داده شود.
-            </Typography>
-          </Stack>
-          <DorsaSwitch
-            checked={formik.values.isPublic}
-            onChange={handleSwitchIsPublic}
           />
         </Stack>
       </Stack>
