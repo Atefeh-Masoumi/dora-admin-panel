@@ -160,13 +160,12 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
         submitLoading={deleteCustomerUserLoading}
       />
       <EditUserAccessModal
-        dialogProps={{
-          open: editModalIsOpen,
-          onClose: () => setEditModalIsOpen(false),
-        }}
+        open={editModalIsOpen}
+        onClose={() => setEditModalIsOpen(false)}
         forceClose={() => setEditModalIsOpen(false)}
         userId={userId as string}
         userName={userName as string}
+        maxWidth="md"
       />
     </>
   );
