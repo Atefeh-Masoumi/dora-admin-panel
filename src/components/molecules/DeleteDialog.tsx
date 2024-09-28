@@ -152,7 +152,6 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
                 justifyContent: "space-between",
                 border: "1px solid #ccc",
                 borderRadius: BORDER_RADIUS_1,
-                padding: "8px",
               }}
             >
               <IconButton onClick={() => copyText(securityPhrase)}>
