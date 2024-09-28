@@ -99,7 +99,7 @@ const AddKubernetesCloudDeployment: FC = () => {
           namespaceId: values.namespaceId!,
           keyValue: groupedByVariableType(values),
           replicaNumber: values.replicaNumber,
-          isPublic: values.isPublic,
+          isPublic: false,
         },
       })
         .unwrap()
