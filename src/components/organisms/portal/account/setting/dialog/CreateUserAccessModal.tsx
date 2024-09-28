@@ -63,7 +63,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [financialManager, setFinancialManager] = useState(false);
   const [accountManager, setAccountManager] = useState(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
-  
 
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
@@ -314,15 +313,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
 
                   <Divider flexItem />
 
-                  <Stack
-                    direction="column"
-                    p={1}
-                    rowGap={1}
-                    columnGap={1}
-                    // sx={{
-                    //   display: superUser ? "none" : "flex",
-                    // }}
-                  >
+                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
                       <Typography>سطح‌های دسترسی</Typography>
                     </Box>
