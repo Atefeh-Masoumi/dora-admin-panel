@@ -12,7 +12,10 @@ import {
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { getResourceItems } from "src/utils/getResourceItems.utils";
-import { KeyListInResourceType, KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
+import {
+  KeyListInResourceType,
+  KuberCloudNamespaceImageType,
+} from "src/types/kubernetesCloud.types";
 
 type SelectEnvironmentVariablePropsType = {
   mainIndex: number;
@@ -27,24 +30,21 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
     const [selectedResourceItem, setSelectedResourceItem] = useState<
       number | null
     >(null);
-
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up("sm"));
     const { kubernetesCloudId } = useParams();
+    const namespaceId = Number(kubernetesCloudId);
 
     const { data: configmapList = [] } =
       useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
-        {
-          namespaceId: Number(kubernetesCloudId),
-        },
-        { skip: !kubernetesCloudId }
+        { namespaceId },
+        { skip: !namespaceId }
       );
+
     const { data: secretList = [] } =
       useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
-        {
-          namespaceId: Number(kubernetesCloudId),
-        },
-        { skip: !kubernetesCloudId }
+        { namespaceId },
+        { skip: !namespaceId }
       );
 
     const isResourceSelectionRequired = useMemo(
@@ -137,23 +137,19 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
 
     return (
       <Grid spacing={2} container>
-        {[...(!isSm ? inputItems.reverse() : inputItems)].reverse().map(
-          ({ Input, value, onChange, otherProps, xs, sm, md, lg }, index) => (
-            // otherProps ? (
-            <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
-              <Input
-                value={value}
-                onChange={onChange}
-                {...(otherProps || undefined)}
-              />
-            </Grid>
-          )
-          // ) : (
-          //   <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
-          //     <Input value={value} onChange={onChange} />
-          //   </Grid>
-          // )
-        )}
+        {[...(!isSm ? inputItems.reverse() : inputItems)]
+          .reverse()
+          .map(
+            ({ Input, value, onChange, otherProps, xs, sm, md, lg }, index) => (
+              <Grid key={index} item xs={xs} sm={sm} md={md} lg={lg}>
+                <Input
+                  value={value}
+                  onChange={onChange}
+                  {...(otherProps || undefined)}
+                />
+              </Grid>
+            )
+          )}
       </Grid>
     );
   });
