@@ -3,11 +3,11 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
+import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -97,7 +97,7 @@ export const KubernetesCloudIngress: FC<
           initialOrder={9}
         />
       </Box>
-      <CreateConfigMapDialog
+      <CreateIngressDialog
         openDialog={openAddIngressDialog}
         onClose={handleCloseAddIngressDialog}
       />
