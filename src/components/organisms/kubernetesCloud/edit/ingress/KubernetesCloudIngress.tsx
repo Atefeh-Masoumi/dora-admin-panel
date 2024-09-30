@@ -2,12 +2,11 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
-import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
+import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -16,7 +15,6 @@ export const KubernetesCloudIngress: FC<
 > = () => {
   const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
-  const [search, setSearch] = useState("");
 
   const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListQuery();
 
@@ -51,10 +49,6 @@ export const KubernetesCloudIngress: FC<
           <Typography fontSize={18} color="secondary">
             لیست اینگرس
           </Typography>
-          <SearchBox
-            onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام سرویس"
-          />
         </Stack>
         <Button
           onClick={handleOpenAddIngressDialog}

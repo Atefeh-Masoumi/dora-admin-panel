@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePostApiMyKubernetesCloudSecretCreateMutation } from "src/app/services/api.generated";
@@ -379,7 +379,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                   sx={{ direction: "rtl" }}
                 >
                   {envs.map((_: any, index: any) => (
-                    <>
+                    <Fragment key={index}>
                       <Grid item xs={4} mb={2}>
                         <DorsaTextField
                           fullWidth
@@ -420,7 +420,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           <TrashSvg />
                         </IconButton>
                       </Grid>
-                    </>
+                    </Fragment>
                   ))}
                 </Grid>
               </Stack>

@@ -83,16 +83,13 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
             sx={{
               bgcolor: `${
                 vmProjectData.isPublic
-                  ? "success.main"
+                  ? "success.light"
                   : "customColor.neutralVeryLight"
               }`,
             }}
           >
             {vmProjectData.isPublic ? (
-              <PublicIcon
-                sx={{ color: `customColor.neutralDark` }}
-                fontSize="medium"
-              />
+              <PublicIcon sx={{ color: "#6E768A" }} fontSize="medium" />
             ) : (
               <PublicOffIcon
                 sx={{ color: `customColor.neutralDark` }}

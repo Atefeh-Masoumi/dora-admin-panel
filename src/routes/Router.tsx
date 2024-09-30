@@ -260,16 +260,16 @@ const Router: FC = () => {
               pageTitle: "گزارش محاسبات",
             })}
           />
-          <Route
+          {/* <Route
             path="/portal/wallet/bill/:id"
             element={mainTemplate(CustomerBill, {
               link: {
                 text: "بازگشت به گزارش محاسبات",
-                url: "/portal/wallet/bill",
+                url: "/portal/financial/?tab=customer-bill",
               },
               hideSidebar: false,
             })}
-          />
+          /> */}
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/cdn"
@@ -596,7 +596,7 @@ const Router: FC = () => {
         <Route
           path="/vpc/:vpcId/nat"
           element={mainTemplate(VpcEditZone, {
-            pageTitle: "مدیریت NAT/DNAT",
+            pageTitle: "مدیریت NAT",
           })}
         />
         <Route

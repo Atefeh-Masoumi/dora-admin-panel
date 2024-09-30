@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const kubernetesCloudTableStruct: columnType[] = [
-  { id: "id", label: "", invisibility: true, disableSort: true },
+  { id: "id", label: "پاد", invisibility: true, disableSort: true },
   { id: "datacenter", label: "مرکز داده" },
   { id: "name", label: "نام سرویس" },
   { id: "statusId", label: "وضعیت" },
@@ -16,6 +16,12 @@ export const kubernetesCloudDeploymentTableStruct: columnType[] = [
   { id: "namespace", label: "namespace" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
+];
+
+export const kubernetesCloudDeploymentInnerListTableStruct: columnType[] = [
+  // { id: "id", label: "" },
+  { id: "nodePort", label: "نود پورت" },
+  { id: "servicePort", label: "سرویس پورت" },
 ];
 
 export const kubernetesCloudConfigMapTableStruct: columnType[] = [

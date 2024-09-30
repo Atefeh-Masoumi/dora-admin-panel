@@ -4,6 +4,21 @@ export const api = createApi({
   baseQuery: baseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    getAccountUserLog: build.query<
+      GetAccountUserLogApiResponse,
+      GetAccountUserLogApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/Account/user-log`,
+        params: {
+          UserId: queryArg.userId,
+          FromDate: queryArg.fromDate,
+          ToDate: queryArg.toDate,
+          PageNumber: queryArg.pageNumber,
+          PageSize: queryArg.pageSize,
+        },
+      }),
+    }),
     getApiMyAccountRoleAccessTypeList: build.query<
       GetApiMyAccountRoleAccessTypeListApiResponse,
       GetApiMyAccountRoleAccessTypeListApiArg
@@ -883,6 +898,14 @@ export const api = createApi({
         body: queryArg.createKuberCloudSecretModel,
       }),
     }),
+    getApiMyKubernetesCloudHostPortListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudHostPortListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudHostPortListByNamespaceIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/port/list/${queryArg.namespaceId}`,
+      }),
+    }),
     putApiMyKubernetesCloudIngressRuleEdit: build.mutation<
       PutApiMyKubernetesCloudIngressRuleEditApiResponse,
       PutApiMyKubernetesCloudIngressRuleEditApiArg
@@ -925,6 +948,15 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/ingress/get/${queryArg.id}`,
+      }),
+    }),
+    deleteApiMyKubernetesCloudIngressDeleteByIngressId: build.mutation<
+      DeleteApiMyKubernetesCloudIngressDeleteByIngressIdApiResponse,
+      DeleteApiMyKubernetesCloudIngressDeleteByIngressIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress/delete/${queryArg.ingressId}`,
+        method: "DELETE",
       }),
     }),
     postApiMyKubernetesCloudIngressCreate: build.mutation<
@@ -990,6 +1022,22 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/host/create`,
         method: "POST",
         body: queryArg.createKuberCloudHostModel,
+      }),
+    }),
+    getApiMyKubernetesCloudDeploymentEnvListByDeploymentId: build.query<
+      GetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdApiResponse,
+      GetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/deployment/env/list/${queryArg.deploymentId}`,
+      }),
+    }),
+    getApiMyKubernetesCloudDeploymentEnvGetById: build.query<
+      GetApiMyKubernetesCloudDeploymentEnvGetByIdApiResponse,
+      GetApiMyKubernetesCloudDeploymentEnvGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/deployment/env/get/${queryArg.id}`,
       }),
     }),
     getApiMyKubernetesCloudDeploymentListByNamespaceId: build.query<
@@ -1390,6 +1438,12 @@ export const api = createApi({
         url: `/api/my/portal/payment/get/${queryArg.id}`,
       }),
     }),
+    getApiMyPortalPaymentDownload: build.query<
+      GetApiMyPortalPaymentDownloadApiResponse,
+      GetApiMyPortalPaymentDownloadApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/payment/download` }),
+    }),
     postApiMyPortalPaymentCreate: build.mutation<
       PostApiMyPortalPaymentCreateApiResponse,
       PostApiMyPortalPaymentCreateApiArg
@@ -1597,6 +1651,215 @@ export const api = createApi({
       GetApiMyPortalBusinessUnitListApiArg
     >({
       query: () => ({ url: `/api/my/portal/business-unit/list` }),
+    }),
+    putApiMyVmSnapshotRevertById: build.mutation<
+      PutApiMyVmSnapshotRevertByIdApiResponse,
+      PutApiMyVmSnapshotRevertByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/revert/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyVmSnapshotListByVmHostId: build.query<
+      GetApiMyVmSnapshotListByVmHostIdApiResponse,
+      GetApiMyVmSnapshotListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/list/${queryArg.vmHostId}`,
+      }),
+    }),
+    getApiMyVmSnapshotGetById: build.query<
+      GetApiMyVmSnapshotGetByIdApiResponse,
+      GetApiMyVmSnapshotGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/snapshot/get/${queryArg.id}` }),
+    }),
+    deleteApiMyVmSnapshotDeleteAllByVmHostId: build.mutation<
+      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse,
+      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/delete-all/${queryArg.vmHostId}`,
+        method: "DELETE",
+      }),
+    }),
+    deleteApiMyVmSnapshotDeleteById: build.mutation<
+      DeleteApiMyVmSnapshotDeleteByIdApiResponse,
+      DeleteApiMyVmSnapshotDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmSnapshotCreate: build.mutation<
+      PostApiMyVmSnapshotCreateApiResponse,
+      PostApiMyVmSnapshotCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/create`,
+        method: "POST",
+        body: queryArg.createSnapshotModel,
+      }),
+    }),
+    putApiMyVmIsoUnmountById: build.mutation<
+      PutApiMyVmIsoUnmountByIdApiResponse,
+      PutApiMyVmIsoUnmountByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/iso/unmount/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.unmountModel,
+      }),
+    }),
+    putApiMyVmIsoMountById: build.mutation<
+      PutApiMyVmIsoMountByIdApiResponse,
+      PutApiMyVmIsoMountByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/iso/mount/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.mountModel,
+      }),
+    }),
+    getApiMyVmIsoListByDatacenterId: build.query<
+      GetApiMyVmIsoListByDatacenterIdApiResponse,
+      GetApiMyVmIsoListByDatacenterIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
+      }),
+    }),
+    putApiMyVmHostStopById: build.mutation<
+      PutApiMyVmHostStopByIdApiResponse,
+      PutApiMyVmHostStopByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/stop/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyVmHostStartById: build.mutation<
+      PutApiMyVmHostStartByIdApiResponse,
+      PutApiMyVmHostStartByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/start/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyVmHostShutdownById: build.mutation<
+      PutApiMyVmHostShutdownByIdApiResponse,
+      PutApiMyVmHostShutdownByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/shutdown/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyVmHostShortListByHypervisorTypeId: build.query<
+      GetApiMyVmHostShortListByHypervisorTypeIdApiResponse,
+      GetApiMyVmHostShortListByHypervisorTypeIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/short-list/${queryArg.hypervisorTypeId}`,
+      }),
+    }),
+    putApiMyVmHostResetById: build.mutation<
+      PutApiMyVmHostResetByIdApiResponse,
+      PutApiMyVmHostResetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/reset/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyVmKmsGetById: build.query<
+      GetApiMyVmKmsGetByIdApiResponse,
+      GetApiMyVmKmsGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
+    }),
+    putApiMyVmHostRebuildById: build.mutation<
+      PutApiMyVmHostRebuildByIdApiResponse,
+      PutApiMyVmHostRebuildByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/rebuild/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.rebuildVmModel,
+      }),
+    }),
+    putApiMyVmHostRebootById: build.mutation<
+      PutApiMyVmHostRebootByIdApiResponse,
+      PutApiMyVmHostRebootByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/reboot/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyVmHostListByVmProjectId: build.query<
+      GetApiMyVmHostListByVmProjectIdApiResponse,
+      GetApiMyVmHostListByVmProjectIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/list/${queryArg.vmProjectId}`,
+      }),
+    }),
+    getApiMyVmHostGetById: build.query<
+      GetApiMyVmHostGetByIdApiResponse,
+      GetApiMyVmHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/host/get/${queryArg.id}` }),
+    }),
+    putApiMyVmHostEditById: build.mutation<
+      PutApiMyVmHostEditByIdApiResponse,
+      PutApiMyVmHostEditByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/edit/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.editVmModel,
+      }),
+    }),
+    putApiMyVmHostDisconnectById: build.mutation<
+      PutApiMyVmHostDisconnectByIdApiResponse,
+      PutApiMyVmHostDisconnectByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/disconnect/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    deleteApiMyVmHostDeleteById: build.mutation<
+      DeleteApiMyVmHostDeleteByIdApiResponse,
+      DeleteApiMyVmHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmHostCreate: build.mutation<
+      PostApiMyVmHostCreateApiResponse,
+      PostApiMyVmHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/create`,
+        method: "POST",
+        body: queryArg.createVmModel,
+      }),
+    }),
+    putApiMyVmHostConnectById: build.mutation<
+      PutApiMyVmHostConnectByIdApiResponse,
+      PutApiMyVmHostConnectByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/connect/${queryArg.id}`,
+        method: "PUT",
+      }),
     }),
     getApiMyVpcTranslateList: build.query<
       GetApiMyVpcTranslateListApiResponse,
@@ -1860,215 +2123,6 @@ export const api = createApi({
         body: queryArg.createVpcHostModel,
       }),
     }),
-    putApiMyVmSnapshotRevertById: build.mutation<
-      PutApiMyVmSnapshotRevertByIdApiResponse,
-      PutApiMyVmSnapshotRevertByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/revert/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    getApiMyVmSnapshotListByVmHostId: build.query<
-      GetApiMyVmSnapshotListByVmHostIdApiResponse,
-      GetApiMyVmSnapshotListByVmHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/list/${queryArg.vmHostId}`,
-      }),
-    }),
-    getApiMyVmSnapshotGetById: build.query<
-      GetApiMyVmSnapshotGetByIdApiResponse,
-      GetApiMyVmSnapshotGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/snapshot/get/${queryArg.id}` }),
-    }),
-    deleteApiMyVmSnapshotDeleteAllByVmHostId: build.mutation<
-      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse,
-      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/delete-all/${queryArg.vmHostId}`,
-        method: "DELETE",
-      }),
-    }),
-    deleteApiMyVmSnapshotDeleteById: build.mutation<
-      DeleteApiMyVmSnapshotDeleteByIdApiResponse,
-      DeleteApiMyVmSnapshotDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyVmSnapshotCreate: build.mutation<
-      PostApiMyVmSnapshotCreateApiResponse,
-      PostApiMyVmSnapshotCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/create`,
-        method: "POST",
-        body: queryArg.createSnapshotModel,
-      }),
-    }),
-    putApiMyVmIsoUnmountById: build.mutation<
-      PutApiMyVmIsoUnmountByIdApiResponse,
-      PutApiMyVmIsoUnmountByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/unmount/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.unmountModel,
-      }),
-    }),
-    putApiMyVmIsoMountById: build.mutation<
-      PutApiMyVmIsoMountByIdApiResponse,
-      PutApiMyVmIsoMountByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/mount/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.mountModel,
-      }),
-    }),
-    getApiMyVmIsoListByDatacenterId: build.query<
-      GetApiMyVmIsoListByDatacenterIdApiResponse,
-      GetApiMyVmIsoListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
-      }),
-    }),
-    putApiMyVmHostStopById: build.mutation<
-      PutApiMyVmHostStopByIdApiResponse,
-      PutApiMyVmHostStopByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/stop/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmHostStartById: build.mutation<
-      PutApiMyVmHostStartByIdApiResponse,
-      PutApiMyVmHostStartByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/start/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmHostShutdownById: build.mutation<
-      PutApiMyVmHostShutdownByIdApiResponse,
-      PutApiMyVmHostShutdownByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/shutdown/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    getApiMyVmHostShortListByHypervisorTypeId: build.query<
-      GetApiMyVmHostShortListByHypervisorTypeIdApiResponse,
-      GetApiMyVmHostShortListByHypervisorTypeIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/short-list/${queryArg.hypervisorTypeId}`,
-      }),
-    }),
-    putApiMyVmHostResetById: build.mutation<
-      PutApiMyVmHostResetByIdApiResponse,
-      PutApiMyVmHostResetByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/reset/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    getApiMyVmKmsGetById: build.query<
-      GetApiMyVmKmsGetByIdApiResponse,
-      GetApiMyVmKmsGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/kms/get/${queryArg.id}` }),
-    }),
-    putApiMyVmHostRebuildById: build.mutation<
-      PutApiMyVmHostRebuildByIdApiResponse,
-      PutApiMyVmHostRebuildByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/rebuild/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.rebuildVmModel,
-      }),
-    }),
-    putApiMyVmHostRebootById: build.mutation<
-      PutApiMyVmHostRebootByIdApiResponse,
-      PutApiMyVmHostRebootByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/reboot/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    getApiMyVmHostListByVmProjectId: build.query<
-      GetApiMyVmHostListByVmProjectIdApiResponse,
-      GetApiMyVmHostListByVmProjectIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/list/${queryArg.vmProjectId}`,
-      }),
-    }),
-    getApiMyVmHostGetById: build.query<
-      GetApiMyVmHostGetByIdApiResponse,
-      GetApiMyVmHostGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/host/get/${queryArg.id}` }),
-    }),
-    putApiMyVmHostEditById: build.mutation<
-      PutApiMyVmHostEditByIdApiResponse,
-      PutApiMyVmHostEditByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/edit/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.editVmModel,
-      }),
-    }),
-    putApiMyVmHostDisconnectById: build.mutation<
-      PutApiMyVmHostDisconnectByIdApiResponse,
-      PutApiMyVmHostDisconnectByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/disconnect/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    deleteApiMyVmHostDeleteById: build.mutation<
-      DeleteApiMyVmHostDeleteByIdApiResponse,
-      DeleteApiMyVmHostDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyVmHostCreate: build.mutation<
-      PostApiMyVmHostCreateApiResponse,
-      PostApiMyVmHostCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/create`,
-        method: "POST",
-        body: queryArg.createVmModel,
-      }),
-    }),
-    putApiMyVmHostConnectById: build.mutation<
-      PutApiMyVmHostConnectByIdApiResponse,
-      PutApiMyVmHostConnectByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/host/connect/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
     getApiMyWebHostList: build.query<
       GetApiMyWebHostListApiResponse,
       GetApiMyWebHostListApiArg
@@ -2202,6 +2256,15 @@ export const api = createApi({
     }),
   }),
 });
+export type GetAccountUserLogApiResponse =
+  /** status 200 OK */ UserLogResponseIEnumerablePagedResponse;
+export type GetAccountUserLogApiArg = {
+  userId?: string;
+  fromDate?: string;
+  toDate?: string;
+  pageNumber: number;
+  pageSize: number;
+};
 export type GetApiMyAccountRoleAccessTypeListApiResponse =
   /** status 200 OK */ RoleAccessTypeListResponse[];
 export type GetApiMyAccountRoleAccessTypeListApiArg = void;
@@ -2630,6 +2693,11 @@ export type PostApiMyKubernetesCloudSecretCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudSecretCreateApiArg = {
   createKuberCloudSecretModel: CreateKuberCloudSecretModel;
 };
+export type GetApiMyKubernetesCloudHostPortListByNamespaceIdApiResponse =
+  /** status 200 OK */ KuberCloudHostListPortResponse[];
+export type GetApiMyKubernetesCloudHostPortListByNamespaceIdApiArg = {
+  namespaceId: number;
+};
 export type PutApiMyKubernetesCloudIngressRuleEditApiResponse = unknown;
 export type PutApiMyKubernetesCloudIngressRuleEditApiArg = {
   editKuberCloudIngressRuleModel: EditKuberCloudIngressRuleModel;
@@ -2649,6 +2717,11 @@ export type GetApiMyKubernetesCloudIngressGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudIngressResponse;
 export type GetApiMyKubernetesCloudIngressGetByIdApiArg = {
   id: number;
+};
+export type DeleteApiMyKubernetesCloudIngressDeleteByIngressIdApiResponse =
+  unknown;
+export type DeleteApiMyKubernetesCloudIngressDeleteByIngressIdApiArg = {
+  ingressId: number;
 };
 export type PostApiMyKubernetesCloudIngressCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudIngressCreateApiArg = {
@@ -2680,6 +2753,16 @@ export type DeleteApiMyKubernetesCloudHostDeleteByIdApiArg = {
 export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudHostCreateApiArg = {
   createKuberCloudHostModel: CreateKuberCloudHostModel;
+};
+export type GetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdApiResponse =
+  /** status 200 OK */ KuberCloudDeploymentEnvListResponse[];
+export type GetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdApiArg = {
+  deploymentId: number;
+};
+export type GetApiMyKubernetesCloudDeploymentEnvGetByIdApiResponse =
+  /** status 200 OK */ GetKuberCloudDeploymentEnvResponse;
+export type GetApiMyKubernetesCloudDeploymentEnvGetByIdApiArg = {
+  id: number;
 };
 export type GetApiMyKubernetesCloudDeploymentListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudDeploymentListResponse[];
@@ -2800,7 +2883,7 @@ export type GetApiMyPortalWalletTransactionUsageReportByPeriodApiArg = {
   period: number;
 };
 export type GetApiMyPortalWalletTransactionDownloadApiResponse =
-  /** status 200 OK */ WalletTransactionReportResponse;
+  /** status 200 OK */ Blob;
 export type GetApiMyPortalWalletTransactionDownloadApiArg = void;
 export type GetApiMyPortalWalletGetBalanceApiResponse =
   /** status 200 OK */ number;
@@ -2884,6 +2967,9 @@ export type GetApiMyPortalPaymentGetByIdApiResponse =
 export type GetApiMyPortalPaymentGetByIdApiArg = {
   id: number;
 };
+export type GetApiMyPortalPaymentDownloadApiResponse =
+  /** status 200 OK */ Blob;
+export type GetApiMyPortalPaymentDownloadApiArg = void;
 export type PostApiMyPortalPaymentCreateApiResponse =
   /** status 200 OK */ CreatePaymentResponse;
 export type PostApiMyPortalPaymentCreateApiArg = {
@@ -2964,7 +3050,7 @@ export type GetApiMyPortalInvoiceGetByIdApiArg = {
   id: number;
 };
 export type GetApiMyPortalInvoiceDownloadApiResponse =
-  /** status 200 OK */ InvoiceReportResponse;
+  /** status 200 OK */ Blob;
 export type GetApiMyPortalInvoiceDownloadApiArg = void;
 export type GetApiMyPortalCustomerProductShortListApiResponse =
   /** status 200 OK */ CustomerProductShortListResponse[];
@@ -2999,6 +3085,113 @@ export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
+export type PutApiMyVmSnapshotRevertByIdApiResponse = unknown;
+export type PutApiMyVmSnapshotRevertByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVmSnapshotListByVmHostIdApiResponse =
+  /** status 200 OK */ VmSnapshotResponse[];
+export type GetApiMyVmSnapshotListByVmHostIdApiArg = {
+  vmHostId: number;
+};
+export type GetApiMyVmSnapshotGetByIdApiResponse =
+  /** status 200 OK */ VmSnapshotResponse;
+export type GetApiMyVmSnapshotGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse = unknown;
+export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg = {
+  vmHostId: number;
+};
+export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmSnapshotCreateApiResponse = unknown;
+export type PostApiMyVmSnapshotCreateApiArg = {
+  createSnapshotModel: CreateSnapshotModel;
+};
+export type PutApiMyVmIsoUnmountByIdApiResponse = unknown;
+export type PutApiMyVmIsoUnmountByIdApiArg = {
+  id: number;
+  unmountModel: UnmountModel;
+};
+export type PutApiMyVmIsoMountByIdApiResponse = unknown;
+export type PutApiMyVmIsoMountByIdApiArg = {
+  id: number;
+  mountModel: MountModel;
+};
+export type GetApiMyVmIsoListByDatacenterIdApiResponse =
+  /** status 200 OK */ IsoListResponse[];
+export type GetApiMyVmIsoListByDatacenterIdApiArg = {
+  datacenterId: number;
+};
+export type PutApiMyVmHostStopByIdApiResponse = unknown;
+export type PutApiMyVmHostStopByIdApiArg = {
+  id: number;
+};
+export type PutApiMyVmHostStartByIdApiResponse = unknown;
+export type PutApiMyVmHostStartByIdApiArg = {
+  id: number;
+};
+export type PutApiMyVmHostShutdownByIdApiResponse = unknown;
+export type PutApiMyVmHostShutdownByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVmHostShortListByHypervisorTypeIdApiResponse =
+  /** status 200 OK */ VmShortListResponse[];
+export type GetApiMyVmHostShortListByHypervisorTypeIdApiArg = {
+  hypervisorTypeId: number;
+};
+export type PutApiMyVmHostResetByIdApiResponse = unknown;
+export type PutApiMyVmHostResetByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVmKmsGetByIdApiResponse =
+  /** status 200 OK */ GetRemoteConsoleResponse;
+export type GetApiMyVmKmsGetByIdApiArg = {
+  id: number;
+};
+export type PutApiMyVmHostRebuildByIdApiResponse = unknown;
+export type PutApiMyVmHostRebuildByIdApiArg = {
+  id: number;
+  rebuildVmModel: RebuildVmModel;
+};
+export type PutApiMyVmHostRebootByIdApiResponse = unknown;
+export type PutApiMyVmHostRebootByIdApiArg = {
+  id: number;
+};
+export type GetApiMyVmHostListByVmProjectIdApiResponse =
+  /** status 200 OK */ VmListResponse[];
+export type GetApiMyVmHostListByVmProjectIdApiArg = {
+  vmProjectId: number;
+};
+export type GetApiMyVmHostGetByIdApiResponse =
+  /** status 200 OK */ GetVmResponse;
+export type GetApiMyVmHostGetByIdApiArg = {
+  id: number;
+};
+export type PutApiMyVmHostEditByIdApiResponse = unknown;
+export type PutApiMyVmHostEditByIdApiArg = {
+  id: number;
+  editVmModel: EditVmModel;
+};
+export type PutApiMyVmHostDisconnectByIdApiResponse = unknown;
+export type PutApiMyVmHostDisconnectByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyVmHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmHostDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmHostCreateApiResponse = unknown;
+export type PostApiMyVmHostCreateApiArg = {
+  createVmModel: CreateVmModel;
+};
+export type PutApiMyVmHostConnectByIdApiResponse = unknown;
+export type PutApiMyVmHostConnectByIdApiArg = {
+  id: number;
+};
 export type GetApiMyVpcTranslateListApiResponse =
   /** status 200 OK */ VpcHostTranslateListResponse[];
 export type GetApiMyVpcTranslateListApiArg = void;
@@ -3130,113 +3323,6 @@ export type PostApiMyVpcHostCreateApiResponse = unknown;
 export type PostApiMyVpcHostCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
 };
-export type PutApiMyVmSnapshotRevertByIdApiResponse = unknown;
-export type PutApiMyVmSnapshotRevertByIdApiArg = {
-  id: number;
-};
-export type GetApiMyVmSnapshotListByVmHostIdApiResponse =
-  /** status 200 OK */ VmSnapshotResponse[];
-export type GetApiMyVmSnapshotListByVmHostIdApiArg = {
-  vmHostId: number;
-};
-export type GetApiMyVmSnapshotGetByIdApiResponse =
-  /** status 200 OK */ VmSnapshotResponse;
-export type GetApiMyVmSnapshotGetByIdApiArg = {
-  id: number;
-};
-export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse = unknown;
-export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg = {
-  vmHostId: number;
-};
-export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
-export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyVmSnapshotCreateApiResponse = unknown;
-export type PostApiMyVmSnapshotCreateApiArg = {
-  createSnapshotModel: CreateSnapshotModel;
-};
-export type PutApiMyVmIsoUnmountByIdApiResponse = unknown;
-export type PutApiMyVmIsoUnmountByIdApiArg = {
-  id: number;
-  unmountModel: UnmountModel;
-};
-export type PutApiMyVmIsoMountByIdApiResponse = unknown;
-export type PutApiMyVmIsoMountByIdApiArg = {
-  id: number;
-  mountModel: MountModel;
-};
-export type GetApiMyVmIsoListByDatacenterIdApiResponse =
-  /** status 200 OK */ IsoListResponse[];
-export type GetApiMyVmIsoListByDatacenterIdApiArg = {
-  datacenterId: number;
-};
-export type PutApiMyVmHostStopByIdApiResponse = unknown;
-export type PutApiMyVmHostStopByIdApiArg = {
-  id: number;
-};
-export type PutApiMyVmHostStartByIdApiResponse = unknown;
-export type PutApiMyVmHostStartByIdApiArg = {
-  id: number;
-};
-export type PutApiMyVmHostShutdownByIdApiResponse = unknown;
-export type PutApiMyVmHostShutdownByIdApiArg = {
-  id: number;
-};
-export type GetApiMyVmHostShortListByHypervisorTypeIdApiResponse =
-  /** status 200 OK */ VmShortListResponse[];
-export type GetApiMyVmHostShortListByHypervisorTypeIdApiArg = {
-  hypervisorTypeId: number;
-};
-export type PutApiMyVmHostResetByIdApiResponse = unknown;
-export type PutApiMyVmHostResetByIdApiArg = {
-  id: number;
-};
-export type GetApiMyVmKmsGetByIdApiResponse =
-  /** status 200 OK */ GetRemoteConsoleResponse;
-export type GetApiMyVmKmsGetByIdApiArg = {
-  id: number;
-};
-export type PutApiMyVmHostRebuildByIdApiResponse = unknown;
-export type PutApiMyVmHostRebuildByIdApiArg = {
-  id: number;
-  rebuildVmModel: RebuildVmModel;
-};
-export type PutApiMyVmHostRebootByIdApiResponse = unknown;
-export type PutApiMyVmHostRebootByIdApiArg = {
-  id: number;
-};
-export type GetApiMyVmHostListByVmProjectIdApiResponse =
-  /** status 200 OK */ VmListResponse[];
-export type GetApiMyVmHostListByVmProjectIdApiArg = {
-  vmProjectId: number;
-};
-export type GetApiMyVmHostGetByIdApiResponse =
-  /** status 200 OK */ GetVmResponse;
-export type GetApiMyVmHostGetByIdApiArg = {
-  id: number;
-};
-export type PutApiMyVmHostEditByIdApiResponse = unknown;
-export type PutApiMyVmHostEditByIdApiArg = {
-  id: number;
-  editVmModel: EditVmModel;
-};
-export type PutApiMyVmHostDisconnectByIdApiResponse = unknown;
-export type PutApiMyVmHostDisconnectByIdApiArg = {
-  id: number;
-};
-export type DeleteApiMyVmHostDeleteByIdApiResponse = unknown;
-export type DeleteApiMyVmHostDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyVmHostCreateApiResponse = unknown;
-export type PostApiMyVmHostCreateApiArg = {
-  createVmModel: CreateVmModel;
-};
-export type PutApiMyVmHostConnectByIdApiResponse = unknown;
-export type PutApiMyVmHostConnectByIdApiArg = {
-  id: number;
-};
 export type GetApiMyWebHostListApiResponse =
   /** status 200 OK */ WebHostListResponse[];
 export type GetApiMyWebHostListApiArg = void;
@@ -3303,6 +3389,25 @@ export type GetApiMyPortalWebsiteBlogGetByLinkApiArg = {
 export type GetApiMyPortalWebsiteAlarmListApiResponse =
   /** status 200 OK */ WebSiteAlarmListResponse[];
 export type GetApiMyPortalWebsiteAlarmListApiArg = void;
+export type UserLogResponse = {
+  id?: number;
+  userId?: string | null;
+  activityDate?: string;
+  source?: string | null;
+  controller?: string | null;
+  action?: string | null;
+  userAgent?: string | null;
+  userIp?: string | null;
+  referrer?: string | null;
+  data?: string | null;
+};
+export type UserLogResponseIEnumerablePagedResponse = {
+  pageNumber?: number;
+  pageSize?: number;
+  totalPages?: number;
+  totalRecords?: number;
+  data?: UserLogResponse[] | null;
+};
 export type RoleAccessTypeListResponse = {
   id: number;
   name: string | null;
@@ -3439,6 +3544,7 @@ export type GetCustomerResponse = {
   phone?: string | null;
   statusId: number;
   status: string | null;
+  isLegal: boolean;
   createDate?: string | null;
   modifyDate?: string | null;
 };
@@ -3820,7 +3926,6 @@ export type GetDomainResponse = {
   statusId: number;
   type: string | null;
   createDate: string;
-  expireDate?: string | null;
   name: string | null;
   organization: string | null;
   country: string | null;
@@ -3835,6 +3940,7 @@ export type GetDomainResponse = {
   isPremium: boolean;
   ns1: string | null;
   ns2: string | null;
+  expireDate?: string | null;
 };
 export type RegisterDomainModel = {
   domainName: string;
@@ -3936,7 +4042,7 @@ export type EditKuberCloudSecretModel = {
   secretId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: string[] | null;
+  removeEnvIds?: number[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -3952,6 +4058,19 @@ export type CreateKuberCloudSecretModel = {
   };
   alias?: string | null;
   description?: string | null;
+};
+export type ListPort = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
+};
+export type KuberCloudHostListPortResponse = {
+  deploymentId: number;
+  deployName: string | null;
+  imageName: string | null;
+  ports?: ListPort[] | null;
+  createDate: string;
 };
 export type EditKuberCloudIngressRuleModel = {
   ingressId: number;
@@ -4042,6 +4161,8 @@ export type KuberCloudHostListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
+  podInUse?: number;
+  tenPods?: number;
   createDate: string;
 };
 export type KuberCloudHostGetResponse = {
@@ -4054,6 +4175,7 @@ export type KuberCloudHostGetResponse = {
   cpu?: number;
   memory?: number;
   disk?: number;
+  podInUse?: number;
   tenPods?: number;
   createDate: string;
 };
@@ -4074,21 +4196,48 @@ export type CreateKuberCloudHostModel = {
   disk?: number | null;
   tenPods?: number | null;
 };
+export type EnvKeyValuePairResponse = {
+  id?: number;
+  key?: string | null;
+  value?: string | null;
+};
+export type KuberCloudDeploymentEnvListResponse = {
+  envs: EnvKeyValuePairResponse[] | null;
+};
+export type GetKuberCloudDeploymentEnvResponse = {
+  id?: number;
+  key?: string | null;
+  value?: string | null;
+  createDate: string;
+  modifyDate: string;
+};
+export type Port = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
+};
 export type KuberCloudDeploymentListResponse = {
   id: number;
   name: string | null;
   image: string | null;
   namespace: string | null;
+  ports?: Port[] | null;
   createDate: string;
+};
+export type PortResponse = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
 };
 export type GetKuberCloudDeploymentResponse = {
   id: number;
   name: string | null;
   image: string | null;
   replica: number;
-  nodePort: number;
-  servicePort: number;
   namespace: string | null;
+  ports?: PortResponse[] | null;
   createDate: string;
   modifyDate: string;
 };
@@ -4144,7 +4293,7 @@ export type EditKuberCloudConfigmapModel = {
   configmapId: number;
   alias?: string | null;
   description?: string | null;
-  removeEnvIds?: string[] | null;
+  removeEnvIds?: number[] | null;
   envs?: {
     [key: string]: {
       [key: string]: string;
@@ -4206,7 +4355,6 @@ export type GetKubernetesResponse = {
   customerProductType: string | null;
   createDate: string;
   modifyDate: string;
-  expireDate?: string | null;
 };
 export type CreateKubernetesModel = {
   clusterName: string;
@@ -4252,7 +4400,6 @@ export type GetStorageHostResponse = {
   isPublic?: boolean;
   public?: string | null;
   createDate?: string;
-  expireDate?: string | null;
 };
 export type EditStorageHostModel = {
   disk?: number;
@@ -4276,9 +4423,6 @@ export type WalletTransactionListResponse = {
 export type WalletUsageReportResponse = {
   balance: number;
   toDate: string;
-};
-export type WalletTransactionReportResponse = {
-  base64File: string | null;
 };
 export type UseVoucherModel = {
   voucherCode: string;
@@ -4381,10 +4525,10 @@ export type GetProductResponse = {
   supplementaryDescription?: string | null;
 };
 export type PaymentProviderListResponse = {
-  id: number;
+  id?: number;
   name: string | null;
-  isDisabled: boolean;
   photoName?: string | null;
+  status?: boolean;
 };
 export type SepCallbackModel = {
   TerminalId?: number | null;
@@ -4593,11 +4737,9 @@ export type GetInvoiceResponse = {
   invoicePrice: number;
   invoiceItems: InvoiceItemModel[] | null;
 };
-export type InvoiceReportResponse = {
-  base64File: string | null;
-};
 export type CustomerProductShortListResponse = {
   id: number;
+  name: string | null;
   product: string | null;
   customerProduct: string | null;
   createDate: string;
@@ -4666,6 +4808,98 @@ export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
 };
+export type VmSnapshotResponse = {
+  id: number;
+  name: string | null;
+  vmSnapshotStatusId: number;
+  vmSnapshotStatus: string | null;
+  isCreated: boolean;
+  description?: string | null;
+  createDate: string;
+};
+export type CreateSnapshotModel = {
+  vmHostId: number;
+  snapshotName: string;
+  snapshotDescription?: string | null;
+};
+export type UnmountModel = {
+  vmId: number;
+};
+export type MountModel = {
+  vmId?: number;
+};
+export type IsoListResponse = {
+  id?: number;
+  name: string | null;
+};
+export type VmShortListResponse = {
+  id?: number;
+  name: string | null;
+};
+export type GetRemoteConsoleResponse = {
+  location: string | null;
+  vmTypeId: number;
+};
+export type RebuildVmModel = {
+  name: string | null;
+  password: string;
+  publicKey?: string | null;
+  imageId: number;
+};
+export type VmListResponse = {
+  id?: number;
+  name: string | null;
+  status: string | null;
+  statusId?: number;
+  storageClassTypeId?: number;
+  datacenter: string | null;
+  operatingSystem: string | null;
+  ipv4?: string | null;
+  createDate?: string;
+};
+export type GetVmResponse = {
+  id: number;
+  datacenterId: number;
+  name: string | null;
+  operatingSystem: string | null;
+  operatingSystemId: number;
+  storageClassTypeId?: number;
+  status: string | null;
+  statusId: number;
+  cpu: number;
+  memory: number;
+  disk: number;
+  macAddress?: string | null;
+  ip?: string | null;
+  powerStatus?: string | null;
+  networkStatus?: string | null;
+  isCluster?: boolean;
+  isMaster?: boolean;
+  isPublic?: boolean;
+  hypervisorTypeId: number;
+  createDate: string;
+  modifyDate: string;
+};
+export type EditVmModel = {
+  cpu: number;
+  memory: number;
+  disk: number;
+};
+export type CreateVmModel = {
+  name: string;
+  password: string;
+  publicKey?: string | null;
+  imageId: number;
+  storageClassTypeId: number;
+  isPredefined: boolean;
+  vmProjectId: number;
+  productBundleId?: number | null;
+  cpu?: number | null;
+  memory?: number | null;
+  disk?: number | null;
+  vpcHostNetworkId?: number | null;
+  ipAddress?: string | null;
+};
 export type VpcHostTranslateListResponse = {
   id: number;
   name: string | null;
@@ -4707,7 +4941,6 @@ export type VpcNetworkListResponse = {
   subnetMask: string | null;
   subnetCidr: string | null;
   name: string | null;
-  status: string | null;
   datacenter: string | null;
   createDate: string;
 };
@@ -4729,7 +4962,6 @@ export type GetVpcGatewayNatResponse = {
   sourcePort: number;
   destinationIp: string | null;
   destinationPort: number;
-  isDisabled: boolean;
   translateIp: string | null;
   sequence?: number;
   vpcHostServiceName?: string | null;
@@ -4828,100 +5060,8 @@ export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
   productBundleId: number;
-  hypervisorTypeId?: number;
+  vpcNodeTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
-};
-export type VmSnapshotResponse = {
-  id: number;
-  name: string | null;
-  vmSnapshotStatusId: number;
-  vmSnapshotStatus: string | null;
-  isCreated: boolean;
-  description?: string | null;
-  createDate: string;
-};
-export type CreateSnapshotModel = {
-  vmHostId: number;
-  snapshotName: string;
-  snapshotDescription?: string | null;
-};
-export type UnmountModel = {
-  vmId: number;
-};
-export type MountModel = {
-  vmId?: number;
-};
-export type IsoListResponse = {
-  id?: number;
-  name: string | null;
-};
-export type VmShortListResponse = {
-  id?: number;
-  name: string | null;
-};
-export type GetRemoteConsoleResponse = {
-  location: string | null;
-  vmTypeId: number;
-};
-export type RebuildVmModel = {
-  name: string | null;
-  password: string;
-  publicKey?: string | null;
-  imageId: number;
-};
-export type VmListResponse = {
-  id?: number;
-  name: string | null;
-  status: string | null;
-  statusId?: number;
-  storageClassTypeId?: number;
-  datacenter: string | null;
-  operatingSystem: string | null;
-  ipv4?: string | null;
-  createDate?: string;
-};
-export type GetVmResponse = {
-  id: number;
-  datacenterId: number;
-  name: string | null;
-  operatingSystem: string | null;
-  operatingSystemId: number;
-  storageClassTypeId?: number;
-  status: string | null;
-  statusId: number;
-  cpu: number;
-  memory: number;
-  disk: number;
-  macAddress?: string | null;
-  ip?: string | null;
-  powerStatus?: string | null;
-  networkStatus?: string | null;
-  isCluster?: boolean;
-  isMaster?: boolean;
-  isPublic?: boolean;
-  hypervisorTypeId: number;
-  createDate: string;
-  modifyDate: string;
-};
-export type EditVmModel = {
-  cpu: number;
-  memory: number;
-  disk: number;
-};
-export type CreateVmModel = {
-  name: string;
-  password: string;
-  publicKey?: string | null;
-  imageId: number;
-  storageClassTypeId: number;
-  isPredefined: boolean;
-  vmProjectId: number;
-  productBundleId?: number | null;
-  cpu?: number | null;
-  memory?: number | null;
-  disk?: number | null;
-  vpcHostNetworkId?: number | null;
-  ipAddress?: string | null;
 };
 export type WebHostListResponse = {
   id?: number;
@@ -5025,6 +5165,7 @@ export type WebSiteAlarmListResponse = {
   link?: string | null;
 };
 export const {
+  useGetAccountUserLogQuery,
   useGetApiMyAccountRoleAccessTypeListQuery,
   useGetApiMyAccountRoleAccessListByUserIdQuery,
   usePutApiMyAccountRoleAccessEditMutation,
@@ -5128,11 +5269,13 @@ export const {
   usePutApiMyKubernetesCloudSecretEditMutation,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
   usePostApiMyKubernetesCloudSecretCreateMutation,
+  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePutApiMyKubernetesCloudIngressRuleEditMutation,
   useDeleteApiMyKubernetesCloudIngressRuleDeleteMutation,
   usePostApiMyKubernetesCloudIngressRuleCreateMutation,
   useGetApiMyKubernetesCloudIngressListQuery,
   useGetApiMyKubernetesCloudIngressGetByIdQuery,
+  useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation,
   usePostApiMyKubernetesCloudIngressCreateMutation,
   useGetApiMyKubernetesCloudCategoryListQuery,
   useGetApiMyKubernetesCloudImageListQuery,
@@ -5141,6 +5284,8 @@ export const {
   usePutApiMyKubernetesCloudHostEditByIdMutation,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
   usePostApiMyKubernetesCloudHostCreateMutation,
+  useGetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdQuery,
+  useGetApiMyKubernetesCloudDeploymentEnvGetByIdQuery,
   useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudDeploymentGetByIdQuery,
   usePutApiMyKubernetesCloudDeploymentEditMutation,
@@ -5191,6 +5336,7 @@ export const {
   usePostApiMyPortalPaymentPecCallBackMutation,
   useGetApiMyPortalPaymentListQuery,
   useGetApiMyPortalPaymentGetByIdQuery,
+  useGetApiMyPortalPaymentDownloadQuery,
   usePostApiMyPortalPaymentCreateMutation,
   usePostApiMyPortalPaymentBpmCallBackMutation,
   usePostApiMyPortalOfferPayMutation,
@@ -5219,6 +5365,30 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyPortalBusinessUnitListQuery,
+  usePutApiMyVmSnapshotRevertByIdMutation,
+  useGetApiMyVmSnapshotListByVmHostIdQuery,
+  useGetApiMyVmSnapshotGetByIdQuery,
+  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
+  useDeleteApiMyVmSnapshotDeleteByIdMutation,
+  usePostApiMyVmSnapshotCreateMutation,
+  usePutApiMyVmIsoUnmountByIdMutation,
+  usePutApiMyVmIsoMountByIdMutation,
+  useGetApiMyVmIsoListByDatacenterIdQuery,
+  usePutApiMyVmHostStopByIdMutation,
+  usePutApiMyVmHostStartByIdMutation,
+  usePutApiMyVmHostShutdownByIdMutation,
+  useGetApiMyVmHostShortListByHypervisorTypeIdQuery,
+  usePutApiMyVmHostResetByIdMutation,
+  useGetApiMyVmKmsGetByIdQuery,
+  usePutApiMyVmHostRebuildByIdMutation,
+  usePutApiMyVmHostRebootByIdMutation,
+  useGetApiMyVmHostListByVmProjectIdQuery,
+  useGetApiMyVmHostGetByIdQuery,
+  usePutApiMyVmHostEditByIdMutation,
+  usePutApiMyVmHostDisconnectByIdMutation,
+  useDeleteApiMyVmHostDeleteByIdMutation,
+  usePostApiMyVmHostCreateMutation,
+  usePutApiMyVmHostConnectByIdMutation,
   useGetApiMyVpcTranslateListQuery,
   useDeleteApiMyVpcTranslateDeleteByIdMutation,
   usePostApiMyVpcTranslateCreateMutation,
@@ -5250,30 +5420,6 @@ export const {
   usePutApiMyVpcHostEditByIdMutation,
   useDeleteApiMyVpcHostDeleteByIdMutation,
   usePostApiMyVpcHostCreateMutation,
-  usePutApiMyVmSnapshotRevertByIdMutation,
-  useGetApiMyVmSnapshotListByVmHostIdQuery,
-  useGetApiMyVmSnapshotGetByIdQuery,
-  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
-  useDeleteApiMyVmSnapshotDeleteByIdMutation,
-  usePostApiMyVmSnapshotCreateMutation,
-  usePutApiMyVmIsoUnmountByIdMutation,
-  usePutApiMyVmIsoMountByIdMutation,
-  useGetApiMyVmIsoListByDatacenterIdQuery,
-  usePutApiMyVmHostStopByIdMutation,
-  usePutApiMyVmHostStartByIdMutation,
-  usePutApiMyVmHostShutdownByIdMutation,
-  useGetApiMyVmHostShortListByHypervisorTypeIdQuery,
-  usePutApiMyVmHostResetByIdMutation,
-  useGetApiMyVmKmsGetByIdQuery,
-  usePutApiMyVmHostRebuildByIdMutation,
-  usePutApiMyVmHostRebootByIdMutation,
-  useGetApiMyVmHostListByVmProjectIdQuery,
-  useGetApiMyVmHostGetByIdQuery,
-  usePutApiMyVmHostEditByIdMutation,
-  usePutApiMyVmHostDisconnectByIdMutation,
-  useDeleteApiMyVmHostDeleteByIdMutation,
-  usePostApiMyVmHostCreateMutation,
-  usePutApiMyVmHostConnectByIdMutation,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
   useGetApiMyWebHostGetByIdQuery,
@@ -5291,3 +5437,4 @@ export const {
   useGetApiMyPortalWebsiteBlogGetByLinkQuery,
   useGetApiMyPortalWebsiteAlarmListQuery,
 } = api;
+

@@ -1,6 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
+  Button,
   Checkbox,
   Dialog,
   DialogContent,
@@ -14,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import { FC, useEffect, useState } from "react";
+import { FC, SyntheticEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetApiMyAccountRoleAccessListByUserIdQuery,
@@ -22,24 +23,31 @@ import {
   usePutApiMyAccountRoleAccessEditMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
-import { access, roleAccessType } from "src/constant/accessModal.constant";
+import {
+  access,
+  CHECK_BOX_ENUM,
+  roleAccessType,
+} from "src/constant/accessModal.constant";
 import RoleAccessList from "../RoleAccessList";
 import { RoleAccessStateType } from "./CreateUserAccessModal";
 
-type EditUserAccessModalPropsType = {
-  dialogProps: DialogProps;
+type EditUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
   userId: string;
   userName: string;
 };
 
 export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
-  dialogProps,
   forceClose,
   userId,
   userName,
+  ...props
 }) => {
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
+  const [superUser, setSuperUser] = useState(false);
+  const [financialManager, setFinancialManager] = useState(false);
+  const [accountManager, setAccountManager] = useState(false);
 
   const { data: roleList, isLoading: roleListIsLoading } =
     useGetApiMyAccountRoleListQuery();
@@ -55,40 +63,16 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     { skip: !userId }
   );
 
-  const [superUser, setSuperUser] = useState(false);
-  const [financialManager, setFinancialManager] = useState(false);
-  const [accountManager, setAccountManager] = useState(false);
-
-  useEffect(() => {
-    if (currentUserRoleAccessList) {
-      setSuperUser(!!currentUserRoleAccessList.isSuperUser);
-      setAccountManager(!!currentUserRoleAccessList.isAccountManager);
-      setFinancialManager(!!currentUserRoleAccessList.isFinancialManager);
+  const handleCheckbox = (selectAll: boolean) => {
+    setSelectAll(selectAll);
+    setAccountManager(false);
+    setFinancialManager(false);
+    if (selectAll) {
+      setSuperUser(true);
+    } else {
+      setSuperUser(false);
     }
-
-    const newRoleAccessList = roleList?.map((role) => {
-      const currentSelectedRole = currentUserRoleAccessList?.roleAccesses?.find(
-        (c) => c.roleId === role.id
-      );
-      return {
-        roleId: role.id,
-        roleName: role.name,
-        isRoleChecked: currentSelectedRole?.hasAccess || false,
-        roleAccessTypeId:
-          currentSelectedRole?.roleAccessTypeId || roleAccessType[0].id,
-        accessTuples: access.map((item) => {
-          return {
-            accessId: item.id,
-            hasAccess:
-              currentSelectedRole?.accesses?.find((a) => item.id === a.accessId)
-                ?.hasAccess || false,
-            accessName: item.persianName,
-          };
-        }),
-      };
-    });
-    newRoleAccessList && setRoleAccessList(newRoleAccessList);
-  }, [roleList, currentUserRoleAccessList]);
+  };
 
   const onSubmit = () => {
     const inCompletedRoleAccess = roleAccessList.find(
@@ -134,13 +118,90 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
       .catch((e) => {});
   };
 
+  useEffect(() => {
+    if (currentUserRoleAccessList) {
+      setSuperUser(!!currentUserRoleAccessList.isSuperUser);
+      setAccountManager(!!currentUserRoleAccessList.isAccountManager);
+      setFinancialManager(!!currentUserRoleAccessList.isFinancialManager);
+    }
+
+    const newRoleAccessList = roleList?.map((role) => {
+      const currentSelectedRole = currentUserRoleAccessList?.roleAccesses?.find(
+        (c) => c.roleId === role.id
+      );
+      return {
+        roleId: role.id,
+        roleName: role.name,
+        isRoleChecked: currentSelectedRole?.hasAccess || false,
+        roleAccessTypeId:
+          currentSelectedRole?.roleAccessTypeId || roleAccessType[0].id,
+        accessTuples: access.map((item) => {
+          return {
+            accessId: item.id,
+            hasAccess:
+              currentSelectedRole?.accesses?.find((a) => item.id === a.accessId)
+                ?.hasAccess || false,
+            accessName: item.persianName,
+          };
+        }),
+      };
+    });
+    newRoleAccessList && setRoleAccessList(newRoleAccessList);
+  }, [roleList, currentUserRoleAccessList]);
+
+  useEffect(() => {
+    const newRoleAccessList = roleList?.map((role) => {
+      return {
+        roleId: role.id,
+        roleName: role.name,
+        isRoleChecked: selectAll ? true : false,
+        roleAccessTypeId: roleAccessType[0].id,
+        accessTuples: access.map((item) => {
+          return {
+            accessId: item.id,
+            hasAccess: selectAll ? true : false,
+            accessName: item.persianName,
+          };
+        }),
+      };
+    });
+
+    newRoleAccessList && setRoleAccessList(newRoleAccessList);
+  }, [selectAll]);
+
+  const radioItems = [
+    {
+      id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
+      label: "مدیریت کاربران",
+      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      value: accountManager,
+      disable: superUser ? true : false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setAccountManager(checked);
+        if (checked === true) {
+          setSuperUser(false);
+        }
+      },
+    },
+    {
+      id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
+      label: "مدیریت مالی",
+      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      value: financialManager,
+      disable: superUser ? true : false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setFinancialManager(checked);
+        if (checked === true) {
+          setSuperUser(false);
+        }
+      },
+    },
+  ];
+
   return (
-    <Dialog {...dialogProps} sx={{ "& .MuiPaper-root": { maxWidth: "750px" } }}>
+    <Dialog {...props} sx={{ p: 3 }} fullWidth>
       <DialogTitle align="center">ویرایش دسترسی های کاربر موجود</DialogTitle>
       <DialogContent>
-        <Stack direction="column" rowGap={2}>
-          <Divider flexItem />
-        </Stack>
         <Formik initialValues={{}} onSubmit={onSubmit}>
           <Form autoComplete="on">
             <Stack
@@ -150,15 +211,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
               direction="column"
               mt={2}
             >
-              <Stack
-                direction="column"
-                p={1.3}
-                rowGap={1}
-                columnGap={1}
-                sx={{
-                  border: ({ palette }) => `1px solid #ccc`,
-                }}
-              >
+              <Stack direction="column" p={1.3} rowGap={1} columnGap={1}>
                 <Box sx={{ width: "100%" }}>
                   <Typography>نام کاربری</Typography>
                 </Box>
@@ -177,30 +230,19 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 <PageLoading />
               ) : (
                 <>
-                  <Stack
-                    direction="column"
-                    p={1}
-                    rowGap={1}
-                    columnGap={1}
-                    sx={{
-                      border: ({ palette }) => `1px solid #ccc`,
-                    }}
-                  >
+                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
                       <Typography>نقش های محدوده حساب</Typography>
-                      <Typography fontSize={12}>
-                        نقش دسترسی کاربر را انتخاب کنید
-                      </Typography>
                     </Box>
                     <Grid container py={1} rowGap={1} justifyContent="center">
-                      <Grid xs={12} md={6} item pr={{ xs: 0, md: 1 }}>
+                      {/* <Grid xs={12} md={6} item pr={{ xs: 0, md: 1 }}>
                         <Box
                           p={1.3}
                           pt={0.1}
                           sx={{
                             width: "100%",
                             height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
+                            // border: ({ palette }) => `1px solid #ccc`,
                           }}
                         >
                           <FormControlLabel
@@ -231,7 +273,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                           sx={{
                             width: "100%",
                             height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
+                            // border: ({ palette }) => `1px solid #ccc`,
                           }}
                         >
                           <FormControlLabel
@@ -263,64 +305,74 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                             می تواند به حساب کاربران دسترسی داشته باشد
                           </Typography>
                         </Box>
-                      </Grid>
-                      <Grid xs={12} item>
-                        <Box
-                          p={1.3}
-                          pt={0.1}
-                          sx={{
-                            width: "100%",
-                            height: "100%",
-                            border: ({ palette }) => `1px solid #ccc`,
-                          }}
+                      </Grid> */}
+
+                      {radioItems.map((item, index) => (
+                        <Grid
+                          key={index}
+                          xs={12}
+                          md={5}
+                          item
+
+                          // pr={{ xs: 0, md: 1 }}
                         >
-                          <FormControlLabel
-                            sx={{ alignItems: "center" }}
-                            control={
-                              <Checkbox
-                                disabled={superUser}
-                                checked={financialManager}
-                                onChange={(e) =>
-                                  setFinancialManager(e.target.checked)
-                                }
-                                sx={{ padding: "0px", paddingRight: "3px" }}
-                              />
-                            }
-                            label="مدیریت مالی"
-                          />
-                          <Typography
-                            sx={
-                              superUser
-                                ? {
-                                    color: ({ palette }) => palette.grey[500],
-                                  }
-                                : {
-                                    color: "#000",
-                                  }
-                            }
-                            px={2}
+                          <Stack
+                            direction="row"
+                            alignItems="start"
+                            justifyContent="center"
+                            spacing={1}
+                            sx={{
+                              "& .MuiRadio-root": { p: 0 },
+                              "& .MuiFormControlLabel-root": { m: 0 },
+                            }}
                           >
-                            می تواند صورتحساب را به روز و ویرایش کند
-                          </Typography>
-                        </Box>
-                      </Grid>
+                            <FormControlLabel
+                              disabled={item.disable}
+                              control={
+                                <Checkbox
+                                  sx={{ padding: 0 }}
+                                  checked={item.value}
+                                  onChange={item.onChange}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                              }
+                              label=""
+                            />
+                            <Stack
+                              textAlign="start"
+                              color={
+                                item.value ? "primary.main" : "secondary.main"
+                              }
+                            >
+                              <Typography variant="text14" fontWeight="bold">
+                                {item.label}
+                              </Typography>
+                              <Typography variant="text13">
+                                {item.text}
+                              </Typography>
+                            </Stack>
+                          </Stack>
+                        </Grid>
+                      ))}
                     </Grid>
                   </Stack>
+
                   <Divider flexItem />
 
-                  <Stack
-                    direction="column"
-                    p={1}
-                    rowGap={1}
-                    columnGap={1}
-                    sx={{
-                      display: superUser ? "none" : "flex",
-                      border: ({ palette }) => `1px solid #ccc`,
-                    }}
-                  >
+                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
                     <Box sx={{ width: "100%" }}>
-                      <Typography>نقش های محدوده حساب</Typography>
-                      <Typography>نقش دسترسی کاربر را انتخاب کنید</Typography>
+                      <Typography>سطح‌های دسترسی</Typography>
+                    </Box>
+                    <Box sx={{ padding: 0, margin: 0 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={selectAll}
+                            onChange={(e, checked) => handleCheckbox(checked)}
+                          />
+                        }
+                        label="همه"
+                      />
                     </Box>
 
                     <RoleAccessList
@@ -330,8 +382,41 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 </>
               )}
 
-              <Divider sx={{ display: superUser ? "none" : "flex" }} flexItem />
               <Stack
+                rowGap={1}
+                columnGap={1}
+                direction="row"
+                p={2}
+                // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
+              >
+                <LoadingButton
+                  // sx={{
+                  //   // minWidth: "160px",
+                  //   flexGrow: 1,
+                  // }}
+
+                  sx={{ width: "28%" }}
+                  type="submit"
+                  loading={editUserIsLoading}
+                  variant="contained"
+                >
+                  تایید
+                </LoadingButton>
+                <Button
+                  onClick={() => forceClose()}
+                  // sx={{
+                  //   minWidth: "160px",
+                  //   flexGrow: 1,
+                  // }}
+                  sx={{ width: "28%" }}
+                  type="button"
+                  variant="outlined"
+                >
+                  انصراف
+                </Button>
+              </Stack>
+
+              {/* <Stack
                 rowGap={1}
                 columnGap={1}
                 sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
@@ -358,7 +443,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 >
                   انصراف
                 </LoadingButton>
-              </Stack>
+              </Stack> */}
             </Stack>
           </Form>
         </Formik>

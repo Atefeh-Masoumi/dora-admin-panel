@@ -100,6 +100,8 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
               },
             }}
             fullWidth
+            placeholder="e.g:192.168.1.10"
+            dir="ltr"
           />
         </Stack>
       </Box>

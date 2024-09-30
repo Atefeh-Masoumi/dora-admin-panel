@@ -54,13 +54,13 @@ export const KubernetesOverview: FC<KubernetesOverviewPropsType> = () => {
         : "----",
       id: "modifyDate",
     },
-    {
-      label: "Expire Date",
-      value: data?.expireDate
-        ? ConvertToJalali(String(data?.expireDate))
-        : "----",
-      id: "expireDate",
-    },
+    // {
+    //   label: "Expire Date",
+    //   value: data?.expireDate
+    //     ? ConvertToJalali(String(data?.expireDate))
+    //     : "----",
+    //   id: "expireDate",
+    // },
   ];
 
   return (

@@ -24,13 +24,17 @@ export const LegalPersonalityDetail: FC<
           value: data?.name ?? "",
         },
         {
-          title: "تاریخ ثبت/تولد :",
+          title: "نوع اکانت:",
+          value: data?.isLegal ? "حقوقی" : "حقیقی",
+        },
+        {
+          title: data?.isLegal ? "تاریخ ثبت :" : "تاریخ تولد :",
           value:
             ConvertToJalaliWithoutTime(String(data?.registrationDate)) ?? "",
         },
 
         {
-          title: "شناسه/کد ملی :",
+          title: data?.isLegal ? "شناسه ملی :" : "کد ملی :",
           value: data?.nationalId ?? "",
         },
 
@@ -48,7 +52,7 @@ export const LegalPersonalityDetail: FC<
           value: ConvertToJalaliWithoutTime(String(data?.modifyDate)) ?? "",
         },
         {
-          title: "شماره شناسنامه/ثبت :",
+          title: data?.isLegal ? "شماره ثبت :" : "شماره شناسنامه ‌:",
           value: data?.registrationNumber ?? "---",
         },
         // {

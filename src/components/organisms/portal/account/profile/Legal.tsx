@@ -15,6 +15,7 @@ import { useFormik } from "formik";
 import { FC, MouseEventHandler, useState } from "react";
 import { toast } from "react-toastify";
 import {
+  useGetApiMyAccountCustomerGetQuery,
   useGetApiMyAccountProfileGetQuery,
   usePutApiMyAccountCustomerConvertToLegalMutation,
 } from "src/app/services/api.generated";
@@ -146,7 +147,6 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
       sx={{ "& .MuiPaper-root": { maxWidth: "500px", padding: "20px" } }}
     >
       <Typography align="center">ثبت اطلاعات حقوقی</Typography>
-      <Divider flexItem />
       <DialogContent>
         <DialogContentText textAlign="center">
           جهت افزودن اطلاعات حقوقی,اطلاعات زیر را تکمیل کنید
@@ -198,13 +198,13 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
                 />
               );
             })}
-            <Stack direction="column" rowGap={1}>
-              <LoadingButton type="submit" variant="contained">
-                ثبت اطلاعات حقوقی
-              </LoadingButton>
+            <Stack justifyContent="right" direction="row" columnGap={1}>
               <Button variant="outlined" onClick={closeDialog}>
                 انصراف
               </Button>
+              <LoadingButton type="submit" variant="contained">
+                ثبت اطلاعات حقوقی
+              </LoadingButton>
             </Stack>
           </Stack>
         </form>
@@ -217,6 +217,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
   const [showModal, setShowModal] = useState(false);
 
   const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
+  const { data: accountCustomerInfo } = useGetApiMyAccountCustomerGetQuery();
 
   const closeDialogHandler = () => {
     setShowModal(false);
@@ -264,18 +265,11 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
       </Stack>
       <Divider variant="middle" />
       <LegalPersonalityDetail />
-      <Stack
-        direction="row"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "20px",
-        }}
-        pt={1.5}
-      >
+      <Stack direction="row" justifyContent="right">
         <Button
+          disabled={accountCustomerInfo?.isLegal}
           variant="contained"
-          sx={{ px: 3, py: 1, fontSize: { sm: "11px", lg: "16px" } }}
+          sx={{ px: 1, py: 1, width: { sm: "100%", md: "22%" } }}
           onClick={() => setShowModal(true)}
         >
           تغییر اکانت به حقوقی

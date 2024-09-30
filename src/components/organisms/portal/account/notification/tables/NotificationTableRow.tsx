@@ -19,7 +19,7 @@ export const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
     minWidth: "fit-content",
     color: "#fff",
     fontSize: "14px",
-    borderRadius: "24px",
+    // borderRadius: "24px",
     padding: "16px",
 
     "& .MuiTooltip-arrow::before": {

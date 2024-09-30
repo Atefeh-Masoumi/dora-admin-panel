@@ -77,8 +77,8 @@ const EditKubernetesCloudDeployment: FC = () => {
           scrollButtons="auto"
         >
           <DorsaTab value={`specification`} label="مشخصات" />
-          <DorsaTab value={`setting`} label="تنظیمات" />
-          <DorsaTab value={`gateway`} label="gateway" />
+          <DorsaTab disabled value={`setting`} label="تنظیمات" />
+          <DorsaTab disabled value={`gateway`} label="gateway" />
           {/* <DorsaTab value={`monitoring`} label="monitoring" /> */}
         </Tabs>
       </Box>

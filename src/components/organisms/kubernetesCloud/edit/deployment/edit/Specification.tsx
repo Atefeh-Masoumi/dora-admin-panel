@@ -25,21 +25,16 @@ export const Specification: FC<SpecificationPropsType> = () => {
   );
 
   return (
-    <Grid
-      container
-      spacing={3}
-      justifyContent="space-between"
-      alignItems="stretch"
-    >
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+      <Grid item xs={12} md={10}>
         <Paper
           component={Stack}
           rowGap={2}
           elevation={0}
           sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
         >
-          <Typography align="right" fontWeight={700} fontSize={18}>
-            Deployment
+          <Typography align="left" fontWeight={700} fontSize={18}>
+            مشخصات دپلویمنت
           </Typography>
           <Divider />
 
@@ -59,42 +54,24 @@ export const Specification: FC<SpecificationPropsType> = () => {
             isLoading={isLoading}
           />
           <BoxRow
-            title="Create Date"
-            value={ConvertToJalali(deploymentData?.createDate!)}
-            isLoading={isLoading}
-          />
-          <BoxRow
-            title="Modify Date"
-            value={ConvertToJalali(deploymentData?.modifyDate!)}
-            isLoading={isLoading}
-          />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Paper
-          component={Stack}
-          rowGap={2}
-          elevation={0}
-          sx={{ borderRadius: BORDER_RADIUS_1, p: { xs: 2.5 }, height: "100%" }}
-        >
-          <Typography align="right" fontWeight={700} fontSize={18}>
-            Config
-          </Typography>
-
-          <Divider />
-          <BoxRow
             title="Replica"
             value={`${deploymentData?.replica}`}
             isLoading={isLoading}
           />
           <BoxRow
-            title="Node Port"
-            value={`${deploymentData?.nodePort}`}
+            title="Create Date"
+            value={ConvertToJalali(deploymentData?.createDate!)
+              .split("-")
+              .reverse()
+              .join(" - ")}
             isLoading={isLoading}
           />
           <BoxRow
-            title="Service Port"
-            value={`${deploymentData?.servicePort}`}
+            title="Modify Date"
+            value={ConvertToJalali(deploymentData?.modifyDate!)
+              .split("-")
+              .reverse()
+              .join(" - ")}
             isLoading={isLoading}
           />
         </Paper>

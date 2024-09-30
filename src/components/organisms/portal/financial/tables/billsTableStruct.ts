@@ -34,4 +34,9 @@ export const billsTableStruct: columnType[] = [
     isPrice: true,
     format: priceToPersian,
   },
+  {
+    id: "control",
+    label: "",
+    isPrice: false,
+  },
 ];
