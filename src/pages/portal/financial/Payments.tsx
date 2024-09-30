@@ -11,6 +11,10 @@ import {
   PaymentListResponse,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { LoadingButton } from "@mui/lab";
+import { useAppSelector } from "src/app/hooks";
+import axios from "axios";
+import { baseUrl } from "src/app/services/baseQuery";
 
 const Payments: FC = () => {
   const { data: payments, isLoading } = useGetApiMyPortalPaymentListQuery();
@@ -18,6 +22,32 @@ const Payments: FC = () => {
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
+  const [loading, setLoading] = useState(false);
+  const token = useAppSelector((store) => store.auth?.accessToken);
+
+  const downloadBtnOnClick = () => {
+    setLoading(true);
+    axios
+      .get(`${baseUrl}/api/my/portal/payment/download`, {
+        headers: { authorization: `Bearer ${token}` },
+        responseType: "blob",
+      })
+      .then((response) => {
+        const url = URL.createObjectURL(response.data);
+        const a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.download = "export.xlsx" || "";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const timeStringToDate = (time: string) =>
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
@@ -68,6 +98,15 @@ const Payments: FC = () => {
               onChange={(text) => setSearch(text)}
             />
           </Stack>
+        </Stack>
+        <Stack direction="row" justifyContent="end" sx={{ width: "100%" }}>
+          <LoadingButton
+            loading={loading}
+            sx={{ color: "primary.main" }}
+            onClick={downloadBtnOnClick}
+          >
+            دانلود گزارش
+          </LoadingButton>
         </Stack>
         {/* <Stack direction="row" spacing={2} alignItems="center">
           <CustomDatePicker
