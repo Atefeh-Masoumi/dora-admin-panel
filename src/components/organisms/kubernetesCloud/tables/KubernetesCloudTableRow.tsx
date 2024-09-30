@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
-  useGetApiMyKubernetesCloudHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -14,6 +13,7 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { kubernetesCloudTableStruct } from "./struct";
+import { CircularProgressWithLabel } from "src/components/atoms/CircularProgressWithLabel";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -24,11 +24,6 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetes, setSelectedKubernetes] =
     useState<KubernetesListResponse | null>(null);
-  const {
-    data: kubernetesList,
-    isLoading: kubernetesListLoading,
-    refetch: refetchKubernetesList,
-  } = useGetApiMyKubernetesCloudHostListQuery({} as any, { skip: true });
 
   const navigate = useNavigate();
 
@@ -43,7 +38,6 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
         closeDialogHandler();
-        refetchKubernetesList();
       })
       .catch((err) => {});
 
@@ -64,6 +58,9 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const id = row["statusId"];
+          const tenPods = row["tenPods"] * 10;
+          const podInUse = row["podInUse"];
+          console.log((podInUse * 100) / tenPods);
           return (
             <DorsaTableCell
               key={column.id}
@@ -104,7 +101,13 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
+                  ) : column.id === "id" ? (
+                    <CircularProgressWithLabel
+                      value={(podInUse * 100) / tenPods}
+                      total={tenPods}
+                    />
                   ) : (
+                    // <CircularProgress variant="determinate" value={25} />
                     text || "__"
                   )}
                 </>

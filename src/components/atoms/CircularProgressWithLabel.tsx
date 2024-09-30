@@ -24,10 +24,11 @@ export const CircularProgressWithLabel = (
         }}
       >
         <Typography
-          variant="text4"
           component="div"
-          sx={{ color: "text.secondary" }}
-        >{`${Math.round(props.value)}/${props.total}`}</Typography>
+          sx={{ color: "text.secondary", fontSize: "10px" }}
+        >{`${Math.round(props.value * props.total) / 100}/${
+          props.total
+        }`}</Typography>
       </Box>
     </Box>
   );
