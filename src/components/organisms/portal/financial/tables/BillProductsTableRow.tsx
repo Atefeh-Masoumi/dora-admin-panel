@@ -52,15 +52,13 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
         <TableCell sx={{ border: "none" }} align="center">
           {priceToPersian(customerProductPrice)}
         </TableCell>
-        <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
+        <TableCell align="center" sx={{ border: "none" }}>
           {ConvertToJalali(String(fromDate))}
         </TableCell>
-        <TableCell align="center" sx={{ direction: "rtl", border: "none" }}>
+        <TableCell align="center" sx={{ border: "none" }}>
           {ConvertToJalali(String(toDate))}
         </TableCell>
-        <TableCell
-          sx={{ border: "none", borderTop: "1px solid rgba(224, 224, 224, 1)" }}
-        >
+        <TableCell sx={{ border: "none" }}>
           <IconButton
             aria-label="expand row"
             size="small"

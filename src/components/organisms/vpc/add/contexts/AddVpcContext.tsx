@@ -100,7 +100,6 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
         name: name as string,
         datacenterId: Number(dataCenter?.id),
         productBundleId: Number(serverConfig?.id),
-        hypervisorTypeId: HYPERVISOR_ENUM.VM,
         defaultNetworks: selectedNetworkList,
       },
     })

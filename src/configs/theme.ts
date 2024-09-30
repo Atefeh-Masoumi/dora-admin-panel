@@ -183,7 +183,11 @@ const theme = createTheme({
   components: {
     MuiTypography: { styleOverrides: { root: { display: "block" } } },
     MuiContainer: { defaultProps: { maxWidth: "xl" } },
-    MuiButton: { styleOverrides: { root: { textTransform: "capitalize" } } },
+    MuiButton: {
+      styleOverrides: {
+        root: { textTransform: "capitalize", boxShadow: "none" },
+      },
+    },
     MuiPaper: { styleOverrides: { root: { borderRadius: BORDER_RADIUS_1 } } },
     MuiSkeleton: { defaultProps: { animation: "wave" } },
   },
