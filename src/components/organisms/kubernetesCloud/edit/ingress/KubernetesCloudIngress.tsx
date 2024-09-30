@@ -6,6 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
+import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -90,10 +91,10 @@ export const KubernetesCloudIngress: FC<
           initialOrder={9}
         />
       </Box>
-      {/* <CreateIngressDialog
-        openDialog={openAddConfigMapDialog}
-        onClose={handleCloseAddConfigMapDialog}
-      /> */}
+      <CreateIngressDialog
+        openDialog={openAddIngressDialog}
+        onClose={handleCloseAddIngressDialog}
+      />
     </Stack>
   );
 };

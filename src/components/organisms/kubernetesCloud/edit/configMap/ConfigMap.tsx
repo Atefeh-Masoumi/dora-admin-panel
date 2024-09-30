@@ -113,7 +113,7 @@ export const KubernetesCloudConfigMap: FC<
             </Stack>
           }
         >
-      افزودن
+          افزودن
         </Button>
       </Stack>
 

@@ -37,10 +37,15 @@ const listItems: sidebarItemType[] = [
   {
     title: "Kubernetes Cloud",
     text: "سرویس ابری کوبرنتیز",
-    Icon: WebHostSvg,
+    Icon: KubernetesSvg,
     link: "/kubernetes-cloud",
   },
-
+  {
+    title: "Object Storage",
+    text: "ذخیره‌ساز ابری",
+    Icon: ObjectStorageSvg,
+    link: "/storage",
+  },
   // {
   //   title: "Web Hosting",
   //   text: "هاستینگ ابری",
