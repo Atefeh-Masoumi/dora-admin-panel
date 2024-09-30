@@ -39,7 +39,7 @@ export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
       ) : (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={userAnalytics}
+            data={[...(userAnalytics || [])].reverse()}
             margin={{
               top: 20,
               left: -30,
