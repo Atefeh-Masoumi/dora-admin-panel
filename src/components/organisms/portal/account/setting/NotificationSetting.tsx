@@ -72,7 +72,6 @@ export const NotificationSetting: FC = () => {
               sx={{ mx: { xs: 0, md: 2 } }}
             />
           </Stack>
-          <Divider variant="middle" />
           <Stack direction="row" justifyContent="space-between">
             <Stack spacing={1}>
               <Typography variant="text1" fontWeight="bold">

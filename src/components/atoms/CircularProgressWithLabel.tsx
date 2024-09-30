@@ -4,11 +4,10 @@ import {
   CircularProgressProps,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 
-function CircularProgressWithLabel(
-  props: CircularProgressProps & { value: number }
-) {
+export const CircularProgressWithLabel = (
+  props: CircularProgressProps & { value: number; total: number }
+) => {
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
       <CircularProgress variant="determinate" {...props} />
@@ -25,17 +24,12 @@ function CircularProgressWithLabel(
         }}
       >
         <Typography
-          variant="text1"
           component="div"
-          sx={{ color: "text.secondary" }}
-        >{`${Math.round(props.value)}%`}</Typography>
+          sx={{ color: "text.secondary", fontSize: "10px" }}
+        >{`${Math.round(props.value * props.total) / 100}/${
+          props.total
+        }`}</Typography>
       </Box>
     </Box>
   );
-}
-
-export default function CircularWithValueLabel() {
-  const [progress, setProgress] = useState(10);
-
-  return <CircularProgressWithLabel value={progress} />;
-}
+};

@@ -4,6 +4,21 @@ export const api = createApi({
   baseQuery: baseQuery,
   tagTypes: [],
   endpoints: (build) => ({
+    getAccountUserLog: build.query<
+      GetAccountUserLogApiResponse,
+      GetAccountUserLogApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/Account/user-log`,
+        params: {
+          UserId: queryArg.userId,
+          FromDate: queryArg.fromDate,
+          ToDate: queryArg.toDate,
+          PageNumber: queryArg.pageNumber,
+          PageSize: queryArg.pageSize,
+        },
+      }),
+    }),
     getApiMyAccountRoleAccessTypeList: build.query<
       GetApiMyAccountRoleAccessTypeListApiResponse,
       GetApiMyAccountRoleAccessTypeListApiArg
@@ -881,6 +896,14 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/secret/create`,
         method: "POST",
         body: queryArg.createKuberCloudSecretModel,
+      }),
+    }),
+    getApiMyKubernetesCloudHostPortListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudHostPortListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudHostPortListByNamespaceIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/host/port/list/${queryArg.namespaceId}`,
       }),
     }),
     putApiMyKubernetesCloudIngressRuleEdit: build.mutation<
@@ -2233,6 +2256,15 @@ export const api = createApi({
     }),
   }),
 });
+export type GetAccountUserLogApiResponse =
+  /** status 200 OK */ UserLogResponseIEnumerablePagedResponse;
+export type GetAccountUserLogApiArg = {
+  userId?: string;
+  fromDate?: string;
+  toDate?: string;
+  pageNumber: number;
+  pageSize: number;
+};
 export type GetApiMyAccountRoleAccessTypeListApiResponse =
   /** status 200 OK */ RoleAccessTypeListResponse[];
 export type GetApiMyAccountRoleAccessTypeListApiArg = void;
@@ -2660,6 +2692,11 @@ export type DeleteApiMyKubernetesCloudSecretDeleteByIdApiArg = {
 export type PostApiMyKubernetesCloudSecretCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudSecretCreateApiArg = {
   createKuberCloudSecretModel: CreateKuberCloudSecretModel;
+};
+export type GetApiMyKubernetesCloudHostPortListByNamespaceIdApiResponse =
+  /** status 200 OK */ KuberCloudHostListPortResponse[];
+export type GetApiMyKubernetesCloudHostPortListByNamespaceIdApiArg = {
+  namespaceId: number;
 };
 export type PutApiMyKubernetesCloudIngressRuleEditApiResponse = unknown;
 export type PutApiMyKubernetesCloudIngressRuleEditApiArg = {
@@ -3352,6 +3389,25 @@ export type GetApiMyPortalWebsiteBlogGetByLinkApiArg = {
 export type GetApiMyPortalWebsiteAlarmListApiResponse =
   /** status 200 OK */ WebSiteAlarmListResponse[];
 export type GetApiMyPortalWebsiteAlarmListApiArg = void;
+export type UserLogResponse = {
+  id?: number;
+  userId?: string | null;
+  activityDate?: string;
+  source?: string | null;
+  controller?: string | null;
+  action?: string | null;
+  userAgent?: string | null;
+  userIp?: string | null;
+  referrer?: string | null;
+  data?: string | null;
+};
+export type UserLogResponseIEnumerablePagedResponse = {
+  pageNumber?: number;
+  pageSize?: number;
+  totalPages?: number;
+  totalRecords?: number;
+  data?: UserLogResponse[] | null;
+};
 export type RoleAccessTypeListResponse = {
   id: number;
   name: string | null;
@@ -3488,6 +3544,7 @@ export type GetCustomerResponse = {
   phone?: string | null;
   statusId: number;
   status: string | null;
+  isLegal: boolean;
   createDate?: string | null;
   modifyDate?: string | null;
 };
@@ -4002,6 +4059,19 @@ export type CreateKuberCloudSecretModel = {
   alias?: string | null;
   description?: string | null;
 };
+export type ListPort = {
+  nodePortId?: number;
+  nodePort?: number;
+  servicePortId?: number;
+  servicePort?: number;
+};
+export type KuberCloudHostListPortResponse = {
+  deploymentId: number;
+  deployName: string | null;
+  imageName: string | null;
+  ports?: ListPort[] | null;
+  createDate: string;
+};
 export type EditKuberCloudIngressRuleModel = {
   ingressId: number;
   ingressRuleId: number;
@@ -4091,6 +4161,8 @@ export type KuberCloudHostListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
+  podInUse?: number;
+  tenPods?: number;
   createDate: string;
 };
 export type KuberCloudHostGetResponse = {
@@ -4869,7 +4941,6 @@ export type VpcNetworkListResponse = {
   subnetMask: string | null;
   subnetCidr: string | null;
   name: string | null;
-  status: string | null;
   datacenter: string | null;
   createDate: string;
 };
@@ -4891,7 +4962,6 @@ export type GetVpcGatewayNatResponse = {
   sourcePort: number;
   destinationIp: string | null;
   destinationPort: number;
-  isDisabled: boolean;
   translateIp: string | null;
   sequence?: number;
   vpcHostServiceName?: string | null;
@@ -4990,7 +5060,7 @@ export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
   productBundleId: number;
-  hypervisorTypeId?: number;
+  vpcNodeTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
 };
 export type WebHostListResponse = {
@@ -5095,6 +5165,7 @@ export type WebSiteAlarmListResponse = {
   link?: string | null;
 };
 export const {
+  useGetAccountUserLogQuery,
   useGetApiMyAccountRoleAccessTypeListQuery,
   useGetApiMyAccountRoleAccessListByUserIdQuery,
   usePutApiMyAccountRoleAccessEditMutation,
@@ -5198,6 +5269,7 @@ export const {
   usePutApiMyKubernetesCloudSecretEditMutation,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
   usePostApiMyKubernetesCloudSecretCreateMutation,
+  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePutApiMyKubernetesCloudIngressRuleEditMutation,
   useDeleteApiMyKubernetesCloudIngressRuleDeleteMutation,
   usePostApiMyKubernetesCloudIngressRuleCreateMutation,

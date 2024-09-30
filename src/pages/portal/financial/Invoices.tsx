@@ -69,7 +69,7 @@ const Invoices: FC = () => {
             />
           </Stack>
         </Stack>
-        <Stack direction="row" spacing={2} alignItems="center">
+        {/* <Stack direction="row" spacing={2} alignItems="center">
           <CustomDatePicker
             placeholder="از تاریخ"
             value={dateFrom}
@@ -80,7 +80,7 @@ const Invoices: FC = () => {
             value={dateTo}
             setValue={setDateTo}
           />
-        </Stack>
+        </Stack> */}
       </Stack>
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>

@@ -99,8 +99,8 @@ const EditZone: FC = () => {
         >
           <DorsaTab value={`overview`} label="مشخصات سرویس" />
           <DorsaTab value={`network`} label="Network" />
-          <DorsaTab value={`vpcVm`} label="VPC-VM" />
-          <DorsaTab value={`nat`} label="NAT/DNAT" />
+          <DorsaTab value={`vpcVm`} label="Virtual Machine" />
+          <DorsaTab value={`nat`} label="NAT" />
           <DorsaTab value={`ip`} label="Public IP" />
           <DorsaTab value={`loadBalancer`} label="Load Balancer" />
         </Tabs>
