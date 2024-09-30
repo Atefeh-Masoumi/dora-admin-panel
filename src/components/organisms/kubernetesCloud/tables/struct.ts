@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const kubernetesCloudTableStruct: columnType[] = [
-  { id: "id", label: "", invisibility: true, disableSort: true },
+  { id: "id", label: "پاد", invisibility: true, disableSort: true },
   { id: "datacenter", label: "مرکز داده" },
   { id: "name", label: "نام سرویس" },
   { id: "statusId", label: "وضعیت" },
