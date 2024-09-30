@@ -459,13 +459,13 @@ export const api = generatedApi
       },
       // ============================== Kubernetes Cloud Deployment ============================== //
       getApiMyKubernetesCloudDeploymentListByNamespaceId: {
-        providesTags: () => ["Deployment"],
+        providesTags: () => ["Deployment", "NameSpace"],
       },
       deleteApiMyKubernetesCloudDeploymentDeleteById: {
-        invalidatesTags: () => ["Deployment"],
+        invalidatesTags: () => ["Deployment", "NameSpace"],
       },
       postApiMyKubernetesCloudDeploymentCreate: {
-        invalidatesTags: () => ["Deployment"],
+        invalidatesTags: () => ["Deployment", "NameSpace"],
       },
     },
   });
