@@ -1,25 +1,61 @@
 import { Box, Stack, Tabs } from "@mui/material";
-import { FC, ReactNode, SyntheticEvent, useMemo, useState } from "react";
+import { FC, SyntheticEvent, useMemo } from "react";
 import {
   Navigate,
   useLocation,
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
+import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudDeployment } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudDeployment";
-import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/edit/info/KubernetesCloudInfo";
 import { KubernetesCloudIngress } from "src/components/organisms/kubernetesCloud/edit/ingress/KubernetesCloudIngress";
 import { KubernetesCloudSecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
 import { KubernetesCloudServerConfig } from "src/components/organisms/kubernetesCloud/edit/serverConfig/KubernetesCloudServerConfig";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditKubernetesCloud: FC = () => {
   const { kubernetesCloudId } = useParams();
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
+
+  const { data, isLoading, refetch } =
+    useGetApiMyKubernetesCloudHostGetByIdQuery(
+      {
+        id: Number(kubernetesCloudId) || 0,
+      },
+      { skip: !kubernetesCloudId }
+    );
+
+  const refetchOnClick = () => refetch();
+
+  const infoList = [
+    [
+      { label: "Status", value: data?.statusId || 0, id: "statusId" },
+      { label: "Name", value: data?.name || "", id: "name" },
+      { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
+      {
+        label: "Create Date",
+        value: data?.createDate
+          ? ConvertToJalali(String(data?.createDate))
+              .split(" - ")
+              .reverse()
+              .join(" - ")
+          : "",
+        id: "createDate",
+      },
+    ],
+    [
+      { label: "CPU", value: `${data?.cpu} Core`, id: "cpu" },
+      { label: "Memory", value: `${data?.memory} G`, id: "memory" },
+      { label: "Disk", value: `${data?.disk} GB`, id: "disk" },
+      { label: "Ten pods", value: `${data?.tenPods} TenPods`, id: "tenPods" },
+    ],
+  ];
 
   const selectedTab = useMemo(() => {
     let result;
@@ -53,9 +89,6 @@ const EditKubernetesCloud: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
-      case `specification`:
-        result = <KubernetesCloudInfo />;
-        break;
       case `deployment`:
         result = <KubernetesCloudDeployment />;
         break;
@@ -71,9 +104,15 @@ const EditKubernetesCloud: FC = () => {
       case `ingress`:
         result = <KubernetesCloudIngress />;
         break;
+      case `overview`:
       default:
-        result = <KubernetesCloudInfo />;
-        break;
+        result = (
+          <ServiceOverview
+            infoList={infoList}
+            isLoading={isLoading}
+            refetchOnClick={refetchOnClick}
+          />
+        );
     }
     return result;
   };

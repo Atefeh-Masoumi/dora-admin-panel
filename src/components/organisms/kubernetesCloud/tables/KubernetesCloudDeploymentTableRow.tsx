@@ -22,7 +22,6 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import {
   kubernetesCloudDeploymentInnerListTableStruct,
   kubernetesCloudDeploymentTableStruct,
@@ -30,6 +29,7 @@ import {
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -141,11 +141,10 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                   {column.id === "statusId" ? (
                     <Chip
                       clickable={false}
-                      label={kubernetesStatusIdentifier(id).label}
-                      color={kubernetesStatusIdentifier(id).chipColor as any}
+                      label={serviceStatusIdentifier(id).label}
                       sx={{
-                        bgcolor: kubernetesStatusIdentifier(id).bgcolor,
-                        color: kubernetesStatusIdentifier(id).textColor,
+                        bgcolor: serviceStatusIdentifier(id).bgColor,
+                        color: serviceStatusIdentifier(id).typographyColor,
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

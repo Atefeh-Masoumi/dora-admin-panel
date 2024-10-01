@@ -130,7 +130,6 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
       }}
     >
       <DialogTitle textAlign="center">{`حذف ${keyTitle}`}</DialogTitle>
-      <Divider />
       <DialogContent>
         <Stack direction="column" rowGap={3}>
           <DialogContentText textAlign="center">{subTitle}</DialogContentText>
@@ -193,26 +192,14 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
           </Stack>
         </Stack>
       </DialogContent>
-      <Divider />
       <DialogActions>
-        <Stack
+        {/* <Stack
           width="90%"
           direction="row"
           alignItems="center"
           columnGap={2}
           sx={{ margin: "10px auto" }}
         >
-          <LoadingButton
-            disabled={!canDelete}
-            variant="contained"
-            color="error"
-            sx={{ width: 260 }}
-            onClick={onSubmit}
-            loading={submitLoading}
-          >
-            {/* {`حذف ${keyTitle}`} */}
-            حذف
-          </LoadingButton>
           <Button
             variant="text"
             color="error"
@@ -221,6 +208,30 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
           >
             انصراف
           </Button>
+          <LoadingButton
+            disabled={!canDelete}
+            variant="contained"
+            color="error"
+            sx={{ width: 260 }}
+            onClick={onSubmit}
+            loading={submitLoading}
+          >
+            حذف
+          </LoadingButton>
+        </Stack> */}
+
+        <Stack p={2} justifyContent="right" direction="row" columnGap={1}>
+          <Button variant="outlined" onClick={onCloseButtonClick}>
+            انصراف
+          </Button>
+          <LoadingButton
+            sx={{ minWidth: 40, width: 120 }}
+            loading={submitLoading}
+            onClick={onSubmit}
+            variant="contained"
+          >
+            حذف
+          </LoadingButton>
         </Stack>
       </DialogActions>
     </Dialog>

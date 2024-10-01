@@ -3,6 +3,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import moment from "jalali-moment";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
+import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import { walletTableStruct } from "src/components/organisms/portal/financial/walletTransaction/tables/struct";
 import WalletTableRow from "src/components/organisms/portal/financial/walletTransaction/tables/WalletTableRow";
 import {
@@ -10,6 +11,7 @@ import {
   WalletTransactionListResponse,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useAppSelector } from "src/app/hooks";
@@ -28,7 +30,7 @@ const Wallet: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/portal/customer-bill/download/${1}`, {
+      .get(`${baseUrl}/api/my/portal/wallet-transaction/download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })
@@ -82,7 +84,7 @@ const Wallet: FC = () => {
           width="100%"
         >
           <Typography variant="text1" color="secondary" whiteSpace="nowrap">
-            لیست گزارش ها
+            لیست تراکنش ها
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
@@ -110,13 +112,15 @@ const Wallet: FC = () => {
             setValue={setDateTo}
           />
         </Stack> */}
-        {/* <LoadingButton
-          loading={loading}
-          sx={{ color: "primary.main" }}
-          onClick={downloadBtnOnClick}
-        >
-          دانلود گزارش
-        </LoadingButton> */}
+        <Stack direction="row" justifyContent="end" sx={{ width: "100%" }}>
+          <LoadingButton
+            loading={loading}
+            sx={{ color: "primary.main" }}
+            onClick={downloadBtnOnClick}
+          >
+            دانلود گزارش
+          </LoadingButton>
+        </Stack>
       </Stack>
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>

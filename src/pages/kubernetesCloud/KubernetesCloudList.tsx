@@ -7,6 +7,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import KubernetesCloudTableRow from "src/components/organisms/kubernetesCloud/tables/KubernetesCloudTableRow";
 import { kubernetesCloudTableStruct } from "src/components/organisms/kubernetesCloud/tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const KubernetesCloudList: FC = () => {
@@ -29,6 +30,29 @@ const KubernetesCloudList: FC = () => {
 
   return (
     <>
+      <Stack
+        p={3}
+        mb={3}
+        bgcolor="warning.main"
+        direction="row"
+        gap={1}
+        borderRadius={BORDER_RADIUS_1}
+        width="100%"
+        color="white"
+        alignItems={{ xs: "start", md: "center" }}
+      >
+        <ErrorOutlineOutlinedIcon />
+        <Typography>توجه:</Typography>
+        <Typography
+          fontSize={14}
+          sx={{
+            opacity: 0.9,
+          }}
+        >
+          این سرویس نسخه آزمایشی می باشد.
+          <br />
+        </Typography>
+      </Stack>
       <Stack
         bgcolor="white"
         py={3}

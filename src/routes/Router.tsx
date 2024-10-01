@@ -642,7 +642,7 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId/specification"
+          path="/kubernetes-cloud/:kubernetesCloudId/overview"
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",

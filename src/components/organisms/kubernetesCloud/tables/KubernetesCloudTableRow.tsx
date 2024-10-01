@@ -10,10 +10,10 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { kubernetesStatusIdentifier } from "src/constant/kubernetesStatus";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { kubernetesCloudTableStruct } from "./struct";
 import { CircularProgressWithLabel } from "src/components/atoms/CircularProgressWithLabel";
+import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -28,7 +28,7 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const settingOnClick = () =>
-    navigate("/kubernetes-cloud/" + row["id"] + "/specification");
+    navigate("/kubernetes-cloud/" + row["id"] + "/overview");
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyKubernetesCloudHostDeleteByIdMutation();
 
@@ -91,11 +91,10 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
                   {column.id === "statusId" ? (
                     <Chip
                       clickable={false}
-                      label={kubernetesStatusIdentifier(id).label}
-                      color={kubernetesStatusIdentifier(id).chipColor as any}
+                      label={serviceStatusIdentifier(id).label}
                       sx={{
-                        bgcolor: kubernetesStatusIdentifier(id).bgcolor,
-                        color: kubernetesStatusIdentifier(id).textColor,
+                        bgcolor: serviceStatusIdentifier(id).bgColor,
+                        color: serviceStatusIdentifier(id).typographyColor,
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

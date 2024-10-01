@@ -1,26 +1,56 @@
 import { FC, useState } from "react";
 import { Divider, Stack, Typography } from "@mui/material";
 import { invoicesTableStruct } from "src/components/organisms/portal/financial/invoices/tables/struct";
-import  InvoicesTableRow  from "src/components/organisms/portal/financial/invoices/tables/InvoicesTableRow";
+import InvoicesTableRow from "src/components/organisms/portal/financial/invoices/tables/InvoicesTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import {
   InvoiceListResponse,
   useGetApiMyPortalInvoiceListQuery,
 } from "src/app/services/api.generated";
-import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import moment from "jalali-moment";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { LoadingButton } from "@mui/lab";
+import { useAppSelector } from "src/app/hooks";
+import axios from "axios";
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
+import { baseUrl } from "src/app/services/baseQuery";
 
 const Invoices: FC = () => {
-  const { data: invoices, isLoading } = useGetApiMyPortalInvoiceListQuery();
-
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
 
+  const token = useAppSelector((store) => store.auth?.accessToken);
+  const { data: invoices, isLoading } = useGetApiMyPortalInvoiceListQuery();
+
   const timeStringToDate = (time: string) =>
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
+
+  const downloadBtnOnClick = () => {
+    setLoading(true);
+    axios
+      .get(`${baseUrl}/api/my/portal/invoice/download`, {
+        headers: { authorization: `Bearer ${token}` },
+        responseType: "blob",
+      })
+      .then((response) => {
+        const url = URL.createObjectURL(response.data);
+        const a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.download = "export.xlsx" || "";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const filteredList =
     invoices?.filter(
@@ -68,6 +98,15 @@ const Invoices: FC = () => {
               onChange={(text) => setSearch(text)}
             />
           </Stack>
+        </Stack>
+        <Stack direction="row" justifyContent="end" sx={{ width: "100%" }}>
+          <LoadingButton
+            loading={loading}
+            sx={{ color: "primary.main" }}
+            onClick={downloadBtnOnClick}
+          >
+            دانلود گزارش
+          </LoadingButton>
         </Stack>
         {/* <Stack direction="row" spacing={2} alignItems="center">
           <CustomDatePicker
