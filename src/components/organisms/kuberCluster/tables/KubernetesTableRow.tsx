@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
   useDeleteApiMyKubernetesClusterHostDeleteByIdMutation,
-  useGetApiMyKubernetesClusterHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
