@@ -2,11 +2,13 @@ import { FC, useState, SyntheticEvent, useEffect } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import { KubernetesEditNodes } from "src/components/organisms/kuberCluster/edit/editNodes/KubernetesEditNodes";
-import { KubernetesOverview } from "src/components/organisms/kuberCluster/edit/overview/KubernetesOverview";
 import { Box, Stack, Tabs } from "@mui/material";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams, useNavigate } from "react-router-dom";
+import { ServiceOverview } from "src/components/molecules/ServiceOverview";
+import { useGetApiMyKubernetesClusterHostGetByIdQuery } from "src/app/services/api.generated";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const a11yProps = (index: number) => {
   return {
@@ -24,6 +26,56 @@ const EditKubernetes: FC = () => {
     setValue(newValue);
     navigate(`?tab=${newValue}`);
   };
+
+  const { id: kubernetesId } = useParams();
+
+  const { data, isLoading, refetch } =
+    useGetApiMyKubernetesClusterHostGetByIdQuery(
+      {
+        id: Number(kubernetesId) || 0,
+      },
+      { skip: !kubernetesId }
+    );
+
+  const refetchOnClick = () => refetch();
+
+  const infoList = [
+    [
+      { label: "Status", value: data?.statusId || 0, id: "statusId" },
+      { label: "Cluster Name", value: data?.name || "", id: "name" },
+      { label: "Datacenter", value: data?.datacenter || "", id: "datacenter" },
+      {
+        label: "Worker Node",
+        value: data?.workerNode || "",
+        id: "workerNode",
+      },
+      {
+        label: "Master Node",
+        value: data?.masterNode || "",
+        id: "masterNode",
+      },
+      {
+        label: "Create Date",
+        value: data?.createDate
+          ? ConvertToJalali(String(data?.createDate))
+              .split("-")
+              .reverse()
+              .join(" - ")
+          : "----",
+        id: "createDate",
+      },
+      {
+        label: "Modify Date",
+        value: data?.modifyDate
+          ? ConvertToJalali(String(data?.modifyDate))
+              .split("-")
+              .reverse()
+              .join(" - ")
+          : "----",
+        id: "modifyDate",
+      },
+    ],
+  ];
 
   useEffect(() => {
     if (tab) {
@@ -66,7 +118,11 @@ const EditKubernetes: FC = () => {
         </Box>
       </Stack>
       <TabPanel value="1" sx={{ p: 0, my: 3 }}>
-        <KubernetesOverview />
+        <ServiceOverview
+          isLoading={isLoading}
+          infoList={infoList}
+          refetchOnClick={refetchOnClick}
+        />
       </TabPanel>
       <TabPanel value="2" sx={{ p: 0, my: 3 }}>
         <KubernetesEditNodes />
