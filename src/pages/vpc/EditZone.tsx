@@ -8,8 +8,10 @@ import { VpcIp } from "./VpcIp";
 import { VpcLoadBalancer } from "./VpcLoadBalancer";
 import { VpcNat } from "./VpcNat";
 import { VpcNetwork } from "./VpcNetwork";
-import { VpcOverview } from "./VpcOverview";
 import { VpcVm } from "./VpcVm";
+import { ServiceOverview } from "src/components/molecules/ServiceOverview";
+import { useGetApiMyVpcHostGetByIdQuery } from "src/app/services/api.generated";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditZone: FC = () => {
   const { vpcId } = useParams();
@@ -17,6 +19,52 @@ const EditZone: FC = () => {
 
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
+
+  const {
+    data,
+    isLoading: getDataLoading,
+    refetch,
+    isFetching: getDataFetching,
+  } = useGetApiMyVpcHostGetByIdQuery({ id: Number(vpcId) }, { skip: !vpcId });
+
+  const refetchOnClick = () => refetch();
+
+  const infoList = [
+    [
+      { id: "statusId", label: "Status", value: data?.statusId ?? "---" },
+      { id: "name", label: "vPC Name", value: data?.name ?? "---" },
+      {
+        id: "datacenter",
+        label: "Datacenter",
+        value: data?.datacenter ?? "---",
+      },
+      {
+        id: "createDate",
+        label: "Create Date",
+        value: data?.createDate
+          ? ConvertToJalali(String(data.createDate))
+              .split("-")
+              .reverse()
+              .join(" - ")
+          : "---",
+      },
+      {
+        id: "lastEditDate",
+        label: "Last Edit Date",
+        value: data?.modifyDate
+          ? ConvertToJalali(String(data.modifyDate))
+              .split("-")
+              .reverse()
+              .join(" - ")
+          : "---",
+      },
+    ],
+  ];
+
+  const isLoading = useMemo(
+    () => getDataLoading || getDataFetching,
+    [getDataFetching, getDataLoading]
+  );
 
   const { pathname } = useLocation();
 
@@ -51,9 +99,6 @@ const EditZone: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
-      case `overview`:
-        result = <VpcOverview />;
-        break;
       case `network`:
         result = <VpcNetwork />;
         break;
@@ -69,8 +114,15 @@ const EditZone: FC = () => {
       case `loadBalancer`:
         result = <VpcLoadBalancer />;
         break;
+      case `overview`:
       default:
-        result = <VpcOverview />;
+        result = (
+          <ServiceOverview
+            infoList={infoList}
+            isLoading={isLoading}
+            refetchOnClick={refetchOnClick}
+          />
+        );
         break;
     }
     return result;
