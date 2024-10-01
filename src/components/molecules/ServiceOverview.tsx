@@ -115,6 +115,7 @@ type infoListType = {
   id: string;
   label: string;
   value: string | number | null;
+  statusColor?: string;
 };
 
 export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
@@ -132,7 +133,7 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
         width="100%"
       >
         {(infoList.length === 1 ? oneSectionOverview : towSectionOverview).map(
-          ({ id, label, gridItemMd }, index) => {
+          ({ label, gridItemMd }, index) => {
             return (
               <Grid key={index} item xs={12} md={gridItemMd}>
                 <Paper
@@ -151,33 +152,44 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
                     refetchOnClick={refetchOnClick || undefined}
                   />
                   <Divider />
-                  {infoList[index].map(({ id, label, value }, index) =>
-                    id === "statusId" ? (
-                      <BoxRow
-                        key={index}
-                        title="Status"
-                        component={
-                          <Chip
-                            label={serviceStatusIdentifier(Number(value)).label}
-                            sx={{
-                              bgcolor: serviceStatusIdentifier(Number(value))
-                                .bgColor,
-                              color: serviceStatusIdentifier(Number(value))
-                                .typographyColor,
-                              borderRadius: BORDER_RADIUS_1,
-                            }}
-                          />
-                        }
-                        isLoading={isLoading}
-                      />
-                    ) : (
-                      <BoxRow
-                        key={index}
-                        title={label}
-                        value={value}
-                        isLoading={isLoading}
-                      />
-                    )
+                  {infoList[index].map(
+                    ({ id, label, value, statusColor }, index) =>
+                      id === "statusId" ? (
+                        <BoxRow
+                          key={index}
+                          title="Status"
+                          component={
+                            <Chip
+                              label={
+                                serviceStatusIdentifier(Number(value)).label
+                              }
+                              sx={{
+                                bgcolor: serviceStatusIdentifier(Number(value))
+                                  .bgColor,
+                                color: serviceStatusIdentifier(Number(value))
+                                  .typographyColor,
+                                borderRadius: BORDER_RADIUS_1,
+                              }}
+                            />
+                          }
+                          isLoading={isLoading}
+                        />
+                      ) : statusColor ? (
+                        <BoxRow
+                          title={label}
+                          component={
+                            <Typography color={statusColor}>{value}</Typography>
+                          }
+                          isLoading={isLoading}
+                        />
+                      ) : (
+                        <BoxRow
+                          key={index}
+                          title={label}
+                          value={value}
+                          isLoading={isLoading}
+                        />
+                      )
                   )}
                 </Paper>
               </Grid>
