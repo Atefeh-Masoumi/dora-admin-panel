@@ -1,19 +1,51 @@
 import { Box, Stack, Tabs } from "@mui/material";
 import { FC, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { useGetApiMyDnsCdnHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
+import { ServiceOverview } from "src/components/molecules/serviceOverview";
 import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
 import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
 import LoadBalance from "src/components/organisms/cdn/edit/loadbalance/LoadBalance";
-import { ZoneInfo } from "src/components/organisms/cdn/edit/overview/ZoneInfo";
 import { CdnSetting } from "src/components/organisms/cdn/edit/setting/CdnSetting";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditZone: FC = () => {
   const { id } = useParams();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { pathname } = useLocation();
+  const {
+    data,
+    isLoading: getDataLoading,
+    refetch,
+  } = useGetApiMyDnsCdnHostGetByIdQuery({ id: Number(id) });
+
+  const refetchOnClick = () => refetch();
+
+  const infoList = [
+    { label: "Status", value: data?.statusId || 0, id: "statusId" },
+    { label: "Zone Name", value: data?.zoneName || 0, id: "zoneName" },
+    {
+      label: "Create Date",
+      value: data?.createDate
+        ? ConvertToJalali(String(data?.createDate))
+            .split(" - ")
+            .reverse()
+            .join(" - ")
+        : "",
+      id: "createDate",
+    },
+    {
+      label: "Last Edit Date",
+      value: ConvertToJalali(String(data?.modifyDate))
+        .split(" - ")
+        .reverse()
+        .join(" - "),
+      id: "lastEditDate",
+    },
+  ];
 
   const selectedTab = useMemo(() => {
     let result;
@@ -46,9 +78,6 @@ const EditZone: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
-      case `overview`:
-        result = <ZoneInfo />;
-        break;
       case `setting`:
         result = <CdnSetting />;
         break;
@@ -64,8 +93,15 @@ const EditZone: FC = () => {
       // case "api-gateway-settings":
       //   result = <></>;
       //break;
+      case `overview`:
       default:
-        result = <ZoneInfo />;
+        result = (
+          <ServiceOverview
+            infoList={infoList}
+            refetchOnClick={refetchOnClick}
+            isLoading={getDataLoading}
+          />
+        );
         break;
     }
     return result;
