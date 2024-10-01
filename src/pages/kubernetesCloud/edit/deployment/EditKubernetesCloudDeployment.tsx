@@ -5,19 +5,75 @@ import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { Gateway } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Gateway";
 import { Monitoring } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Monitoring";
 import { Settings } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Settings";
-import { Specification } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Specification";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { ServiceOverview } from "src/components/molecules/ServiceOverview";
+import { useGetApiMyKubernetesCloudDeploymentGetByIdQuery } from "src/app/services/api.generated";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditKubernetesCloudDeployment: FC = () => {
   const { deploymentId, kubernetesCloudId } = useParams();
   const navigate = useNavigate();
-
   const { pathname } = useLocation();
+
+  const {
+    data,
+    isLoading: getDeploymentDataLoading,
+    isFetching: getDeploymentDataFetching,
+  } = useGetApiMyKubernetesCloudDeploymentGetByIdQuery(
+    {
+      id: Number(deploymentId),
+    },
+    { skip: !deploymentId }
+  );
+
+  const infoList = [
+    [
+      {
+        id: "Name",
+        label: "Name",
+        value: data?.name ?? null,
+      },
+      {
+        id: "Image",
+        label: "Image",
+        value: data?.image ?? null,
+      },
+      {
+        id: "Namespace",
+        label: "Namespace",
+        value: data?.namespace ?? null,
+      },
+      {
+        id: "Replica",
+        label: "Replica",
+        value: data?.replica !== undefined ? `${data.replica}` : null,
+      },
+      {
+        id: "createDate",
+        label: "Create Date",
+        value: data?.createDate
+          ? ConvertToJalali(data.createDate).split("-").reverse().join(" - ")
+          : null,
+      },
+      {
+        id: "modifyDate",
+        label: "Modify Date",
+        value: data?.modifyDate
+          ? ConvertToJalali(data.modifyDate).split("-").reverse().join(" - ")
+          : null,
+      },
+    ],
+  ];
+
+  const isLoading = useMemo(
+    () => getDeploymentDataLoading || getDeploymentDataFetching,
+    [getDeploymentDataFetching, getDeploymentDataLoading]
+  );
 
   const selectedTab = useMemo(() => {
     let result;
-    if (pathname.includes("specification")) {
-      result = `specification`;
+    if (pathname.includes("overview")) {
+      result = `overview`;
     }
     if (pathname.includes("setting")) {
       result = `setting`;
@@ -39,17 +95,15 @@ const EditKubernetesCloudDeployment: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
-      case `specification`:
-        result = <Specification />;
-        break;
       case `setting`:
         result = <Settings />;
         break;
       case `gateway`:
         result = <Gateway />;
         break;
+      case `overview`:
       default:
-        result = <Specification />;
+        result = <ServiceOverview infoList={infoList} isLoading={isLoading} />;
         break;
     }
     return result;
@@ -76,7 +130,7 @@ const EditKubernetesCloudDeployment: FC = () => {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <DorsaTab value={`specification`} label="مشخصات" />
+          <DorsaTab value={`overview`} label="مشخصات" />
           <DorsaTab disabled value={`setting`} label="تنظیمات" />
           <DorsaTab disabled value={`gateway`} label="gateway" />
           {/* <DorsaTab value={`monitoring`} label="monitoring" /> */}
