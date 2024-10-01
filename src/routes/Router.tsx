@@ -729,7 +729,7 @@ const Router: FC = () => {
         />
 
         <Route
-          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/specification"
+          path="/kubernetes-cloud/:kubernetesCloudId/deployment/:deploymentId/overview"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "مشخصات Deployment",
             // RightComponent: DomainSelect,

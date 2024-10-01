@@ -57,7 +57,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
         kubernetesCloudId +
         "/deployment/" +
         row.id +
-        "/specification"
+        "/overview"
     );
 
   const handleDeleteDeploymentRecord = () =>
