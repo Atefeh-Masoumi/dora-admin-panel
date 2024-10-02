@@ -90,14 +90,16 @@ export const CreateNetworkModal: FC<CreateNetworkDialogPropsType> = ({
               formik={formik}
               id="name"
               size="small"
+              dir="ltr"
               fullWidth
               error={Boolean(formik.errors.name && formik.touched.name)}
               helperText={formik.touched.name && formik.errors.name}
-              placeholder="نام موردنظر را وارد کنید"
+              placeholder="Name"
             />
             <TextField
-              placeholder="مثال: 192.168.1.0/24"
               {...formik.getFieldProps("gatewayCidr")}
+              dir="ltr"
+              placeholder="e.g: 192.168.1.0/24"
               error={Boolean(
                 formik.errors.gatewayCidr && formik.touched.gatewayCidr
               )}
@@ -110,6 +112,11 @@ export const CreateNetworkModal: FC<CreateNetworkDialogPropsType> = ({
                   "&.Mui-focused fieldset": {
                     border: ({ palette }) => `#ccc 1px solid`,
                   },
+                },
+              }}
+              FormHelperTextProps={{
+                style: {
+                  textAlign: "start",
                 },
               }}
             />

@@ -1,18 +1,23 @@
 import { styled, Switch, SwitchProps } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import {
+  BORDER_RADIUS_1,
+  BORDER_RADIUS_2,
+  BORDER_RADIUS_3,
+  BORDER_RADIUS_5,
+} from "src/configs/theme";
 
 export const DorsaSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-  width: 48,
+  width: 49,
   height: 24,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
-    margin: 2,
+    // margin: 2,
     transitionDuration: "300ms",
     "&.Mui-checked": {
-      transform: "translateX(24px)",
+      transform: "translateX(25px)",
       color: "#fff",
       "& + .MuiSwitch-track": {
         backgroundColor:
@@ -36,11 +41,11 @@ export const DorsaSwitch = styled((props: SwitchProps) => (
   },
   "& .MuiSwitch-thumb": {
     boxSizing: "border-box",
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
   },
   "& .MuiSwitch-track": {
-    borderRadius: BORDER_RADIUS_1,
+    borderRadius: BORDER_RADIUS_5,
     backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
     opacity: 1,
     transition: theme.transitions.create(["background-color"], {

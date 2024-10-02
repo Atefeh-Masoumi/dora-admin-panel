@@ -88,14 +88,14 @@ const Wallet: FC = () => {
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
-              placeholder="جستجو در شماره تراکنش"
+              placeholder="جستجو"
               onChange={(text) => setSearch(text)}
               fullWidth
             />
           </Stack>
           <Stack display={{ xs: "none", md: "flex" }}>
             <SearchBox
-              placeholder="جستجو در شماره تراکنش"
+              placeholder="جستجو"
               onChange={(text) => setSearch(text)}
             />
           </Stack>

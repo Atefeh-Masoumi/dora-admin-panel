@@ -92,21 +92,28 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
               formik={formik}
               id="name"
               size="small"
+              dir="ltr"
               fullWidth
               error={Boolean(formik.errors.name && formik.touched.name)}
               helperText={formik.touched.name && formik.errors.name}
-              placeholder="نام موردنظر را وارد کنید"
+              placeholder="Name"
             />
             <TextField
-              placeholder="مثال: 192.168.1.0/24"
+              placeholder="e.g: 192.168.1.0/24"
               {...formik.getFieldProps("gatewayCidr")}
               error={Boolean(
                 formik.errors.gatewayCidr && formik.touched.gatewayCidr
               )}
+              dir="ltr"
               helperText={formik.errors.gatewayCidr}
               focused
               size="small"
               label="GatewayCIDR"
+              FormHelperTextProps={{
+                style: {
+                  textAlign: "start",
+                },
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {

@@ -87,14 +87,14 @@ const Invoices: FC = () => {
           </Typography>
           <Stack display={{ xs: "flex", md: "none" }} width="100%">
             <SearchBox
-              placeholder="جستجو در شماره فاکتور"
+              placeholder="جستجو"
               onChange={(text) => setSearch(text)}
               fullWidth
             />
           </Stack>
           <Stack display={{ xs: "none", md: "flex" }}>
             <SearchBox
-              placeholder="جستجو در شماره فاکتور"
+              placeholder="جستجو"
               onChange={(text) => setSearch(text)}
             />
           </Stack>
