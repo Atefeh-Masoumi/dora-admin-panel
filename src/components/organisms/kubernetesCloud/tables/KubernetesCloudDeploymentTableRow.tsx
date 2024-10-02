@@ -193,7 +193,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                               {item.nodePort}
                             </TableCell>
                             <TableCell sx={{ border: "none" }} align="center">
-                              {item.servicePort}
+                              {item.targetPort}
                             </TableCell>
                           </TableRow>
                         );
