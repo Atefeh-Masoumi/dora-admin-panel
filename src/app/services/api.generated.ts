@@ -4,12 +4,12 @@ export const api = createApi({
   baseQuery: baseQuery,
   tagTypes: [],
   endpoints: (build) => ({
-    getAccountUserLog: build.query<
-      GetAccountUserLogApiResponse,
-      GetAccountUserLogApiArg
+    getApiMyAccountUserLog: build.query<
+      GetApiMyAccountUserLogApiResponse,
+      GetApiMyAccountUserLogApiArg
     >({
       query: (queryArg) => ({
-        url: `/Account/user-log`,
+        url: `/api/my/account/user-log`,
         params: {
           UserId: queryArg.userId,
           FromDate: queryArg.fromDate,
@@ -1022,6 +1022,33 @@ export const api = createApi({
         url: `/api/my/kubernetes/cloud/host/create`,
         method: "POST",
         body: queryArg.createKuberCloudHostModel,
+      }),
+    }),
+    getApiMyKubernetesCloudFirewallListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudFirewallListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudFirewallListByNamespaceIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/firewall/list/${queryArg.namespaceId}`,
+      }),
+    }),
+    deleteApiMyKubernetesCloudFirewallDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudFirewallDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudFirewallDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/firewall/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyKubernetesCloudFirewallCreate: build.mutation<
+      PostApiMyKubernetesCloudFirewallCreateApiResponse,
+      PostApiMyKubernetesCloudFirewallCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/firewall/create`,
+        method: "POST",
+        body: queryArg.createKuberCloudFirewallModel,
       }),
     }),
     getApiMyKubernetesCloudDeploymentEnvListByDeploymentId: build.query<
@@ -2256,9 +2283,9 @@ export const api = createApi({
     }),
   }),
 });
-export type GetAccountUserLogApiResponse =
+export type GetApiMyAccountUserLogApiResponse =
   /** status 200 OK */ UserLogResponseIEnumerablePagedResponse;
-export type GetAccountUserLogApiArg = {
+export type GetApiMyAccountUserLogApiArg = {
   userId?: string;
   fromDate?: string;
   toDate?: string;
@@ -2753,6 +2780,19 @@ export type DeleteApiMyKubernetesCloudHostDeleteByIdApiArg = {
 export type PostApiMyKubernetesCloudHostCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudHostCreateApiArg = {
   createKuberCloudHostModel: CreateKuberCloudHostModel;
+};
+export type GetApiMyKubernetesCloudFirewallListByNamespaceIdApiResponse =
+  /** status 200 OK */ KuberCloudFirewallListResponse[];
+export type GetApiMyKubernetesCloudFirewallListByNamespaceIdApiArg = {
+  namespaceId: number;
+};
+export type DeleteApiMyKubernetesCloudFirewallDeleteByIdApiResponse = unknown;
+export type DeleteApiMyKubernetesCloudFirewallDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyKubernetesCloudFirewallCreateApiResponse = unknown;
+export type PostApiMyKubernetesCloudFirewallCreateApiArg = {
+  createKuberCloudFirewallModel: CreateKuberCloudFirewallModel;
 };
 export type GetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdApiResponse =
   /** status 200 OK */ KuberCloudDeploymentEnvListResponse[];
@@ -4060,10 +4100,9 @@ export type CreateKuberCloudSecretModel = {
   description?: string | null;
 };
 export type ListPort = {
-  nodePortId?: number;
+  portId?: number;
   nodePort?: number;
-  servicePortId?: number;
-  servicePort?: number;
+  targetPort?: number;
 };
 export type KuberCloudHostListPortResponse = {
   deploymentId: number;
@@ -4196,6 +4235,20 @@ export type CreateKuberCloudHostModel = {
   disk?: number | null;
   tenPods?: number | null;
 };
+export type KuberCloudFirewallListResponse = {
+  id: number;
+  sourceIp: string | null;
+  protocol: string | null;
+  targetPort: number;
+  createDate?: string;
+};
+export type CreateKuberCloudFirewallModel = {
+  datacenterKuberNodeId: number;
+  firewallProtocolTypeId: number;
+  deployPortId: number;
+  sourceIp?: string | null;
+  sourcePort?: number | null;
+};
 export type EnvKeyValuePairResponse = {
   id?: number;
   key?: string | null;
@@ -4212,10 +4265,9 @@ export type GetKuberCloudDeploymentEnvResponse = {
   modifyDate: string;
 };
 export type Port = {
-  nodePortId?: number;
+  portId?: number;
   nodePort?: number;
-  servicePortId?: number;
-  servicePort?: number;
+  targetPort?: number;
 };
 export type KuberCloudDeploymentListResponse = {
   id: number;
@@ -4226,10 +4278,9 @@ export type KuberCloudDeploymentListResponse = {
   createDate: string;
 };
 export type PortResponse = {
-  nodePortId?: number;
+  portId?: number;
   nodePort?: number;
-  servicePortId?: number;
-  servicePort?: number;
+  targetPort?: number;
 };
 export type GetKuberCloudDeploymentResponse = {
   id: number;
@@ -5165,7 +5216,7 @@ export type WebSiteAlarmListResponse = {
   link?: string | null;
 };
 export const {
-  useGetAccountUserLogQuery,
+  useGetApiMyAccountUserLogQuery,
   useGetApiMyAccountRoleAccessTypeListQuery,
   useGetApiMyAccountRoleAccessListByUserIdQuery,
   usePutApiMyAccountRoleAccessEditMutation,
@@ -5284,6 +5335,9 @@ export const {
   usePutApiMyKubernetesCloudHostEditByIdMutation,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
   usePostApiMyKubernetesCloudHostCreateMutation,
+  useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
+  useDeleteApiMyKubernetesCloudFirewallDeleteByIdMutation,
+  usePostApiMyKubernetesCloudFirewallCreateMutation,
   useGetApiMyKubernetesCloudDeploymentEnvListByDeploymentIdQuery,
   useGetApiMyKubernetesCloudDeploymentEnvGetByIdQuery,
   useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery,
