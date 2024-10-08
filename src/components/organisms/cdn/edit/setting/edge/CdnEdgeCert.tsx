@@ -25,6 +25,8 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
       dnsCdnHostId: dnsId,
     });
 
+  console.log(edgeCert);
+
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
@@ -33,10 +35,7 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
     })
       .unwrap()
       .then(() => toast.success("Certificate created"))
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) toast.error("خطای سرور");
-        else toast.error(res.data[""][0]);
-      });
+      .catch((res) => {});
   };
 
   return (
@@ -57,38 +56,42 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
         </LoadingButton>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
-      <Stack spacing={2} px={1} color="secondary.main">
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">صادرکننده گواهی:</Typography>
-          {isLoading ? (
-            <TextLoading num={9} />
-          ) : (
-            <Typography variant="text15">{edgeCert?.issuer}</Typography>
-          )}
-        </Stack>
+      {edgeCert ? (
+        <Stack spacing={2} px={1} color="secondary.main">
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">صادرکننده گواهی:</Typography>
+            {isLoading ? (
+              <TextLoading num={9} />
+            ) : (
+              <Typography variant="text15">{edgeCert?.issuer}</Typography>
+            )}
+          </Stack>
 
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">پایان اعتبار:</Typography>
-          {isLoading ? (
-            <TextLoading num={8} />
-          ) : (
-            <Typography variant="text15">
-              {edgeCert?.expirationDate
-                ? ConvertToJalali(String(edgeCert?.expirationDate))
-                : "---"}
-            </Typography>
-          )}
-        </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">پایان اعتبار:</Typography>
+            {isLoading ? (
+              <TextLoading num={8} />
+            ) : (
+              <Typography variant="text15">
+                {edgeCert?.expirationDate
+                  ? ConvertToJalali(String(edgeCert?.expirationDate))
+                  : "---"}
+              </Typography>
+            )}
+          </Stack>
 
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">دامنه‌ها:</Typography>
-          {isLoading ? (
-            <TextLoading num={9} />
-          ) : (
-            <Typography variant="text15">{edgeCert?.commonName}</Typography>
-          )}
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">دامنه‌ها:</Typography>
+            {isLoading ? (
+              <TextLoading num={9} />
+            ) : (
+              <Typography variant="text15">{edgeCert?.commonName}</Typography>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
+      ) : (
+        <>empty</>
+      )}
     </Stack>
   );
 };

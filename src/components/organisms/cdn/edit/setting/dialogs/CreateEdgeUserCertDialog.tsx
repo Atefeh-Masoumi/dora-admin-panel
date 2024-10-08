@@ -38,7 +38,7 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   });
 
   const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
-    { dnsCdnHostId, keyPem, certPem },
+    { keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!dnsId || !keyPem || !certPem) return;
@@ -50,13 +50,7 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
         toast.success("گواهینامه مورد نظر با موفقیت اضافه شد");
         handleClose();
       })
-      .catch((res) => {
-        if (res.status === 401 || res.status === 404) {
-          toast.error("اطلاعات را درست وارد کنید");
-        } else {
-          toast.error(res.data[""][0]);
-        }
-      });
+      .catch((res) => {});
     setSubmitting(false);
   };
 
