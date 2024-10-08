@@ -122,7 +122,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
         <Stack>
           <Fragment>
             {isLoading ? (
-              <Stack spacing={1} alignItems="center" justifyContent="center">
+              <Stack spacing={4} alignItems="center" justifyContent="center">
                 {[...Array(1)].map((_, index) => (
                   <Skeleton
                     key={index}
@@ -135,13 +135,16 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
               </Stack>
             ) : (
               userAnalytics?.series?.map((item) =>
-                <Stack sx={{ height: 300 }}>
+                <Stack sx={{ height: 250 }}>
+                  <Typography variant="text1" color="secondary">
+                    {item.name}
+                  </Typography>
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                       data={item.data?.map(
                         (item2, index2) => ({
                           uv: item2,
-                          name: index2,
+                          // name: index2,
                         })
                       )}
                       margin={{
@@ -177,9 +180,15 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
                       />
                     </LineChart>
                   </ResponsiveContainer>
+                  <Divider
+                    sx={{
+                      borderColor: "rgba(110, 118, 138, 0.08)",
+                      mt: 1.5,
+                      mb: { xs: 1.4, md: 2.3 },
+                    }} />
+
                 </Stack>
               )
-
             )}
           </Fragment>
         </Stack>
