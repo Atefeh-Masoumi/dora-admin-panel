@@ -9,6 +9,8 @@ import {
   usePostApiMyDnsCdnEdgeCertCreateMutation,
   useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery,
 } from "src/app/services/api.generated";
+import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
+
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 type CdnEdgeCertPropsType = {
@@ -25,7 +27,6 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
       dnsCdnHostId: dnsId,
     });
 
-  console.log(edgeCert);
 
   const submit = () => {
     createLicense({
@@ -90,7 +91,13 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
           </Stack>
         </Stack>
       ) : (
-        <>empty</>
+        <Stack direction="row" justifyContent="center">
+          <img
+            src={EmptyTableSvg}
+            alt="Empty Card"
+            style={{ maxWidth: "160px", maxHeight: "100px" }}
+          />
+        </Stack>
       )}
     </Stack>
   );

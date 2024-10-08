@@ -60,7 +60,7 @@ export const CdnSetting: FC = () => {
         />
       </Stack>
 
-      <Stack bgcolor="white" p={5} spacing={2}>
+      {/* <Stack bgcolor="white" p={5} spacing={2}>
         <Typography fontSize={20} color="secondary" fontWeight="bold">
           گواهی های لبه (EDGE)
         </Typography>
@@ -70,7 +70,7 @@ export const CdnSetting: FC = () => {
           loading={isLoading}
           certTypeId={zoneData?.cdnHostEdgeCertTypeId}
         />
-      </Stack>
+      </Stack> */}
 
       <Stack bgcolor="white" p={5} spacing={2}>
         <Typography fontSize={20} color="secondary" fontWeight="bold">

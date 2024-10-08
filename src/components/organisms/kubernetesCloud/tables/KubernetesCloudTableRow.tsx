@@ -60,7 +60,6 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
           const id = row["statusId"];
           const tenPods = row["tenPods"] * 10;
           const podInUse = row["podInUse"];
-          console.log((podInUse * 100) / tenPods);
           return (
             <DorsaTableCell
               key={column.id}

@@ -14,7 +14,6 @@ export const LegalPersonalityDetail: FC<
   const { data, isLoading: customerInfoLoading } =
     useGetApiMyAccountCustomerGetQuery();
 
-  console.log();
 
   useEffect(() => {
     if (data) {
