@@ -32,6 +32,7 @@ const tags = [
   "SecretMap",
   "NameSpace",
   "Deployment",
+  "Ingress",
 ];
 
 export const api = generatedApi
@@ -467,6 +468,7 @@ export const api = generatedApi
       postApiMyKubernetesCloudDeploymentCreate: {
         invalidatesTags: () => ["Deployment", "NameSpace"],
       },
+      // ============================== Kubernetes Cloud Deployment ============================== //
     },
   });
 
