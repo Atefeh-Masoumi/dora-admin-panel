@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useGetApiMyKubernetesCloudIngressListQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
@@ -16,7 +16,7 @@ export const KubernetesCloudIngress: FC<
   const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListQuery();
+  const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({ namespaceId: 1 });
 
   function handleOpenAddIngressDialog() {
     setOpenAddIngressDialog(true);
