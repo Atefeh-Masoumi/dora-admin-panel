@@ -22,7 +22,6 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
       dnsCdnHostId: dnsId,
     });
 
-
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
