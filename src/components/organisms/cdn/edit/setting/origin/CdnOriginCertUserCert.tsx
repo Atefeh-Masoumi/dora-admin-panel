@@ -26,8 +26,6 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
-  console.log({ userCert });
-
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
