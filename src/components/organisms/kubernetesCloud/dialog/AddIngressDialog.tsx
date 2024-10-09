@@ -85,53 +85,45 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
+
     props.onClose(event, "backdropClick");
+    setRules([]);
+    formik.resetForm();
   };
-  // const isEmptyTLSSecretList = useMemo(() => {
-  //   return tLSSecretList && tLSSecretList?.length <= 0;
-  // }, [tLSSecretList]);
 
   const formik = useFormik<CreateIngressTypes>({
     initialValues: {
       name: "",
-      // protocolTypeId: 3,
-      // secretId: null,
       domainName: "",
       protocolTypeId: 3,
       secretId: 0,
       rules: [
         {
-          // service: 0,
           path: "",
           kuberCloudDeployPortId: 0,
         },
       ],
     },
     validationSchema: formValidation,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
-      //   const processedEnvsToObject = values?.rules?.reduce(
-      //     (acc: any, item: any) => {
-      //       acc[item.key] = item.value;
-      //       return acc;
-      //     },
-      //     {}
-      //   );
-
-      //   createIngress({
-      //     createKuberCloudIngressModel: {
-      //       name: values.name as string,
-      //       protocolTypeId : ,
-      //       rules :"",
-      //         secretId : ""
-      //     },
-      //   })
-      //     .unwrap()
-      //     .then(() => {
-      //       toast.success("Configmap با موفقیت ساخته شد");
-      //       resetForm();
-      //       onClose();
-      //     })
-      //     .catch(() => {});
+    onSubmit: (
+      { domainName, name, protocolTypeId, secretId, rules },
+      { setSubmitting, resetForm }
+    ) => {
+      createIngress({
+        createKuberCloudIngressModel: {
+          name: name!,
+          domainName: domainName!,
+          protocolTypeId: protocolTypeId,
+          secretId: secretId!,
+          rules: rules,
+        },
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("Configmap با موفقیت ساخته شد");
+          resetForm();
+        })
+        .catch(() => {});
 
       setSubmitting(false);
     },
