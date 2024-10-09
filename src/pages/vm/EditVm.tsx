@@ -14,6 +14,7 @@ import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConf
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
+import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -77,6 +78,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   const tabArray = [
     "مشخصات سرور",
+    "آنالیز ترافیک",
     "آدرس IP سرور",
     "بازسازی سیستم عامل",
     "تغییر مشخصات سخت افزاری",
@@ -85,6 +87,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   const tabPanelArray = [
     VmInfo,
+    AnalyticChart,
     VmIpAddress,
     VmRebuild,
     ServerConfig,
