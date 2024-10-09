@@ -459,20 +459,20 @@ export const api = createApi({
         url: `/api/my/dns-cdn/host/get-ns/${queryArg.id}`,
       }),
     }),
-    getApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodId: build.query<
-      GetApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodIdApiResponse,
-      GetApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/dns-cdn/host/get-cdn-analytic/${queryArg.id}/${queryArg.periodId}`,
-      }),
-    }),
     getApiMyDnsCdnHostGetCdnById: build.query<
       GetApiMyDnsCdnHostGetCdnByIdApiResponse,
       GetApiMyDnsCdnHostGetCdnByIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/dns-cdn/host/get-cdn/${queryArg.id}`,
+      }),
+    }),
+    getApiMyDnsCdnHostGetAnalyticByIdAndPeriodId: build.query<
+      GetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdApiResponse,
+      GetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/dns-cdn/host/get-analytic/${queryArg.id}/${queryArg.periodId}`,
       }),
     }),
     getApiMyDnsCdnHostGetById: build.query<
@@ -936,11 +936,13 @@ export const api = createApi({
         body: queryArg.createKuberCloudIngressRuleModel,
       }),
     }),
-    getApiMyKubernetesCloudIngressList: build.query<
-      GetApiMyKubernetesCloudIngressListApiResponse,
-      GetApiMyKubernetesCloudIngressListApiArg
+    getApiMyKubernetesCloudIngressListByNamespaceId: build.query<
+      GetApiMyKubernetesCloudIngressListByNamespaceIdApiResponse,
+      GetApiMyKubernetesCloudIngressListByNamespaceIdApiArg
     >({
-      query: () => ({ url: `/api/my/kubernetes/cloud/ingress/list` }),
+      query: (queryArg) => ({
+        url: `/api/my/kubernetes/cloud/ingress/list/${queryArg.namespaceId}`,
+      }),
     }),
     getApiMyKubernetesCloudIngressGetById: build.query<
       GetApiMyKubernetesCloudIngressGetByIdApiResponse,
@@ -1835,6 +1837,14 @@ export const api = createApi({
         url: `/api/my/vm/host/list/${queryArg.vmProjectId}`,
       }),
     }),
+    getApiMyVmHostGetAnalyticByIdAndPeriodId: build.query<
+      GetApiMyVmHostGetAnalyticByIdAndPeriodIdApiResponse,
+      GetApiMyVmHostGetAnalyticByIdAndPeriodIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/host/get-analytic/${queryArg.id}/${queryArg.periodId}`,
+      }),
+    }),
     getApiMyVmHostGetById: build.query<
       GetApiMyVmHostGetByIdApiResponse,
       GetApiMyVmHostGetByIdApiArg
@@ -2504,16 +2514,16 @@ export type GetApiMyDnsCdnHostGetNsByIdApiResponse =
 export type GetApiMyDnsCdnHostGetNsByIdApiArg = {
   id: number;
 };
-export type GetApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodIdApiResponse =
-  /** status 200 OK */ GetCdnAnalyticResponse;
-export type GetApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodIdApiArg = {
-  id: number;
-  periodId: number;
-};
 export type GetApiMyDnsCdnHostGetCdnByIdApiResponse =
   /** status 200 OK */ GetCdnResponse;
 export type GetApiMyDnsCdnHostGetCdnByIdApiArg = {
   id: number;
+};
+export type GetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdApiResponse =
+  /** status 200 OK */ GetAnalyticResponse;
+export type GetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdApiArg = {
+  id: number;
+  periodId: number;
 };
 export type GetApiMyDnsCdnHostGetByIdApiResponse =
   /** status 200 OK */ GetDnsCdnResponse;
@@ -2737,9 +2747,11 @@ export type PostApiMyKubernetesCloudIngressRuleCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudIngressRuleCreateApiArg = {
   createKuberCloudIngressRuleModel: CreateKuberCloudIngressRuleModel;
 };
-export type GetApiMyKubernetesCloudIngressListApiResponse =
+export type GetApiMyKubernetesCloudIngressListByNamespaceIdApiResponse =
   /** status 200 OK */ KuberCloudIngressListResponse[];
-export type GetApiMyKubernetesCloudIngressListApiArg = void;
+export type GetApiMyKubernetesCloudIngressListByNamespaceIdApiArg = {
+  namespaceId: number;
+};
 export type GetApiMyKubernetesCloudIngressGetByIdApiResponse =
   /** status 200 OK */ GetKuberCloudIngressResponse;
 export type GetApiMyKubernetesCloudIngressGetByIdApiArg = {
@@ -3205,6 +3217,12 @@ export type GetApiMyVmHostListByVmProjectIdApiResponse =
   /** status 200 OK */ VmListResponse[];
 export type GetApiMyVmHostListByVmProjectIdApiArg = {
   vmProjectId: number;
+};
+export type GetApiMyVmHostGetAnalyticByIdAndPeriodIdApiResponse =
+  /** status 200 OK */ GetAnalyticResponse;
+export type GetApiMyVmHostGetAnalyticByIdAndPeriodIdApiArg = {
+  id: number;
+  periodId: number;
 };
 export type GetApiMyVmHostGetByIdApiResponse =
   /** status 200 OK */ GetVmResponse;
@@ -3787,14 +3805,6 @@ export type GetDnsNsResponse = {
   ns?: string[] | null;
   cloudNs?: string[] | null;
 };
-export type SeriesModel = {
-  name?: string | null;
-  data?: number[] | null;
-};
-export type GetCdnAnalyticResponse = {
-  categories?: string[] | null;
-  series?: SeriesModel[] | null;
-};
 export type GetCdnResponse = {
   zoneName: string | null;
   statusId: number;
@@ -3805,6 +3815,14 @@ export type GetCdnResponse = {
   isHsts: boolean;
   isHttpsRedirect: boolean;
   isNonWwwRedirect: boolean;
+};
+export type SeriesModel = {
+  name?: string | null;
+  data?: number[] | null;
+};
+export type GetAnalyticResponse = {
+  categories?: string[] | null;
+  series?: SeriesModel[] | null;
 };
 export type GetDnsCdnResponse = {
   id?: number;
@@ -4124,7 +4142,6 @@ export type DeleteKuberCloudIngressRuleModel = {
   ruleIds: number[];
 };
 export type IngressRuleModelRequest = {
-  domainName: string | null;
   path: string | null;
   kuberCloudDeployPortId: number;
 };
@@ -4143,7 +4160,6 @@ export type KuberCloudIngressListResponse = {
 export type RulesResponse = {
   id: number;
   path: string | null;
-  domainName: string | null;
   serviceName: string | null;
   port: number;
   createDate: string;
@@ -4152,16 +4168,17 @@ export type RulesResponse = {
 export type GetKuberCloudIngressResponse = {
   id: number;
   name: string | null;
+  domainName: string | null;
   rules: RulesResponse[] | null;
   createDate: string;
 };
 export type RuleModelRequest = {
-  domainName: string | null;
   path: string | null;
   kuberCloudDeployPortId: number;
 };
 export type CreateKuberCloudIngressModel = {
   name: string;
+  domainName: string;
   protocolTypeId: number;
   secretId: number;
   rules: RuleModelRequest[];
@@ -4492,6 +4509,7 @@ export type ProductItemListResponse = {
   id: number;
   name: string | null;
   price: number;
+  unit: string | null;
 };
 export type VmSpec = {
   productItemId: number;
@@ -5270,8 +5288,8 @@ export const {
   useGetApiMyDatacenterListQuery,
   useGetApiMyDnsCdnHostListQuery,
   useGetApiMyDnsCdnHostGetNsByIdQuery,
-  useGetApiMyDnsCdnHostGetCdnAnalyticByIdAndPeriodIdQuery,
   useGetApiMyDnsCdnHostGetCdnByIdQuery,
+  useGetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdQuery,
   useGetApiMyDnsCdnHostGetByIdQuery,
   useDeleteApiMyDnsCdnHostDeleteByIdMutation,
   usePostApiMyDnsCdnHostCreateMutation,
@@ -5324,7 +5342,7 @@ export const {
   usePutApiMyKubernetesCloudIngressRuleEditMutation,
   useDeleteApiMyKubernetesCloudIngressRuleDeleteMutation,
   usePostApiMyKubernetesCloudIngressRuleCreateMutation,
-  useGetApiMyKubernetesCloudIngressListQuery,
+  useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudIngressGetByIdQuery,
   useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation,
   usePostApiMyKubernetesCloudIngressCreateMutation,
@@ -5437,6 +5455,7 @@ export const {
   usePutApiMyVmHostRebuildByIdMutation,
   usePutApiMyVmHostRebootByIdMutation,
   useGetApiMyVmHostListByVmProjectIdQuery,
+  useGetApiMyVmHostGetAnalyticByIdAndPeriodIdQuery,
   useGetApiMyVmHostGetByIdQuery,
   usePutApiMyVmHostEditByIdMutation,
   usePutApiMyVmHostDisconnectByIdMutation,

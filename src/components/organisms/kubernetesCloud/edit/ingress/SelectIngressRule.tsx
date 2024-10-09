@@ -1,105 +1,52 @@
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, IconButton, MenuItem, Stack } from "@mui/material";
 import { FormikProps } from "formik";
-import { FC } from "react";
+import { Dispatch, FC, Fragment, SetStateAction } from "react";
 import { CreateIngressTypes } from "../../dialog/AddIngressDialog";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
+  RuleModelRequest,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { SECRET_TYPES_ENUM } from "src/components/organisms/home/constants/secretTypesConstants";
+import { DeleteOutline } from "@mui/icons-material";
 
 type SelectIngressRulePropsType = {
   formik: FormikProps<CreateIngressTypes>;
   mainIndex: number;
+  setRules: Dispatch<SetStateAction<RuleModelRequest[]>>;
 };
 
 export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
   formik,
   mainIndex,
+  setRules,
 }) => {
   const { kubernetesCloudId } = useParams();
 
-  const { data: portList, isLoading: portListLoading } =
+  const { data: kuberCloudObject, isLoading: portListLoading } =
     useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
     });
 
-  const { data: tLSSecretList, isLoading: tLSSecretListLoadning } =
-    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
-      {
-        namespaceId: Number(kubernetesCloudId),
-        secretTypeId: SECRET_TYPES_ENUM.TLS,
-      },
-      { skip: !kubernetesCloudId }
+  const removeRules = (index: number) => {
+    setRules((prevState) => {
+      let result = [...prevState];
+      result.splice(index, 1);
+      return result;
+    });
+    formik.setFieldValue(
+      "rules",
+      formik.values.rules.filter((_, i) => i !== index)
     );
+  };
 
   const inputItems = [
     {
-      id: 1,
-      xs: 12,
-      md: 6,
-      width: "100%",
-      placeHolder: "Domain Name",
-      value: formik.values.rules[mainIndex]?.domainName || "",
-      onChange: (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => {
-        formik.setFieldValue(
-          `rules[${mainIndex}].domainName`,
-          event.target.value
-        );
-      },
-      otherProps: {},
-    },
-    {
-      id: 3,
-      xs: 12,
-      md: 6,
-      width: "100%",
-      placeHolder: "Protocol Type",
-      value: "test",
-      onChange: (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => {
-        formik.setFieldValue(
-          `rules[${mainIndex}].secretId`,
-          event.target.value
-        );
-      },
-      otherProps: {
-        select: true,
-        label: "Protocol Type",
-      },
-      menuItems: [
-        { id: 4, name: "HTTP" },
-        { id: 3, name: "HTTPS" },
-      ],
-    },
-    {
-      id: 2,
-      xs: 12,
-      md: 12,
-      width: "100%",
-      placeHolder: "Secret",
-      value: "test",
-      onChange: (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => {
-        formik.setFieldValue(`rules[${mainIndex}].secret`, event.target.value);
-      },
-      otherProps: {
-        select: true,
-        label: "Secret",
-      },
-      menuItems: tLSSecretList,
-    },
-
-    {
       id: 5,
       xs: 12,
-      md: 6,
+      md: 6.5 ,
       width: "100%",
       placeHolder: "Port",
       value: formik.values.rules[mainIndex]?.kuberCloudDeployPortId || "",
@@ -113,32 +60,20 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       },
       otherProps: {
         select: true,
-        label: "Port",
+        label: "Service Port",
       },
-      menuItems: [],
+      RestOfComponent: () => (
+        <IconButton onClick={() => removeRules(mainIndex)}>
+          <DeleteOutline color="error" />
+        </IconButton>
+      ),
+      // menuItems: kuberCloudObject || [],
     },
-    {
-      id: 5,
-      xs: 12,
-      md: 6,
-      width: "100%",
-      placeHolder: "Service",
-      value: formik.values.rules[mainIndex]?.service || "",
-      onChange: (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => {
-        formik.setFieldValue(`rules[${mainIndex}].service`, event.target.value);
-      },
-      otherProps: {
-        select: true,
-        label: "Service",
-      },
-      menuItems: [],
-    },
+
     {
       id: 4,
       xs: 12,
-      md: 4,
+      md: 5.5,
       width: "100%",
       placeHolder: "Path",
       value: formik.values.rules[mainIndex]?.path || "",
@@ -151,7 +86,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
   ];
 
   return (
-    <Grid container spacing={1}>
+    <Fragment key={mainIndex}>
       {inputItems.map(
         (
           {
@@ -162,31 +97,34 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
             placeHolder,
             onChange,
             width,
-            menuItems,
+            RestOfComponent,
+            // menuItems,
           },
           inputIndex
         ) => (
           <Grid item key={inputIndex} xs={xs} md={md}>
-            <DorsaTextField
-              dir="ltr"
-              size="small"
-              sx={{ width: width }}
-              placeholder={placeHolder}
-              value={value}
-              select={otherProps?.select || false}
-              onChange={onChange}
-              {...(otherProps || {})}
-            >
-              {menuItems &&
+            <Stack direction="row">
+            {RestOfComponent && RestOfComponent()}
+              <DorsaTextField
+                dir="ltr"
+                size="small"
+                sx={{ width: width }}
+                placeholder={placeHolder}
+                value={value}
+                onChange={onChange}
+                {...(otherProps || {})}
+              >
+                {/* {menuItems &&
                 menuItems.map((item, index) => (
                   <MenuItem dir="ltr" key={index} value={item.id}>
                     {item.name}
                   </MenuItem>
-                ))}
-            </DorsaTextField>
+                ))} */}
+              </DorsaTextField>
+            </Stack>
           </Grid>
         )
       )}
-    </Grid>
+    </Fragment>
   );
 };

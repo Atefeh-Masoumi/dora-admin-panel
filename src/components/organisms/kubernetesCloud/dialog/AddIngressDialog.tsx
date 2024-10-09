@@ -34,13 +34,18 @@ import * as yup from "yup";
 import { SECRET_TYPES_ENUM } from "../../home/constants/secretTypesConstants";
 import { SelectIngressRule } from "../edit/ingress/SelectIngressRule";
 
+const ProtocolTypeItems = [
+  { id: 4, name: "HTTP" },
+  { id: 3, name: "HTTPS" },
+];
+
 export type CreateIngressTypes = {
   name: string | null;
+  domainName: string | null;
+  protocolTypeId: 3 | 4;
+  secretId?: number | null;
   rules: {
-    domainName: string | null;
-    protocolTypeId: 3 | 4;
-    secretId?: number | null;
-    service: number | null;
+    // service: number | null;
     path: string | null;
     kuberCloudDeployPortId: number;
   }[];
@@ -69,6 +74,15 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   const [createIngress, { isLoading: createIngressLoading }] =
     usePostApiMyKubernetesCloudIngressCreateMutation();
 
+  const { data: tLSSecretList, isLoading: tLSSecretListLoadning } =
+    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+      {
+        namespaceId: Number(kubernetesCloudId),
+        secretTypeId: SECRET_TYPES_ENUM.TLS,
+      },
+      { skip: !kubernetesCloudId }
+    );
+
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
     props.onClose(event, "backdropClick");
@@ -82,12 +96,12 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       name: "",
       // protocolTypeId: 3,
       // secretId: null,
+      domainName: "",
+      protocolTypeId: 3,
+      secretId: 0,
       rules: [
         {
-          domainName: "",
-          protocolTypeId: 3,
-          secretId: 0,
-          service: 0,
+          // service: 0,
           path: "",
           kuberCloudDeployPortId: 0,
         },
@@ -127,48 +141,14 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   const addRules = () => {
     setRules((prevState) => {
       let result = [...prevState];
-      result.push({ domainName: "", kuberCloudDeployPortId: 0, path: "" });
+      // result.push({ service: "", kuberCloudDeployPortId: 0, path: "" });
+      result.push({ kuberCloudDeployPortId: 0, path: "" });
       return result;
     });
     formik.setFieldValue("rules", [
       ...formik.values.rules,
-      { domainName: "", kuberCloudDeployPortId: 0, path: "" },
+      { service: "", kuberCloudDeployPortId: 0, path: "" },
     ]);
-  };
-
-  const removeRules = (index: number) => {
-    setRules((prevState) => {
-      let result = [...prevState];
-      result.splice(index, 1);
-      return result;
-    });
-    formik.setFieldValue(
-      "rules",
-      formik.values.rules.filter((_, i) => i !== index)
-    );
-  };
-
-  const handleVmChange = (index: number, vmHostId: number) => {
-    // const updatedPoolMembers = [...formik.values.poolMembers];
-    // updatedPoolMembers[index] = { ...updatedPoolMembers[index], vmHostId };
-    // formik.setFieldValue("poolMembers", updatedPoolMembers);
-  };
-
-  const handlePortChange = (index: number, port: number) => {
-    // const updatedPoolMembers = [...formik.values.poolMembers];
-    // updatedPoolMembers[index] = { ...updatedPoolMembers[index], port };
-    // formik.setFieldValue("poolMembers", updatedPoolMembers);
-  };
-
-  const getAvailableVms = (index: number) => {
-    // const selectedVmIds = formik.values.poolMembers.map(
-    //   (member) => member.vmHostId
-    // );
-    // return vmHostList?.filter(
-    //   (vm) =>
-    //     !selectedVmIds.includes(Number(vm.id)) ||
-    //     vm.id === formik.values.poolMembers[index]?.vmHostId
-    // );
   };
 
   return (
@@ -204,8 +184,9 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                 </div>
               </Alert>
             )}
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={12}>
+
+            <Grid container rowSpacing={2} columnSpacing={1}>
+              <Grid item xs={12} md={6}>
                 <DorsaTextField
                   dir="ltr"
                   fullWidth
@@ -216,82 +197,63 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   {...formik.getFieldProps("name")}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <DorsaTextField
-                  select
                   dir="ltr"
                   fullWidth
-                  label="type"
+                  label="Domain Name"
+                  error={Boolean(
+                    formik.errors.domainName && formik.touched.domainName
+                  )}
+                  helperText={formik.errors.domainName}
+                  disabled={false}
+                  {...formik.getFieldProps("domainName")}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <DorsaTextField
+                  dir="ltr"
+                  select
                   error={Boolean(
                     formik.errors.protocolTypeId &&
                       formik.touched.protocolTypeId
                   )}
                   helperText={formik.errors.protocolTypeId}
-                  disabled={isEmptyTLSSecretList}
-                  {...formik.getFieldProps("protocolTypeId")}
+                  disabled={false}
+                  label="Protocol Type"
+                  fullWidth
                 >
-                  {ProtocolTypeList.map(({ id, name }) => (
-                    <MenuItem
-                      dir="ltr"
-                      key={id}
-                      value={id}
-                      sx={{
-                        borderRadius: 1,
-                        backgroundColor: "#F3F4F6",
-                        m: 0.5,
-                        py: 1.5,
-                        color: "secondary",
-                        "&: focus": {
-                          color: "rgba(60, 138, 255, 1)",
-                          backgroundColor: "rgba(60, 138, 255, 0.1)",
-                        },
-                      }}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </DorsaTextField>
-              </Grid> */}
-              {/* {formik.values.protocolTypeId === 3 && (
-                <Grid item xs={12}>
-                  <DorsaTextField
-                    select
-                    dir="ltr"
-                    fullWidth
-                    label="Secret Type Id"
-                    error={Boolean(
-                      formik.errors.secretId && formik.touched.secretId
-                    )}
-                    helperText={formik.errors.secretId}
-                    disabled={isEmptyTLSSecretList}
-                    {...formik.getFieldProps("secretId")}
-                    inputProps={{
-                      maxLength: 5,
-                    }}
-                  >
-                    {tLSSecretList?.map(({ id, name }) => (
-                      <MenuItem
-                        dir="ltr"
-                        key={id}
-                        value={id}
-                        sx={{
-                          borderRadius: 1,
-                          backgroundColor: "#F3F4F6",
-                          m: 0.5,
-                          py: 1.5,
-                          color: "secondary",
-                          "&: focus": {
-                            color: "rgba(60, 138, 255, 1)",
-                            backgroundColor: "rgba(60, 138, 255, 0.1)",
-                          },
-                        }}
-                      >
-                        {name}
+                  {ProtocolTypeItems &&
+                    ProtocolTypeItems.map((item, index) => (
+                      <MenuItem dir="ltr" key={index} value={item.id}>
+                        {item.name}
                       </MenuItem>
                     ))}
+                </DorsaTextField>
+              </Grid>
+              {formik.values.protocolTypeId === 3 && (
+                <Grid item xs={12} md={6}>
+                  <DorsaTextField
+                    dir="ltr"
+                    select
+                    error={Boolean(
+                      formik.errors.protocolTypeId &&
+                        formik.touched.protocolTypeId
+                    )}
+                    helperText={formik.errors.protocolTypeId}
+                    disabled={false}
+                    label="TLS Secret"
+                    fullWidth
+                  >
+                    {tLSSecretList &&
+                      tLSSecretList.map((item, index) => (
+                        <MenuItem dir="ltr" key={index} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
                   </DorsaTextField>
                 </Grid>
-              )} */}
+              )}
             </Grid>
 
             <Divider />
@@ -321,13 +283,19 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   اضافه کردن
                 </Button>
               </Stack>
-              {rules.map((rule, ruleIndex) => (
-                <SelectIngressRule mainIndex={ruleIndex} formik={formik} />
-              ))}
+              <Grid container spacing={1}>
+                {rules.map((rule, ruleIndex) => (
+                  <SelectIngressRule
+                    setRules={setRules}
+                    mainIndex={ruleIndex}
+                    formik={formik}
+                  />
+                ))}
+              </Grid>
             </Stack>
           </Stack>
 
-          <DialogActions sx={{ px: 0 }}>
+          <DialogActions sx={{ px: 0, py: 4 }}>
             <Button
               variant="outlined"
               color="secondary"
