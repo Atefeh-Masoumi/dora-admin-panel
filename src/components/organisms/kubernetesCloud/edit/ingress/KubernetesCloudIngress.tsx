@@ -17,11 +17,11 @@ export const KubernetesCloudIngress: FC<
   const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
 
-  const { namespaceId } = useParams();
+  const { kubernetesCloudId } = useParams();
 
   const { data = [], isLoading } =
     useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({
-      namespaceId: Number(namespaceId),
+      namespaceId: Number(kubernetesCloudId),
     });
 
   function handleOpenAddIngressDialog() {

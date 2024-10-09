@@ -186,7 +186,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
             )}
 
             <Grid container rowSpacing={2} columnSpacing={1}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={6}>
                 <DorsaTextField
                   dir="ltr"
                   fullWidth
@@ -210,7 +210,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   {...formik.getFieldProps("domainName")}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={6}>
                 <DorsaTextField
                   dir="ltr"
                   select
@@ -232,7 +232,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                 </DorsaTextField>
               </Grid>
               {formik.values.protocolTypeId === 3 && (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <DorsaTextField
                     dir="ltr"
                     select

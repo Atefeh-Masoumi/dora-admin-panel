@@ -46,7 +46,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
     {
       id: 5,
       xs: 12,
-      md: 6.5 ,
+      sm: 6.5,
       width: "100%",
       placeHolder: "Port",
       value: formik.values.rules[mainIndex]?.kuberCloudDeployPortId || "",
@@ -73,7 +73,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
     {
       id: 4,
       xs: 12,
-      md: 5.5,
+      sm: 5.5,
       width: "100%",
       placeHolder: "Path",
       value: formik.values.rules[mainIndex]?.path || "",
@@ -92,7 +92,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
           {
             value,
             xs,
-            md,
+            sm,
             otherProps,
             placeHolder,
             onChange,
@@ -102,9 +102,9 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
           },
           inputIndex
         ) => (
-          <Grid item key={inputIndex} xs={xs} md={md}>
+          <Grid item key={inputIndex} xs={xs} sm={sm}>
             <Stack direction="row">
-            {RestOfComponent && RestOfComponent()}
+              {RestOfComponent && RestOfComponent()}
               <DorsaTextField
                 dir="ltr"
                 size="small"
