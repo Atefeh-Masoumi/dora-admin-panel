@@ -6,6 +6,7 @@ import {
   DialogActions,
   DialogTitle,
   Divider,
+  FormControl,
   Grid,
   IconButton,
   MenuItem,
@@ -157,70 +158,101 @@ export const CreateIngressDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
               ایجاد اینگرس
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
-            <Grid2 container spacing={1}>
-              <Grid2 xs={12} md={6}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6}>
                 <DorsaTextField
                   fullWidth
                   label="*name"
-                  size="small"
+                  size="medium"
                   error={Boolean(formik.errors.name && formik.touched.name)}
                   helperText={formik.errors.name}
                   {...formik.getFieldProps("name")}
                 />
-              </Grid2>
-              <Grid2 xs={12} md={6}>
-                <Select
-                  size="small"
-                  value={formik.values.protocolTypeId}
-                  onChange={(event) => {
-                    formik.setFieldValue(
-                      "protocolTypeId",
-                      Number(event.target.value)
-                    );
-                    setRules([
-                      {
-                        domainName: null,
-                        path: null,
-                        kuberCloudDeployPortId: null,
+              </Grid>
+              <Grid item xs={12} md={6}>
+                {/* <FormControl fullWidth size="medium">
+                  <Select
+                    value={formik.values.protocolTypeId}
+                    onChange={(event) => {
+                      formik.setFieldValue(
+                        "protocolTypeId",
+                        Number(event.target.value)
+                      );
+                      setRules([
+                        {
+                          domainName: null,
+                          path: null,
+                          kuberCloudDeployPortId: null,
+                        },
+                      ]);
+                      formik.setFieldValue("envs", [
+                        {
+                          domainName: null,
+                          path: null,
+                          kuberCloudDeployPortId: null,
+                        },
+                      ]);
+                    }}
+                    sx={{
+                      "& .MuiSelect-select": {
+                        bgcolor: "rgba(110, 118, 138, 0.06)",
+                        border: "none !important",
+                        padding: "7px !important",
                       },
-                    ]);
-                    formik.setFieldValue("envs", [
-                      {
-                        domainName: null,
-                        path: null,
-                        kuberCloudDeployPortId: null,
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        border: "none !important",
                       },
-                    ]);
-                  }}
-                  sx={{
-                    width: "100%",
-                    "& .MuiSelect-select": {
-                      bgcolor: "rgba(110, 118, 138, 0.06)",
-                      border: "none !important",
-                      padding: "7px !important",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      border: "none !important",
-                    },
-                  }}
+                    }}
+                  >
+                    {ProtocolTypeList.map(({ name, id }) => (
+                      <MenuItem
+                        sx={{
+                          mx: 0.5,
+                          my: 1,
+                          borderRadius: 1,
+                          direction: "ltr",
+                        }}
+                        key={id}
+                        value={id}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl> */}
+                <DorsaTextField
+                  select
+                  fullWidth
+                  label="نوع توزیع"
+                  // error={Boolean(
+                  //   formik.errors.algorithmTypeId &&
+                  //     formik.touched.algorithmTypeId
+                  // )}
+                  // helperText={formik.errors.algorithmTypeId}
+                  {...formik.getFieldProps("protocolTypeId")}
                 >
                   {ProtocolTypeList.map(({ name, id }) => (
                     <MenuItem
-                      sx={{
-                        mx: 0.5,
-                        my: 1,
-                        borderRadius: 1,
-                        direction: "ltr",
-                      }}
                       key={id}
                       value={id}
+                      sx={{
+                        borderRadius: 1,
+                        backgroundColor: "#F3F4F6",
+                        m: 0.5,
+                        py: 1.5,
+                        color: "secondary",
+                        "&: focus": {
+                          color: "rgba(60, 138, 255, 1)",
+                          backgroundColor: "rgba(60, 138, 255, 0.1)",
+                        },
+                      }}
                     >
                       {name}
                     </MenuItem>
                   ))}
-                </Select>
-              </Grid2>
-            </Grid2>
+                </DorsaTextField>
+                </Grid>
+            </Grid>
 
             <Stack spacing={3}>
               <Stack

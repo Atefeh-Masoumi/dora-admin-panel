@@ -48,7 +48,6 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
     return vmProjectData[statusId] === 2;
   }, [vmProjectData, statusId]);
 
-  console.log({ detailsList });
   return (
     <Stack
       direction="column"

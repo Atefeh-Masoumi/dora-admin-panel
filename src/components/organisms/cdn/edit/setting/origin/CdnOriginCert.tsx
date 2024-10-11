@@ -6,6 +6,7 @@ import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
 
 type CdnOriginCertPropsType = {
   dnsId: number;
@@ -37,36 +38,46 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
         </LoadingButton>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
-      <Stack spacing={2} px={1} color="secondary.main">
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">صادرکننده گواهی:</Typography>
-          {isLoading ? (
-            <TextLoading num={9} />
-          ) : (
-            <Typography variant="text15">{edgeCert?.issuer}</Typography>
-          )}
+      {edgeCert ? (
+        <Stack spacing={2} px={1} color="secondary.main">
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">صادرکننده گواهی:</Typography>
+            {isLoading ? (
+              <TextLoading num={9} />
+            ) : (
+              <Typography variant="text15">{edgeCert?.issuer}</Typography>
+            )}
+          </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">پایان اعتبار:</Typography>
+            {isLoading ? (
+              <TextLoading num={8} />
+            ) : (
+              <Typography variant="text15">
+                {edgeCert?.expirationDate
+                  ? ConvertToJalali(String(edgeCert?.expirationDate))
+                  : "---"}
+              </Typography>
+            )}
+          </Stack>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="text14">دامنه‌ها:</Typography>
+            {isLoading ? (
+              <TextLoading num={9} />
+            ) : (
+              <Typography variant="text15">{edgeCert?.commonName}</Typography>
+            )}
+          </Stack>
         </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">پایان اعتبار:</Typography>
-          {isLoading ? (
-            <TextLoading num={8} />
-          ) : (
-            <Typography variant="text15">
-              {edgeCert?.expirationDate
-                ? ConvertToJalali(String(edgeCert?.expirationDate))
-                : "---"}
-            </Typography>
-          )}
+      ) : (
+        <Stack direction="row" justifyContent="center">
+          <img
+            src={EmptyTableSvg}
+            alt="Empty Card"
+            style={{ maxWidth: "160px", maxHeight: "100px" }}
+          />
         </Stack>
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="text14">دامنه‌ها:</Typography>
-          {isLoading ? (
-            <TextLoading num={9} />
-          ) : (
-            <Typography variant="text15">{edgeCert?.commonName}</Typography>
-          )}
-        </Stack>
-      </Stack>
+      )}
     </Stack>
   );
 };

@@ -51,8 +51,10 @@ export const CreateOriginUserCertDialog: FC<
       .catch((res) => {
         if (res.status === 401 || res.status === 404) {
           toast.error("اطلاعات را درست وارد کنید");
-        } else {
+        } else if (res.data && res.data[""]) {
           toast.error(res.data[""][0]);
+        } else {
+          toast.error("خطایی پیش آمده");
         }
       });
     setSubmitting(false);
@@ -119,7 +121,7 @@ export const CreateOriginUserCertDialog: FC<
                   variant="contained"
                   sx={{ px: 3, py: 0.8 }}
                 >
-                  بارگذاری گواهینامه
+                  add
                 </LoadingButton>
               </Stack>
             </Stack>

@@ -72,7 +72,7 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 2, md: 3 }}
-                  sx={{ border: 2, borderRadius: BORDER_RADIUS_1, px: 2 }}
+                  sx={{ border: 1, borderRadius: BORDER_RADIUS_1, px: 2 }}
                 >
                   <img src={certTypeId === 1 ? Cloud : CloudOff} alt="Cloud" />
                   <Typography
@@ -95,7 +95,7 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 1.2, md: 2.5 }}
-                  sx={{ border: 2, borderRadius: BORDER_RADIUS_1, px: 2 }}
+                  sx={{ border: 1, borderRadius: BORDER_RADIUS_1, px: 2 }}
                 >
                   <User
                     status={certTypeId === 2 ? "Active" : "Inactive"}

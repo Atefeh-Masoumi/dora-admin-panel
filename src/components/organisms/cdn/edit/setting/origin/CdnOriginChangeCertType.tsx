@@ -70,7 +70,7 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 2, md: 3 }}
-                  sx={{ px: 2, border: 2, borderRadius: BORDER_RADIUS_1 }}
+                  sx={{ px: 2, border: 1, borderRadius: BORDER_RADIUS_1 }}
                 >
                   <img src={certTypeId === 1 ? Cloud : CloudOff} alt="Cloud" />
                   <Typography
@@ -92,7 +92,7 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
                   spacing={1}
                   alignItems="center"
                   py={{ xs: 1.2, md: 2.5 }}
-                  sx={{ px: 2, border: 2, borderRadius: BORDER_RADIUS_1 }}
+                  sx={{ px: 2, border: 1, borderRadius: BORDER_RADIUS_1 }}
                 >
                   <User
                     fontSize="large"

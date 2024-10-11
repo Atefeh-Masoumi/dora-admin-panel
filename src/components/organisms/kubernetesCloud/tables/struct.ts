@@ -52,7 +52,7 @@ export const kubernetesConfigListTableStruct: columnType[] = [
   { id: "control", label: "", disableSort: true },
 ];
 
-export const kubernetesCloudIngressTablrStruct: columnType[] = [
+export const kubernetesCloudIngressTableStruct: columnType[] = [
   { id: "id", label: "" },
   { id: "name", label: "نام" },
   { id: "ruleCount", label: "ruleCount" },

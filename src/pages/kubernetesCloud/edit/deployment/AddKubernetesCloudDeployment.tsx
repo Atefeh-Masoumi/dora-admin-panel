@@ -29,6 +29,7 @@ import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { kuberCloudNameRegex } from "src/utils/regex.utils";
 import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
+
 const title =
   "ایجاد متغیرهای محیطی: کلید (مانند DB_HOST)، مقدار (مثلاً localhost)، و منبع اختیاری (مانند ConfigMap یا Secret) برای هر requirement.";
 const AddKubernetesCloudDeployment: FC = () => {

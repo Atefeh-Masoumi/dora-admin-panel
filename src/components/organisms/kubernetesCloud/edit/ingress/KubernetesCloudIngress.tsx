@@ -5,8 +5,9 @@ import { useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery } from "src/app
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
-import { kubernetesCloudIngressTablrStruct } from "../../tables/struct";
-import { CreateIngressDialog } from "../../dialog/CreateIngressDialog";
+import { kubernetesCloudIngressTableStruct } from "../../tables/struct";
+import { AddIngressDialog } from "../../dialog/AddIngressDialog";
+import { useParams } from "react-router";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -16,7 +17,12 @@ export const KubernetesCloudIngress: FC<
   const [openAddIngressDialog, setOpenAddIngressDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } = useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({ namespaceId: 1 });
+  const { kubernetesCloudId } = useParams();
+
+  const { data = [], isLoading } =
+    useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({
+      namespaceId: Number(kubernetesCloudId),
+    });
 
   function handleOpenAddIngressDialog() {
     setOpenAddIngressDialog(true);
@@ -83,7 +89,7 @@ export const KubernetesCloudIngress: FC<
       <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
       <Box width="100%" sx={{ pt: 1.5 }}>
         <BaseTable
-          struct={kubernetesCloudIngressTablrStruct}
+          struct={kubernetesCloudIngressTableStruct}
           RowComponent={KubernetesCloudIngressTableRow}
           rows={data}
           text="در حال حاضر سرویسی وجود ندارد"
@@ -91,8 +97,9 @@ export const KubernetesCloudIngress: FC<
           initialOrder={9}
         />
       </Box>
-      <CreateIngressDialog
-        openDialog={openAddIngressDialog}
+      <AddIngressDialog
+        maxWidth="sm"
+        open={openAddIngressDialog}
         onClose={handleCloseAddIngressDialog}
       />
     </Stack>

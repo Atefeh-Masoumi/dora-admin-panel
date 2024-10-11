@@ -60,10 +60,11 @@ export const CdnSetting: FC = () => {
         />
       </Stack>
 
-      <Stack spacing={2}>
-        <Typography fontSize={24} color="secondary" fontWeight="bold">
+      <Stack bgcolor="white" p={5} spacing={2}>
+        <Typography fontSize={20} color="secondary" fontWeight="bold">
           گواهی های لبه (EDGE)
         </Typography>
+        <Divider />
         <CdnEdgeChangeCertType
           dnsId={dnsId}
           loading={isLoading}
@@ -71,10 +72,12 @@ export const CdnSetting: FC = () => {
         />
       </Stack>
 
-      <Stack spacing={2}>
-        <Typography fontSize={24} color="secondary" fontWeight="bold">
+      <Stack bgcolor="white" p={5} spacing={2}>
+        <Typography fontSize={20} color="secondary" fontWeight="bold">
           گواهی های سرور (ORIGIN)
         </Typography>
+        <Divider />
+
         <CdnOriginChangeCertType
           dnsId={dnsId}
           loading={isLoading}

@@ -4142,7 +4142,6 @@ export type DeleteKuberCloudIngressRuleModel = {
   ruleIds: number[];
 };
 export type IngressRuleModelRequest = {
-  domainName: string | null;
   path: string | null;
   kuberCloudDeployPortId: number;
 };
@@ -4161,7 +4160,6 @@ export type KuberCloudIngressListResponse = {
 export type RulesResponse = {
   id: number;
   path: string | null;
-  domainName: string | null;
   serviceName: string | null;
   port: number;
   createDate: string;
@@ -4170,16 +4168,17 @@ export type RulesResponse = {
 export type GetKuberCloudIngressResponse = {
   id: number;
   name: string | null;
+  domainName: string | null;
   rules: RulesResponse[] | null;
   createDate: string;
 };
 export type RuleModelRequest = {
-  domainName: string | null;
   path: string | null;
   kuberCloudDeployPortId: number;
 };
 export type CreateKuberCloudIngressModel = {
   name: string;
+  domainName: string;
   protocolTypeId: number;
   secretId: number;
   rules: RuleModelRequest[];
@@ -4510,6 +4509,7 @@ export type ProductItemListResponse = {
   id: number;
   name: string | null;
   price: number;
+  unit: string | null;
 };
 export type VmSpec = {
   productItemId: number;
