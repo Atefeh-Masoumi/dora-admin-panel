@@ -6,10 +6,8 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   RuleModelRequest,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-import { SECRET_TYPES_ENUM } from "src/components/organisms/home/constants/secretTypesConstants";
 import { DeleteOutline } from "@mui/icons-material";
 
 type SelectIngressRulePropsType = {
@@ -25,17 +23,19 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
 }) => {
   const { kubernetesCloudId } = useParams();
 
-  const { data: kuberCloudObject, isLoading: portListLoading } =
+  const { data: kuberCloudObject } =
     useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
     });
 
   const servicePortList = kuberCloudObject?.flatMap((item, index) =>
     item.ports?.map((port, portIndex) => ({
-      id: index * 2 + portIndex + 1,
+      id: port.portId,
       value: `${item.deployName}:${port.targetPort}`,
     }))
   );
+
+  console.log(formik.values);
 
   const removeRules = (index: number) => {
     setRules((prevState) => {
@@ -93,7 +93,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
   ];
 
   return (
-    <Fragment key={mainIndex}>
+    <>
       {inputItems.map(
         (
           {
@@ -134,6 +134,6 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
           </Grid>
         )
       )}
-    </Fragment>
+    </>
   );
 };

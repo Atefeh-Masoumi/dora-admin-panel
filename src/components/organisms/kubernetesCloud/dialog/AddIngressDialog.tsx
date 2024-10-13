@@ -16,18 +16,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { FC, MouseEventHandler, useState } from "react";
+import { FC, Fragment, MouseEventHandler, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   RuleModelRequest,
-  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudIngressCreateMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import PageLoading from "src/components/atoms/PageLoading";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import * as yup from "yup";
 import { SECRET_TYPES_ENUM } from "../../home/constants/secretTypesConstants";
 import { SelectIngressRule } from "../edit/ingress/SelectIngressRule";
@@ -43,7 +41,6 @@ export type CreateIngressTypes = {
   protocolTypeId: 3 | 4;
   secretId?: number | null;
   rules: {
-    // service: number | null;
     path: string | null;
     kuberCloudDeployPortId: number;
   }[];
@@ -54,12 +51,12 @@ const formValidation = yup.object().shape({
   // ProtocolTypeList: yup.number().required("نوع protocol را انتخاب کنید"),
   // serverPoolPort: yup.number().nullable().required("Port را وارد کنید"),
   domainName: yup.string().required("دامنه الزامی می باشد"),
-  secretId: yup.number().required("سکرت الزامی می باشد."),
-  rules: yup.array().of(
-    yup.object().shape({
-      path: yup.string().required("path را وارد کنید"),
-    })
-  ),
+  // secretId: yup.number().required("سکرت الزامی می باشد."),
+  // rules: yup.array().of(
+  //   yup.object().shape({
+  //     path: yup.string().required("path را وارد کنید"),
+  //   })
+  // ),
 });
 
 type AddIngressDialogPropsType = DialogProps & {};
@@ -96,12 +93,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       domainName: "",
       protocolTypeId: 4,
       secretId: 0,
-      rules: [
-        {
-          path: "",
-          kuberCloudDeployPortId: 0,
-        },
-      ],
+      rules: [],
     },
     validationSchema: formValidation,
     onSubmit: (
@@ -113,6 +105,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
           name: name!,
           domainName: domainName!,
           protocolTypeId: protocolTypeId,
+          // secretId: protocolTypeId === 4 ? secretId! : null,
           secretId: secretId!,
           rules: rules,
         },
@@ -123,7 +116,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
           resetForm();
         })
         .catch(() => {});
-
       setSubmitting(false);
     },
     enableReinitialize: true,
@@ -138,7 +130,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
     });
     formik.setFieldValue("rules", [
       ...formik.values.rules,
-      { service: "", kuberCloudDeployPortId: 0, path: "" },
+      { kuberCloudDeployPortId: 0, path: "" },
     ]);
   };
 
@@ -229,13 +221,13 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                     dir="ltr"
                     select
                     error={Boolean(
-                      formik.errors.protocolTypeId &&
-                        formik.touched.protocolTypeId
+                      formik.errors.secretId && formik.touched.secretId
                     )}
-                    helperText={formik.errors.protocolTypeId}
+                    helperText={formik.errors.secretId}
                     disabled={false}
                     label="TLS Secret"
                     fullWidth
+                    {...formik.getFieldProps("secretId")}
                   >
                     {tLSSecretList &&
                       tLSSecretList.map((item, index) => (
@@ -277,11 +269,13 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Stack>
               <Grid container spacing={1}>
                 {rules.map((rule, ruleIndex) => (
-                  <SelectIngressRule
-                    setRules={setRules}
-                    mainIndex={ruleIndex}
-                    formik={formik}
-                  />
+                  <Fragment key={ruleIndex}>
+                    <SelectIngressRule
+                      setRules={setRules}
+                      mainIndex={ruleIndex}
+                      formik={formik}
+                    />
+                  </Fragment>
                 ))}
               </Grid>
             </Stack>
@@ -297,9 +291,8 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
-              // loading={createVpcLoadBalancerLoading}
+              loading={createIngressLoading}
               variant="contained"
               sx={{ px: 3, py: 0.8 }}
             >
