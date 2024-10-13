@@ -1,8 +1,7 @@
-import { Add, Info, Warning } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Alert,
-  AlertTitle,
   Button,
   Dialog,
   DialogActions,
@@ -11,14 +10,13 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  IconButton,
   Link,
   MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
-import { FormikErrors, useFormik } from "formik";
-import { FC, MouseEventHandler, useMemo, useState } from "react";
+import { useFormik } from "formik";
+import { FC, MouseEventHandler, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
@@ -55,9 +53,10 @@ const formValidation = yup.object().shape({
   name: yup.string().required("نام الزامی می باشد"),
   // ProtocolTypeList: yup.number().required("نوع protocol را انتخاب کنید"),
   // serverPoolPort: yup.number().nullable().required("Port را وارد کنید"),
+  domainName: yup.string().required("دامنه الزامی می باشد"),
+  secretId: yup.number().required("سکرت الزامی می باشد."),
   rules: yup.array().of(
     yup.object().shape({
-      domainName: yup.string().required("name را وارد کنید"),
       path: yup.string().required("path را وارد کنید"),
     })
   ),
@@ -66,6 +65,7 @@ const formValidation = yup.object().shape({
 type AddIngressDialogPropsType = DialogProps & {};
 
 export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
+  onClose,
   ...props
 }) => {
   const { kubernetesCloudId } = useParams();
@@ -84,9 +84,8 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
     );
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (!props.onClose) return;
-
-    props.onClose(event, "backdropClick");
+    if (!onClose) return;
+    onClose(event, "backdropClick");
     setRules([]);
     formik.resetForm();
   };
@@ -95,7 +94,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
     initialValues: {
       name: "",
       domainName: "",
-      protocolTypeId: 3,
+      protocolTypeId: 4,
       secretId: 0,
       rules: [
         {
@@ -144,7 +143,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   };
 
   return (
-    <Dialog sx={{ p: 4 }} {...props} fullWidth>
+    <Dialog sx={{ p: 4 }} onClose={cancelBtnOnClick} {...props} fullWidth>
       {false && <PageLoading />}
       <DialogTitle fontWeight="bold" variant="text1">
         ایجاد اینگرس
@@ -214,6 +213,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   disabled={false}
                   label="Protocol Type"
                   fullWidth
+                  {...formik.getFieldProps("protocolTypeId")}
                 >
                   {ProtocolTypeItems &&
                     ProtocolTypeItems.map((item, index) => (

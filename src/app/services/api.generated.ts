@@ -2219,6 +2219,15 @@ export const api = createApi({
         body: queryArg.checkWebHostDomainModel,
       }),
     }),
+    putApiMyPortalNewsUnsubscribeByEmail: build.mutation<
+      PutApiMyPortalNewsUnsubscribeByEmailApiResponse,
+      PutApiMyPortalNewsUnsubscribeByEmailApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/news/unsubscribe/${queryArg.email}`,
+        method: "PUT",
+      }),
+    }),
     postApiMyPortalNewsCreate: build.mutation<
       PostApiMyPortalNewsCreateApiResponse,
       PostApiMyPortalNewsCreateApiArg
@@ -3411,6 +3420,10 @@ export type PostApiMyWebHostCheckDomainApiResponse = unknown;
 export type PostApiMyWebHostCheckDomainApiArg = {
   checkWebHostDomainModel: CheckWebHostDomainModel;
 };
+export type PutApiMyPortalNewsUnsubscribeByEmailApiResponse = unknown;
+export type PutApiMyPortalNewsUnsubscribeByEmailApiArg = {
+  email: string;
+};
 export type PostApiMyPortalNewsCreateApiResponse = unknown;
 export type PostApiMyPortalNewsCreateApiArg = {
   createNewsLetterModel: CreateNewsLetterModel;
@@ -4126,8 +4139,8 @@ export type KuberCloudHostListPortResponse = {
   deploymentId: number;
   deployName: string | null;
   imageName: string | null;
-  ports?: ListPort[] | null;
   createDate: string;
+  ports?: ListPort[] | null;
 };
 export type EditKuberCloudIngressRuleModel = {
   ingressId: number;
@@ -4268,16 +4281,16 @@ export type CreateKuberCloudFirewallModel = {
 };
 export type EnvKeyValuePairResponse = {
   id?: number;
-  key?: string | null;
-  value?: string | null;
+  key: string | null;
+  value: string | null;
 };
 export type KuberCloudDeploymentEnvListResponse = {
   envs: EnvKeyValuePairResponse[] | null;
 };
 export type GetKuberCloudDeploymentEnvResponse = {
   id?: number;
-  key?: string | null;
-  value?: string | null;
+  key: string | null;
+  value: string | null;
   createDate: string;
   modifyDate: string;
 };
@@ -4291,8 +4304,8 @@ export type KuberCloudDeploymentListResponse = {
   name: string | null;
   image: string | null;
   namespace: string | null;
-  ports?: Port[] | null;
   createDate: string;
+  ports?: Port[] | null;
 };
 export type PortResponse = {
   portId?: number;
@@ -4305,9 +4318,9 @@ export type GetKuberCloudDeploymentResponse = {
   image: string | null;
   replica: number;
   namespace: string | null;
-  ports?: PortResponse[] | null;
   createDate: string;
   modifyDate: string;
+  ports?: PortResponse[] | null;
 };
 export type EditKuberCloudDeploymentModel = {
   deployId: number;
@@ -5500,6 +5513,7 @@ export const {
   useDeleteApiMyWebHostDeleteByIdMutation,
   usePostApiMyWebHostCreateMutation,
   usePostApiMyWebHostCheckDomainMutation,
+  usePutApiMyPortalNewsUnsubscribeByEmailMutation,
   usePostApiMyPortalNewsCreateMutation,
   usePostApiMyPortalContactUsCreateMutation,
   useGetApiMyPortalWebsiteBlogCommentGetByIdQuery,

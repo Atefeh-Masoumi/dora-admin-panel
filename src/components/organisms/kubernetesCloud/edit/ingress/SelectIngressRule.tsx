@@ -30,6 +30,13 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       namespaceId: Number(kubernetesCloudId),
     });
 
+  const servicePortList = kuberCloudObject?.flatMap((item, index) =>
+    item.ports?.map((port, portIndex) => ({
+      id: index * 2 + portIndex + 1,
+      value: `${item.deployName}:${port.targetPort}`,
+    }))
+  );
+
   const removeRules = (index: number) => {
     setRules((prevState) => {
       let result = [...prevState];
@@ -67,7 +74,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
           <DeleteOutline color="error" />
         </IconButton>
       ),
-      // menuItems: kuberCloudObject || [],
+      menuItems: servicePortList || [],
     },
 
     {
@@ -98,7 +105,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
             onChange,
             width,
             RestOfComponent,
-            // menuItems,
+            menuItems,
           },
           inputIndex
         ) => (
@@ -114,12 +121,14 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
                 onChange={onChange}
                 {...(otherProps || {})}
               >
-                {/* {menuItems &&
-                menuItems.map((item, index) => (
-                  <MenuItem dir="ltr" key={index} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))} */}
+                {menuItems &&
+                  (menuItems as Array<{ id: number; value: string }>).map(
+                    (item, index) => (
+                      <MenuItem dir="ltr" key={index} value={item.id}>
+                        {item.value}
+                      </MenuItem>
+                    )
+                  )}
               </DorsaTextField>
             </Stack>
           </Grid>
