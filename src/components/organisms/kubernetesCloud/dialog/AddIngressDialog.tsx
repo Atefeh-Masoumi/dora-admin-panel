@@ -80,10 +80,15 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       { skip: !kubernetesCloudId }
     );
 
-  const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const closeDialogHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!onClose) return;
     onClose(event, "backdropClick");
     setRules([]);
+    formik.resetForm();
+  };
+
+  const closeHandler: DialogProps["onClose"] = (event) => {
+    onClose && onClose(event, "escapeKeyDown");
     formik.resetForm();
   };
 
@@ -92,7 +97,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       name: "",
       domainName: "",
       protocolTypeId: 4,
-      secretId: 0,
+      secretId: null,
       rules: [],
     },
     validationSchema: formValidation,
@@ -105,15 +110,14 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
           name: name!,
           domainName: domainName!,
           protocolTypeId: protocolTypeId,
-          // secretId: protocolTypeId === 4 ? secretId! : null,
-          secretId: secretId!,
+          secretId: protocolTypeId === 3 ? secretId! : null,
           rules: rules,
         },
       })
         .unwrap()
         .then(() => {
           toast.success("Configmap با موفقیت ساخته شد");
-          resetForm();
+          closeHandler(new Event("submit"), "escapeKeyDown");
         })
         .catch(() => {});
       setSubmitting(false);
@@ -135,7 +139,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   };
 
   return (
-    <Dialog sx={{ p: 4 }} onClose={cancelBtnOnClick} {...props} fullWidth>
+    <Dialog sx={{ p: 4 }} onClose={closeDialogHandler} {...props} fullWidth>
       {false && <PageLoading />}
       <DialogTitle fontWeight="bold" variant="text1">
         ایجاد اینگرس
@@ -286,7 +290,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               variant="outlined"
               color="secondary"
               sx={{ px: 3, py: 0.8 }}
-              onClick={cancelBtnOnClick}
+              onClick={closeDialogHandler}
             >
               انصراف
             </Button>

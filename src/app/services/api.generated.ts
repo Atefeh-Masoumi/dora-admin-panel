@@ -4193,7 +4193,7 @@ export type CreateKuberCloudIngressModel = {
   name: string;
   domainName: string;
   protocolTypeId: number;
-  secretId: number;
+  secretId?: number | null;
   rules: RuleModelRequest[];
 };
 export type KuberCloudImageCategoryDto = {

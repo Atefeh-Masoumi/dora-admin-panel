@@ -29,7 +29,8 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
   const vpcHostId = Number(vpcId) || 0;
   const [callCreateNetwork, { isLoading }] =
     usePostApiMyVpcNetworkCreateMutation();
-  const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+  
+    const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
     props.onClose(event, "backdropClick");
     formik.resetForm();

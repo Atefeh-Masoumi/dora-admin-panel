@@ -468,7 +468,16 @@ export const api = generatedApi
       postApiMyKubernetesCloudDeploymentCreate: {
         invalidatesTags: () => ["Deployment", "NameSpace"],
       },
-      // ============================== Kubernetes Cloud Deployment ============================== //
+      // ============================== Kubernetes Cloud Ingress ============================== //
+      getApiMyKubernetesCloudIngressListByNamespaceId: {
+        providesTags: () => ["Ingress"],
+      },
+      deleteApiMyKubernetesCloudIngressDeleteByIngressId: {
+        invalidatesTags: () => ["Ingress"],
+      },
+      postApiMyKubernetesCloudIngressCreate: {
+        invalidatesTags: () => ["Ingress"],
+      },
     },
   });
 

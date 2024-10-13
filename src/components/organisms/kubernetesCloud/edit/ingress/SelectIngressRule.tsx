@@ -1,6 +1,6 @@
 import { Grid, IconButton, MenuItem, Stack } from "@mui/material";
 import { FormikProps } from "formik";
-import { Dispatch, FC, Fragment, SetStateAction } from "react";
+import { Dispatch, FC, Fragment, SetStateAction, useMemo } from "react";
 import { CreateIngressTypes } from "../../dialog/AddIngressDialog";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
@@ -28,14 +28,16 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       namespaceId: Number(kubernetesCloudId),
     });
 
-  const servicePortList = kuberCloudObject?.flatMap((item, index) =>
-    item.ports?.map((port, portIndex) => ({
-      id: port.portId,
-      value: `${item.deployName}:${port.targetPort}`,
-    }))
-  );
+  const servicePortList = useMemo(() => {
+    return kuberCloudObject?.flatMap((item, index) =>
+      item.ports?.map((port, portIndex) => ({
+        id: port.portId,
+        value: `${item.deployName}:${port.targetPort}`,
+      }))
+    );
+  }, [kuberCloudObject]);
 
-  console.log(formik.values);
+  console.log(servicePortList);
 
   const removeRules = (index: number) => {
     setRules((prevState) => {
