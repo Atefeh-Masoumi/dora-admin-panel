@@ -4,10 +4,10 @@ import { FC, useState } from "react";
 import { useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 import { kubernetesCloudIngressTableStruct } from "../../tables/struct";
 import { AddIngressDialog } from "../../dialog/AddIngressDialog";
 import { useParams } from "react-router";
+import KubernetesCloudIngressTableRow from "../../tables/KubernetesCloudIngressTableRow";
 
 type KubernetesCloudIngressPropsType = {};
 

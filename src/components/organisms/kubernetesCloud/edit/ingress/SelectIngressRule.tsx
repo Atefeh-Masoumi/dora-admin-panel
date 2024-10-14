@@ -1,15 +1,13 @@
 import { Grid, IconButton, MenuItem, Stack } from "@mui/material";
 import { FormikProps } from "formik";
-import { Dispatch, FC, Fragment, SetStateAction } from "react";
+import { Dispatch, FC, Fragment, SetStateAction, useMemo } from "react";
 import { CreateIngressTypes } from "../../dialog/AddIngressDialog";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   RuleModelRequest,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-import { SECRET_TYPES_ENUM } from "src/components/organisms/home/constants/secretTypesConstants";
 import { DeleteOutline } from "@mui/icons-material";
 
 type SelectIngressRulePropsType = {
@@ -25,10 +23,21 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
 }) => {
   const { kubernetesCloudId } = useParams();
 
-  const { data: kuberCloudObject, isLoading: portListLoading } =
+  const { data: kuberCloudObject } =
     useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
     });
+
+  const servicePortList = useMemo(() => {
+    return kuberCloudObject?.flatMap((item, index) =>
+      item.ports?.map((port, portIndex) => ({
+        id: port.portId,
+        value: `${item.deployName}:${port.targetPort}`,
+      }))
+    );
+  }, [kuberCloudObject]);
+
+  console.log(servicePortList);
 
   const removeRules = (index: number) => {
     setRules((prevState) => {
@@ -67,7 +76,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
           <DeleteOutline color="error" />
         </IconButton>
       ),
-      // menuItems: kuberCloudObject || [],
+      menuItems: servicePortList || [],
     },
 
     {
@@ -86,7 +95,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
   ];
 
   return (
-    <Fragment key={mainIndex}>
+    <>
       {inputItems.map(
         (
           {
@@ -98,7 +107,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
             onChange,
             width,
             RestOfComponent,
-            // menuItems,
+            menuItems,
           },
           inputIndex
         ) => (
@@ -114,17 +123,19 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
                 onChange={onChange}
                 {...(otherProps || {})}
               >
-                {/* {menuItems &&
-                menuItems.map((item, index) => (
-                  <MenuItem dir="ltr" key={index} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))} */}
+                {menuItems &&
+                  (menuItems as Array<{ id: number; value: string }>).map(
+                    (item, index) => (
+                      <MenuItem dir="ltr" key={index} value={item.id}>
+                        {item.value}
+                      </MenuItem>
+                    )
+                  )}
               </DorsaTextField>
             </Stack>
           </Grid>
         )
       )}
-    </Fragment>
+    </>
   );
 };

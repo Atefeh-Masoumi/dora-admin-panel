@@ -58,4 +58,5 @@ export const kubernetesCloudIngressTableStruct: columnType[] = [
   { id: "ruleCount", label: "ruleCount" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "modifyDate", label: "تاریخ تغییر" },
+  { id: "control", label: "", disableSort: true },
 ];
