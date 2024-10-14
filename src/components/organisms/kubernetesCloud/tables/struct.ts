@@ -60,3 +60,13 @@ export const kubernetesCloudIngressTableStruct: columnType[] = [
   { id: "modifyDate", label: "تاریخ تغییر" },
   { id: "control", label: "", disableSort: true },
 ];
+
+export const kubernetesCloudIngressRuleTableStruct: columnType[] = [
+  { id: "id", label: "" },
+  { id: "port", label: "پورت" },
+  { id: "path", label: "Path" },
+  { id: "serviceName", label: "نام سرویس" },
+  { id: "createDate", label: "تاریخ ایجاد" },
+  { id: "modifiyDate", label: "تاریخ تغییر" },
+  { id: "control", label: "", disableSort: true },
+];
