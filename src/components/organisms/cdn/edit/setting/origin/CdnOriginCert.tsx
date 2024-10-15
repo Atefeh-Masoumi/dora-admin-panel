@@ -34,7 +34,7 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
         >
-          صدور گواهی
+          {edgeCert ? "تمدید گواهی" : "افزودن"}
         </LoadingButton>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />

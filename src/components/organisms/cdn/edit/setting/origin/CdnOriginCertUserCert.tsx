@@ -39,7 +39,7 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
           }
           onClick={handleOpen}
         >
-          افزودن گواهی
+          {userCert ? "تمدید گواهی" : "افزودن"}
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
