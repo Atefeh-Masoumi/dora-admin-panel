@@ -203,7 +203,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
             width: circles.width,
             height: circles.height,
             borderRadius: "50px",
-            bgcolor: "white",
+            bgcolor: "#f5f5f5",
             borderTop: "1px solid #DCE7FD",
           }}
         />
@@ -224,7 +224,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
           position: "absolute",
           width: "40px",
           height: "40px",
-          bgcolor: "white",
+          bgcolor: "#f5f5f5",
           right: 0,
           top: 0,
           bottom: 0,
@@ -250,7 +250,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
           position: "absolute",
           width: "40px",
           height: "40px",
-          bgcolor: "white",
+          bgcolor: "#f5f5f5",
           left: 0,
           top: 0,
           bottom: 0,
@@ -268,8 +268,9 @@ const VmReceipt: FC<ReceiptPropsType> = ({
       elevation={0}
       sx={{
         position: "relative",
-        bgcolor: "#FBFCFF",
-        border: "1px solid #DCE7FD",
+        bgcolor: "white",
+        pb: 3,
+        // border: "1px solid #DCE7FD",
         borderTopRightRadius: BORDER_RADIUS_1,
         borderTopLeftRadius: BORDER_RADIUS_1,
         borderBottomRightRadius: 0,

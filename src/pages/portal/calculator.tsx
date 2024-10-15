@@ -51,7 +51,7 @@ const Calculator: FC = () => {
 
   return (
     <Stack
-      bgcolor="white"
+      // bgcolor="white"
       py={1}
       px={1}
       borderRadius={3}
@@ -61,7 +61,7 @@ const Calculator: FC = () => {
         alignItems: "center",
       }}
     >
-      <Stack
+      {/* <Stack
         direction="row"
         alignItems="center"
         justifyContent="center"
@@ -74,8 +74,9 @@ const Calculator: FC = () => {
         <Typography variant="title7" fontWeight={700} color="primary">
           خدمات ابری
         </Typography>
-      </Stack>
-      <Stack sx={{ width: { xs: "100%", lg: "80%" } }}>
+      </Stack> */}
+      {/* <Stack sx={{ width: { xs: "100%", lg: "80%" } }}> */}
+      <Stack sx={{  }}>
         <TabContext value={value}>
           <Container
             sx={{
@@ -83,7 +84,7 @@ const Calculator: FC = () => {
               justifyContent: "center",
               // mt: 2,
               margin: "10px auto",
-              border: "1px solid #DCE7FD",
+              // border: "1px solid #DCE7FD",
               borderRadius: BORDER_RADIUS_1,
             }}
           >
@@ -92,7 +93,7 @@ const Calculator: FC = () => {
               sx={{
                 width: "90%",
                 bgcolor: "white",
-                py: 0.5,
+                py: 1,
                 borderRadius: BORDER_RADIUS_1,
               }}
               TabIndicatorProps={{ style: { display: "none" } }}

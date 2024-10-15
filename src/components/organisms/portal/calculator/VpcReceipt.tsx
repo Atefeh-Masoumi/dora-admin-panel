@@ -176,7 +176,7 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
             width: circles.width,
             height: circles.height,
             borderRadius: "50px",
-            bgcolor: "white",
+            bgcolor: "#f5f5f5",
             borderTop: "1px solid #DCE7FD",
           }}
         />
@@ -197,7 +197,7 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
           position: "absolute",
           width: "40px",
           height: "40px",
-          bgcolor: "white",
+          bgcolor: "#f5f5f5",
           right: 0,
           top: 0,
           bottom: 0,
@@ -213,8 +213,8 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
             width: chain.width,
             height: chain.height,
             borderRadius: "5px",
-            bgcolor: "transparent",
-            border: "1px solid #DCE7FD",
+            bgcolor: "#f5f5f5     ",
+            // border: "1px solid #DCE7FD",
           }}
         />
       ))}
@@ -223,12 +223,12 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
           position: "absolute",
           width: "40px",
           height: "40px",
-          bgcolor: "white",
+          bgcolor: "#f5f5f5",
           left: 0,
           top: 0,
           bottom: 0,
           transform: "translateX(-65%)",
-          borderRight: "1px solid #DCE7FD",
+          // borderRight: "1px solid #DCE7FD",
           borderRadius: "50px",
         }}
       />
@@ -241,8 +241,9 @@ const VpcReceipt: FC<ReceiptPropsType> = ({ ipCount, rulesCount }) => {
       elevation={0}
       sx={{
         position: "relative",
-        bgcolor: "#FBFCFF",
-        border: "1px solid #DCE7FD",
+        bgcolor: "white",
+        pb: 3,
+        // border: "1px solid #DCE7FD",
         borderTopRightRadius: BORDER_RADIUS_1,
         borderTopLeftRadius: BORDER_RADIUS_1,
         borderBottomRightRadius: 0,

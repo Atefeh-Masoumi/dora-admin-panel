@@ -21,8 +21,9 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
       elevation={0}
       sx={{
         direction: "ltr !important",
-        bgcolor: "#FBFCFF",
-        border: "1px solid #DCE7FD",
+        bgcolor: "#white",
+        pb: 3,
+        // border: "1px solid #DCE7FD",
         borderRadius: BORDER_RADIUS_1,
         p: { xs: 2, md: 2.5, lg: 3 },
         flexGrow: 1,
