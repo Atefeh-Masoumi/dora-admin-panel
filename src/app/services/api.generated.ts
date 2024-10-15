@@ -916,14 +916,13 @@ export const api = createApi({
         body: queryArg.editKuberCloudIngressRuleModel,
       }),
     }),
-    deleteApiMyKubernetesCloudIngressRuleDelete: build.mutation<
-      DeleteApiMyKubernetesCloudIngressRuleDeleteApiResponse,
-      DeleteApiMyKubernetesCloudIngressRuleDeleteApiArg
+    deleteApiMyKubernetesCloudIngressRuleDeleteById: build.mutation<
+      DeleteApiMyKubernetesCloudIngressRuleDeleteByIdApiResponse,
+      DeleteApiMyKubernetesCloudIngressRuleDeleteByIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/kubernetes/cloud/ingress-rule/delete`,
+        url: `/api/my/kubernetes/cloud/ingress-rule/delete/${queryArg.id}`,
         method: "DELETE",
-        body: queryArg.deleteKuberCloudIngressRuleModel,
       }),
     }),
     postApiMyKubernetesCloudIngressRuleCreate: build.mutation<
@@ -2748,9 +2747,10 @@ export type PutApiMyKubernetesCloudIngressRuleEditApiResponse = unknown;
 export type PutApiMyKubernetesCloudIngressRuleEditApiArg = {
   editKuberCloudIngressRuleModel: EditKuberCloudIngressRuleModel;
 };
-export type DeleteApiMyKubernetesCloudIngressRuleDeleteApiResponse = unknown;
-export type DeleteApiMyKubernetesCloudIngressRuleDeleteApiArg = {
-  deleteKuberCloudIngressRuleModel: DeleteKuberCloudIngressRuleModel;
+export type DeleteApiMyKubernetesCloudIngressRuleDeleteByIdApiResponse =
+  unknown;
+export type DeleteApiMyKubernetesCloudIngressRuleDeleteByIdApiArg = {
+  id: number;
 };
 export type PostApiMyKubernetesCloudIngressRuleCreateApiResponse = unknown;
 export type PostApiMyKubernetesCloudIngressRuleCreateApiArg = {
@@ -4150,10 +4150,6 @@ export type EditKuberCloudIngressRuleModel = {
   path?: string | null;
   kuberCloudDeployPortId?: number | null;
 };
-export type DeleteKuberCloudIngressRuleModel = {
-  ingressId: number;
-  ruleIds: number[];
-};
 export type IngressRuleModelRequest = {
   path: string | null;
   kuberCloudDeployPortId: number;
@@ -4163,10 +4159,19 @@ export type CreateKuberCloudIngressRuleModel = {
   secretId: number;
   rules: IngressRuleModelRequest[];
 };
+export type RulesModel = {
+  id: number;
+  path: string | null;
+  serviceName: string | null;
+  port: number;
+  createDate: string;
+  modifiyDate: string;
+};
 export type KuberCloudIngressListResponse = {
   id: number;
   name: string | null;
   ruleCount: number;
+  rules: RulesModel[] | null;
   createDate: string;
   modifyDate: string;
 };
@@ -5353,7 +5358,7 @@ export const {
   usePostApiMyKubernetesCloudSecretCreateMutation,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePutApiMyKubernetesCloudIngressRuleEditMutation,
-  useDeleteApiMyKubernetesCloudIngressRuleDeleteMutation,
+  useDeleteApiMyKubernetesCloudIngressRuleDeleteByIdMutation,
   usePostApiMyKubernetesCloudIngressRuleCreateMutation,
   useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudIngressGetByIdQuery,
