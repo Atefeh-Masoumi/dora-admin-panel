@@ -26,7 +26,6 @@ export const CdnEdgeCertUserCert: FC<CdnEdgeCertPropsType> = ({
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
-
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -40,7 +39,7 @@ export const CdnEdgeCertUserCert: FC<CdnEdgeCertPropsType> = ({
           }
           onClick={handleOpen}
         >
-          افزودن گواهی
+          {userCert ? "تمدید گواهی" : "افزودن"}
         </Button>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />

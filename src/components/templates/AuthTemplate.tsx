@@ -27,7 +27,8 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
     <Box
       p={{ xs: 2, sm: 3, md: 4 }}
       bgcolor="rgba(229, 229, 229, 0.8)"
-      height="100vh"
+      // height="100vh"
+      minHeight="100vh"
     >
       <Grid container spacing={2} height="100%">
         <Grid item xs={12} md={6}>
@@ -63,7 +64,12 @@ export const AuthTemplate: FC<AuthTemplatePropsType> = ({
             <div />
           </Stack>
         </Grid>
-        <Grid item xs={6} display={{ xs: "none", md: "unset" }} height="100%">
+        <Grid
+          item
+          xs={6}
+          display={{ xs: "none", md: "unset" }}
+          minHeight="95vh"
+        >
           <AuthCard />
         </Grid>
       </Grid>

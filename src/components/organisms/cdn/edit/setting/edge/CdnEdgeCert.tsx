@@ -27,7 +27,6 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
       dnsCdnHostId: dnsId,
     });
 
-
   const submit = () => {
     createLicense({
       createCdnEdgeCertModel: {
@@ -53,7 +52,7 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
           }
           onClick={submit}
         >
-          صدور گواهی
+          {edgeCert ? "تمدید گواهی" : "افزودن"}
         </LoadingButton>
       </Stack>
       <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
