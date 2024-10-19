@@ -1,7 +1,20 @@
-import { Box, Stack, Tabs } from "@mui/material";
-import { FC, SyntheticEvent, useMemo } from "react";
+import { ContentCopy } from "@mui/icons-material";
+import {
+  Box,
+  Chip,
+  Divider,
+  IconButton,
+  Stack,
+  Tabs,
+  Typography,
+} from "@mui/material";
+import { FC, Fragment, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import { useGetApiMyDnsCdnHostGetByIdQuery } from "src/app/services/api.generated";
+import { toast } from "react-toastify";
+import {
+  useGetApiMyDnsCdnHostGetByIdQuery,
+  useGetApiMyDnsCdnHostGetNsByIdQuery,
+} from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
@@ -15,6 +28,40 @@ const EditZone: FC = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const copyText = (text: string) => {
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          toast.success("متن با موفقیت کپی شد");
+        })
+        .catch((err) => {});
+    } else {
+      fallbackCopyTextToClipboard(text);
+    }
+  };
+
+  const fallbackCopyTextToClipboard = (text: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      const successful = document.execCommand("copy");
+      successful ?? toast.success("متن با موفقیت کپی شد");
+    } catch (err) {
+      toast.warning(err as string);
+    }
+    document.body.removeChild(textArea);
+  };
+
+  const { data: nsList, isLoading: nsListLoading } =
+    useGetApiMyDnsCdnHostGetNsByIdQuery({ id: Number(id) });
 
   const {
     data,
@@ -98,11 +145,133 @@ const EditZone: FC = () => {
       case `overview`:
       default:
         result = (
-          <ServiceOverview
-            infoList={infoList}
-            refetchOnClick={refetchOnClick}
-            isLoading={getDataLoading}
-          />
+          <>
+            <ServiceOverview
+              infoList={infoList}
+              refetchOnClick={refetchOnClick}
+              isLoading={getDataLoading}
+            />
+
+            {nsList &&
+              nsList.status &&
+              nsList.cloudNs &&
+              nsList.ns &&
+              nsList.cloudNs.length > 0 && (
+                <Stack
+                  border={1}
+                  borderColor="customColor.neutralExtraLight"
+                  direction="column"
+                  gap={2}
+                  p={1.5}
+                >
+                  <Typography>اضافه کردن نام سرور</Typography>
+                  <Stack
+                    border={1}
+                    borderColor="customColor.neutralExtraLight"
+                    direction="column"
+                    gap={2}
+                    p={1.5}
+                  >
+                    <Typography>NS های تنظیم شده</Typography>
+                    {nsList?.cloudNs?.map((cloudNsItem, index) => (
+                      <Fragment key={cloudNsItem + index}>
+                        <Stack direction="column" gap={1}>
+                          <Typography textAlign="end" color="text.light">
+                            {`:Name Server ${index + 1}`}
+                          </Typography>
+                          <Stack
+                            border="1px solid #edf2f6"
+                            bgcolor="background.default"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            px={2}
+                            py={1}
+                          >
+                            <Chip
+                              onClick={() => copyText(cloudNsItem)}
+                              variant="filled"
+                              label="copy to clipboard"
+                              avatar={
+                                <IconButton>
+                                  <ContentCopy sx={{ fontSize: 16 }} />
+                                </IconButton>
+                              }
+                            />
+
+                            <Typography
+                              fontFamily="monospace"
+                              color="text.light"
+                            >
+                              {cloudNsItem}
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                        <Divider
+                          sx={{
+                            display:
+                              nsList?.cloudNs!.length - 1 === index
+                                ? "none"
+                                : "block",
+                          }}
+                        />
+                      </Fragment>
+                    ))}
+                  </Stack>
+                  <Stack
+                    border={1}
+                    borderColor="customColor.neutralExtraLight"
+                    direction="column"
+                    gap={2}
+                    p={1.5}
+                  >
+                    <Typography>اضافه کردن نام سرور</Typography>
+                    {nsList?.cloudNs?.map((cloudNsItem, index) => (
+                      <Fragment key={cloudNsItem + index}>
+                        <Stack direction="column" gap={1}>
+                          <Typography textAlign="end" color="text.light">
+                            {`:Name Server ${index + 1}`}
+                          </Typography>
+                          <Stack
+                            border="1px solid #edf2f6"
+                            bgcolor="background.default"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            px={2}
+                            py={1}
+                          >
+                            <Chip
+                              onClick={() => copyText(cloudNsItem)}
+                              variant="filled"
+                              label="copy to clipboard"
+                              avatar={
+                                <IconButton>
+                                  <ContentCopy sx={{ fontSize: 16 }} />
+                                </IconButton>
+                              }
+                            />
+
+                            <Typography
+                              fontFamily="monospace"
+                              color="text.light"
+                            >
+                              {cloudNsItem}
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                        <Divider
+                          sx={{
+                            display:
+                              nsList!.cloudNs!.length - 1 === index
+                                ? "none"
+                                : "block",
+                          }}
+                        />
+                      </Fragment>
+                    ))}
+                  </Stack>
+                </Stack>
+              )}
+          </>
         );
         break;
     }
