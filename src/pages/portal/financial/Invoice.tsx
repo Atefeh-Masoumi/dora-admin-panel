@@ -126,11 +126,11 @@ const Invoice: FC = () => {
                   >
                     فاکتور شماره {invoiceItem?.id}
                   </Typography>
-                  <Button sx={{ p: 0 }}>
+                  {/* <Button sx={{ p: 0 }}>
                     <Typography color="primary" variant="text15">
                       دانلود فاکتور
                     </Typography>
-                  </Button>
+                  </Button> */}
                 </Stack>
               )}
             </Stack>
