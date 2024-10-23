@@ -132,15 +132,15 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
     <Dialog
       {...props}
       onClose={closeDialogHandler}
-      components={{ Backdrop: BlurBackdrop }}
-      sx={{
-        "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
-      }}
+      fullWidth
+      // components={{ Backdrop: BlurBackdrop }}
+      // sx={{
+        // "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
+      // }}
     >
-      <DialogTitle textAlign="center">
+      <DialogTitle textAlign="left">
         {projectId ? "بروزرسانی پروژه" : "افزودن پروژه جدید"}
       </DialogTitle>
-      <Divider />
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
           <Stack direction="column" rowGap={2}>
@@ -202,28 +202,27 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 </RadioGroup>
               </Stack>
             )}
-            <Divider />
             <Stack
               direction="row"
-              justifyContent="center"
+              justifyContent="flex-end"
               alignItems="center"
               rowGap={1.5}
             >
+              <Button
+                sx={{ width: { xs: "100%", sm: 100 } }}
+                variant="text"
+                onClick={closeDialogHandler}
+              >
+                انصراف
+              </Button>
               <LoadingButton
-                sx={{ width: { xs: "100%", sm: 260 } }}
+                sx={{ width: { xs: "100%", sm: 140 } }}
                 variant="contained"
                 type="submit"
                 loading={createVmProjectLoading || editVmProjectLoading}
               >
                 {projectId ? "بروزرسانی پروژه" : "ایجاد پروژه"}
               </LoadingButton>
-              <Button
-                sx={{ width: { xs: "100%", sm: 260 } }}
-                variant="text"
-                onClick={closeDialogHandler}
-              >
-                انصراف
-              </Button>
             </Stack>
           </Stack>
         </form>

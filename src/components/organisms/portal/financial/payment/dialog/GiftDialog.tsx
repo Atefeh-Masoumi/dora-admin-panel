@@ -69,7 +69,7 @@ export const GiftDialog: FC<GiftDialogPropsType> = ({
           return (
             <Form autoComplete="on">
               <Stack sx={{ boxShadow: 24, px: 1.5, py: 3 }} spacing={3}>
-                <Typography align="center" variant="text1" fontWeight="bold">
+                <Typography align="left" variant="text1" fontWeight="bold">
                   افزایش موجودی با کد هدیه
                 </Typography>
                 <Stack

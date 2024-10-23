@@ -146,7 +146,9 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
       {...dialogProps}
       sx={{ "& .MuiPaper-root": { maxWidth: "500px", padding: "20px" } }}
     >
-      <Typography align="center">ثبت اطلاعات حقوقی</Typography>
+      <Typography textAlign="left" sx={{ fontWeight: "bold" }}>
+        ثبت اطلاعات حقوقی
+      </Typography>
       <DialogContent>
         <DialogContentText textAlign="center">
           جهت افزودن اطلاعات حقوقی,اطلاعات زیر را تکمیل کنید

@@ -200,7 +200,9 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
 
   return (
     <Dialog {...props} sx={{ p: 3 }} fullWidth>
-      <DialogTitle align="center">ویرایش دسترسی های کاربر موجود</DialogTitle>
+      <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
+        ویرایش دسترسی های کاربر موجود
+      </DialogTitle>
       <DialogContent>
         <Formik initialValues={{}} onSubmit={onSubmit}>
           <Form autoComplete="on">
@@ -386,34 +388,35 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 rowGap={1}
                 columnGap={1}
                 direction="row"
+                justifyContent="flex-end"
                 p={2}
                 // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
               >
-                <LoadingButton
-                  // sx={{
-                  //   // minWidth: "160px",
-                  //   flexGrow: 1,
-                  // }}
-
-                  sx={{ width: "28%" }}
-                  type="submit"
-                  loading={editUserIsLoading}
-                  variant="contained"
-                >
-                  تایید
-                </LoadingButton>
                 <Button
                   onClick={() => forceClose()}
                   // sx={{
                   //   minWidth: "160px",
                   //   flexGrow: 1,
                   // }}
-                  sx={{ width: "28%" }}
+                  sx={{ width: "13%" }}
                   type="button"
                   variant="outlined"
                 >
                   انصراف
                 </Button>
+                <LoadingButton
+                  // sx={{
+                  //   // minWidth: "160px",
+                  //   flexGrow: 1,
+                  // }}
+
+                  sx={{ width: "13%" }}
+                  type="submit"
+                  loading={editUserIsLoading}
+                  variant="contained"
+                >
+                  تایید
+                </LoadingButton>
               </Stack>
 
               {/* <Stack
