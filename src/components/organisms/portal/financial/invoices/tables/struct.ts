@@ -45,6 +45,11 @@ export const invoicesTableStruct: columnType[] = [
     id: "invoiceStatus",
     label: "وضعیت",
   },
+  {
+    id: "view",
+    label: "",
+    isPrice: false,
+  },
 ];
 
 export const invoiceTableStruct: columnType[] = [
