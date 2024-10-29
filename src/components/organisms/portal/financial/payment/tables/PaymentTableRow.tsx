@@ -1,14 +1,20 @@
-import { FC } from "react";
-import { Chip, Stack, Typography } from "@mui/material";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { FC, useState } from "react";
 import { paymentTableStruct } from "./struct";
-import { useNavigate } from "react-router";
+import { Chip, Stack, Typography } from "@mui/material";
+import PaymentModal from "src/pages/portal/financial/Payment";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 
 const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
-  const navigate = useNavigate();
+  const [dialog, setDialog] = useState<boolean>(false);
 
-  const rowClickHandler = () => navigate("/portal/wallet/payment/" + row.id);
+  const openDialog = () => {
+    setDialog(true);
+  };
+
+  const closeDialog = () => {
+    setDialog(false);
+  };
 
   const renderValueHandler = (column: any) => {
     const value = row[column.id];
@@ -54,27 +60,32 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
     return result;
   };
 
+  console.log({ dialog });
   return (
-    <DorsaTableRow
-      hover
-      role="checkbox"
-      tabIndex={-1}
-      key={row.id}
-      sx={{ cursor: "pointer" }}
-      onClick={rowClickHandler}
-    >
-      {paymentTableStruct.map((column) => {
-        return (
-          <DorsaTableCell
-            key={column.id}
-            align="center"
-            sx={{ px: 1, whiteSpace: "nowrap" }}
-          >
-            <Stack>{renderValueHandler(column)}</Stack>
-          </DorsaTableCell>
-        );
-      })}
-    </DorsaTableRow>
+    <>
+      <DorsaTableRow
+        hover
+        role="checkbox"
+        tabIndex={-1}
+        key={row.id}
+        sx={{ cursor: "pointer" }}
+        onClick={openDialog}
+      >
+        {paymentTableStruct.map((column) => {
+          return (
+            <DorsaTableCell
+              key={column.id}
+              align="center"
+              sx={{ px: 1, whiteSpace: "nowrap" }}
+            >
+              <Stack>{renderValueHandler(column)}</Stack>
+            </DorsaTableCell>
+          );
+        })}
+      </DorsaTableRow>
+
+      <PaymentModal handleClose={closeDialog} open={dialog} maxWidth="xs" />
+    </>
   );
 };
 

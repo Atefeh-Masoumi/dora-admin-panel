@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Chip, Stack } from "@mui/material";
+import { Button, Chip, Stack } from "@mui/material";
 import { FC, MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -29,14 +29,7 @@ const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   return (
-    <DorsaTableRow
-      hover
-      role="checkbox"
-      tabIndex={-1}
-      key={row.usedCode}
-      sx={{ cursor: "pointer" }}
-      onClick={() => navigate(`/portal/wallet/invoice/${row.id}`)}
-    >
+    <DorsaTableRow hover role="checkbox" tabIndex={-1} key={row.usedCode}>
       {invoicesTableStruct.map((column) => {
         const value = row[column.id];
         const text =
@@ -96,6 +89,17 @@ const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
                   column.id === "discount" ||
                   column.id === "invoicePrice" ? (
                   <Stack>{text} ریال</Stack>
+                ) : column.id === "view" ? (
+                  <Button
+                    onClick={() =>
+                      navigate(
+                        `/portal/financial?tab=invoice&invoice-id=${row.id}`
+                      )
+                    }
+                    variant="text"
+                  >
+                    مشاهده
+                  </Button>
                 ) : (
                   text
                 )}

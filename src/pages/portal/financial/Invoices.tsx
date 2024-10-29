@@ -15,6 +15,8 @@ import { useAppSelector } from "src/app/hooks";
 import axios from "axios";
 import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import { baseUrl } from "src/app/services/baseQuery";
+import { useSearchParams } from "react-router-dom";
+import Invoice from "./Invoice";
 
 const Invoices: FC = () => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,9 @@ const Invoices: FC = () => {
 
   const token = useAppSelector((store) => store.auth?.accessToken);
   const { data: invoices, isLoading } = useGetApiMyPortalInvoiceListQuery();
+
+  const [searchParams] = useSearchParams();
+  const customerInvoiceId = searchParams.get("invoice-id");
 
   const timeStringToDate = (time: string) =>
     moment.from(time, "fa", "YYYY/MM/DD HH:mm:ss").startOf("day").toDate();
@@ -65,50 +70,54 @@ const Invoices: FC = () => {
     ) || [];
 
   return (
-    <Stack
-      borderRadius={BORDER_RADIUS_1}
-      bgcolor="white"
-      p={{ xs: 1.8, lg: 3 }}
-    >
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        alignItems={{ xs: "start", md: "center" }}
-        justifyContent="space-between"
-        spacing={2}
-      >
+    <>
+      {customerInvoiceId ? (
+        <Invoice />
+      ) : (
         <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={2}
-          alignItems={{ xs: "start", md: "center" }}
-          width="100%"
+          borderRadius={BORDER_RADIUS_1}
+          bgcolor="white"
+          p={{ xs: 1.8, lg: 3 }}
         >
-          <Typography variant="text1" color="secondary" whiteSpace="nowrap">
-            لیست فاکتور ها
-          </Typography>
-          <Stack display={{ xs: "flex", md: "none" }} width="100%">
-            <SearchBox
-              placeholder="جستجو"
-              onChange={(text) => setSearch(text)}
-              fullWidth
-            />
-          </Stack>
-          <Stack display={{ xs: "none", md: "flex" }}>
-            <SearchBox
-              placeholder="جستجو"
-              onChange={(text) => setSearch(text)}
-            />
-          </Stack>
-        </Stack>
-        <Stack direction="row" justifyContent="end" sx={{ width: "100%" }}>
-          <LoadingButton
-            loading={loading}
-            sx={{ color: "primary.main" }}
-            onClick={downloadBtnOnClick}
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            alignItems={{ xs: "start", md: "center" }}
+            justifyContent="space-between"
+            spacing={2}
           >
-            دانلود گزارش
-          </LoadingButton>
-        </Stack>
-        {/* <Stack direction="row" spacing={2} alignItems="center">
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              spacing={2}
+              alignItems={{ xs: "start", md: "center" }}
+              width="100%"
+            >
+              <Typography variant="text1" color="secondary" whiteSpace="nowrap">
+                لیست فاکتور ها
+              </Typography>
+              <Stack display={{ xs: "flex", md: "none" }} width="100%">
+                <SearchBox
+                  placeholder="جستجو"
+                  onChange={(text) => setSearch(text)}
+                  fullWidth
+                />
+              </Stack>
+              <Stack display={{ xs: "none", md: "flex" }}>
+                <SearchBox
+                  placeholder="جستجو"
+                  onChange={(text) => setSearch(text)}
+                />
+              </Stack>
+            </Stack>
+            <Stack direction="row" justifyContent="end" sx={{ width: "100%" }}>
+              <LoadingButton
+                loading={loading}
+                sx={{ color: "primary.main" }}
+                onClick={downloadBtnOnClick}
+              >
+                دانلود گزارش
+              </LoadingButton>
+            </Stack>
+            {/* <Stack direction="row" spacing={2} alignItems="center">
           <CustomDatePicker
             placeholder="از تاریخ"
             value={dateFrom}
@@ -120,19 +129,22 @@ const Invoices: FC = () => {
             setValue={setDateTo}
           />
         </Stack> */}
-      </Stack>
-      <Divider variant="middle" sx={{ my: 2 }} />
-      <Stack>
-        <BaseTable
-          struct={invoicesTableStruct}
-          RowComponent={InvoicesTableRow}
-          rows={filteredList}
-          text="در حال حاضر فاکتور ندارید"
-          isLoading={isLoading}
-          initialOrder={1}
-        />
-      </Stack>
-    </Stack>
+          </Stack>
+          <Divider variant="middle" sx={{ my: 2 }} />
+          <Stack>
+            <BaseTable
+              struct={invoicesTableStruct}
+              RowComponent={InvoicesTableRow}
+              rows={filteredList}
+              text="در حال حاضر فاکتور ندارید"
+              isLoading={isLoading}
+              initialOrder={1}
+            />
+          </Stack>
+        </Stack>
+      )}
+    </>
   );
 };
+
 export default Invoices;
