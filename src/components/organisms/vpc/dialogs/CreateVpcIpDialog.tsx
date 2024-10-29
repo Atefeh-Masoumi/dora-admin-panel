@@ -69,7 +69,11 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
   };
   return (
     <Dialog {...props} onClose={closeDialogHandler}>
-      <DialogTitle align="center">افزودن IP جدید</DialogTitle>
+      <DialogTitle justifyContent="left">
+        <Typography fontSize="1.25rem" component="span" fontWeight={700}>
+          افزودن IP جدید
+        </Typography>
+      </DialogTitle>
       <DialogContent>
         <Stack>
           <Alert
@@ -77,6 +81,7 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
             icon={false}
           >
             <FormControlLabel
+              sx={{ justifyContent: "left" }}
               label={
                 <Typography variant="text6">
                   تأیید کنید که می خواهید یک IP جدید ایجاد کنید.
@@ -95,8 +100,17 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
           <Stack
             direction={{ xs: "column", md: "row" }}
             alignItems="center"
+            justifyContent="right"
             gap={2}
           >
+            <Button
+              onClick={cancelBtnOnClick}
+              fullWidth
+              variant="outlined"
+              sx={{ width: "23%" }}
+            >
+              انصراف
+            </Button>
             <LoadingButton
               fullWidth
               disabled={!isConfirm}
@@ -104,12 +118,10 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
               onClick={handleButton}
               variant="contained"
               loading={createVpcIpLoading}
+              sx={{ width: "25%" }}
             >
               ایجاد
             </LoadingButton>
-            <Button onClick={cancelBtnOnClick} fullWidth variant="outlined">
-              انصراف
-            </Button>
           </Stack>
         </Stack>
       </DialogContent>

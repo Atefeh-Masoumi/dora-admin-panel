@@ -213,7 +213,9 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
 
   return (
     <Dialog {...props} sx={{ p: 3 }} fullWidth>
-      <DialogTitle align="center">افزودن کاربر جدید</DialogTitle>
+      <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
+        افزودن کاربر جدید
+      </DialogTitle>
       <DialogContent>
         <Formik
           validationSchema={formValidation}
@@ -344,34 +346,35 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     rowGap={1}
                     columnGap={1}
                     direction="row"
+                    justifyContent="flex-end"
                     p={2}
                     // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
                   >
-                    <LoadingButton
-                      // sx={{
-                      //   // minWidth: "160px",
-                      //   flexGrow: 1,
-                      // }}
-
-                      sx={{ width: "28%" }}
-                      type="submit"
-                      loading={createUserIsLoading}
-                      variant="contained"
-                    >
-                      تایید
-                    </LoadingButton>
                     <Button
                       onClick={() => forceClose()}
                       // sx={{
                       //   minWidth: "160px",
                       //   flexGrow: 1,
                       // }}
-                      sx={{ width: "28%" }}
+                      sx={{ width: "13%" }}
                       type="button"
                       variant="outlined"
                     >
                       انصراف
                     </Button>
+                    <LoadingButton
+                      // sx={{
+                      //   // minWidth: "160px",
+                      //   flexGrow: 1,
+                      // }}
+
+                      sx={{ width: "13%" }}
+                      type="submit"
+                      loading={createUserIsLoading}
+                      variant="contained"
+                    >
+                      تایید
+                    </LoadingButton>
                   </Stack>
                 </Stack>
               </Form>
