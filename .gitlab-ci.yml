@@ -15,7 +15,7 @@ stages:
 
 variables:
   KUBE_CONTEXT_DORSA: cloud-computing/core/front-my-core:dorsa-front-my
-  KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-my-front-agent
+  KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-front-my
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
 
 ## Stage 1 : PACKAGE
