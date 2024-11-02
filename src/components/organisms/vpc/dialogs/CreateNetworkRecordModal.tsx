@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, MouseEventHandler } from "react";
@@ -29,8 +30,8 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
   const vpcHostId = Number(vpcId) || 0;
   const [callCreateNetwork, { isLoading }] =
     usePostApiMyVpcNetworkCreateMutation();
-  
-    const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+
+  const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
     props.onClose(event, "backdropClick");
     formik.resetForm();
@@ -81,11 +82,15 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
 
   return (
     <Dialog {...props} onClose={closeHandler}>
-      <DialogTitle align="center">ایجاد Network جدید</DialogTitle>
+      <DialogTitle justifyContent="left">
+        <Typography fontSize="1.25rem" component="span" fontWeight={700}>
+          ایجاد Network جدید
+        </Typography>
+      </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
-          <Stack direction="column" rowGap={3} pt={2}>
-            <DialogContentText textAlign="center">
+          <Stack direction="column" rowGap={3}>
+            <DialogContentText justifyContent="left">
               یک نام برای شناسایی Network خود مشخص کنید.
             </DialogContentText>
 
@@ -126,19 +131,26 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
             <Stack
               direction={{ xs: "column", md: "row" }}
               alignItems="center"
+              justifyContent="right"
               gap={2}
             >
+              <Button
+                onClick={cancelBtnOnClick}
+                fullWidth
+                variant="outlined"
+                sx={{ width: "23%" }}
+              >
+                انصراف
+              </Button>
               <LoadingButton
                 fullWidth
                 type="submit"
                 variant="contained"
                 disabled={isLoading}
+                sx={{ width: "25%" }}
               >
                 ایجاد
               </LoadingButton>
-              <Button onClick={cancelBtnOnClick} fullWidth variant="outlined">
-                انصراف
-              </Button>
             </Stack>
           </Stack>
         </form>
