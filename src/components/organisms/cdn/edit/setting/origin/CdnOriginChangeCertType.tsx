@@ -78,7 +78,7 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
                     fontSize={{ xs: 16, md: 18 }}
                     sx={{ lineHeight: 1, whiteSpace: "nowrap" }}
                   >
-                    استفاده از گواهی درسا
+                    استفاده از گواهی راهبر
                   </Typography>
                 </Stack>
               </Button>

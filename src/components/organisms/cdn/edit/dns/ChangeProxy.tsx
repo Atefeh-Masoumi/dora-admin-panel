@@ -41,7 +41,7 @@ export const ChangeProxyStatus: FC<ChangeProxyStatusPropsType> = ({
           استفاده از Proxy
         </Typography>
         <Typography variant="text8" color="secondary">
-          با انتخاب این گزینه ترافیک از ابر درسا عبور خواهد کرد
+          با انتخاب این گزینه ترافیک از ابر راهبر عبور خواهد کرد
         </Typography>
       </Stack>
       <DorsaSwitch checked={proxyStatus} onChange={changeProxy} />

@@ -32,7 +32,7 @@ export const ReferralCode: FC = () => {
         <Stack direction="column" spacing={0.7} alignItems="center">
           <Typography variant="title5">معرف شما</Typography>
           <Typography variant="text2" textAlign="center">
-            کد دعوت فردی که شما را به درسا کلود دعوت کرده را می‌توانید در کادر
+            کد دعوت فردی که شما را به راهبر کلود دعوت کرده را می‌توانید در کادر
             زیر وارد کنید.
           </Typography>
         </Stack>

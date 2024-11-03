@@ -59,7 +59,7 @@ export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
           title={
             <Stack spacing={1.5} p={1}>
               <Stack textAlign="justify" spacing={0.5}>
-                <Typography fontSize={16}>استفاده از CDN ابر درسا</Typography>
+                <Typography fontSize={16}>استفاده از CDN ابر راهبر</Typography>
                 <Typography
                   whiteSpace="initial"
                   fontSize={14}

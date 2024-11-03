@@ -25,7 +25,7 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی ابر درسا</Typography>
+        <Typography>گواهی ابر راهبر</Typography>
         <LoadingButton
           variant="outlined"
           size="large"
