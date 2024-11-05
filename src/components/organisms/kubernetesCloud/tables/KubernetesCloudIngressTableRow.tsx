@@ -112,8 +112,6 @@ export const KubernetesCloudIngressTableRow: FC<{
     setOpenEditIngressDialog(false);
   }
 
-  console.log(selectedIngressRule);
-
   return (
     <>
       <DorsaTableRow

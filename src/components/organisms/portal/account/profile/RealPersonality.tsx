@@ -17,7 +17,7 @@ import * as yup from "yup";
 
 const ERROR_MESSAGE = "فیلد الزامیست!";
 const DATE_ERROR_MESSAGE =
-  "تاریخ وارد شده معتبر نیست. لطفا تاریخ را در بازه 1390/01/01 تا 1402/12/29 با فرمت صحیح وارد کنید";
+  "تاریخ وارد شده معتبر نیست. لطفا تاریخ را در بازه 1300/01/01 تا 1402/12/29 با فرمت صحیح وارد کنید";
 
 const validationSchema = yup.object().shape({
   firstName: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
@@ -54,12 +54,16 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     address,
     birthDate,
   }) => {
+    const gregorianDateWithTimezone = moment(birthDate, "jYYYY/jMM/jDD").format(
+      "YYYY-MM-DDTHH:mm:ss"
+    );
+
     editProfile({
       editProfileModel: {
         firstName: firstName!,
         lastName: lastName!,
         nationalId: nationalId!,
-        birthDate,
+        birthDate: gregorianDateWithTimezone,
         address: address!,
       },
     })
@@ -77,13 +81,6 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     onSubmit,
     enableReinitialize: true,
   });
-
-  console.log(formik.values);
-
-  const handleBirthDate = (date: any) => {
-    const jalaliDate = moment.utc(date).format("YYYY-MM-DDTHH:mm:ss");
-    formik.setFieldValue("birthDate", jalaliDate);
-  };
 
   return (
     <form onSubmit={formik.handleSubmit}>

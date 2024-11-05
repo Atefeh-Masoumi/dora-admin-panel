@@ -37,7 +37,6 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
     );
   }, [kuberCloudObject]);
 
-  console.log(servicePortList);
 
   const removeRules = (index: number) => {
     setRules((prevState) => {
