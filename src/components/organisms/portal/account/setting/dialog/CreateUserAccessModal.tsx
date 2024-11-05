@@ -64,6 +64,14 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [accountManager, setAccountManager] = useState(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
+  function handleReset(values, { resetForm }) {
+    setSuperUser(false);
+    setFinancialManager(false);
+    setAccountManager(false);
+    setSelectAll(false);
+    resetForm();
+  }
+
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
     setAccountManager(false);
@@ -127,6 +135,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       .then(() => {
         toast.success("دسترسی کاربر مورد نظر با موفقیت ایجاد گردید");
         forceClose();
+        handleReset();
       })
       .catch(() => {});
   };
@@ -184,9 +193,32 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     //   },
     // },
     {
+      id: CHECK_BOX_ENUM.SUPER_USER,
+      label: "سوپر ادمین",
+      text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
+      value: superUser,
+      disable: false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setSuperUser(checked);
+        setAccountManager(checked);
+        setFinancialManager(checked);
+        setSelectAll(checked);
+      },
+    },
+    {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
-      label: "مدیریت کاربران",
-      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت کاربران
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند به حساب کاربران دسترسی داشته باشد
+        </Typography>
+      ),
       value: accountManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -198,8 +230,18 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
     {
       id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
-      label: "مدیریت مالی",
-      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت مالی
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند صورتحساب را به‌روز و ویرایش کند
+        </Typography>
+      ),
       value: financialManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -212,7 +254,15 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   ];
 
   return (
-    <Dialog {...props} sx={{ p: 3 }} fullWidth>
+    <Dialog
+      {...props}
+      sx={{ p: 3 }}
+      fullWidth
+      onClose={() => {
+        handleReset(resetForm);
+        forceClose();
+      }}
+    >
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
         افزودن کاربر جدید
       </DialogTitle>
@@ -324,7 +374,13 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                         control={
                           <Checkbox
                             checked={selectAll}
-                            onChange={(e, checked) => handleCheckbox(checked)}
+                            disabled={superUser ? true : false}
+                            onChange={(e, checked) => {
+                              handleCheckbox(checked);
+                              if (checked === true) {
+                                setSuperUser(false);
+                              }
+                            }}
                           />
                         }
                         label="همه"
@@ -337,6 +393,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                         {...{
                           setRoleAccessList,
                           roleAccessList,
+                          disabled: superUser,
                         }}
                       />
                     )}
@@ -351,7 +408,10 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
                   >
                     <Button
-                      onClick={() => forceClose()}
+                      onClick={() => {
+                        forceClose();
+                        handleReset();
+                      }}
                       // sx={{
                       //   minWidth: "160px",
                       //   flexGrow: 1,

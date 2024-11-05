@@ -67,11 +67,11 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     setSelectAll(selectAll);
     setAccountManager(false);
     setFinancialManager(false);
-    if (selectAll) {
-      setSuperUser(true);
-    } else {
-      setSuperUser(false);
-    }
+    // if (selectAll) {
+    //   setSuperUser(true);
+    // } else {
+    //   setSuperUser(false);
+    // }
   };
 
   const onSubmit = () => {
@@ -171,10 +171,34 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
 
   const radioItems = [
     {
+      id: CHECK_BOX_ENUM.SUPER_USER,
+      label: "سوپر ادمین",
+      text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند  ",
+      value: superUser,
+      disable: false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setSuperUser(checked);
+        setAccountManager(checked);
+        setFinancialManager(checked);
+        setSelectAll(checked);
+      },
+    },
+    {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
-      label: "مدیریت کاربران",
-      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت کاربران
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند به حساب کاربران دسترسی داشته باشد
+        </Typography>
+      ),
       value: accountManager,
+      checked: superUser ? true : false,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
         setAccountManager(checked);
@@ -185,9 +209,20 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     },
     {
       id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
-      label: "مدیریت مالی",
-      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت مالی
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند صورتحساب را به‌روز و ویرایش کند
+        </Typography>
+      ),
       value: financialManager,
+      checked: superUser ? true : false,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
         setFinancialManager(checked);
@@ -370,7 +405,13 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                         control={
                           <Checkbox
                             checked={selectAll}
-                            onChange={(e, checked) => handleCheckbox(checked)}
+                            disabled={superUser ? true : false}
+                            onChange={(e, checked) => {
+                              handleCheckbox(checked);
+                              if (checked === true) {
+                                setSuperUser(false);
+                              }
+                            }}
                           />
                         }
                         label="همه"
@@ -378,7 +419,11 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                     </Box>
 
                     <RoleAccessList
-                      {...{ setRoleAccessList, roleAccessList }}
+                      {...{
+                        setRoleAccessList,
+                        roleAccessList,
+                        disabled: superUser,
+                      }}
                     />
                   </Stack>
                 </>
@@ -418,7 +463,6 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                   تایید
                 </LoadingButton>
               </Stack>
-
               {/* <Stack
                 rowGap={1}
                 columnGap={1}
