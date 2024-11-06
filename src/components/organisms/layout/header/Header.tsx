@@ -144,12 +144,18 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
         navigate(-1);
         return;
-      case BACK_URL_HINTS_ENUM.ADD_VM:
-        href =
-          !projectId || !vpcId
-            ? `/vm/${projectId}/list`
-            : `/vpc/${vpcId}/vm?projectId=${projectId}&vpcId=${vpcId}`;
-        break;
+        case BACK_URL_HINTS_ENUM.ADD_VM:
+          href =
+            !projectId || !vpcId
+              ? `/vm/${projectId}/list`
+              : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
+          break;
+        case BACK_URL_HINTS_ENUM.EDIT_VM:
+          href = !vpcId
+            ? `/vm`
+            : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
+  
+          break;
       default:
         href = typeof url === "string" ? url : "";
         break;
