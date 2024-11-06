@@ -134,6 +134,7 @@ const Header: FC<HeaderPropsType> = ({
       </Popover>
     </>
   );
+  console.log({ vpcId });
 
   const backButtonOnClick = (url: string | number) => {
     let href: string | number = "";
@@ -148,7 +149,13 @@ const Header: FC<HeaderPropsType> = ({
         href =
           !projectId || !vpcId
             ? `/vm/${projectId}/list`
-            : `/vpc/${vpcId}/vm?projectId=${projectId}&vpcId=${vpcId}`;
+            : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
+        break;
+      case BACK_URL_HINTS_ENUM.EDIT_VM:
+        href = !vpcId
+          ? `/vm`
+          : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
+
         break;
       default:
         href = typeof url === "string" ? url : "";
