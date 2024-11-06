@@ -1,6 +1,6 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { useDeleteApiMyVmHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
@@ -11,6 +11,7 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcStatusIdentifier } from "src/constant/vpcStatus";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { vpcVmStruct } from "./struct";
+import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -22,6 +23,7 @@ const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [selectedVm, setSelectedVm] = useState<any>(null);
 
   const navigate = useNavigate();
+  const { vpcId } = useParams();
 
   const [deleteVmRecord, { isLoading: deleteVmRecordLoading }] =
     useDeleteApiMyVmHostDeleteByIdMutation();
@@ -46,7 +48,11 @@ const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
       .catch((err) => {});
 
   const settingOnClick = () => {
-    navigate("/vm/" + row["id"]);
+    navigate(
+      "/vm/" +
+        row["id"] +
+        `?vmType=${VM_PUBLICITY_TYPE.VPC_VM}&projectId=${row.projectId}&vpcId=${vpcId}`
+    );
   };
 
   return (
