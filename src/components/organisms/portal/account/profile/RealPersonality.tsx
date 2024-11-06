@@ -12,14 +12,22 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
+import { jalaliDateRegex } from "src/utils/regexUtils";
 import * as yup from "yup";
+
 const ERROR_MESSAGE = "فیلد الزامیست!";
+const DATE_ERROR_MESSAGE =
+  "تاریخ وارد شده معتبر نیست. لطفا تاریخ را در بازه 1300/01/01 تا 1402/12/29 با فرمت صحیح وارد کنید";
 
 const validationSchema = yup.object().shape({
   firstName: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
   lastName: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
   nationalId: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
-  // birthDate: yup.string().required("تاریخ تولد الزامیست!"),
+  birthDate: yup
+    .string()
+    .typeError(ERROR_MESSAGE)
+    .required(ERROR_MESSAGE)
+    .matches(jalaliDateRegex, DATE_ERROR_MESSAGE),
   address: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
 });
 
@@ -46,12 +54,16 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     address,
     birthDate,
   }) => {
+    const gregorianDateWithTimezone = moment(birthDate, "jYYYY/jMM/jDD").format(
+      "YYYY-MM-DDTHH:mm:ss"
+    );
+
     editProfile({
       editProfileModel: {
         firstName: firstName!,
         lastName: lastName!,
         nationalId: nationalId!,
-        birthDate,
+        birthDate: gregorianDateWithTimezone,
         address: address!,
       },
     })
@@ -70,41 +82,37 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     enableReinitialize: true,
   });
 
-  // console.log(formik.values);    
-
-  const handleBirthDate = (date: any) => {
-    const jalaliDate = moment.utc(date).format("YYYY-MM-DDTHH:mm:ss");
-    formik.setFieldValue("birthDate", jalaliDate);
-  };
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <Stack spacing={2.7} justifyContent="space-between" p={1}>
         <Stack direction="row" spacing={1}>
           <DorsaTextField
             error={Boolean(formik.errors.firstName && formik.touched.firstName)}
-            helperText={formik.errors.firstName}
+            helperText={formik.touched.firstName && formik.errors.firstName}
             label="نام"
+            focused
             fullWidth
             {...formik.getFieldProps("firstName")}
           />
           <DorsaTextField
             error={Boolean(formik.errors.lastName && formik.touched.lastName)}
-            helperText={formik.errors.lastName}
+            helperText={formik.touched.lastName && formik.errors.lastName}
             label="نام خانوادگی"
+            focused
             fullWidth
             {...formik.getFieldProps("lastName")}
           />
         </Stack>
         <DorsaTextField
           error={Boolean(formik.errors.nationalId && formik.touched.nationalId)}
-          helperText={formik.errors.nationalId}
+          helperText={formik.touched.nationalId && formik.errors.nationalId}
           label="کد ملی"
+          focused
           fullWidth
           inputProps={{ dir: "ltr" }}
           {...formik.getFieldProps("nationalId")}
         />
-        <LocalizationProvider
+        {/* <LocalizationProvider
           dateAdapter={AdapterJalali as any}
           localeText={{
             cancelButtonLabel: "لغو",
@@ -128,13 +136,25 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
               />
             )}
           />
-        </LocalizationProvider>
+        </LocalizationProvider> */}
+        <DorsaTextField
+          error={Boolean(formik.errors.birthDate && formik.touched.birthDate)}
+          helperText={formik.touched.birthDate && formik.errors.birthDate}
+          fullWidth
+          sx={{ direction: "rtl" }}
+          {...formik.getFieldProps("birthDate")}
+          label="تاریخ تولد"
+          placeholder="YYYY/MM/DD"
+          focused
+          rows={3}
+        />
         <DorsaTextField
           error={Boolean(formik.errors.address && formik.touched.address)}
-          helperText={formik.errors.address}
+          helperText={formik.touched.address && formik.errors.address}
           {...formik.getFieldProps("address")}
           label="آدرس"
           fullWidth
+          focused
           multiline
           rows={3}
         />
