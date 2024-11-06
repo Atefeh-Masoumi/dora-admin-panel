@@ -26,7 +26,7 @@ const AddVpc: FC = () => {
       <Grid container>
         <Grid xs={12} md={8} item>
           <Stack
-            component={Paper}
+            // component={Paper}
             sx={{
               position: "relative",
               width: { xs: "100%" },
@@ -37,7 +37,7 @@ const AddVpc: FC = () => {
             <Grid container gap={2}>
               <Grid xs={12} item>
                 <SelectVpcDataCenter />
-                <Divider sx={{ margin: "50px 10px" }} />
+                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
               </Grid>
               {/* <Grid xs={12} item>
                 <SelectVpcHypervisor />
@@ -45,15 +45,15 @@ const AddVpc: FC = () => {
               </Grid> */}
               <Grid xs={12} item>
                 <SelectVpcNetwork />
-                <Divider sx={{ margin: "50px 10px" }} />
+                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
               </Grid>
               <Grid xs={12} item>
                 <SelectVpcConfig />
-                <Divider sx={{ margin: "50px 10px" }} />
+                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
               </Grid>
               <Grid xs={12} item>
                 <SelectVpcServiceInfo />
-                <Divider sx={{ margin: "50px 10px" }} />
+                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
               </Grid>
             </Grid>
           </Stack>
