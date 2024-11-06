@@ -20,7 +20,7 @@ import {
   useGetApiMyAccountRoleListQuery,
   usePostApiMyAccountCustomerUserCreateMutation,
 } from "src/app/services/api.generated";
-import { Form, Formik } from "formik";
+import { useFormik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
 import RoleAccessList from "../RoleAccessList";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -64,12 +64,31 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [accountManager, setAccountManager] = useState(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
-  function handleReset(values, { resetForm }) {
+  // const initialRoleAccessList: RoleAccessStateType = [];
+
+  // const handleClose: DialogProps["onClose"] = (event, reason) => {
+  //   if (reason && reason === "backdropClick") {
+  //     setSuperUser(false);
+  //     setFinancialManager(false);
+  //     setAccountManager(false);
+  //     setSelectAll(false);
+  //     return;
+  //   }
+  // }
+
+  const handleReset = () => {
     setSuperUser(false);
     setFinancialManager(false);
     setAccountManager(false);
     setSelectAll(false);
-    resetForm();
+    setRoleAccessList((prevList) =>
+      prevList.map((role) => ({ ...role, isRoleChecked: false,
+        accessTuples: role.accessTuples.map((access) => ({
+          ...access,
+          hasAccess: false,
+        })),
+       }))
+    );
   }
 
   const handleCheckbox = (selectAll: boolean) => {
@@ -136,6 +155,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         toast.success("دسترسی کاربر مورد نظر با موفقیت ایجاد گردید");
         forceClose();
         handleReset();
+        resetForm();
       })
       .catch(() => {});
   };
@@ -253,13 +273,22 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
   ];
 
+
+  const formik = useFormik({
+    initialValues : formInitialValues , 
+     validationSchema : formValidation, 
+     onSubmit
+  })
+
+
   return (
     <Dialog
       {...props}
       sx={{ p: 3 }}
       fullWidth
       onClose={() => {
-        handleReset(resetForm);
+        handleReset();
+        formik.resetForm();
         forceClose();
       }}
     >
@@ -267,15 +296,9 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         افزودن کاربر جدید
       </DialogTitle>
       <DialogContent>
-        <Formik
-          validationSchema={formValidation}
-          initialValues={formInitialValues}
-          onSubmit={onSubmit}
-        >
-          {({ errors, touched, getFieldProps }) => {
-            return (
-              <Form style={{ padding: 0 }} autoComplete="on">
-                <Stack
+        <form onSubmit={formik.handleSubmit}>
+          
+        <Stack
                   rowGap={2}
                   columnGap={2}
                   width="100%"
@@ -290,14 +313,14 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       </Typography>
                     </Box>
                     <TextField
-                      {...getFieldProps("userName")}
+                      {...formik.getFieldProps("userName")}
                       size="small"
                       type="userName"
                       label="نام کاربری *"
                       fullWidth
                       inputProps={{ dir: "ltr" }}
-                      error={Boolean(errors.userName && touched.userName)}
-                      helperText={touched.userName && errors.userName}
+                      error={Boolean(formik.errors.userName && formik.touched.userName)}
+                      helperText={formik.touched.userName && formik.errors.userName}
                     />
                   </Stack>
 
@@ -389,7 +412,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     {roleListIsLoading || roleAccessList?.length === 0 ? (
                       <PageLoading />
                     ) : (
-                      <RoleAccessList
+                      <RoleAccessList 
                         {...{
                           setRoleAccessList,
                           roleAccessList,
@@ -409,8 +432,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   >
                     <Button
                       onClick={() => {
-                        forceClose();
                         handleReset();
+                        forceClose();
                       }}
                       // sx={{
                       //   minWidth: "160px",
@@ -437,10 +460,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     </LoadingButton>
                   </Stack>
                 </Stack>
-              </Form>
-            );
-          }}
-        </Formik>
+        </form>
       </DialogContent>
     </Dialog>
   );

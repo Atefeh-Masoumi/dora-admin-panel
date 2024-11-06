@@ -1,4 +1,3 @@
-
 import AdapterJalali from "@date-io/date-fns-jalali";
 import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
@@ -71,7 +70,7 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     enableReinitialize: true,
   });
 
-  console.log(formik.values);
+  // console.log(formik.values);    
 
   const handleBirthDate = (date: any) => {
     const jalaliDate = moment.utc(date).format("YYYY-MM-DDTHH:mm:ss");

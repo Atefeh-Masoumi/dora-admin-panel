@@ -63,6 +63,52 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     { skip: !userId }
   );
 
+  const handleReset = () => {
+    setSuperUser(false);
+    setFinancialManager(false);
+    setAccountManager(false);
+    setSelectAll(false);
+    setRoleAccessList((prevList) =>
+      prevList.map((role) => ({ ...role, isRoleChecked: false,
+        accessTuples: role.accessTuples.map((access) => ({
+          ...access,
+          hasAccess: false,
+        })),
+       }))
+    );
+    
+    // useEffect(() => {
+    //   if (currentUserRoleAccessList) {
+    //     setSuperUser(!!currentUserRoleAccessList.isSuperUser);
+    //     setAccountManager(!!currentUserRoleAccessList.isAccountManager);
+    //     setFinancialManager(!!currentUserRoleAccessList.isFinancialManager);
+    //   }
+  
+    //   const newRoleAccessList = roleList?.map((role) => {
+    //     const currentSelectedRole = currentUserRoleAccessList?.roleAccesses?.find(
+    //       (c) => c.roleId === role.id
+    //     );
+    //     return {
+    //       roleId: role.id,
+    //       roleName: role.name,
+    //       isRoleChecked: currentSelectedRole?.hasAccess || false,
+    //       roleAccessTypeId:
+    //         currentSelectedRole?.roleAccessTypeId || roleAccessType[0].id,
+    //       accessTuples: access.map((item) => {
+    //         return {
+    //           accessId: item.id,
+    //           hasAccess:
+    //             currentSelectedRole?.accesses?.find((a) => item.id === a.accessId)
+    //               ?.hasAccess || false,
+    //           accessName: item.persianName,
+    //         };
+    //       }),
+    //     };
+    //   });
+    //   newRoleAccessList && setRoleAccessList(newRoleAccessList);
+    // }, [roleList, currentUserRoleAccessList]);
+  }
+
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
     setAccountManager(false);
@@ -147,7 +193,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
       };
     });
     newRoleAccessList && setRoleAccessList(newRoleAccessList);
-  }, [roleList, currentUserRoleAccessList]);
+  }, [roleList, currentUserRoleAccessList, props.open]);
 
   useEffect(() => {
     const newRoleAccessList = roleList?.map((role) => {
@@ -233,8 +279,17 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     },
   ];
 
+  console.log({roleAccessList})
+
+
   return (
-    <Dialog {...props} sx={{ p: 3 }} fullWidth>
+    <Dialog {...props} 
+    sx={{ p: 3 }} 
+    fullWidth       
+    onClose={() => {
+      handleReset();
+      forceClose();
+    }}>
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
         ویرایش دسترسی های کاربر موجود
       </DialogTitle>
@@ -438,7 +493,10 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
               >
                 <Button
-                  onClick={() => forceClose()}
+                  onClick={() => {
+                    forceClose()
+                    handleReset()
+                  }}
                   // sx={{
                   //   minWidth: "160px",
                   //   flexGrow: 1,
