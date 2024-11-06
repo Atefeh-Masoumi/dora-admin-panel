@@ -112,7 +112,7 @@ export const KubernetesCloudIngressTableRow: FC<{
     setOpenEditIngressDialog(false);
   }
 
-  console.log(selectedIngressRule);
+  // console.log(selectedIngressRule);
 
   return (
     <>

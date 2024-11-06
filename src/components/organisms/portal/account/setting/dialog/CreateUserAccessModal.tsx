@@ -20,7 +20,7 @@ import {
   useGetApiMyAccountRoleListQuery,
   usePostApiMyAccountCustomerUserCreateMutation,
 } from "src/app/services/api.generated";
-import { Form, Formik } from "formik";
+import { useFormik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
 import RoleAccessList from "../RoleAccessList";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -63,6 +63,33 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [financialManager, setFinancialManager] = useState(false);
   const [accountManager, setAccountManager] = useState(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
+
+  // const initialRoleAccessList: RoleAccessStateType = [];
+
+  // const handleClose: DialogProps["onClose"] = (event, reason) => {
+  //   if (reason && reason === "backdropClick") {
+  //     setSuperUser(false);
+  //     setFinancialManager(false);
+  //     setAccountManager(false);
+  //     setSelectAll(false);
+  //     return;
+  //   }
+  // }
+
+  const handleReset = () => {
+    setSuperUser(false);
+    setFinancialManager(false);
+    setAccountManager(false);
+    setSelectAll(false);
+    setRoleAccessList((prevList) =>
+      prevList.map((role) => ({ ...role, isRoleChecked: false,
+        accessTuples: role.accessTuples.map((access) => ({
+          ...access,
+          hasAccess: false,
+        })),
+       }))
+    );
+  }
 
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
@@ -127,6 +154,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       .then(() => {
         toast.success("دسترسی کاربر مورد نظر با موفقیت ایجاد گردید");
         forceClose();
+        handleReset();
+        resetForm();
       })
       .catch(() => {});
   };
@@ -184,9 +213,32 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     //   },
     // },
     {
+      id: CHECK_BOX_ENUM.SUPER_USER,
+      label: "سوپر ادمین",
+      text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
+      value: superUser,
+      disable: false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setSuperUser(checked);
+        setAccountManager(checked);
+        setFinancialManager(checked);
+        setSelectAll(checked);
+      },
+    },
+    {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
-      label: "مدیریت کاربران",
-      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت کاربران
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند به حساب کاربران دسترسی داشته باشد
+        </Typography>
+      ),
       value: accountManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -198,8 +250,18 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
     {
       id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
-      label: "مدیریت مالی",
-      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت مالی
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند صورتحساب را به‌روز و ویرایش کند
+        </Typography>
+      ),
       value: financialManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -211,21 +273,32 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
   ];
 
+
+  const formik = useFormik({
+    initialValues : formInitialValues , 
+     validationSchema : formValidation, 
+     onSubmit
+  })
+
+
   return (
-    <Dialog {...props} sx={{ p: 3 }} fullWidth>
+    <Dialog
+      {...props}
+      sx={{ p: 3 }}
+      fullWidth
+      onClose={() => {
+        handleReset();
+        formik.resetForm();
+        forceClose();
+      }}
+    >
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
         افزودن کاربر جدید
       </DialogTitle>
       <DialogContent>
-        <Formik
-          validationSchema={formValidation}
-          initialValues={formInitialValues}
-          onSubmit={onSubmit}
-        >
-          {({ errors, touched, getFieldProps }) => {
-            return (
-              <Form style={{ padding: 0 }} autoComplete="on">
-                <Stack
+        <form onSubmit={formik.handleSubmit}>
+          
+        <Stack
                   rowGap={2}
                   columnGap={2}
                   width="100%"
@@ -240,14 +313,14 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       </Typography>
                     </Box>
                     <TextField
-                      {...getFieldProps("userName")}
+                      {...formik.getFieldProps("userName")}
                       size="small"
                       type="userName"
                       label="نام کاربری *"
                       fullWidth
                       inputProps={{ dir: "ltr" }}
-                      error={Boolean(errors.userName && touched.userName)}
-                      helperText={touched.userName && errors.userName}
+                      error={Boolean(formik.errors.userName && formik.touched.userName)}
+                      helperText={formik.touched.userName && formik.errors.userName}
                     />
                   </Stack>
 
@@ -324,7 +397,13 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                         control={
                           <Checkbox
                             checked={selectAll}
-                            onChange={(e, checked) => handleCheckbox(checked)}
+                            disabled={superUser ? true : false}
+                            onChange={(e, checked) => {
+                              handleCheckbox(checked);
+                              if (checked === true) {
+                                setSuperUser(false);
+                              }
+                            }}
                           />
                         }
                         label="همه"
@@ -333,10 +412,11 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     {roleListIsLoading || roleAccessList?.length === 0 ? (
                       <PageLoading />
                     ) : (
-                      <RoleAccessList
+                      <RoleAccessList 
                         {...{
                           setRoleAccessList,
                           roleAccessList,
+                          disabled: superUser,
                         }}
                       />
                     )}
@@ -351,7 +431,10 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
                   >
                     <Button
-                      onClick={() => forceClose()}
+                      onClick={() => {
+                        handleReset();
+                        forceClose();
+                      }}
                       // sx={{
                       //   minWidth: "160px",
                       //   flexGrow: 1,
@@ -377,10 +460,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                     </LoadingButton>
                   </Stack>
                 </Stack>
-              </Form>
-            );
-          }}
-        </Formik>
+        </form>
       </DialogContent>
     </Dialog>
   );
