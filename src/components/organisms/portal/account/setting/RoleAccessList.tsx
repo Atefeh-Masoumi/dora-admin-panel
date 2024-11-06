@@ -14,11 +14,13 @@ import { roleAccessType } from "src/constant/accessModal.constant";
 type RoleAccessListPropsType = {
   roleAccessList: RoleAccessStateType;
   setRoleAccessList: Dispatch<SetStateAction<RoleAccessStateType>>;
+  disabled: boolean;
 };
 
 const RoleAccessList: FC<RoleAccessListPropsType> = ({
   roleAccessList,
   setRoleAccessList,
+  disabled,
 }) => {
   const handleRoleChange = (roleId: number | undefined, isChecked: boolean) => {
     const newRoleAccessList = roleAccessList?.map((roleAccess) => {
@@ -103,21 +105,29 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
                 />
               }
               label={
-                <Typography variant="text14" noWrap>
+                <Typography
+                  variant="text14"
+                  noWrap
+                  sx={{
+                    color: disabled ? "gray" : "inherit",
+                  }}
+                >
                   {roleAccess.roleName}
                 </Typography>
               }
+              disabled={disabled}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <FormControl fullWidth>
               <Select
-                disabled={!roleAccess?.isRoleChecked}
+                disabled={!roleAccess?.isRoleChecked || disabled}
                 defaultValue={roleAccessType[0].id}
                 sx={{
                   height: "30px",
                   "& .MuiSelect-outlined": {
                     fontSize: "14px",
+                    color: disabled ? "gray" : "inherit",
                   },
                 }}
                 onChange={(e) =>
@@ -126,7 +136,9 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
                 value={roleAccess.roleAccessTypeId}
               >
                 {roleAccessType.map((item) => (
-                  <MenuItem value={item.id} key={item.id}>
+                  <MenuItem value={item.id} key={item.id} sx={{
+                    color: disabled ? "gray" : "inherit",
+                  }}>
                     {item.persianName}
                   </MenuItem>
                 ))}
@@ -144,7 +156,7 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
                 }}
                 control={
                   <Checkbox
-                    disabled={!roleAccess?.isRoleChecked}
+                    disabled={!roleAccess?.isRoleChecked || disabled}
                     checked={access.hasAccess}
                     onChange={(e) =>
                       handleAccessChange(
@@ -158,7 +170,7 @@ const RoleAccessList: FC<RoleAccessListPropsType> = ({
                 }
                 label={
                   <Typography
-                    color={!roleAccess?.isRoleChecked ? "grey" : ""}
+                    color={!roleAccess?.isRoleChecked || disabled ? "grey" : ""}
                     variant="text13"
                   >
                     {access.accessName}

@@ -60,7 +60,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
     return result;
   };
 
-  console.log({ dialog });
+  // console.log({ dialog });
   return (
     <>
       <DorsaTableRow
