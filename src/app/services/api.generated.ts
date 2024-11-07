@@ -1,8 +1,5 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "src/app/services/baseQuery";
-export const api = createApi({
-  baseQuery: baseQuery,
-  tagTypes: [],
+import { api } from "./emptyApi";
+const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     getApiMyAccountUserLog: build.query<
       GetApiMyAccountUserLogApiResponse,
@@ -858,7 +855,9 @@ export const api = createApi({
     >({
       query: (queryArg) => ({
         url: `/api/my/kubernetes/cloud/secret/list/${queryArg.namespaceId}`,
-        params: { secretTypeId: queryArg.secretTypeId },
+        params: {
+          secretTypeId: queryArg.secretTypeId,
+        },
       }),
     }),
     getApiMyKubernetesCloudSecretGetById: build.query<
@@ -2300,7 +2299,9 @@ export const api = createApi({
       query: () => ({ url: `/api/my/portal/website-alarm/list` }),
     }),
   }),
+  overrideExisting: false,
 });
+export { injectedRtkApi as enhancedApi };
 export type GetApiMyAccountUserLogApiResponse =
   /** status 200 OK */ UserLogResponseIEnumerablePagedResponse;
 export type GetApiMyAccountUserLogApiArg = {
@@ -4143,10 +4144,7 @@ export type KuberCloudHostListPortResponse = {
   ports?: ListPort[] | null;
 };
 export type EditKuberCloudIngressRuleModel = {
-  ingressId: number;
   ingressRuleId: number;
-  secretId?: number;
-  domainName?: string | null;
   path?: string | null;
   kuberCloudDeployPortId?: number | null;
 };
@@ -4156,7 +4154,6 @@ export type IngressRuleModelRequest = {
 };
 export type CreateKuberCloudIngressRuleModel = {
   ingressId: number;
-  secretId: number;
   rules: IngressRuleModelRequest[];
 };
 export type RulesModel = {
@@ -4164,12 +4161,13 @@ export type RulesModel = {
   path: string | null;
   serviceName: string | null;
   port: number;
-  createDate: string;
-  modifiyDate: string;
 };
 export type KuberCloudIngressListResponse = {
   id: number;
   name: string | null;
+  domainName: string | null;
+  protocolTypeId: number;
+  kuberCloudSecretId?: number | null;
   ruleCount: number;
   rules: RulesModel[] | null;
   createDate: string;
@@ -4187,8 +4185,11 @@ export type GetKuberCloudIngressResponse = {
   id: number;
   name: string | null;
   domainName: string | null;
+  protocolTypeId: number;
+  kuberCloudSecretId?: number | null;
   rules: RulesResponse[] | null;
   createDate: string;
+  modifyDate: string;
 };
 export type RuleModelRequest = {
   path: string | null;
@@ -4278,7 +4279,7 @@ export type KuberCloudFirewallListResponse = {
   createDate?: string;
 };
 export type CreateKuberCloudFirewallModel = {
-  datacenterKuberNodeId: number;
+  datacenterId: number;
   firewallProtocolTypeId: number;
   deployPortId: number;
   sourceIp?: string | null;
@@ -4438,7 +4439,7 @@ export type GetKubernetesResponse = {
   workerNode: number;
   status: string | null;
   statusId: number;
-  customerProductType: string | null;
+  hostProjectId: number;
   createDate: string;
   modifyDate: string;
 };
@@ -5122,6 +5123,7 @@ export type VpcListResponse = {
   status: string | null;
   hypervisorTypeId: number;
   statusId: number;
+  datacenterVpcNodeTypeId: number;
   createDate: string;
 };
 export type VpcResponse = {
@@ -5132,6 +5134,7 @@ export type VpcResponse = {
   name: string | null;
   status: string | null;
   hypervisorTypeId: number;
+  datacenterVpcNodeTypeId: number;
   statusId: number;
   createDate: string;
   modifyDate: string;
@@ -5147,7 +5150,7 @@ export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
   productBundleId: number;
-  vpcNodeTypeId?: number;
+  hypervisorTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
 };
 export type WebHostListResponse = {
@@ -5184,16 +5187,12 @@ export type CheckWebHostDomainModel = {
 };
 export type CreateNewsLetterModel = {
   email: string;
-  captchaKey: string;
-  captchaCode: string;
 };
 export type CreateContactUsModel = {
   firstName: string;
   lastName: string;
   email: string;
   content: string;
-  captchaKey: string;
-  captchaCode: string;
 };
 export type GetWebSiteBolgCommentResponse = {
   id?: number;
@@ -5528,5 +5527,4 @@ export const {
   useGetApiMyPortalWebsiteBlogGetHeaderArticlesQuery,
   useGetApiMyPortalWebsiteBlogGetByLinkQuery,
   useGetApiMyPortalWebsiteAlarmListQuery,
-} = api;
-
+} = injectedRtkApi;
