@@ -1,8 +1,8 @@
 import {
-  api as generatedApi,
   PostApiMyPortalIssueCreateApiArg,
   PostApiMyPortalIssueItemCreateApiResponse,
 } from "./api.generated";
+import { enhancedApi } from "./api.generated";
 
 const tags = [
   "Profile",
@@ -35,7 +35,7 @@ const tags = [
   "Ingress",
 ];
 
-export const api = generatedApi
+export const api = enhancedApi
   .injectEndpoints({
     endpoints: (build) => ({
       customCreateIssue: build.mutation<
