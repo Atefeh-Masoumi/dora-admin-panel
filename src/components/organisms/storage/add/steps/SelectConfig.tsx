@@ -1,5 +1,5 @@
 import { FC, useContext, useMemo } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import AddStorageTableRow from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";
@@ -45,7 +45,10 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   );
 
   return (
-    <>
+    <Paper
+      elevation={1}
+      sx={{ p: 2, width: "100%", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }}
+    >
       <Stack spacing={2}>
         <Typography fontSize={24} fontWeight="bold" align="center">
           مشخصات سرویس را انتخاب کنید
@@ -97,6 +100,6 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
           </Stack>
         )}
       </Box>
-    </>
+    </Paper>
   );
 };
