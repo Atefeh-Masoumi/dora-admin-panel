@@ -227,12 +227,12 @@ export const KubernetesCloudIngressTableRow: FC<{
                               <TableCell align="center" sx={{ border: "none" }}>
                                 {rule.serviceName}
                               </TableCell>
-                              <TableCell align="center" sx={{ border: "none" }}>
-                                {ConvertToJalali(String(rule.createDate))}
+                              {/* <TableCell align="center" sx={{ border: "none" }}>
+                                {ConvertToJalali(String(rule.))}
                               </TableCell>
                               <TableCell align="center" sx={{ border: "none" }}>
                                 {ConvertToJalali(String(rule.modifiyDate))}
-                              </TableCell>
+                              </TableCell> */}
                               <TableCell align="center" sx={{ border: "none" }}>
                                 <IconButton
                                   size="small"
