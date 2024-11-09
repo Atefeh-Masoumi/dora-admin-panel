@@ -11,8 +11,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   KuberCloudIngressListResponse,
@@ -27,13 +28,16 @@ import {
   kubernetesCloudIngressTableStruct,
 } from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
-import { EditSecretMapDialog } from "../dialog/EditSecretMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { EditIngressRuleDialog } from "../dialog/EditIngressRuleDialog";
+import { Add } from "@mui/icons-material";
+import { AddRuleDialog } from "../dialog/AddRuleDialog";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
+  EDIT = "EDIT",
 }
 
 enum ITEM_TYPE_ENUM {
@@ -45,19 +49,15 @@ export const KubernetesCloudIngressTableRow: FC<{
   row: KuberCloudIngressListResponse;
   rowBgColor: any;
 }> = ({ row, rowBgColor }) => {
-  const [openEditIngressDialog, setOpenEditIngressDialog] =
-    useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const [keyTitle, setKeyTitle] = useState<"Ingress" | "Ingress Rule" | null>(
-    null
-  );
-  const ingressRuleList = row.rules || [];
-
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetesCloudIngress, setSelectedKubernetesCloudIngress] =
     useState<KuberCloudIngressListResponse | null>(null);
   const [selectedIngressRule, setSelectedIngressRule] =
     useState<RulesModel | null>(null);
+  const [keyTitle, setKeyTitle] = useState<ITEM_TYPE_ENUM | null>(null);
+
+  const ingressRuleList = row.rules || [];
 
   const [deleteIngress, { isLoading: deleteIngressLoading }] =
     useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation();
@@ -65,54 +65,50 @@ export const KubernetesCloudIngressTableRow: FC<{
   const [deleteIngressRule, { isLoading: deleteIngressRuleLoading }] =
     useDeleteApiMyKubernetesCloudIngressRuleDeleteByIdMutation();
 
-  const deleteHandler = (itemType: "Ingress" | "Ingress Rule" | null) =>
-    itemType === "Ingress"
+  const isLoading = useMemo(() => {
+    return deleteIngressLoading && deleteIngressRuleLoading;
+  }, [deleteIngressLoading, deleteIngressRuleLoading]);
+
+  const handleDeleteItem = (itemType: ITEM_TYPE_ENUM | null) =>
+    itemType === ITEM_TYPE_ENUM.INGRESS
       ? deleteIngress({ ingressId: Number(selectedKubernetesCloudIngress?.id) })
           .unwrap()
           .then(() => {
             toast.success("ingress با موفقیت حذف شد");
-            closeDialogHandler();
+            handleCloseModal();
           })
           .catch((err) => {})
       : deleteIngressRule({ id: Number(selectedIngressRule?.id) });
 
-  const closeDialogHandler = () => {
+  const handleCloseModal = () => {
     setDialogType(null);
+    setKeyTitle(null);
     setSelectedKubernetesCloudIngress(null);
+    setSelectedIngressRule(null);
   };
 
-  const handleOpenDeleteModal = (
+  const handleOpenModal = (
     item: KuberCloudIngressListResponse | RulesModel,
-    itemType: ITEM_TYPE_ENUM
+    itemType: ITEM_TYPE_ENUM,
+    dialogType: DIALOG_TYPE_ENUM
   ) => {
     switch (itemType) {
       case "INGRESS":
         setSelectedKubernetesCloudIngress(
           item as KuberCloudIngressListResponse
         );
-        setKeyTitle("Ingress");
+        setKeyTitle(ITEM_TYPE_ENUM.INGRESS);
         break;
       case "INGRESS_RULE":
         setSelectedIngressRule(item as RulesModel);
-        setKeyTitle("Ingress Rule");
+        setKeyTitle(ITEM_TYPE_ENUM.INGRESS_RULE);
 
         break;
       default:
         break;
     }
-    setDialogType(DIALOG_TYPE_ENUM.DELETE);
+    setDialogType(dialogType);
   };
-
-  function handleOpenEditIngressDialog(ingress: KuberCloudIngressListResponse) {
-    setSelectedKubernetesCloudIngress(ingress);
-    setOpenEditIngressDialog(true);
-  }
-
-  function handleCloseEditIngressRuleDialog() {
-    setOpenEditIngressDialog(false);
-  }
-
-  // console.log(selectedIngressRule);
 
   return (
     <>
@@ -129,7 +125,6 @@ export const KubernetesCloudIngressTableRow: FC<{
         {kubernetesCloudIngressTableStruct.map((column, index) => {
           const value = row[column.id as keyof KuberCloudIngressListResponse];
           const text = column.format ? column.format(value) : value;
-          // const id = row["statusId"];
           return (
             <DorsaTableCell
               key={index}
@@ -143,17 +138,38 @@ export const KubernetesCloudIngressTableRow: FC<{
                   spacing={0.6}
                   maxWidth="fit-content"
                 >
-                  {/* <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={() => handleOpenEditIngressDialog(row)}
+                  <Tooltip
+                    title="ایجاد Rule جدید"
+                    placement="top"
+                    arrow
+                    sx={{
+                      backgroundColor: "gray.800",
+                      color: "white",
+                      fontSize: "12px",
+                    }}
                   >
-                    <Edit />
-                  </IconButton> */}
+                    <IconButton
+                      sx={{ borderRadius: 1 }}
+                      onClick={() =>
+                        handleOpenModal(
+                          row,
+                          ITEM_TYPE_ENUM.INGRESS_RULE,
+                          DIALOG_TYPE_ENUM.CREATE
+                        )
+                      }
+                    >
+                      <Add />
+                    </IconButton>
+                  </Tooltip>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
                     onClick={() =>
-                      handleOpenDeleteModal(row, ITEM_TYPE_ENUM.INGRESS)
+                      handleOpenModal(
+                        row,
+                        ITEM_TYPE_ENUM.INGRESS,
+                        DIALOG_TYPE_ENUM.DELETE
+                      )
                     }
                   >
                     <TrashSvg />
@@ -168,7 +184,7 @@ export const KubernetesCloudIngressTableRow: FC<{
                 </Stack>
               ) : (
                 <>
-                  {column.id === "createDate"
+                  {column.id === "createDate" || column.id === "modifyDate"
                     ? ConvertToJalali(String(text))
                     : text || "__"}
                 </>
@@ -187,8 +203,6 @@ export const KubernetesCloudIngressTableRow: FC<{
                 <Table
                   size="small"
                   sx={{
-                    // "& tr": { bgcolor: "red" },
-                    // "& th": { bgcolor: "blue" },
                     m: 3,
                     borderRadius: "15px",
                   }}
@@ -227,18 +241,16 @@ export const KubernetesCloudIngressTableRow: FC<{
                               <TableCell align="center" sx={{ border: "none" }}>
                                 {rule.serviceName}
                               </TableCell>
-                              {/* <TableCell align="center" sx={{ border: "none" }}>
-                                {ConvertToJalali(String(rule.))}
-                              </TableCell>
-                              <TableCell align="center" sx={{ border: "none" }}>
-                                {ConvertToJalali(String(rule.modifiyDate))}
-                              </TableCell> */}
                               <TableCell align="center" sx={{ border: "none" }}>
                                 <IconButton
                                   size="small"
                                   sx={{ borderRadius: 1 }}
                                   onClick={() =>
-                                    handleOpenEditIngressDialog(row)
+                                    handleOpenModal(
+                                      rule,
+                                      ITEM_TYPE_ENUM.INGRESS_RULE,
+                                      DIALOG_TYPE_ENUM.EDIT
+                                    )
                                   }
                                 >
                                   <Edit />
@@ -248,9 +260,10 @@ export const KubernetesCloudIngressTableRow: FC<{
                                   sx={{ borderRadius: 1 }}
                                   color="error"
                                   onClick={() =>
-                                    handleOpenDeleteModal(
+                                    handleOpenModal(
                                       rule,
-                                      ITEM_TYPE_ENUM.INGRESS_RULE
+                                      ITEM_TYPE_ENUM.INGRESS_RULE,
+                                      DIALOG_TYPE_ENUM.DELETE
                                     )
                                   }
                                 >
@@ -270,21 +283,28 @@ export const KubernetesCloudIngressTableRow: FC<{
       </TableRow>
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle={keyTitle || ""}
+        onClose={handleCloseModal}
+        keyTitle={keyTitle?.toLocaleLowerCase() || ""}
         subTitle="برای حذف آیتم, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={
-          keyTitle === "Ingress"
+          keyTitle === ITEM_TYPE_ENUM.INGRESS
             ? selectedKubernetesCloudIngress?.name || ""
-            : selectedIngressRule?.serviceName! + ":" + selectedIngressRule?.id
+            : selectedIngressRule?.serviceName! +
+              ":" +
+              selectedIngressRule?.port
         }
-        onSubmit={() => deleteHandler(keyTitle)}
-        submitLoading={deleteIngressLoading}
+        onSubmit={() => handleDeleteItem(keyTitle)}
+        submitLoading={isLoading}
       />
-      <EditSecretMapDialog
-        openDialog={openEditIngressDialog}
-        onClose={handleCloseEditIngressRuleDialog}
-        secretData={selectedKubernetesCloudIngress}
+      <AddRuleDialog
+        open={dialogType === DIALOG_TYPE_ENUM.CREATE}
+        onClose={handleCloseModal}
+        ingressId={row.id}
+      />
+      <EditIngressRuleDialog
+        open={dialogType === DIALOG_TYPE_ENUM.EDIT}
+        onClose={handleCloseModal}
+        data={selectedIngressRule}
       />
     </>
   );

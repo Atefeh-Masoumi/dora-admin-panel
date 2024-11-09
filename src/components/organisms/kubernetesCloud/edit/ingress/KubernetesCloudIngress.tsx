@@ -19,10 +19,38 @@ export const KubernetesCloudIngress: FC<
 
   const { kubernetesCloudId } = useParams();
 
-  const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
-    });
+  // const { data = [], isLoading } =
+  //   useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery({
+  //     namespaceId: Number(kubernetesCloudId),
+  //   });
+
+  let isLoading = false;
+  const data = [
+    {
+      id: 1,
+      name: "string",
+      domainName: "string",
+      protocolTypeId: 0,
+      kuberCloudSecretId: 0,
+      ruleCount: 1,
+      rules: [
+        {
+          id: 1,
+          path: "string1",
+          serviceName: "string1",
+          port: 1,
+        },
+        {
+          id: 2,
+          path: "string2",
+          serviceName: "string2",
+          port: 2,
+        },
+      ],
+      createDate: "2024-11-09T06:39:27.481Z",
+      modifyDate: "2024-11-09T06:39:27.481Z",
+    },
+  ];
 
   function handleOpenAddIngressDialog() {
     setOpenAddIngressDialog(true);
