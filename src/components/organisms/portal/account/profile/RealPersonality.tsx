@@ -43,7 +43,10 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     firstName: userInformation?.firstName || null,
     lastName: userInformation?.lastName || null,
     nationalId: userInformation?.nationalId || null,
-    birthDate: userInformation?.birthDate || "",
+    birthDate:
+      moment(userInformation?.birthDate as string)
+        .locale("fa")
+        .format("jYYYY/jMM/jDD") || "",
     address: userInformation?.address || null,
   };
 
