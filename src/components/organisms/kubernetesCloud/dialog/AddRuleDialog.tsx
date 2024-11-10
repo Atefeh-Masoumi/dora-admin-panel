@@ -112,21 +112,18 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
             افزودن Rule
           </DialogTitle>
           <Divider sx={{ marginTop: "20px !important" }} />
-          <Button
-            variant="text"
-            color="secondary"
-            sx={{
-              color: "primary.main",
-              justifyContent: "space-between",
-              py: 1,
-              fontSize: "16px",
-            }}
-            startIcon={<Add />}
-            onClick={addRules}
-            disabled={false}
-          >
-            اضافه کردن
-          </Button>
+          <Stack sx={{ width: "100%" }} justifyContent="center" alignItems="end">
+            <Button
+              sx={{ maxWidth: "max-content" }}
+              variant="text"
+              color="secondary"
+              startIcon={<Add />}
+              onClick={addRules}
+              disabled={false}
+            >
+              اضافه کردن
+            </Button>
+          </Stack>
 
           <Grid2 container spacing={1}>
             {rules.map((rule, ruleIndex) => (
