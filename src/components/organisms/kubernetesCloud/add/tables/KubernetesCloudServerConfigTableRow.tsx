@@ -33,7 +33,12 @@ const KubernetesCloudServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
         .slice(1, productBundleTableStruct.length)
         .map((column) => {
           const value = row[column.id];
-          const text = column.format ? column.format(value) : value;
+          const text =
+            column.id === "kuber10Pods"
+              ? value * 10
+              : column.format
+              ? column.format(value)
+              : value;
           return (
             <DorsaTableCell
               key={column.id}

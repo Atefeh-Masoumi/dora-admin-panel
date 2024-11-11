@@ -1,4 +1,4 @@
-import { Chip, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useGetApiMyAccountCustomerGetQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -13,8 +13,6 @@ export const LegalPersonalityDetail: FC<
   const [customerInfo, setCustomerInfo] = useState<any>([]);
   const { data, isLoading: customerInfoLoading } =
     useGetApiMyAccountCustomerGetQuery();
-
-
   useEffect(() => {
     if (data) {
       setCustomerInfo([
@@ -29,30 +27,30 @@ export const LegalPersonalityDetail: FC<
         {
           title: data?.isLegal ? "تاریخ ثبت :" : "تاریخ تولد :",
           value:
-            ConvertToJalaliWithoutTime(String(data?.registrationDate)) ?? "",
+            ConvertToJalaliWithoutTime(String(data?.registrationDate)) || "---",
         },
 
         {
           title: data?.isLegal ? "شناسه ملی :" : "کد ملی :",
-          value: data?.nationalId ?? "",
+          value: data?.nationalId || "---",
         },
 
         {
           title: "تاریخ ایجاد :",
-          value: ConvertToJalaliWithoutTime(String(data?.createDate)) ?? "",
+          value: ConvertToJalaliWithoutTime(String(data?.createDate)) || "---",
         },
 
         {
           title: "شماره تماس :",
-          value: `0${data?.phone?.slice(-10)}` ?? "",
+          value: `0${data?.phone?.slice(-10)}` || "---",
         },
         {
           title: "تاریخ آخرین ویرایش :",
-          value: ConvertToJalaliWithoutTime(String(data?.modifyDate)) ?? "",
+          value: ConvertToJalaliWithoutTime(String(data?.modifyDate)) || "---",
         },
         {
           title: data?.isLegal ? "شماره ثبت :" : "شماره شناسنامه ‌:",
-          value: data?.registrationNumber ?? "---",
+          value: data?.registrationNumber || "---",
         },
         // {
         //   id: "status",

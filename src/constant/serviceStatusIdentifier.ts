@@ -77,6 +77,13 @@ export const serviceStatusIdentifier = (StatusId: number) => {
         bgColor: "warning.light",
         label: "در صف انتظار",
       };
+    case 12:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "درحال حذف",
+      };
     default:
       return {
         iconColor: "error",
