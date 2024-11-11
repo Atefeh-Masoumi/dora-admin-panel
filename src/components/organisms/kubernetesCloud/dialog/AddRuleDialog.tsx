@@ -7,12 +7,13 @@ import {
   DialogTitle,
   Divider,
   FormControl,
+  Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   Stack,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
 import { FC, useMemo, useState } from "react";
 import {
@@ -23,7 +24,7 @@ import {
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
 import { useParams } from "react-router";
-import { Add } from "@mui/icons-material";
+import { Add, DeleteOutline } from "@mui/icons-material";
 
 type InitialValuesType = {
   ingressId: number;
@@ -50,6 +51,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
     });
 
   const transformedPorts = useMemo(() => {
+    console.log({ deploymentPortList });
     return deploymentPortList?.flatMap((deployment) =>
       deployment?.ports?.map((port) => ({
         portId: port.portId,
@@ -68,6 +70,18 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
       ...formik.values.rules,
       { kuberCloudDeployPortId: 0, path: "" },
     ]);
+  };
+
+  const removeRules = (index: number) => {
+    setRules((prevState) => {
+      let result = [...prevState];
+      result.splice(index, 1);
+      return result;
+    });
+    formik.setFieldValue(
+      "rules",
+      formik.values.rules.filter((_, i) => i !== index)
+    );
   };
 
   const formik = useFormik<InitialValuesType>({
@@ -97,7 +111,14 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
   });
 
   return (
-    <Dialog open={props.open} onClose={props.onClose} fullWidth>
+    <Dialog
+      open={props.open}
+      onClose={() => {
+        props.onClose && props.onClose({}, "backdropClick");
+        formik.resetForm();
+      }}
+      fullWidth
+    >
       <form onSubmit={formik.handleSubmit} autoComplete="on">
         <Stack
           px={{ xs: 1.8, md: 2 }}
@@ -112,7 +133,11 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
             افزودن Rule
           </DialogTitle>
           <Divider sx={{ marginTop: "20px !important" }} />
-          <Stack sx={{ width: "100%" }} justifyContent="center" alignItems="end">
+          <Stack
+            sx={{ width: "100%" }}
+            justifyContent="center"
+            alignItems="end"
+          >
             <Button
               sx={{ maxWidth: "max-content" }}
               variant="text"
@@ -125,55 +150,67 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
             </Button>
           </Stack>
 
-          <Grid2 container spacing={1}>
+          <Stack direction="column" rowGap={{ xs: 4, md: 2 }}>
             {rules.map((rule, ruleIndex) => (
-              <>
-                <Grid2 xs={12} md={6}>
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Port</InputLabel>
-                    <Select
-                      label="Port"
-                      size="small"
-                      {...formik.getFieldProps("kuberCloudDeployPortId")}
-                    >
-                      {transformedPorts?.map((item, index) => (
-                        <MenuItem
-                          sx={{
-                            mx: 0.5,
-                            my: 1,
-                            borderRadius: 1,
-                            direction: "ltr",
-                          }}
-                          key={index}
-                          value={item?.portId}
-                        >
-                          {item?.nodePort}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid2>
-                <Grid2 xs={12} md={6}>
+              <Grid
+                direction={{ xs: "column-reverse", md: "row" }}
+                key={ruleIndex}
+                container
+                spacing={1}
+              >
+                <Grid item xs={12} md={6}>
+                  <Stack direction="row">
+                    <IconButton onClick={() => removeRules(ruleIndex)}>
+                      <DeleteOutline color="error" />
+                    </IconButton>
+                    <FormControl fullWidth size="small">
+                      <InputLabel>Port</InputLabel>
+                      <Select
+                        label="Port"
+                        size="small"
+                        {...formik.getFieldProps(
+                          `rules[${ruleIndex}].kuberCloudDeployPortId`
+                        )}
+                      >
+                        {transformedPorts?.map((item, index) => (
+                          <MenuItem
+                            sx={{
+                              mx: 0.5,
+                              my: 1,
+                              borderRadius: 1,
+                              direction: "ltr",
+                            }}
+                            key={index}
+                            value={item?.portId}
+                          >
+                            {item?.nodePort}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <DorsaTextField
                     dir="ltr"
                     fullWidth
-                    label="*name"
+                    label="*Path"
                     size="small"
-                    {...formik.getFieldProps("serviceName")}
+                    {...formik.getFieldProps(`rules[${ruleIndex}].path`)}
                   />
-                </Grid2>
-              </>
+                </Grid>
+              </Grid>
             ))}
-          </Grid2>
-
+          </Stack>
           <DialogActions>
             <Button
               variant="outlined"
               color="secondary"
               sx={{ px: 3, py: 0.8 }}
-              onClick={(e) =>
-                props.onClose && props.onClose(e, "escapeKeyDown")
-              }
+              onClick={(e) => {
+                props.onClose && props.onClose(e, "escapeKeyDown");
+                formik.resetForm();
+              }}
             >
               انصراف
             </Button>

@@ -279,7 +279,6 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     },
   ];
 
-  console.log({roleAccessList})
 
 
   return (

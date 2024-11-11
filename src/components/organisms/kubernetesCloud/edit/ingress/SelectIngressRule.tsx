@@ -1,19 +1,19 @@
 import { Grid, IconButton, MenuItem, Stack } from "@mui/material";
-import { FormikProps } from "formik";
+import { FormikErrors, FormikProps, FormikTouched } from "formik";
 import { Dispatch, FC, Fragment, SetStateAction, useMemo } from "react";
-import { CreateIngressTypes } from "../../dialog/AddIngressDialog";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
-  RuleModelRequest,
-  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-} from "src/app/services/api.generated";
+  CreateIngressTypes,
+  CustomRuleModelRequest,
+} from "../../dialog/AddIngressDialog";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { DeleteOutline } from "@mui/icons-material";
 
 type SelectIngressRulePropsType = {
   formik: FormikProps<CreateIngressTypes>;
   mainIndex: number;
-  setRules: Dispatch<SetStateAction<RuleModelRequest[]>>;
+  setRules: Dispatch<SetStateAction<CustomRuleModelRequest[]>>;
 };
 
 export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
@@ -36,8 +36,6 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       }))
     );
   }, [kuberCloudObject]);
-
-  // console.log(servicePortList);
 
   const removeRules = (index: number) => {
     setRules((prevState) => {
@@ -68,6 +66,33 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
         );
       },
       otherProps: {
+        error: Boolean(
+          (
+            formik.touched.rules?.[mainIndex] as FormikTouched<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.kuberCloudDeployPortId &&
+            (
+              formik.errors.rules?.[mainIndex] as FormikErrors<{
+                path: string | null;
+                kuberCloudDeployPortId: number;
+              }>
+            )?.kuberCloudDeployPortId
+        ),
+        helperText:
+          (
+            formik.touched.rules?.[mainIndex] as FormikTouched<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.kuberCloudDeployPortId &&
+          (
+            formik.errors.rules?.[mainIndex] as FormikErrors<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.kuberCloudDeployPortId,
         select: true,
         label: "Service Port",
       },
@@ -86,6 +111,35 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       width: "100%",
       placeHolder: "Path",
       value: formik.values.rules[mainIndex]?.path || "",
+      otherProps: {
+        error: Boolean(
+          (
+            formik.touched.rules?.[mainIndex] as FormikTouched<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.path &&
+            (
+              formik.errors.rules?.[mainIndex] as FormikErrors<{
+                path: string | null;
+                kuberCloudDeployPortId: number;
+              }>
+            )?.path
+        ),
+        helperText:
+          (
+            formik.touched.rules?.[mainIndex] as FormikTouched<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.path &&
+          (
+            formik.errors.rules?.[mainIndex] as FormikErrors<{
+              path: string | null;
+              kuberCloudDeployPortId: number;
+            }>
+          )?.path,
+      },
       onChange: (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => {
