@@ -63,6 +63,8 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
     );
   }, [deploymentPortList]);
 
+
+
   const formik = useFormik<InitialValuesType>({
     initialValues: {
       ingressRuleId: data?.id || 1,
@@ -141,13 +143,9 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
               <DorsaTextField
                 dir="ltr"
                 fullWidth
-                label="*name"
+                label="*Path"
                 size="small"
                 {...formik.getFieldProps("serviceName")}
-                // value={formik.values.serviceName}
-                // onChange={(e) =>
-                //   formik.setFieldValue("serviceName", e.target.value)
-                // }
               />
             </Grid2>
           </Grid2>

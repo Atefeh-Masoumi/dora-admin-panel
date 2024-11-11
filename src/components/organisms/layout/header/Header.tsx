@@ -134,7 +134,6 @@ const Header: FC<HeaderPropsType> = ({
       </Popover>
     </>
   );
-  console.log({ vpcId });
 
   const backButtonOnClick = (url: string | number) => {
     let href: string | number = "";
