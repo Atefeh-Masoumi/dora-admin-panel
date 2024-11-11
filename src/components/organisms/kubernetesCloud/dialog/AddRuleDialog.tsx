@@ -51,7 +51,6 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
     });
 
   const transformedPorts = useMemo(() => {
-    console.log({ deploymentPortList });
     return deploymentPortList?.flatMap((deployment) =>
       deployment?.ports?.map((port) => ({
         portId: port.portId,
