@@ -708,6 +708,13 @@ const Router: FC = () => {
         />
 
         <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/firewall"
+          element={mainTemplate(EditKubernetesCloud, {
+            pageTitle: "مدیریت Firewall",
+          })}
+        />
+
+        <Route
           path="/kubernetes-cloud/:kubernetesCloudId/deployment/add"
           element={mainTemplate(AddKubernetesCloudDeployment, {
             link: {

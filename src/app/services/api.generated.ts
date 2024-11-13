@@ -4279,11 +4279,11 @@ export type KuberCloudFirewallListResponse = {
   createDate?: string;
 };
 export type CreateKuberCloudFirewallModel = {
-  datacenterId: number;
+  namespaceId: number;
   firewallProtocolTypeId: number;
   deployPortId: number;
-  sourceIp?: string | null;
-  sourcePort?: number | null;
+  sourceIp?: number | null;
+  description?: string | null;
 };
 export type EnvKeyValuePairResponse = {
   id?: number;

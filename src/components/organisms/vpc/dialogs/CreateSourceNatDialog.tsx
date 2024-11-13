@@ -233,6 +233,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
       setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     []
   );
+  
   const onConnect = useCallback(
     (params: any) => setEdges((els) => addEdge(params, els)),
     []
