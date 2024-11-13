@@ -11,6 +11,7 @@ import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
 import { KubernetesCloudDeployment } from "src/components/organisms/kubernetesCloud/edit/deployment/KubernetesCloudDeployment";
+import { KubernetesCloudFirewall } from "src/components/organisms/kubernetesCloud/edit/firewall/KubernetesCloudFirewall";
 import { KubernetesCloudIngress } from "src/components/organisms/kubernetesCloud/edit/ingress/KubernetesCloudIngress";
 import { KubernetesCloudSecretMap } from "src/components/organisms/kubernetesCloud/edit/secretMap/SecretMap";
 import { KubernetesCloudServerConfig } from "src/components/organisms/kubernetesCloud/edit/serverConfig/KubernetesCloudServerConfig";
@@ -77,6 +78,9 @@ const EditKubernetesCloud: FC = () => {
     if (pathname.includes("ingress")) {
       result = `ingress`;
     }
+    if (pathname.includes("firewall")) {
+      result = `firewall`;
+    }
 
     return result;
   }, [pathname]);
@@ -89,6 +93,9 @@ const EditKubernetesCloud: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
+      case `firewall`:
+        result = <KubernetesCloudFirewall />
+        break;
       case `deployment`:
         result = <KubernetesCloudDeployment />;
         break;
@@ -149,6 +156,7 @@ const EditKubernetesCloud: FC = () => {
           <DorsaTab value={`configmap`} label="Configmap" />
           <DorsaTab value={`secret`} label="Secret" />
           <DorsaTab value={`ingress`} label="Ingress" />
+          <DorsaTab value={`firewall`} label="Firewall" />
         </Tabs>
       </Box>
       {renderHandler()}
