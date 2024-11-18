@@ -1,19 +1,17 @@
-import AdapterJalali from "@date-io/date-fns-jalali";
 import { LoadingButton } from "@mui/lab";
 import { Stack } from "@mui/material";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { Form, Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import moment from "jalali-moment";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { toast } from "react-toastify";
-import {
-  useGetApiMyAccountProfileGetQuery,
-  usePutApiMyAccountProfileEditMutation,
-} from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import { jalaliDateRegex } from "src/utils/regexUtils";
 import * as yup from "yup";
+import {
+  useGetApiMyAccountProfileGetQuery,
+  usePutApiMyAccountProfileEditMutation,
+} from "src/app/services/api.generated";
 
 const ERROR_MESSAGE = "فیلد الزامیست!";
 const DATE_ERROR_MESSAGE =
@@ -22,7 +20,7 @@ const DATE_ERROR_MESSAGE =
 const validationSchema = yup.object().shape({
   firstName: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
   lastName: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
-  nationalId: yup.string().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
+  nationalId: yup.number().typeError(ERROR_MESSAGE).required(ERROR_MESSAGE),
   birthDate: yup
     .string()
     .typeError(ERROR_MESSAGE)
@@ -43,10 +41,11 @@ export const RealPersonality: FC<RealPersonalityPropsType> = () => {
     firstName: userInformation?.firstName || null,
     lastName: userInformation?.lastName || null,
     nationalId: userInformation?.nationalId || null,
-    birthDate:
-      moment(userInformation?.birthDate as string)
-        .locale("fa")
-        .format("jYYYY/jMM/jDD") || "",
+    birthDate: userInformation?.birthDate
+      ? moment(userInformation?.birthDate as string)
+          .locale("fa")
+          .format("jYYYY/jMM/jDD")
+      : moment(new Date()).locale("fa").format("jYYYY/jMM/jDD"),
     address: userInformation?.address || null,
   };
 
