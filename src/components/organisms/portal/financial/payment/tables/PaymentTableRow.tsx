@@ -67,7 +67,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         role="checkbox"
         tabIndex={-1}
         key={row.id}
-        sx={{ cursor: "pointer" }}
+        sx={{ py: 2.9, cursor: "pointer" }}
         onClick={openDialog}
       >
         {paymentTableStruct.map((column) => {
@@ -75,7 +75,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
             <DorsaTableCell
               key={column.id}
               align="center"
-              sx={{ px: 1, whiteSpace: "nowrap" }}
+              sx={{ px: 1, py: 2.9, whiteSpace: "nowrap" }}
             >
               <Stack>{renderValueHandler(column)}</Stack>
             </DorsaTableCell>

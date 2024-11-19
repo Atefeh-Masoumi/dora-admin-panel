@@ -19,7 +19,7 @@ const BillsTableRow: FC<{ row: any }> = ({ row }) => {
           <DorsaTableCell
             key={column.id}
             align="center"
-            sx={{ px: 1, whiteSpace: "nowrap" }}
+            sx={{ py:2.9, px: 1, whiteSpace: "nowrap" }}
           >
             {column.id === "title" ? (
               <Stack

@@ -26,7 +26,7 @@ export const CommissionTableRow: FC<{ row: any }> = ({ row }) => {
           <DorsaTableCell
             key={column.id}
             align="center"
-            sx={{ px: 1, whiteSpace: "nowrap" }}
+            sx={{ px: 1, py: 2.9, whiteSpace: "nowrap" }}
           >
             {column.id === "title" ? (
               <Stack
