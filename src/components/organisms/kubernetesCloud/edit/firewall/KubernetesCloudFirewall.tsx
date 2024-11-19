@@ -11,9 +11,6 @@ import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/d
 import {
   Button,
   Divider,
-  FormControl,
-  MenuItem,
-  Select,
   Stack,
   Typography,
 } from "@mui/material";

@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   Chip,
   Dialog,
@@ -7,40 +6,24 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
-import { FC, useCallback, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import {
   CreateKuberCloudFirewallModel,
-  CreateVpcGatewaySnatModel,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  useGetApiMyVpcIpListByVpcHostIdQuery,
-  useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
-  usePostApiMyVpcNatCreateSnatMutation,
 } from "src/app/services/api.generated";
 import * as yup from "yup";
-import {
-  addEdge,
-  MarkerType,
-  ReactFlow,
-  reconnectEdge,
-  useEdgesState,
-  useNodesState,
-} from "@xyflow/react";
-import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { ipValidation, maskRegexOnly24 } from "src/utils/regex.utils";
 import { formikOnSubmitType } from "src/types/form.type";
 
