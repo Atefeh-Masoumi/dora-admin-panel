@@ -23,70 +23,78 @@ const AddVpc: FC = () => {
       >
         ایجاد ابر اختصاصی
       </Typography>
-      <Grid container>
-        <Grid xs={12} md={8} item>
-          <Stack
-            // component={Paper}
-            sx={{
-              position: "relative",
-              width: { xs: "100%" },
-              px: { xs: 1.8, lg: 2 },
-              py: { xs: 1.8, lg: 2.25 },
-            }}
-          >
-            <Grid container gap={2}>
-              <Grid xs={12} item>
-                <SelectVpcDataCenter />
-                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
-              </Grid>
-              {/* <Grid xs={12} item>
+      <Box sx={{ my: 0 }}>
+        <Grid container>
+          <Grid xs={12} md={8} item>
+            <Stack
+              component={Paper}
+              sx={{
+                position: "relative",
+                width: { xs: "100%" },
+                px: { xs: 1.8, lg: 2 },
+                py: { xs: 1.8, lg: 2.25 },
+              }}
+            >
+              <Grid container gap={2}>
+                <Grid xs={12} item>
+                  <SelectVpcDataCenter />
+                  <Divider sx={{ mt: 10 }} />
+                </Grid>
+                {/* <Grid xs={12} item>
                 <SelectVpcHypervisor />
-                <Divider sx={{ margin: "50px 10px" }} />
+                  <Divider sx={{ mt: 10 }} />
               </Grid> */}
-              <Grid xs={12} item>
-                <SelectVpcNetwork />
-                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
+                <Grid xs={12} item>
+                  <SelectVpcNetwork />
+                  <Divider sx={{ mt: 10 }} />
+                </Grid>
+                <Grid xs={12} item>
+                  <SelectVpcConfig />
+                  <Divider sx={{ mt: 10 }} />
+                </Grid>
+                <Grid xs={12} item sx={{ pb: 4 }}>
+                  <SelectVpcServiceInfo />
+                </Grid>
               </Grid>
-              <Grid xs={12} item>
-                <SelectVpcConfig />
-                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
-              </Grid>
-              <Grid xs={12} item>
-                <SelectVpcServiceInfo />
-                {/* <Divider sx={{ margin: "50px 10px" }} /> */}
-              </Grid>
-            </Grid>
-          </Stack>
+            </Stack>
+          </Grid>
+          <Grid
+            id="relative-left-col-factor"
+            px={{ md: 2, xs: 0 }}
+            py={{ md: 0, xs: 2 }}
+            xs={12}
+            md={4}
+            item
+            style={{ position: "relative", textAlign: "center" }}
+          >
+            <Box sx={{ position: "sticky", top: 0 }}>
+              <ServiceReceipt
+                receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
+                submitHandler={() => submitHandler()}
+                submitButtonIsLoading={submitLoading}
+                receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
+                receiptItemNumber={serverConfig?.id ? "۱" : "---"}
+                reciptItemPrice={Math.floor(
+                  serverConfig?.price || 0
+                ).toLocaleString("fa-IR")}
+                totalPrice={Math.floor(
+                  (serverConfig?.price || 0) * 1.1
+                ).toLocaleString("fa-IR")}
+                vat={Math.floor(
+                  (serverConfig?.price || 0) * 0.1
+                ).toLocaleString("fa-IR")}
+              />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid
-          id="relative-left-col-factor"
-          px={{ md: 2, xs: 0 }}
-          py={{ md: 0, xs: 2 }}
-          xs={12}
-          md={4}
-          item
-          style={{ position: "relative", textAlign: "center" }}
-        >
-          <Box sx={{ position: "sticky", top: 0 }}>
-            <ServiceReceipt
-              receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
-              submitHandler={() => submitHandler()}
-              submitButtonIsLoading={submitLoading}
-              receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
-              receiptItemNumber={serverConfig?.id ? "۱" : "---"}
-              reciptItemPrice={Math.floor(
-                serverConfig?.price || 0
-              ).toLocaleString("fa-IR")}
-              totalPrice={Math.floor(
-                (serverConfig?.price || 0) * 1.1
-              ).toLocaleString("fa-IR")}
-              vat={Math.floor((serverConfig?.price || 0) * 0.1).toLocaleString(
-                "fa-IR"
-              )}
-            />
-          </Box>
-        </Grid>
-      </Grid>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+          px={1.7}
+        ></Stack>
+      </Box>
     </>
   );
 };

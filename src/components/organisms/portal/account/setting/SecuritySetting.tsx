@@ -7,6 +7,7 @@ import {
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const SecuritySetting: FC = () => {
   const { data: profileData, isLoading } = useGetApiMyAccountProfileGetQuery();
@@ -40,7 +41,7 @@ export const SecuritySetting: FC = () => {
           px: { xs: 1.8, lg: 3 },
           py: { xs: 1.8, lg: 2.25 },
           backgroundColor: "white",
-          borderRadius: 2,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Typography variant="text1" color="secondary" sx={{ pt: 1.1 }}>

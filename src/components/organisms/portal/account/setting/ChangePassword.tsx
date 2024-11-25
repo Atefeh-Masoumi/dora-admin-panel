@@ -16,6 +16,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { formikOnSubmitType } from "src/types/form.type";
 import { passwordValidatorRegex } from "src/utils/formValidator";
 import { usePostApiMyAccountProfileChangePasswordMutation } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const passValidationHandler = (value: string) =>
   !value ? false : passwordValidatorRegex.test(value);
@@ -80,7 +81,7 @@ export const ChangePassword: FC = () => {
               px: { xs: 1.8, lg: 3 },
               py: { xs: 1.8, lg: 2.25 },
               backgroundColor: "white",
-              borderRadius: 2,
+              borderRadius: BORDER_RADIUS_1,
             }}
           >
             <Typography variant="text1" color="secondary" sx={{ pt: 1.1 }}>
