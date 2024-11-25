@@ -12,11 +12,6 @@ export const billsTableStruct: columnType[] = [
     type: "date",
   },
   {
-    id: "billDate",
-    label: "تاریخ و زمان صورتحساب",
-    type: "date",
-  },
-  {
     id: "netPrice",
     label: "مبلغ صورتحساب",
     isPrice: true,
@@ -33,6 +28,11 @@ export const billsTableStruct: columnType[] = [
     label: "جمع کل",
     isPrice: true,
     format: priceToPersian,
+  },
+  {
+    id: "billDate",
+    label: "تاریخ و زمان صورتحساب",
+    type: "date",
   },
   {
     id: "control",
