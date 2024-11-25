@@ -184,7 +184,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                             margin: { xs: " 5px 0", sm: "0 !important" },
                           }}
                           value={id}
-                          control={<Radio size="small" />}
+                          control={<Radio size="medium" />}
                           label={
                             <Stack
                               direction="row"

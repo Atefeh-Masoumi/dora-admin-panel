@@ -72,7 +72,6 @@ const AddStorageService: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
-      // TODO: add "storageHostTypeId";
       createStorageService({
         createStorageHostModel: {
           name: name,
@@ -107,7 +106,7 @@ const AddStorageService: FC = () => {
         <Grid container>
           <Grid xs={12} md={8} item>
             <Stack
-              // component={Paper}
+              component={Paper}
               sx={{
                 position: "relative",
                 width: { xs: "100%" },
@@ -118,18 +117,18 @@ const AddStorageService: FC = () => {
               <Grid container gap={2}>
                 <Grid xs={12} item>
                   <SelectDataCenter />
-                  {/* <Divider sx={{ margin: "50px 10px" }} /> */}
+                  <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
                   <SelectConfigType
                     isPredefined={isPredefined}
                     setIsPredefined={setIsPredefined}
                   />
-                  {/* <Divider sx={{ margin: "50px 10px" }} /> */}
+                  <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
                   <SelectConfig />
-                  {/* <Divider sx={{ margin: "50px 10px" }} /> */}
+                  <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
                   <ServerInfo />

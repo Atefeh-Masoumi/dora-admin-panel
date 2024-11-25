@@ -88,6 +88,14 @@ export const vpcStatusIdentifier = (vpcId: number) => {
         bgcolor: "warning.light",
         chipColor: "warning",
       };
+    case 12:
+      return {
+        id: "Deleting",
+        label: "در صف حذف",
+        textColor: "warning.main",
+        bgcolor: "warning.light",
+        chipColor: "warning",
+      };
     default:
       return {
         id: "Other",

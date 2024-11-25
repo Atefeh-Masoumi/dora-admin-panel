@@ -79,7 +79,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
   );
 
   return (
-    <Paper sx={{ p: 2, width: "100%", boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)'}}>
+    <>
       <Stack spacing={2}>
         <Typography fontSize={24} fontWeight="bold" align="center">
           مشخصات سرور را انتخاب کنید
@@ -139,6 +139,6 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
           </Stack>
         )}
       </Box>
-    </Paper>
+    </>
   );
 };

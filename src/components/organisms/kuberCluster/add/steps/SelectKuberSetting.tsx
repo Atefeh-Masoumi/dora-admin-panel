@@ -109,68 +109,64 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   );
 
   return (
-    <Paper
-      sx={{ p: 2, width: "100%", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }}
-    >
-      <Stack alignItems="center" rowGap={4}>
-        <Typography fontSize={24} fontWeight="bold" alignItems="center">
-          تنظیمات کلاستر کوبرنتیز را انتخاب کنید
-        </Typography>
-        <Stack
-          direction="row"
-          // direction={{ xs: "column", lg: "row" }}
-          gap={2}
-          alignItems="center"
-          justifyContent="center"
-          flexWrap="wrap"
-        >
-          <FormControl>
-            <InputLabel>ورژن‌های کوبرنتیز</InputLabel>
-            <Select
-              label="ورژن‌های کوبرنتیز"
-              sx={{ width: 240 }}
-              value={kubernetesVersion?.id || ""}
-              onChange={versionOnChange}
-            >
-              {versionsList?.map(({ id, name }) => (
-                <MenuItem key={id} value={id}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl disabled={!dataCenter}>
-            <InputLabel>نسخه سیستم عامل</InputLabel>
-            <Select
-              label="نسخه سیستم عامل"
-              sx={{ width: 240 }}
-              value={osVersion?.id || ""}
-              onChange={osVersionOnChange}
-            >
-              {osVersionsList?.length === 0 ? (
-                <MenuItem disabled value="">
-                  موردی یافت نشد
-                </MenuItem>
-              ) : (
-                osVersionsList?.map(({ id, name }) => {
-                  return (
-                    <MenuItem key={id} value={id!}>
-                      {name}
-                    </MenuItem>
-                  );
-                })
-              )}
-            </Select>
-          </FormControl>
-          <Counter
-            label="تعداد نودهای کلاستر"
-            value={workersCount}
-            onChange={workersCountOnChange}
-            onPlusClick={addOne}
-            onMinusClick={minusOne}
-          />
-        </Stack>
+    <Stack alignItems="center" rowGap={4}>
+      <Typography fontSize={24} fontWeight="bold" alignItems="center">
+        تنظیمات کلاستر کوبرنتیز را انتخاب کنید
+      </Typography>
+      <Stack
+        direction="row"
+        // direction={{ xs: "column", lg: "row" }}
+        gap={2}
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+      >
+        <FormControl>
+          <InputLabel>ورژن‌های کوبرنتیز</InputLabel>
+          <Select
+            label="ورژن‌های کوبرنتیز"
+            sx={{ width: 240 }}
+            value={kubernetesVersion?.id || ""}
+            onChange={versionOnChange}
+          >
+            {versionsList?.map(({ id, name }) => (
+              <MenuItem key={id} value={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl disabled={!dataCenter}>
+          <InputLabel>نسخه سیستم عامل</InputLabel>
+          <Select
+            label="نسخه سیستم عامل"
+            sx={{ width: 240 }}
+            value={osVersion?.id || ""}
+            onChange={osVersionOnChange}
+          >
+            {osVersionsList?.length === 0 ? (
+              <MenuItem disabled value="">
+                موردی یافت نشد
+              </MenuItem>
+            ) : (
+              osVersionsList?.map(({ id, name }) => {
+                return (
+                  <MenuItem key={id} value={id!}>
+                    {name}
+                  </MenuItem>
+                );
+              })
+            )}
+          </Select>
+        </FormControl>
+        <Counter
+          label="تعداد نودهای کلاستر"
+          value={workersCount}
+          onChange={workersCountOnChange}
+          onPlusClick={addOne}
+          onMinusClick={minusOne}
+        />
       </Stack>
-    </Paper>
+    </Stack>
   );
 };

@@ -25,10 +25,7 @@ export const SelectVpcConfig: FC<SelectVpcConfigPropsType> = () => {
   );
 
   return (
-    <Paper
-      elevation={1}
-      sx={{ p: 2, width: "100%", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }}
-    >
+    <>
       <Stack spacing={2}>
         <Typography fontSize={24} fontWeight="bold" align="center">
           مشخصات سرویس را انتخاب کنید
@@ -42,6 +39,6 @@ export const SelectVpcConfig: FC<SelectVpcConfigPropsType> = () => {
         </Typography>
       </Stack>
       <Box sx={{ px: { lg: 5 }, pt: 5 }}>{table}</Box>
-    </Paper>
+    </>
   );
 };
