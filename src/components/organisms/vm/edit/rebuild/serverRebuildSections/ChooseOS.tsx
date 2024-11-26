@@ -19,11 +19,13 @@ import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
 import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import { EditServerContext } from "../contexts/EditServerContext";
+import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
+import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
+  hypervisorId?: number | null;
   imageId?: number | null;
   setImageId?: any;
 };
@@ -37,16 +39,16 @@ type OsDropDownType = {
 };
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
+  datacenterId,
+  hypervisorId,
   imageId,
   setImageId,
 }) => {
-  const { dataCenter } = useContext(EditServerContext);
-
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
-      datacenterId: Number(dataCenter) || 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hypervisorTypeId: HYPERVISOR_ENUM.VM,
+      datacenterId: Number(datacenterId) || 0,
+      hypervisorTypeId: hypervisorId || 0,
     }
   );
 
@@ -136,6 +138,10 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
         return <DebianSvgIcon />;
       case 5:
         return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      case 6:
+        return <SuseOSIcon sx={{ width: 40, height: 40 }} />;
+      case 7:
+        return <RockyOSIcon sx={{ width: 40, height: 40 }} />;
       default:
         return "";
     }

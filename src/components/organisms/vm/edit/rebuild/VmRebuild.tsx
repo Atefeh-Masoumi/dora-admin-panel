@@ -4,19 +4,20 @@ import { useFormik } from "formik";
 import { FC, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
+import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
 
 type VmRebuildSteps = 1 | 2;
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
-  const { serverId } = useContext(EditServerContext);
+  const { serverId, hypervisorId, datacenterId } =
+    useContext(EditServerContext);
   const [step, setStep] = useState<VmRebuildSteps>(1);
   const [imageId, setImageId] = useState<any>(0);
   const [name, setName] = useState("");
@@ -84,7 +85,12 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         لطفا ابتدا سیستم عامل مورد نظر ماشین را از زیر انتخاب کنید
       </Typography>
       {step === 1 ? (
-        <ChooseOSForRebuild imageId={imageId} setImageId={setImageId} />
+        <ChooseOSForRebuild
+          imageId={imageId}
+          setImageId={setImageId}
+          hypervisorId={hypervisorId}
+          datacenterId={datacenterId}
+        />
       ) : (
         <ChooseInfo
           name={name}
