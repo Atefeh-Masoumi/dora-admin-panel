@@ -105,7 +105,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     props.onClose && props.onClose(event, "escapeKeyDown");
     formik.resetForm();
   };
-  console.log(formik.values);
 
   return (
     <Dialog {...props} onClose={dialogCloseHandler} maxWidth={"xs"}>
