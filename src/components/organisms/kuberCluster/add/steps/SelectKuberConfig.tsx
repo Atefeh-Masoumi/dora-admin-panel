@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
 import { useGetApiMyPortalProductBundleKuberClusterListQuery } from "src/app/services/api.generated";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -75,7 +75,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
         isLoading={vmBundlesListLoading}
       />
     ),
-    [vmBundlesListLoading]
+    [vmBundlesListLoading, vmBundlesList]
   );
 
   return (

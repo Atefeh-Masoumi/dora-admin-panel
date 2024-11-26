@@ -1,12 +1,5 @@
 import { TabContext, TabPanel } from "@mui/lab";
-import {
-  Container,
-  Stack,
-  Tabs,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Container, Stack, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import { FC, SyntheticEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
@@ -76,7 +69,7 @@ const Calculator: FC = () => {
         </Typography>
       </Stack> */}
       {/* <Stack sx={{ width: { xs: "100%", lg: "80%" } }}> */}
-      <Stack sx={{  }}>
+      <Stack sx={{}}>
         <TabContext value={value}>
           <Container
             sx={{

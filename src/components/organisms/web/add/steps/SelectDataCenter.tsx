@@ -2,8 +2,6 @@ import { useContext, FC } from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { AddWebContext } from "src/components/organisms/web/add/contexts/AddWebContext";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterListQuery,

@@ -1,4 +1,3 @@
-import { Add } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -8,14 +7,10 @@ import {
   DialogTitle,
   Divider,
   FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   Stack,
-  Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
@@ -62,8 +57,6 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
       }))
     );
   }, [deploymentPortList]);
-
-
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {

@@ -3,9 +3,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "src/app/hooks";
-import { ShortUserBill } from "src/components/organisms/home/BillShortList";
 import { Products } from "src/components/organisms/home/Products";
-import { ShortTickets } from "src/components/organisms/home/SupportShortList";
 import { Wallet } from "src/components/organisms/home/Wallet";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 

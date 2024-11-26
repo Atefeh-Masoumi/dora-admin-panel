@@ -62,12 +62,7 @@ const Signup: FC = () => {
 
   const navigate = useNavigate();
 
-  const {
-    data: captchaData,
-    isLoading: getCaptchaLoading,
-    isFetching: getCaptchaFetching,
-    refetch: refetchCaptchaData,
-  } = useGetApiMyAccountCaptchaQuery();
+  const { refetch: refetchCaptchaData } = useGetApiMyAccountCaptchaQuery();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     {

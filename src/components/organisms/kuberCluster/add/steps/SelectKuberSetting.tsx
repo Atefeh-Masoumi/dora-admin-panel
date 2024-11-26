@@ -2,7 +2,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   SelectChangeEvent,
   Stack,
@@ -16,15 +15,15 @@ import {
   useEffect,
   useMemo,
 } from "react";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
+import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterImageListQuery,
   useGetApiMyKubernetesClusterVersionListQuery,
 } from "src/app/services/api.generated";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
-import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
-import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 
 type SelectKuberSettingPropsType = {};
 

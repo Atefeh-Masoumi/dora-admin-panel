@@ -26,11 +26,6 @@ export const DomainInfo: FC<DomainInfoPropsType> = () => {
     [getDataFetching, getDataLoading]
   );
 
-  const isActive = useMemo(
-    () => domainData?.statusId === 2,
-    [domainData?.statusId]
-  );
-
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
       <Grid2 xs={12}>

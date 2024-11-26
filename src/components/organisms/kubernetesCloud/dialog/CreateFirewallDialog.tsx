@@ -18,19 +18,13 @@ import { Stack } from "@mui/system";
 import { FC, useMemo } from "react";
 import { useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
+import * as yup from "yup";
+import { formikOnSubmitType } from "src/types/form.type";
 import {
   CreateKuberCloudFirewallModel,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
-import * as yup from "yup";
-import { ipValidation, maskRegexOnly24 } from "src/utils/regex.utils";
-import { formikOnSubmitType } from "src/types/form.type";
-
-const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
-const combinedIpRegex = new RegExp(
-  `${ipValidation.source}|${maskRegexOnly24.source}`
-);
 
 const options = [
   { id: 1, label: "TCP Protocol", isTcp: true },
@@ -57,8 +51,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     });
 
   const deployPortList = useMemo(() => {
-    return kuberCloudObject?.flatMap((item, index) =>
-      item.ports?.map((port, portIndex) => ({
+    return kuberCloudObject?.flatMap((item) =>
+      item.ports?.map((port) => ({
         id: port.portId,
         value: `${item.deployName}:${port.targetPort}`,
       }))
@@ -76,23 +70,22 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     description: null,
   };
 
-  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (
-    values,
-    { resetForm }
-  ) => {
-    // createKubernetesCloudFirewall({
-    //   createKuberCloudFirewallModel: {
-    //     ...values,
-    //   },
-    // })
-    //   .unwrap()
-    //   .then((res) => {
-    //     resetForm();
-    //     formik.resetForm();
-    //     forceClose();
-    //   })
-    //   .catch((err) => {});
-  };
+  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = () =>
+    // values
+    {
+      // createKubernetesCloudFirewall({
+      //   createKuberCloudFirewallModel: {
+      //     ...values,
+      //   },
+      // })
+      //   .unwrap()
+      //   .then((res) => {
+      //     resetForm();
+      //     formik.resetForm();
+      //     forceClose();
+      //   })
+      //   .catch((err) => {});
+    };
 
   const formik = useFormik({
     initialValues,

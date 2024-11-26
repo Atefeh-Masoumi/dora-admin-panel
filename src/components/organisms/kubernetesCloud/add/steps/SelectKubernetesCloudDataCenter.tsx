@@ -6,8 +6,6 @@ import {
   useGetApiMyDatacenterListQuery,
 } from "src/app/services/api.generated";
 import { AddKubernetesCloudContext } from "../context/AddKubernetesCloudContext";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
 import DomainIcon from "@mui/icons-material/Domain";
 
 type SelectKuberDataCenterPropsType = {};

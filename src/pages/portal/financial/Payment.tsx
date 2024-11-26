@@ -1,11 +1,8 @@
 import Dialog, { DialogProps } from "@mui/material/Dialog";
-import { useNavigate, useParams } from "react-router";
-import { FC, useEffect, useState, useMemo } from "react";
+import { FC, useState, useMemo } from "react";
 import { priceToPersian } from "src/utils/priceToPersian";
-import PageLoading from "src/components/atoms/PageLoading";
 import { ConvertToJalali } from "src/utils/convertToJalali";
-import { Button, Stack, Typography, Paper } from "@mui/material";
-import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";
+import { Stack, Typography, Paper } from "@mui/material";
 import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
 import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
 
@@ -17,10 +14,7 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
   handleClose,
   ...props
 }) => {
-  const [paymentInfo, setPaymentInfo] = useState<any>({});
-  const navigate = useNavigate();
-
-  const [getInfo, { isLoading }] = useLazyGetApiMyPortalPaymentGetByIdQuery();
+  const [paymentInfo] = useState<any>({});
 
   const isSuccess = useMemo(() => {
     let result: boolean = false;
@@ -29,8 +23,6 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
     }
     return result;
   }, [paymentInfo.paymentStatusId]);
-
-  const closeHandler = () => navigate("/portal/wallet/payment");
 
   return (
     <Dialog
@@ -42,7 +34,6 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
         },
       }}
     >
-      {isLoading && <PageLoading />}
       <Paper
         elevation={0}
         component={Stack}

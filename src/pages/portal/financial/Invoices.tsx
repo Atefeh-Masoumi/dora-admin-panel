@@ -13,7 +13,6 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { LoadingButton } from "@mui/lab";
 import { useAppSelector } from "src/app/hooks";
 import axios from "axios";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import { baseUrl } from "src/app/services/baseQuery";
 import { useSearchParams } from "react-router-dom";
 import Invoice from "./Invoice";
@@ -21,8 +20,8 @@ import Invoice from "./Invoice";
 const Invoices: FC = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [dateFrom, setDateFrom] = useState<Date | null>(null);
-  const [dateTo, setDateTo] = useState<Date | null>(null);
+  const [dateFrom] = useState<Date | null>(null);
+  const [dateTo] = useState<Date | null>(null);
 
   const token = useAppSelector((store) => store.auth?.accessToken);
   const { data: invoices, isLoading } = useGetApiMyPortalInvoiceListQuery();
