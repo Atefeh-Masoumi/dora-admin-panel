@@ -82,14 +82,16 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     setAccountManager(false);
     setSelectAll(false);
     setRoleAccessList((prevList) =>
-      prevList.map((role) => ({ ...role, isRoleChecked: false,
+      prevList.map((role) => ({
+        ...role,
+        isRoleChecked: false,
         accessTuples: role.accessTuples.map((access) => ({
           ...access,
           hasAccess: false,
         })),
-       }))
+      }))
     );
-  }
+  };
 
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
@@ -200,22 +202,21 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     newRoleAccessList && setRoleAccessList(newRoleAccessList);
   }, [roleList]);
   const radioItems = [
-    // {
-    //   id: CHECK_BOX_ENUM.SUPER_USER,
-    //   label: "سوپر ادمین - همه دسترسی ها",
-    //   text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
-    //   value: superUser,
-    //   disable: false,
-    //   onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
-    //     setSuperUser(checked);
-    //     setAccountManager(false);
-    //     setFinancialManager(false);
-    //   },
-    // },
     {
       id: CHECK_BOX_ENUM.SUPER_USER,
-      label: "سوپر ادمین",
-      text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          سوپر ادمین
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و
+          ویرایش کند
+        </Typography>
+      ),
       value: superUser,
       disable: false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -273,13 +274,11 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
   ];
 
-
   const formik = useFormik({
-    initialValues : formInitialValues , 
-     validationSchema : formValidation, 
-     onSubmit
-  })
-
+    initialValues: formInitialValues,
+    validationSchema: formValidation,
+    onSubmit,
+  });
 
   return (
     <Dialog
@@ -297,169 +296,170 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
-          
-        <Stack
-                  rowGap={2}
-                  columnGap={2}
-                  width="100%"
-                  direction="column"
-                  mt={2}
-                >
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography fontSize={12}>
-                        از اعضا دعوت کنید تا به همه یا دامنه های خاصی در حساب
-                        شما دسترسی داشته باشند
-                      </Typography>
-                    </Box>
-                    <TextField
-                      {...formik.getFieldProps("userName")}
-                      size="small"
-                      type="userName"
-                      label="نام کاربری *"
-                      fullWidth
-                      inputProps={{ dir: "ltr" }}
-                      error={Boolean(formik.errors.userName && formik.touched.userName)}
-                      helperText={formik.touched.userName && formik.errors.userName}
-                    />
-                  </Stack>
+          <Stack
+            rowGap={2}
+            columnGap={2}
+            width="100%"
+            direction="column"
+            mt={2}
+          >
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography fontSize={12}>
+                  از اعضا دعوت کنید تا به همه یا دامنه های خاصی در حساب شما
+                  دسترسی داشته باشند
+                </Typography>
+              </Box>
+              <TextField
+                {...formik.getFieldProps("userName")}
+                size="small"
+                type="userName"
+                label="نام کاربری *"
+                fullWidth
+                inputProps={{ dir: "ltr" }}
+                error={Boolean(
+                  formik.errors.userName && formik.touched.userName
+                )}
+                helperText={formik.touched.userName && formik.errors.userName}
+              />
+            </Stack>
 
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography>نقش های محدوده حساب</Typography>
-                    </Box>
-                    <Grid
-                      container
-                      py={1}
-                      rowGap={1}
-                      justifyContent="center"
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography>نقش های محدوده حساب</Typography>
+              </Box>
+              <Grid
+                container
+                py={1}
+                rowGap={1}
+                justifyContent="center"
+                alignItems="start"
+              >
+                {radioItems.map((item, index) => (
+                  <Grid
+                    key={index}
+                    xs={12}
+                    md={4}
+                    item
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      textAlign: "start",
+                      whiteSpace: "normal",
+                    }}
+                    // pr={{ xs: 0, md: 1 }}
+                  >
+                    <Stack
+                      direction="row"
                       alignItems="start"
-                      columnGap={1}
+                      justifyContent="center"
+                      spacing={1}
+                      sx={{
+                        "& .MuiRadio-root": { p: 0 },
+                        "& .MuiFormControlLabel-root": { m: 0 },
+                      }}
                     >
-                      {radioItems.map((item, index) => (
-                        <Grid
-                          key={index}
-                          xs={12}
-                          md={5}
-                          item
-
-                          // pr={{ xs: 0, md: 1 }}
-                        >
-                          <Stack
-                            direction="row"
-                            alignItems="start"
-                            justifyContent="center"
-                            spacing={1}
-                            sx={{
-                              "& .MuiRadio-root": { p: 0 },
-                              "& .MuiFormControlLabel-root": { m: 0 },
-                            }}
-                          >
-                            <FormControlLabel
-                              disabled={item.disable}
-                              control={
-                                <Checkbox
-                                  sx={{ padding: 0 }}
-                                  checked={item.value}
-                                  onChange={item.onChange}
-                                  inputProps={{ "aria-label": "controlled" }}
-                                />
-                              }
-                              label=""
-                            />
-                            <Stack
-                              textAlign="start"
-                              color={
-                                item.value ? "primary.main" : "secondary.main"
-                              }
-                            >
-                              <Typography variant="text14" fontWeight="bold">
-                                {item.label}
-                              </Typography>
-                              <Typography variant="text13">
-                                {item.text}
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Stack>
-
-                  <Divider flexItem />
-
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography>سطح‌های دسترسی</Typography>
-                    </Box>
-                    <Box sx={{ padding: 0, margin: 0 }}>
                       <FormControlLabel
+                        disabled={item.disable}
                         control={
                           <Checkbox
-                            checked={selectAll}
-                            disabled={superUser ? true : false}
-                            onChange={(e, checked) => {
-                              handleCheckbox(checked);
-                              if (checked === true) {
-                                setSuperUser(false);
-                              }
-                            }}
+                            sx={{ padding: 0 }}
+                            checked={item.value}
+                            onChange={item.onChange}
+                            inputProps={{ "aria-label": "controlled" }}
                           />
                         }
-                        label="همه"
+                        label=""
                       />
-                    </Box>
-                    {roleListIsLoading || roleAccessList?.length === 0 ? (
-                      <PageLoading />
-                    ) : (
-                      <RoleAccessList 
-                        {...{
-                          setRoleAccessList,
-                          roleAccessList,
-                          disabled: superUser,
-                        }}
-                      />
-                    )}
-                  </Stack>
+                      <Stack
+                        textAlign="start"
+                        color={item.value ? "primary.main" : "secondary.main"}
+                      >
+                        <Typography variant="text14" fontWeight="bold">
+                          {item.label}
+                        </Typography>
+                        <Typography variant="text13">{item.text}</Typography>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                ))}
+              </Grid>
+            </Stack>
 
-                  <Stack
-                    rowGap={1}
-                    columnGap={1}
-                    direction="row"
-                    justifyContent="flex-end"
-                    p={2}
-                    // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-                  >
-                    <Button
-                      onClick={() => {
-                        handleReset();
-                        forceClose();
+            <Divider flexItem />
+
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography>سطح‌های دسترسی</Typography>
+              </Box>
+              <Box sx={{ padding: 0, margin: 0 }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectAll}
+                      disabled={superUser ? true : false}
+                      onChange={(e, checked) => {
+                        handleCheckbox(checked);
+                        if (checked === true) {
+                          setSuperUser(false);
+                        }
                       }}
-                      // sx={{
-                      //   minWidth: "160px",
-                      //   flexGrow: 1,
-                      // }}
-                      sx={{ width: "13%" }}
-                      type="button"
-                      variant="outlined"
-                    >
-                      انصراف
-                    </Button>
-                    <LoadingButton
-                      // sx={{
-                      //   // minWidth: "160px",
-                      //   flexGrow: 1,
-                      // }}
+                    />
+                  }
+                  label="همه"
+                />
+              </Box>
+              {roleListIsLoading || roleAccessList?.length === 0 ? (
+                <PageLoading />
+              ) : (
+                <RoleAccessList
+                  {...{
+                    setRoleAccessList,
+                    roleAccessList,
+                    disabled: superUser,
+                  }}
+                />
+              )}
+            </Stack>
 
-                      sx={{ width: "13%" }}
-                      type="submit"
-                      loading={createUserIsLoading}
-                      variant="contained"
-                    >
-                      تایید
-                    </LoadingButton>
-                  </Stack>
-                </Stack>
+            <Stack
+              rowGap={1}
+              columnGap={1}
+              direction="row"
+              justifyContent="flex-end"
+              p={2}
+              // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
+            >
+              <Button
+                onClick={() => {
+                  handleReset();
+                  forceClose();
+                }}
+                // sx={{
+                //   minWidth: "160px",
+                //   flexGrow: 1,
+                // }}
+                sx={{ width: "13%" }}
+                type="button"
+                variant="outlined"
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                // sx={{
+                //   // minWidth: "160px",
+                //   flexGrow: 1,
+                // }}
+
+                sx={{ width: "13%" }}
+                type="submit"
+                loading={createUserIsLoading}
+                variant="contained"
+              >
+                تایید
+              </LoadingButton>
+            </Stack>
+          </Stack>
         </form>
       </DialogContent>
     </Dialog>
