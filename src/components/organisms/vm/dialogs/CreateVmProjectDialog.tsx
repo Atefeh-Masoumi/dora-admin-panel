@@ -36,13 +36,11 @@ import DomainIcon from "@mui/icons-material/Domain";
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
   name?: VmProjectListResponse["name"];
-  hypervisorTypeId?: VmProjectListResponse["hypervisorTypeId"];
 };
 
 export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   projectId,
   name,
-  hypervisorTypeId,
   ...props
 }) => {
   const [createVmProject, { isLoading: createVmProjectLoading }] =
@@ -54,7 +52,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 
   const initialValues: VmProjectCreateModel = {
     name: name || "",
-    hypervisorTypeId: 1,
+    hypervisorTypeId: 0,
     datacenterId: (datacenterList && datacenterList[0].id) || 0,
     // isPublic: true,
     // vpcHostId: null,
@@ -66,7 +64,6 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       .min(5, "نباید کمتر از ۵ کارکتر باشد")
       .max(70, "نباید بیشتر از ۷۰ کارکتر باشد")
       .required("این بخش الزامی است"),
-    hypervisorTypeId: yup.number().required("این بخش الزامی است"),
     datacenterId: projectId
       ? yup.number().nullable()
       : yup.number().required("این بخش الزامی است"),
