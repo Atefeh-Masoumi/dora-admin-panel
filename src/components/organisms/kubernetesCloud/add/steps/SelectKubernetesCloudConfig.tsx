@@ -80,7 +80,7 @@ export const SelectKubernetesCloudConfig: FC<
         isLoading={KubernetesCloudBundlesListLoading}
       />
     ),
-    [KubernetesCloudBundlesListLoading]
+    [KubernetesCloudBundlesListLoading, KubernetesCloudBundleList]
   );
 
   return (

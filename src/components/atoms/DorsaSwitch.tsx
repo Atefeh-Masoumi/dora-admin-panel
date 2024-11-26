@@ -1,10 +1,5 @@
 import { styled, Switch, SwitchProps } from "@mui/material";
-import {
-  BORDER_RADIUS_1,
-  BORDER_RADIUS_2,
-  BORDER_RADIUS_3,
-  BORDER_RADIUS_5,
-} from "src/configs/theme";
+import { BORDER_RADIUS_5 } from "src/configs/theme";
 
 export const DorsaSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />

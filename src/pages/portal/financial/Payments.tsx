@@ -3,7 +3,6 @@ import { Divider, Stack, Typography } from "@mui/material";
 import moment from "jalali-moment";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { CustomDatePicker } from "src/components/organisms/calender/CustomDatePicker";
 import { paymentTableStruct } from "src/components/organisms/portal/financial/payment/tables/struct";
 import PaymentTableRow from "src/components/organisms/portal/financial/payment/tables/PaymentTableRow";
 import {
@@ -20,8 +19,8 @@ const Payments: FC = () => {
   const { data: payments, isLoading } = useGetApiMyPortalPaymentListQuery();
 
   const [search, setSearch] = useState("");
-  const [dateFrom, setDateFrom] = useState<Date | null>(null);
-  const [dateTo, setDateTo] = useState<Date | null>(null);
+  const [dateFrom] = useState<Date | null>(null);
+  const [dateTo] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
   const token = useAppSelector((store) => store.auth?.accessToken);
 

@@ -72,7 +72,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     setServerId(Number(id));
     setHypervisorId(vmData?.hypervisorTypeId || 0);
     setDatacenterId(vmData?.datacenterId || 0);
-  }, [id, vmData, setServerId]);
+  }, [id, vmData, setServerId, setDatacenterId, setHypervisorId]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);

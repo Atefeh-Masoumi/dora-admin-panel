@@ -51,9 +51,6 @@ const Payment = lazy(() => import("src/pages/portal/financial/Payment"));
 const CustomerBills = lazy(
   () => import("src/pages/portal/financial/CustomerBills")
 );
-const CustomerBill = lazy(
-  () => import("src/pages/portal/financial/CustomerBill")
-);
 const Invoices = lazy(() => import("src/pages/portal/financial/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/financial/Invoice"));
 
@@ -81,7 +78,9 @@ const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 const KubernetesIndex = lazy(
   () => import("src/pages/KuberCluster/KubernetesList")
 );
-const AddKubernetes = lazy(() => import("src/pages/KuberCluster/AddKubernetes"));
+const AddKubernetes = lazy(
+  () => import("src/pages/KuberCluster/AddKubernetes")
+);
 const EditKubernetes = lazy(
   () => import("src/pages/KuberCluster/EditKubernetes")
 );
@@ -104,15 +103,11 @@ const EditKubernetesCloud = lazy(
 );
 const AddKubernetesCloudDeployment = lazy(
   () =>
-    import(
-      "src/pages/kuberCloud/edit/deployment/AddKubernetesCloudDeployment"
-    )
+    import("src/pages/kuberCloud/edit/deployment/AddKubernetesCloudDeployment")
 );
 const EditKubernetesCloudDeployment = lazy(
   () =>
-    import(
-      "src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment"
-    )
+    import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 const mainTemplate = (
   PageComponent: FC<any>,

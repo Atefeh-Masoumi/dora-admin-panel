@@ -22,7 +22,6 @@ enum DIALOG_TYPE_ENUM {
 
 export const Snapshot: FC<SnapshotPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
   const { id } = useParams();
@@ -57,16 +56,26 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
 
   return (
     <>
-      <Paper sx={{ overflow: "hidden", p: 3 }} elevation={0}>
+      <Typography
+        color="grey.700"
+        fontSize={24}
+        fontWeight={700}
+        sx={{ mb: 2 }}
+      >
+        بازسازی سیستم عامل
+      </Typography>
+
+      <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
         <Stack
-          // px={3}
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
           justifyContent="space-between"
           gap={1}
         >
-          <Typography>لیست snapshot های سرور</Typography>
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
             <Button
               onClick={openCreateDialogHandler}
@@ -87,7 +96,6 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
             )}
           </Stack>
         </Stack>
-        <Divider />
         <BaseTable
           struct={snapShotTableStruct}
           RowComponent={SnapshotTableRow}

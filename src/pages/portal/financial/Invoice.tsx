@@ -16,7 +16,7 @@ import {
   useGetApiMyPortalInvoiceGetByIdQuery,
   usePostApiMyPortalInvoicePayMutation,
 } from "src/app/services/api.generated";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";

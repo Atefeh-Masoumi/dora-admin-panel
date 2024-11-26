@@ -157,7 +157,7 @@ const AddKubernetesCloudDeployment: FC = () => {
 
     setEnvironmentVariableList(result);
     formik.setFieldValue("keyValue", result);
-  }, [formik.values.imageId]);
+  }, [formik.values.imageId, kuberCloudImageList]);
 
   if (kuberCloudImageLoading) return <PageLoading />;
 
