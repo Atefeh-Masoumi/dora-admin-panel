@@ -226,6 +226,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
           </Button>
           <LoadingButton
             sx={{ minWidth: 40, width: 120 }}
+            disabled={!canDelete}
             loading={submitLoading}
             onClick={onSubmit}
             variant="contained"
