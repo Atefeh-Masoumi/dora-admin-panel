@@ -21,6 +21,7 @@ import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
 } from "src/app/services/api.generated";
+import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
@@ -135,6 +136,8 @@ export const SelectOS: FC<SelectOSPropsType> = ({
         return <DebianSvgIcon />;
       case 5:
         return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      case 7:
+        return <RockyOSIcon sx={{ width: 40, height: 40 }} />;
       default:
         return "";
     }
