@@ -96,7 +96,7 @@ const CustomerBills: FC = () => {
               rows={filteredList}
               text="در حال حاضر گزارش ندارید"
               isLoading={isLoading}
-              initialOrder={1}
+              initialOrder={5}
             />
           </Stack>
         </Stack>
