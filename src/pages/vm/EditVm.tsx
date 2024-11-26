@@ -56,9 +56,10 @@ const a11yProps = (index: number) => {
 type EditCloudServerPropsType = {};
 
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
-  const [section, setSection] = useState(0);
-  const { setServerId } = useContext(EditServerContext);
   const { id } = useParams();
+  const { setServerId, setHypervisorId, setDatacenterId } =
+    useContext(EditServerContext);
+  const [section, setSection] = useState(0);
   const navigate = useNavigate(); // Added
 
   const { data: vmData, isLoading: getVmDataLoading } =
@@ -69,7 +70,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   useEffect(() => {
     if (!id) return;
     setServerId(Number(id));
-  }, [id, setServerId]);
+    setHypervisorId(vmData?.hypervisorTypeId || 0);
+    setDatacenterId(vmData?.datacenterId || 0);
+  }, [id, vmData, setServerId]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
