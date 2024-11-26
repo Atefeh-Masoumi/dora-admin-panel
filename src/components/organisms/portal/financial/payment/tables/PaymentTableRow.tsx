@@ -48,7 +48,11 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         );
         break;
       case "hashCardNumber":
-        result = <Typography sx={{ direction: "rtl" }}>{text}</Typography>;
+        result = (
+          <Typography sx={{ direction: "rtl", fontSize: "12px" }}>
+            {text}
+          </Typography>
+        );
         break;
       case "amount":
         result = <>{text} ریال</>;
