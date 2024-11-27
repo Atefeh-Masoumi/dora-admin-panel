@@ -132,7 +132,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       fullWidth
       // components={{ Backdrop: BlurBackdrop }}
       // sx={{
-        // "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
+      // "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
       // }}
     >
       <DialogTitle textAlign="left">
@@ -199,26 +199,23 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 </RadioGroup>
               </Stack>
             )}
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              rowGap={1.5}
-            >
+            <Stack direction="row" justifyContent="end" spacing={1}>
               <Button
-                sx={{ width: { xs: "100%", sm: 100 } }}
-                variant="text"
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
                 onClick={closeDialogHandler}
               >
                 انصراف
               </Button>
               <LoadingButton
-                sx={{ width: { xs: "100%", sm: 140 } }}
-                variant="contained"
+                component="button"
                 type="submit"
                 loading={createVmProjectLoading || editVmProjectLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
               >
-                {projectId ? "بروزرسانی پروژه" : "ایجاد پروژه"}
+                ذخیره
               </LoadingButton>
             </Stack>
           </Stack>

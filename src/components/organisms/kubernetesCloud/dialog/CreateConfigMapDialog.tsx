@@ -154,7 +154,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 <DorsaTextField
                   fullWidth
                   label="*name"
-                  size="small"
                   error={Boolean(formik.errors.name && formik.touched.name)}
                   helperText={formik.errors.name}
                   {...formik.getFieldProps("name")}
@@ -206,7 +205,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                         onChange={(e) =>
                           handleKeyChange(index, String(e.target.value))
                         }
-                        size="small"
                       />
                     </Grid>
                     <Grid item xs={7} mb={2}>
@@ -217,7 +215,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                         onChange={(e) =>
                           handleValueChange(index, String(e.target.value))
                         }
-                        size="small"
                       />
                     </Grid>
                     <Grid
@@ -243,23 +240,25 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
               </Grid>
             </Stack>
             <DialogActions>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={onClose}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                component="button"
-                type="submit"
-                loading={createConfigMapLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ذخیره
-              </LoadingButton>
+              <Stack direction="row" justifyContent="end" spacing={1}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
+                  onClick={onClose}
+                >
+                  انصراف
+                </Button>
+                <LoadingButton
+                  component="button"
+                  type="submit"
+                  loading={createConfigMapLoading}
+                  variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
+                >
+                  ذخیره
+                </LoadingButton>
+              </Stack>
             </DialogActions>
           </Stack>
         </form>

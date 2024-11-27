@@ -202,26 +202,28 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
             ))}
           </Stack>
           <DialogActions>
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ px: 3, py: 0.8 }}
-              onClick={(e) => {
-                props.onClose && props.onClose(e, "escapeKeyDown");
-                formik.resetForm();
-              }}
-            >
-              انصراف
-            </Button>
-            <LoadingButton
-              component="button"
-              type="submit"
-              variant="contained"
-              sx={{ px: 3, py: 0.8 }}
-              loading={createIngressRuleLoading}
-            >
-              ایجاد
-            </LoadingButton>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={(e) => {
+                  props.onClose && props.onClose(e, "escapeKeyDown");
+                  formik.resetForm();
+                }}
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={createIngressRuleLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </Stack>
           </DialogActions>
         </Stack>
       </form>

@@ -65,13 +65,14 @@ export const RevertVmSnapshotDialog: FC<RevertVmSnapshotDialogPropsType> = ({
             انصراف
           </Button>
           <LoadingButton
-            onClick={submit}
-            variant="contained"
-            color="error"
-            sx={{ px: 3, py: 0.8 }}
+            component="button"
+            type="submit"
             loading={isLoading}
+            variant="contained"
+            sx={{ px: 3, py: 0.8 }}
+            onClick={submit}
           >
-            شروع فرآیند
+            ذخیره
           </LoadingButton>
         </Stack>
       </Stack>

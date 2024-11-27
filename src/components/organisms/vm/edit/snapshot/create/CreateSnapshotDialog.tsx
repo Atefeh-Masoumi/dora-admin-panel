@@ -102,22 +102,24 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
               size="small"
               label="توضیحات"
             />
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              alignItems="center"
-              gap={2}
-            >
-              <LoadingButton
-                fullWidth
-                type="submit"
-                variant="contained"
-                loading={createSnapshotLoading}
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={cancelBtnOnClick}
               >
-                ایجاد
-              </LoadingButton>
-              <Button onClick={cancelBtnOnClick} fullWidth variant="outlined">
                 انصراف
               </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={createSnapshotLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
             </Stack>
           </Stack>
         </form>

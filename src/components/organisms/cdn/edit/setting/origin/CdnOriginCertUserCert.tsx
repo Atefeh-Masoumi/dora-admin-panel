@@ -29,7 +29,7 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی کاربر</Typography>
+        <Typography></Typography>
         <Button
           variant="outlined"
           size="large"
@@ -39,10 +39,9 @@ export const CdnOriginCertUserCert: FC<CdnOriginCertUserCertPropsType> = ({
           }
           onClick={handleOpen}
         >
-          {userCert ? "تمدید گواهی" : "افزودن"}
+          {userCert ? "تمدید SSL" : "بارگزاری SSL"}
         </Button>
       </Stack>
-      <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
       {userCert ? (
         <Stack spacing={2} px={1} color="secondary.main">
           <Stack direction="row" justifyContent="space-between">

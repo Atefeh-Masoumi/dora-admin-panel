@@ -283,8 +283,9 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
             </Stack>
           </Stack>
-
-          <DialogActions sx={{ px: 0, py: 4 }}>
+        </DialogContent>
+        <DialogActions>
+          <Stack direction="row" justifyContent="end" spacing={1}>
             <Button
               variant="outlined"
               color="secondary"
@@ -294,6 +295,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
+              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"
@@ -301,8 +303,8 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
             >
               ذخیره
             </LoadingButton>
-          </DialogActions>
-        </DialogContent>
+          </Stack>
+        </DialogActions>
       </form>
     </Dialog>
   );

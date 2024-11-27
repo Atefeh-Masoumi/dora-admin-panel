@@ -2,6 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogContentText,
   DialogProps,
@@ -128,33 +129,30 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
                 },
               }}
             />
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              justifyContent="right"
-              gap={2}
-            >
-              <Button
-                onClick={cancelBtnOnClick}
-                fullWidth
-                variant="outlined"
-                sx={{ width: "23%" }}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                fullWidth
-                type="submit"
-                variant="contained"
-                disabled={isLoading}
-                sx={{ width: "25%" }}
-              >
-                ایجاد
-              </LoadingButton>
-            </Stack>
           </Stack>
         </form>
       </DialogContent>
+      <DialogActions>
+        <Stack direction="row" justifyContent="end" spacing={1}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ px: 3, py: 0.8 }}
+            onClick={cancelBtnOnClick}
+          >
+            انصراف
+          </Button>
+          <LoadingButton
+            component="button"
+            type="submit"
+            loading={isLoading}
+            variant="contained"
+            sx={{ px: 3, py: 0.8 }}
+          >
+            ذخیره
+          </LoadingButton>
+        </Stack>
+      </DialogActions>
     </Dialog>
   );
 };

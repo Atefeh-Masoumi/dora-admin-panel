@@ -215,27 +215,21 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                       )}
                     </Grid>
                   </Stack>
-
-                  <Stack
-                    direction="row"
-                    spacing={0.5}
-                    alignItems="center"
-                    justifyContent="end"
-                  >
+                  <Stack direction="row" justifyContent="end" spacing={1}>
                     <Button
                       variant="outlined"
                       color="secondary"
-                      sx={{ py: 1, borderRadius: 1.5 }}
+                      sx={{ px: 3, py: 0.8 }}
                       onClick={closeDialogHandler}
                     >
                       انصراف
                     </Button>
                     <LoadingButton
-                      loading={isLoading}
-                      variant="contained"
                       component="button"
                       type="submit"
-                      sx={{ py: 1, borderRadius: 1.5 }}
+                      loading={isLoading}
+                      variant="contained"
+                      sx={{ px: 3, py: 0.8 }}
                     >
                       پرداخت آنلاین
                     </LoadingButton>
