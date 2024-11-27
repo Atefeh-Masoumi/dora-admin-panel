@@ -14,16 +14,10 @@ import Commission from "./Commission";
 
 const tabs: tabsType[] = [
   {
-    title: "صورتحساب قطعی",
+    title: "محاسبات",
     icon: AccountSvg,
     content: <CustomerBills />,
     path: "customer-bill",
-  },
-  {
-    title: "صورتحساب جاری",
-    icon: AccountSvg,
-    content: <CustomerBills />,
-    path: "customer-bill0",
   },
   { title: "کیف پول", icon: AccountSvg, content: <Wallet />, path: "wallet" },
   {
