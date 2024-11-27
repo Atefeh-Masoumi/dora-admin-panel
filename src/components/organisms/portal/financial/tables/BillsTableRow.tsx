@@ -59,7 +59,7 @@ const BillsTableRow: FC<{ row: any }> = ({ row }) => {
                   <Button
                     onClick={() =>
                       navigate(
-                        `/portal/financial?tab=customer-bill&customer-bill-id=${row.id}`
+                        `/portal/financial?tab=customer-bills&customer-bill-id=${row.id}`
                       )
                     }
                     variant="text"

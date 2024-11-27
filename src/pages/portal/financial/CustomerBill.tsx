@@ -75,16 +75,18 @@ const Bill: FC = () => {
 
   return (
     <>
-      <Stack direction="row" justifyContent="start">
-        <Button variant="text">
-          <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
-          <Typography
-            onClick={() => navigate("/portal/financial?tab=customer-bill")}
-          >
-            بازگشت به لیست محاسبات
-          </Typography>
-        </Button>
-      </Stack>
+      {Number(id) != 0 && (
+        <Stack direction="row" justifyContent="start">
+          <Button variant="text">
+            <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
+            <Typography
+              onClick={() => navigate("/portal/financial?tab=customer-bill")}
+            >
+              بازگشت به لیست محاسبات
+            </Typography>
+          </Button>
+        </Stack>
+      )}
       <Stack spacing={2}>
         <Stack
           borderRadius={BORDER_RADIUS_1}
