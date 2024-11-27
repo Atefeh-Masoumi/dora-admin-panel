@@ -144,25 +144,27 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
           </Grid2>
 
           <DialogActions>
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ px: 3, py: 0.8 }}
-              onClick={(e) =>
-                props.onClose && props.onClose(e, "escapeKeyDown")
-              }
-            >
-              انصراف
-            </Button>
-            <LoadingButton
-              component="button"
-              type="submit"
-              variant="contained"
-              sx={{ px: 3, py: 0.8 }}
-              loading={editIngressRuleLoading}
-            >
-              ذخیره
-            </LoadingButton>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={(e) =>
+                  props.onClose && props.onClose(e, "escapeKeyDown")
+                }
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={editIngressRuleLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </Stack>
           </DialogActions>
         </Stack>
       </form>

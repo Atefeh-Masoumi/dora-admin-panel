@@ -192,33 +192,6 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
         </Stack>
       </DialogContent>
       <DialogActions>
-        {/* <Stack
-          width="90%"
-          direction="row"
-          alignItems="center"
-          columnGap={2}
-          sx={{ margin: "10px auto" }}
-        >
-          <Button
-            variant="text"
-            color="error"
-            sx={{ width: 260 }}
-            onClick={onCloseButtonClick}
-          >
-            انصراف
-          </Button>
-          <LoadingButton
-            disabled={!canDelete}
-            variant="contained"
-            color="error"
-            sx={{ width: 260 }}
-            onClick={onSubmit}
-            loading={submitLoading}
-          >
-            حذف
-          </LoadingButton>
-        </Stack> */}
-
         <Stack p={2} justifyContent="right" direction="row" columnGap={1}>
           <Button variant="outlined" onClick={onCloseButtonClick}>
             انصراف
@@ -228,6 +201,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
             disabled={!canDelete}
             loading={submitLoading}
             onClick={onSubmit}
+            color="error"
             variant="contained"
           >
             حذف

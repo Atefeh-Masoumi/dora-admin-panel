@@ -229,7 +229,8 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
       ),
       text: (
         <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
-          می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند
+          می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و
+          ویرایش کند
         </Typography>
       ),
       value: superUser,
@@ -409,10 +410,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                           </Typography>
                         </Box>
                       </Grid> */}
-                      <Grid
-                        container
-                        spacing={2}
-                      >
+                      <Grid container spacing={2}>
                         {radioItems.map((item, index) => (
                           <Grid
                             key={index}
@@ -503,72 +501,28 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                   </Stack>
                 </>
               )}
-
-              <Stack
-                rowGap={1}
-                columnGap={1}
-                direction="row"
-                justifyContent="flex-end"
-                p={2}
-                // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-              >
+              <Stack direction="row" justifyContent="end" spacing={1}>
                 <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
                   onClick={() => {
                     forceClose();
                     handleReset();
                   }}
-                  // sx={{
-                  //   minWidth: "160px",
-                  //   flexGrow: 1,
-                  // }}
-                  sx={{ width: "13%" }}
-                  type="button"
-                  variant="outlined"
                 >
                   انصراف
                 </Button>
                 <LoadingButton
-                  // sx={{
-                  //   // minWidth: "160px",
-                  //   flexGrow: 1,
-                  // }}
-
-                  sx={{ width: "13%" }}
+                  component="button"
                   type="submit"
                   loading={editUserIsLoading}
                   variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
                 >
-                  تایید
+                  ذخیره
                 </LoadingButton>
               </Stack>
-              {/* <Stack
-                rowGap={1}
-                columnGap={1}
-                sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-              >
-                <LoadingButton
-                  sx={{
-                    minWidth: "160px",
-                    flexGrow: 1,
-                  }}
-                  type="submit"
-                  loading={editUserIsLoading}
-                  variant="contained"
-                >
-                  ویرایش
-                </LoadingButton>
-                <LoadingButton
-                  onClick={() => forceClose()}
-                  sx={{
-                    minWidth: "160px",
-                    flexGrow: 1,
-                  }}
-                  type="button"
-                  variant="outlined"
-                >
-                  انصراف
-                </LoadingButton>
-              </Stack> */}
             </Stack>
           </Form>
         </Formik>

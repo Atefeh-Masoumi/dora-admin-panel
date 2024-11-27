@@ -120,17 +120,23 @@ export const CreateNetworkModal: FC<CreateNetworkDialogPropsType> = ({
                 },
               }}
             />
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              gap={2}
-            >
-              <LoadingButton fullWidth type="submit" variant="contained">
-                ایجاد
-              </LoadingButton>
-              <Button onClick={cancelBtnOnClick} fullWidth variant="outlined">
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={cancelBtnOnClick}
+              >
                 انصراف
               </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
             </Stack>
           </Stack>
         </form>

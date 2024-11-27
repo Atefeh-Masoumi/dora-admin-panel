@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogProps,
   DialogTitle,
@@ -96,35 +97,29 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
             />
           </Alert>
         </Stack>
-        <Stack direction="column" rowGap={3} pt={2}>
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            alignItems="center"
-            justifyContent="right"
-            gap={2}
-          >
-            <Button
-              onClick={cancelBtnOnClick}
-              fullWidth
-              variant="outlined"
-              sx={{ width: "23%" }}
-            >
-              انصراف
-            </Button>
-            <LoadingButton
-              fullWidth
-              disabled={!isConfirm}
-              type="button"
-              onClick={handleButton}
-              variant="contained"
-              loading={createVpcIpLoading}
-              sx={{ width: "25%" }}
-            >
-              ایجاد
-            </LoadingButton>
-          </Stack>
-        </Stack>
       </DialogContent>
+      <DialogActions>
+        <Stack direction="row" justifyContent="end" spacing={1}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ px: 3, py: 0.8 }}
+            onClick={cancelBtnOnClick}
+          >
+            انصراف
+          </Button>
+          <LoadingButton
+            component="button"
+            type="submit"
+            disabled={!isConfirm}
+            loading={createVpcIpLoading}
+            variant="contained"
+            sx={{ px: 3, py: 0.8 }}
+          >
+            ذخیره
+          </LoadingButton>
+        </Stack>
+      </DialogActions>
     </Dialog>
   );
 };

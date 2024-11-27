@@ -334,23 +334,25 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                 </Stack>
                 <br />
                 <DialogActions>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ px: 3, py: 0.8 }}
-                    onClick={onClose}
-                  >
-                    انصراف
-                  </Button>
-                  <LoadingButton
-                    component="button"
-                    type="submit"
-                    loading={editLoadBalanceLoading}
-                    variant="contained"
-                    sx={{ px: 3, py: 0.8 }}
-                  >
-                    ذخیره تغییرات
-                  </LoadingButton>
+                  <Stack direction="row" justifyContent="end" spacing={1}>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      sx={{ px: 3, py: 0.8 }}
+                      onClick={onClose}
+                    >
+                      انصراف
+                    </Button>
+                    <LoadingButton
+                      component="button"
+                      type="submit"
+                      loading={editLoadBalanceLoading}
+                      variant="contained"
+                      sx={{ px: 3, py: 0.8 }}
+                    >
+                      ذخیره
+                    </LoadingButton>
+                  </Stack>
                 </DialogActions>
               </Stack>
             </Form>

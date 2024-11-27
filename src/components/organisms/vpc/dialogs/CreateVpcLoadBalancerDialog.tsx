@@ -409,23 +409,25 @@ export const CreateVpcLoadBalancerDialog: FC<
               </Grid>
             </Stack>
             <DialogActions>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={onClose}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                component="button"
-                type="submit"
-                loading={createVpcLoadBalancerLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ذخیره
-              </LoadingButton>
+              <Stack direction="row" justifyContent="end" spacing={1}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
+                  onClick={onClose}
+                >
+                  انصراف
+                </Button>
+                <LoadingButton
+                  component="button"
+                  type="submit"
+                  loading={createVpcLoadBalancerLoading}
+                  variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
+                >
+                  ذخیره
+                </LoadingButton>
+              </Stack>
             </DialogActions>
           </Stack>
         </form>

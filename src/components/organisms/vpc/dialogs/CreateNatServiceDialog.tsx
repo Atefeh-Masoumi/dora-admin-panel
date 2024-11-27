@@ -2,6 +2,7 @@ import {
   Button,
   Chip,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogProps,
   DialogTitle,
@@ -137,7 +138,7 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
               </FormControl>
             </Stack>
           </Stack>
-          <Grid xs={12} padding={0} margin={0} item>
+          <Stack>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-error-label">
                 {"انتخاب پروتکل"}
@@ -146,7 +147,6 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
                 {...formik.getFieldProps("isTcp")}
                 labelId="demo-simple-select-error-label"
                 size="small"
-                fullWidth
                 input={
                   <OutlinedInput
                     id="select-multiple-chip"
@@ -173,35 +173,30 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
                 ))}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid
-            sx={{ mt: { xs: 1, lg: 0 } }}
-            container
-            rowSpacing={2}
-            columnSpacing={1}
-          >
-            <Grid item xs={12} lg={12}>
-              <Stack
-                sx={{ width: "100%" }}
-                direction={{ xs: "column", md: "column" }}
-                gap={1}
-              >
-                <LoadingButton
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                  loading={createVpcNatServiceLoading}
-                >
-                  ایجاد
-                </LoadingButton>
-                <Button onClick={cancelBtnOnClick} fullWidth variant="outlined">
-                  انصراف
-                </Button>
-              </Stack>
-            </Grid>
-          </Grid>
+          </Stack>
         </form>
       </DialogContent>
+      <DialogActions>
+        <Stack direction="row" justifyContent="end" spacing={1}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ px: 3, py: 0.8 }}
+            onClick={cancelBtnOnClick}
+          >
+            انصراف
+          </Button>
+          <LoadingButton
+            component="button"
+            type="submit"
+            loading={createVpcNatServiceLoading}
+            variant="contained"
+            sx={{ px: 3, py: 0.8 }}
+          >
+            ذخیره
+          </LoadingButton>
+        </Stack>
+      </DialogActions>
     </Dialog>
   );
 };

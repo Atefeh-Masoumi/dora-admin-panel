@@ -200,12 +200,22 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
                 />
               );
             })}
-            <Stack justifyContent="right" direction="row" columnGap={1}>
-              <Button variant="outlined" onClick={closeDialog}>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={closeDialog}
+              >
                 انصراف
               </Button>
-              <LoadingButton type="submit" variant="contained">
-                ثبت اطلاعات حقوقی
+              <LoadingButton
+                component="button"
+                type="submit"
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
               </LoadingButton>
             </Stack>
           </Stack>

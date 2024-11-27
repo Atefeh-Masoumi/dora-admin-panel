@@ -102,7 +102,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   return (
     <Dialog {...props} onClose={dialogCloseHandler} maxWidth={"xs"}>
       <DialogTitle fontWeight={"700"}>ایجاد Firewall جدید</DialogTitle>
-
       <form onSubmit={formik.handleSubmit}>
         <DialogContent
           sx={{
@@ -114,7 +113,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             rowGap: 4,
           }}
         >
-          <FormControl size="small" fullWidth>
+          <FormControl fullWidth>
             <InputLabel id="protocolSelection">انتخاب پروتکل</InputLabel>
             <Select
               labelId="protocolSelection"
@@ -140,7 +139,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               ))}
             </Select>
           </FormControl>
-          <FormControl size="small" fullWidth>
+          <FormControl fullWidth>
             <InputLabel id="e">Deploy Port</InputLabel>
             <Select
               {...formik.getFieldProps("isTcp")}
@@ -154,7 +153,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ ":dir": "ltr" }} size="small" fullWidth>
+          <FormControl fullWidth>
             <TextField
               {...formik.getFieldProps("sourceIp")}
               focused
@@ -188,28 +187,26 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             />
           </FormControl>
         </DialogContent>
-        <DialogActions sx={{ pb: 3, px: 3 }}>
-          <Grid container rowSpacing={2}>
-            <Grid item xs={12} lg={12}>
-              <Stack
-                sx={{ width: "60%" }}
-                direction={{ xs: "column", md: "row" }}
-                gap={1}
-              >
-                <LoadingButton
-                  loading={isLoading}
-                  fullWidth
-                  variant="contained"
-                  type="submit"
-                >
-                  ایجاد
-                </LoadingButton>
-                <Button onClick={forceClose} fullWidth variant="outlined">
-                  انصراف
-                </Button>
-              </Stack>
-            </Grid>
-          </Grid>
+        <DialogActions>
+          <Stack direction="row" justifyContent="end" spacing={1}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{ px: 3, py: 0.8 }}
+              onClick={forceClose}
+            >
+              انصراف
+            </Button>
+            <LoadingButton
+              component="button"
+              type="submit"
+              loading={isLoading}
+              variant="contained"
+              sx={{ px: 3, py: 0.8 }}
+            >
+              ذخیره
+            </LoadingButton>
+          </Stack>
         </DialogActions>
       </form>
     </Dialog>

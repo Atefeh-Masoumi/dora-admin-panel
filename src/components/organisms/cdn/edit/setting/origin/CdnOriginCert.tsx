@@ -25,7 +25,7 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی ابر درسا</Typography>
+        <Typography></Typography>
         <LoadingButton
           variant="outlined"
           size="large"
@@ -34,10 +34,9 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
           }
         >
-          {edgeCert ? "تمدید گواهی" : "افزودن"}
+          {edgeCert ? "تمدید SSL" : "درخواست SSL"}
         </LoadingButton>
       </Stack>
-      <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
       {edgeCert ? (
         <Stack spacing={2} px={1} color="secondary.main">
           <Stack direction="row" justifyContent="space-between">

@@ -421,42 +421,26 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                 />
               )}
             </Stack>
-
-            <Stack
-              rowGap={1}
-              columnGap={1}
-              direction="row"
-              justifyContent="flex-end"
-              p={2}
-              // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-            >
+            <Stack direction="row" justifyContent="end" spacing={1}>
               <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
                 onClick={() => {
                   handleReset();
                   forceClose();
                 }}
-                // sx={{
-                //   minWidth: "160px",
-                //   flexGrow: 1,
-                // }}
-                sx={{ width: "13%" }}
-                type="button"
-                variant="outlined"
               >
                 انصراف
               </Button>
               <LoadingButton
-                // sx={{
-                //   // minWidth: "160px",
-                //   flexGrow: 1,
-                // }}
-
-                sx={{ width: "13%" }}
+                component="button"
                 type="submit"
                 loading={createUserIsLoading}
                 variant="contained"
+                sx={{ px: 3, py: 0.8 }}
               >
-                تایید
+                ذخیره
               </LoadingButton>
             </Stack>
           </Stack>
