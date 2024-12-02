@@ -1,20 +1,36 @@
-import Dialog, { DialogProps } from "@mui/material/Dialog";
-import { FC, useState, useMemo } from "react";
-import { priceToPersian } from "src/utils/priceToPersian";
-import { ConvertToJalali } from "src/utils/convertToJalali";
-import { Stack, Typography, Paper } from "@mui/material";
+import { FC, useEffect, useState, useMemo } from "react";
+import { Button, Stack, Typography, Paper } from "@mui/material";
 import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg";
 import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
+import { priceToPersian } from "src/utils/priceToPersian";
+import { useNavigate, useParams } from "react-router";
+import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";
+import PageLoading from "src/components/atoms/PageLoading";
+import { ConvertToJalali } from "src/utils/convertToJalali";
 
-type PaymentCallBackPropsType = DialogProps & {
+type PaymentCallBackPropsType = {
   handleClose: () => void;
 };
 
-const PaymentModal: FC<PaymentCallBackPropsType> = ({
-  handleClose,
-  ...props
-}) => {
-  const [paymentInfo] = useState<any>({});
+const PaymentCallBack: FC<PaymentCallBackPropsType> = ({ handleClose }) => {
+  const [paymentInfo, setPaymentInfo] = useState<any>({});
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [getInfo, { isLoading }] = useLazyGetApiMyPortalPaymentGetByIdQuery();
+
+  useEffect(() => {
+    if (id === null || id === undefined || isNaN(Number(id))) {
+      navigate(-1);
+    } else {
+      getInfo({ id: Number(id) })
+        .unwrap()
+        .then((res) => {
+          if (!res) return;
+          setPaymentInfo(res);
+        });
+    }
+  }, [getInfo, id, navigate]);
 
   const isSuccess = useMemo(() => {
     let result: boolean = false;
@@ -24,20 +40,17 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
     return result;
   }, [paymentInfo.paymentStatusId]);
 
+  const closeHandler = () => navigate("/portal/wallet/payment");
+
+  if (!id) return <></>;
+
   return (
-    <Dialog
-      onClose={handleClose}
-      {...props}
-      PaperProps={{
-        style: {
-          borderRadius: 24,
-        },
-      }}
-    >
+    <>
+      {isLoading && <PageLoading />}
       <Paper
         elevation={0}
         component={Stack}
-        sx={{ px: 4, py: 3, pb: 5 }}
+        sx={{ px: 4, py: 3 }}
         spacing={4}
         alignItems="center"
       >
@@ -54,7 +67,7 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
         >
           {isSuccess ? "پرداخت موفق" : "پرداخت ناموفق"}
         </Typography>
-        <Typography color="secondary.main" variant="text14" align="center">
+        <Typography color="secondary.main" variant="text14" align="justify">
           {isSuccess
             ? "پرداخت شما با موفقیت انجام شد!"
             : "متاسفانه مشکلی در پرداخت پیش آمده است. در صورتی که وجهی از حساب شما کم شده است، تا ۷۲ ساعت دیگر به حساب شما بر خواهد گشت."}
@@ -62,38 +75,36 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
         <Stack spacing={2} color="secondary.main" width="100%">
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">مبلغ تراکنشی</Typography>
-            <Typography variant="text14" dir="rtl">
+            <Typography variant="text14" dir="ltr">
               {priceToPersian(paymentInfo.amount || 0)} ریال
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">زمان تراکنش</Typography>
             <Typography variant="text14" dir="ltr">
-              {paymentInfo.transactionDate
-                ? ConvertToJalali(String(paymentInfo.transactionDate))
-                : "---"}
+              {ConvertToJalali(String(paymentInfo.transactionDate)) || ""}
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">کد پیگیری</Typography>
             <Typography variant="text14" dir="ltr">
-              {paymentInfo.id || "---"}
+              {paymentInfo.id || ""}
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">کد مرجع (بانک)</Typography>
             <Typography variant="text14" dir="ltr">
-              {paymentInfo.rrn || "---"}
+              {paymentInfo.rrn || ""}
             </Typography>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="text14">شماره کارت</Typography>
             <Typography variant="text14" dir="ltr">
-              {paymentInfo.hashCardNumber || "---"}
+              {paymentInfo.hashCardNumber || ""}
             </Typography>
           </Stack>
         </Stack>
-        {/* <Button
+        <Button
           variant="outlined"
           color="secondary"
           sx={{
@@ -106,10 +117,10 @@ const PaymentModal: FC<PaymentCallBackPropsType> = ({
           size="large"
         >
           بازگشت به ابر درسا
-        </Button> */}
+        </Button>
       </Paper>
-    </Dialog>
+    </>
   );
 };
 
-export default PaymentModal;
+export default PaymentCallBack;
