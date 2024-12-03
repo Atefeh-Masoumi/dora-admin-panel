@@ -19,6 +19,7 @@ import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/cont
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_ENUM } from "src/types/vmEnum";
+import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -85,7 +86,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP سرور",
     "بازسازی سیستم عامل",
     "تغییر مشخصات سخت افزاری",
-    "Snapshot",
+    "اسنپ‌شات",
+    "فایروال",
   ];
 
   const tabPanelArray = [
@@ -95,6 +97,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmRebuild,
     ServerConfig,
     Snapshot,
+    Firewall,
   ];
 
   if (!id) return <Navigate to="/vm" />;

@@ -796,12 +796,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.changeContactModel,
       }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
-    >({
-      query: () => ({ url: `/api/my/home/index` }),
-    }),
     getApiMyHostHypervisorList: build.query<
       GetApiMyHostHypervisorListApiResponse,
       GetApiMyHostHypervisorListApiArg
@@ -1438,7 +1432,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/payment/sep-call-back`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.sepCallbackModel,
       }),
     }),
     postApiMyPortalPaymentPecCallBack: build.mutation<
@@ -1448,7 +1442,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/payment/pec-call-back`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.pecConfirmCallRequest,
       }),
     }),
     getApiMyPortalPaymentList: build.query<
@@ -1488,7 +1482,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/payment/bpm-call-back`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.bpmConfirmCallRequest,
       }),
     }),
     postApiMyPortalOfferPay: build.mutation<
@@ -1552,7 +1546,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-item/create`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.createIssueItemModel,
       }),
     }),
     getApiMyPortalIssueShortList: build.query<
@@ -1574,7 +1568,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue/create`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.createIssueModel,
       }),
     }),
     getApiMyPortalInvoiceUnpaid: build.query<
@@ -1678,6 +1672,72 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyPortalBusinessUnitListApiArg
     >({
       query: () => ({ url: `/api/my/portal/business-unit/list` }),
+    }),
+    getApiMyVmBackupListByVmHostId: build.query<
+      GetApiMyVmBackupListByVmHostIdApiResponse,
+      GetApiMyVmBackupListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/backup/list/${queryArg.vmHostId}`,
+      }),
+    }),
+    getApiMyVmBackupGetById: build.query<
+      GetApiMyVmBackupGetByIdApiResponse,
+      GetApiMyVmBackupGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/backup/get/${queryArg.id}` }),
+    }),
+    deleteApiMyVmBackupDeleteById: build.mutation<
+      DeleteApiMyVmBackupDeleteByIdApiResponse,
+      DeleteApiMyVmBackupDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/backup/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmBackupCreate: build.mutation<
+      PostApiMyVmBackupCreateApiResponse,
+      PostApiMyVmBackupCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/backup/create`,
+        method: "POST",
+        body: queryArg.createVmBackupModel,
+      }),
+    }),
+    getApiMyVmVolumeListByVmHostId: build.query<
+      GetApiMyVmVolumeListByVmHostIdApiResponse,
+      GetApiMyVmVolumeListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/volume/list/${queryArg.vmHostId}`,
+      }),
+    }),
+    getApiMyVmVolumeGetById: build.query<
+      GetApiMyVmVolumeGetByIdApiResponse,
+      GetApiMyVmVolumeGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/volume/get/${queryArg.id}` }),
+    }),
+    deleteApiMyVmVolumeDeleteById: build.mutation<
+      DeleteApiMyVmVolumeDeleteByIdApiResponse,
+      DeleteApiMyVmVolumeDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/volume/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmVolumeCreate: build.mutation<
+      PostApiMyVmVolumeCreateApiResponse,
+      PostApiMyVmVolumeCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/volume/create`,
+        method: "POST",
+        body: queryArg.createVmVolumeModel,
+      }),
     }),
     putApiMyVmSnapshotRevertById: build.mutation<
       PutApiMyVmSnapshotRevertByIdApiResponse,
@@ -1894,6 +1954,39 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/host/connect/${queryArg.id}`,
         method: "PUT",
+      }),
+    }),
+    getApiMyVmFirewallListByVmHostId: build.query<
+      GetApiMyVmFirewallListByVmHostIdApiResponse,
+      GetApiMyVmFirewallListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/firewall/list/${queryArg.vmHostId}`,
+      }),
+    }),
+    getApiMyVmFirewallGetById: build.query<
+      GetApiMyVmFirewallGetByIdApiResponse,
+      GetApiMyVmFirewallGetByIdApiArg
+    >({
+      query: (queryArg) => ({ url: `/api/my/vm/firewall/get/${queryArg.id}` }),
+    }),
+    deleteApiMyVmFirewallDeleteById: build.mutation<
+      DeleteApiMyVmFirewallDeleteByIdApiResponse,
+      DeleteApiMyVmFirewallDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/firewall/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVmFirewallCreate: build.mutation<
+      PostApiMyVmFirewallCreateApiResponse,
+      PostApiMyVmFirewallCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/firewall/create`,
+        method: "POST",
+        body: queryArg.createVmFirewallModel,
       }),
     }),
     getApiMyVpcTranslateList: build.query<
@@ -2690,8 +2783,6 @@ export type PutApiMyDomainHostChangeContactApiResponse = unknown;
 export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyHostHypervisorListApiResponse =
   /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
@@ -3011,15 +3102,11 @@ export type GetApiMyPortalPaymentProviderListApiResponse =
 export type GetApiMyPortalPaymentProviderListApiArg = void;
 export type PostApiMyPortalPaymentSepCallBackApiResponse = unknown;
 export type PostApiMyPortalPaymentSepCallBackApiArg = {
-  body: {
-    model: SepCallbackModel;
-  };
+  sepCallbackModel: SepCallbackModel;
 };
 export type PostApiMyPortalPaymentPecCallBackApiResponse = unknown;
 export type PostApiMyPortalPaymentPecCallBackApiArg = {
-  body: {
-    model: PecConfirmCallRequest;
-  };
+  pecConfirmCallRequest: PecConfirmCallRequest;
 };
 export type GetApiMyPortalPaymentListApiResponse =
   /** status 200 OK */ PaymentListResponse[];
@@ -3039,9 +3126,7 @@ export type PostApiMyPortalPaymentCreateApiArg = {
 };
 export type PostApiMyPortalPaymentBpmCallBackApiResponse = unknown;
 export type PostApiMyPortalPaymentBpmCallBackApiArg = {
-  body: {
-    model: BpmConfirmCallRequest;
-  };
+  bpmConfirmCallRequest: BpmConfirmCallRequest;
 };
 export type PostApiMyPortalOfferPayApiResponse =
   /** status 200 OK */ OrderOfferPayResponse;
@@ -3076,9 +3161,7 @@ export type GetApiMyPortalIssueItemDownloadByIdApiArg = {
 };
 export type PostApiMyPortalIssueItemCreateApiResponse = unknown;
 export type PostApiMyPortalIssueItemCreateApiArg = {
-  body: {
-    model: CreateIssueItemModel;
-  };
+  createIssueItemModel: CreateIssueItemModel;
 };
 export type GetApiMyPortalIssueShortListApiResponse =
   /** status 200 OK */ IssueShortListResponse[];
@@ -3088,9 +3171,7 @@ export type GetApiMyPortalIssueListApiResponse =
 export type GetApiMyPortalIssueListApiArg = void;
 export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
-  body: {
-    model: CreateIssueModel;
-  };
+  createIssueModel: CreateIssueModel;
 };
 export type GetApiMyPortalInvoiceUnpaidApiResponse =
   /** status 200 OK */ UnPaidInvoiceResponse[];
@@ -3147,6 +3228,42 @@ export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
+export type GetApiMyVmBackupListByVmHostIdApiResponse =
+  /** status 200 OK */ VmBackupListResponse[];
+export type GetApiMyVmBackupListByVmHostIdApiArg = {
+  vmHostId: number;
+};
+export type GetApiMyVmBackupGetByIdApiResponse =
+  /** status 200 OK */ GetVmBackupResponse;
+export type GetApiMyVmBackupGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyVmBackupDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmBackupDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmBackupCreateApiResponse = unknown;
+export type PostApiMyVmBackupCreateApiArg = {
+  createVmBackupModel: CreateVmBackupModel;
+};
+export type GetApiMyVmVolumeListByVmHostIdApiResponse =
+  /** status 200 OK */ VmVolumeListResponse[];
+export type GetApiMyVmVolumeListByVmHostIdApiArg = {
+  vmHostId: number;
+};
+export type GetApiMyVmVolumeGetByIdApiResponse =
+  /** status 200 OK */ GetVmVolumeResponse;
+export type GetApiMyVmVolumeGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyVmVolumeDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmVolumeDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmVolumeCreateApiResponse = unknown;
+export type PostApiMyVmVolumeCreateApiArg = {
+  createVmVolumeModel: CreateVmVolumeModel;
+};
 export type PutApiMyVmSnapshotRevertByIdApiResponse = unknown;
 export type PutApiMyVmSnapshotRevertByIdApiArg = {
   id: number;
@@ -3259,6 +3376,24 @@ export type PostApiMyVmHostCreateApiArg = {
 export type PutApiMyVmHostConnectByIdApiResponse = unknown;
 export type PutApiMyVmHostConnectByIdApiArg = {
   id: number;
+};
+export type GetApiMyVmFirewallListByVmHostIdApiResponse =
+  /** status 200 OK */ VmFirewallListResponse[];
+export type GetApiMyVmFirewallListByVmHostIdApiArg = {
+  vmHostId: number;
+};
+export type GetApiMyVmFirewallGetByIdApiResponse =
+  /** status 200 OK */ GetVmFirewallResponse;
+export type GetApiMyVmFirewallGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyVmFirewallDeleteByIdApiResponse = unknown;
+export type DeleteApiMyVmFirewallDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyVmFirewallCreateApiResponse = unknown;
+export type PostApiMyVmFirewallCreateApiArg = {
+  createVmFirewallModel: CreateVmFirewallModel;
 };
 export type GetApiMyVpcTranslateListApiResponse =
   /** status 200 OK */ VpcHostTranslateListResponse[];
@@ -4896,6 +5031,41 @@ export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
 };
+export type VmBackupListResponse = {
+  id: number;
+  vmVolumeName: number;
+  name: string | null;
+  createDate: string;
+};
+export type GetVmBackupResponse = {
+  id: number;
+  name: string | null;
+  createDate: string;
+};
+export type CreateVmBackupModel = {
+  vmVolumeId: number;
+  name: string;
+};
+export type VmVolumeListResponse = {
+  id: number;
+  diskSize: number;
+  rootDisk: string | null;
+  createDate: string;
+};
+export type GetVmVolumeResponse = {
+  id: number;
+  firewallProtocolTypeId: number;
+  isIngress: boolean;
+  remoteIp: string | null;
+  minPort: number;
+  maxPort: number;
+  isIpV4: boolean;
+};
+export type CreateVmVolumeModel = {
+  vmHostId: number;
+  volumeSize: number;
+  name: string;
+};
 export type VmSnapshotResponse = {
   id: number;
   name: string | null;
@@ -4987,6 +5157,33 @@ export type CreateVmModel = {
   disk?: number | null;
   vpcHostNetworkId?: number | null;
   ipAddress?: string | null;
+};
+export type VmFirewallListResponse = {
+  id: number;
+  firewallProtocolType: string | null;
+  isIngress: string | null;
+  remoteIp: string | null;
+  minPort: number;
+  maxPort: number;
+  isIpV4: boolean;
+  createDate: string;
+};
+export type GetVmFirewallResponse = {
+  id: number;
+  firewallProtocolTypeId: number;
+  isIngress: boolean;
+  remoteIp: string | null;
+  minPort: number;
+  maxPort: number;
+  isIpV4: boolean;
+};
+export type CreateVmFirewallModel = {
+  vmHostId: number;
+  firewallProtocolTypeId: number;
+  directionId: number;
+  remoteIp: string;
+  minPort: number;
+  maxPort: number;
 };
 export type VpcHostTranslateListResponse = {
   id: number;
@@ -5343,7 +5540,6 @@ export const {
   usePostApiMyDomainHostCheckDomainMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePutApiMyDomainHostChangeContactMutation,
-  useGetApiMyHomeIndexQuery,
   useGetApiMyHostHypervisorListQuery,
   useGetApiMyHostProjectListQuery,
   useGetApiMyHostProjectGetByIdQuery,
@@ -5454,6 +5650,14 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyPortalBusinessUnitListQuery,
+  useGetApiMyVmBackupListByVmHostIdQuery,
+  useGetApiMyVmBackupGetByIdQuery,
+  useDeleteApiMyVmBackupDeleteByIdMutation,
+  usePostApiMyVmBackupCreateMutation,
+  useGetApiMyVmVolumeListByVmHostIdQuery,
+  useGetApiMyVmVolumeGetByIdQuery,
+  useDeleteApiMyVmVolumeDeleteByIdMutation,
+  usePostApiMyVmVolumeCreateMutation,
   usePutApiMyVmSnapshotRevertByIdMutation,
   useGetApiMyVmSnapshotListByVmHostIdQuery,
   useGetApiMyVmSnapshotGetByIdQuery,
@@ -5479,6 +5683,10 @@ export const {
   useDeleteApiMyVmHostDeleteByIdMutation,
   usePostApiMyVmHostCreateMutation,
   usePutApiMyVmHostConnectByIdMutation,
+  useGetApiMyVmFirewallListByVmHostIdQuery,
+  useGetApiMyVmFirewallGetByIdQuery,
+  useDeleteApiMyVmFirewallDeleteByIdMutation,
+  usePostApiMyVmFirewallCreateMutation,
   useGetApiMyVpcTranslateListQuery,
   useDeleteApiMyVpcTranslateDeleteByIdMutation,
   usePostApiMyVpcTranslateCreateMutation,

@@ -28,6 +28,8 @@ import {
 const options = [
   { id: 1, label: "TCP Protocol", isTcp: true },
   { id: 2, label: "UDP Protocol", isTcp: false },
+  { id: 3, label: "ICMP Protocol", isTcp: false },
+  { id: 4, label: "Any", isTcp: false },
 ];
 
 export const InitialValueSchema = yup.object().shape({
@@ -58,7 +60,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     );
   }, [kuberCloudObject]);
 
-  const [createKubernetesCloudFirewall, { isLoading }] =
+  const [createFirewall, { isLoading }] =
     usePostApiMyKubernetesCloudFirewallCreateMutation();
 
   const initialValues: CreateKuberCloudFirewallModel = {
@@ -131,6 +133,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               {[
                 { id: 1, label: "TCP Protocol", isTcp: true },
                 { id: 2, label: "UDP Protocol", isTcp: false },
+                { id: 3, label: "ICMP Protocol", isTcp: false },
+                { id: 4, label: "Any", isTcp: false },
               ].map((item, index) => (
                 <MenuItem key={index} value={item.id}>
                   {item.label}
@@ -139,6 +143,13 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             </Select>
           </FormControl>
           <FormControl fullWidth>
+            <TextField
+              focused
+              label="آدرس IP"
+              defaultValue="0.0.0.010"
+            ></TextField>
+          </FormControl>
+          {/* <FormControl fullWidth>
             <InputLabel id="e">Deploy Port</InputLabel>
             <Select
               {...formik.getFieldProps("isTcp")}
@@ -151,17 +162,28 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
-          <FormControl fullWidth>
+          </FormControl> */}
+          <FormControl sx={{ flexDirection: "row", gap: 2 }}>
             <TextField
-              {...formik.getFieldProps("sourceIp")}
+              {...formik.getFieldProps("sourcePort")}
               focused
-              label="Source IP"
+              label="از پورت"
+              // type="number"
+              error={Boolean(formik.errors.sourceIp && formik.touched.sourceIp)}
+              helperText={formik.touched.sourceIp && formik.errors.sourceIp}
+            />
+            <TextField
+              {...formik.getFieldProps("destPort")}
+              focused
+              label="تا پورت"
+              // type="number"
+              // error={Boolean(formik.errors.maxPort && formik.touched.maxPort)}
+              // helperText={formik.touched.maxPort && formik.errors.maxPort}
               error={Boolean(formik.errors.sourceIp && formik.touched.sourceIp)}
               helperText={formik.touched.sourceIp && formik.errors.sourceIp}
             />
           </FormControl>
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <TextField
               fullWidth
               multiline
@@ -184,7 +206,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
                 formik.touched.description && formik.errors.description
               }
             />
-          </FormControl>
+          </FormControl> */}
         </DialogContent>
         <DialogActions>
           <Stack direction="row" justifyContent="end" spacing={1}>
