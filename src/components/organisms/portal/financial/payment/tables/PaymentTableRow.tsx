@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { paymentTableStruct } from "./struct";
 import { Chip, Stack, Typography } from "@mui/material";
-import PaymentModal from "src/pages/portal/financial/Payment";
+import PaymentDialog from "../dialog/PaymentDIalog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 
@@ -87,7 +87,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
 
-      <PaymentModal handleClose={closeDialog} open={dialog} maxWidth="xs" />
+      <PaymentDialog handleClose={closeDialog} open={dialog} maxWidth="xs" />
     </>
   );
 };
