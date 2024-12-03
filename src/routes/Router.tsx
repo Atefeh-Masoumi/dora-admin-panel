@@ -47,7 +47,7 @@ const Wallet = lazy(
   () => import("src/pages/portal/financial/WalletTransactions")
 );
 const Payments = lazy(() => import("src/pages/portal/financial/Payments"));
-const Payment = lazy(() => import("src/pages/portal/financial/Payment"));
+const Payment = lazy(() => import("src/pages/portal/financial/PaymentCallBack"));
 const CustomerBills = lazy(
   () => import("src/pages/portal/financial/CustomerBills")
 );

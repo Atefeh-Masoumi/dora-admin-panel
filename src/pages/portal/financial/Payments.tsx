@@ -107,18 +107,6 @@ const Payments: FC = () => {
             دانلود گزارش
           </LoadingButton>
         </Stack>
-        {/* <Stack direction="row" spacing={2} alignItems="center">
-          <CustomDatePicker
-            placeholder="از تاریخ"
-            value={dateFrom}
-            setValue={setDateFrom}
-          />
-          <CustomDatePicker
-            placeholder="از تاریخ"
-            value={dateTo}
-            setValue={setDateTo}
-          />
-        </Stack> */}
       </Stack>
       <Divider variant="middle" sx={{ my: 2 }} />
       <Stack>
