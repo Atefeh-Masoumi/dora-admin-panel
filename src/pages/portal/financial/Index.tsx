@@ -15,16 +15,16 @@ import Bill from "./CustomerBill";
 
 const tabs: tabsType[] = [
   {
-    title: "محاسبات جاری",
-    icon: AccountSvg,
-    content: <Bill />,
-    path: "customer-bill&customer-bill-id=0",
-  },
-  {
     title: "محاسبات قطعی",
     icon: AccountSvg,
     content: <CustomerBills />,
     path: "customer-bills",
+  },
+  {
+    title: "محاسبات جاری",
+    icon: AccountSvg,
+    content: <Bill />,
+    path: "customer-bill&customer-bill-id=0",
   },
   { title: "کیف پول", icon: AccountSvg, content: <Wallet />, path: "wallet" },
   {
