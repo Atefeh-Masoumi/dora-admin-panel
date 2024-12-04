@@ -43,7 +43,7 @@ export const InviteCode: FC = () => {
       width={"100%"}
     >
       <Box borderRadius="100%" border="18px solid rgba(60, 138, 255, 0.04)">
-        <Stack 
+        <Stack
           direction="row"
           alignItems="center"
           justifyContent="center"
@@ -62,7 +62,8 @@ export const InviteCode: FC = () => {
       </Box>
       <Grid alignItems={"center"} justifyContent={"center"} mb={3}>
         <Typography color="secondary" textAlign={"center"}>
-          با استفاده از این کد می‌توانید دوستان خود را به ابر درسا دعوت کنید
+          با استفاده از این کد می‌توانید دوستان خود را دعوت کنید و کسب درآمد
+          کنید
           <WelcomeTooltip />
         </Typography>
       </Grid>

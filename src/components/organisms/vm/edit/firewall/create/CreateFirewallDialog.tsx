@@ -4,7 +4,6 @@ import {
   Dialog,
   Select,
   MenuItem,
-  TextField,
   InputLabel,
   DialogTitle,
   DialogProps,
@@ -18,7 +17,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
-import { FC, MouseEventHandler, useMemo } from "react";
+import { FC, MouseEventHandler } from "react";
 import { useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
@@ -26,9 +25,9 @@ import { formikOnSubmitType } from "src/types/form.type";
 import {
   CreateVmFirewallModel,
   usePostApiMyVmFirewallCreateMutation,
-  useGetApiMyVmFirewallListByVmHostIdQuery,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 const options = [
   { id: 1, label: "TCP Protocol", firewallProtocolType: "TCP" },
@@ -45,10 +44,6 @@ export const InitialValueSchema = yup.object().shape({
   // maxPort: yup.number().required("Maximum port الزامی است."),
 });
 
-// export const InitialValueSchema = yup.object().shape({
-//   name: yup.string().required(VALIDATION_REQUIRED_ERROR_MESSAGE),
-// });
-
 type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
 };
@@ -59,20 +54,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   ...props
 }) => {
   const { vmId } = useParams();
-  // const vmHostId = useMemo(() => Number(vmId), [vmId]);
-
-  // const { data: vmObject } = useGetApiMyVmFirewallListByVmHostIdQuery({
-  //   vmHostId: Number(vmId),
-  // });
-
-  // const deployPortList = useMemo(() => {
-  //   return vmObject?.flatMap((item) =>
-  //     item.ports?.map((port) => ({
-  //       id: port.portId,
-  //       value: `${item.deployName}:${port.targetPort}`,
-  //     }))
-  //   );
-  // }, [vmObject]);
 
   const closeHandler: DialogProps["onClose"] = (event) => {
     onClose && onClose(event, "escapeKeyDown");
@@ -84,7 +65,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
   const initialValues: CreateVmFirewallModel = {
     vmHostId: 0,
-    firewallProtocolTypeId: 0,
+    firewallProtocolTypeId: 1,
     directionId: 0,
     remoteIp: "0.0.0.0/0",
     minPort: 0,
@@ -92,14 +73,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   };
 
   const onSubmit: formikOnSubmitType<CreateVmFirewallModel> = (
-    {
-      vmHostId,
-      firewallProtocolTypeId,
-      directionId,
-      remoteIp,
-      minPort,
-      maxPort,
-    },
+    { firewallProtocolTypeId, directionId, remoteIp, minPort, maxPort },
     { setSubmitting }
   ) => {
     if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
@@ -122,53 +96,12 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
       .finally(() => {
         setSubmitting(false);
       });
-    // createKubernetesCloudFirewall({
-    //   createVMFirewallModel: {
-    //     ...values,
-    //   },
-    // })
-    //   .unwrap()
-    //   .then((res) => {
-    //     resetForm();
-    //     formik.resetForm();
-    //     forceClose();
-    //   })
-    //   .catch((err) => {});
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: InitialValueSchema,
     onSubmit,
-    //   :(
-    //   {
-    //     vmHostId,
-    //     firewallProtocolTypeId,
-    //     directionId,
-    //     remoteIp,
-    //     minPort,
-    //     maxPort,
-    //   },
-    //   { setSubmitting, resetForm }
-    // ) => {
-    //   createFirewall({
-    //     createVmFirewallModel: {
-    //       vmHostId: vmHostId,
-    //       firewallProtocolTypeId: firewallProtocolTypeId,
-    //       directionId: directionId,
-    //       remoteIp: remoteIp,
-    //       minPort: minPort,
-    //       maxPort: maxPort,
-    //     },
-    //   })
-    //     .unwrap()
-    //     .then(() => {
-    //       toast.success("Configmap با موفقیت ساخته شد");
-    //       closeHandler(new Event("submit"), "escapeKeyDown");
-    //     })
-    //     .catch(() => {});
-    //   setSubmitting(false);
-    // },
     enableReinitialize: true,
   });
 
@@ -220,13 +153,13 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             <Select
               labelId="protocolSelection"
               label="انتخاب پروتکل"
-              value={formik.values.firewallProtocolTypeId} // Bind to Formik value
+              value={formik.values.firewallProtocolTypeId}
               onChange={(event) =>
                 formik.setFieldValue(
                   "firewallProtocolTypeId",
                   event.target.value
                 )
-              } // Handle change
+              }
               renderValue={(selected: number) => (
                 <Chip
                   sx={{ width: "100%" }}
@@ -246,7 +179,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
           </FormControl>
 
           <FormControl fullWidth>
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("remoteIp")} // Bind to Formik value
               label="آدرس IP"
               defaultValue="0.0.0.0/0"
@@ -255,9 +188,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               inputProps={{ dir: "ltr" }}
             />
           </FormControl>
-
           <FormControl sx={{ flexDirection: "row", gap: 2 }}>
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("minPort")}
               focused
               label="از پورت"
@@ -265,7 +197,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               helperText={formik.touched.minPort && formik.errors.minPort}
               inputProps={{ dir: "ltr" }}
             />
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("maxPort")}
               focused
               label="تا پورت"

@@ -1,144 +1,116 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { Button, Divider, Stack, Typography } from "@mui/material";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery, useGetApiMyVmFirewallListByVmHostIdQuery } from "src/app/services/api.generated";
-import { CreateFirewallDialog } from "src/components/organisms/vm/dialogs/CreateFirewallDialog";
-import { addVmProjectTableStruct } from "../../tables/struct";
-import AddVmTableRow from "../../tables/VmTableRow";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/create/CreateFirewallDialog";
+import { firewallTableStruct } from "./table/struct";
+import FirewallTableRow from "./table/FirewallTableRow";
+import { toast } from "react-toastify";
+import {
+  useDeleteApiMyVmFirewallDeleteByIdMutation,
+  useGetApiMyVmFirewallListByVmHostIdQuery,
+  VmFirewallListResponse,
+} from "src/app/services/api.generated";
 
-export const Firewall: FC = () => {
-  const [search, setSearch] = useState("");
-  const [dialogType, setDialogType] = useState<"DELETE" | "CREATE" | null>(
-    null
-  );
+type FirewallPropsType = {};
 
-  const closeDialogs = () => {
+enum DIALOG_TYPE_ENUM {
+  CREATE = "CREATE",
+  DELETE = "DELETE",
+}
+
+export const Firewall: FC<FirewallPropsType> = () => {
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+  const [selectedFirewall, setSelectedFirewall] =
+    useState<VmFirewallListResponse | null>(null);
+
+  const { id } = useParams();
+  const { data: firewallList = [], isLoading: getFirewallLoading } =
+    useGetApiMyVmFirewallListByVmHostIdQuery(
+      { vmHostId: Number(id) },
+      { skip: !id }
+    );
+
+  const openCreateDialogHandler = () => {
+    setShowCreateDialog(true);
+  };
+  const closeDialogHandler = () => {
     setDialogType(null);
+    setShowCreateDialog(false);
   };
 
-  const { kubernetesCloudId: vmId } = useParams();
+  const [deleteRecord, { isLoading: deleteRecordLoading }] =
+    useDeleteApiMyVmFirewallDeleteByIdMutation();
 
-  const { data = [], isLoading } = useGetApiMyVmFirewallListByVmHostIdQuery(
-    {
-      vmHostId: Number(vmId) || 0,
-    },
-    { skip: !vmId }
-  );
-
-  const filteredList =
-    data?.filter((item) => {
-      let result = null;
-      if (item?.remoteIp) {
-        result = item.remoteIp.toLowerCase().includes(search.toLowerCase());
-      }
-      return result;
-    }) || [];
+  const deleteRecordHandler = () =>
+    deleteRecord({ id: Number(id) })
+      .unwrap()
+      .then(() => {
+        toast.success("رول ها بعد از بررسی حذف خواهند شد");
+        closeDialogHandler();
+      })
+      .catch(() => {});
 
   return (
-    <Stack
-      bgcolor="white"
-      py={2}
-      px={3}
-      borderRadius={BORDER_RADIUS_1}
-      width="100%"
-      direction="row"
-      justifyContent="center"
-    >
-      <Stack width="100%">
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "start", md: "center" }}
-          justifyContent="space-between"
-          spacing={2}
-        >
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            spacing={2}
-            alignItems={{ xs: "start", md: "center" }}
-            width="100%"
-          >
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              width="100%"
-              alignItems="center"
-            >
-              <Stack direction="row" alignItems="center" spacing={1.5}>
-                <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست Firewall
-                </Typography>
-                <Stack display={{ xs: "none", md: "flex" }}>
-                  <SearchBox
-                    placeholder="جستجو "
-                    onChange={(text) => setSearch(text)}
-                  />
-                </Stack>
-              </Stack>
-            </Stack>
-            <Stack display={{ xs: "flex", md: "none" }} width="100%">
-              <SearchBox
-                placeholder="جستجو "
-                onChange={(text) => setSearch(text)}
-                fullWidth
-              />
-            </Stack>
-          </Stack>
-          <Stack display={{ xs: "none", md: "flex" }}>
-            <Stack width="auto" direction="row">
-              <Button
-                variant="outlined"
-                onClick={() => setDialogType("CREATE")}
-                size="large"
-                sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-                startIcon={
-                  <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-                }
-              >
-                افزودن Firewall جدید
-              </Button>
-              {/* <FormControl
-                size="small"
-                fullWidth
-                sx={{ borderTopLeftRadius: 0 }}
-              >
-                <Select
-                  sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-                  value={selectedNatType}
-                  onChange={(event) => {
-                    // setSelectedNatType(Number(event.target.value));
-                    setDialogType(null);
-                  }}
-                >
-                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNAT</MenuItem>
-                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNAT</MenuItem>
-                </Select>
-              </FormControl> */}
-            </Stack>
-          </Stack>
-        </Stack>
+    <>
+      <Typography
+        color="grey.700"
+        fontSize={24}
+        fontWeight={700}
+        sx={{ mb: 2 }}
+      >
+        مدیریت رول ها
+      </Typography>
 
-        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-        <Stack py={1.5}>
-          <BaseTable
-            struct={addVmProjectTableStruct}
-            RowComponent={AddVmTableRow}
-            rows={filteredList || []}
-            text="در حال حاضر رکورد وجود ندارد"
-            isLoading={isLoading}
-          />
+      <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
+        <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="end"
+          gap={1}
+        >
+          {" "}
+          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
+            <Button
+              onClick={openCreateDialogHandler}
+              variant="outlined"
+              startIcon={<Add />}
+            >
+              افزودن رول جدید
+            </Button>
+          </Stack>
         </Stack>
-      </Stack>
+        <BaseTable
+          struct={firewallTableStruct}
+          RowComponent={FirewallTableRow}
+          rows={firewallList}
+          text="در حال حاضر رکورد وجود ندارد"
+          isLoading={getFirewallLoading}
+        />
+      </Paper>
       <CreateFirewallDialog
-        maxWidth="md"
+        maxWidth="xs"
         fullWidth
-        open={dialogType === "CREATE"}
-        onClose={closeDialogs}
-        forceClose={() => setDialogType(null)}
+        open={showCreateDialog}
+        onClose={closeDialogHandler}
+        forceClose={closeDialogHandler}
       />
-    </Stack>
+      <DeleteDialog
+        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+        onClose={closeDialogHandler}
+        keyTitle="دیسک"
+        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={`${selectedFirewall?.id}`}
+        onSubmit={deleteRecordHandler}
+        submitLoading={deleteRecordLoading}
+      />
+    </>
   );
 };

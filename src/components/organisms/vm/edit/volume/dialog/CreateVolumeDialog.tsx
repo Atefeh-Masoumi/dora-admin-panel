@@ -77,7 +77,7 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
 
   return (
     <Dialog {...props}>
-      <DialogTitle align="center">ایجاد snapshot جدید</DialogTitle>
+      <DialogTitle align="center">ایجاد دیسک جدید</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <Stack rowGap={3} pt={2}>
@@ -88,6 +88,7 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
               label="نام"
             />
             <DorsaTextField
+              type="number"
               {...formik.getFieldProps("volumeSize")}
               error={Boolean(
                 formik.errors.volumeSize && formik.touched.volumeSize
@@ -99,17 +100,23 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Stack p={2} justifyContent="right" direction="row" columnGap={1}>
-            <Button variant="outlined" onClick={cancelBtnOnClick}>
+          <Stack direction="row" justifyContent="end" spacing={1}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{ px: 3, py: 0.8 }}
+              onClick={cancelBtnOnClick}
+            >
               انصراف
             </Button>
             <LoadingButton
-              sx={{ minWidth: 40, width: 120 }}
+              component="button"
+              type="submit"
               loading={createVolumeLoading}
-              color="error"
               variant="contained"
+              sx={{ px: 3, py: 0.8 }}
             >
-              حذف
+              ذخیره
             </LoadingButton>
           </Stack>
         </DialogActions>

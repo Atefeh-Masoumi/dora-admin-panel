@@ -1,17 +1,17 @@
 import { Add, Remove } from "@mui/icons-material";
-import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { CreateSnapshotDialog } from "./dialog/CreateSnapshotDialog";
+import SnapshotTableRow from "./table/SnapshotTableRow";
+import { snapShotTableStruct } from "./table/struct";
 import {
   useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
   useGetApiMyVmSnapshotListByVmHostIdQuery,
 } from "src/app/services/api.generated";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateSnapshotDialog } from "./create/CreateSnapshotDialog";
-import SnapshotTableRow from "./table/SnapshotTableRow";
-import { snapShotTableStruct } from "./table/struct";
 
 type SnapshotPropsType = {};
 
@@ -62,7 +62,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
         fontWeight={700}
         sx={{ mb: 2 }}
       >
-        بازسازی سیستم عامل
+        مدیریت اسنپ شات
       </Typography>
 
       <Paper
@@ -73,7 +73,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="end"
           gap={1}
         >
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
@@ -82,7 +82,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
               variant="outlined"
               startIcon={<Add />}
             >
-              افزودن snapshot جدید
+              افزودن اسنپ شات جدید
             </Button>
             {snapshotList.length > 0 && (
               <Button

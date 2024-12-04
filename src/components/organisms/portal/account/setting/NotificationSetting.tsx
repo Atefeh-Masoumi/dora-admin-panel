@@ -63,7 +63,7 @@ export const NotificationSetting: FC = () => {
                 اطلاع رسانی پیامک
               </Typography>
               <Typography variant="text15" color="secondary">
-                اطلاع رسانی پیام ها و ایونت‌های ابر درسا از طریق پیامک
+                اطلاع رسانی پیام ها و ایونت‌ها از طریق پیامک
               </Typography>
             </Stack>
             <DorsaSwitch
@@ -79,7 +79,7 @@ export const NotificationSetting: FC = () => {
                 اطلاع رسانی ایمیل
               </Typography>
               <Typography variant="text15" color="secondary">
-                اطلاع رسانی پیام ها و ایونت‌های ابر درسا از طریق ایمیل
+                اطلاع رسانی پیام ها و ایونت‌ها از طریق ایمیل
               </Typography>
             </Stack>
             <DorsaSwitch

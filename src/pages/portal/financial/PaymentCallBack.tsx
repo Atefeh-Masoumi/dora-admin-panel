@@ -116,7 +116,7 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = () => {
           onClick={closeHandler}
           size="large"
         >
-          بازگشت به ابر درسا
+          بازگشت
         </Button>
       </Paper>
     </>

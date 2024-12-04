@@ -3,16 +3,16 @@ import { Button, Paper, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
+import VolumeTableRow from "./table/VolumeTableRow";
+import { volumeTableStruct } from "./table/struct";
 import {
   useDeleteApiMyVmVolumeDeleteByIdMutation,
   useGetApiMyVmVolumeListByVmHostIdQuery,
   VmVolumeListResponse,
 } from "src/app/services/api.generated";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateVolumeDialog } from "./create/CreateVolumeDialog";
-import VolumeTableRow from "./table/VolumeTableRow";
-import { volumeTableStruct } from "./table/struct";
 
 type VolumePropsType = {};
 
@@ -28,7 +28,7 @@ export const Volume: FC<VolumePropsType> = () => {
     useState<VmVolumeListResponse | null>(null);
 
   const { id } = useParams();
-  const { data: snapshotList = [], isLoading: getSnapshotLoading } =
+  const { data: volumeList = [], isLoading: getVolumeLoading } =
     useGetApiMyVmVolumeListByVmHostIdQuery(
       { vmHostId: Number(id) },
       { skip: !id }
@@ -41,18 +41,14 @@ export const Volume: FC<VolumePropsType> = () => {
     setShowCreateDialog(false);
   };
 
-  const handleOpenDelete = () => {
-    setDialogType(DIALOG_TYPE_ENUM.DELETE);
-  };
-
-  const [deleteAllSnapShots, { isLoading: deleteDnsRecordLoading }] =
+  const [deleteVolume, { isLoading: deleteRecordLoading }] =
     useDeleteApiMyVmVolumeDeleteByIdMutation();
 
-  const deleteDnsRecordHandler = () =>
-    deleteAllSnapShots({ id: Number(id) })
+  const deleteRecordHandler = () =>
+    deleteVolume({ id: Number(id) })
       .unwrap()
       .then(() => {
-        toast.success("تمام دیسک ها بعد از بررسی حذف خواهند شد");
+        toast.success("دیسک بعد از بررسی حذف خواهند شد");
         closeDialogHandler();
       })
       .catch(() => {});
@@ -65,7 +61,7 @@ export const Volume: FC<VolumePropsType> = () => {
         fontWeight={700}
         sx={{ mb: 2 }}
       >
-        بازسازی سیستم عامل
+        مدیریت دیسک
       </Typography>
 
       <Paper
@@ -76,7 +72,7 @@ export const Volume: FC<VolumePropsType> = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="end"
           gap={1}
         >
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
@@ -92,9 +88,9 @@ export const Volume: FC<VolumePropsType> = () => {
         <BaseTable
           struct={volumeTableStruct}
           RowComponent={VolumeTableRow}
-          rows={snapshotList}
+          rows={volumeList}
           text="در حال حاضر دیسک وجود ندارد"
-          isLoading={getSnapshotLoading}
+          isLoading={getVolumeLoading}
           initialOrder={9}
         />
       </Paper>
@@ -111,8 +107,8 @@ export const Volume: FC<VolumePropsType> = () => {
         keyTitle="دیسک"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
         securityPhrase={`${selectedVolume?.name}`}
-        onSubmit={deleteDnsRecordHandler}
-        submitLoading={deleteDnsRecordLoading}
+        onSubmit={deleteRecordHandler}
+        submitLoading={deleteRecordLoading}
       />
     </>
   );

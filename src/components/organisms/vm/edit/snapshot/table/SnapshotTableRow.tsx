@@ -11,7 +11,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
+import { RevertVmSnapshotDialog } from "../dialog/RevertVmSnapshotDialog";
 import { snapShotTableStruct } from "./struct";
 
 enum VM_SNAPSHOT_STATUS_INFO {

@@ -68,7 +68,7 @@ const ReferralCallBack: FC<ReferralCallBackPropsType> = () => {
           onClick={closeHandler}
           size="large"
         >
-          بازگشت به ابر درسا
+          بازگشت
         </Button>
       </Paper>
     </>

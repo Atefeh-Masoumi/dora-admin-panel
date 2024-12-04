@@ -1,14 +1,14 @@
-import { IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { volumeTableStruct } from "./struct";
+import { firewallTableStruct } from "./struct";
 import {
-  VmVolumeListResponse,
-  useDeleteApiMyVmVolumeDeleteByIdMutation,
+  VmFirewallListResponse,
+  useDeleteApiMyVmFirewallDeleteByIdMutation,
 } from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
@@ -16,19 +16,19 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
+export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVolume, setSelectedVolume] =
-    useState<VmVolumeListResponse | null>(null);
+    useState<VmFirewallListResponse | null>(null);
 
   const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
-    useDeleteApiMyVmVolumeDeleteByIdMutation();
+    useDeleteApiMyVmFirewallDeleteByIdMutation();
 
   const deleteVolumeRecordHandler = () =>
     deleteItem({ id: Number(selectedVolume?.id) })
       .unwrap()
       .then(() => {
-        toast.success("حذف دیسک مورد نظر در حال بررسی است");
+        toast.success("حذف رول مورد نظر در حال بررسی است");
         closeDialogHandler();
       })
       .catch(() => {});
@@ -38,7 +38,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedVolume(null);
   };
 
-  const handleOpenDelete = (snapshot: VmVolumeListResponse) => {
+  const handleOpenDelete = (snapshot: VmFirewallListResponse) => {
     setSelectedVolume(snapshot);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -46,7 +46,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {volumeTableStruct.map((column) => {
+        {firewallTableStruct.map((column) => {
           return (
             <DorsaTableCell
               key={column.id}
@@ -54,7 +54,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
               sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
               <Stack direction="row" columnGap={1} alignItems="center">
-                <IconButton onClick={() => handleOpenDelete(row)}>
+                <IconButton onClick={() => handleOpenDelete(row)}> 
                   <TrashSvg />
                 </IconButton>
               </Stack>
@@ -67,7 +67,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
         onClose={closeDialogHandler}
         keyTitle="دیسک"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedVolume?.name || ""}
+        securityPhrase={selectedVolume?.id.toString() || ""}
         onSubmit={deleteVolumeRecordHandler}
         submitLoading={deleteVolumeRecordLoading}
       />
@@ -75,4 +75,4 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
   );
 };
 
-export default withTableRowWrapper(VolumeTableRow);
+export default withTableRowWrapper(FirewallTableRow);
