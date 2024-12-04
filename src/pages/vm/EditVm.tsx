@@ -10,15 +10,16 @@ import {
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { VM_ENUM } from "src/types/vmEnum";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
-import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { VM_ENUM } from "src/types/vmEnum";
+import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -85,7 +86,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP سرور",
     "بازسازی سیستم عامل",
     "تغییر مشخصات سخت افزاری",
-    "Snapshot",
+    "اسنپ شات",
   ];
 
   const tabPanelArray = [
@@ -95,6 +96,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmRebuild,
     ServerConfig,
     Snapshot,
+    Volume
   ];
 
   if (!id) return <Navigate to="/vm" />;

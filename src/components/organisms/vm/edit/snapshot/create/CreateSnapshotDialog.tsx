@@ -6,7 +6,7 @@ import {
   DialogContent,
   Stack,
   Button,
-  TextField,
+  DialogActions,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -15,6 +15,7 @@ import { LoadingButton } from "@mui/lab";
 import { usePostApiMyVmSnapshotCreateMutation } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateSnapshotDialogPropsType = DialogProps & {
   forceClose: () => void;
@@ -77,19 +78,18 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   return (
     <Dialog {...props}>
       <DialogTitle align="center">ایجاد snapshot جدید</DialogTitle>
-      <DialogContent>
-        <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
+        <DialogContent>
           <Stack rowGap={3} pt={2}>
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("snapshotName")}
               error={Boolean(
                 formik.errors.snapshotName && formik.touched.snapshotName
               )}
               helperText={formik.errors.snapshotName}
-              size="small"
-              label="نام snapshot"
+              label="نام"
             />
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("snapshotDescription")}
               error={Boolean(
                 formik.errors.snapshotDescription &&
@@ -99,31 +99,26 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
               multiline
               minRows={3}
               maxRows={8}
-              size="small"
               label="توضیحات"
             />
-            <Stack direction="row" justifyContent="end" spacing={1}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={cancelBtnOnClick}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                component="button"
-                type="submit"
-                loading={createSnapshotLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ذخیره
-              </LoadingButton>
-            </Stack>
           </Stack>
-        </form>
-      </DialogContent>
+        </DialogContent>
+        <DialogActions>
+          <Stack p={2} justifyContent="right" direction="row" columnGap={1}>
+            <Button variant="outlined" onClick={cancelBtnOnClick}>
+              انصراف
+            </Button>
+            <LoadingButton
+              sx={{ minWidth: 40, width: 120 }}
+              loading={createSnapshotLoading}
+              color="error"
+              variant="contained"
+            >
+              حذف
+            </LoadingButton>
+          </Stack>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

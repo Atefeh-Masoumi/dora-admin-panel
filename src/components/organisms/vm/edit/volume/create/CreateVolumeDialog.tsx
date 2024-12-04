@@ -6,15 +6,16 @@ import {
   DialogContent,
   Stack,
   Button,
-  TextField,
+  DialogActions,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { LoadingButton } from "@mui/lab";
-import { usePostApiMyVmSnapshotCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmVolumeCreateMutation } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateVolumeDialogPropsType = DialogProps & {
   forceClose: () => void;
@@ -24,25 +25,25 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
   forceClose,
   ...props
 }) => {
-  const [createSnapshot, { isLoading: createVolumeLoading }] =
-    usePostApiMyVmSnapshotCreateMutation();
+  const [createVolume, { isLoading: createVolumeLoading }] =
+    usePostApiMyVmVolumeCreateMutation();
 
   const { id } = useParams();
 
   const initialValues = {
-    snapshotName: "",
-    snapshotDescription: "",
+    name: "",
+    volumeSize: 0,
   };
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
-    { snapshotName, snapshotDescription },
+    { name, volumeSize },
     { setSubmitting }
   ) => {
     if (id === null || id === undefined || isNaN(Number(id))) return;
-    createSnapshot({
-      createSnapshotModel: {
+    createVolume({
+      createVmVolumeModel: {
         vmHostId: Number(id),
-        snapshotName,
-        snapshotDescription,
+        name,
+        volumeSize,
       },
     })
       .unwrap()
@@ -59,7 +60,7 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-      snapshotName: yup
+      name: yup
         .string()
         .min(5, "تعداد کارکترهای نام snapshot باید حداقل ۵ عدد باشد")
         .max(50, "تعداد کارکترهای نام snapshot باید حداقل ۵۰ عدد باشد")
@@ -77,53 +78,42 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
   return (
     <Dialog {...props}>
       <DialogTitle align="center">ایجاد snapshot جدید</DialogTitle>
-      <DialogContent>
-        <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
+        <DialogContent>
           <Stack rowGap={3} pt={2}>
-            <TextField
-              {...formik.getFieldProps("snapshotName")}
-              error={Boolean(
-                formik.errors.snapshotName && formik.touched.snapshotName
-              )}
-              helperText={formik.errors.snapshotName}
-              size="small"
-              label="نام snapshot"
+            <DorsaTextField
+              {...formik.getFieldProps("name")}
+              error={Boolean(formik.errors.name && formik.touched.name)}
+              helperText={formik.errors.name}
+              label="نام"
             />
-            <TextField
-              {...formik.getFieldProps("snapshotDescription")}
+            <DorsaTextField
+              {...formik.getFieldProps("volumeSize")}
               error={Boolean(
-                formik.errors.snapshotDescription &&
-                  formik.touched.snapshotDescription
+                formik.errors.volumeSize && formik.touched.volumeSize
               )}
-              helperText={formik.errors.snapshotDescription}
+              helperText={formik.errors.volumeSize}
               multiline
-              minRows={3}
-              maxRows={8}
-              size="small"
-              label="توضیحات"
+              label="حجم دیسک (GB)"
             />
-            <Stack direction="row" justifyContent="end" spacing={1}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={cancelBtnOnClick}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                component="button"
-                type="submit"
-                loading={createVolumeLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ذخیره
-              </LoadingButton>
-            </Stack>
           </Stack>
-        </form>
-      </DialogContent>
+        </DialogContent>
+        <DialogActions>
+          <Stack p={2} justifyContent="right" direction="row" columnGap={1}>
+            <Button variant="outlined" onClick={cancelBtnOnClick}>
+              انصراف
+            </Button>
+            <LoadingButton
+              sx={{ minWidth: 40, width: 120 }}
+              loading={createVolumeLoading}
+              color="error"
+              variant="contained"
+            >
+              حذف
+            </LoadingButton>
+          </Stack>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

@@ -1,17 +1,15 @@
 import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import {
-  VmSnapshotResponse,
-  useDeleteApiMyVmSnapshotDeleteByIdMutation,
-} from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import theme from "src/configs/theme";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { RevertVmSnapshotDialog } from "../../../dialogs/RevertVmSnapshotDialog";
 import { volumeTableStruct } from "./struct";
+import {
+  VmVolumeListResponse,
+  useDeleteApiMyVmVolumeDeleteByIdMutation,
+} from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -20,32 +18,28 @@ enum DIALOG_TYPE_ENUM {
 
 export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedSnapshot, setSelectedSnapshot] =
-    useState<VmSnapshotResponse | null>(null);
-  const [openRevert, setOpenRevert] = useState(false);
+  const [selectedVolume, setSelectedVolume] =
+    useState<VmVolumeListResponse | null>(null);
 
-  const handleOpenRevert = () => setOpenRevert(true);
-  const handleCloseRevert = () => setOpenRevert(false);
+  const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
+    useDeleteApiMyVmVolumeDeleteByIdMutation();
 
-  const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
-    useDeleteApiMyVmSnapshotDeleteByIdMutation();
-
-  const deleteSnapshotRecordHandler = () =>
-    deleteItem({ id: Number(selectedSnapshot?.id) })
+  const deleteVolumeRecordHandler = () =>
+    deleteItem({ id: Number(selectedVolume?.id) })
       .unwrap()
       .then(() => {
-        toast.success("حدف snapshot مورد نظر در حال بررسی است");
+        toast.success("حذف دیسک مورد نظر در حال بررسی است");
         closeDialogHandler();
       })
       .catch((err) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedSnapshot(null);
+    setSelectedVolume(null);
   };
 
-  const handleOpenDelete = (snapshot: VmSnapshotResponse) => {
-    setSelectedSnapshot(snapshot);
+  const handleOpenDelete = (snapshot: VmVolumeListResponse) => {
+    setSelectedVolume(snapshot);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
@@ -53,10 +47,6 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
         {volumeTableStruct.map((column) => {
-          const value = row[column.id];
-          const text = column.format ? column.format(value) : value;
-          const isCreated = row.isCreated;
-
           return (
             <DorsaTableCell
               key={column.id}
@@ -75,16 +65,11 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="Snapshot"
+        keyTitle="دیسک"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedSnapshot?.name || ""}
-        onSubmit={deleteSnapshotRecordHandler}
-        submitLoading={deleteSnapshotRecordLoading}
-      />
-      <RevertVmSnapshotDialog
-        snapshotId={row.id}
-        openDialog={openRevert}
-        handleClose={handleCloseRevert}
+        securityPhrase={selectedVolume?.name || ""}
+        onSubmit={deleteVolumeRecordHandler}
+        submitLoading={deleteVolumeRecordLoading}
       />
     </Fragment>
   );
