@@ -1546,7 +1546,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-item/create`,
         method: "POST",
-        body: queryArg.createIssueItemModel,
+        body: queryArg.body,
       }),
     }),
     getApiMyPortalIssueShortList: build.query<
@@ -1568,7 +1568,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue/create`,
         method: "POST",
-        body: queryArg.createIssueModel,
+        body: queryArg.body,
       }),
     }),
     getApiMyPortalInvoiceUnpaid: build.query<
@@ -3161,7 +3161,9 @@ export type GetApiMyPortalIssueItemDownloadByIdApiArg = {
 };
 export type PostApiMyPortalIssueItemCreateApiResponse = unknown;
 export type PostApiMyPortalIssueItemCreateApiArg = {
-  createIssueItemModel: CreateIssueItemModel;
+  body: {
+    model: CreateIssueItemModel;
+  };
 };
 export type GetApiMyPortalIssueShortListApiResponse =
   /** status 200 OK */ IssueShortListResponse[];
@@ -3171,7 +3173,9 @@ export type GetApiMyPortalIssueListApiResponse =
 export type GetApiMyPortalIssueListApiArg = void;
 export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
-  createIssueModel: CreateIssueModel;
+  body: {
+    model: CreateIssueModel;
+  };
 };
 export type GetApiMyPortalInvoiceUnpaidApiResponse =
   /** status 200 OK */ UnPaidInvoiceResponse[];
@@ -5178,11 +5182,11 @@ export type GetVmFirewallResponse = {
 };
 export type CreateVmFirewallModel = {
   vmHostId: number;
-  firewallProtocolTypeId: number;
+  firewallProtocolTypeId: number;//
   directionId: number;
-  remoteIp: string;
-  minPort: number;
-  maxPort: number;
+  remoteIp: string;//
+  minPort: number;//
+  maxPort: number;//
 };
 export type VpcHostTranslateListResponse = {
   id: number;

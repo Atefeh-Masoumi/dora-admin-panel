@@ -5,7 +5,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery, useGetApiMyVmFirewallListByVmHostIdQuery } from "src/app/services/api.generated";
 import { CreateFirewallDialog } from "src/components/organisms/vm/dialogs/CreateFirewallDialog";
 import { addVmProjectTableStruct } from "../../tables/struct";
 import AddVmTableRow from "../../tables/VmTableRow";
@@ -22,19 +22,18 @@ export const Firewall: FC = () => {
 
   const { kubernetesCloudId: vmId } = useParams();
 
-  const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
-      {
-        namespaceId: Number(vmId) || 0,
-      },
-      { skip: !vmId }
-    );
+  const { data = [], isLoading } = useGetApiMyVmFirewallListByVmHostIdQuery(
+    {
+      vmHostId: Number(vmId) || 0,
+    },
+    { skip: !vmId }
+  );
 
   const filteredList =
     data?.filter((item) => {
       let result = null;
-      if (item?.sourceIp) {
-        result = item.sourceIp.toLowerCase().includes(search.toLowerCase());
+      if (item?.remoteIp) {
+        result = item.remoteIp.toLowerCase().includes(search.toLowerCase());
       }
       return result;
     }) || [];
