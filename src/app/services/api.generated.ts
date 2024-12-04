@@ -5033,8 +5033,8 @@ export type BusinessUnitListResponse = {
 };
 export type VmBackupListResponse = {
   id: number;
-  vmVolumeName: number;
   name: string | null;
+  vmVolumeName: number;
   createDate: string;
 };
 export type GetVmBackupResponse = {
@@ -5048,18 +5048,17 @@ export type CreateVmBackupModel = {
 };
 export type VmVolumeListResponse = {
   id: number;
-  diskSize: number;
+  name: string | null;
+  volumeSize: number;
   rootDisk: string | null;
   createDate: string;
 };
 export type GetVmVolumeResponse = {
   id: number;
-  firewallProtocolTypeId: number;
-  isIngress: boolean;
-  remoteIp: string | null;
-  minPort: number;
-  maxPort: number;
-  isIpV4: boolean;
+  name: string | null;
+  isRootDisk: boolean;
+  volumeSize: number;
+  createDate: string;
 };
 export type CreateVmVolumeModel = {
   vmHostId: number;

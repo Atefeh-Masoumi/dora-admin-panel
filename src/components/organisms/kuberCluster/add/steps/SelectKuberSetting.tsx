@@ -62,7 +62,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   const { data: osVersionsList = [] } = useGetApiMyDatacenterImageListQuery({
     datacenterId: dataCenter?.id || 1,
     productId: PRODUCT_CATEGORY_ENUM.KubernetesCluster,
-    hypervisorTypeId: HYPERVISOR_ENUM.VM,
+    hypervisorTypeId: 0,
   });
 
   useEffect(() => {
