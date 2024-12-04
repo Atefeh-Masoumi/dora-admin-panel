@@ -5182,11 +5182,11 @@ export type GetVmFirewallResponse = {
 };
 export type CreateVmFirewallModel = {
   vmHostId: number;
-  firewallProtocolTypeId: number;
+  firewallProtocolTypeId: number;//
   directionId: number;
-  remoteIp: string;
-  minPort: number;
-  maxPort: number;
+  remoteIp: string;//
+  minPort: number;//
+  maxPort: number;//
 };
 export type VpcHostTranslateListResponse = {
   id: number;

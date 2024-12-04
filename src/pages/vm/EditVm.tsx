@@ -19,6 +19,9 @@ import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { VM_ENUM } from "src/types/vmEnum";
+import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 
 type TabPanelProps = {
@@ -86,7 +89,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP سرور",
     "بازسازی سیستم عامل",
     "تغییر مشخصات سخت افزاری",
-    "اسنپ شات",
+    "اسنپ‌شات",
+    "فایروال",
   ];
 
   const tabPanelArray = [
@@ -96,7 +100,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmRebuild,
     ServerConfig,
     Snapshot,
-    Volume
+    Firewall,
   ];
 
   if (!id) return <Navigate to="/vm" />;

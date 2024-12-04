@@ -7,7 +7,6 @@ import {
   DialogProps,
   DialogTitle,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -167,7 +166,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               fullWidth
               multiline
               rows={4}
-              {...formik.getFieldProps("sourceIp")}
+              {...formik.getFieldProps("description")}
               focused
               sx={{
                 "& .MuiOutlinedInput-root": {
