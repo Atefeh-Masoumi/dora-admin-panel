@@ -30,7 +30,7 @@ export const analyticsCategories = [
   "یک روز",
   "سه روز",
   "یک هفته",
-  "یک ماه"
+  "یک ماه",
 ];
 
 type AnalyticChartPropsType = {};

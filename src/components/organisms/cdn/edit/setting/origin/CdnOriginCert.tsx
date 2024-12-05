@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { TextLoading } from "src/components/molecules/TextLoading";
@@ -24,8 +24,7 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
 
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography></Typography>
+      <Stack direction="row" justifyContent="end" alignItems="center">
         <LoadingButton
           variant="outlined"
           size="large"

@@ -179,5 +179,5 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
         </Stack>
       </Stack>
     </>
-  );
+  ); 
 };
