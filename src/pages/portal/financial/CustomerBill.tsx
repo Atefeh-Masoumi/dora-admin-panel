@@ -75,7 +75,7 @@ const Bill: FC = () => {
 
   return (
     <>
-      {Number(id) != 0 && (
+      {Number(id) !== 0 && (
         <Stack direction="row" justifyContent="start">
           <Button variant="text">
             <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
