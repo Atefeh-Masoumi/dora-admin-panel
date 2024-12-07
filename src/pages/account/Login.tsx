@@ -19,7 +19,6 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Captcha } from "src/components/molecules/Captcha";
 import { useAppSelector } from "src/app/hooks";
-import { captchaRegex } from "src/utils/regexUtils";
 
 const formInitialValues = { email: "", password: "" };
 

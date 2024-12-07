@@ -87,9 +87,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP",
     "بازسازی",
     "سخت افزاری",
-    // "دیسک",
-    // "اسنپ‌شات",
-    // "فایروال",
+    "دیسک",
+    "اسنپ‌شات",
+    "فایروال",
   ];
 
   const tabPanelArray = [
@@ -98,9 +98,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmIpAddress,
     VmRebuild,
     ServerConfig,
-    // Volume,
-    // Snapshot,
-    // Firewall,
+    Volume,
+    Snapshot,
+    Firewall,
   ];
 
   if (!id) return <Navigate to="/vm" />;

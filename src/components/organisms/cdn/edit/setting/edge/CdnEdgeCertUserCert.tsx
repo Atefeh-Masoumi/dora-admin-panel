@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Divider, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useGetApiMyDnsCdnEdgeCertGetUserCertByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";

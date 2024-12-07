@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useGetApiMyDnsCdnOriginCertGetUserCertByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";

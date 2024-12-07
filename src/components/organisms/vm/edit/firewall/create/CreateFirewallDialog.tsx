@@ -89,7 +89,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        toast.success("فایروال جدید با موفقیت ایجاد شد");
+        toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
       })
       .catch((err) => {})
@@ -160,15 +160,9 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
                   event.target.value
                 )
               }
-              renderValue={(selected: number) => (
-                <Chip
-                  sx={{ width: "100%" }}
-                  key={selected}
-                  label={
-                    options.find((option) => option.id === selected)?.label
-                  }
-                />
-              )}
+              renderValue={(selected: number) =>
+                options.find((option) => option.id === selected)?.label
+              }
             >
               {options.map((item) => (
                 <MenuItem key={item.id} value={item.id}>
@@ -180,6 +174,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
           <FormControl fullWidth>
             <DorsaTextField
+              sx={{ pb: 1 }}
               {...formik.getFieldProps("remoteIp")} // Bind to Formik value
               label="آدرس IP"
               defaultValue="0.0.0.0/0"
@@ -187,9 +182,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               helperText={formik.touched.remoteIp && formik.errors.remoteIp}
               inputProps={{ dir: "ltr" }}
             />
-          </FormControl>
-          <FormControl sx={{ flexDirection: "row", gap: 2 }}>
             <DorsaTextField
+              sx={{ pb: 1 }}
               {...formik.getFieldProps("minPort")}
               focused
               label="از پورت"
@@ -198,6 +192,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
+              sx={{ pb: 1 }}
               {...formik.getFieldProps("maxPort")}
               focused
               label="تا پورت"

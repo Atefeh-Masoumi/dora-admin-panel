@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   InputLabel,
   Stack,
   Radio,
@@ -25,7 +24,6 @@ import {
   usePutApiMyHostProjectEditByIdMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";

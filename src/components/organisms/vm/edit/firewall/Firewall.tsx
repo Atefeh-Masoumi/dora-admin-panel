@@ -1,15 +1,12 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/create/CreateFirewallDialog";
 import { firewallTableStruct } from "./table/struct";
 import FirewallTableRow from "./table/FirewallTableRow";
-import { toast } from "react-toastify";
 import {
-  useDeleteApiMyVmFirewallDeleteByIdMutation,
   useGetApiMyVmFirewallListByVmHostIdQuery,
   VmFirewallListResponse,
 } from "src/app/services/api.generated";
@@ -24,8 +21,7 @@ enum DIALOG_TYPE_ENUM {
 export const Firewall: FC<FirewallPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedFirewall, setSelectedFirewall] =
-    useState<VmFirewallListResponse | null>(null);
+  useState<VmFirewallListResponse | null>(null);
 
   const { id } = useParams();
   const { data: firewallList = [], isLoading: getFirewallLoading } =
@@ -41,18 +37,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
     setDialogType(null);
     setShowCreateDialog(false);
   };
-
-  const [deleteRecord, { isLoading: deleteRecordLoading }] =
-    useDeleteApiMyVmFirewallDeleteByIdMutation();
-
-  const deleteRecordHandler = () =>
-    deleteRecord({ id: Number(id) })
-      .unwrap()
-      .then(() => {
-        toast.success("رول ها بعد از بررسی حذف خواهند شد");
-        closeDialogHandler();
-      })
-      .catch(() => {});
 
   return (
     <>
@@ -76,7 +60,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
           justifyContent="end"
           gap={1}
         >
-          {" "}
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
             <Button
               onClick={openCreateDialogHandler}
@@ -87,13 +70,17 @@ export const Firewall: FC<FirewallPropsType> = () => {
             </Button>
           </Stack>
         </Stack>
-        <BaseTable
-          struct={firewallTableStruct}
-          RowComponent={FirewallTableRow}
-          rows={firewallList}
-          text="در حال حاضر رکورد وجود ندارد"
-          isLoading={getFirewallLoading}
-        />
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack>
+          <BaseTable
+            struct={firewallTableStruct}
+            RowComponent={FirewallTableRow}
+            rows={firewallList}
+            text="در حال حاضر رکورد وجود ندارد"
+            isLoading={getFirewallLoading}
+            initialOrder={1}
+          />
+        </Stack>
       </Paper>
       <CreateFirewallDialog
         maxWidth="xs"
@@ -101,15 +88,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
-      />
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="دیسک"
-        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={`${selectedFirewall?.id}`}
-        onSubmit={deleteRecordHandler}
-        submitLoading={deleteRecordLoading}
       />
     </>
   );

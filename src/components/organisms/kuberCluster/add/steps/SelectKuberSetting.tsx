@@ -16,7 +16,6 @@ import {
   useMemo,
 } from "react";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 import {
