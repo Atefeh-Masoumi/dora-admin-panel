@@ -3,7 +3,6 @@ import { Box, Stack, Tabs } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { Gateway } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Gateway";
-import { Monitoring } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Monitoring";
 import { Settings } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Settings";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";

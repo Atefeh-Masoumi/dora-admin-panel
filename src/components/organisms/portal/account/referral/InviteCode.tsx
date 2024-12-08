@@ -62,7 +62,8 @@ export const InviteCode: FC = () => {
       </Box>
       <Grid alignItems={"center"} justifyContent={"center"} mb={3}>
         <Typography color="secondary" textAlign={"center"}>
-          با استفاده از این کد می‌توانید دوستان خود را به ابر راهبر دعوت کنید
+          با استفاده از این کد می‌توانید دوستان خود را دعوت کنید و کسب درآمد
+          کنید
           <WelcomeTooltip />
         </Typography>
       </Grid>

@@ -2,16 +2,11 @@ import { Add, Remove } from "@mui/icons-material";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
-import { toast } from "react-toastify";
-import {
-  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
-  useGetApiMyVmSnapshotListByVmHostIdQuery,
-} from "src/app/services/api.generated";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateSnapshotDialog } from "./create/CreateSnapshotDialog";
+import { CreateSnapshotDialog } from "./dialog/CreateSnapshotDialog";
 import SnapshotTableRow from "./table/SnapshotTableRow";
 import { snapShotTableStruct } from "./table/struct";
+import { useGetApiMyVmSnapshotListByVmHostIdQuery } from "src/app/services/api.generated";
 
 type SnapshotPropsType = {};
 
@@ -22,7 +17,6 @@ enum DIALOG_TYPE_ENUM {
 
 export const Snapshot: FC<SnapshotPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
   const { id } = useParams();
@@ -43,37 +37,35 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  const [deleteAllSnapShots, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation();
-
-  const deleteDnsRecordHandler = () =>
-    deleteAllSnapShots({ vmHostId: Number(id) })
-      .unwrap()
-      .then(() => {
-        toast.success("تمام snapshot ها بعد از بررسی حذف خواهند شد");
-        closeDialogHandler();
-      })
-      .catch((err) => {});
-
   return (
     <>
-      <Paper sx={{ overflow: "hidden", p: 3 }} elevation={0}>
+      <Typography
+        color="grey.700"
+        fontSize={24}
+        fontWeight={700}
+        sx={{ mb: 2 }}
+      >
+        مدیریت اسنپ شات
+      </Typography>
+
+      <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
         <Stack
-          // px={3}
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="end"
           gap={1}
         >
-          <Typography>لیست snapshot های سرور</Typography>
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
             <Button
               onClick={openCreateDialogHandler}
               variant="outlined"
               startIcon={<Add />}
             >
-              افزودن snapshot جدید
+              افزودن اسنپ شات جدید
             </Button>
             {snapshotList.length > 0 && (
               <Button
@@ -87,14 +79,14 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
             )}
           </Stack>
         </Stack>
-        <Divider />
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <BaseTable
           struct={snapShotTableStruct}
           RowComponent={SnapshotTableRow}
           rows={snapshotList}
           text="در حال حاضر snapshot وجود ندارد"
           isLoading={getSnapshotLoading}
-          initialOrder={9}
+          initialOrder={7}
         />
       </Paper>
       <CreateSnapshotDialog
@@ -103,15 +95,6 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
-      />
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="Snapshot"
-        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={`SnapShots=${id}`}
-        onSubmit={deleteDnsRecordHandler}
-        submitLoading={deleteDnsRecordLoading}
       />
     </>
   );

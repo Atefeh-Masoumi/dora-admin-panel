@@ -5,6 +5,7 @@ import {
   useGetApiMyVmHostListByVmProjectIdQuery,
   useGetApiMyVpcHostGetByIdQuery,
 } from "src/app/services/api.generated";
+import PageLoading from "src/components/atoms/PageLoading";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -51,90 +52,97 @@ export const VpcVm: FC = () => {
   };
 
   return (
-    <Stack
-      bgcolor="white"
-      py={2}
-      px={3}
-      borderRadius={BORDER_RADIUS_1}
-      width="100%"
-      direction="row"
-      justifyContent="center"
-    >
-      <Stack width="100%">
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "start", md: "center" }}
-          justifyContent="space-between"
-          spacing={2}
-        >
+    <>
+      {(isLoading || vpcInfoLoading) && <PageLoading />}
+      <Stack
+        bgcolor="white"
+        py={2}
+        px={3}
+        borderRadius={BORDER_RADIUS_1}
+        width="100%"
+        direction="row"
+        justifyContent="center"
+      >
+        <Stack width="100%">
           <Stack
             direction={{ xs: "column", md: "row" }}
-            spacing={2}
             alignItems={{ xs: "start", md: "center" }}
-            width="100%"
+            justifyContent="space-between"
+            spacing={2}
           >
             <Stack
-              direction="row"
-              justifyContent="space-between"
+              direction={{ xs: "column", md: "row" }}
+              spacing={2}
+              alignItems={{ xs: "start", md: "center" }}
               width="100%"
-              alignItems="center"
             >
-              <Stack direction="row" alignItems="center" spacing={1.5}>
-                <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست سرورهای مجازی
-                </Typography>
-                <Stack display={{ xs: "none", md: "flex" }}>
-                  <SearchBox
-                    placeholder="جستجو در نام رکورد"
-                    onChange={(text) => setSearch(text)}
-                  />
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                width="100%"
+                alignItems="center"
+              >
+                <Stack direction="row" alignItems="center" spacing={1.5}>
+                  <Typography
+                    fontSize={18}
+                    color="secondary"
+                    whiteSpace="nowrap"
+                  >
+                    لیست سرورهای مجازی
+                  </Typography>
+                  <Stack display={{ xs: "none", md: "flex" }}>
+                    <SearchBox
+                      placeholder="جستجو در نام رکورد"
+                      onChange={(text) => setSearch(text)}
+                    />
+                  </Stack>
                 </Stack>
               </Stack>
+              <Stack display={{ xs: "flex", md: "none" }} width="100%">
+                <SearchBox
+                  placeholder="جستجو "
+                  onChange={(text) => setSearch(text)}
+                  fullWidth
+                />
+              </Stack>
             </Stack>
-            <Stack display={{ xs: "flex", md: "none" }} width="100%">
-              <SearchBox
-                placeholder="جستجو "
-                onChange={(text) => setSearch(text)}
-                fullWidth
-              />
-            </Stack>
-          </Stack>
-          <Stack
-            display={{ xs: "none", md: "flex" }}
-            direction="row"
-            spacing={2}
-            alignItems="center"
-          >
-            <Button
-              variant="outlined"
-              onClick={handleNavigatetoVm}
-              size="large"
-              sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-              startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-              }
+            <Stack
+              display={{ xs: "none", md: "flex" }}
+              direction="row"
+              spacing={2}
+              alignItems="center"
             >
-              افزودن VM جدید
-            </Button>
+              <Button
+                variant="outlined"
+                onClick={handleNavigatetoVm}
+                size="large"
+                sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
+                startIcon={
+                  <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                }
+              >
+                افزودن VM جدید
+              </Button>
+            </Stack>
+          </Stack>
+          <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+          <Stack py={1.5}>
+            <BaseTable
+              struct={vpcVmStruct}
+              RowComponent={VpcVmTableRow}
+              rows={filteredList || []}
+              text="در حال حاضر رکورد وجود ندارد"
+              isLoading={isLoading}
+            />
           </Stack>
         </Stack>
-        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-        <Stack py={1.5}>
-          <BaseTable
-            struct={vpcVmStruct}
-            RowComponent={VpcVmTableRow}
-            rows={filteredList || []}
-            text="در حال حاضر رکورد وجود ندارد"
-            isLoading={isLoading}
-          />
-        </Stack>
+        <CreateNetworkRecordModal
+          maxWidth="xs"
+          fullWidth
+          open={dialogType === "CREATE"}
+          onClose={closeDialogs}
+        />
       </Stack>
-      <CreateNetworkRecordModal
-        maxWidth="xs"
-        fullWidth
-        open={dialogType === "CREATE"}
-        onClose={closeDialogs}
-      />
-    </Stack>
+    </>
   );
 };

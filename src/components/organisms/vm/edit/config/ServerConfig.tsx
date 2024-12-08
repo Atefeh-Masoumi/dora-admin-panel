@@ -18,7 +18,7 @@ import {
 // const memoryUnitPrice = 600000;
 // const cpuUnitPrice = 500000;
 // const diskUnitPrice = 45000;
-const ipAddress = 600000;
+// const ipAddress = 600000;
 
 type ServerConfigPropsType = {};
 
@@ -30,6 +30,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [memoryUnitPrice, setMemoryUnitPrice] = useState(0);
   const [cpuUnitPrice, setCpuUnitPrice] = useState(0);
   const [diskUnitPrice, setDiskUnitPrice] = useState(0);
+  const [ipAddress, setIpAddress] = useState(0);
 
   const { data: unitsPrice, isLoading: getUnitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
@@ -69,6 +70,9 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     setDiskUnitPrice(
       unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VDisk)?.price ||
         0
+    );
+    setIpAddress(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.Ipv4)?.price || 0
     );
   }, [cpuUnitPrice, diskUnitPrice, memoryUnitPrice, unitsPrice]);
 

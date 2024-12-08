@@ -1,24 +1,25 @@
 import { LoadingButton } from "@mui/lab";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
-
-type VmRebuildSteps = 1 | 2;
+import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
+import Header from "src/components/organisms/layout/header/Header";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
-  const { serverId } = useContext(EditServerContext);
-  const [step, setStep] = useState<VmRebuildSteps>(1);
-  const [imageId, setImageId] = useState<any>(0);
+  const formInitialValues = { serverName: "", password: "" };
+  const { serverId, hypervisorId, datacenterId } =
+    useContext(EditServerContext);
+  const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,14 +27,8 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildByIdMutation();
 
   const submitHandler = () => {
-    if (step === 1) {
-      imageId && setStep(2);
-    } else if (step === 2) {
-      formik.handleSubmit();
-    }
+    formik.handleSubmit();
   };
-  //formik
-  const formInitialValues = { serverName: "", password: "" };
 
   const formValidation = yup.object().shape({
     serverName: yup.string().required("نام سرور الزامیست!"),
@@ -52,7 +47,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
       rebuildVmModel: {
         name: formik.values.serverName,
         password: formik.values.password,
-        imageId: imageId.osId,
+        imageId: imageId,
       },
     })
       .unwrap()
@@ -71,21 +66,33 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   });
 
   return (
-    <Paper
-      elevation={0}
-      component={Stack}
-      rowGap={2}
-      sx={{ py: 5, px: { xs: 2, sm: 5 } }}
-    >
-      <Typography align="center" fontWeight={700} fontSize={24} color="#202020">
-        انتخاب سیستم عامل
+    <>
+      <Typography
+        color="grey.700"
+        fontSize={24}
+        fontWeight={700}
+        sx={{ mb: 2 }}
+      >
+        بازسازی سیستم عامل
       </Typography>
-      <Typography align="center" color="grey.700">
-        لطفا ابتدا سیستم عامل مورد نظر ماشین را از زیر انتخاب کنید
-      </Typography>
-      {step === 1 ? (
-        <ChooseOSForRebuild imageId={imageId} setImageId={setImageId} />
-      ) : (
+      <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}>
+        <Typography align="center" color="grey.700">
+          بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
+        </Typography>
+        <ChooseOSForRebuild
+          setImageId={setImageId}
+          hypervisorId={hypervisorId}
+          datacenterId={datacenterId}
+        />
+        <Typography
+          align="center"
+          fontWeight={700}
+          fontSize={24}
+          color="#202020"
+          sx={{ mt: 10 }}
+        >
+          اطلاعات سرور
+        </Typography>
         <ChooseInfo
           name={name}
           setName={setName}
@@ -93,22 +100,22 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
           setPassword={setPassword}
           formik={formik}
         />
-      )}
-      <Stack alignItems="center" justifyContent="center">
-        <LoadingButton
-          loading={isLoading}
-          variant="contained"
-          onClick={submitHandler}
-          sx={{
-            width: { xs: "100%", sm: "auto" },
-            px: { sm: 8 },
-            py: 2.1,
-            mt: 2,
-          }}
-        >
-          ادامه
-        </LoadingButton>
-      </Stack>
-    </Paper>
+        <Stack alignItems="center" justifyContent="center">
+          <LoadingButton
+            loading={isLoading}
+            variant="contained"
+            onClick={submitHandler}
+            sx={{
+              width: { xs: "100%", sm: "auto" },
+              px: { sm: 8 },
+              py: 2.1,
+              mt: 2,
+            }}
+          >
+            درخواست بازسازی
+          </LoadingButton>
+        </Stack>
+      </Paper>
+    </>
   );
 };

@@ -1,14 +1,12 @@
 import { useContext, FC } from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
+import DomainIcon from "@mui/icons-material/Domain";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterListQuery,
 } from "src/app/services/api.generated";
-import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
-import DomainIcon from "@mui/icons-material/Domain";
 
 type SelectKuberDataCenterPropsType = {};
 

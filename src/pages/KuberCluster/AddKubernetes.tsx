@@ -174,22 +174,22 @@ const AddKubernetes: FC = () => {
             <Grid container gap={2}>
               <Grid xs={12} item>
                 <SelectKuberDataCenter />
-                <Divider sx={{ margin: "50px 10px" }} />
+                <Divider sx={{ mt: 10 }} />
               </Grid>
               <Grid xs={12} item>
                 <SelectKuberSetting />
-                <Divider sx={{ margin: "50px 10px" }} />
+                <Divider sx={{ mt: 10 }} />
               </Grid>
               <Grid xs={12} item>
                 <SelectConfigType
                   isPredefined={isPredefined}
                   setIsPredefined={setIsPredefined}
                 />
-                <Divider sx={{ margin: "50px 10px" }} />
+                <Divider sx={{ mt: 10 }} />
               </Grid>
               <Grid xs={12} item>
                 <SelectKuberConfig />
-                <Divider sx={{ margin: "50px 10px" }} />
+                <Divider sx={{ mt: 10 }} />
               </Grid>
               <Grid xs={12} item>
                 <ServerKuberInfo />

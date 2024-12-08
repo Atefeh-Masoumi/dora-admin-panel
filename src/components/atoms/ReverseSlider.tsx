@@ -6,7 +6,7 @@ import {
   styled,
   ThemeProvider,
 } from "@mui/material";
-import { BORDER_RADIUS_1, BORDER_RADIUS_5 } from "src/configs/theme";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const theme = createTheme({
   direction: "ltr",

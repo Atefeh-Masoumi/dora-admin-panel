@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { paymentTableStruct } from "./struct";
 import { Chip, Stack, Typography } from "@mui/material";
-import PaymentModal from "src/pages/portal/financial/Payment";
+import PaymentDialog from "../dialog/PaymentDIalog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 
@@ -48,7 +48,11 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         );
         break;
       case "hashCardNumber":
-        result = <Typography sx={{ direction: "rtl" }}>{text}</Typography>;
+        result = (
+          <Typography sx={{ direction: "rtl", fontSize: "12px" }}>
+            {text}
+          </Typography>
+        );
         break;
       case "amount":
         result = <>{text} ریال</>;
@@ -67,7 +71,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         role="checkbox"
         tabIndex={-1}
         key={row.id}
-        sx={{ cursor: "pointer" }}
+        sx={{ py: 2.9, cursor: "pointer" }}
         onClick={openDialog}
       >
         {paymentTableStruct.map((column) => {
@@ -75,7 +79,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
             <DorsaTableCell
               key={column.id}
               align="center"
-              sx={{ px: 1, whiteSpace: "nowrap" }}
+              sx={{ px: 1, py: 2.9, whiteSpace: "nowrap" }}
             >
               <Stack>{renderValueHandler(column)}</Stack>
             </DorsaTableCell>
@@ -83,7 +87,7 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
 
-      <PaymentModal handleClose={closeDialog} open={dialog} maxWidth="xs" />
+      <PaymentDialog handleClose={closeDialog} open={dialog} maxWidth="xs" />
     </>
   );
 };

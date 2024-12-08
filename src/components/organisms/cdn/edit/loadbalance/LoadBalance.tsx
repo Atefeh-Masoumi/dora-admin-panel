@@ -19,7 +19,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
     dnsCdnHostId: dnsId,
   });
 
-  const openDialog = () => setShowDialog(true);
+  // const openDialog = () => setShowDialog(true);
   const closeDialog = () => setShowDialog(false);
 
   return (

@@ -10,21 +10,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ErrorMessage, Field, Form, Formik, useFormikContext } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { FC, useEffect, useMemo, useState } from "react";
 import Countdown from "react-countdown";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useAppSelector } from "src/app/hooks";
-import {
-  useGetApiMyAccountCaptchaQuery,
-  usePostApiMyAccountForgotMutation,
-} from "src/app/services/api.generated";
 import { setForgetPasswordConfirmCodeAction } from "src/app/slice/forgetPasswordSlice";
 import { CodeField } from "src/components/atoms/CodeField";
 import { AuthTemplate } from "src/components/templates/AuthTemplate";
 import * as Yup from "yup";
+import {
+  useGetApiMyAccountCaptchaQuery,
+  usePostApiMyAccountForgotMutation,
+} from "src/app/services/api.generated";
 
 type ForgetPassConfirmCodePropsType = {
   goNext: () => void;

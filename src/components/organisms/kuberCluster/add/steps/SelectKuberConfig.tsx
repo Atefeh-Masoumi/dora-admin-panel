@@ -75,7 +75,7 @@ export const SelectKuberConfig: FC<SelectKuberConfigPropsType> = () => {
         isLoading={vmBundlesListLoading}
       />
     ),
-    [vmBundlesListLoading]
+    [vmBundlesListLoading, vmBundlesList]
   );
 
   return (

@@ -9,10 +9,6 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { FC, useContext, useEffect, useState } from "react";
-import {
-  DatacenterImageListResponse,
-  useGetApiMyDatacenterImageListQuery,
-} from "src/app/services/api.generated";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
@@ -21,11 +17,15 @@ import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVm
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
+import {
+  DatacenterImageListResponse,
+  useGetApiMyDatacenterImageListQuery,
+} from "src/app/services/api.generated";
+import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
-  imageId?: number | null;
-  setImageId?: any;
+  hypervisorTypeId?: number | null;
 };
 
 type OsDropDownType = {
@@ -38,8 +38,7 @@ type OsDropDownType = {
 
 export const SelectOS: FC<SelectOSPropsType> = ({
   datacenterId,
-  imageId,
-  setImageId,
+  hypervisorTypeId,
 }) => {
   const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
 
@@ -47,7 +46,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({
     {
       datacenterId: datacenterId || 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hypervisorTypeId: HYPERVISOR_ENUM.VM,
+      hypervisorTypeId: hypervisorTypeId || HYPERVISOR_ENUM.VM,
     }
   );
 
@@ -137,6 +136,8 @@ export const SelectOS: FC<SelectOSPropsType> = ({
         return <DebianSvgIcon />;
       case 5:
         return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      case 7:
+        return <RockyOSIcon sx={{ width: 40, height: 40 }} />;
       default:
         return "";
     }

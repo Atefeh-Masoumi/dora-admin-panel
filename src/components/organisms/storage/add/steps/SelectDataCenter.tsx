@@ -1,5 +1,5 @@
 import { useContext, FC } from "react";
-import { Skeleton, Stack, Typography } from "@mui/material";
+import { Paper, Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
   DatacenterListResponse,

@@ -121,7 +121,7 @@ export const CreateOriginUserCertDialog: FC<
                   variant="contained"
                   sx={{ px: 3, py: 0.8 }}
                 >
-                  add
+                  ذخیره
                 </LoadingButton>
               </Stack>
             </Stack>

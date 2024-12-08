@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  api,
+  enhancedApi,
   LoginModel,
   PostApiMyAccountLoginApiResponse,
 } from "../services/api.generated";
@@ -40,7 +40,7 @@ const authSlice = createSlice({
   },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
-      api.endpoints.postApiMyAccountLogin.matchFulfilled,
+      enhancedApi.endpoints.postApiMyAccountLogin.matchFulfilled,
       (_, actionPayload) => {
         const accessToken =
           actionPayload.payload.accessToken === "0"
@@ -64,14 +64,14 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.postApiMyAccountTwoFactorLogin.matchFulfilled,
+      enhancedApi.endpoints.postApiMyAccountTwoFactorLogin.matchFulfilled,
       (_, { payload }: { payload: PostApiMyAccountLoginApiResponse }) => {
         localStorage.setItem("loginInfo", JSON.stringify(payload));
         return { ...payload, email: "", password: "" };
       }
     );
     addMatcher(
-      api.endpoints.putApiMyAccountProfileEditTwoFactor.matchFulfilled,
+      enhancedApi.endpoints.putApiMyAccountProfileEditTwoFactor.matchFulfilled,
       (state, actionPayload) => {
         const twoFactor =
           actionPayload.meta.arg.originalArgs.twoFactorModel.twoFactorStatus;
@@ -83,7 +83,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.putApiMyAccountProfileEdit.matchFulfilled,
+      enhancedApi.endpoints.putApiMyAccountProfileEdit.matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };
@@ -92,7 +92,8 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.postApiMyAccountProfileConfirmPhoneNumber.matchFulfilled,
+      enhancedApi.endpoints.postApiMyAccountProfileConfirmPhoneNumber
+        .matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };
@@ -101,7 +102,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      api.endpoints.postApiMyAccountProfileConfirmEmail.matchFulfilled,
+      enhancedApi.endpoints.postApiMyAccountProfileConfirmEmail.matchFulfilled,
       (state, actionPayload) => {
         const { profileCompleted } = actionPayload.payload;
         const newState = { ...state, profileCompleted };

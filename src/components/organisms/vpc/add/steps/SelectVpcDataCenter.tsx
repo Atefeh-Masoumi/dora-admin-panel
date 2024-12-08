@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Typography } from "@mui/material";
+import { Paper, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import {
   DatacenterListResponse,
@@ -6,8 +6,6 @@ import {
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { AddVpcContext } from "../contexts/AddVpcContext";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
 import DomainIcon from "@mui/icons-material/Domain";
 
 type SelectKuberDataCenterPropsType = {};

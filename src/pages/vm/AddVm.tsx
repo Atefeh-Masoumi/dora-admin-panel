@@ -170,7 +170,7 @@ const AddVm: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد سرور مجازی جدید
+        ایجاد سرور ابری
       </Typography>
       <Box sx={{ my: 0 }}>
         <Grid container>
@@ -195,7 +195,10 @@ const AddVm: FC = () => {
               )}
               <Grid container gap={2}>
                 <Grid xs={12} item>
-                  <SelectOS datacenterId={vmProjectData?.datacenterId} />
+                  <SelectOS
+                    datacenterId={vmProjectData?.datacenterId}
+                    hypervisorTypeId={vmProjectData?.hypervisorTypeId}
+                  />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>

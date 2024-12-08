@@ -22,7 +22,7 @@ import {
 } from "src/app/services/api.generated";
 
 const vmDataList = [
-  { label: "نوع زیرساخت:", id: "hypervisorType" },
+  { label: "زیرساخت:", id: "hypervisorType" },
   { label: "مرکز داده:", id: "datacenter" },
 ];
 

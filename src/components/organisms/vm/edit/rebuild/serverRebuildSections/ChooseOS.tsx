@@ -13,18 +13,18 @@ import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
 } from "src/app/services/api.generated";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
 import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
 import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
-import { EditServerContext } from "../contexts/EditServerContext";
+import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
+import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
-  imageId?: number | null;
+  hypervisorId?: number | null;
   setImageId?: any;
 };
 
@@ -37,16 +37,15 @@ type OsDropDownType = {
 };
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
-  imageId,
+  datacenterId,
+  hypervisorId,
   setImageId,
 }) => {
-  const { dataCenter } = useContext(EditServerContext);
-
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
-      datacenterId: Number(dataCenter) || 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hypervisorTypeId: HYPERVISOR_ENUM.VM,
+      datacenterId: Number(datacenterId) || 0,
+      hypervisorTypeId: hypervisorId || 0,
     }
   );
 
@@ -85,10 +84,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
             isSelected: false,
           };
         }
-        setImageId(
-          x.content.find((item) => item.id === +(x.selectedImageId || "0")) ||
-            null
-        );
+        setImageId(x.content.find((item) => item.id)?.id || null);
         return { ...x, isSelected: true };
       })
     );
@@ -103,7 +99,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
           ) || null;
 
         if (selectedImageItem) {
-          setImageId(selectedImageItem);
+          setImageId(selectedImageItem.id);
           return {
             ...dropDownState,
             selectedImageId: event.target.value,
@@ -136,6 +132,10 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
         return <DebianSvgIcon />;
       case 5:
         return <CentOSIcon sx={{ width: 40, height: 40 }} />;
+      case 6:
+        return <SuseOSIcon sx={{ width: 40, height: 40 }} />;
+      case 7:
+        return <RockyOSIcon sx={{ width: 40, height: 40 }} />;
       default:
         return "";
     }
@@ -148,6 +148,9 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       spacing={4}
       sx={{ px: 2 }}
     >
+      <Typography fontSize={24} fontWeight="bold" align="center">
+        سیستم عامل ماشین را انتخاب کنید
+      </Typography>
       <Grid2 container gap={2} justifyContent="center" width="100%">
         {isLoading &&
           [...Array(2)].map((_, index) => (
@@ -222,6 +225,19 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                     overflow: "hidden",
                   }}
                 >
+                  {/* {osDropDown.osId === 1 ? (
+                    <WindowsSvg
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        "&>path": {
+                          fill: ({ palette }) => palette.primary.main,
+                        },
+                      }}
+                    />
+                  ) : (
+                    <UbuntuSvg sx={{ width: 40, height: 40 }} />
+                  )} */}
                   {dataCenterIconRenderHandler(osDropDown.osId)}
                 </Box>
                 <Typography

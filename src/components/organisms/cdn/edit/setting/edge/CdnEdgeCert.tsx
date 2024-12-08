@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Divider, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { toast } from "react-toastify";
@@ -40,8 +40,7 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
 
   return (
     <Stack bgcolor="white" borderRadius={BORDER_RADIUS_1} p={2} width="100%">
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography>گواهی ابر راهبر</Typography>
+      <Stack direction="row" justifyContent="end" alignItems="center">
         <LoadingButton
           loading={loadingCreate}
           variant="outlined"
@@ -52,10 +51,9 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
           }
           onClick={submit}
         >
-          {edgeCert ? "تمدید گواهی" : "افزودن"}
+          {edgeCert ? "تمدید SSL" : "درخواست SSL"}
         </LoadingButton>
       </Stack>
-      <Divider sx={{ width: "100%", color: "#6E768A14", my: 2 }} />
       {edgeCert ? (
         <Stack spacing={2} px={1} color="secondary.main">
           <Stack direction="row" justifyContent="space-between">

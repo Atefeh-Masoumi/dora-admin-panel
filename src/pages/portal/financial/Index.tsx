@@ -11,13 +11,20 @@ import Invoices from "./Invoices";
 import Payments from "./Payments";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 import Commission from "./Commission";
+import Bill from "./CustomerBill";
 
 const tabs: tabsType[] = [
   {
-    title: "محاسبات",
+    title: "محاسبات قطعی",
     icon: AccountSvg,
     content: <CustomerBills />,
-    path: "customer-bill",
+    path: "customer-bills",
+  },
+  {
+    title: "محاسبات جاری",
+    icon: AccountSvg,
+    content: <Bill />,
+    path: "customer-bill&customer-bill-id=0",
   },
   { title: "کیف پول", icon: AccountSvg, content: <Wallet />, path: "wallet" },
   {

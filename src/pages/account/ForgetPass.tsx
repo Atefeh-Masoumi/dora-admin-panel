@@ -27,12 +27,7 @@ export const ForgetPass: FC<ForgetPassPropsType> = ({ goNext }) => {
   const [captchaKey, setCaptchaKey] = useState("");
   const [sendMail, { isLoading }] = usePostApiMyAccountForgotMutation();
 
-  const {
-    data: captchaData,
-    isLoading: getCaptchaLoading,
-    isFetching: getCaptchaFetching,
-    refetch: refetchCaptchaData,
-  } = useGetApiMyAccountCaptchaQuery();
+  const { refetch: refetchCaptchaData } = useGetApiMyAccountCaptchaQuery();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { email, captchaCode },

@@ -13,4 +13,5 @@ export const passwordValidationRegex =
   /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 export const captchaRegex = /^[a-zA-Z0-9!@#]{6}$/;
 
-export const jalaliDateRegex = /^(13[0-9][0-9]|140[0-2])\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
+export const jalaliDateRegex =
+  /^(13[0-9][0-9]|140[0-2])\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;

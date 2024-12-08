@@ -47,12 +47,9 @@ const Wallet = lazy(
   () => import("src/pages/portal/financial/WalletTransactions")
 );
 const Payments = lazy(() => import("src/pages/portal/financial/Payments"));
-const Payment = lazy(() => import("src/pages/portal/financial/Payment"));
+const Payment = lazy(() => import("src/pages/portal/financial/PaymentCallBack"));
 const CustomerBills = lazy(
   () => import("src/pages/portal/financial/CustomerBills")
-);
-const CustomerBill = lazy(
-  () => import("src/pages/portal/financial/CustomerBill")
 );
 const Invoices = lazy(() => import("src/pages/portal/financial/Invoices"));
 const Invoice = lazy(() => import("src/pages/portal/financial/Invoice"));
@@ -79,14 +76,16 @@ const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
 const EditStorageService = lazy(() => import("src/pages/storage/EditStorage"));
 
 const KubernetesIndex = lazy(
-  () => import("src/pages/KubeCluster/KubernetesList")
+  () => import("src/pages/KuberCluster/KubernetesList")
 );
-const AddKubernetes = lazy(() => import("src/pages/KubeCluster/AddKubernetes"));
+const AddKubernetes = lazy(
+  () => import("src/pages/KuberCluster/AddKubernetes")
+);
 const EditKubernetes = lazy(
-  () => import("src/pages/KubeCluster/EditKubernetes")
+  () => import("src/pages/KuberCluster/EditKubernetes")
 );
 const AddNodeKubernetes = lazy(
-  () => import("src/pages/KubeCluster/AddNodeKubernetes")
+  () => import("src/pages/KuberCluster/AddNodeKubernetes")
 );
 
 const VpcIndex = lazy(() => import("src/pages/vpc/VpcList"));
@@ -94,25 +93,21 @@ const AddVpc = lazy(() => import("src/pages/vpc/AddVpc"));
 const VpcEditZone = lazy(() => import("src/pages/vpc/EditZone"));
 
 const KubernetesCloud = lazy(
-  () => import("src/pages/kubernetesCloud/KubernetesCloudList")
+  () => import("src/pages/kuberCloud/KubernetesCloudList")
 );
 const AddNamespace = lazy(
-  () => import("src/pages/kubernetesCloud/add/AddkubernetesCloud")
+  () => import("src/pages/kuberCloud/add/AddkubernetesCloud")
 );
 const EditKubernetesCloud = lazy(
-  () => import("src/pages/kubernetesCloud/edit/EditKubernetesCloud")
+  () => import("src/pages/kuberCloud/edit/EditKubernetesCloud")
 );
 const AddKubernetesCloudDeployment = lazy(
   () =>
-    import(
-      "src/pages/kubernetesCloud/edit/deployment/AddKubernetesCloudDeployment"
-    )
+    import("src/pages/kuberCloud/edit/deployment/AddKubernetesCloudDeployment")
 );
 const EditKubernetesCloudDeployment = lazy(
   () =>
-    import(
-      "src/pages/kubernetesCloud/edit/deployment/EditKubernetesCloudDeployment"
-    )
+    import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 const mainTemplate = (
   PageComponent: FC<any>,
@@ -704,6 +699,13 @@ const Router: FC = () => {
               url: "/kubernetes-cloud",
             },
             hideSidebar: false,
+          })}
+        />
+
+        <Route
+          path="/kubernetes-cloud/:kubernetesCloudId/firewall"
+          element={mainTemplate(EditKubernetesCloud, {
+            pageTitle: "مدیریت Firewall",
           })}
         />
 

@@ -10,15 +10,17 @@ import {
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
-import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
-import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
-import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
-import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
-import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
-import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_ENUM } from "src/types/vmEnum";
+import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
+import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
+import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
+import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
+import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
+import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
+import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
+import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 
 type TabPanelProps = {
   children?: ReactNode;
@@ -56,9 +58,10 @@ const a11yProps = (index: number) => {
 type EditCloudServerPropsType = {};
 
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
-  const [section, setSection] = useState(0);
-  const { setServerId } = useContext(EditServerContext);
   const { id } = useParams();
+  const { setServerId, setHypervisorId, setDatacenterId } =
+    useContext(EditServerContext);
+  const [section, setSection] = useState(0);
   const navigate = useNavigate(); // Added
 
   const { data: vmData, isLoading: getVmDataLoading } =
@@ -69,7 +72,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   useEffect(() => {
     if (!id) return;
     setServerId(Number(id));
-  }, [id, setServerId]);
+    setHypervisorId(vmData?.hypervisorTypeId || 0);
+    setDatacenterId(vmData?.datacenterId || 0);
+  }, [id, vmData, setServerId, setDatacenterId, setHypervisorId]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
@@ -79,10 +84,12 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const tabArray = [
     "مشخصات سرور",
     "آنالیز ترافیک",
-    "آدرس IP سرور",
-    "بازسازی سیستم عامل",
-    "تغییر مشخصات سخت افزاری",
-    "Snapshot",
+    "آدرس IP",
+    "بازسازی",
+    "سخت افزاری",
+    "دیسک",
+    "اسنپ‌شات",
+    "فایروال",
   ];
 
   const tabPanelArray = [
@@ -91,7 +98,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmIpAddress,
     VmRebuild,
     ServerConfig,
+    Volume,
     Snapshot,
+    Firewall,
   ];
 
   if (!id) return <Navigate to="/vm" />;

@@ -297,7 +297,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 <DorsaTextField
                   fullWidth
                   label="*name"
-                  size="small"
                   error={Boolean(formik.errors.name && formik.touched.name)}
                   helperText={formik.errors.name}
                   {...formik.getFieldProps("name")}
@@ -305,7 +304,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
               </Grid2>
               <Grid2 xs={12} md={6}>
                 <Select
-                  size="small"
                   value={formik.values.secretTypeId}
                   onChange={(event) => {
                     formik.setFieldValue(
@@ -366,7 +364,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                     }}
                     startIcon={<Add />}
                     onClick={addEnvsInput}
-                    size="small"
                   >
                     اضافه کردن
                   </Button>
@@ -388,7 +385,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           onChange={(e) =>
                             handleKeyForOpaque(index, String(e.target.value))
                           }
-                          size="small"
                         />
                       </Grid>
                       <Grid item xs={7} mb={2}>
@@ -399,7 +395,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           onChange={(e) =>
                             handleValueForOpaque(index, String(e.target.value))
                           }
-                          size="small"
                         />
                       </Grid>
                       <Grid
@@ -453,7 +448,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           String(e.target.value)
                         )
                       }
-                      size="small"
                       multiline
                       rows={4}
                     />
@@ -468,7 +462,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           String(e.target.value)
                         )
                       }
-                      size="small"
                       multiline
                       rows={4}
                     />
@@ -504,7 +497,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           String(e.target.value)
                         )
                       }
-                      size="small"
                       placeholder="https://...."
                     />
                   </Grid>
@@ -516,7 +508,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                       onChange={(e) =>
                         handleUsernameForImageRegistry(String(e.target.value))
                       }
-                      size="small"
                     />
                   </Grid>
                   <Grid item xs={6} mb={2}>
@@ -527,7 +518,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                       onChange={(e) =>
                         handlePasswordForImageRegistry(String(e.target.value))
                       }
-                      size="small"
                     />
                   </Grid>
                   <Grid item xs={6} mb={2}>
@@ -538,7 +528,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                       onChange={(e) =>
                         handleEmailForImageRegistry(String(e.target.value))
                       }
-                      size="small"
                     />
                   </Grid>
                 </Grid>
@@ -572,7 +561,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           String(e.target.value)
                         )
                       }
-                      size="small"
                     />
                   </Grid>
                   <Grid item xs={6} mb={2}>
@@ -585,30 +573,31 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                           String(e.target.value)
                         )
                       }
-                      size="small"
                     />
                   </Grid>
                 </Grid>
               </Stack>
             )}
             <DialogActions>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={onClose}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                component="button"
-                type="submit"
-                loading={createSecretMapLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ذخیره
-              </LoadingButton>
+              <Stack direction="row" justifyContent="end" spacing={1}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
+                  onClick={onClose}
+                >
+                  انصراف
+                </Button>
+                <LoadingButton
+                  component="button"
+                  type="submit"
+                  loading={createSecretMapLoading}
+                  variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
+                >
+                  ذخیره
+                </LoadingButton>
+              </Stack>
             </DialogActions>
           </Stack>
         </form>

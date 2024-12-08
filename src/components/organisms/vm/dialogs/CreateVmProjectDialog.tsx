@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   InputLabel,
   Stack,
   Radio,
@@ -25,7 +24,6 @@ import {
   usePutApiMyHostProjectEditByIdMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
@@ -36,13 +34,11 @@ import DomainIcon from "@mui/icons-material/Domain";
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
   name?: VmProjectListResponse["name"];
-  hypervisorTypeId?: VmProjectListResponse["hypervisorTypeId"];
 };
 
 export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
   projectId,
   name,
-  hypervisorTypeId,
   ...props
 }) => {
   const [createVmProject, { isLoading: createVmProjectLoading }] =
@@ -54,7 +50,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 
   const initialValues: VmProjectCreateModel = {
     name: name || "",
-    hypervisorTypeId: 1,
+    hypervisorTypeId: 0,
     datacenterId: (datacenterList && datacenterList[0].id) || 0,
     // isPublic: true,
     // vpcHostId: null,
@@ -66,7 +62,6 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       .min(5, "نباید کمتر از ۵ کارکتر باشد")
       .max(70, "نباید بیشتر از ۷۰ کارکتر باشد")
       .required("این بخش الزامی است"),
-    hypervisorTypeId: yup.number().required("این بخش الزامی است"),
     datacenterId: projectId
       ? yup.number().nullable()
       : yup.number().required("این بخش الزامی است"),
@@ -135,7 +130,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       fullWidth
       // components={{ Backdrop: BlurBackdrop }}
       // sx={{
-        // "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
+      // "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 },
       // }}
     >
       <DialogTitle textAlign="left">
@@ -184,7 +179,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                             margin: { xs: " 5px 0", sm: "0 !important" },
                           }}
                           value={id}
-                          control={<Radio size="small" />}
+                          control={<Radio size="medium" />}
                           label={
                             <Stack
                               direction="row"
@@ -202,26 +197,23 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 </RadioGroup>
               </Stack>
             )}
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              rowGap={1.5}
-            >
+            <Stack direction="row" justifyContent="end" spacing={1}>
               <Button
-                sx={{ width: { xs: "100%", sm: 100 } }}
-                variant="text"
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
                 onClick={closeDialogHandler}
               >
                 انصراف
               </Button>
               <LoadingButton
-                sx={{ width: { xs: "100%", sm: 140 } }}
-                variant="contained"
+                component="button"
                 type="submit"
                 loading={createVmProjectLoading || editVmProjectLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
               >
-                {projectId ? "بروزرسانی پروژه" : "ایجاد پروژه"}
+                ذخیره
               </LoadingButton>
             </Stack>
           </Stack>

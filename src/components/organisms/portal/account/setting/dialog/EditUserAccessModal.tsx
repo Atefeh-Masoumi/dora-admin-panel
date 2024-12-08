@@ -63,15 +63,63 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     { skip: !userId }
   );
 
+  const handleReset = () => {
+    setSuperUser(false);
+    setFinancialManager(false);
+    setAccountManager(false);
+    setSelectAll(false);
+    setRoleAccessList((prevList) =>
+      prevList.map((role) => ({
+        ...role,
+        isRoleChecked: false,
+        accessTuples: role.accessTuples.map((access) => ({
+          ...access,
+          hasAccess: false,
+        })),
+      }))
+    );
+
+    // useEffect(() => {
+    //   if (currentUserRoleAccessList) {
+    //     setSuperUser(!!currentUserRoleAccessList.isSuperUser);
+    //     setAccountManager(!!currentUserRoleAccessList.isAccountManager);
+    //     setFinancialManager(!!currentUserRoleAccessList.isFinancialManager);
+    //   }
+
+    //   const newRoleAccessList = roleList?.map((role) => {
+    //     const currentSelectedRole = currentUserRoleAccessList?.roleAccesses?.find(
+    //       (c) => c.roleId === role.id
+    //     );
+    //     return {
+    //       roleId: role.id,
+    //       roleName: role.name,
+    //       isRoleChecked: currentSelectedRole?.hasAccess || false,
+    //       roleAccessTypeId:
+    //         currentSelectedRole?.roleAccessTypeId || roleAccessType[0].id,
+    //       accessTuples: access.map((item) => {
+    //         return {
+    //           accessId: item.id,
+    //           hasAccess:
+    //             currentSelectedRole?.accesses?.find((a) => item.id === a.accessId)
+    //               ?.hasAccess || false,
+    //           accessName: item.persianName,
+    //         };
+    //       }),
+    //     };
+    //   });
+    //   newRoleAccessList && setRoleAccessList(newRoleAccessList);
+    // }, [roleList, currentUserRoleAccessList]);
+  };
+
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
     setAccountManager(false);
     setFinancialManager(false);
-    if (selectAll) {
-      setSuperUser(true);
-    } else {
-      setSuperUser(false);
-    }
+    // if (selectAll) {
+    //   setSuperUser(true);
+    // } else {
+    //   setSuperUser(false);
+    // }
   };
 
   const onSubmit = () => {
@@ -147,7 +195,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
       };
     });
     newRoleAccessList && setRoleAccessList(newRoleAccessList);
-  }, [roleList, currentUserRoleAccessList]);
+  }, [roleList, currentUserRoleAccessList, props.open]);
 
   useEffect(() => {
     const newRoleAccessList = roleList?.map((role) => {
@@ -171,10 +219,45 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
 
   const radioItems = [
     {
+      id: CHECK_BOX_ENUM.SUPER_USER,
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          سوپر ادمین
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و
+          ویرایش کند
+        </Typography>
+      ),
+      value: superUser,
+      disable: false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setSuperUser(checked);
+        setAccountManager(checked);
+        setFinancialManager(checked);
+        setSelectAll(checked);
+      },
+    },
+    {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
-      label: "مدیریت کاربران",
-      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت کاربران
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند به حساب کاربران دسترسی داشته باشد
+        </Typography>
+      ),
       value: accountManager,
+      checked: superUser ? true : false,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
         setAccountManager(checked);
@@ -185,9 +268,20 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
     },
     {
       id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
-      label: "مدیریت مالی",
-      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت مالی
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند صورتحساب را به‌روز و ویرایش کند
+        </Typography>
+      ),
       value: financialManager,
+      checked: superUser ? true : false,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
         setFinancialManager(checked);
@@ -199,7 +293,15 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
   ];
 
   return (
-    <Dialog {...props} sx={{ p: 3 }} fullWidth>
+    <Dialog
+      {...props}
+      sx={{ p: 3 }}
+      fullWidth
+      onClose={() => {
+        handleReset();
+        forceClose();
+      }}
+    >
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
         ویرایش دسترسی های کاربر موجود
       </DialogTitle>
@@ -308,54 +410,60 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                           </Typography>
                         </Box>
                       </Grid> */}
-
-                      {radioItems.map((item, index) => (
-                        <Grid
-                          key={index}
-                          xs={12}
-                          md={5}
-                          item
-
-                          // pr={{ xs: 0, md: 1 }}
-                        >
-                          <Stack
-                            direction="row"
-                            alignItems="start"
-                            justifyContent="center"
-                            spacing={1}
+                      <Grid container spacing={2}>
+                        {radioItems.map((item, index) => (
+                          <Grid
+                            key={index}
+                            xs={12}
+                            md={4}
+                            item
                             sx={{
-                              "& .MuiRadio-root": { p: 0 },
-                              "& .MuiFormControlLabel-root": { m: 0 },
+                              display: "flex",
+                              alignItems: "flex-start",
+                              textAlign: "start",
+                              whiteSpace: "normal",
                             }}
+                            // pr={{ xs: 0, md: 1 }}
                           >
-                            <FormControlLabel
-                              disabled={item.disable}
-                              control={
-                                <Checkbox
-                                  sx={{ padding: 0 }}
-                                  checked={item.value}
-                                  onChange={item.onChange}
-                                  inputProps={{ "aria-label": "controlled" }}
-                                />
-                              }
-                              label=""
-                            />
                             <Stack
-                              textAlign="start"
-                              color={
-                                item.value ? "primary.main" : "secondary.main"
-                              }
+                              direction="row"
+                              alignItems="start"
+                              justifyContent="center"
+                              spacing={1}
+                              sx={{
+                                "& .MuiRadio-root": { p: 0 },
+                                "& .MuiFormControlLabel-root": { m: 0 },
+                              }}
                             >
-                              <Typography variant="text14" fontWeight="bold">
-                                {item.label}
-                              </Typography>
-                              <Typography variant="text13">
-                                {item.text}
-                              </Typography>
+                              <FormControlLabel
+                                disabled={item.disable}
+                                control={
+                                  <Checkbox
+                                    sx={{ padding: 0 }}
+                                    checked={item.value}
+                                    onChange={item.onChange}
+                                    inputProps={{ "aria-label": "controlled" }}
+                                  />
+                                }
+                                label=""
+                              />
+                              <Stack
+                                textAlign="start"
+                                color={
+                                  item.value ? "primary.main" : "secondary.main"
+                                }
+                              >
+                                <Typography variant="text14" fontWeight="bold">
+                                  {item.label}
+                                </Typography>
+                                <Typography variant="text13">
+                                  {item.text}
+                                </Typography>
+                              </Stack>
                             </Stack>
-                          </Stack>
-                        </Grid>
-                      ))}
+                          </Grid>
+                        ))}
+                      </Grid>
                     </Grid>
                   </Stack>
 
@@ -370,7 +478,13 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                         control={
                           <Checkbox
                             checked={selectAll}
-                            onChange={(e, checked) => handleCheckbox(checked)}
+                            disabled={superUser ? true : false}
+                            onChange={(e, checked) => {
+                              handleCheckbox(checked);
+                              if (checked === true) {
+                                setSuperUser(false);
+                              }
+                            }}
                           />
                         }
                         label="همه"
@@ -378,75 +492,37 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                     </Box>
 
                     <RoleAccessList
-                      {...{ setRoleAccessList, roleAccessList }}
+                      {...{
+                        setRoleAccessList,
+                        roleAccessList,
+                        disabled: superUser,
+                      }}
                     />
                   </Stack>
                 </>
               )}
-
-              <Stack
-                rowGap={1}
-                columnGap={1}
-                direction="row"
-                justifyContent="flex-end"
-                p={2}
-                // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-              >
+              <Stack direction="row" justifyContent="end" spacing={1}>
                 <Button
-                  onClick={() => forceClose()}
-                  // sx={{
-                  //   minWidth: "160px",
-                  //   flexGrow: 1,
-                  // }}
-                  sx={{ width: "13%" }}
-                  type="button"
                   variant="outlined"
+                  color="secondary"
+                  sx={{ px: 3, py: 0.8 }}
+                  onClick={() => {
+                    forceClose();
+                    handleReset();
+                  }}
                 >
                   انصراف
                 </Button>
                 <LoadingButton
-                  // sx={{
-                  //   // minWidth: "160px",
-                  //   flexGrow: 1,
-                  // }}
-
-                  sx={{ width: "13%" }}
+                  component="button"
                   type="submit"
                   loading={editUserIsLoading}
                   variant="contained"
+                  sx={{ px: 3, py: 0.8 }}
                 >
-                  تایید
+                  ذخیره
                 </LoadingButton>
               </Stack>
-
-              {/* <Stack
-                rowGap={1}
-                columnGap={1}
-                sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-              >
-                <LoadingButton
-                  sx={{
-                    minWidth: "160px",
-                    flexGrow: 1,
-                  }}
-                  type="submit"
-                  loading={editUserIsLoading}
-                  variant="contained"
-                >
-                  ویرایش
-                </LoadingButton>
-                <LoadingButton
-                  onClick={() => forceClose()}
-                  sx={{
-                    minWidth: "160px",
-                    flexGrow: 1,
-                  }}
-                  type="button"
-                  variant="outlined"
-                >
-                  انصراف
-                </LoadingButton>
-              </Stack> */}
             </Stack>
           </Form>
         </Formik>

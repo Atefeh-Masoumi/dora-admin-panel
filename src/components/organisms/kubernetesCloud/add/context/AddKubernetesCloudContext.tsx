@@ -122,7 +122,7 @@ const AddKubernetesCloudContextProvider: FC<
         cpu: customConfig.cpu,
         memory: customConfig.memory,
         disk: customConfig.disk,
-        tenPods: customConfig.pods10,
+        tenPods: customConfig.pods10 /10,
         hostProjectId: null,
       },
     })

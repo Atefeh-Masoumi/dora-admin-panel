@@ -75,7 +75,7 @@ export const VpcLoadBalanceListTableRow: FC<
         <TableCell align="center">{rowData?.ip}</TableCell>
         <TableCell align="center">{rowData?.name}</TableCell>
         <TableCell align="center">{rowData?.port}</TableCell>
-        <TableCell align="center">{rowData?.vpcHostLbType}</TableCell>
+        <TableCell align="center">{rowData?.vpcHostLbType}</TableCell>  
         <TableCell align="center">
           <IconButton
             sx={{ borderRadius: 1 }}

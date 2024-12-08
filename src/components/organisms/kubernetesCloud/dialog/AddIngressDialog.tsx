@@ -35,28 +35,27 @@ const ProtocolTypeItems = [
   { id: 3, name: "HTTPS" },
 ];
 
+export type CustomRuleModelRequest = {
+  path: string | null;
+  kuberCloudDeployPortId: number | null;
+};
 export type CreateIngressTypes = {
   name: string | null;
   domainName: string | null;
   protocolTypeId: 3 | 4;
   secretId?: number | null;
-  rules: {
-    path: string | null;
-    kuberCloudDeployPortId: number;
-  }[];
+  rules: CustomRuleModelRequest[];
 };
 
 const formValidation = yup.object().shape({
   name: yup.string().required("نام الزامی می باشد"),
-  // ProtocolTypeList: yup.number().required("نوع protocol را انتخاب کنید"),
-  // serverPoolPort: yup.number().nullable().required("Port را وارد کنید"),
   domainName: yup.string().required("دامنه الزامی می باشد"),
-  // secretId: yup.number().required("سکرت الزامی می باشد."),
-  // rules: yup.array().of(
-  //   yup.object().shape({
-  //     path: yup.string().required("path را وارد کنید"),
-  //   })
-  // ),
+  rules: yup.array().of(
+    yup.object().shape({
+      path: yup.string().required(" الزامی می باشد path"),
+      kuberCloudDeployPortId: yup.number().nullable().required("پورت الزامیست"),
+    })
+  ),
 });
 
 type AddIngressDialogPropsType = DialogProps & {};
@@ -66,12 +65,12 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   ...props
 }) => {
   const { kubernetesCloudId } = useParams();
-  const [rules, setRules] = useState<RuleModelRequest[]>([]);
+  const [rules, setRules] = useState<CustomRuleModelRequest[]>([]);
 
   const [createIngress, { isLoading: createIngressLoading }] =
     usePostApiMyKubernetesCloudIngressCreateMutation();
 
-  const { data: tLSSecretList, isLoading: tLSSecretListLoadning } =
+  const { data: tLSSecretList } =
     useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
       {
         namespaceId: Number(kubernetesCloudId),
@@ -111,7 +110,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
           domainName: domainName!,
           protocolTypeId: protocolTypeId,
           secretId: protocolTypeId === 3 ? secretId! : null,
-          rules: rules,
+          rules: rules as RuleModelRequest[],
         },
       })
         .unwrap()
@@ -128,8 +127,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   const addRules = () => {
     setRules((prevState) => {
       let result = [...prevState];
-      // result.push({ service: "", kuberCloudDeployPortId: 0, path: "" });
-      result.push({ kuberCloudDeployPortId: 0, path: "" });
+      result.push({ kuberCloudDeployPortId: null, path: "" });
       return result;
     });
     formik.setFieldValue("rules", [
@@ -221,25 +219,33 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
               {formik.values.protocolTypeId === 3 && (
                 <Grid item xs={12} sm={6}>
-                  <DorsaTextField
-                    dir="ltr"
-                    select
-                    error={Boolean(
-                      formik.errors.secretId && formik.touched.secretId
-                    )}
-                    helperText={formik.errors.secretId}
-                    disabled={false}
-                    label="TLS Secret"
-                    fullWidth
-                    {...formik.getFieldProps("secretId")}
-                  >
-                    {tLSSecretList &&
-                      tLSSecretList.map((item, index) => (
-                        <MenuItem dir="ltr" key={index} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))}
-                  </DorsaTextField>
+                  {tLSSecretList && tLSSecretList.length > 0 ? (
+                    <DorsaTextField
+                      dir="ltr"
+                      select
+                      error={Boolean(
+                        formik.errors.secretId && formik.touched.secretId
+                      )}
+                      helperText={formik.errors.secretId}
+                      disabled={false}
+                      label="TLS Secret"
+                      fullWidth
+                      {...formik.getFieldProps("secretId")}
+                    >
+                      {tLSSecretList &&
+                        tLSSecretList.map((item, index) => (
+                          <MenuItem dir="ltr" key={index} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                    </DorsaTextField>
+                  ) : (
+                    <Alert severity="warning" variant="outlined">
+                      <Typography justifyItems="center" textAlign="center">
+                        ابتدا secret از نوع TLS بسازید
+                      </Typography>
+                    </Alert>
+                  )}
                 </Grid>
               )}
             </Grid>
@@ -257,13 +263,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                 </Typography>
                 <Button
                   variant="text"
-                  color="secondary"
-                  sx={{
-                    color: "primary.main",
-                    justifyContent: "space-between",
-                    py: 1,
-                    fontSize: "16px",
-                  }}
                   startIcon={<Add />}
                   onClick={addRules}
                   disabled={false}
@@ -284,8 +283,9 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
             </Stack>
           </Stack>
-
-          <DialogActions sx={{ px: 0, py: 4 }}>
+        </DialogContent>
+        <DialogActions>
+          <Stack direction="row" justifyContent="end" spacing={1}>
             <Button
               variant="outlined"
               color="secondary"
@@ -295,6 +295,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
+              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"
@@ -302,8 +303,8 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
             >
               ذخیره
             </LoadingButton>
-          </DialogActions>
-        </DialogContent>
+          </Stack>
+        </DialogActions>
       </form>
     </Dialog>
   );

@@ -8,6 +8,7 @@ import {
   usePutApiMyAccountProfileEditPhoneNotificationMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const NotificationSetting: FC = () => {
   const { data, isLoading: getDataLoading } =
@@ -39,16 +40,16 @@ export const NotificationSetting: FC = () => {
 
   return (
     <>
-      {(getDataLoading || editPhoneLoading || editEmailLoading) && (
-        <PageLoading />
-      )}
+      {getDataLoading ||
+        editPhoneLoading ||
+        (editEmailLoading && <PageLoading />)}
       <Stack
         sx={{
           width: { xs: "100%" },
           px: { xs: 1.8, lg: 3 },
           py: { xs: 1.8, lg: 2.25 },
           backgroundColor: "white",
-          borderRadius: 2,
+          borderRadius: BORDER_RADIUS_1,
         }}
       >
         <Typography variant="text1" color="secondary" sx={{ pt: 1.1 }}>
@@ -62,7 +63,7 @@ export const NotificationSetting: FC = () => {
                 اطلاع رسانی پیامک
               </Typography>
               <Typography variant="text15" color="secondary">
-                اطلاع رسانی پیام ها و ایونت‌های ابر راهبر از طریق پیامک
+                اطلاع رسانی پیام ها و ایونت‌ها از طریق پیامک
               </Typography>
             </Stack>
             <DorsaSwitch
@@ -78,7 +79,7 @@ export const NotificationSetting: FC = () => {
                 اطلاع رسانی ایمیل
               </Typography>
               <Typography variant="text15" color="secondary">
-                اطلاع رسانی پیام ها و ایونت‌های ابر راهبر از طریق ایمیل
+                اطلاع رسانی پیام ها و ایونت‌ها از طریق ایمیل
               </Typography>
             </Stack>
             <DorsaSwitch

@@ -16,6 +16,7 @@ import {
   useGetApiMyDnsCdnHostGetNsByIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
+import PageLoading from "src/components/atoms/PageLoading";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { AnalyticChart } from "src/components/organisms/cdn/edit/analytics/AnalyticChart";
 import { DnsRecord } from "src/components/organisms/cdn/edit/dns/DnsRecords";
@@ -279,36 +280,39 @@ const EditZone: FC = () => {
   };
 
   return (
-    <Stack spacing={5} alignItems="center">
-      <Box
-        sx={{
-          maxWidth: "100%",
-          bgcolor: "white",
-          py: 0.5,
-          borderRadius: BORDER_RADIUS_1,
-        }}
-      >
-        <Tabs
+    <>
+      {nsListLoading && <PageLoading />}
+      <Stack spacing={5} alignItems="center">
+        <Box
           sx={{
-            minWidth: "fix-content",
+            maxWidth: "100%",
+            bgcolor: "white",
+            py: 0.5,
             borderRadius: BORDER_RADIUS_1,
           }}
-          TabIndicatorProps={{ style: { display: "none" } }}
-          value={selectedTab}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
         >
-          <DorsaTab value={`overview`} label="مشخصات دامنه" />
-          <DorsaTab value={`setting`} label="تنظیمات" />
-          <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
-          <DorsaTab value={`dns-record`} label="تنظیمات DNS Record" />
-          <DorsaTab value={`load-balance`} label="تنظیمات Load Balance" />
-          {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}
-        </Tabs>
-      </Box>
-      {renderHandler()}
-    </Stack>
+          <Tabs
+            sx={{
+              minWidth: "fix-content",
+              borderRadius: BORDER_RADIUS_1,
+            }}
+            TabIndicatorProps={{ style: { display: "none" } }}
+            value={selectedTab}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            <DorsaTab value={`overview`} label="مشخصات دامنه" />
+            <DorsaTab value={`setting`} label="تنظیمات" />
+            <DorsaTab value={`analytics`} label="آنالیز ترافیک" />
+            <DorsaTab value={`dns-record`} label="تنظیمات DNS Record" />
+            <DorsaTab value={`load-balance`} label="تنظیمات Load Balance" />
+            {/* <DorsaTab value="api-gateway-settings" label="تنظیمات API Gateway" /> */}
+          </Tabs>
+        </Box>
+        {renderHandler()}
+      </Stack>
+    </>
   );
 };
 

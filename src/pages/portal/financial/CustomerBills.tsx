@@ -19,8 +19,8 @@ const CustomerBills: FC = () => {
     useGetApiMyPortalCustomerBillListQuery();
 
   const [search, setSearch] = useState("");
-  const [dateFrom, setDateFrom] = useState<Date | null>(null);
-  const [dateTo, setDateTo] = useState<Date | null>(null);
+  const [dateFrom] = useState<Date | null>(null);
+  const [dateTo] = useState<Date | null>(null);
   const [searchParams] = useSearchParams();
   const customerBillId = searchParams.get("customer-bill-id");
 
@@ -96,7 +96,7 @@ const CustomerBills: FC = () => {
               rows={filteredList}
               text="در حال حاضر گزارش ندارید"
               isLoading={isLoading}
-              initialOrder={1}
+              initialOrder={2}
             />
           </Stack>
         </Stack>

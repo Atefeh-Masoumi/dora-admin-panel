@@ -7,19 +7,22 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "syncApis": "sh ./sync_apis.sh",
+    "syncApis --old": "sh ./sync_apis.sh",
+    "syncApis": "npx @rtk-query/codegen-openapi src/openapi-config.ts",
     "prettify": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,scss,json}\""
   },
   "dependencies": {
     "@date-io/date-fns-jalali": "^2.15.0",
-    "@emotion/react": "^11.10.5",
+    "@emotion/react": "^11.13.5",
     "@emotion/server": "^11.10.0",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.13.5",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.9",
+    "@mui/joy": "^5.0.0-beta.48",
     "@mui/lab": "^5.0.0-alpha.106",
     "@mui/material": "^5.10.12",
     "@mui/styles": "^5.10.10",
+    "@mui/system": "^6.1.9",
     "@mui/x-date-pickers": "^5.0.6",
     "@persian-tools/persian-tools": "^3.4.1",
     "@reduxjs/toolkit": "^1.8.5",
@@ -56,6 +59,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@rtk-incubator/rtk-query-codegen-openapi": "^0.5.1",
+    "@rtk-query/codegen-openapi": "^2.0.0",
     "@types/moment-jalaali": "^0.7.9",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
@@ -64,6 +68,7 @@
     "@types/stylis": "^4.0.2",
     "recharts": "^2.1.16",
     "stylis-plugin-rtl": "^2.1.1",
+    "ts-node": "^10.9.2",
     "typescript": "<4.8"
   },
   "eslintConfig": {

@@ -60,7 +60,15 @@ export const CdnSetting: FC = () => {
         />
       </Stack>
 
-      <Stack bgcolor="white" p={5} spacing={2}>
+      <Stack
+        bgcolor="white"
+        py={3}
+        px={3}
+        width="100%"
+        borderRadius={BORDER_RADIUS_1}
+        direction="column"
+        spacing={2}
+      >
         <Typography fontSize={20} color="secondary" fontWeight="bold">
           گواهی های لبه (EDGE)
         </Typography>
@@ -72,7 +80,15 @@ export const CdnSetting: FC = () => {
         />
       </Stack>
 
-      <Stack bgcolor="white" p={5} spacing={2}>
+      <Stack
+        bgcolor="white"
+        py={3}
+        px={3}
+        width="100%"
+        borderRadius={BORDER_RADIUS_1}
+        direction="column"
+        spacing={2}
+      >
         <Typography fontSize={20} color="secondary" fontWeight="bold">
           گواهی های سرور (ORIGIN)
         </Typography>

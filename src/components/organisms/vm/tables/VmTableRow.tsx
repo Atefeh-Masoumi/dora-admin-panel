@@ -34,7 +34,10 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
     useDeleteApiMyVmHostDeleteByIdMutation();
 
-  const isDeactivate = useMemo(() => row["statusId"] !== 2, [row]);
+  const isDeactivate = useMemo(
+    () => row["statusId"] !== 2 && row["statusId"] !== 8,
+    [row]
+  );
 
   const settingOnClick = () => {
     if (isDeactivate) return;
@@ -55,7 +58,10 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const monitorOnClick = () => {
-    if (isDeactivate) return;
+    if (isDeactivate) {
+      toast.success("در این وضعیت امکان کنسول وجود");
+      return;
+    }
     getUrl({
       id: row["id"],
     })
@@ -158,13 +164,15 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                           : id === 7
                           ? "بازسازی"
                           : id === 8
-                          ? "خطا"
+                          ? "خطا در زیرساخت"
                           : id === 9
                           ? "بازسازی"
                           : id === 10
                           ? "خاموش"
                           : id === 11
                           ? "در صف انتظار"
+                          : id === 12
+                          ? "در صف حذف"
                           : "ناموفق"
                       }
                       sx={{

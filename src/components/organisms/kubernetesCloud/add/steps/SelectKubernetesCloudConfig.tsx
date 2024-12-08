@@ -59,7 +59,7 @@ export const SelectKubernetesCloudConfig: FC<
     },
     {
       id: PRODUCT_ITEM_ENUM.Kuber10Pods,
-      label: "TenPods",
+      label: "Pods",
       min: 10,
       max: 100,
       step: 10,
@@ -70,7 +70,6 @@ export const SelectKubernetesCloudConfig: FC<
       },
     },
   ];
-
   const table = useMemo(
     () => (
       <BaseTable
@@ -81,7 +80,7 @@ export const SelectKubernetesCloudConfig: FC<
         isLoading={KubernetesCloudBundlesListLoading}
       />
     ),
-    [KubernetesCloudBundlesListLoading]
+    [KubernetesCloudBundlesListLoading, KubernetesCloudBundleList]
   );
 
   return (

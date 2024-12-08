@@ -59,7 +59,7 @@ export const vpcStatusIdentifier = (vpcId: number) => {
     case 8:
       return {
         id: "Failed",
-        label: "خطا",
+        label: "خطا در زیرساخت",
         textColor: "error.main",
         bgcolor: "error.light",
         chipColor: "error",
@@ -84,6 +84,14 @@ export const vpcStatusIdentifier = (vpcId: number) => {
       return {
         id: "InQueue",
         label: "در صف انتظار",
+        textColor: "warning.main",
+        bgcolor: "warning.light",
+        chipColor: "warning",
+      };
+    case 12:
+      return {
+        id: "Deleting",
+        label: "در صف حذف",
         textColor: "warning.main",
         bgcolor: "warning.light",
         chipColor: "warning",

@@ -20,7 +20,7 @@ import {
   useGetApiMyAccountRoleListQuery,
   usePostApiMyAccountCustomerUserCreateMutation,
 } from "src/app/services/api.generated";
-import { Form, Formik } from "formik";
+import { useFormik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
 import RoleAccessList from "../RoleAccessList";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -63,6 +63,35 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [financialManager, setFinancialManager] = useState(false);
   const [accountManager, setAccountManager] = useState(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
+
+  // const initialRoleAccessList: RoleAccessStateType = [];
+
+  // const handleClose: DialogProps["onClose"] = (event, reason) => {
+  //   if (reason && reason === "backdropClick") {
+  //     setSuperUser(false);
+  //     setFinancialManager(false);
+  //     setAccountManager(false);
+  //     setSelectAll(false);
+  //     return;
+  //   }
+  // }
+
+  const handleReset = () => {
+    setSuperUser(false);
+    setFinancialManager(false);
+    setAccountManager(false);
+    setSelectAll(false);
+    setRoleAccessList((prevList) =>
+      prevList.map((role) => ({
+        ...role,
+        isRoleChecked: false,
+        accessTuples: role.accessTuples.map((access) => ({
+          ...access,
+          hasAccess: false,
+        })),
+      }))
+    );
+  };
 
   const handleCheckbox = (selectAll: boolean) => {
     setSelectAll(selectAll);
@@ -127,6 +156,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       .then(() => {
         toast.success("دسترسی کاربر مورد نظر با موفقیت ایجاد گردید");
         forceClose();
+        handleReset();
+        resetForm();
       })
       .catch(() => {});
   };
@@ -171,22 +202,44 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     newRoleAccessList && setRoleAccessList(newRoleAccessList);
   }, [roleList]);
   const radioItems = [
-    // {
-    //   id: CHECK_BOX_ENUM.SUPER_USER,
-    //   label: "سوپر ادمین - همه دسترسی ها",
-    //   text: "می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و ویرایش کند",
-    //   value: superUser,
-    //   disable: false,
-    //   onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
-    //     setSuperUser(checked);
-    //     setAccountManager(false);
-    //     setFinancialManager(false);
-    //   },
-    // },
+    {
+      id: CHECK_BOX_ENUM.SUPER_USER,
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          سوپر ادمین
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند هر تنظیم را ویرایش کند، خرید کند،‌ صورتحساب را به روز و
+          ویرایش کند
+        </Typography>
+      ),
+      value: superUser,
+      disable: false,
+      onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
+        setSuperUser(checked);
+        setAccountManager(checked);
+        setFinancialManager(checked);
+        setSelectAll(checked);
+      },
+    },
     {
       id: CHECK_BOX_ENUM.ACCOUNT_MANAGER,
-      label: "مدیریت کاربران",
-      text: "می تواند به حساب کاربران دسترسی داشته باشد",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت کاربران
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند به حساب کاربران دسترسی داشته باشد
+        </Typography>
+      ),
       value: accountManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -198,8 +251,18 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
     {
       id: CHECK_BOX_ENUM.FINANCIAL_MANAGER,
-      label: "مدیریت مالی",
-      text: "می تواند صورتحساب را به‌روز و ویرایش کند",
+      label: (
+        <Typography
+          sx={{ color: superUser ? "gray" : "inherit", fontWeight: "bold" }}
+        >
+          مدیریت مالی
+        </Typography>
+      ),
+      text: (
+        <Typography sx={{ color: superUser ? "gray" : "inherit" }}>
+          می تواند صورتحساب را به‌روز و ویرایش کند
+        </Typography>
+      ),
       value: financialManager,
       disable: superUser ? true : false,
       onChange: (e: SyntheticEvent<Element, Event>, checked: boolean) => {
@@ -211,176 +274,177 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
     },
   ];
 
+  const formik = useFormik({
+    initialValues: formInitialValues,
+    validationSchema: formValidation,
+    onSubmit,
+  });
+
   return (
-    <Dialog {...props} sx={{ p: 3 }} fullWidth>
+    <Dialog
+      {...props}
+      sx={{ p: 3 }}
+      fullWidth
+      onClose={() => {
+        handleReset();
+        formik.resetForm();
+        forceClose();
+      }}
+    >
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
         افزودن کاربر جدید
       </DialogTitle>
       <DialogContent>
-        <Formik
-          validationSchema={formValidation}
-          initialValues={formInitialValues}
-          onSubmit={onSubmit}
-        >
-          {({ errors, touched, getFieldProps }) => {
-            return (
-              <Form style={{ padding: 0 }} autoComplete="on">
-                <Stack
-                  rowGap={2}
-                  columnGap={2}
-                  width="100%"
-                  direction="column"
-                  mt={2}
-                >
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography fontSize={12}>
-                        از اعضا دعوت کنید تا به همه یا دامنه های خاصی در حساب
-                        شما دسترسی داشته باشند
-                      </Typography>
-                    </Box>
-                    <TextField
-                      {...getFieldProps("userName")}
-                      size="small"
-                      type="userName"
-                      label="نام کاربری *"
-                      fullWidth
-                      inputProps={{ dir: "ltr" }}
-                      error={Boolean(errors.userName && touched.userName)}
-                      helperText={touched.userName && errors.userName}
-                    />
-                  </Stack>
+        <form onSubmit={formik.handleSubmit}>
+          <Stack
+            rowGap={2}
+            columnGap={2}
+            width="100%"
+            direction="column"
+            mt={2}
+          >
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography fontSize={12}>
+                  از اعضا دعوت کنید تا به همه یا دامنه های خاصی در حساب شما
+                  دسترسی داشته باشند
+                </Typography>
+              </Box>
+              <TextField
+                {...formik.getFieldProps("userName")}
+                size="small"
+                type="userName"
+                label="نام کاربری *"
+                fullWidth
+                inputProps={{ dir: "ltr" }}
+                error={Boolean(
+                  formik.errors.userName && formik.touched.userName
+                )}
+                helperText={formik.touched.userName && formik.errors.userName}
+              />
+            </Stack>
 
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography>نقش های محدوده حساب</Typography>
-                    </Box>
-                    <Grid
-                      container
-                      py={1}
-                      rowGap={1}
-                      justifyContent="center"
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography>نقش های محدوده حساب</Typography>
+              </Box>
+              <Grid
+                container
+                py={1}
+                rowGap={1}
+                justifyContent="center"
+                alignItems="start"
+              >
+                {radioItems.map((item, index) => (
+                  <Grid
+                    key={index}
+                    xs={12}
+                    md={4}
+                    item
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      textAlign: "start",
+                      whiteSpace: "normal",
+                    }}
+                    // pr={{ xs: 0, md: 1 }}
+                  >
+                    <Stack
+                      direction="row"
                       alignItems="start"
-                      columnGap={1}
+                      justifyContent="center"
+                      spacing={1}
+                      sx={{
+                        "& .MuiRadio-root": { p: 0 },
+                        "& .MuiFormControlLabel-root": { m: 0 },
+                      }}
                     >
-                      {radioItems.map((item, index) => (
-                        <Grid
-                          key={index}
-                          xs={12}
-                          md={5}
-                          item
-
-                          // pr={{ xs: 0, md: 1 }}
-                        >
-                          <Stack
-                            direction="row"
-                            alignItems="start"
-                            justifyContent="center"
-                            spacing={1}
-                            sx={{
-                              "& .MuiRadio-root": { p: 0 },
-                              "& .MuiFormControlLabel-root": { m: 0 },
-                            }}
-                          >
-                            <FormControlLabel
-                              disabled={item.disable}
-                              control={
-                                <Checkbox
-                                  sx={{ padding: 0 }}
-                                  checked={item.value}
-                                  onChange={item.onChange}
-                                  inputProps={{ "aria-label": "controlled" }}
-                                />
-                              }
-                              label=""
-                            />
-                            <Stack
-                              textAlign="start"
-                              color={
-                                item.value ? "primary.main" : "secondary.main"
-                              }
-                            >
-                              <Typography variant="text14" fontWeight="bold">
-                                {item.label}
-                              </Typography>
-                              <Typography variant="text13">
-                                {item.text}
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Stack>
-
-                  <Divider flexItem />
-
-                  <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-                    <Box sx={{ width: "100%" }}>
-                      <Typography>سطح‌های دسترسی</Typography>
-                    </Box>
-                    <Box sx={{ padding: 0, margin: 0 }}>
                       <FormControlLabel
+                        disabled={item.disable}
                         control={
                           <Checkbox
-                            checked={selectAll}
-                            onChange={(e, checked) => handleCheckbox(checked)}
+                            sx={{ padding: 0 }}
+                            checked={item.value}
+                            onChange={item.onChange}
+                            inputProps={{ "aria-label": "controlled" }}
                           />
                         }
-                        label="همه"
+                        label=""
                       />
-                    </Box>
-                    {roleListIsLoading || roleAccessList?.length === 0 ? (
-                      <PageLoading />
-                    ) : (
-                      <RoleAccessList
-                        {...{
-                          setRoleAccessList,
-                          roleAccessList,
-                        }}
-                      />
-                    )}
-                  </Stack>
+                      <Stack
+                        textAlign="start"
+                        color={item.value ? "primary.main" : "secondary.main"}
+                      >
+                        <Typography variant="text14" fontWeight="bold">
+                          {item.label}
+                        </Typography>
+                        <Typography variant="text13">{item.text}</Typography>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                ))}
+              </Grid>
+            </Stack>
 
-                  <Stack
-                    rowGap={1}
-                    columnGap={1}
-                    direction="row"
-                    justifyContent="flex-end"
-                    p={2}
-                    // sx={{ flexWrap: "wrap", justifyContent: "space-around" }}
-                  >
-                    <Button
-                      onClick={() => forceClose()}
-                      // sx={{
-                      //   minWidth: "160px",
-                      //   flexGrow: 1,
-                      // }}
-                      sx={{ width: "13%" }}
-                      type="button"
-                      variant="outlined"
-                    >
-                      انصراف
-                    </Button>
-                    <LoadingButton
-                      // sx={{
-                      //   // minWidth: "160px",
-                      //   flexGrow: 1,
-                      // }}
+            <Divider flexItem />
 
-                      sx={{ width: "13%" }}
-                      type="submit"
-                      loading={createUserIsLoading}
-                      variant="contained"
-                    >
-                      تایید
-                    </LoadingButton>
-                  </Stack>
-                </Stack>
-              </Form>
-            );
-          }}
-        </Formik>
+            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
+              <Box sx={{ width: "100%" }}>
+                <Typography>سطح‌های دسترسی</Typography>
+              </Box>
+              <Box sx={{ padding: 0, margin: 0 }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectAll}
+                      disabled={superUser ? true : false}
+                      onChange={(e, checked) => {
+                        handleCheckbox(checked);
+                        if (checked === true) {
+                          setSuperUser(false);
+                        }
+                      }}
+                    />
+                  }
+                  label="همه"
+                />
+              </Box>
+              {roleListIsLoading || roleAccessList?.length === 0 ? (
+                <PageLoading />
+              ) : (
+                <RoleAccessList
+                  {...{
+                    setRoleAccessList,
+                    roleAccessList,
+                    disabled: superUser,
+                  }}
+                />
+              )}
+            </Stack>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={() => {
+                  handleReset();
+                  forceClose();
+                }}
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={createUserIsLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </Stack>
+          </Stack>
+        </form>
       </DialogContent>
     </Dialog>
   );

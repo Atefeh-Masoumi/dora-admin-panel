@@ -233,6 +233,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
       setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     []
   );
+
   const onConnect = useCallback(
     (params: any) => setEdges((els) => addEdge(params, els)),
     []
@@ -454,28 +455,26 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions sx={{ pb: 3, px: 3 }}>
-            <Grid container rowSpacing={2}>
-              <Grid item xs={12} lg={6}>
-                <Stack
-                  sx={{ width: "100%" }}
-                  direction={{ xs: "column", md: "row" }}
-                  gap={1}
-                >
-                  <LoadingButton
-                    loading={isLoading}
-                    fullWidth
-                    variant="contained"
-                    type="submit"
-                  >
-                    ایجاد
-                  </LoadingButton>
-                  <Button onClick={forceClose} fullWidth variant="outlined">
-                    انصراف
-                  </Button>
-                </Stack>
-              </Grid>
-            </Grid>
+          <DialogActions>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={forceClose}
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={isLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </Stack>
           </DialogActions>
         </form>
       ) : (

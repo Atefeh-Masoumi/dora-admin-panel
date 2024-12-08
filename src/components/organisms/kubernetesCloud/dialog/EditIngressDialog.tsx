@@ -286,8 +286,9 @@ export const EditIngressDialog: FC<EditIngressDialogPropsType> = ({
               </Grid> */}
             </Stack>
           </Stack>
-
-          <DialogActions sx={{ px: 0, py: 4 }}>
+        </DialogContent>
+        <DialogActions>
+          <Stack direction="row" justifyContent="end" spacing={1}>
             <Button
               variant="outlined"
               color="secondary"
@@ -297,6 +298,7 @@ export const EditIngressDialog: FC<EditIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
+              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"
@@ -304,8 +306,8 @@ export const EditIngressDialog: FC<EditIngressDialogPropsType> = ({
             >
               ذخیره
             </LoadingButton>
-          </DialogActions>
-        </DialogContent>
+          </Stack>
+        </DialogActions>
       </form>
     </Dialog>
   );

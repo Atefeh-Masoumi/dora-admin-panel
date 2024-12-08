@@ -15,15 +15,14 @@ import {
   useEffect,
   useMemo,
 } from "react";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
+import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
+import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterImageListQuery,
   useGetApiMyKubernetesClusterVersionListQuery,
 } from "src/app/services/api.generated";
-import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
-import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
-import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 
 type SelectKuberSettingPropsType = {};
 
@@ -62,7 +61,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   const { data: osVersionsList = [] } = useGetApiMyDatacenterImageListQuery({
     datacenterId: dataCenter?.id || 1,
     productId: PRODUCT_CATEGORY_ENUM.KubernetesCluster,
-    hypervisorTypeId: HYPERVISOR_ENUM.VM,
+    hypervisorTypeId: 0,
   });
 
   useEffect(() => {
