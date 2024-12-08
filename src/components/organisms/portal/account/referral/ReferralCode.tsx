@@ -3,7 +3,6 @@ import { Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 // import { usePostApiMyPortalReferralJoinMutation } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const ReferralCode: FC = () => {
