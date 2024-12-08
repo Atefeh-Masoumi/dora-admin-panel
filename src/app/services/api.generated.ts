@@ -1673,6 +1673,14 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/business-unit/list` }),
     }),
+    getApiMyVmBackupShortListByVmHostId: build.query<
+      GetApiMyVmBackupShortListByVmHostIdApiResponse,
+      GetApiMyVmBackupShortListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/backup/short-list/${queryArg.vmHostId}`,
+      }),
+    }),
     getApiMyVmBackupListByVmHostId: build.query<
       GetApiMyVmBackupListByVmHostIdApiResponse,
       GetApiMyVmBackupListByVmHostIdApiArg
@@ -1737,6 +1745,14 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/volume/create`,
         method: "POST",
         body: queryArg.createVmVolumeModel,
+      }),
+    }),
+    getApiMyVmSnapshotShortListByVmHostId: build.query<
+      GetApiMyVmSnapshotShortListByVmHostIdApiResponse,
+      GetApiMyVmSnapshotShortListByVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/snapshot/short-list/${queryArg.vmHostId}`,
       }),
     }),
     putApiMyVmSnapshotRevertById: build.mutation<
@@ -3232,6 +3248,11 @@ export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
+export type GetApiMyVmBackupShortListByVmHostIdApiResponse =
+  /** status 200 OK */ VmBackupShortListResponse[];
+export type GetApiMyVmBackupShortListByVmHostIdApiArg = {
+  vmHostId: number;
+};
 export type GetApiMyVmBackupListByVmHostIdApiResponse =
   /** status 200 OK */ VmBackupListResponse[];
 export type GetApiMyVmBackupListByVmHostIdApiArg = {
@@ -3267,6 +3288,11 @@ export type DeleteApiMyVmVolumeDeleteByIdApiArg = {
 export type PostApiMyVmVolumeCreateApiResponse = unknown;
 export type PostApiMyVmVolumeCreateApiArg = {
   createVmVolumeModel: CreateVmVolumeModel;
+};
+export type GetApiMyVmSnapshotShortListByVmHostIdApiResponse =
+  /** status 200 OK */ VmSnapshotShortListResponse[];
+export type GetApiMyVmSnapshotShortListByVmHostIdApiArg = {
+  vmHostId: number;
 };
 export type PutApiMyVmSnapshotRevertByIdApiResponse = unknown;
 export type PutApiMyVmSnapshotRevertByIdApiArg = {
@@ -5035,6 +5061,10 @@ export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
 };
+export type VmBackupShortListResponse = {
+  id?: number;
+  name: string | null;
+};
 export type VmBackupListResponse = {
   id: number;
   name: string | null;
@@ -5069,6 +5099,10 @@ export type CreateVmVolumeModel = {
   volumeSize: number;
   name: string;
 };
+export type VmSnapshotShortListResponse = {
+  id?: number;
+  name: string | null;
+};
 export type VmSnapshotResponse = {
   id: number;
   name: string | null;
@@ -5080,8 +5114,8 @@ export type VmSnapshotResponse = {
 };
 export type CreateSnapshotModel = {
   vmHostId: number;
-  snapshotName: string;
-  snapshotDescription?: string | null;
+  name: string;
+  description?: string | null;
 };
 export type UnmountModel = {
   vmId: number;
@@ -5166,8 +5200,8 @@ export type VmFirewallListResponse = {
   firewallProtocolType: string | null;
   isIngress: string | null;
   remoteIp: string | null;
-  minPort: number;
-  maxPort: number;
+  minPort: string | null;
+  maxPort: string | null;
   isIpV4: boolean;
   createDate: string;
 };
@@ -5653,6 +5687,7 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyPortalBusinessUnitListQuery,
+  useGetApiMyVmBackupShortListByVmHostIdQuery,
   useGetApiMyVmBackupListByVmHostIdQuery,
   useGetApiMyVmBackupGetByIdQuery,
   useDeleteApiMyVmBackupDeleteByIdMutation,
@@ -5661,6 +5696,7 @@ export const {
   useGetApiMyVmVolumeGetByIdQuery,
   useDeleteApiMyVmVolumeDeleteByIdMutation,
   usePostApiMyVmVolumeCreateMutation,
+  useGetApiMyVmSnapshotShortListByVmHostIdQuery,
   usePutApiMyVmSnapshotRevertByIdMutation,
   useGetApiMyVmSnapshotListByVmHostIdQuery,
   useGetApiMyVmSnapshotGetByIdQuery,

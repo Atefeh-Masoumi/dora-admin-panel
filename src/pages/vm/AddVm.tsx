@@ -170,7 +170,7 @@ const AddVm: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-        ایجاد سرور مجازی جدید
+        ایجاد سرور ابری
       </Typography>
       <Box sx={{ my: 0 }}>
         <Grid container>

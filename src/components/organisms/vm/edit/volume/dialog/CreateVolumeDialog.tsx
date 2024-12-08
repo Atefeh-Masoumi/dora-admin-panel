@@ -48,7 +48,7 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        toast.success("snapshot جدید با موفقیت ایجاد شد");
+        toast.success("دیسک با موفقیت ایجاد شد");
         forceClose();
       })
       .catch((err) => {})
@@ -62,8 +62,8 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
     validationSchema: yup.object().shape({
       name: yup
         .string()
-        .min(5, "تعداد کارکترهای نام snapshot باید حداقل ۵ عدد باشد")
-        .max(50, "تعداد کارکترهای نام snapshot باید حداقل ۵۰ عدد باشد")
+        .min(5, "تعداد کارکترهای نام دیسک باید حداقل ۵ عدد باشد")
+        .max(50, "تعداد کارکترهای نام دیسک باید حداقل ۵۰ عدد باشد")
         .required("این بخش الزامی می‌باشد"),
       snapshotDescription: yup.string(),
     }),

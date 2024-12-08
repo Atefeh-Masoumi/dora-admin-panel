@@ -31,24 +31,24 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   const { id } = useParams();
 
   const initialValues = {
-    snapshotName: "",
-    snapshotDescription: "",
+    name: "",
+    description: "",
   };
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
-    { snapshotName, snapshotDescription },
+    { name, description },
     { setSubmitting }
   ) => {
     if (id === null || id === undefined || isNaN(Number(id))) return;
     createSnapshot({
       createSnapshotModel: {
         vmHostId: Number(id),
-        snapshotName,
-        snapshotDescription,
+        name,
+        description,
       },
     })
       .unwrap()
       .then(() => {
-        toast.success("snapshot جدید با موفقیت ایجاد شد");
+        toast.success("اسنپ شات با موفقیت ایجاد شد");
         forceClose();
       })
       .catch((err) => {})
@@ -60,12 +60,12 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-      snapshotName: yup
+      name: yup
         .string()
-        .min(5, "تعداد کارکترهای نام snapshot باید حداقل ۵ عدد باشد")
-        .max(50, "تعداد کارکترهای نام snapshot باید حداقل ۵۰ عدد باشد")
+        .min(5, "تعداد کارکترهای نام اسنپ شات باید حداقل ۵ عدد باشد")
+        .max(50, "تعداد کارکترهای نام اسنپ شات باید حداقل ۵۰ عدد باشد")
         .required("این بخش الزامی می‌باشد"),
-      snapshotDescription: yup.string(),
+      description: yup.string(),
     }),
     onSubmit,
   });
@@ -82,20 +82,19 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
         <DialogContent>
           <Stack rowGap={3} pt={2}>
             <DorsaTextField
-              {...formik.getFieldProps("snapshotName")}
-              error={Boolean(
-                formik.errors.snapshotName && formik.touched.snapshotName
-              )}
-              helperText={formik.errors.snapshotName}
+              focused
+              {...formik.getFieldProps("name")}
+              error={Boolean(formik.errors.name && formik.touched.name)}
+              helperText={formik.errors.name}
               label="نام"
+              inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
-              {...formik.getFieldProps("snapshotDescription")}
+              {...formik.getFieldProps("description")}
               error={Boolean(
-                formik.errors.snapshotDescription &&
-                  formik.touched.snapshotDescription
+                formik.errors.description && formik.touched.description
               )}
-              helperText={formik.errors.snapshotDescription}
+              helperText={formik.errors.description}
               multiline
               minRows={3}
               maxRows={8}
