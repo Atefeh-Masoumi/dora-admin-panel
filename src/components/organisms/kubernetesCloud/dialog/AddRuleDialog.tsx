@@ -145,7 +145,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
               onClick={addRules}
               disabled={false}
             >
-              اضافه کردن
+              ایجاد رول جدید
             </Button>
           </Stack>
 

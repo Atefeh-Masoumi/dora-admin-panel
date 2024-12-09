@@ -101,23 +101,6 @@ export const KubernetesCloudFirewall: FC = () => {
               >
                 افزودن رول
               </Button>
-              {/* <FormControl
-                size="small"
-                fullWidth
-                sx={{ borderTopLeftRadius: 0 }}
-              >
-                <Select
-                  sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-                  value={selectedNatType}
-                  onChange={(event) => {
-                    // setSelectedNatType(Number(event.target.value));
-                    setDialogType(null);
-                  }}
-                >
-                  <MenuItem value={NAT_TYPE.S_NAT}>افزودن SNAT</MenuItem>
-                  <MenuItem value={NAT_TYPE.D_NAT}>افزودن DNAT</MenuItem>
-                </Select>
-              </FormControl> */}
             </Stack>
           </Stack>
         </Stack>

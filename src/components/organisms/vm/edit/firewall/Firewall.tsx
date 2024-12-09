@@ -63,7 +63,9 @@ export const Firewall: FC<FirewallPropsType> = () => {
             <Button
               onClick={openCreateDialogHandler}
               variant="outlined"
-              startIcon={<Add />}
+              startIcon={
+                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+              }
             >
               افزودن رول
             </Button>

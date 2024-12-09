@@ -78,7 +78,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
         onClose={closeDialogHandler}
         keyTitle="دیسک"
         subTitle="برای حذف دیسک, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedVm?.id.toString() || ""}
+        securityPhrase={selectedVm?.name || ""}
         onSubmit={deleteVmRecordHandler}
         submitLoading={deleteVmRecordLoading}
       />
