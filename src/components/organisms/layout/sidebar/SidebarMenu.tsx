@@ -14,12 +14,12 @@ import { ItemList } from "./ItemList";
 type SidebarPropsType = {};
 
 const listItems: sidebarItemType[] = [
-  // {
-  //   title: "CDN / DNS",
-  //   text: "شبکه مدیریت و توزیع محتوا",
-  //   Icon: CloudConnectionSvg,
-  //   link: "/cdn",
-  // },
+  {
+    title: "CDN / DNS",
+    text: "شبکه مدیریت و توزیع محتوا",
+    Icon: CloudConnectionSvg,
+    link: "/cdn",
+  },
   {
     title: "Virtual Machine",
     text: "سرور های ابری",
