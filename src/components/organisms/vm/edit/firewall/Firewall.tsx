@@ -79,7 +79,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
             rows={firewallList}
             text="در حال حاضر رکورد وجود ندارد"
             isLoading={getFirewallLoading}
-            initialOrder={3}
+            initialOrder={2}
           />
         </Stack>
       </Paper>
