@@ -292,7 +292,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       }}
     >
       <DialogTitle textAlign="left" sx={{ fontWeight: "bold" }}>
-        افزودن کاربر جدید
+        افزودن
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>

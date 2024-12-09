@@ -93,7 +93,7 @@ export const VpcLoadBalancer: FC = () => {
                   size="large"
                   sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
                 >
-                  افزودن LoadBalancer جدید
+                  افزودن LoadBalancer
                 </Button>
               </Stack>
             </Stack>
@@ -120,7 +120,7 @@ export const VpcLoadBalancer: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن LoadBalancer جدید
+              افزودن LoadBalancer
             </Button>
           </Stack>
         </Stack>

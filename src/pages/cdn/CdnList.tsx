@@ -148,7 +148,7 @@ const CdnList: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن دامنه جدید
+              افزودن دامنه
             </Button>
           </Stack>
         </Stack>

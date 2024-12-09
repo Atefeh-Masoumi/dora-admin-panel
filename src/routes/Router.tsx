@@ -47,7 +47,9 @@ const Wallet = lazy(
   () => import("src/pages/portal/financial/WalletTransactions")
 );
 const Payments = lazy(() => import("src/pages/portal/financial/Payments"));
-const Payment = lazy(() => import("src/pages/portal/financial/PaymentCallBack"));
+const Payment = lazy(
+  () => import("src/pages/portal/financial/PaymentCallBack")
+);
 const CustomerBills = lazy(
   () => import("src/pages/portal/financial/CustomerBills")
 );
@@ -552,7 +554,7 @@ const Router: FC = () => {
         <Route
           path="/vpc"
           element={mainTemplate(VpcIndex, {
-            pageTitle: "مدیریت سرویس ابر اختصاصی",
+            pageTitle: "مدیریت ابر اختصاصی",
           })}
         />
 
@@ -562,7 +564,7 @@ const Router: FC = () => {
             AddVpc,
             {
               link: {
-                text: "بازگشت به مدیریت سرویس ابر اختصاصی",
+                text: "بازگشت به مدیریت ابر اختصاصی",
                 url: "/vpc",
               },
               hideSidebar: false,

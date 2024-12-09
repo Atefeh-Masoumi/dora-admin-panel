@@ -72,7 +72,7 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
     <Dialog {...props} onClose={closeDialogHandler}>
       <DialogTitle justifyContent="left">
         <Typography fontSize="1.25rem" component="span" fontWeight={700}>
-          افزودن IP جدید
+          افزودن IP
         </Typography>
       </DialogTitle>
       <DialogContent>

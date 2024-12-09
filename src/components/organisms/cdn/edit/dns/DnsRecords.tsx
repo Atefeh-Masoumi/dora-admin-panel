@@ -74,7 +74,7 @@ export const DnsRecord: FC = () => {
                   size="large"
                   sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
                 >
-                  افزودن رکورد جدید
+                  افزودن رکورد
                 </Button>
               </Stack>
             </Stack>
@@ -101,7 +101,7 @@ export const DnsRecord: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن رکورد جدید
+              افزودن رکورد
             </Button>
           </Stack>
         </Stack>

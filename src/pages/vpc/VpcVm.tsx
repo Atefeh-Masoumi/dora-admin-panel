@@ -121,7 +121,7 @@ export const VpcVm: FC = () => {
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                افزودن VM جدید
+                افزودن VM
               </Button>
             </Stack>
           </Stack>

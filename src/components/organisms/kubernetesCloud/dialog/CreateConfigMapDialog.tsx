@@ -168,7 +168,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1}>
-                  افزودن Envs
+                  افزودن
                 </Typography>
                 <Button
                   variant="outlined"

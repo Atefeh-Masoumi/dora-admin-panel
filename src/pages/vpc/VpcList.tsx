@@ -73,7 +73,7 @@ const VpcList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست سرویس ابر اختصاصی
+              لیست ابر اختصاصی
             </Typography>
             <SearchBox
               onChange={(text) => setSearch(text)}
@@ -107,7 +107,7 @@ const VpcList: FC = () => {
               </Stack>
             }
           >
-            ایجاد سرویس ابر اختصاصی
+            ایجاد ابر اختصاصی
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

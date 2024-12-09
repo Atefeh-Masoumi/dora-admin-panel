@@ -29,14 +29,14 @@ const listItems: sidebarItemType[] = [
   },
   {
     title: "Kubernetes Cluster",
-    text: "سرویس کلاستر کوبرنتیز",
+    text: "کلاستر کوبرنتیز",
     Icon: KubernetesSvg,
     link: "/kubernetes-cluster",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
   },
   // {
   //   title: "Kubernetes Cloud",
-  //   text: "سرویس ابری کوبرنتیز",
+  //   text: "ابری کوبرنتیز",
   //   Icon: KubernetesSvg,
   //   link: "/kubernetes-cloud",
   // },

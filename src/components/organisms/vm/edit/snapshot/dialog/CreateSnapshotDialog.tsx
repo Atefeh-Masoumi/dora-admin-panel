@@ -25,23 +25,24 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   forceClose,
   ...props
 }) => {
+  const { vmId } = useParams();
+
   const [createSnapshot, { isLoading: createSnapshotLoading }] =
     usePostApiMyVmSnapshotCreateMutation();
-
-  const { id } = useParams();
 
   const initialValues = {
     name: "",
     description: "",
   };
+
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { name, description },
     { setSubmitting }
   ) => {
-    if (id === null || id === undefined || isNaN(Number(id))) return;
+    if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
     createSnapshot({
       createSnapshotModel: {
-        vmHostId: Number(id),
+        vmHostId: Number(vmId),
         name,
         description,
       },
@@ -77,7 +78,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
 
   return (
     <Dialog {...props}>
-      <DialogTitle align="center">ایجاد snapshot جدید</DialogTitle>
+      <DialogTitle align="center">ایجاد اسنپ شات جدید</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <Stack rowGap={3} pt={2}>

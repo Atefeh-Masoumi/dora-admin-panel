@@ -14,14 +14,14 @@ export const homeProductsConstantListItems = [
   // },
   {
     title: "Virtual Machine",
-    text: "سرویس سرور های ابری",
+    text: "سرورهای ابری",
     Icon: VmSvg,
     bgcolor: "rgba(211, 237, 224, 1)",
     link: "/vm",
   },
   {
     title: "Kubernetes",
-    text: "سرویس کوبرنتیز ابری",
+    text: "کوبرنتیز ابری",
     Icon: KubernetesSvg,
     bgcolor: "rgba(211, 250, 240, 1)",
     link: "/kubernetes-cluster",

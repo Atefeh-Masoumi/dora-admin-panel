@@ -139,7 +139,7 @@ export const KubernetesCloudIngressTableRow: FC<{
                   maxWidth="fit-content"
                 >
                   <Tooltip
-                    title="ایجاد Rule جدید"
+                    title="ایجاد رول جدید"
                     placement="top"
                     arrow
                     sx={{

@@ -347,7 +347,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                   variant="contained"
                   sx={{ px: 3, py: 0.8 }}
                 >
-                  ثبت رکورد جدید
+                  ذخیره
                 </LoadingButton>
               </Stack>
             </Stack>

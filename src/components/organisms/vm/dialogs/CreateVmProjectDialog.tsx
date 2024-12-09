@@ -134,7 +134,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
       // }}
     >
       <DialogTitle textAlign="left">
-        {projectId ? "بروزرسانی پروژه" : "افزودن پروژه جدید"}
+        {projectId ? "بروزرسانی پروژه" : "افزودن پروژه"}
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>

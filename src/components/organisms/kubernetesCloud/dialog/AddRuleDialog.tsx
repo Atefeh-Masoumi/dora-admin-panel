@@ -129,7 +129,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
             variant="text1"
             sx={{ padding: "10px 5px" }}
           >
-            افزودن Rule
+            افزودن رول
           </DialogTitle>
           <Divider sx={{ marginTop: "20px !important" }} />
           <Stack

@@ -107,8 +107,8 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="سرویس کوبرنتیز"
-        subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
+        keyTitle="کلاستر کوبرنتیز"
+        subTitle="برای حذف کلاستر کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedKubernetes?.name || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteDnsRecordLoading}
