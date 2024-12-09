@@ -1,7 +1,6 @@
 # Stage 1
 #FROM node:18-bullseye-slim AS builder
 FROM repo.dorsa.cloud/docker/node:18-bullseye-slim AS builder
-#FROM hub.hamdocker.ir/node:18-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
