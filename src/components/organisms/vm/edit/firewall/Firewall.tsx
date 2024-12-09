@@ -48,7 +48,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
       >
         مدیریت رول ها
       </Typography>
-
       <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
@@ -66,7 +65,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
               variant="outlined"
               startIcon={<Add />}
             >
-              افزودن رول جدید
+              افزودن رول
             </Button>
           </Stack>
         </Stack>
@@ -78,7 +77,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
             rows={firewallList}
             text="در حال حاضر رکورد وجود ندارد"
             isLoading={getFirewallLoading}
-            initialOrder={1}
+            initialOrder={3}
           />
         </Stack>
       </Paper>

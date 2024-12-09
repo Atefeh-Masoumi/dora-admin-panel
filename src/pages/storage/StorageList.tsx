@@ -92,7 +92,7 @@ const StorageList: FC = () => {
               </Stack>
             }
           >
-            فضای ابری جدید
+            ایجاد فضای ابری
           </Button>
         </Stack>
       </Stack>

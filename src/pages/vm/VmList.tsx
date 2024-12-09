@@ -115,7 +115,7 @@ const VmList: FC = () => {
               </Stack>
             }
           >
-            سرور ابری جدید
+            ایجاد سرور ابری
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

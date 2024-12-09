@@ -73,7 +73,7 @@ export const VpcIp: FC = () => {
                   size="large"
                   sx={{ whiteSpace: "nowrap", px: { xs: 0.5, md: 1.2 } }}
                 >
-                  افزودن IP جدید
+                  افزودن IP
                 </Button>
               </Stack>
             </Stack>
@@ -100,7 +100,7 @@ export const VpcIp: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن IP جدید
+              افزودن IP
             </Button>
           </Stack>
         </Stack>

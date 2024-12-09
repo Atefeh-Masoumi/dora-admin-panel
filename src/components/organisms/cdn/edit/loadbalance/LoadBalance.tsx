@@ -49,7 +49,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
               <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
             }
           >
-            افزودن کلاستر جدید
+           افزودن
           </Button> */}
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

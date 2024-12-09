@@ -43,7 +43,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
           justifyContent="space-between"
         >
           <Typography fontSize={18} color="secondary">
-            لیست نودهای سرویس کوبرنتیز ابری
+            لیست نودهای کوبرنتیز ابری
           </Typography>
           <Button
             onClick={gotToAddNode}
@@ -72,7 +72,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
               </Stack>
             }
           >
-            افزودن نود جدید
+            افزودن نود
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

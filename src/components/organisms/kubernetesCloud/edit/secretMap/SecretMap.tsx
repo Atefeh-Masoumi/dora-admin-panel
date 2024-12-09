@@ -1,11 +1,5 @@
 import { Add } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography
-} from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
 import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";

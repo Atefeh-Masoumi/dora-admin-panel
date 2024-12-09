@@ -1,4 +1,4 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router";
@@ -33,10 +33,6 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
     setShowCreateDialog(false);
   };
 
-  const handleOpenDelete = () => {
-    setDialogType(DIALOG_TYPE_ENUM.DELETE);
-  };
-
   return (
     <>
       <Typography
@@ -65,18 +61,8 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
               variant="outlined"
               startIcon={<Add />}
             >
-              افزودن اسنپ شات جدید
+              افزودن اسنپ شات
             </Button>
-            {snapshotList.length > 0 && (
-              <Button
-                onClick={handleOpenDelete}
-                variant="outlined"
-                color="error"
-                startIcon={<Remove />}
-              >
-                حذف همه snapshot
-              </Button>
-            )}
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -84,7 +70,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
           struct={snapShotTableStruct}
           RowComponent={SnapshotTableRow}
           rows={snapshotList}
-          text="در حال حاضر snapshot وجود ندارد"
+          text="در حال حاضر اسنپ شات وجود ندارد"
           isLoading={getSnapshotLoading}
           initialOrder={7}
         />

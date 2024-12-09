@@ -117,7 +117,7 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="سرویس کوبرنتیز"
+        keyTitle="کوبرنتیز ابری"
         subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedKubernetes?.name || ""}
         onSubmit={deleteDnsRecordHandler}

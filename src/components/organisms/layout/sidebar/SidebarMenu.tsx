@@ -14,12 +14,12 @@ import { ItemList } from "./ItemList";
 type SidebarPropsType = {};
 
 const listItems: sidebarItemType[] = [
-  {
-    title: "CDN / DNS",
-    text: "شبکه مدیریت و توزیع محتوا",
-    Icon: CloudConnectionSvg,
-    link: "/cdn",
-  },
+  // {
+  //   title: "CDN / DNS",
+  //   text: "شبکه مدیریت و توزیع محتوا",
+  //   Icon: CloudConnectionSvg,
+  //   link: "/cdn",
+  // },
   {
     title: "Virtual Machine",
     text: "سرور های ابری",
@@ -29,14 +29,14 @@ const listItems: sidebarItemType[] = [
   },
   {
     title: "Kubernetes Cluster",
-    text: "سرویس کلاستر کوبرنتیز",
+    text: "کلاستر کوبرنتیز",
     Icon: KubernetesSvg,
     link: "/kubernetes-cluster",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
   },
   // {
   //   title: "Kubernetes Cloud",
-  //   text: "سرویس ابری کوبرنتیز",
+  //   text: "ابری کوبرنتیز",
   //   Icon: KubernetesSvg,
   //   link: "/kubernetes-cloud",
   // },

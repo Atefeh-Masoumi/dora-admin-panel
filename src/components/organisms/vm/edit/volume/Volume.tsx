@@ -2,8 +2,6 @@ import { Add } from "@mui/icons-material";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { toast } from "react-toastify";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
 import VolumeTableRow from "./table/VolumeTableRow";
@@ -66,7 +64,7 @@ export const Volume: FC = () => {
               variant="outlined"
               startIcon={<Add />}
             >
-              افزودن دیسک جدید
+              افزودن دیسک
             </Button>
           </Stack>
         </Stack>

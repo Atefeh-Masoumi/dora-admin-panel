@@ -83,7 +83,7 @@ const KubernetesList: FC = () => {
               </Stack>
             }
           >
-            ایجاد سرویس کوبرنتیز
+            ایجاد کلاستر کوبرنتیز
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />

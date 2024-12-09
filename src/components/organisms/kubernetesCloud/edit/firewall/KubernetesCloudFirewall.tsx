@@ -4,16 +4,9 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import {
-  useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
-} from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/dialog/CreateFirewallDialog";
-import {
-  Button,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
 import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
 
@@ -106,7 +99,7 @@ export const KubernetesCloudFirewall: FC = () => {
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                افزودن Firewall جدید
+                افزودن رول
               </Button>
               {/* <FormControl
                 size="small"

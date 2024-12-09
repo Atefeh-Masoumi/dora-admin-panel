@@ -1,6 +1,5 @@
 import {
   Button,
-  Chip,
   Dialog,
   Select,
   MenuItem,
@@ -22,10 +21,7 @@ import { useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import {
-  CreateVmFirewallModel,
-  usePostApiMyVmFirewallCreateMutation,
-} from "src/app/services/api.generated";
+import { usePostApiMyVmFirewallCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
@@ -36,50 +32,35 @@ const options = [
   { id: 4, label: "Any", firewallProtocolType: "any" },
 ];
 
-export const InitialValueSchema = yup.object().shape({
-  // firewallProtocolTypeId: yup.number().required("Protocol type is required"),
-  // directionId: yup.number().required("نوع درخواست را مشخص کنید."),
-  // remoteIp: yup.string().required("Remote IP is required"),
-  // minPort: yup.number().required("Minimum port الزامی است."),
-  // maxPort: yup.number().required("Maximum port الزامی است."),
-});
-
 type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
 };
 
 export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
-  onClose,
   forceClose,
   ...props
 }) => {
-  const { vmId } = useParams();
-
-  const closeHandler: DialogProps["onClose"] = (event) => {
-    onClose && onClose(event, "escapeKeyDown");
-    formik.resetForm();
-  };
+  const { id } = useParams();
 
   const [createFirewall, { isLoading }] =
     usePostApiMyVmFirewallCreateMutation();
 
-  const initialValues: CreateVmFirewallModel = {
-    vmHostId: 0,
+  const initialValues = {
     firewallProtocolTypeId: 1,
-    directionId: 0,
+    directionId: 1,
     remoteIp: "0.0.0.0/0",
-    minPort: 0,
-    maxPort: 0,
+    minPort: 22,
+    maxPort: 22,
   };
 
-  const onSubmit: formikOnSubmitType<CreateVmFirewallModel> = (
+  const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { firewallProtocolTypeId, directionId, remoteIp, minPort, maxPort },
     { setSubmitting }
   ) => {
-    if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
+    if (id === null || id === undefined || isNaN(Number(id))) return;
     createFirewall({
       createVmFirewallModel: {
-        vmHostId: Number(vmId),
+        vmHostId: Number(id),
         firewallProtocolTypeId,
         directionId,
         remoteIp,
@@ -100,19 +81,24 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
   const formik = useFormik({
     initialValues,
-    validationSchema: InitialValueSchema,
+    validationSchema: yup.object().shape({
+      // firewallProtocolTypeId: yup.number().required("Protocol type is required"),
+      // directionId: yup.number().required("نوع درخواست را مشخص کنید."),
+      // remoteIp: yup.string().required("Remote IP is required"),
+      // minPort: yup.number().required("Minimum port الزامی است."),
+      // maxPort: yup.number().required("Maximum port الزامی است."),
+    }),
     onSubmit,
     enableReinitialize: true,
   });
 
-  const closeDialogHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (!onClose) return;
-    onClose(event, "backdropClick");
-    formik.resetForm();
+  const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    if (!props.onClose) return;
+    props.onClose(event, "backdropClick");
   };
 
   return (
-    <Dialog {...props} onClose={closeDialogHandler} maxWidth={"xs"}>
+    <Dialog {...props}>
       <DialogTitle fontWeight={"700"}>ایجاد رول جدید</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent
@@ -174,6 +160,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
           <FormControl fullWidth>
             <DorsaTextField
+              focused
               sx={{ pb: 1 }}
               {...formik.getFieldProps("remoteIp")} // Bind to Formik value
               label="آدرس IP"
@@ -183,18 +170,18 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
+              focused
               sx={{ pb: 1 }}
               {...formik.getFieldProps("minPort")}
-              focused
               label="از پورت"
               error={Boolean(formik.errors.minPort && formik.touched.minPort)}
               helperText={formik.touched.minPort && formik.errors.minPort}
               inputProps={{ dir: "ltr" }}
             />
             <DorsaTextField
+              focused
               sx={{ pb: 1 }}
               {...formik.getFieldProps("maxPort")}
-              focused
               label="تا پورت"
               error={Boolean(formik.errors.maxPort && formik.touched.maxPort)}
               helperText={formik.touched.maxPort && formik.errors.maxPort}
@@ -208,7 +195,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               variant="outlined"
               color="secondary"
               sx={{ px: 3, py: 0.8 }}
-              onClick={closeDialogHandler}
+              onClick={cancelBtnOnClick}
             >
               انصراف
             </Button>

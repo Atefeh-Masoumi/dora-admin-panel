@@ -196,7 +196,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1}>
-                  افزودن Envs
+                  افزودن
                 </Typography>
                 <Button
                   variant="outlined"

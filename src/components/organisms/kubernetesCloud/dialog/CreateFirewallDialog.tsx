@@ -100,7 +100,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
   return (
     <Dialog {...props} onClose={dialogCloseHandler} maxWidth={"xs"}>
-      <DialogTitle fontWeight={"700"}>ایجاد Firewall جدید</DialogTitle>
+      <DialogTitle fontWeight={"700"}>افزودن رول</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent
           sx={{

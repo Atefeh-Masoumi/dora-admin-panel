@@ -128,7 +128,7 @@ const VmProjectList: FC = () => {
                   <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
                 }
               >
-                افزودن پروژه جدید
+                افزودن پروژه
               </Button>
             </Stack>
           </Stack>

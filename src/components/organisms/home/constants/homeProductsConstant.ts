@@ -5,23 +5,23 @@ import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 
 export const homeProductsConstantListItems = [
-  {
-    title: "CDN / DNS",
-    text: "شبکه مدیریت و توزیع محتوا",
-    Icon: CloudConnectionSvg,
-    bgcolor: "rgba(60, 138, 255, 0.08)",
-    link: "/cdn",
-  },
+  // {
+  //   title: "CDN / DNS",
+  //   text: "شبکه مدیریت و توزیع محتوا",
+  //   Icon: CloudConnectionSvg,
+  //   bgcolor: "rgba(60, 138, 255, 0.08)",
+  //   link: "/cdn",
+  // },
   {
     title: "Virtual Machine",
-    text: "سرویس سرور های ابری",
+    text: "سرورهای ابری",
     Icon: VmSvg,
     bgcolor: "rgba(211, 237, 224, 1)",
     link: "/vm",
   },
   {
     title: "Kubernetes",
-    text: "سرویس کوبرنتیز ابری",
+    text: "کوبرنتیز ابری",
     Icon: KubernetesSvg,
     bgcolor: "rgba(211, 250, 240, 1)",
     link: "/kubernetes-cluster",

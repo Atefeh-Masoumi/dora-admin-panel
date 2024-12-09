@@ -74,7 +74,7 @@ export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
                 fontWeight="bold"
                 sx={{ paddingInlineStart: 1 }}
               >
-                پروتکل ارتباطی بازدیدکننده با سرورهای درسا و سرورهای اصلی کاربر
+                پروتکل ارتباطی بازدیدکننده با سرورهای راهبر و سرورهای اصلی کاربر
               </Typography>
               <Typography variant="text15" color="secondary">
                 با تنظیم این گزینه می‌توانید شیوه‌ی ارتباط بین سرورهای CDN و

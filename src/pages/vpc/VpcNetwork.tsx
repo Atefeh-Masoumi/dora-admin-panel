@@ -98,7 +98,7 @@ export const VpcNetwork: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن Network جدید
+              افزودن Network
             </Button>
           </Stack>
         </Stack>
