@@ -13,7 +13,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -43,6 +42,7 @@ import {
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import { ipValidation, maskRegexOnly24 } from "src/utils/regex.utils";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 const VALIDATION_REQUIRED_ERROR_MESSAGE = "فیلد الزامیست";
 const combinedIpRegex = new RegExp(
@@ -307,7 +307,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         {...formik.getFieldProps("destinationIp")}
                         value={formik.values.destinationIp ?? ""}
                         size="small"
@@ -333,7 +333,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                     </FormControl>
 
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         fullWidth
                         {...formik.getFieldProps("destinationPort")}
                         value={formik.values.destinationPort ?? ""}
@@ -429,7 +429,7 @@ export const CreateSourceNatDialog: FC<CreateSourceNatFormPropsType> = ({
                       </Select>
                     </FormControl>
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         fullWidth
                         {...formik.getFieldProps("sourceIp")}
                         focused

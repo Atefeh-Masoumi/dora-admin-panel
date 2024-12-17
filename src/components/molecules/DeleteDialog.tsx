@@ -12,7 +12,6 @@ import {
   DialogTitle,
   IconButton,
   Stack,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -29,6 +28,7 @@ import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BlurBackdrop } from "../atoms/BlurBackdrop";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { DorsaTextField } from "../atoms/DorsaTextField";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;
@@ -172,7 +172,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
             <Typography gutterBottom>
               محل وارد کردن {subjectTitle} {keyTitle}
             </Typography>
-            <TextField
+            <DorsaTextField
               onChange={inputOnChange}
               value={inputValue}
               size="small"

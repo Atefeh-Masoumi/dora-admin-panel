@@ -116,9 +116,15 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
               focused
               size="small"
               label="GatewayCIDR"
-              FormHelperTextProps={{
+              InputLabelProps={{
                 style: {
                   textAlign: "start",
+                  left: -95,
+                },
+              }}
+              FormHelperTextProps={{
+                style: {
+                  textAlign: "end",
                 },
               }}
               sx={{
