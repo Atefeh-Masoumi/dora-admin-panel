@@ -11,7 +11,6 @@ import {
   FormControlLabel,
   Grid,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import * as yup from "yup";
@@ -30,6 +29,7 @@ import {
   CHECK_BOX_ENUM,
   roleAccessType,
 } from "src/constant/accessModal.constant";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
@@ -310,7 +310,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   دسترسی داشته باشند
                 </Typography>
               </Box>
-              <TextField
+              <DorsaTextField
                 {...formik.getFieldProps("userName")}
                 size="small"
                 type="userName"

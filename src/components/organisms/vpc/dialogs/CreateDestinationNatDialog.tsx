@@ -13,7 +13,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -45,6 +44,7 @@ import {
 import { ipValidation } from "src/utils/regex.utils";
 import * as yup from "yup";
 import { SelectNatService } from "../nat/SelectNatService";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 export type CreateVpcGatewayDnat = {
   vpcHostId: number;
@@ -337,7 +337,7 @@ export const CreateDestinationNatDialog: FC<
                     </FormControl>
 
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         {...formik.getFieldProps("destinationIp")}
                         value={formik.values.destinationIp ?? ""}
                         size="small"
@@ -362,7 +362,7 @@ export const CreateDestinationNatDialog: FC<
                       />
                     </FormControl>
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         fullWidth
                         {...formik.getFieldProps("destinationPort")}
                         value={formik.values.destinationPort ?? ""}
@@ -446,7 +446,7 @@ export const CreateDestinationNatDialog: FC<
                   </Stack>
                   <Stack width="100%" direction="column" rowGap={2}>
                     <FormControl fullWidth>
-                      <TextField
+                      <DorsaTextField
                         fullWidth
                         {...formik.getFieldProps("sourceIp")}
                         focused

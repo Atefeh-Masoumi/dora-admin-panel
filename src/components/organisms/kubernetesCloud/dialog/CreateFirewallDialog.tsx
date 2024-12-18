@@ -10,7 +10,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
@@ -24,6 +23,7 @@ import {
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 const options = [
   { id: 1, label: "TCP Protocol", isTcp: true },
@@ -153,7 +153,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("sourceIp")}
               focused
               label="Source IP"
@@ -162,7 +162,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             />
           </FormControl>
           <FormControl fullWidth>
-            <TextField
+            <DorsaTextField
               fullWidth
               multiline
               rows={4}

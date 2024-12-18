@@ -7,11 +7,11 @@ import {
   DialogProps,
   DialogTitle,
   Stack,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { Dispatch, FC, MouseEventHandler, SetStateAction } from "react";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import { maskRegexOnly24 } from "src/utils/regex.utils";
 import * as yup from "yup";
@@ -96,7 +96,7 @@ export const CreateNetworkModal: FC<CreateNetworkDialogPropsType> = ({
               helperText={formik.touched.name && formik.errors.name}
               placeholder="Name"
             />
-            <TextField
+            <DorsaTextField
               {...formik.getFieldProps("gatewayCidr")}
               dir="ltr"
               placeholder="e.g: 192.168.1.0/24"

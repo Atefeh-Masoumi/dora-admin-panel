@@ -11,7 +11,6 @@ import {
   FormControlLabel,
   Grid,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
@@ -30,6 +29,7 @@ import {
 } from "src/constant/accessModal.constant";
 import RoleAccessList from "../RoleAccessList";
 import { RoleAccessStateType } from "./CreateUserAccessModal";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type EditUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
@@ -319,7 +319,7 @@ export const EditUserAccessModal: FC<EditUserAccessModalPropsType> = ({
                 <Box sx={{ width: "100%" }}>
                   <Typography>نام کاربری</Typography>
                 </Box>
-                <TextField
+                <DorsaTextField
                   disabled
                   size="small"
                   type="userName"

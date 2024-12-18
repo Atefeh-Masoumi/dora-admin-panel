@@ -7,11 +7,9 @@ import {
   DialogProps,
   DialogTitle,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, MouseEventHandler } from "react";
@@ -22,6 +20,7 @@ import { Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { usePostApiMyVpcTranslateCreateMutation } from "src/app/services/api.generated";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateVpcNatServiceType = {
   vpcHostId: number;
@@ -113,7 +112,7 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
           <Stack direction="row" columnGap={1} rowGap={2} sx={{ py: 2 }}>
             <Stack>
               <FormControl fullWidth>
-                <TextField
+                <DorsaTextField
                   {...formik.getFieldProps("serviceName")}
                   size="small"
                   label="نام"
@@ -128,7 +127,7 @@ export const CreateNatServiceDialog: FC<CreateNatServiceDialogType> = ({
             </Stack>
             <Stack>
               <FormControl fullWidth>
-                <TextField
+                <DorsaTextField
                   {...formik.getFieldProps("port")}
                   size="small"
                   label="پورت"

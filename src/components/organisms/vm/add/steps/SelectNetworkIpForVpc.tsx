@@ -6,12 +6,12 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useGetApiMyVpcNetworkShortListByVpcHostIdQuery } from "src/app/services/api.generated";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ipValidation } from "src/utils/regex.utils";
 
 type SelectNetworkIpForVpcPropsType = {
@@ -86,7 +86,7 @@ export const SelectNetworkIpForVpc: FC<SelectNetworkIpForVpcPropsType> = ({
           </Typography>
           <Divider sx={{ mb: 1 }} />
           <Typography color="text.light">لطفا IP را انتخاب کنید.</Typography>
-          <TextField
+          <DorsaTextField
             value={selectedIp}
             onChange={(event) => {
               handleSelectedIp(event?.target.value);
