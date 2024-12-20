@@ -13,20 +13,19 @@ import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { LoadingButton } from "@mui/lab";
 import { usePostApiMyVmSnapshotCreateMutation } from "src/app/services/api.generated";
-import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateSnapshotDialogPropsType = DialogProps & {
+  vmId: number;
   forceClose: () => void;
 };
 
 export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
+  vmId,
   forceClose,
   ...props
 }) => {
-  const { vmId } = useParams();
-
   const [createSnapshot, { isLoading: createSnapshotLoading }] =
     usePostApiMyVmSnapshotCreateMutation();
 
@@ -63,10 +62,9 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
     validationSchema: yup.object().shape({
       name: yup
         .string()
-        .min(5, "تعداد کارکترهای نام اسنپ شات باید حداقل ۵ عدد باشد")
+        .min(2, "تعداد کارکترهای نام اسنپ شات باید حداقل 2 عدد باشد")
         .max(50, "تعداد کارکترهای نام اسنپ شات باید حداقل ۵۰ عدد باشد")
         .required("این بخش الزامی می‌باشد"),
-      description: yup.string(),
     }),
     onSubmit,
   });
@@ -78,7 +76,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
 
   return (
     <Dialog {...props}>
-      <DialogTitle align="center">ایجاد اسنپ شات جدید</DialogTitle>
+      <DialogTitle align="center">ایجاد اسنپ شات</DialogTitle>
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           <Stack rowGap={3} pt={2}>

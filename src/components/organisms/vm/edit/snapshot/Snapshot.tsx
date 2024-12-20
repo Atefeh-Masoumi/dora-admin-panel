@@ -78,6 +78,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
       <CreateSnapshotDialog
         maxWidth="xs"
         fullWidth
+        vmId={Number(id)}
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
