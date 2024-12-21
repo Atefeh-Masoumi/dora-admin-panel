@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
       when: always
     - when: never
 
@@ -16,6 +16,7 @@ stages:
 variables:
   KUBE_CONTEXT_DORSA: cloud-computing/core/front-my-core:dorsa-front-my
   KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-front-my
+  KUBE_CONTEXT_BAHARTEL: ccloud-computing/core/front-my-core:bahartel-front-my
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
 
 ## Stage 1 : PACKAGE
@@ -45,6 +46,15 @@ package_raahbar_prod:
   when: manual
   only:
     - raahbar
+
+package_bahartel_prod:
+  stage: package
+  script:
+    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel-prod
+  when: manual
+  only:
+    - bahar
 
 # Stage 2 : DEPLOY
 
@@ -82,3 +92,15 @@ deploy_raahbar_prod:
   when: on_success
   only: 
     - raahbar
+
+deploy_bahartel_prod:
+  stage: deploy
+  needs: [package_bahartel_prod]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-my-bahartel-prod.yaml
+    - kubectl -n production rollout restart deployment front-my-v1
+  when: on_success
+  only: 
+    - bahar
