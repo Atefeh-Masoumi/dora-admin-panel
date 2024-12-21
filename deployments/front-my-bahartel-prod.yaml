@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: front-my-v1
+  labels:
+    app: front-my
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front-my
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: front-my
+        version: v1
+    spec:
+      containers:
+        - name: front-my
+          image: git.dorsa.cloud:5050/cloud-computing/core/front-my-core/front-my-bahartel-prod:latest
+          ports:
+            - name: http-0
+              containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+      # Try to schedule at least one pod of the app in each node:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - front-my
+              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: front-my
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: dorsa-git
