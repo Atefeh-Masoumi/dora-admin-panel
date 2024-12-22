@@ -36,7 +36,7 @@ export const ChangeProxyStatus: FC<ChangeProxyStatusPropsType> = ({
         proxyStatus === true ? "0px 2px 11px rgba(60, 138, 255, 0.44)" : "none"
       }
     >
-      <Stack color="secondary.main">
+      {/* <Stack color="secondary.main">
         <Typography color={color + ".main"} fontSize={16}>
           استفاده از Proxy
         </Typography>
@@ -44,7 +44,7 @@ export const ChangeProxyStatus: FC<ChangeProxyStatusPropsType> = ({
           با انتخاب این گزینه ترافیک از CDN عبور خواهد کرد
         </Typography>
       </Stack>
-      <DorsaSwitch checked={proxyStatus} onChange={changeProxy} />
+      <DorsaSwitch checked={proxyStatus} onChange={changeProxy} /> */}
     </Stack>
   );
 };

@@ -82,7 +82,7 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
             pointerEvents: "all",
             minWidth: "0",
             fontSize: "14px",
-            color: "#3C8AFF",
+            color: "#00a651",
           }}
           onClick={changeAdapter}
           startIcon={<CalendarSvg />}
@@ -180,7 +180,7 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
         height: "32px",
       },
       "& .MuiDayPicker-weekDayLabel": {
-        color: "#3C8AFF",
+        color: "#00a651",
         fontSize: "12px",
       },
       "& .MuiPickersDay-root": {
@@ -201,11 +201,11 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
         },
       "& .muirtl-1rulnbo-MuiButtonBase-root-MuiPickersDay-root.Mui-selected": {
         color: "white",
-        backgroundColor: "#3C8AFF",
+        backgroundColor: "#00a651",
       },
       "& .muirtl-1rulnbo-MuiButtonBase-root-MuiPickersDay-root:focus.Mui-selected":
         {
-          backgroundColor: "#3C8AFF",
+          backgroundColor: "#00a651",
           "& :hover": {
             backgroundColor: "rgb(56, 95, 172)",
           },
@@ -214,11 +214,11 @@ export const CustomDatePicker: FC<CustomDatePickerPropsType> = ({
         color: "white",
         borderRadius: "10px",
         fontSize: "16px",
-        backgroundColor: "#3C8AFF",
+        backgroundColor: "#00a651",
       },
       "& .muirtl-zexgeb-MuiButtonBase-root-MuiPickersDay-root:focus.Mui-selected":
         {
-          backgroundColor: "#3C8AFF",
+          backgroundColor: "#00a651",
         },
       "& .muirtl-zexgeb-MuiButtonBase-root-MuiPickersDay-root:focus.Mui-selected:hover":
         {

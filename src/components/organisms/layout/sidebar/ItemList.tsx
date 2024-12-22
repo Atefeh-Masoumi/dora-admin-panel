@@ -72,7 +72,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                 sx={{
                   width: 40,
                   height: 40,
-                  bgcolor: pathname === "/" ? "#0560FD14" : "#6E768A14",
+                  bgcolor: pathname === "/" ? "rgba(211, 237, 224, 1)" : "#6E768A14",
                   borderRadius: BORDER_RADIUS_1,
                 }}
               >
@@ -115,7 +115,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                       sx={{
                         width: 40,
                         height: 40,
-                        bgcolor: isSelected ? "#0560FD14" : "#6E768A14",
+                        bgcolor: isSelected ? "rgba(211, 237, 224, 1)" : "#6E768A14",
                         borderRadius: BORDER_RADIUS_1,
                       }}
                     >

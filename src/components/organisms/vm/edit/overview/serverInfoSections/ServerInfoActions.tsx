@@ -206,7 +206,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
                     sx={{
                       "&>path": {
                         stroke: ({ palette }) =>
-                          isDisable ? palette.secondary.light : "#3C8AFF",
+                          isDisable ? palette.secondary.light : "#00a651",
                       },
                       opacity: isLoading ? "0" : "1",
                     }}
@@ -219,8 +219,8 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
                     marginTop: "-5px",
                   },
                   borderRadius: BORDER_RADIUS_1,
-                  border: "1px solid #3C8AFF",
-                  color: "#3C8AFF",
+                  border: "1px solid #00a651",
+                  color: "#00a651",
                   whiteSpace: "nowrap",
                 }}
               >

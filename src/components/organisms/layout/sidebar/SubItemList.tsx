@@ -70,7 +70,7 @@ export const SubItemList: FC<SubItemListPropsType> = ({ listItems }) => {
             }}
             primaryTypographyProps={{
               fontSize: "14px",
-              color: "#3C8AFF",
+              color: "#00a651",
               fontWeight: 400,
             }}
             secondaryTypographyProps={{
@@ -99,7 +99,7 @@ export const SubItemList: FC<SubItemListPropsType> = ({ listItems }) => {
               sx={{
                 p: 0,
                 "&:hover": { bgcolor: "transparent" },
-                bgcolor: isSelected ? "#3C8AFF14" : "transparent",
+                bgcolor: isSelected ? "#00a65114" : "transparent",
                 width: 170,
                 height: 40,
                 borderRadius: "8px",
@@ -112,7 +112,7 @@ export const SubItemList: FC<SubItemListPropsType> = ({ listItems }) => {
                 }}
                 primaryTypographyProps={{
                   fontSize: "14px",
-                  color: isSelected ? "#3C8AFF" : "#6E768A4D",
+                  color: isSelected ? "#00a651" : "#6E768A4D",
                   fontWeight: 400,
                 }}
                 primary={title}

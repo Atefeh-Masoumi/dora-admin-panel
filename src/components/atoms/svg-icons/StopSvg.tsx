@@ -12,7 +12,7 @@ export const StopSvg: FC<SvgIconProps> = (props) => {
     >
       <path
         d="M7.3 19H12.7C17.2 19 19 17.2 19 12.7V7.3C19 2.8 17.2 1 12.7 1H7.3C2.8 1 1 2.8 1 7.3V12.7C1 17.2 2.8 19 7.3 19Z"
-        stroke="#3C8AFF"
+        stroke="#00a651"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -12,15 +12,15 @@ const DeviceMessageSvg: FC<SvgIconProps & CloudConnectionProps> = ({
       <path
         opacity={mode === "selected" ? "0.4" : ""}
         d="M18.04 13.55C17.62 13.96 17.38 14.55 17.44 15.18C17.53 16.26 18.52 17.05 19.6 17.05H21.5V18.24C21.5 20.31 19.81 22 17.74 22H6.26C4.19 22 2.5 20.31 2.5 18.24V11.51C2.5 9.44001 4.19 7.75 6.26 7.75H17.74C19.81 7.75 21.5 9.44001 21.5 11.51V12.95H19.48C18.92 12.95 18.41 13.17 18.04 13.55Z"
-        stroke={mode === "selected" ? "#3C8AFF" : "#6E768A"}
+        stroke={mode === "selected" ? "#00a651" : "#6E768A"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        {...(mode === "selected" && { fill: "#3C8AFF" })}
+        {...(mode === "selected" && { fill: "#00a651" })}
       />
       <path
         d="M2.5 12.41V7.84004C2.5 6.65004 3.23 5.59 4.34 5.17L12.28 2.17C13.52 1.7 14.85 2.62003 14.85 3.95003V7.75002"
-        stroke={mode === "selected" ? "#3C8AFF" : "#6E768A"}
+        stroke={mode === "selected" ? "#00a651" : "#6E768A"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -34,11 +34,11 @@ const DeviceMessageSvg: FC<SvgIconProps & CloudConnectionProps> = ({
               strokeLinecap: "round",
               strokeLinejoin: "round",
             }
-          : { fill: "#3C8AFF" })}
+          : { fill: "#00a651" })}
       />
       <path
         d="M7 12H14"
-        stroke={mode === "selected" ? "#3C8AFF" : "#6E768A"}
+        stroke={mode === "selected" ? "#00a651" : "#6E768A"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

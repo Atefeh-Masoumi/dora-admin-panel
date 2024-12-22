@@ -15,8 +15,8 @@ type SidebarPropsType = {};
 
 const listItems: sidebarItemType[] = [
   {
-    title: "CDN / DNS",
-    text: "شبکه مدیریت و توزیع محتوا",
+    title: "DNS",
+    text: " سرویس  DNS ابری ",
     Icon: CloudConnectionSvg,
     link: "/cdn",
   },
@@ -60,13 +60,13 @@ const listItems: sidebarItemType[] = [
   //   link: "/domain",
   //   subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
   // },
-  {
-    title: "Private Cloud (VPC)",
-    text: "ابر اختصاصی مجازی",
-    Icon: WebHostSvg,
-    link: "/vpc",
-    subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
-  },
+  // {
+  //   title: "Private Cloud (VPC)",
+  //   text: "ابر اختصاصی مجازی",
+  //   Icon: WebHostSvg,
+  //   link: "/vpc",
+  //   subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
+  // },
   {
     Icon: WalletSvg,
     link: "/portal/wallet",

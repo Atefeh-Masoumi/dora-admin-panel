@@ -189,7 +189,7 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
                                 sx={{
                                   border:
                                     paymentProvider === provider.id
-                                      ? "2px solid #3C8AFF !important"
+                                      ? "2px solid #00a651 !important"
                                       : 1,
                                   py: 1,
                                 }}

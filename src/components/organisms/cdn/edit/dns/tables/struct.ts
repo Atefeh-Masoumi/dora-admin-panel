@@ -8,6 +8,7 @@ export const zoneTableStruct: columnType[] = [
     id: "value",
     label: "Content",
   },
-  { id: "useProxy", label: "Proxy Status" },
+  // { id: "useProxy", label: "Proxy Status" },
+  { id: " ", label: " " },
   { id: "control", label: "", disableSort: true },
 ];

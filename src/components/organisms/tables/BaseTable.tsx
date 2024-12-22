@@ -65,7 +65,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
               key={index}
               variant="rectangular"
               height={50}
-              sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
+              sx={{ bgcolor: "main", borderRadius: 2 }}
             />
           ))}
         </Stack>

@@ -40,7 +40,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
         <Stack direction="row" alignItems="center" spacing={1}>
           <DorsaTextField
             disabled
-            value="asia.dorsa.cloud"
+            value="ns1.baharcloud.com"
             inputProps={{ dir: "ltr" }}
             sx={{ width: "280px", cursor: "pointer", py: 0, px: 0 }}
             InputProps={{
@@ -48,7 +48,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
                 <Button
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    navigator.clipboard.writeText("asia.dorsa.cloud");
+                    navigator.clipboard.writeText("ns1.baharcloud.com")
                     toast.success("NS کپی شد", { position: "bottom-left" });
                   }}
                 >
@@ -62,7 +62,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
         <Stack direction="row" alignItems="center" spacing={1}>
           <DorsaTextField
             disabled
-            value="mobin.dorsa.cloud"
+            value="ns2.baharcloud.com"
             inputProps={{ dir: "ltr" }}
             sx={{ width: "280px", cursor: "pointer", py: 0, px: 0 }}
             InputProps={{
@@ -70,7 +70,7 @@ export const RecordsList: FC<RecordsListPropsType> = ({ zoneName }) => {
                 <Button
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    navigator.clipboard.writeText("mobin.dorsa.cloud");
+                    navigator.clipboard.writeText("ns2.baharcloud.com")
                     toast.success("NS کپی شد", { position: "bottom-left" });
                   }}
                 >

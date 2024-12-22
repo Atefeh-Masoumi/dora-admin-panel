@@ -116,7 +116,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
                     >
                       <Add
                         fontSize="small"
-                        sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                        sx={{ "& path": { stroke: "#00a651" } }}
                       />
                     </Stack>
                   )

@@ -22,7 +22,7 @@ export const ReferralCode: FC = () => {
       direction="row"
       justifyContent="center"
       borderRadius={BORDER_RADIUS_1}
-      bgcolor="#3C8AFF"
+      bgcolor="#00a651"
       color="white"
       px={{ xs: 1.8, lg: 3 }}
       py={{ xs: 1.8, lg: 5 }}
