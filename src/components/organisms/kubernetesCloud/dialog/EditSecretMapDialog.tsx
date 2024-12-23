@@ -45,7 +45,7 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
 }) => {
   const [editSecretMap, { isLoading: editSecretMapLoading }] =
     usePutApiMyKubernetesCloudSecretEditMutation();
-  const processedSecretData = decodebase64(secretData?.secrets);
+  const processedSecretData = secretData?.secrets;
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
