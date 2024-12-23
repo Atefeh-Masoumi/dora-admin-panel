@@ -111,9 +111,9 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
       Object.keys(updatedConfigmap.envs).forEach((key) => {
         processedEnvsToObjectBase64[key] = {};
         Object.keys(updatedConfigmap.envs[key]).forEach((innerKey) => {
-          processedEnvsToObjectBase64[key][innerKey] = btoa(
+          processedEnvsToObjectBase64[key][innerKey] = 
             updatedConfigmap.envs[key][innerKey]
-          );
+          
         });
       });
 
