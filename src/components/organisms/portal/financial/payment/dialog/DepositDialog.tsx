@@ -228,7 +228,6 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                       ۱۰,۰۰۰,۰۰۰ ریال
                     </Button>
                   </Stack>
-                  {/* TODO: Add Charge Code Here */}
                   <Stack
                     spacing={2}
                     border={1}
@@ -240,24 +239,19 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                       درگاه پرداخت
                     </Typography>
                     <Grid container rowSpacing={1} columnSpacing={1}>
-                      {paymentProviderListLoading ? (
-                        <CircularProgress sx={{ margin: "0 auto" }} />
-                      ) : (
-                        paymentProviderList?.map((provider) => {
+                    {paymentProviderListLoading ? (
+                      <CircularProgress sx={{ margin: "0 auto" }} />
+                    ) : (
+                      paymentProviderList
+                        ?.filter((provider) => provider.status) // Filter enabled providers
+                        .map((provider) => {
                           return (
                             <Grid key={provider.id} item xs={5.7}>
                               <Button
-                                onClick={() =>
-                                  setFieldValue(
-                                    "paymentProviderId",
-                                    provider.id
-                                  )
-                                }
+                                onClick={() => setFieldValue("paymentProviderId", provider.id)}
                                 variant="outlined"
                                 color={
-                                  paymentProvider === provider.id
-                                    ? "primary"
-                                    : "secondary"
+                                  paymentProvider === provider.id ? "primary" : "secondary"
                                 }
                                 sx={{
                                   border:
@@ -274,19 +268,15 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                                   spacing={1}
                                   alignItems={{ xs: "start", md: "end" }}
                                 >
-                                  {renderProviderLogo(
-                                    String(provider.photoName)
-                                  )}
-                                  <Typography variant="text14">
-                                    {provider.name}
-                                  </Typography>
+                                  {renderProviderLogo(String(provider.photoName))}
+                                  <Typography variant="text14">{provider.name}</Typography>
                                 </Stack>
                               </Button>
                             </Grid>
                           );
                         })
-                      )}
-                    </Grid>
+                    )}
+                  </Grid>
                   </Stack>
                   <Stack direction="row" justifyContent="end" spacing={1}>
                     <Button
