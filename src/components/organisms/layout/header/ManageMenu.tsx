@@ -81,8 +81,8 @@ export const ManageMenu: FC = () => {
         disableElevation
         onClick={handleClick}
         endIcon={<ExpandMoreIcon sx={{ fontSize: "1.5em !important" }} />}
-        color="secondary"
-        sx={{ backgroundColor: "rgba(110, 118, 138, 0.06)", py: 1.3 }}
+        
+        sx={{ backgroundColor: "rgba(110, 118, 138, 0.06)", py: 1.3 , color:"rgba(110, 118, 138, 1)"}}
         fullWidth
       >
         <Stack direction="row">

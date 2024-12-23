@@ -80,7 +80,7 @@ const VmList: FC = () => {
             alignItems="center"
             spacing={2}
           >
-            <Typography fontSize={18} color="secondary">
+            <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
               لیست سرورهای ابری
             </Typography>
             <SearchBox

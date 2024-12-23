@@ -42,7 +42,7 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
           alignItems={{ xs: "start", md: "center" }}
           justifyContent="space-between"
         >
-          <Typography fontSize={18} color="secondary">
+          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
             لیست نودهای کوبرنتیز ابری
           </Typography>
           <Button

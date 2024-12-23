@@ -34,12 +34,12 @@ const listItems: sidebarItemType[] = [
     link: "/kubernetes-cluster",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
   },
-  // {
-  //   title: "Kubernetes Cloud",
-  //   text: "ابری کوبرنتیز",
-  //   Icon: KubernetesSvg,
-  //   link: "/kubernetes-cloud",
-  // },
+  {
+    title: "Kubernetes Cloud",
+    text: "ابری کوبرنتیز",
+    Icon: KubernetesSvg,
+    link: "/kubernetes-cloud",
+  },
   {
     title: "Object Storage",
     text: "ذخیره‌ساز ابری",

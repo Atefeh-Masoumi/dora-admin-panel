@@ -34,7 +34,7 @@ export const Analytics: FC = () => {
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography variant="text1" color="secondary">
+        <Typography variant="text1" color="rgba(110, 118, 138, 1)" >
           مصرف ۳۰ روز اخیر
         </Typography>
         <Select

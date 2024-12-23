@@ -117,7 +117,7 @@ export const VpcLoadBalancer: FC = () => {
               size="large"
               sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
               startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                <Add sx={{ "& path": { stroke: "#00a651" } }} />
               }
             >
               افزودن LoadBalancer

@@ -64,7 +64,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
               onClick={openCreateDialogHandler}
               variant="outlined"
               startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                <Add sx={{ "& path": { stroke: "#00a651" } }} />
               }
             >
               افزودن رول

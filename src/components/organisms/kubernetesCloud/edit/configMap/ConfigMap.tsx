@@ -65,7 +65,7 @@ export const KubernetesCloudConfigMap: FC<
           alignItems="center"
           spacing={2}
         >
-          <Typography fontSize={18} color="secondary">
+          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
             لیست کانفیگ‌مپ
           </Typography>
           <SearchBox
@@ -95,7 +95,7 @@ export const KubernetesCloudConfigMap: FC<
             >
               <Add
                 fontSize="small"
-                sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                sx={{ "& path": { stroke: "#00a651" } }}
               />
             </Stack>
           }

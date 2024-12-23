@@ -40,7 +40,7 @@ export const GiftAndReferral: FC = () => {
             bgcolor={"white"}
             borderRadius={BORDER_RADIUS_1}
           >
-            <Typography color="secondary" variant="text2" whiteSpace="nowrap">
+            <Typography color="rgba(110, 118, 138, 1)" variant="text2" whiteSpace="nowrap">
               کد هدیه دارید؟
             </Typography>
             <Button
@@ -67,7 +67,7 @@ export const GiftAndReferral: FC = () => {
               <Grid item xs={12} sm={6}>
                 <Stack direction="row">
                   <Typography
-                    color="secondary"
+                    color="rgba(110, 118, 138, 1)"
                     fontSize={14}
                     sx={{
                       display: "flex",

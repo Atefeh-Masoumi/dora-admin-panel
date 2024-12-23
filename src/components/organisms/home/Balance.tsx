@@ -39,7 +39,7 @@ export const Balance: FC = () => {
       >
         <Typography
           variant="text1"
-          color="secondary"
+          color="rgba(110, 118, 138, 1)"
           sx={{ py: 1, pb: { xs: 0, md: 2 } }}
         >
           کیف پول

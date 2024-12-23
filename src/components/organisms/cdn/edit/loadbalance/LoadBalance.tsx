@@ -37,7 +37,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography fontSize={18} color="secondary">
+          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
             لیست Load Balance ابری
           </Typography>
           {/* <Button
@@ -46,7 +46,7 @@ const LoadBalance: FC<LoadBalancePropsType> = () => {
             size="large"
             sx={{ whiteSpace: "nowrap", px: 1.2 }}
             startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+              <Add sx={{ "& path": { stroke: "#00a651" } }} />
             }
           >
            افزودن

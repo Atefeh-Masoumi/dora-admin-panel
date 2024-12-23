@@ -47,7 +47,7 @@ export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
           size="large"
           sx={{ whiteSpace: "nowrap", px: 1.2, borderRadius: 1.5, border: 1 }}
           startIcon={
-            <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            <Add sx={{ "& path": { stroke: "#00a651" } }} />
           }
           onClick={submit}
         >

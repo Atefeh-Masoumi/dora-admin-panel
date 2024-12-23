@@ -78,7 +78,7 @@ export const WebConfig: FC<WebConfigPropsType> = () => {
                 alignItems="center"
                 spacing={2}
               >
-                <Typography fontSize={18} color="secondary">
+                <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
                   مشخصات سرویس را انتخاب کنید
                 </Typography>
               </Stack>
