@@ -125,144 +125,123 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
   };
 
   return (
-    <>
-      <Dialog
-        open={openDialog}
-        onClose={onClose}
-        components={{ Backdrop: BlurBackdrop }}
-        fullWidth
-        PaperProps={{
-          sx: { borderRadius: BORDER_RADIUS_1 },
-        }}
-      >
-        <form onSubmit={formik.handleSubmit} autoComplete="on">
-          <Stack
-            px={{ xs: 1.8, md: 2 }}
-            py={{ xs: 1.8, md: 1 }}
-            spacing={{ xs: 2, md: 5 }}
+    <Dialog open={openDialog} onClose={onClose} maxWidth={"xs"}>
+      <form onSubmit={formik.handleSubmit} autoComplete="on">
+        <Stack
+          px={{ xs: 1.8, md: 2 }}
+          py={{ xs: 1.8, md: 1 }}
+          spacing={{ xs: 2, md: 5 }}
+        >
+          <DialogTitle
+            fontWeight="bold"
+            variant="text1"
+            sx={{ padding: "10px 5px" }}
           >
-            <DialogTitle
-              fontWeight="bold"
-              variant="text1"
-              sx={{ padding: "10px 5px" }}
-            >
-              ایجاد Configmap
-            </DialogTitle>
-            <Divider sx={{ marginTop: "20px !important" }} />
-            <Grid2 container>
-              <Grid2 xs={12} md={6}>
-                <DorsaTextField
-                  fullWidth
-                  label="*name"
-                  error={Boolean(formik.errors.name && formik.touched.name)}
-                  helperText={formik.errors.name}
-                  {...formik.getFieldProps("name")}
-                />
-              </Grid2>
+            ایجاد Configmap
+          </DialogTitle>
+          <Grid2 container>
+            <Grid2 xs={12} md={12}>
+              <DorsaTextField
+                fullWidth
+                label="*name"
+                error={Boolean(formik.errors.name && formik.touched.name)}
+                helperText={formik.errors.name}
+                {...formik.getFieldProps("name")}
+              />
             </Grid2>
-
-            <Stack spacing={3}>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
+          </Grid2>
+          <Stack spacing={3}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Typography fontWeight={600} mb={1}>
+                افزودن
+              </Typography>
+              <Button
+                variant="text"
+                startIcon={<Add />}
+                onClick={addEnvsInput}
+                size="small"
               >
-                <Typography fontWeight={600} mb={1}>
-                  افزودن
-                </Typography>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{
-                    color: "primary.main",
-                    justifyContent: "space-between",
-                    py: 1,
-                    fontSize: "15px !important",
-                    mb: 1,
-                    border: "1px solid",
-                  }}
-                  startIcon={<Add />}
-                  onClick={addEnvsInput}
-                  size="small"
-                >
-                  اضافه کردن
-                </Button>
-              </Stack>
-              <Grid
-                container
-                columnSpacing={1}
-                alignItems={"center"}
-                justifyContent={"center"}
-                sx={{ direction: "rtl", margin: "0 auto" }}
-              >
-                {envs.map((_: any, index: any) => (
-                  <Fragment key={index}>
-                    <Grid item xs={4} mb={2}>
-                      <DorsaTextField
-                        fullWidth
-                        label="key"
-                        value={formik.values.envs[index]?.key || ""}
-                        onChange={(e) =>
-                          handleKeyChange(index, String(e.target.value))
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={7} mb={2}>
-                      <DorsaTextField
-                        fullWidth
-                        label="value"
-                        value={formik.values.envs[index]?.value || ""}
-                        onChange={(e) =>
-                          handleValueChange(index, String(e.target.value))
-                        }
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={1}
-                      mb={1}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        paddingRight: "0 !important",
-                        margin: 0,
-                        padding: 0,
-                        marginBottom: "15px !important",
-                      }}
-                    >
-                      <IconButton onClick={() => removeEnvsInput(index)}>
-                        <TrashSvg />
-                      </IconButton>
-                    </Grid>
-                  </Fragment>
-                ))}
-              </Grid>
+                اضافه کردن
+              </Button>
             </Stack>
-            <DialogActions>
-              <Stack direction="row" justifyContent="end" spacing={1}>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ px: 3, py: 0.8 }}
-                  onClick={onClose}
-                >
-                  انصراف
-                </Button>
-                <LoadingButton
-                  component="button"
-                  type="submit"
-                  loading={createConfigMapLoading}
-                  variant="contained"
-                  sx={{ px: 3, py: 0.8 }}
-                >
-                  ذخیره
-                </LoadingButton>
-              </Stack>
-            </DialogActions>
+            <Grid
+              container
+              columnSpacing={1}
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{ direction: "rtl", margin: "0 auto" }}
+            >
+              {envs.map((_: any, index: any) => (
+                <Fragment key={index}>
+                  <Grid item xs={4} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="key"
+                      value={formik.values.envs[index]?.key || ""}
+                      onChange={(e) =>
+                        handleKeyChange(index, String(e.target.value))
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={7} mb={2}>
+                    <DorsaTextField
+                      fullWidth
+                      label="value"
+                      value={formik.values.envs[index]?.value || ""}
+                      onChange={(e) =>
+                        handleValueChange(index, String(e.target.value))
+                      }
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={1}
+                    mb={1}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      paddingRight: "0 !important",
+                      margin: 0,
+                      padding: 0,
+                      marginBottom: "15px !important",
+                    }}
+                  >
+                    <IconButton onClick={() => removeEnvsInput(index)}>
+                      <TrashSvg />
+                    </IconButton>
+                  </Grid>
+                </Fragment>
+              ))}
+            </Grid>
           </Stack>
-        </form>
-      </Dialog>
-    </>
+          <DialogActions>
+            <Stack direction="row" justifyContent="end" spacing={1}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                sx={{ px: 3, py: 0.8 }}
+                onClick={onClose}
+              >
+                انصراف
+              </Button>
+              <LoadingButton
+                component="button"
+                type="submit"
+                loading={createConfigMapLoading}
+                variant="contained"
+                sx={{ px: 3, py: 0.8 }}
+              >
+                ذخیره
+              </LoadingButton>
+            </Stack>
+          </DialogActions>
+        </Stack>
+      </form>
+    </Dialog>
   );
 };

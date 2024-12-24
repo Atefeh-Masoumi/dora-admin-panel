@@ -137,7 +137,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   };
 
   return (
-    <Dialog sx={{ p: 4 }} onClose={closeDialogHandler} {...props} fullWidth>
+    <Dialog {...props} onClose={closeDialogHandler} maxWidth={"xs"}>
       {false && <PageLoading />}
       <DialogTitle fontWeight="bold" variant="text1">
         ایجاد اینگرس
@@ -171,6 +171,28 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
             )}
 
             <Grid container rowSpacing={2} columnSpacing={1}>
+              <Grid item xs={12} sm={12}>
+                <DorsaTextField
+                  dir="ltr"
+                  select
+                  error={Boolean(
+                    formik.errors.protocolTypeId &&
+                      formik.touched.protocolTypeId
+                  )}
+                  helperText={formik.errors.protocolTypeId}
+                  disabled={false}
+                  label="Protocol Type"
+                  fullWidth
+                  {...formik.getFieldProps("protocolTypeId")}
+                >
+                  {ProtocolTypeItems &&
+                    ProtocolTypeItems.map((item, index) => (
+                      <MenuItem dir="ltr" key={index} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    ))}
+                </DorsaTextField>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <DorsaTextField
                   dir="ltr"
@@ -195,28 +217,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   {...formik.getFieldProps("domainName")}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <DorsaTextField
-                  dir="ltr"
-                  select
-                  error={Boolean(
-                    formik.errors.protocolTypeId &&
-                      formik.touched.protocolTypeId
-                  )}
-                  helperText={formik.errors.protocolTypeId}
-                  disabled={false}
-                  label="Protocol Type"
-                  fullWidth
-                  {...formik.getFieldProps("protocolTypeId")}
-                >
-                  {ProtocolTypeItems &&
-                    ProtocolTypeItems.map((item, index) => (
-                      <MenuItem dir="ltr" key={index} value={item.id}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                </DorsaTextField>
-              </Grid>
+
               {formik.values.protocolTypeId === 3 && (
                 <Grid item xs={12} sm={6}>
                   {tLSSecretList && tLSSecretList.length > 0 ? (
@@ -265,7 +266,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   variant="text"
                   startIcon={<Add />}
                   onClick={addRules}
-                  disabled={false}
+                  size="small"
                 >
                   اضافه کردن
                 </Button>

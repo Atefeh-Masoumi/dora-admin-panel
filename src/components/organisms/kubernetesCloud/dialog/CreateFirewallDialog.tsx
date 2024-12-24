@@ -1,6 +1,5 @@
 import {
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,16 +17,16 @@ import { useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   CreateKuberCloudFirewallModel,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 const options = [
-  { id: 1, label: "TCP Protocol", isTcp: true },
-  { id: 2, label: "UDP Protocol", isTcp: false },
+  { id: 1, label: "TCP", isTcp: true },
+  { id: 2, label: "UDP", isTcp: false },
 ];
 
 export const InitialValueSchema = yup.object().shape({
@@ -118,19 +117,13 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               labelId="protocolSelection"
               label="انتخاب پروتکل"
               {...formik.getFieldProps("isTcp")}
-              renderValue={(selected: number) => (
-                <Chip
-                  sx={{ width: "100%" }}
-                  key={selected}
-                  label={
-                    options.find((option) => option.id === selected)?.label
-                  }
-                />
-              )}
+              renderValue={(selected: number) =>
+                options.find((option) => option.id === selected)?.label
+              }
             >
               {[
-                { id: 1, label: "TCP Protocol", isTcp: true },
-                { id: 2, label: "UDP Protocol", isTcp: false },
+                { id: 1, label: "TCP", isTcp: true },
+                { id: 2, label: "UDP", isTcp: false },
               ].map((item, index) => (
                 <MenuItem key={index} value={item.id}>
                   {item.label}
@@ -168,14 +161,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               rows={4}
               {...formik.getFieldProps("description")}
               focused
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    border: "1px solid lightgray",
-                  },
-                },
-              }}
-              size="small"
               label="Description"
               error={Boolean(
                 formik.errors.description && formik.touched.description
