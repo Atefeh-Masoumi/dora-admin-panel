@@ -44,11 +44,11 @@ export const api = enhancedApi
           abortController?: AbortController;
         }
       >({
-        query: ({ body, abortController }) => ({
+        query: ({ createIssueModel, abortController }) => ({
           url: `/api/my/portal/issue/create`,
           method: "POST",
-          body,
-          abortController,
+          createIssueModel,
+          signal: abortController?.signal, 
         }),
       }),
     }),
@@ -279,6 +279,9 @@ export const api = enhancedApi
       },
       getApiMyKubernetesClusterHostGetById: {
         providesTags: () => ["KubernetesCluster"],
+      },
+      getApiMyKubernetesCloudFirewallListByNamespaceId:{
+        providesTags:()=>["KubernetesCluster"]
       },
       deleteApiMyKubernetesClusterNodeDeleteById: {
         invalidatesTags: () => ["KubernetesCluster"],
