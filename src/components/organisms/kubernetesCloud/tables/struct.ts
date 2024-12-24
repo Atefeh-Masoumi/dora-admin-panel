@@ -31,6 +31,15 @@ export const kubernetesCloudConfigMapTableStruct: columnType[] = [
   { id: "control", label: "", disableSort: true },
 ];
 
+export const kubernetesCloudFireWallTableStruct: columnType[] = [
+  { id: "id", label: "" },
+  { id: "sourceIp", label: "آی پی مبدا" },
+  { id: "targetPort", label: "پورت مقصد" },
+  { id: "protocol", label: "پروتکل" },
+  { id: "createDate", label: "تاریخ ایجاد" },
+  { id: "control", label: "", disableSort: true },
+];
+
 export const kubernetesCloudSecretMapTableStruct: columnType[] = [
   { id: "id", label: "" },
   { id: "name", label: "نام" },
