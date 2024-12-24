@@ -361,6 +361,68 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createBareMetalModel,
       }),
     }),
+    getApiMyBlockStorageHostList: build.query<
+      GetApiMyBlockStorageHostListApiResponse,
+      GetApiMyBlockStorageHostListApiArg
+    >({
+      query: () => ({ url: `/api/my/block-storage/host/list` }),
+    }),
+    getApiMyBlockStorageHostGetById: build.query<
+      GetApiMyBlockStorageHostGetByIdApiResponse,
+      GetApiMyBlockStorageHostGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/get/${queryArg.id}`,
+      }),
+    }),
+    putApiMyBlockStorageHostEditById: build.mutation<
+      PutApiMyBlockStorageHostEditByIdApiResponse,
+      PutApiMyBlockStorageHostEditByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/edit/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.editBlockStorageHostModel,
+      }),
+    }),
+    putApiMyBlockStorageHostDetachById: build.mutation<
+      PutApiMyBlockStorageHostDetachByIdApiResponse,
+      PutApiMyBlockStorageHostDetachByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/detach/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    deleteApiMyBlockStorageHostDeleteById: build.mutation<
+      DeleteApiMyBlockStorageHostDeleteByIdApiResponse,
+      DeleteApiMyBlockStorageHostDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyBlockStorageHostCreate: build.mutation<
+      PostApiMyBlockStorageHostCreateApiResponse,
+      PostApiMyBlockStorageHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/create`,
+        method: "POST",
+        body: queryArg.createBlockStorageHostModel,
+      }),
+    }),
+    putApiMyBlockStorageHostAttachById: build.mutation<
+      PutApiMyBlockStorageHostAttachByIdApiResponse,
+      PutApiMyBlockStorageHostAttachByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/attach/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.attachBlockStorageModel,
+      }),
+    }),
     getApiMyColocationList: build.query<
       GetApiMyColocationListApiResponse,
       GetApiMyColocationListApiArg
@@ -1546,7 +1608,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-item/create`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.createIssueItemModel,
       }),
     }),
     getApiMyPortalIssueShortList: build.query<
@@ -1568,7 +1630,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/portal/issue/create`,
         method: "POST",
-        body: queryArg.body,
+        body: queryArg.createIssueModel,
       }),
     }),
     getApiMyPortalInvoiceUnpaid: build.query<
@@ -1681,6 +1743,15 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/backup/short-list/${queryArg.vmHostId}`,
       }),
     }),
+    postApiMyVmBackupRestoreByBackupIdAndVolumeId: build.mutation<
+      PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiResponse,
+      PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/backup/restore/${queryArg.backupId}/${queryArg.volumeId}`,
+        method: "POST",
+      }),
+    }),
     getApiMyVmBackupListByVmHostId: build.query<
       GetApiMyVmBackupListByVmHostIdApiResponse,
       GetApiMyVmBackupListByVmHostIdApiArg
@@ -1727,6 +1798,16 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyVmVolumeGetByIdApiArg
     >({
       query: (queryArg) => ({ url: `/api/my/vm/volume/get/${queryArg.id}` }),
+    }),
+    postApiMyVmVolumeExtend: build.mutation<
+      PostApiMyVmVolumeExtendApiResponse,
+      PostApiMyVmVolumeExtendApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/volume/extend`,
+        method: "POST",
+        body: queryArg.extendVmVolumeModel,
+      }),
     }),
     deleteApiMyVmVolumeDeleteById: build.mutation<
       DeleteApiMyVmVolumeDeleteByIdApiResponse,
@@ -2086,6 +2167,15 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.editVmNetworkModel,
       }),
     }),
+    deleteApiMyVpcNetworkDetachByPortIdAndVmHostId: build.mutation<
+      DeleteApiMyVpcNetworkDetachByPortIdAndVmHostIdApiResponse,
+      DeleteApiMyVpcNetworkDetachByPortIdAndVmHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/network/detach/${queryArg.portId}/${queryArg.vmHostId}`,
+        method: "DELETE",
+      }),
+    }),
     deleteApiMyVpcNetworkDeleteById: build.mutation<
       DeleteApiMyVpcNetworkDeleteByIdApiResponse,
       DeleteApiMyVpcNetworkDeleteByIdApiArg
@@ -2103,6 +2193,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vpc/network/create`,
         method: "POST",
         body: queryArg.createVpcNetworkModel,
+      }),
+    }),
+    postApiMyVpcNetworkAttach: build.mutation<
+      PostApiMyVpcNetworkAttachApiResponse,
+      PostApiMyVpcNetworkAttachApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/network/attach`,
+        method: "POST",
+        body: queryArg.createAttachModel,
       }),
     }),
     putApiMyVpcNatIncreaseSequenceByVpcHostIdAndId: build.mutation<
@@ -2265,6 +2365,31 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vpc/host/create`,
         method: "POST",
         body: queryArg.createVpcHostModel,
+      }),
+    }),
+    getApiMyVpcFirewallRuleList: build.query<
+      GetApiMyVpcFirewallRuleListApiResponse,
+      GetApiMyVpcFirewallRuleListApiArg
+    >({
+      query: () => ({ url: `/api/my/vpc/firewall/rule/list` }),
+    }),
+    deleteApiMyVpcFirewallRuleDeleteByRuleId: build.mutation<
+      DeleteApiMyVpcFirewallRuleDeleteByRuleIdApiResponse,
+      DeleteApiMyVpcFirewallRuleDeleteByRuleIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/firewall/rule/delete/${queryArg.ruleId}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyVpcFirewallRuleCreate: build.mutation<
+      PostApiMyVpcFirewallRuleCreateApiResponse,
+      PostApiMyVpcFirewallRuleCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vpc/firewall/rule/create`,
+        method: "POST",
+        body: queryArg.createVpcFirewallRuleModel,
       }),
     }),
     getApiMyWebHostList: build.query<
@@ -2579,6 +2704,36 @@ export type DeleteApiMyBareMetalHostDeleteByIdApiArg = {
 export type PostApiMyBareMetalHostCreateApiResponse = unknown;
 export type PostApiMyBareMetalHostCreateApiArg = {
   createBareMetalModel: CreateBareMetalModel;
+};
+export type GetApiMyBlockStorageHostListApiResponse =
+  /** status 200 OK */ BlockStorageHostListResponse[];
+export type GetApiMyBlockStorageHostListApiArg = void;
+export type GetApiMyBlockStorageHostGetByIdApiResponse =
+  /** status 200 OK */ BlockStorageHostGetResponse;
+export type GetApiMyBlockStorageHostGetByIdApiArg = {
+  id: number;
+};
+export type PutApiMyBlockStorageHostEditByIdApiResponse = unknown;
+export type PutApiMyBlockStorageHostEditByIdApiArg = {
+  id: number;
+  editBlockStorageHostModel: EditBlockStorageHostModel;
+};
+export type PutApiMyBlockStorageHostDetachByIdApiResponse = unknown;
+export type PutApiMyBlockStorageHostDetachByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyBlockStorageHostDeleteByIdApiResponse = unknown;
+export type DeleteApiMyBlockStorageHostDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyBlockStorageHostCreateApiResponse = unknown;
+export type PostApiMyBlockStorageHostCreateApiArg = {
+  createBlockStorageHostModel: CreateBlockStorageHostModel;
+};
+export type PutApiMyBlockStorageHostAttachByIdApiResponse = unknown;
+export type PutApiMyBlockStorageHostAttachByIdApiArg = {
+  id: number;
+  attachBlockStorageModel: AttachBlockStorageModel;
 };
 export type GetApiMyColocationListApiResponse =
   /** status 200 OK */ ColocationListResponse[];
@@ -3177,9 +3332,7 @@ export type GetApiMyPortalIssueItemDownloadByIdApiArg = {
 };
 export type PostApiMyPortalIssueItemCreateApiResponse = unknown;
 export type PostApiMyPortalIssueItemCreateApiArg = {
-  body: {
-    model: CreateIssueItemModel;
-  };
+  createIssueItemModel: CreateIssueItemModel;
 };
 export type GetApiMyPortalIssueShortListApiResponse =
   /** status 200 OK */ IssueShortListResponse[];
@@ -3189,9 +3342,7 @@ export type GetApiMyPortalIssueListApiResponse =
 export type GetApiMyPortalIssueListApiArg = void;
 export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
-  body: {
-    model: CreateIssueModel;
-  };
+  createIssueModel: CreateIssueModel;
 };
 export type GetApiMyPortalInvoiceUnpaidApiResponse =
   /** status 200 OK */ UnPaidInvoiceResponse[];
@@ -3253,6 +3404,11 @@ export type GetApiMyVmBackupShortListByVmHostIdApiResponse =
 export type GetApiMyVmBackupShortListByVmHostIdApiArg = {
   vmHostId: number;
 };
+export type PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiResponse = unknown;
+export type PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiArg = {
+  backupId: number;
+  volumeId: number;
+};
 export type GetApiMyVmBackupListByVmHostIdApiResponse =
   /** status 200 OK */ VmBackupListResponse[];
 export type GetApiMyVmBackupListByVmHostIdApiArg = {
@@ -3280,6 +3436,10 @@ export type GetApiMyVmVolumeGetByIdApiResponse =
   /** status 200 OK */ GetVmVolumeResponse;
 export type GetApiMyVmVolumeGetByIdApiArg = {
   id: number;
+};
+export type PostApiMyVmVolumeExtendApiResponse = unknown;
+export type PostApiMyVmVolumeExtendApiArg = {
+  extendVmVolumeModel: ExtendVmVolumeModel;
 };
 export type DeleteApiMyVmVolumeDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmVolumeDeleteByIdApiArg = {
@@ -3466,6 +3626,11 @@ export type PutApiMyVpcNetworkEditByIdApiArg = {
   id: number;
   editVmNetworkModel: EditVmNetworkModel;
 };
+export type DeleteApiMyVpcNetworkDetachByPortIdAndVmHostIdApiResponse = unknown;
+export type DeleteApiMyVpcNetworkDetachByPortIdAndVmHostIdApiArg = {
+  portId: string;
+  vmHostId: string;
+};
 export type DeleteApiMyVpcNetworkDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVpcNetworkDeleteByIdApiArg = {
   id: number;
@@ -3473,6 +3638,10 @@ export type DeleteApiMyVpcNetworkDeleteByIdApiArg = {
 export type PostApiMyVpcNetworkCreateApiResponse = unknown;
 export type PostApiMyVpcNetworkCreateApiArg = {
   createVpcNetworkModel: CreateVpcNetworkModel;
+};
+export type PostApiMyVpcNetworkAttachApiResponse = unknown;
+export type PostApiMyVpcNetworkAttachApiArg = {
+  createAttachModel: CreateAttachModel;
 };
 export type PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiResponse = unknown;
 export type PutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdApiArg = {
@@ -3555,6 +3724,17 @@ export type DeleteApiMyVpcHostDeleteByIdApiArg = {
 export type PostApiMyVpcHostCreateApiResponse = unknown;
 export type PostApiMyVpcHostCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
+};
+export type GetApiMyVpcFirewallRuleListApiResponse =
+  /** status 200 OK */ VpcHostFirewallRuleListResponse[];
+export type GetApiMyVpcFirewallRuleListApiArg = void;
+export type DeleteApiMyVpcFirewallRuleDeleteByRuleIdApiResponse = unknown;
+export type DeleteApiMyVpcFirewallRuleDeleteByRuleIdApiArg = {
+  ruleId: string;
+};
+export type PostApiMyVpcFirewallRuleCreateApiResponse = unknown;
+export type PostApiMyVpcFirewallRuleCreateApiArg = {
+  createVpcFirewallRuleModel: CreateVpcFirewallRuleModel;
 };
 export type GetApiMyWebHostListApiResponse =
   /** status 200 OK */ WebHostListResponse[];
@@ -3904,6 +4084,40 @@ export type CreateBareMetalModel = {
   imageId: number;
   password?: string | null;
   publicKey?: string | null;
+};
+export type BlockStorageHostListResponse = {
+  id: number;
+  datacenter: string | null;
+  customerId: number;
+  customer: string | null;
+  userName: string | null;
+  name: string | null;
+  status: string | null;
+  statusId: number;
+  createDate: string;
+};
+export type BlockStorageHostGetResponse = {
+  id: number;
+  datacenter: string | null;
+  name: string | null;
+  size: number;
+  status: string | null;
+  statusId: number;
+  createDate: string;
+};
+export type EditBlockStorageHostModel = {
+  size: number;
+};
+export type CreateBlockStorageHostModel = {
+  name: string;
+  datacenterId: number;
+  isPredefined: boolean;
+  hostProjectId: number;
+  productBundleId?: number | null;
+  disk?: number | null;
+};
+export type AttachBlockStorageModel = {
+  vmHostId: number;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -4447,7 +4661,7 @@ export type CreateKuberCloudFirewallModel = {
   namespaceId: number;
   firewallProtocolTypeId: number;
   deployPortId: number;
-  sourceIp?: number | null;
+  sourceIp?: string | null;
   description?: string | null;
 };
 export type EnvKeyValuePairResponse = {
@@ -4787,12 +5001,12 @@ export type SepCallbackModel = {
   TerminalId?: number | null;
   state?: string | null;
   status?: number | null;
-  RRN?: number | null;
+  RRN?: string | null;
   refNum?: string | null;
   resNum?: number | null;
-  traceNo?: number | null;
+  traceNo?: string | null;
   amount?: number | null;
-  wage?: number | null;
+  wage?: string | null;
   securePan?: string | null;
   hashedCardNumber?: string | null;
 };
@@ -5015,6 +5229,8 @@ export type CustomerBillListResponse = {
   id: number;
   calculateMonthId: number;
   calculateMonth: string | null;
+  fromDate: string;
+  toDate: string;
   billDate: string;
   netPrice: number;
   vat: number;
@@ -5041,6 +5257,8 @@ export type GetCustomerBillResponse = {
   id: number;
   name: string | null;
   billDate: string;
+  fromDate?: string | null;
+  toDate?: string | null;
   netPrice: number;
   vat: number;
   totalPrice: number;
@@ -5068,15 +5286,17 @@ export type VmBackupShortListResponse = {
 export type VmBackupListResponse = {
   id: number;
   name: string | null;
-  vmVolumeName: number;
+  vmVolumeName: string | null;
   createDate: string;
 };
 export type GetVmBackupResponse = {
   id: number;
   name: string | null;
+  vmVolumeName: string | null;
   createDate: string;
 };
 export type CreateVmBackupModel = {
+  vmHostId: number;
   vmVolumeId: number;
   name: string;
 };
@@ -5090,9 +5310,14 @@ export type VmVolumeListResponse = {
 export type GetVmVolumeResponse = {
   id: number;
   name: string | null;
+  rootDisk: string | null;
   isRootDisk: boolean;
   volumeSize: number;
   createDate: string;
+};
+export type ExtendVmVolumeModel = {
+  vmVolumeId: number;
+  volumeSize: number;
 };
 export type CreateVmVolumeModel = {
   vmHostId: number;
@@ -5275,6 +5500,12 @@ export type CreateVpcNetworkModel = {
   name: string | null;
   gatewayCidr: string | null;
 };
+export type CreateAttachModel = {
+  vpcHostNetworkId: string | null;
+  ipAddress: string | null;
+  vmHostId: string | null;
+  customerId?: number;
+};
 export type GetVpcGatewayNatResponse = {
   id: number;
   natTypeId: number;
@@ -5386,6 +5617,27 @@ export type CreateVpcHostModel = {
   productBundleId: number;
   hypervisorTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
+};
+export type VpcHostFirewallRuleListResponse = {
+  id?: number;
+  name: string | null;
+  vpcHostName: string | null;
+  protocolType: string | null;
+  actionType: string | null;
+  sourceIpAddress?: string | null;
+  destinationIpAddress?: string | null;
+  destinationPort?: number;
+  createDate?: string;
+};
+export type CreateVpcFirewallRuleModel = {
+  vpcHostId?: number;
+  isIngress?: boolean;
+  name: string | null;
+  protocolType: string | null;
+  actionType: string | null;
+  sourceIpAddress?: string | null;
+  destinationIpAddress?: string | null;
+  destinationPort?: number;
 };
 export type WebHostListResponse = {
   id?: number;
@@ -5527,6 +5779,13 @@ export const {
   useGetApiMyBareMetalHostGetByIdQuery,
   useDeleteApiMyBareMetalHostDeleteByIdMutation,
   usePostApiMyBareMetalHostCreateMutation,
+  useGetApiMyBlockStorageHostListQuery,
+  useGetApiMyBlockStorageHostGetByIdQuery,
+  usePutApiMyBlockStorageHostEditByIdMutation,
+  usePutApiMyBlockStorageHostDetachByIdMutation,
+  useDeleteApiMyBlockStorageHostDeleteByIdMutation,
+  usePostApiMyBlockStorageHostCreateMutation,
+  usePutApiMyBlockStorageHostAttachByIdMutation,
   useGetApiMyColocationListQuery,
   useGetApiMyColocationGetByIdQuery,
   useDeleteApiMyColocationDeleteByIdMutation,
@@ -5688,12 +5947,14 @@ export const {
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyVmBackupShortListByVmHostIdQuery,
+  usePostApiMyVmBackupRestoreByBackupIdAndVolumeIdMutation,
   useGetApiMyVmBackupListByVmHostIdQuery,
   useGetApiMyVmBackupGetByIdQuery,
   useDeleteApiMyVmBackupDeleteByIdMutation,
   usePostApiMyVmBackupCreateMutation,
   useGetApiMyVmVolumeListByVmHostIdQuery,
   useGetApiMyVmVolumeGetByIdQuery,
+  usePostApiMyVmVolumeExtendMutation,
   useDeleteApiMyVmVolumeDeleteByIdMutation,
   usePostApiMyVmVolumeCreateMutation,
   useGetApiMyVmSnapshotShortListByVmHostIdQuery,
@@ -5736,8 +5997,10 @@ export const {
   useGetApiMyVpcNetworkShortListByVpcHostIdQuery,
   useGetApiMyVpcNetworkListByVpcHostIdQuery,
   usePutApiMyVpcNetworkEditByIdMutation,
+  useDeleteApiMyVpcNetworkDetachByPortIdAndVmHostIdMutation,
   useDeleteApiMyVpcNetworkDeleteByIdMutation,
   usePostApiMyVpcNetworkCreateMutation,
+  usePostApiMyVpcNetworkAttachMutation,
   usePutApiMyVpcNatIncreaseSequenceByVpcHostIdAndIdMutation,
   usePutApiMyVpcNatDecreaseSequenceByVpcHostIdAndIdMutation,
   useGetApiMyVpcNatListByVpcHostIdQuery,
@@ -5757,6 +6020,9 @@ export const {
   usePutApiMyVpcHostEditByIdMutation,
   useDeleteApiMyVpcHostDeleteByIdMutation,
   usePostApiMyVpcHostCreateMutation,
+  useGetApiMyVpcFirewallRuleListQuery,
+  useDeleteApiMyVpcFirewallRuleDeleteByRuleIdMutation,
+  usePostApiMyVpcFirewallRuleCreateMutation,
   useGetApiMyWebHostListQuery,
   useGetApiMyWebHostGetLoginSessionByIdQuery,
   useGetApiMyWebHostGetByIdQuery,

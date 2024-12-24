@@ -20,6 +20,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   CreateKuberCloudFirewallModel,
+  useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
@@ -42,7 +43,10 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   ...props
 }) => {
   const { kubernetesCloudId } = useParams();
-
+  const { refetch } = useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
+    { namespaceId: Number(kubernetesCloudId) || 0 },
+    { skip: !kubernetesCloudId }
+  );
   const { data: kuberCloudObject } =
     useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
@@ -60,29 +64,32 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const [createKubernetesCloudFirewall, { isLoading }] =
     usePostApiMyKubernetesCloudFirewallCreateMutation();
 
+    const param = useParams()
+    const namespaceid = Number(param?.kubernetesCloudId)
+
   const initialValues: CreateKuberCloudFirewallModel = {
-    namespaceId: 0,
+    namespaceId:namespaceid,
     firewallProtocolTypeId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
   };
 
-  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = () =>
-    // values
-    {
-      // createKubernetesCloudFirewall({
-      //   createKuberCloudFirewallModel: {
-      //     ...values,
-      //   },
-      // })
-      //   .unwrap()
-      //   .then((res) => {
-      //     resetForm();
-      //     formik.resetForm();
-      //     forceClose();
-      //   })
-      //   .catch((err) => {});
+  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (values, { resetForm }) =>
+  {
+      createKubernetesCloudFirewall({
+        createKuberCloudFirewallModel: {
+          ...values,
+        },
+      })
+        .unwrap()
+        .then((res) => {
+          resetForm();
+          formik.resetForm();
+          forceClose();
+          refetch()
+        })
+        .catch((err) => {});
     };
 
   const formik = useFormik({
@@ -116,7 +123,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             <Select
               labelId="protocolSelection"
               label="انتخاب پروتکل"
-              {...formik.getFieldProps("isTcp")}
+              {...formik.getFieldProps("firewallProtocolTypeId")}
               renderValue={(selected: number) =>
                 options.find((option) => option.id === selected)?.label
               }
@@ -134,7 +141,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
           <FormControl fullWidth>
             <InputLabel id="e">Deploy Port</InputLabel>
             <Select
-              {...formik.getFieldProps("isTcp")}
+              {...formik.getFieldProps("deployPortId")}
               labelId="e"
               label="Deploy Port"
             >

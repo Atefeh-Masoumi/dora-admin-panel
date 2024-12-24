@@ -58,7 +58,7 @@ const Detail: FC = () => {
     formData.append("issueId", id as string);
     formData.append("content", content);
     formData.append("attachment", (file as Blob) || null);
-    itemCreate({ body: formData as any })
+    itemCreate({ createIssueItemModel: formData as any })
       .unwrap()
       .then(() => {
         setContent("");

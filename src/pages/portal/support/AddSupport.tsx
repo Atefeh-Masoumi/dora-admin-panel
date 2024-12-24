@@ -22,6 +22,7 @@ import {
   IssueSubjectShortListResponse,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalProductListQuery,
+  usePostApiMyPortalIssueCreateMutation,
   usePostApiMyPortalIssueSubjectSelectListMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -75,6 +76,7 @@ const AddTicket: FC = () => {
     })
       .unwrap()
       .then((res: SetStateAction<IssueSubjectShortListResponse[]>) =>
+        res !== undefined &&
         setList(res)
       );
 
@@ -101,6 +103,8 @@ const AddTicket: FC = () => {
   const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
 
   const [upload] = useCustomCreateIssueMutation();
+  const [createissue, {isLoading }] = usePostApiMyPortalIssueCreateMutation();
+  
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -128,19 +132,24 @@ const AddTicket: FC = () => {
     formData.append("issueSubjectId", title.toString());
     formData.append("issuePriorityId", ticketPriorityLevel?.toString()!);
     productId && formData.append("productId", productId.toString());
+    
     if (selectedApiCloudCustomerProduct !== 0) {
       formData.append(
         "customerProductId",
         selectedApiCloudCustomerProduct.toString()
       );
     }
-    file && formData.append("attachment", file as Blob);
-    upload({
-      body: formData as any,
-      abortController: abortController.current,
-    })
+    !!file && formData.append("attachment", file as Blob)
+    
+    // upload({
+    //   body: formData as any,
+    //   abortController: abortController.current,
+    // })
+      createissue({
+        createIssueModel: formData as any
+      })
       .unwrap()
-      .then(() => {
+      .then((res:any) => {
         toast.success("تیکت با موفقیت اضافه شد");
         navigate("/portal/supports");
       })
@@ -148,7 +157,7 @@ const AddTicket: FC = () => {
         if (res.status === 401 || res.status === 404) {
           toast.error("مشکلی پیش آمده");
         } else {
-          toast.error(res.data[""][0]);
+          toast.error(res?.data[""][0]);
         }
       });
   };
@@ -464,7 +473,7 @@ const AddTicket: FC = () => {
               انصراف
             </Button>
             <LoadingButton
-              // loading={loadingCreate}
+               loading={isLoading}
               onClick={submit}
               fullWidth
               variant="contained"
@@ -473,6 +482,7 @@ const AddTicket: FC = () => {
             >
               ارسال تیکت
             </LoadingButton>
+            
           </Stack>
         </Stack>
       </Stack>
