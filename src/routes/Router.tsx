@@ -210,7 +210,7 @@ const Router: FC = () => {
             element={mainTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
-                url: -1,
+                url: "/portal/supports",
               },
               hideSidebar: false,
             })}

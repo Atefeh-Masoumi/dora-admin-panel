@@ -8,7 +8,7 @@ import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery } from "src/ap
 import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/dialog/CreateFirewallDialog";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
-import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
+import {  kubernetesCloudFireWallTableStruct } from "../../tables/struct";
 
 export const KubernetesCloudFirewall: FC = () => {
   const [search, setSearch] = useState("");
@@ -29,7 +29,7 @@ export const KubernetesCloudFirewall: FC = () => {
       },
       { skip: !kubernetesCloudId }
     );
-
+   
   const filteredList =
     data?.filter((item) => {
       let result = null;
@@ -108,7 +108,7 @@ export const KubernetesCloudFirewall: FC = () => {
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack py={1.5}>
           <BaseTable
-            struct={kubernetesCloudConfigMapTableStruct}
+            struct={kubernetesCloudFireWallTableStruct}
             RowComponent={KubernetesCloudConfigMapTableRow}
             rows={filteredList || []}
             text="در حال حاضر رکورد وجود ندارد"

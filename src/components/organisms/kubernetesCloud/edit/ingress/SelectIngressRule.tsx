@@ -1,6 +1,6 @@
 import { Grid, IconButton, MenuItem, Stack } from "@mui/material";
 import { FormikErrors, FormikProps, FormikTouched } from "formik";
-import { Dispatch, FC, Fragment, SetStateAction, useMemo } from "react";
+import { Dispatch, FC, Fragment, SetStateAction, useEffect, useMemo } from "react";
 import {
   CreateIngressTypes,
   CustomRuleModelRequest,
@@ -23,7 +23,7 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
 }) => {
   const { kubernetesCloudId } = useParams();
 
-  const { data: kuberCloudObject } =
+  const { data: kuberCloudObject , refetch } =
     useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
       namespaceId: Number(kubernetesCloudId),
     });
@@ -36,6 +36,12 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
       }))
     );
   }, [kuberCloudObject]);
+
+  useEffect(()=>{
+  
+    refetch()
+  
+  },[])
 
   const removeRules = (index: number) => {
     setRules((prevState) => {

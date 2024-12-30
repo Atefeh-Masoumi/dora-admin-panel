@@ -150,7 +150,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
     onSubmit: (values, { setSubmitting, resetForm }) => {
       const processedEnvsToObject = values.envs.reduce(
         (acc: any, item: any) => {
-          acc[item.key] = btoa(item.value);
+          acc[item.key] = item.value;
 
           return acc;
         },
