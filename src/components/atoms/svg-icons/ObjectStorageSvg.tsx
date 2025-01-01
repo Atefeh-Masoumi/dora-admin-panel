@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export const ObjectStorageSvg: FC<SvgIconProps> = (props) => {
+export const ObjectStorageSvg: FC<SvgIconProps> = ({mode,...props}) => {
   return (
     <SvgIcon
       className="svg-default-class"
@@ -15,14 +15,17 @@ export const ObjectStorageSvg: FC<SvgIconProps> = (props) => {
       <path
         d="M3 15.75H1.5V18C1.50119 18.3975 1.6596 18.7783 1.94065 19.0593C2.2217 19.3404 2.60254 19.4988 3 19.5H5.25V18H3V15.75ZM3 6H5.25V4.5H3C2.60254 4.50119 2.2217 4.6596 1.94065 4.94065C1.6596 5.2217 1.50119 5.60254 1.5 6V8.25H3V6ZM12.75 4.5H17.25V6H12.75V4.5ZM5.25 4.5H18.75V6H5.25V4.5ZM5.25 18H18.75V19.5H5.25V18ZM21 11.25H3V8.25H1.5V15.75H3V12.75H21V15.75H22.5V8.25H21V11.25ZM21 18H18.75V19.5H21C21.3975 19.4988 21.7783 19.3404 22.0593 19.0593C22.3404 18.7783 22.4988 18.3975 22.5 18V15.75H21V18ZM21 4.5H18.75V6H21V8.25H22.5V6C22.4988 5.60254 22.3404 5.2217 22.0593 4.94065C21.7783 4.6596 21.3975 4.50119 21 4.5ZM6.75 18H11.25V19.5H6.75V18Z"
         fill="black"
+        {...(mode === "selected" && { fill: "#00a651" })}
       />
       <path
         d="M5.25 9.75C5.66421 9.75 6 9.41421 6 9C6 8.58579 5.66421 8.25 5.25 8.25C4.83579 8.25 4.5 8.58579 4.5 9C4.5 9.41421 4.83579 9.75 5.25 9.75Z"
         fill="black"
+        {...(mode === "selected" && { fill: "#00a651" })}
       />
       <path
         d="M5.25 15.75C5.66421 15.75 6 15.4142 6 15C6 14.5858 5.66421 14.25 5.25 14.25C4.83579 14.25 4.5 14.5858 4.5 15C4.5 15.4142 4.83579 15.75 5.25 15.75Z"
         fill="black"
+        {...(mode === "selected" && { fill: "#00a651" })}
       />
     </SvgIcon>
   );
