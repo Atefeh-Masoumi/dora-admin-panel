@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export const KubernetesSvg: FC<SvgIconProps> = (props) => {
+export const KubernetesSvg: FC<SvgIconProps> = ({mode,...props}) => {
   return (
     <SvgIcon
       className="svg-default-class"
@@ -15,10 +15,12 @@ export const KubernetesSvg: FC<SvgIconProps> = (props) => {
       <path
         d="M12 17.25C11.85 17.25 11.7 17.25 11.625 17.175L7.875 14.925C7.65 14.775 7.5 14.55 7.5 14.25V9.75C7.5 9.45 7.65 9.225 7.875 9.075L11.625 6.825C11.7 6.75 11.85 6.75 12 6.75C12.15 6.75 12.3 6.75 12.375 6.825L16.125 9.075C16.35 9.225 16.5 9.45 16.5 9.75V14.25C16.5 14.55 16.35 14.775 16.125 14.925L12.375 17.175C12.3 17.25 12.15 17.25 12 17.25ZM9 13.8L12 15.6L15 13.8V10.125L12 8.325L9 10.125V13.8Z"
         fill="black"
+        {...(mode === "selected" && { fill: "#3C8AFF" })}
       />
       <path
         d="M12 23.25C11.85 23.25 11.775 23.25 11.625 23.175L2.625 17.925C2.4 17.775 2.25 17.55 2.25 17.25V6.75C2.25 6.45 2.4 6.225 2.625 6.075L11.625 0.825C11.775 0.75 11.85 0.75 12 0.75C12.15 0.75 12.225 0.75 12.375 0.825L21.375 6.075L20.625 7.35L12 2.4L3.75 7.2V16.875L12 21.675L20.25 16.875V11.25H21.75V17.25C21.75 17.55 21.6 17.775 21.375 17.925L12.375 23.175C12.225 23.25 12.15 23.25 12 23.25Z"
         fill="black"
+        {...(mode === "selected" && { fill: "#3C8AFF" })}
       />
     </SvgIcon>
   );
