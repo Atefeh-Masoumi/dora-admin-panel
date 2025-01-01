@@ -8,6 +8,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import DnsCdnTableRow from "src/components/organisms/cdn/tables/DnsCdnTableRow";
 import { cdnDnsTableStruct } from "src/components/organisms/cdn/tables/struct";
 import { useGetApiMyDnsCdnHostListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const DnsCdnList: FC = () => {
   const [search, setSearch] = useState("");
@@ -16,6 +17,7 @@ const DnsCdnList: FC = () => {
     data,
     isLoading: getDataLoading,
     isFetching,
+    refetch
   } = useGetApiMyDnsCdnHostListQuery();
 
   const isLoading = useMemo(
@@ -59,12 +61,17 @@ const DnsCdnList: FC = () => {
           <Typography fontSize={18} color="secondary">
             لیست زون‌ها
           </Typography>
-          <SearchBox
+          <RefreshButton isFetching={isFetching} refetchData={refetch} />
+        </Stack>
+        <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+        <SearchBox
             onChange={(text) => setSearch(text)}
             placeholder="جستجو در نام زون‌ها"
           />
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={1}>
           <Button
             onClick={createCloudOnClick}
             variant="outlined"
