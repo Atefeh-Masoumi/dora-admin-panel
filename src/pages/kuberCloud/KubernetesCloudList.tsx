@@ -9,11 +9,12 @@ import { kubernetesCloudTableStruct } from "src/components/organisms/kubernetesC
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const KubernetesCloudList: FC = () => {
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyKubernetesCloudHostListQuery();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesCloudHostListQuery();
 
   const filteredList =
     data?.filter((item) => {
@@ -75,11 +76,18 @@ const KubernetesCloudList: FC = () => {
             <Typography fontSize={18} color="secondary">
               لیست کوبرنتیز ابری
             </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+
             <SearchBox
               onChange={(text) => setSearch(text)}
               placeholder="جستجو در نام سرویس"
             />
-          </Stack>
           <Button
             onClick={gotToAddKubernetes}
             variant="outlined"
@@ -109,6 +117,7 @@ const KubernetesCloudList: FC = () => {
           >
             ایجاد کوبرنتیز ابری
           </Button>
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
