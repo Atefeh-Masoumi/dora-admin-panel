@@ -8,6 +8,7 @@ import { storageTableStruct } from "src/components/organisms/storage/tables/stru
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useGetApiMyObjectStorageHostListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const StorageList: FC = () => {
   const [search, setSearch] = useState("");
@@ -16,6 +17,7 @@ const StorageList: FC = () => {
     data,
     isLoading: getDataLoading,
     isFetching,
+    refetch
   } = useGetApiMyObjectStorageHostListQuery();
 
   const isLoading = useMemo(
@@ -59,12 +61,17 @@ const StorageList: FC = () => {
           <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
             لیست سرویس فضای ابری
           </Typography>
-          <SearchBox
+          <RefreshButton isFetching={isFetching} refetchData={refetch} />
+        </Stack>
+        <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+        <SearchBox
             onChange={(text) => setSearch(text)}
             placeholder="جستجو در نام سرویس"
           />
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={1}>
           <Button
             onClick={createCloudOnClick}
             variant="outlined"

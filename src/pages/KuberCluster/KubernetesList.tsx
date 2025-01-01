@@ -8,11 +8,12 @@ import { useGetApiMyKubernetesClusterHostListQuery } from "src/app/services/api.
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesTableStruct } from "src/components/organisms/kuberCluster/tables/struct";
 import KubernetesTableRow from "src/components/organisms/kuberCluster/tables/KubernetesTableRow";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const KubernetesList: FC = () => {
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyKubernetesClusterHostListQuery();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesClusterHostListQuery();
 
   const filteredList =
     data?.filter((item) => {
@@ -51,11 +52,17 @@ const KubernetesList: FC = () => {
             <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
               لیست سرویس کلاستر کوبرنتیز
             </Typography>
-            <SearchBox
-              onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام سرویس"
-            />
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+          <SearchBox
+            onChange={(text) => setSearch(text)}
+            placeholder="جستجو در نام سرویس"
+          />
           <Button
             onClick={gotToAddKubernetes}
             variant="outlined"
@@ -85,6 +92,7 @@ const KubernetesList: FC = () => {
           >
             ایجاد کلاستر کوبرنتیز
           </Button>
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>

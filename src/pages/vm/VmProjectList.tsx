@@ -20,6 +20,8 @@ import {
   useDeleteApiMyHostProjectDeleteByIdMutation,
   useGetApiMyHostProjectListQuery,
 } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { SearchBox } from "src/components/molecules/SearchBox";
 
 const vmDataList = [
   { label: "زیرساخت:", id: "hypervisorType" },
@@ -32,6 +34,7 @@ enum DIALOG_TYPE_ENUM {
 }
 
 const VmProjectList: FC = () => {
+  const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedProject, setSelectedProject] =
     useState<VmProjectListResponse | null>(null);
@@ -41,9 +44,18 @@ const VmProjectList: FC = () => {
   const {
     data: vmProjectList,
     isLoading: VmProjectListLoading,
+    isFetching,
     refetch,
   } = useGetApiMyHostProjectListQuery();
 
+  const filteredList =
+    vmProjectList?.filter((item) => {
+      let result = null;
+      if (item?.name) {
+        result = item?.name.includes(search);
+      }
+      return result;
+    }) || [];
   const [deleteProject, { isLoading: deleteProjectLoading }] =
     useDeleteApiMyHostProjectDeleteByIdMutation();
 
@@ -92,7 +104,7 @@ const VmProjectList: FC = () => {
 
   return (
     <>
-      <Fragment>
+      
         <Stack
           borderRadius={BORDER_RADIUS_1}
           bgcolor="white"
@@ -113,8 +125,17 @@ const VmProjectList: FC = () => {
               >
                 لیست پروژه‌ها
               </Typography>
+              <RefreshButton isFetching={isFetching} refetchData={refetch} />
             </Stack>
-            <Stack direction="row" alignItems="center" spacing={1}>
+            <Stack 
+             direction={{ xs: "column", sm: "row" }}
+             alignItems="center"
+             spacing={2}
+           >
+               <SearchBox
+                    onChange={(text) => setSearch(text)}
+                    placeholder="جستجو در نام سرویس"
+                  />
               <Button
                 variant="outlined"
                 onClick={createBtnOnClick}
@@ -156,14 +177,14 @@ const VmProjectList: FC = () => {
                   </Grid>
                 ))}
               </Fragment>
-            ) : vmProjectList?.length === 0 ? (
+            ) : filteredList?.length === 0 ? (
               <Stack py={3} sx={{ width: "100%" }}>
                 <Stack bgcolor="white" borderRadius={3}>
                   <EmptyTable text="در حال حاضر پروژه‌ای وجود ندارد" />
                 </Stack>
               </Stack>
             ) : (
-              vmProjectList?.map((item) => {
+              filteredList?.map((item) => {
                 return (
                   <Grid
                     key={item.id}
@@ -209,7 +230,7 @@ const VmProjectList: FC = () => {
           onSubmit={deleteProjectHandler}
           submitLoading={deleteProjectLoading}
         />
-      </Fragment>
+      
     </>
   );
 };
