@@ -34,10 +34,12 @@ const options = [
 
 type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
+  refetch:()=>void
 };
 
 export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   forceClose,
+  refetch,
   ...props
 }) => {
   const { id } = useParams();
@@ -72,6 +74,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
       .then(() => {
         toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
+        refetch();
       })
       .catch((err) => {})
       .finally(() => {

@@ -86,6 +86,7 @@ export const Volume: FC = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
+        refetch={refetch}
       />
     </>
   );

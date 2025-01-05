@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo } from "react";
+import { FC, useContext, useEffect, useMemo } from "react";
 import { Paper, Stack } from "@mui/material";
 import { MonitorSvg } from "src/components/atoms/svg-icons/MonitorSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -46,7 +46,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
     usePutApiMyVmHostRebootByIdMutation();
 
-  const { data: vmData, isLoading: getVmDataLoading } =
+  const { data: vmData, isLoading: getVmDataLoading ,refetch} =
     useGetApiMyVmHostGetByIdQuery(
       {
         id: Number(id || 0)!,
@@ -172,6 +172,10 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
     },
   ];
 
+  useEffect(() => {
+    refetch()
+  }, [])
+  
   return (
     <Paper
       elevation={0}

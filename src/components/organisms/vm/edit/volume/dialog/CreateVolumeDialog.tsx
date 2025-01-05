@@ -19,10 +19,12 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateVolumeDialogPropsType = DialogProps & {
   forceClose: () => void;
+  refetch:()=>void;
 };
 
 export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
   forceClose,
+  refetch,
   ...props
 }) => {
   const [createVolume, { isLoading: createVolumeLoading }] =
@@ -50,6 +52,7 @@ export const CreateVolumeDialog: FC<CreateVolumeDialogPropsType> = ({
       .then(() => {
         toast.success("دیسک با موفقیت ایجاد شد");
         forceClose();
+        refetch();
       })
       .catch((err) => {})
       .finally(() => {
