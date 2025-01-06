@@ -19,11 +19,13 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 type CreateSnapshotDialogPropsType = DialogProps & {
   vmId: number;
   forceClose: () => void;
+  refetch:()=>void;
 };
 
 export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   vmId,
   forceClose,
+  refetch,
   ...props
 }) => {
   const [createSnapshot, { isLoading: createSnapshotLoading }] =
@@ -50,6 +52,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
       .then(() => {
         toast.success("اسنپ شات با موفقیت ایجاد شد");
         forceClose();
+        refetch();
       })
       .catch((err) => {})
       .finally(() => {

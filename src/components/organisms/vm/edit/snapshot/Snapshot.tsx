@@ -20,7 +20,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
   const { id } = useParams();
-  const { data: snapshotList = [], isLoading: getSnapshotLoading } =
+  const { data: snapshotList = [], isLoading: getSnapshotLoading ,refetch} =
     useGetApiMyVmSnapshotListByVmHostIdQuery(
       { vmHostId: Number(id) },
       { skip: !id }
@@ -82,6 +82,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
+        refetch={refetch}
       />
     </>
   );

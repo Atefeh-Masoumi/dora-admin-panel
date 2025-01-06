@@ -34,12 +34,12 @@ const listItems: sidebarItemType[] = [
     link: "/kubernetes-cluster",
     subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
   },
-  // {
-  //   title: "Kubernetes Cloud",
-  //   text: "ابری کوبرنتیز",
-  //   Icon: KubernetesSvg,
-  //   link: "/kubernetes-cloud",
-  // },
+  {
+    title: "Kubernetes Cloud",
+    text: "ابری کوبرنتیز",
+    Icon: KubernetesSvg,
+    link: "/kubernetes-cloud",
+  },
   {
     title: "Object Storage",
     text: "ذخیره‌ساز ابری",
@@ -60,13 +60,13 @@ const listItems: sidebarItemType[] = [
   //   link: "/domain",
   //   subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
   // },
-  {
-    title: "Private Cloud (VPC)",
-    text: "ابر اختصاصی مجازی",
-    Icon: WebHostSvg,
-    link: "/vpc",
-    subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
-  },
+  // {
+  //   title: "Private Cloud (VPC)",
+  //   text: "ابر اختصاصی مجازی",
+  //   Icon: WebHostSvg,
+  //   link: "/vpc",
+  //   subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
+  // },
   {
     Icon: WalletSvg,
     link: "/portal/wallet",

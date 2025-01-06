@@ -24,12 +24,12 @@ export const Firewall: FC<FirewallPropsType> = () => {
   useState<VmFirewallListResponse | null>(null);
 
   const { id } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading } =
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch} =
     useGetApiMyVmFirewallListByVmHostIdQuery(
       { vmHostId: Number(id) },
       { skip: !id }
     );
-
+console.log(firewallList)
   const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
   };
@@ -89,6 +89,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
+        refetch={refetch}
       />
     </>
   );
