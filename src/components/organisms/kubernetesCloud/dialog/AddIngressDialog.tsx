@@ -251,8 +251,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               )}
             </Grid>
 
-            <Divider />
-
             <Stack gap={3}>
               <Stack
                 direction="row"
