@@ -341,7 +341,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1} ml={1}>
-                  افزودن اطلاعات
+                  اطلاعات
                 </Typography>
                 <Button
                   variant="text"
@@ -412,7 +412,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1} ml={1}>
-                  افزودن اطلاعات
+                  اطلاعات
                 </Typography>
               </Stack>
               <Grid
@@ -457,7 +457,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1} ml={1}>
-                  افزودن اطلاعات
+                  اطلاعات
                 </Typography>
               </Stack>
               <Grid
@@ -467,7 +467,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent={"center"}
                 sx={{ direction: "rtl" }}
               >
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Registry Address *"
@@ -480,7 +480,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                     placeholder="https://...."
                   />
                 </Grid>
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Username *"
@@ -490,7 +490,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                     }
                   />
                 </Grid>
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Password *"
@@ -500,7 +500,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                     }
                   />
                 </Grid>
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Email"
@@ -521,7 +521,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography fontWeight={600} mb={1} ml={1}>
-                  افزودن اطلاعات
+                  اطلاعات
                 </Typography>
               </Stack>
               <Grid
@@ -531,7 +531,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 justifyContent={"center"}
                 sx={{ direction: "rtl" }}
               >
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Username *"
@@ -543,7 +543,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                     }
                   />
                 </Grid>
-                <Grid item xs={6} mb={2}>
+                <Grid item xs={12} mb={2}>
                   <DorsaTextField
                     fullWidth
                     label="Password *"
