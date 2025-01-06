@@ -193,7 +193,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                     ))}
                 </DorsaTextField>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <DorsaTextField
                   dir="ltr"
                   fullWidth
@@ -204,7 +204,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                   {...formik.getFieldProps("name")}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <DorsaTextField
                   dir="ltr"
                   fullWidth
@@ -251,8 +251,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               )}
             </Grid>
 
-            <Divider />
-
             <Stack gap={3}>
               <Stack
                 direction="row"
@@ -260,7 +258,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
                 justifyContent="space-between"
               >
                 <Typography sx={{ color: ({ palette }) => palette.grey[800] }}>
-                  rules
+                  Routes
                 </Typography>
                 <Button
                   variant="text"
