@@ -219,7 +219,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
 
               {formik.values.protocolTypeId === 3 && (
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                   {tLSSecretList && tLSSecretList.length > 0 ? (
                     <DorsaTextField
                       dir="ltr"
