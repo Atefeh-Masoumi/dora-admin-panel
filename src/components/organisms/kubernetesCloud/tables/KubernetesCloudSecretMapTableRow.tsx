@@ -176,7 +176,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
                               align="center"
                               sx={{ borderBottom: "none !important" }}
                             >
-                              {atob(item.value)}
+                              {item.value}
                             </TableCell>
                           </TableRow>
                         );

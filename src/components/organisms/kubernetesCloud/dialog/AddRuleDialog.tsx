@@ -40,8 +40,10 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
   ...props
 }) => {
   const { kubernetesCloudId } = useParams();
-  const [rules, setRules] = useState<IngressRuleModelRequest[]>([]);
-
+  const [rules, setRules] = useState<IngressRuleModelRequest[]>([{
+    "kuberCloudDeployPortId": 0,
+    "path": ""
+  }]);
   const [createIngressRule, { isLoading: createIngressRuleLoading }] =
     usePostApiMyKubernetesCloudIngressRuleCreateMutation();
 
@@ -50,14 +52,15 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
       namespaceId: Number(kubernetesCloudId),
     });
 
-  const transformedPorts = useMemo(() => {
-    return deploymentPortList?.flatMap((deployment) =>
-      deployment?.ports?.map((port) => ({
-        portId: port.portId,
-        nodePort: port.nodePort,
-      }))
-    );
-  }, [deploymentPortList]);
+    const transformedPorts = useMemo(() => {
+      return deploymentPortList?.flatMap((deployment) =>
+        deployment.ports?.map((port) => ({
+          portId: port.portId,
+          nodePort: port.nodePort,
+          name: deployment.deployName,
+        }))
+      );
+    }, [deploymentPortList]);
 
   const addRules = () => {
     setRules((prevState) => {
@@ -182,7 +185,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
                             key={index}
                             value={item?.portId}
                           >
-                            {item?.nodePort}
+                            {item?.name}:{item?.nodePort}
                           </MenuItem>
                         ))}
                       </Select>

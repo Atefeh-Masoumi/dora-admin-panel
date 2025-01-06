@@ -8,6 +8,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import AddVmTableRow from "src/components/organisms/vm/tables/VmTableRow";
 import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const VmList: FC = () => {
   const { projectId } = useParams();
@@ -19,6 +20,7 @@ const VmList: FC = () => {
     data: vmList,
     isLoading: getVmListLoading,
     refetch,
+    isFetching
   } = useGetApiMyVmHostListByVmProjectIdQuery({
     vmProjectId: Number(projectId),
   });
@@ -83,11 +85,18 @@ const VmList: FC = () => {
             <Typography fontSize={18} color="secondary">
               لیست سرورهای ابری
             </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+            
+          </Stack>
+          <Stack 
+             direction={{ xs: "column", sm: "row" }}
+             alignItems="center"
+             spacing={2}
+           >
             <SearchBox
               onChange={(text) => setSearch(text)}
               placeholder="جستجو در نام ماشین"
             />
-          </Stack>
           <Button
             onClick={createCloudOnClick}
             variant="outlined"
@@ -117,6 +126,7 @@ const VmList: FC = () => {
           >
             ایجاد سرور ابری
           </Button>
+           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>

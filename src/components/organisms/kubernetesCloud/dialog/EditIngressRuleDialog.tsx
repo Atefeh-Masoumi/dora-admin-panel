@@ -49,15 +49,16 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
       namespaceId: Number(kubernetesCloudId),
     });
 
-  const transformedPorts = useMemo(() => {
-    return deploymentPortList?.flatMap((deployment) =>
-      deployment?.ports?.map((port) => ({
-        portId: port.portId,
-        nodePort: port.nodePort,
-      }))
-    );
-  }, [deploymentPortList]);
-
+    const transformedPorts = useMemo(() => {
+      return deploymentPortList?.flatMap((deployment) =>
+        deployment.ports?.map((port) => ({
+          portId: port.portId,
+          nodePort: port.nodePort,
+          name: deployment.deployName,
+        }))
+      );
+    }, [deploymentPortList]);
+    
   const formik = useFormik<InitialValuesType>({
     initialValues: {
       ingressRuleId: data?.id || 1,
@@ -126,7 +127,7 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
                       key={index}
                       value={item?.portId}
                     >
-                      {item?.nodePort}
+                      {item?.name}:{item?.nodePort}
                     </MenuItem>
                   ))}
                 </Select>

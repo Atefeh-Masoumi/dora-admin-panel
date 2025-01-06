@@ -53,7 +53,7 @@ export const CodeField: FC<CodeFieldPropsType> = ({
   return (
     <Stack
       direction="row-reverse"
-      justifyContent="space-between"
+      justifyContent="center"
       width="100%"
       alignItems="center"
       // sx={{ direction: "rtl" }}

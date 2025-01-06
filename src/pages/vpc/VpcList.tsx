@@ -4,6 +4,7 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router";
 import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { vpcTableStruct } from "src/components/organisms/vpc/tables/struct";
@@ -13,7 +14,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 const VpcList: FC = () => {
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useGetApiMyVpcHostListQuery();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyVpcHostListQuery();
 
   const filteredList =
     data?.filter((item) => {
@@ -75,11 +76,17 @@ const VpcList: FC = () => {
             <Typography fontSize={18} color="secondary">
               لیست ابر اختصاصی
             </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
             <SearchBox
               onChange={(text) => setSearch(text)}
               placeholder="جستجو در نام سرویس"
             />
-          </Stack>
           <Button
             onClick={gotToAddVpc}
             variant="outlined"
@@ -109,6 +116,7 @@ const VpcList: FC = () => {
           >
             ایجاد ابر اختصاصی
           </Button>
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
