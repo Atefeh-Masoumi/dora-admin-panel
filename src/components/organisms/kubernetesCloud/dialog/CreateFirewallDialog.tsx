@@ -64,33 +64,35 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const [createKubernetesCloudFirewall, { isLoading }] =
     usePostApiMyKubernetesCloudFirewallCreateMutation();
 
-    const param = useParams()
-    const namespaceid = Number(param?.kubernetesCloudId)
+  const param = useParams();
+  const namespaceid = Number(param?.kubernetesCloudId);
 
   const initialValues: CreateKuberCloudFirewallModel = {
-    namespaceId:namespaceid,
+    namespaceId: namespaceid,
     firewallProtocolTypeId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
   };
 
-  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (values, { resetForm }) =>
-  {
-      createKubernetesCloudFirewall({
-        createKuberCloudFirewallModel: {
-          ...values,
-        },
+  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (
+    values,
+    { resetForm }
+  ) => {
+    createKubernetesCloudFirewall({
+      createKuberCloudFirewallModel: {
+        ...values,
+      },
+    })
+      .unwrap()
+      .then((res) => {
+        resetForm();
+        formik.resetForm();
+        forceClose();
+        refetch();
       })
-        .unwrap()
-        .then((res) => {
-          resetForm();
-          formik.resetForm();
-          forceClose();
-          refetch()
-        })
-        .catch((err) => {});
-    };
+      .catch((err) => {});
+  };
 
   const formik = useFormik({
     initialValues,
