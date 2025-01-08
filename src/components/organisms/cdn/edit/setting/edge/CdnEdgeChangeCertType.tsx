@@ -80,7 +80,7 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
                     fontSize={{ xs: 16, md: 18 }}
                     sx={{ lineHeight: 1, whiteSpace: "nowrap" }}
                   >
-                    استفاده از گواهی راهبر
+                    استفاده از گواهی ابری
                   </Typography>
                 </Stack>
               </Button>
