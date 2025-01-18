@@ -4,33 +4,48 @@ import {
     Cancel as CancelIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { FC, useContext } from "react";
+import { FC, useState } from "react";
 import { DeleteSvg } from "src/components/atoms/svg-icons/DeleteSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { CircularProgress, IconButton, Typography } from "@mui/material";
-import { useLazyGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api";
-import { EditServerContext } from "../rebuild/contexts/EditServerContext";
-  
+import { IPDeleteDialog } from "./dialog/IPDeleteDialog";
 
-const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
-    const { serverId } = useContext(EditServerContext);
-    const [getData, ] =
-        useLazyGetApiMyDatacenterIpListByIdQuery();
-    const [deleteIp, { isLoading }] =
-      useDeleteApiMyDatacenterIpDeleteByIdMutation();
-    const onClick = () => {
-      id &&
-        deleteIp({ id })
+interface IpRowProps extends DatacenterIpListResponse {
+  refetch: () => void;
+}
+
+const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
+  const [deleteIp, { isLoading }] = useDeleteApiMyDatacenterIpDeleteByIdMutation();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control the dialog
+
+  const handleDelete = () => {
+    if (id) {
+      deleteIp({ id })
         .unwrap()
-        .then((res) => {
-          toast.success(" با موفقیت حذف شد");
-          serverId && getData({id:serverId})
+        .then(() => {
+          toast.success("با موفقیت حذف شد");
+          refetch(); 
         })
-        .catch((err) => {});
-    };
-  
-    return (
+        .catch((err) => {
+          toast.error("حذف انجام نشد");
+        })
+        .finally(() => {
+          setIsDeleteDialogOpen(false); 
+        });
+    }
+  };
+
+  const openDeleteDialog = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
+  return (
+    <>
       <Grid2
         container
         sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
@@ -72,12 +87,22 @@ const IpRow: FC<DatacenterIpListResponse> = ({ ip, isPrimary, id }) => {
               <CircularProgress size={25} />
             </IconButton>
           ) : (
-            <IconButton onClick={onClick}>
+            <IconButton onClick={openDeleteDialog}>
               <DeleteSvg />
             </IconButton>
           )}
         </Grid2>
       </Grid2>
-    );
-  };
-  export default IpRow
+
+      <IPDeleteDialog
+        open={isDeleteDialogOpen}
+        onClose={closeDeleteDialog}
+        onConfirm={handleDelete}
+        title="حذف IP"
+        message="آیا از حذف این IP اطمینان دارید؟ این عمل غیرقابل بازگشت است."
+      />
+    </>
+  );
+};
+
+export default IpRow;
