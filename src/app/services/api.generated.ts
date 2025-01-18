@@ -361,6 +361,129 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createBareMetalModel,
       }),
     }),
+    getApiMyBlockStorageBackupShortListById: build.query<
+      GetApiMyBlockStorageBackupShortListByIdApiResponse,
+      GetApiMyBlockStorageBackupShortListByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/short-list/${queryArg.id}`,
+      }),
+    }),
+    postApiMyBlockStorageBackupRestoreById: build.mutation<
+      PostApiMyBlockStorageBackupRestoreByIdApiResponse,
+      PostApiMyBlockStorageBackupRestoreByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/restore/${queryArg.id}`,
+        method: "POST",
+      }),
+    }),
+    getApiMyBlockStorageBackupListById: build.query<
+      GetApiMyBlockStorageBackupListByIdApiResponse,
+      GetApiMyBlockStorageBackupListByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/list/${queryArg.id}`,
+      }),
+    }),
+    getApiMyBlockStorageBackupGetById: build.query<
+      GetApiMyBlockStorageBackupGetByIdApiResponse,
+      GetApiMyBlockStorageBackupGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/get/${queryArg.id}`,
+      }),
+    }),
+    deleteApiMyBlockStorageBackupDeleteById: build.mutation<
+      DeleteApiMyBlockStorageBackupDeleteByIdApiResponse,
+      DeleteApiMyBlockStorageBackupDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyBlockStorageBackupCreate: build.mutation<
+      PostApiMyBlockStorageBackupCreateApiResponse,
+      PostApiMyBlockStorageBackupCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/backup/create`,
+        method: "POST",
+        body: queryArg.createVolumeBackupModel,
+      }),
+    }),
+    putApiMyBlockStorageHostDetachById: build.mutation<
+      PutApiMyBlockStorageHostDetachByIdApiResponse,
+      PutApiMyBlockStorageHostDetachByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/detach/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyBlockStorageHostAttachById: build.mutation<
+      PutApiMyBlockStorageHostAttachByIdApiResponse,
+      PutApiMyBlockStorageHostAttachByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/host/attach/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.attachVolumeModel,
+      }),
+    }),
+    getApiMyBlockStorageSnapshotShortListByBlockStorageHostId: build.query<
+      GetApiMyBlockStorageSnapshotShortListByBlockStorageHostIdApiResponse,
+      GetApiMyBlockStorageSnapshotShortListByBlockStorageHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/short-list/${queryArg.blockStorageHostId}`,
+      }),
+    }),
+    putApiMyBlockStorageSnapshotRevertById: build.mutation<
+      PutApiMyBlockStorageSnapshotRevertByIdApiResponse,
+      PutApiMyBlockStorageSnapshotRevertByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/revert/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    getApiMyBlockStorageSnapshotListByBlockStorageHostId: build.query<
+      GetApiMyBlockStorageSnapshotListByBlockStorageHostIdApiResponse,
+      GetApiMyBlockStorageSnapshotListByBlockStorageHostIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/list/${queryArg.blockStorageHostId}`,
+      }),
+    }),
+    getApiMyBlockStorageSnapshotGetById: build.query<
+      GetApiMyBlockStorageSnapshotGetByIdApiResponse,
+      GetApiMyBlockStorageSnapshotGetByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/get/${queryArg.id}`,
+      }),
+    }),
+    deleteApiMyBlockStorageSnapshotDeleteById: build.mutation<
+      DeleteApiMyBlockStorageSnapshotDeleteByIdApiResponse,
+      DeleteApiMyBlockStorageSnapshotDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyBlockStorageSnapshotCreate: build.mutation<
+      PostApiMyBlockStorageSnapshotCreateApiResponse,
+      PostApiMyBlockStorageSnapshotCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/block-storage/snapshot/create`,
+        method: "POST",
+        body: queryArg.createVolumeSnapshotModel,
+      }),
+    }),
     getApiMyBlockStorageHostList: build.query<
       GetApiMyBlockStorageHostListApiResponse,
       GetApiMyBlockStorageHostListApiArg
@@ -382,16 +505,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/block-storage/host/edit/${queryArg.id}`,
         method: "PUT",
-        body: queryArg.editBlockStorageHostModel,
-      }),
-    }),
-    putApiMyBlockStorageHostDetachById: build.mutation<
-      PutApiMyBlockStorageHostDetachByIdApiResponse,
-      PutApiMyBlockStorageHostDetachByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/block-storage/host/detach/${queryArg.id}`,
-        method: "PUT",
+        body: queryArg.editVolumeHostModel,
       }),
     }),
     deleteApiMyBlockStorageHostDeleteById: build.mutation<
@@ -410,17 +524,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/block-storage/host/create`,
         method: "POST",
-        body: queryArg.createBlockStorageHostModel,
-      }),
-    }),
-    putApiMyBlockStorageHostAttachById: build.mutation<
-      PutApiMyBlockStorageHostAttachByIdApiResponse,
-      PutApiMyBlockStorageHostAttachByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/block-storage/host/attach/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.attachBlockStorageModel,
+        body: queryArg.createVolumeHostModel,
       }),
     }),
     getApiMyColocationList: build.query<
@@ -483,6 +587,15 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/datacenter/ip/delete/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    postApiMyDatacenterIpAddById: build.mutation<
+      PostApiMyDatacenterIpAddByIdApiResponse,
+      PostApiMyDatacenterIpAddByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/datacenter/ip/add/${queryArg.id}`,
+        method: "POST",
       }),
     }),
     getApiMyDatacenterImageList: build.query<
@@ -857,6 +970,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "PUT",
         body: queryArg.changeContactModel,
       }),
+    }),
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
+    >({
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyHostHypervisorList: build.query<
       GetApiMyHostHypervisorListApiResponse,
@@ -1735,56 +1854,6 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/business-unit/list` }),
     }),
-    getApiMyVmBackupShortListByVmHostId: build.query<
-      GetApiMyVmBackupShortListByVmHostIdApiResponse,
-      GetApiMyVmBackupShortListByVmHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/backup/short-list/${queryArg.vmHostId}`,
-      }),
-    }),
-    postApiMyVmBackupRestoreByBackupIdAndVolumeId: build.mutation<
-      PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiResponse,
-      PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/backup/restore/${queryArg.backupId}/${queryArg.volumeId}`,
-        method: "POST",
-      }),
-    }),
-    getApiMyVmBackupListByVmHostId: build.query<
-      GetApiMyVmBackupListByVmHostIdApiResponse,
-      GetApiMyVmBackupListByVmHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/backup/list/${queryArg.vmHostId}`,
-      }),
-    }),
-    getApiMyVmBackupGetById: build.query<
-      GetApiMyVmBackupGetByIdApiResponse,
-      GetApiMyVmBackupGetByIdApiArg
-    >({
-      query: (queryArg) => ({ url: `/api/my/vm/backup/get/${queryArg.id}` }),
-    }),
-    deleteApiMyVmBackupDeleteById: build.mutation<
-      DeleteApiMyVmBackupDeleteByIdApiResponse,
-      DeleteApiMyVmBackupDeleteByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/backup/delete/${queryArg.id}`,
-        method: "DELETE",
-      }),
-    }),
-    postApiMyVmBackupCreate: build.mutation<
-      PostApiMyVmBackupCreateApiResponse,
-      PostApiMyVmBackupCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/backup/create`,
-        method: "POST",
-        body: queryArg.createVmBackupModel,
-      }),
-    }),
     getApiMyVmVolumeListByVmHostId: build.query<
       GetApiMyVmVolumeListByVmHostIdApiResponse,
       GetApiMyVmVolumeListByVmHostIdApiArg
@@ -1859,15 +1928,6 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/my/vm/snapshot/get/${queryArg.id}` }),
     }),
-    deleteApiMyVmSnapshotDeleteAllByVmHostId: build.mutation<
-      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse,
-      DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/snapshot/delete-all/${queryArg.vmHostId}`,
-        method: "DELETE",
-      }),
-    }),
     deleteApiMyVmSnapshotDeleteById: build.mutation<
       DeleteApiMyVmSnapshotDeleteByIdApiResponse,
       DeleteApiMyVmSnapshotDeleteByIdApiArg
@@ -1885,34 +1945,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/snapshot/create`,
         method: "POST",
         body: queryArg.createSnapshotModel,
-      }),
-    }),
-    putApiMyVmIsoUnmountById: build.mutation<
-      PutApiMyVmIsoUnmountByIdApiResponse,
-      PutApiMyVmIsoUnmountByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/unmount/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.unmountModel,
-      }),
-    }),
-    putApiMyVmIsoMountById: build.mutation<
-      PutApiMyVmIsoMountByIdApiResponse,
-      PutApiMyVmIsoMountByIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/mount/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.mountModel,
-      }),
-    }),
-    getApiMyVmIsoListByDatacenterId: build.query<
-      GetApiMyVmIsoListByDatacenterIdApiResponse,
-      GetApiMyVmIsoListByDatacenterIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/iso/list/${queryArg.datacenterId}`,
       }),
     }),
     putApiMyVmHostStopById: build.mutation<
@@ -2705,22 +2737,81 @@ export type PostApiMyBareMetalHostCreateApiResponse = unknown;
 export type PostApiMyBareMetalHostCreateApiArg = {
   createBareMetalModel: CreateBareMetalModel;
 };
+export type GetApiMyBlockStorageBackupShortListByIdApiResponse =
+  /** status 200 OK */ VolumeBackupShortListResponse[];
+export type GetApiMyBlockStorageBackupShortListByIdApiArg = {
+  id: number;
+};
+export type PostApiMyBlockStorageBackupRestoreByIdApiResponse = unknown;
+export type PostApiMyBlockStorageBackupRestoreByIdApiArg = {
+  id: number;
+};
+export type GetApiMyBlockStorageBackupListByIdApiResponse =
+  /** status 200 OK */ VolumeBackupListResponse[];
+export type GetApiMyBlockStorageBackupListByIdApiArg = {
+  id: number;
+};
+export type GetApiMyBlockStorageBackupGetByIdApiResponse =
+  /** status 200 OK */ GetVolumeBackupResponse;
+export type GetApiMyBlockStorageBackupGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyBlockStorageBackupDeleteByIdApiResponse = unknown;
+export type DeleteApiMyBlockStorageBackupDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyBlockStorageBackupCreateApiResponse = unknown;
+export type PostApiMyBlockStorageBackupCreateApiArg = {
+  createVolumeBackupModel: CreateVolumeBackupModel;
+};
+export type PutApiMyBlockStorageHostDetachByIdApiResponse = unknown;
+export type PutApiMyBlockStorageHostDetachByIdApiArg = {
+  id: number;
+};
+export type PutApiMyBlockStorageHostAttachByIdApiResponse = unknown;
+export type PutApiMyBlockStorageHostAttachByIdApiArg = {
+  id: number;
+  attachVolumeModel: AttachVolumeModel;
+};
+export type GetApiMyBlockStorageSnapshotShortListByBlockStorageHostIdApiResponse =
+  /** status 200 OK */ VolumeSnapshotShortListResponse[];
+export type GetApiMyBlockStorageSnapshotShortListByBlockStorageHostIdApiArg = {
+  blockStorageHostId: number;
+};
+export type PutApiMyBlockStorageSnapshotRevertByIdApiResponse = unknown;
+export type PutApiMyBlockStorageSnapshotRevertByIdApiArg = {
+  id: number;
+};
+export type GetApiMyBlockStorageSnapshotListByBlockStorageHostIdApiResponse =
+  /** status 200 OK */ VolumeSnapshotResponse[];
+export type GetApiMyBlockStorageSnapshotListByBlockStorageHostIdApiArg = {
+  blockStorageHostId: number;
+};
+export type GetApiMyBlockStorageSnapshotGetByIdApiResponse =
+  /** status 200 OK */ VolumeSnapshotResponse;
+export type GetApiMyBlockStorageSnapshotGetByIdApiArg = {
+  id: number;
+};
+export type DeleteApiMyBlockStorageSnapshotDeleteByIdApiResponse = unknown;
+export type DeleteApiMyBlockStorageSnapshotDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyBlockStorageSnapshotCreateApiResponse = unknown;
+export type PostApiMyBlockStorageSnapshotCreateApiArg = {
+  createVolumeSnapshotModel: CreateVolumeSnapshotModel;
+};
 export type GetApiMyBlockStorageHostListApiResponse =
-  /** status 200 OK */ BlockStorageHostListResponse[];
+  /** status 200 OK */ VolumeListResponse[];
 export type GetApiMyBlockStorageHostListApiArg = void;
 export type GetApiMyBlockStorageHostGetByIdApiResponse =
-  /** status 200 OK */ BlockStorageHostGetResponse;
+  /** status 200 OK */ GetVolumeResponse;
 export type GetApiMyBlockStorageHostGetByIdApiArg = {
   id: number;
 };
 export type PutApiMyBlockStorageHostEditByIdApiResponse = unknown;
 export type PutApiMyBlockStorageHostEditByIdApiArg = {
   id: number;
-  editBlockStorageHostModel: EditBlockStorageHostModel;
-};
-export type PutApiMyBlockStorageHostDetachByIdApiResponse = unknown;
-export type PutApiMyBlockStorageHostDetachByIdApiArg = {
-  id: number;
+  editVolumeHostModel: EditVolumeHostModel;
 };
 export type DeleteApiMyBlockStorageHostDeleteByIdApiResponse = unknown;
 export type DeleteApiMyBlockStorageHostDeleteByIdApiArg = {
@@ -2728,12 +2819,7 @@ export type DeleteApiMyBlockStorageHostDeleteByIdApiArg = {
 };
 export type PostApiMyBlockStorageHostCreateApiResponse = unknown;
 export type PostApiMyBlockStorageHostCreateApiArg = {
-  createBlockStorageHostModel: CreateBlockStorageHostModel;
-};
-export type PutApiMyBlockStorageHostAttachByIdApiResponse = unknown;
-export type PutApiMyBlockStorageHostAttachByIdApiArg = {
-  id: number;
-  attachBlockStorageModel: AttachBlockStorageModel;
+  createVolumeHostModel: CreateVolumeHostModel;
 };
 export type GetApiMyColocationListApiResponse =
   /** status 200 OK */ ColocationListResponse[];
@@ -2764,9 +2850,12 @@ export type GetApiMyDatacenterIpListByIdApiResponse =
 export type GetApiMyDatacenterIpListByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyDatacenterIpDeleteByIdApiResponse =
-  /** status 200 OK */ DatacenterIpListResponse[];
+export type DeleteApiMyDatacenterIpDeleteByIdApiResponse = unknown;
 export type DeleteApiMyDatacenterIpDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyDatacenterIpAddByIdApiResponse = unknown;
+export type PostApiMyDatacenterIpAddByIdApiArg = {
   id: number;
 };
 export type GetApiMyDatacenterImageListApiResponse =
@@ -2954,6 +3043,8 @@ export type PutApiMyDomainHostChangeContactApiResponse = unknown;
 export type PutApiMyDomainHostChangeContactApiArg = {
   changeContactModel: ChangeContactModel;
 };
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyHostHypervisorListApiResponse =
   /** status 200 OK */ HypervisorListResponse[];
 export type GetApiMyHostHypervisorListApiArg = void;
@@ -3399,34 +3490,6 @@ export type GetApiMyPortalCalculateMonthListApiArg = void;
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
-export type GetApiMyVmBackupShortListByVmHostIdApiResponse =
-  /** status 200 OK */ VmBackupShortListResponse[];
-export type GetApiMyVmBackupShortListByVmHostIdApiArg = {
-  vmHostId: number;
-};
-export type PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiResponse = unknown;
-export type PostApiMyVmBackupRestoreByBackupIdAndVolumeIdApiArg = {
-  backupId: number;
-  volumeId: number;
-};
-export type GetApiMyVmBackupListByVmHostIdApiResponse =
-  /** status 200 OK */ VmBackupListResponse[];
-export type GetApiMyVmBackupListByVmHostIdApiArg = {
-  vmHostId: number;
-};
-export type GetApiMyVmBackupGetByIdApiResponse =
-  /** status 200 OK */ GetVmBackupResponse;
-export type GetApiMyVmBackupGetByIdApiArg = {
-  id: number;
-};
-export type DeleteApiMyVmBackupDeleteByIdApiResponse = unknown;
-export type DeleteApiMyVmBackupDeleteByIdApiArg = {
-  id: number;
-};
-export type PostApiMyVmBackupCreateApiResponse = unknown;
-export type PostApiMyVmBackupCreateApiArg = {
-  createVmBackupModel: CreateVmBackupModel;
-};
 export type GetApiMyVmVolumeListByVmHostIdApiResponse =
   /** status 200 OK */ VmVolumeListResponse[];
 export type GetApiMyVmVolumeListByVmHostIdApiArg = {
@@ -3468,10 +3531,6 @@ export type GetApiMyVmSnapshotGetByIdApiResponse =
 export type GetApiMyVmSnapshotGetByIdApiArg = {
   id: number;
 };
-export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiResponse = unknown;
-export type DeleteApiMyVmSnapshotDeleteAllByVmHostIdApiArg = {
-  vmHostId: number;
-};
 export type DeleteApiMyVmSnapshotDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
   id: number;
@@ -3479,21 +3538,6 @@ export type DeleteApiMyVmSnapshotDeleteByIdApiArg = {
 export type PostApiMyVmSnapshotCreateApiResponse = unknown;
 export type PostApiMyVmSnapshotCreateApiArg = {
   createSnapshotModel: CreateSnapshotModel;
-};
-export type PutApiMyVmIsoUnmountByIdApiResponse = unknown;
-export type PutApiMyVmIsoUnmountByIdApiArg = {
-  id: number;
-  unmountModel: UnmountModel;
-};
-export type PutApiMyVmIsoMountByIdApiResponse = unknown;
-export type PutApiMyVmIsoMountByIdApiArg = {
-  id: number;
-  mountModel: MountModel;
-};
-export type GetApiMyVmIsoListByDatacenterIdApiResponse =
-  /** status 200 OK */ IsoListResponse[];
-export type GetApiMyVmIsoListByDatacenterIdApiArg = {
-  datacenterId: number;
 };
 export type PutApiMyVmHostStopByIdApiResponse = unknown;
 export type PutApiMyVmHostStopByIdApiArg = {
@@ -4085,7 +4129,47 @@ export type CreateBareMetalModel = {
   password?: string | null;
   publicKey?: string | null;
 };
-export type BlockStorageHostListResponse = {
+export type VolumeBackupShortListResponse = {
+  id?: number;
+  name: string | null;
+};
+export type VolumeBackupListResponse = {
+  id: number;
+  name: string | null;
+  blockStorageName: string | null;
+  createDate: string;
+};
+export type GetVolumeBackupResponse = {
+  id: number;
+  name: string | null;
+  blockStorageName: string | null;
+  createDate: string;
+};
+export type CreateVolumeBackupModel = {
+  blockStorageHostId: number;
+  name: string;
+};
+export type AttachVolumeModel = {
+  vmHostId: number;
+};
+export type VolumeSnapshotShortListResponse = {
+  id?: number;
+  name: string | null;
+};
+export type VolumeSnapshotResponse = {
+  id: number;
+  name: string | null;
+  blockStorageSnapshotStatus: string | null;
+  description?: string | null;
+  createDate: string;
+  modifyDate?: string;
+};
+export type CreateVolumeSnapshotModel = {
+  blockStorageHostId: number;
+  name: string;
+  description?: string | null;
+};
+export type VolumeListResponse = {
   id: number;
   datacenter: string | null;
   customerId: number;
@@ -4096,28 +4180,25 @@ export type BlockStorageHostListResponse = {
   statusId: number;
   createDate: string;
 };
-export type BlockStorageHostGetResponse = {
+export type GetVolumeResponse = {
   id: number;
   datacenter: string | null;
   name: string | null;
   size: number;
   status: string | null;
   statusId: number;
+  vmHostId?: number | null;
   createDate: string;
 };
-export type EditBlockStorageHostModel = {
+export type EditVolumeHostModel = {
   size: number;
 };
-export type CreateBlockStorageHostModel = {
+export type CreateVolumeHostModel = {
   name: string;
   datacenterId: number;
   isPredefined: boolean;
-  hostProjectId: number;
   productBundleId?: number | null;
   disk?: number | null;
-};
-export type AttachBlockStorageModel = {
-  vmHostId: number;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -5279,27 +5360,6 @@ export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
 };
-export type VmBackupShortListResponse = {
-  id?: number;
-  name: string | null;
-};
-export type VmBackupListResponse = {
-  id: number;
-  name: string | null;
-  vmVolumeName: string | null;
-  createDate: string;
-};
-export type GetVmBackupResponse = {
-  id: number;
-  name: string | null;
-  vmVolumeName: string | null;
-  createDate: string;
-};
-export type CreateVmBackupModel = {
-  vmHostId: number;
-  vmVolumeId: number;
-  name: string;
-};
 export type VmVolumeListResponse = {
   id: number;
   name: string | null;
@@ -5341,16 +5401,6 @@ export type CreateSnapshotModel = {
   vmHostId: number;
   name: string;
   description?: string | null;
-};
-export type UnmountModel = {
-  vmId: number;
-};
-export type MountModel = {
-  vmId?: number;
-};
-export type IsoListResponse = {
-  id?: number;
-  name: string | null;
 };
 export type VmShortListResponse = {
   id?: number;
@@ -5536,8 +5586,8 @@ export type CreateVpcGatewayDnatModel = {
   vpcHostId: number;
   vpcNetworkId: number;
   vpcHostGatewayIpId: number;
-  vpcHostTranslateId: number;
   name: string;
+  vpcHostTranslateId: number;
   sourceIp?: string | null;
   destinationIp: string;
   destinationPort: number;
@@ -5615,6 +5665,7 @@ export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
   productBundleId: number;
+  snatEnable?: boolean | null;
   hypervisorTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
 };
@@ -5779,13 +5830,25 @@ export const {
   useGetApiMyBareMetalHostGetByIdQuery,
   useDeleteApiMyBareMetalHostDeleteByIdMutation,
   usePostApiMyBareMetalHostCreateMutation,
+  useGetApiMyBlockStorageBackupShortListByIdQuery,
+  usePostApiMyBlockStorageBackupRestoreByIdMutation,
+  useGetApiMyBlockStorageBackupListByIdQuery,
+  useGetApiMyBlockStorageBackupGetByIdQuery,
+  useDeleteApiMyBlockStorageBackupDeleteByIdMutation,
+  usePostApiMyBlockStorageBackupCreateMutation,
+  usePutApiMyBlockStorageHostDetachByIdMutation,
+  usePutApiMyBlockStorageHostAttachByIdMutation,
+  useGetApiMyBlockStorageSnapshotShortListByBlockStorageHostIdQuery,
+  usePutApiMyBlockStorageSnapshotRevertByIdMutation,
+  useGetApiMyBlockStorageSnapshotListByBlockStorageHostIdQuery,
+  useGetApiMyBlockStorageSnapshotGetByIdQuery,
+  useDeleteApiMyBlockStorageSnapshotDeleteByIdMutation,
+  usePostApiMyBlockStorageSnapshotCreateMutation,
   useGetApiMyBlockStorageHostListQuery,
   useGetApiMyBlockStorageHostGetByIdQuery,
   usePutApiMyBlockStorageHostEditByIdMutation,
-  usePutApiMyBlockStorageHostDetachByIdMutation,
   useDeleteApiMyBlockStorageHostDeleteByIdMutation,
   usePostApiMyBlockStorageHostCreateMutation,
-  usePutApiMyBlockStorageHostAttachByIdMutation,
   useGetApiMyColocationListQuery,
   useGetApiMyColocationGetByIdQuery,
   useDeleteApiMyColocationDeleteByIdMutation,
@@ -5794,6 +5857,7 @@ export const {
   useGetApiMyDashboardFinancialQuery,
   useGetApiMyDatacenterIpListByIdQuery,
   useDeleteApiMyDatacenterIpDeleteByIdMutation,
+  usePostApiMyDatacenterIpAddByIdMutation,
   useGetApiMyDatacenterImageListQuery,
   useGetApiMyDatacenterListQuery,
   useGetApiMyDnsCdnHostListQuery,
@@ -5836,6 +5900,7 @@ export const {
   usePostApiMyDomainHostCheckDomainMutation,
   usePutApiMyDomainHostChangeNsMutation,
   usePutApiMyDomainHostChangeContactMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyHostHypervisorListQuery,
   useGetApiMyHostProjectListQuery,
   useGetApiMyHostProjectGetByIdQuery,
@@ -5946,12 +6011,6 @@ export const {
   useGetApiMyPortalCommissionListQuery,
   useGetApiMyPortalCalculateMonthListQuery,
   useGetApiMyPortalBusinessUnitListQuery,
-  useGetApiMyVmBackupShortListByVmHostIdQuery,
-  usePostApiMyVmBackupRestoreByBackupIdAndVolumeIdMutation,
-  useGetApiMyVmBackupListByVmHostIdQuery,
-  useGetApiMyVmBackupGetByIdQuery,
-  useDeleteApiMyVmBackupDeleteByIdMutation,
-  usePostApiMyVmBackupCreateMutation,
   useGetApiMyVmVolumeListByVmHostIdQuery,
   useGetApiMyVmVolumeGetByIdQuery,
   usePostApiMyVmVolumeExtendMutation,
@@ -5961,12 +6020,8 @@ export const {
   usePutApiMyVmSnapshotRevertByIdMutation,
   useGetApiMyVmSnapshotListByVmHostIdQuery,
   useGetApiMyVmSnapshotGetByIdQuery,
-  useDeleteApiMyVmSnapshotDeleteAllByVmHostIdMutation,
   useDeleteApiMyVmSnapshotDeleteByIdMutation,
   usePostApiMyVmSnapshotCreateMutation,
-  usePutApiMyVmIsoUnmountByIdMutation,
-  usePutApiMyVmIsoMountByIdMutation,
-  useGetApiMyVmIsoListByDatacenterIdQuery,
   usePutApiMyVmHostStopByIdMutation,
   usePutApiMyVmHostStartByIdMutation,
   usePutApiMyVmHostShutdownByIdMutation,
