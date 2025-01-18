@@ -56,6 +56,8 @@ export const VmIpAddress: FC = () => {
   const [data, setData] =
     useState<GetApiMyDatacenterIpListByIdApiResponse | null>(null);
 
+console.log(getData)
+
   useEffect(() => {
     if (serverId) {
       getData({ id: serverId })

@@ -87,7 +87,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP",
     "بازسازی",
     "سخت افزاری",
-    "دیسک",
+    // "دیسک",
     "اسنپ‌شات",
     "فایروال",
   ];
@@ -98,7 +98,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmIpAddress,
     VmRebuild,
     ServerConfig,
-    Volume,
+    // Volume,
     Snapshot,
     Firewall,
   ];
