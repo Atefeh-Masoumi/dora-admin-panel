@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
@@ -23,8 +23,7 @@ import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
 
 type SelectOSPropsType = {
-  datacenterId?: number | null;
-  hypervisorId?: number | null;
+  hostProjectId: number;
   setImageId?: any;
 };
 
@@ -37,15 +36,14 @@ type OsDropDownType = {
 };
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
-  datacenterId,
-  hypervisorId,
+  hostProjectId,
   setImageId,
 }) => {
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
+      datacenterId: 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      datacenterId: Number(datacenterId) || 0,
-      hypervisorTypeId: hypervisorId || 0,
+      hostProjectId: hostProjectId,
     }
   );
 

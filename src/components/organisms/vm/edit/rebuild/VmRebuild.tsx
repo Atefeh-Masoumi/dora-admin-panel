@@ -10,15 +10,12 @@ import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
-import Header from "src/components/organisms/layout/header/Header";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const formInitialValues = { serverName: "", password: "" };
-  const { serverId, hypervisorId, datacenterId } =
-    useContext(EditServerContext);
+  const { serverId, hostProjectId } = useContext(EditServerContext);
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -81,8 +78,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         </Typography>
         <ChooseOSForRebuild
           setImageId={setImageId}
-          hypervisorId={hypervisorId}
-          datacenterId={datacenterId}
+          hostProjectId={hostProjectId || 0}
         />
         <Typography
           align="center"

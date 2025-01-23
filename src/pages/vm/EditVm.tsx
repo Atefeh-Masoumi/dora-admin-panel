@@ -19,7 +19,6 @@ import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/Analyt
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
-import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 
 type TabPanelProps = {
@@ -59,7 +58,7 @@ type EditCloudServerPropsType = {};
 
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const { id } = useParams();
-  const { setServerId, setHypervisorId, setDatacenterId } =
+  const { setServerId, setHostProjectId, setHypervisorId, setDatacenterId } =
     useContext(EditServerContext);
   const [section, setSection] = useState(0);
   const navigate = useNavigate(); // Added
@@ -74,7 +73,15 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     setServerId(Number(id));
     setHypervisorId(vmData?.hypervisorTypeId || 0);
     setDatacenterId(vmData?.datacenterId || 0);
-  }, [id, vmData, setServerId, setDatacenterId, setHypervisorId]);
+    setHostProjectId(vmData?.hostProjectId || 0);
+  }, [
+    id,
+    vmData,
+    setHostProjectId,
+    setServerId,
+    setDatacenterId,
+    setHypervisorId,
+  ]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);

@@ -7,6 +7,8 @@ type EditServerContextType = {
   setDatacenterId: (id: number | null) => void;
   hypervisorId: number | null;
   setHypervisorId: (id: number | null) => void;
+  hostProjectId: number | null;
+  setHostProjectId: (id: number | null) => void;
 };
 
 export const EditServerContext = createContext<EditServerContextType>({
@@ -16,6 +18,8 @@ export const EditServerContext = createContext<EditServerContextType>({
   setDatacenterId: (id) => {},
   hypervisorId: null,
   setHypervisorId: (id) => {},
+  hostProjectId: null,
+  setHostProjectId: (id) => {},
 });
 
 type EditServerContextProviderPropsType = {
@@ -28,6 +32,7 @@ const EditServerContextProvider: FC<EditServerContextProviderPropsType> = ({
   const [serverId, setServerId] = useState<number | null>(null);
   const [datacenterId, setDatacenterId] = useState<number | null>(null);
   const [hypervisorId, setHypervisorId] = useState<number | null>(null);
+  const [hostProjectId, setHostProjectId] = useState<number | null>(null);
 
   return (
     <EditServerContext.Provider
@@ -38,6 +43,8 @@ const EditServerContextProvider: FC<EditServerContextProviderPropsType> = ({
         setDatacenterId,
         hypervisorId,
         setHypervisorId,
+        hostProjectId,
+        setHostProjectId,
       }}
     >
       {children}

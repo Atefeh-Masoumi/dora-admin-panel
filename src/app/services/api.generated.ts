@@ -607,7 +607,7 @@ const injectedRtkApi = api.injectEndpoints({
         params: {
           DatacenterId: queryArg.datacenterId,
           ProductId: queryArg.productId,
-          HypervisorTypeId: queryArg.hypervisorTypeId,
+          HostProjectId: queryArg.hostProjectId,
         },
       }),
     }),
@@ -1580,6 +1580,14 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/kuber-cloud-list` }),
     }),
+    getApiMyPortalProductBundleBlockStorageList: build.query<
+      GetApiMyPortalProductBundleBlockStorageListApiResponse,
+      GetApiMyPortalProductBundleBlockStorageListApiArg
+    >({
+      query: () => ({
+        url: `/api/my/portal/product-bundle/block-storage-list`,
+      }),
+    }),
     getApiMyPortalProductBundleBareMetalList: build.query<
       GetApiMyPortalProductBundleBareMetalListApiResponse,
       GetApiMyPortalProductBundleBareMetalListApiArg
@@ -1867,16 +1875,6 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyVmVolumeGetByIdApiArg
     >({
       query: (queryArg) => ({ url: `/api/my/vm/volume/get/${queryArg.id}` }),
-    }),
-    postApiMyVmVolumeExtend: build.mutation<
-      PostApiMyVmVolumeExtendApiResponse,
-      PostApiMyVmVolumeExtendApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/volume/extend`,
-        method: "POST",
-        body: queryArg.extendVmVolumeModel,
-      }),
     }),
     deleteApiMyVmVolumeDeleteById: build.mutation<
       DeleteApiMyVmVolumeDeleteByIdApiResponse,
@@ -2863,7 +2861,7 @@ export type GetApiMyDatacenterImageListApiResponse =
 export type GetApiMyDatacenterImageListApiArg = {
   datacenterId: number;
   productId: number;
-  hypervisorTypeId: number;
+  hostProjectId: number;
 };
 export type GetApiMyDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
@@ -3348,6 +3346,9 @@ export type GetApiMyPortalProductBundleKuberClusterListApiArg = void;
 export type GetApiMyPortalProductBundleKuberCloudListApiResponse =
   /** status 200 OK */ ProductBundleKuberCloudListResponse[];
 export type GetApiMyPortalProductBundleKuberCloudListApiArg = void;
+export type GetApiMyPortalProductBundleBlockStorageListApiResponse =
+  /** status 200 OK */ ProductBundleBlockStorageListResponse[];
+export type GetApiMyPortalProductBundleBlockStorageListApiArg = void;
 export type GetApiMyPortalProductBundleBareMetalListApiResponse =
   /** status 200 OK */ ProductBundleBareMetalListResponse[];
 export type GetApiMyPortalProductBundleBareMetalListApiArg = void;
@@ -3499,10 +3500,6 @@ export type GetApiMyVmVolumeGetByIdApiResponse =
   /** status 200 OK */ GetVmVolumeResponse;
 export type GetApiMyVmVolumeGetByIdApiArg = {
   id: number;
-};
-export type PostApiMyVmVolumeExtendApiResponse = unknown;
-export type PostApiMyVmVolumeExtendApiArg = {
-  extendVmVolumeModel: ExtendVmVolumeModel;
 };
 export type DeleteApiMyVmVolumeDeleteByIdApiResponse = unknown;
 export type DeleteApiMyVmVolumeDeleteByIdApiArg = {
@@ -4137,6 +4134,7 @@ export type VolumeBackupListResponse = {
   id: number;
   name: string | null;
   blockStorageName: string | null;
+  status: string | null;
   createDate: string;
 };
 export type GetVolumeBackupResponse = {
@@ -4159,7 +4157,7 @@ export type VolumeSnapshotShortListResponse = {
 export type VolumeSnapshotResponse = {
   id: number;
   name: string | null;
-  blockStorageSnapshotStatus: string | null;
+  status: string | null;
   description?: string | null;
   createDate: string;
   modifyDate?: string;
@@ -5051,6 +5049,12 @@ export type ProductBundleKuberCloudListResponse = {
   kuberDisk: number;
   kuber10Pods: number;
 };
+export type ProductBundleBlockStorageListResponse = {
+  id: number;
+  name: string | null;
+  price: number;
+  vDisk: number;
+};
 export type ProductBundleBareMetalListResponse = {
   id: number;
   name: string | null;
@@ -5133,7 +5137,7 @@ export type CreatePaymentResponse = {
   refId?: string | null;
 };
 export type CreatePaymentModel = {
-  paymentProviderId?: number;
+  paymentProviderId: number;
   amount: number;
 };
 export type BpmConfirmCallRequest = {
@@ -5375,10 +5379,6 @@ export type GetVmVolumeResponse = {
   volumeSize: number;
   createDate: string;
 };
-export type ExtendVmVolumeModel = {
-  vmVolumeId: number;
-  volumeSize: number;
-};
 export type CreateVmVolumeModel = {
   vmHostId: number;
   volumeSize: number;
@@ -5404,6 +5404,7 @@ export type CreateSnapshotModel = {
 };
 export type VmShortListResponse = {
   id?: number;
+  hostProjectId?: number;
   name: string | null;
 };
 export type GetRemoteConsoleResponse = {
@@ -5447,6 +5448,7 @@ export type GetVmResponse = {
   isMaster?: boolean;
   isPublic?: boolean;
   hypervisorTypeId: number;
+  hostProjectId: number;
   createDate: string;
   modifyDate: string;
 };
@@ -5574,10 +5576,10 @@ export type GetVpcGatewayNatResponse = {
 };
 export type CreateVpcGatewaySnatModel = {
   vpcHostId: number;
-  vpcNetworkId: number;
-  vpcHostGatewayIpId: number;
-  name: string;
-  sourceIp: string;
+  vpcNetworkId?: number | null;
+  vpcHostGatewayIpId?: number | null;
+  name?: string | null;
+  sourceIp?: string | null;
   destinationIp?: string | null;
   destinationPort?: number | null;
   description?: string | null;
@@ -5645,6 +5647,7 @@ export type VpcResponse = {
   id: number;
   datacenterId: number;
   vpcHostProjectId?: number | null;
+  snatEnabled?: boolean;
   datacenter: string | null;
   name: string | null;
   status: string | null;
@@ -5665,7 +5668,8 @@ export type CreateVpcHostModel = {
   name: string;
   datacenterId: number;
   productBundleId: number;
-  snatEnable?: boolean | null;
+  isPublic?: boolean;
+  privateNetworkId?: number | null;
   hypervisorTypeId?: number;
   defaultNetworks?: CreateVpcHostDefaultNetworks[] | null;
 };
@@ -5974,6 +5978,7 @@ export const {
   useGetApiMyPortalProductBundleStorageListQuery,
   useGetApiMyPortalProductBundleKuberClusterListQuery,
   useGetApiMyPortalProductBundleKuberCloudListQuery,
+  useGetApiMyPortalProductBundleBlockStorageListQuery,
   useGetApiMyPortalProductBundleBareMetalListQuery,
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalProductGetByIdQuery,
@@ -6013,7 +6018,6 @@ export const {
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyVmVolumeListByVmHostIdQuery,
   useGetApiMyVmVolumeGetByIdQuery,
-  usePostApiMyVmVolumeExtendMutation,
   useDeleteApiMyVmVolumeDeleteByIdMutation,
   usePostApiMyVmVolumeCreateMutation,
   useGetApiMyVmSnapshotShortListByVmHostIdQuery,

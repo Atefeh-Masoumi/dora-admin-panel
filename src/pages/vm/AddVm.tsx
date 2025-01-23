@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  useGetApiMyHostProjectGetByIdQuery,
   usePostApiMyVmHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
@@ -58,10 +57,6 @@ const AddVm: FC = () => {
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
-
-  const { data: vmProjectData } = useGetApiMyHostProjectGetByIdQuery({
-    id: Number(projectId),
-  });
 
   const navigate = useNavigate();
 
@@ -195,10 +190,7 @@ const AddVm: FC = () => {
               )}
               <Grid container gap={2}>
                 <Grid xs={12} item>
-                  <SelectOS
-                    datacenterId={vmProjectData?.datacenterId}
-                    hypervisorTypeId={vmProjectData?.hypervisorTypeId}
-                  />
+                  <SelectOS hostProjectId={Number(projectId)} />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
