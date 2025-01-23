@@ -24,7 +24,7 @@ import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
-  hypervisorId?: number | null;
+  hostProjectId?: number | null;
   setImageId?: any;
 };
 
@@ -38,14 +38,14 @@ type OsDropDownType = {
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
   datacenterId,
-  hypervisorId,
+  hostProjectId,
   setImageId,
 }) => {
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
       productId: PRODUCT_CATEGORY_ENUM.VM,
       datacenterId: Number(datacenterId) || 0,
-      hypervisorTypeId: hypervisorId || 0,
+      hostProjectId: hostProjectId || 0,
     }
   );
 

@@ -25,7 +25,7 @@ import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 
 type SelectOSPropsType = {
   datacenterId?: number | null;
-  hypervisorTypeId?: number | null;
+  hostProjectId?: number | null;
 };
 
 type OsDropDownType = {
@@ -38,15 +38,15 @@ type OsDropDownType = {
 
 export const SelectOS: FC<SelectOSPropsType> = ({
   datacenterId,
-  hypervisorTypeId,
+  hostProjectId,
 }) => {
-  const { dataCenter, setOsVersion: setOsImage } = useContext(AddServerContext);
+  const { setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
       datacenterId: datacenterId || 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hypervisorTypeId: hypervisorTypeId || HYPERVISOR_ENUM.VM,
+      hostProjectId: hostProjectId || 0,
     }
   );
 

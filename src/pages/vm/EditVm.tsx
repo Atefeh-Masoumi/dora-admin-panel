@@ -19,7 +19,6 @@ import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/Analyt
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
-import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 
 type TabPanelProps = {

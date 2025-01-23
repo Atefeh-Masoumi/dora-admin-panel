@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useContext, useState } from "react";
 import { useNavigate } from "react-router";
@@ -10,14 +10,12 @@ import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
-import Header from "src/components/organisms/layout/header/Header";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const formInitialValues = { serverName: "", password: "" };
-  const { serverId, hypervisorId, datacenterId } =
+  const { serverId, hostProjectId, datacenterId } =
     useContext(EditServerContext);
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
@@ -81,7 +79,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         </Typography>
         <ChooseOSForRebuild
           setImageId={setImageId}
-          hypervisorId={hypervisorId}
+          hostProjectId={hostProjectId}
           datacenterId={datacenterId}
         />
         <Typography

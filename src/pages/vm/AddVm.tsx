@@ -197,7 +197,7 @@ const AddVm: FC = () => {
                 <Grid xs={12} item>
                   <SelectOS
                     datacenterId={vmProjectData?.datacenterId}
-                    hypervisorTypeId={vmProjectData?.hypervisorTypeId}
+                    hostProjectId={Number(projectId)}
                   />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
