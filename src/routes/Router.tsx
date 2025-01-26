@@ -466,6 +466,104 @@ const Router: FC = () => {
               EditServerContextProvider
             )}
           />
+          <Route
+            path="/vm/:projectId/:id/specification"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/analytics"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/ip"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/rebuild"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/config"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/snapshot"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
+          <Route
+            path="/vm/:projectId/:id/firewall"
+            element={mainTemplate(
+              EditVm,
+              {
+                link: {
+                  text: "بازگشت به مدیریت سرور ابری",
+                  url: "/vm/:projectId/:id",
+                },
+                hideSidebar: false,
+              },
+              EditServerContextProvider
+            )}
+          />
           {/* ======================================= Kubernetes Cluster ======================================= */}
           <Route
             path="/kubernetes-cluster"

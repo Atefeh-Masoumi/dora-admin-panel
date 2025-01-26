@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -57,11 +57,12 @@ const a11yProps = (index: number) => {
 type EditCloudServerPropsType = {};
 
 const EditCloudServer: FC<EditCloudServerPropsType> = () => {
-  const { id } = useParams();
-  const { setServerId, setHypervisorId, setDatacenterId } =
+  const { id, projectId } = useParams();
+  const { setServerId, setHostProjectId, setHypervisorId, setDatacenterId } =
     useContext(EditServerContext);
   const [section, setSection] = useState(0);
-  const navigate = useNavigate(); // Added
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { data: vmData, isLoading: getVmDataLoading } =
     useGetApiMyVmHostGetByIdQuery({
@@ -73,11 +74,35 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     setServerId(Number(id));
     setHypervisorId(vmData?.hypervisorTypeId || 0);
     setDatacenterId(vmData?.datacenterId || 0);
-  }, [id, vmData, setServerId, setDatacenterId, setHypervisorId]);
+    setHostProjectId(vmData?.hostProjectId || 0);
+  }, [
+    id,
+    vmData,
+    setHostProjectId,
+    setServerId,
+    setDatacenterId,
+    setHypervisorId,
+  ]);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const sectionIndex = routes.findIndex(route => 
+      new RegExp(route
+        .replace(':projectId', projectId || '')
+        .replace(':id', id || '')
+      ).test(currentPath)
+    );
+    if (sectionIndex !== -1) {
+      setSection(sectionIndex);
+    }
+  }, [location.pathname, id, projectId]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setSection(newValue);
-    navigate(`?section=${newValue}`, { replace: true });
+    const newPath = routes[newValue]
+      .replace(':projectId', projectId || '')
+      .replace(':id', id || '');
+    navigate(newPath, { replace: true });
   };
 
   const tabArray = [
@@ -89,6 +114,16 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     // "دیسک",
     "اسنپ‌شات",
     "فایروال",
+  ];
+
+  const routes = [
+    "/vm/:projectId/:id/specification",
+    "/vm/:projectId/:id/analytics",
+    "/vm/:projectId/:id/ip",
+    "/vm/:projectId/:id/rebuild",
+    "/vm/:projectId/:id/config",
+    "/vm/:projectId/:id/snapshot",
+    "/vm/:projectId/:id/firewall",
   ];
 
   const tabPanelArray = [
