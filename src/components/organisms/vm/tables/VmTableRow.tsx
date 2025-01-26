@@ -1,6 +1,6 @@
 import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
 import {
@@ -27,7 +27,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVm, setSelectedVm] = useState<GetVmResponse | null>(null);
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const [getUrl, { isLoading: getUrlLoading }] =
     useLazyGetApiMyVmKmsGetByIdQuery();
 
@@ -41,7 +41,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () => {
     if (isDeactivate) return;
-    navigate("/vm/" + row["id"]);
+    navigate(`/vm/${projectId}/`+row["id"]);
   };
 
   const sendUserToKmsConsole = (

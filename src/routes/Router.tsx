@@ -368,7 +368,7 @@ const Router: FC = () => {
             )}
           />
           <Route
-            path="/vm/:id"
+            path="/vm/:projectId/:id"
             element={mainTemplate(
               EditVm,
               {

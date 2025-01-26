@@ -61,7 +61,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const { setServerId, setHostProjectId, setHypervisorId, setDatacenterId } =
     useContext(EditServerContext);
   const [section, setSection] = useState(0);
-  const navigate = useNavigate(); // Added
+  const navigate = useNavigate(); 
 
   const { data: vmData, isLoading: getVmDataLoading } =
     useGetApiMyVmHostGetByIdQuery({
