@@ -41,7 +41,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () => {
     if (isDeactivate) return;
-    navigate(`/vm/${projectId}/`+row["id"]);
+    navigate(`/vm/${projectId}/`+row["id"]+'/specification');
   };
 
   const sendUserToKmsConsole = (

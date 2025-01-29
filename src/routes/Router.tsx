@@ -367,20 +367,7 @@ const Router: FC = () => {
               AddServerContextProvider
             )}
           />
-          <Route
-            path="/vm/:projectId/:id"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
-          />
+         
           <Route
             path="/vm/:projectId/:id/specification"
             element={mainTemplate(
