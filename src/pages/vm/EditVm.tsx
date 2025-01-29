@@ -110,12 +110,10 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     case vmData?.isCluster && vmData?.isMaster:
       hiddenTabs = [
         VM_ENUM.VM_REBUILD,
-        VM_ENUM.SNAPSHOT,
-        VM_ENUM.SERVER_CONFIG,
       ];
       break;
     case vmData?.isCluster && !vmData?.isMaster:
-      hiddenTabs = [VM_ENUM.VM_REBUILD, VM_ENUM.SNAPSHOT];
+      hiddenTabs = [VM_ENUM.VM_REBUILD];
       break;
     default:
       hiddenTabs = [];
