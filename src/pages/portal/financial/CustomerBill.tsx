@@ -72,176 +72,190 @@ const Bill: FC = () => {
         setLoading(false);
       });
   };
-
   return (
     <>
-      {Number(id) !== 0 && (
-        <Stack direction="row" justifyContent="start">
-          <Button variant="text">
-            <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
-            <Typography
-              onClick={() => navigate("/portal/financial?tab=customer-bill")}
-            >
-              بازگشت به لیست محاسبات
-            </Typography>
-          </Button>
-        </Stack>
-      )}
-      <Stack spacing={2}>
-        <Stack
-          borderRadius={BORDER_RADIUS_1}
-          spacing={3}
+      {!bill ? (
+        <Stack spacing={2} 
           bgcolor="white"
-          p={{ xs: 1.8, lg: 3 }}
+          p ={{ xs: 1.8, lg: 3 }} 
+          height="100%"
+         
         >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Stack direction="row" spacing={2} alignItems="center" width="100%">
+          <Typography>
+            در حال حاضر صورت حسابی برای شما صادر نشده است
+          </Typography>
+        </Stack>
+      ) : (
+        <>
+          {Number(id) !== 0 && (
+            <Stack direction="row" justifyContent="start">
+              <Button variant="text">
+                <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
+                <Typography
+                  onClick={() => navigate("/portal/financial?tab=customer-bill")}
+                >
+                  بازگشت به لیست محاسبات
+                </Typography>
+              </Button>
+            </Stack>
+          )}
+          <Stack spacing={2}>
+            <Stack
+              borderRadius={BORDER_RADIUS_1}
+              spacing={3}
+              bgcolor="white"
+              p={{ xs: 1.8, lg: 3 }}
+            >
               <Stack
                 direction="row"
-                justifyContent="space-between"
                 alignItems="center"
-                width="100%"
+                justifyContent="space-between"
               >
-                {isLoading ? (
-                  <Stack width={100}>
-                    <LinearProgress />
-                  </Stack>
-                ) : (
+                <Stack direction="row" spacing={2} alignItems="center" width="100%">
                   <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    alignItems={{ xs: "start", md: "center" }}
-                    spacing={{ xs: 0, md: 2 }}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    width="100%"
                   >
-                    <Typography
-                      fontWeight={700}
-                      variant="text1"
-                      color="secondary"
-                      whiteSpace="nowrap"
+                    {isLoading ? (
+                      <Stack width={100}>
+                        <LinearProgress />
+                      </Stack>
+                    ) : (
+                      <Stack
+                        direction={{ xs: "column", md: "row" }}
+                        alignItems={{ xs: "start", md: "center" }}
+                        spacing={{ xs: 0, md: 2 }}
+                      >
+                        <Typography
+                          fontWeight={700}
+                          variant="text1"
+                          color="secondary"
+                          whiteSpace="nowrap"
+                        >
+                          گزارش شماره {bill?.id}
+                        </Typography>
+                        <LoadingButton
+                          loading={loading}
+                          sx={{ color: "primary.main" }}
+                          onClick={downloadBtnOnClick}
+                        >
+                          دانلود گزارش
+                        </LoadingButton>
+                      </Stack>
+                    )}
+                    <Stack
+                      direction={{ xs: "column", md: "row" }}
+                      alignItems="center"
+                      spacing={{ xs: 1, md: 2 }}
                     >
-                      گزارش شماره {bill?.id}
-                    </Typography>
-                    <LoadingButton
-                      loading={loading}
-                      sx={{ color: "primary.main" }}
-                      onClick={downloadBtnOnClick}
-                    >
-                      دانلود گزارش
-                    </LoadingButton>
+                      {isLoading ? (
+                        <Stack width={120} py={1}>
+                          <LinearProgress />
+                        </Stack>
+                      ) : (
+                        <Typography variant="text9">
+                          خریدار: {bill?.name}
+                        </Typography>
+                      )}
+                      {isLoading ? (
+                        <Stack width={120} py={1}>
+                          <LinearProgress />
+                        </Stack>
+                      ) : (
+                        <Typography variant="text9">تاریخ: {date}</Typography>
+                      )}
+                    </Stack>
                   </Stack>
-                )}
-                <Stack
-                  direction={{ xs: "column", md: "row" }}
-                  alignItems="center"
-                  spacing={{ xs: 1, md: 2 }}
-                >
-                  {isLoading ? (
-                    <Stack width={120} py={1}>
-                      <LinearProgress />
-                    </Stack>
-                  ) : (
-                    <Typography variant="text9">
-                      خریدار: {bill?.name}
-                    </Typography>
-                  )}
-                  {isLoading ? (
-                    <Stack width={120} py={1}>
-                      <LinearProgress />
-                    </Stack>
-                  ) : (
-                    <Typography variant="text9">تاریخ: {date}</Typography>
-                  )}
                 </Stack>
               </Stack>
+              <Divider sx={{ my: 2 }} />
+              <Stack>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        {customerProductsTableStruct.map((item, index) => {
+                          return (
+                            <TableCell align="center" key={index}>
+                              {item.label}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {productList.map((product, index) => (
+                        <BillProductsTableRow
+                          rowBgColor={
+                            (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
+                          }
+                          key={index}
+                          rowData={product}
+                        />
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Stack>
             </Stack>
-          </Stack>
-          <Divider sx={{ my: 2 }} />
-          <Stack>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    {customerProductsTableStruct.map((item, index) => {
-                      return (
-                        <TableCell align="center" key={index}>
-                          {item.label}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {productList.map((product, index) => (
-                    <BillProductsTableRow
-                      rowBgColor={
-                        (index + 1) % 2 === 0 ? "" : "rgba(240, 247, 255, 1)"
-                      }
-                      key={index}
-                      rowData={product}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Stack>
-        </Stack>
 
-        <Stack direction="row" justifyContent="end">
-          <Stack
-            borderRadius={BORDER_RADIUS_1}
-            bgcolor="white"
-            p={1.5}
-            width="100%"
-            maxWidth={500}
-          >
-            <Stack direction="column" spacing={1.5}>
-              <Stack direction="column">
-                {payBill.map((bill, index) => (
+            <Stack direction="row" justifyContent="end">
+              <Stack
+                borderRadius={BORDER_RADIUS_1}
+                bgcolor="white"
+                p={1.5}
+                width="100%"
+                maxWidth={500}
+              >
+                <Stack direction="column" spacing={1.5}>
+                  <Stack direction="column">
+                    {payBill.map((bill, index) => (
+                      <Stack
+                        key={index}
+                        borderRadius={1}
+                        direction="row"
+                        justifyContent="space-between"
+                        p={2}
+                        bgcolor={index === 1 ? "white" : "#F0F7FF"}
+                        fontSize={14}
+                        color="#6E768A"
+                      >
+                        <Typography>{bill.label}</Typography>
+                        <Typography>
+                          {priceToPersian(Number(bill.value))} ریال
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Stack>
+                  <Divider
+                    sx={{ borderColor: "rgba(91, 104, 119, 0.1)", mb: 1.3 }}
+                  />
+
                   <Stack
-                    key={index}
                     borderRadius={1}
                     direction="row"
                     justifyContent="space-between"
                     p={2}
-                    bgcolor={index === 1 ? "white" : "#F0F7FF"}
-                    fontSize={14}
                     color="#6E768A"
                   >
-                    <Typography>{bill.label}</Typography>
-                    <Typography>
-                      {priceToPersian(Number(bill.value))} ریال
+                    <Typography fontWeight={700} fontSize={16}>
+                      جمع مبالغ
+                    </Typography>
+                    <Typography fontWeight={700} fontSize={16}>
+                      {priceToPersian(Number(bill?.totalPrice))} ریال
                     </Typography>
                   </Stack>
-                ))}
+                  {/* <Button fullWidth size="large" variant="contained" sx={{ py: 1.5 }}>
+                  پرداخت آنلاین فاکتور
+                </Button> */}
+                </Stack>
               </Stack>
-              <Divider
-                sx={{ borderColor: "rgba(91, 104, 119, 0.1)", mb: 1.3 }}
-              />
-
-              <Stack
-                borderRadius={1}
-                direction="row"
-                justifyContent="space-between"
-                p={2}
-                color="#6E768A"
-              >
-                <Typography fontWeight={700} fontSize={16}>
-                  جمع مبالغ
-                </Typography>
-                <Typography fontWeight={700} fontSize={16}>
-                  {priceToPersian(Number(bill?.totalPrice))} ریال
-                </Typography>
-              </Stack>
-              {/* <Button fullWidth size="large" variant="contained" sx={{ py: 1.5 }}>
-              پرداخت آنلاین فاکتور
-            </Button> */}
             </Stack>
           </Stack>
-        </Stack>
-      </Stack>
+        </>
+      )}
     </>
   );
 };
