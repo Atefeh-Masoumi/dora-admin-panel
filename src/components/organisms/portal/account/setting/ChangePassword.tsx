@@ -29,20 +29,15 @@ const formInitialValues = {
 const formValidation = yup.object().shape({
   password: yup
     .string()
-    .test("Password validation", "Password is not valid", (value) =>
+    .test("Password validation", "رمز عبور معتبر نیست. لطفا قوانین رمز عبور را رعایت کنید", (value) =>
       passValidationHandler(value as string)
     ),
-  currentPassword: yup
-    .string()
-    .test("Current Password validation", "Password is not valid", (value) =>
-      passValidationHandler(value as string)
-    ),
+  currentPassword: yup.string().required("پسورد قدیمی را وارد نمایید")
 });
-
 export const ChangePassword: FC = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-
+  
   const [changePassword, { isLoading }] =
     usePostApiMyAccountProfileChangePasswordMutation();
 
@@ -118,6 +113,7 @@ export const ChangePassword: FC = () => {
                   label="رمز عبور فعلی"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
+                  helperText={touched.currentPassword && errors.currentPassword}
                 />
                 <DorsaTextField
                   error={Boolean(errors.password && touched.password)}
@@ -138,6 +134,7 @@ export const ChangePassword: FC = () => {
                   label="رمز عبور جدید"
                   fullWidth
                   inputProps={{ dir: "ltr" }}
+                  helperText={touched.password && errors.password}
                 />
                 <Stack
                   direction="column"

@@ -29,7 +29,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
       { vmHostId: Number(id) },
       { skip: !id }
     );
-console.log(firewallList)
   const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
   };
