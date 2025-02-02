@@ -10,7 +10,7 @@ const defaultErrorMessage =
 
 export const baseUrl =
   process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_DEVELOPMENT_URL_V1
+    ? process.env.REACT_APP_DEVELOPMENT_URL_V1_
     : process.env.REACT_APP_PRODUCTION_URL_V1;
 
 export const baseQuery: BaseQueryFn<
