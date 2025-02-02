@@ -24,17 +24,21 @@ export const LegalPersonalityDetail: FC<
           title: "نوع اکانت:",
           value: data?.isLegal ? "حقوقی" : "حقیقی",
         },
-        {
-          title: data?.isLegal ? "تاریخ ثبت :" : "تاریخ تولد :",
-          value:
-            ConvertToJalaliWithoutTime(String(data?.registrationDate)) || "---",
-        },
 
         {
           title: data?.isLegal ? "شناسه ملی :" : "کد ملی :",
           value: data?.nationalId || "---",
         },
+        {
+          id: "status",
+          title: "وضعیت :",
+          value: data?.status ?? "",
+        },
 
+        {
+          title: data?.isLegal ? "شماره ثبت :" : "شماره شناسنامه ‌:",
+          value: data?.registrationNumber || "---",
+        },
         {
           title: "تاریخ ایجاد :",
           value: ConvertToJalaliWithoutTime(String(data?.createDate)) || "---",
@@ -48,15 +52,6 @@ export const LegalPersonalityDetail: FC<
           title: "تاریخ آخرین ویرایش :",
           value: ConvertToJalaliWithoutTime(String(data?.modifyDate)) || "---",
         },
-        {
-          title: data?.isLegal ? "شماره ثبت :" : "شماره شناسنامه ‌:",
-          value: data?.registrationNumber || "---",
-        },
-        // {
-        //   id: "status",
-        //   title: "وضعیت :",
-        //   value: data?.status ?? "",
-        // },
       ]);
     }
   }, [data]);
