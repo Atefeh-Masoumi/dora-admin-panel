@@ -41,21 +41,14 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
   goNext,
   setCode,
 }) => {
-  const [captchaKey, setCaptchaKey] = useState("");
   const [confirmCode, setConfirmCode] = useState<(string | null)[]>([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
+    null, null, null, null, null, null,
   ]);
+  const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
   const haveNull = confirmCode.some((code) => code === null);
 
-  const [countDownDate, setCountDownDate] = useState(Date.now() + 120000);
-
-  const [sendMail] = usePostApiMyAccountForgotMutation();
-
+  // Captcha related states (only for resend)
+  const [captchaKey, setCaptchaKey] = useState("");
   const {
     data: captchaData,
     isLoading: getCaptchaLoading,
@@ -63,34 +56,22 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
     refetch,
   } = useGetApiMyAccountCaptchaQuery();
 
-  const resendCode = (values: any) => {
-    if (!values.captchaCode) {
-      toast.warning("لطفا ابتدا متن امنیتی خود را وارد کنید");
-      return;
-    }
-    sendMail({
-      forgotModel: {
-        email,
-        captchaKey: captchaKey,
-        captchaCode: values.captchaCode,
-      },
-    })
-      .unwrap()
-      .then(() => toast.success("کد با موفقیت ارسال شد"));
-    setCountDownDate(Date.now() + 120000);
-  };
+  const isLoading = useMemo(
+    () => getCaptchaFetching || getCaptchaLoading,
+    [getCaptchaFetching, getCaptchaLoading]
+  );
 
+  const [sendMail] = usePostApiMyAccountForgotMutation();
   const dispatch = useDispatch();
-
   const { email } = useAppSelector((state) => state.forgetPassword);
-
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!email) navigate("/account/login");
   }, [email, navigate]);
 
-  const submitHandler = (values: any) => {
+  // Verify code handler (no captcha needed)
+  const handleVerifyCode = () => {
     if (confirmCode.some((char) => char === null)) return;
     if (!email) {
       toast.warning("لطفا ابتدا ایمیل خود را وارد کنید");
@@ -101,146 +82,134 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
     goNext();
   };
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // Resend code handler (with captcha)
+  const handleResendCode = (captchaCode: string) => {
 
-  useEffect(() => {
+    sendMail({
+      forgotModel: {
+        email,
+        captchaKey,
+        captchaCode,
+      },
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("کد با موفقیت ارسال شد");
+        setCountDownDate(Date.now() + 120000);
+      })
+      .catch((error) => {
+        toast.error("خطا در ارسال کد");
+      });
+  };
+ useEffect(() => {
     const intervalId = setInterval(() => {
       refetch();
     }, 120000);
 
     return () => clearInterval(intervalId);
   }, [refetch]);
-
+  // Captcha effects
   useEffect(() => {
-    if (
-      !captchaData ||
-      !captchaData.captchaKey ||
-      !captchaData.base64CaptchaImage
-    )
-      return;
-
-    setCaptchaKey(captchaData.captchaKey);
-  }, [captchaData, setCaptchaKey]);
-
-  const isLoading = useMemo(
-    () => getCaptchaFetching || getCaptchaLoading,
-    [getCaptchaFetching, getCaptchaLoading]
-  );
+    if (captchaData?.captchaKey) {
+      setCaptchaKey(captchaData.captchaKey);
+    }
+  }, [captchaData]);
 
   return (
     <AuthTemplate title="فراموشی رمز عبور">
-      <Formik
-        initialValues={{ captchaCode: "" }}
-        validationSchema={validationSchema}
-        onSubmit={submitHandler}
-      >
-        {({ isSubmitting, resetForm, values }) => (
-          <Form>
-            <Stack spacing={1} alignItems="start">
-              <Stack spacing={1} alignItems="start" pb={2} width="100%">
-                <Typography fontSize={14} color="secondary">
-                  کد تایید ارسال شده را وارد کنید:
-                </Typography>
-                <CodeField
-                  characters={confirmCode}
-                  setCharacters={setConfirmCode}
-                />
-                <Stack direction="column" rowGap={2} width="100%">
-                  <Divider flexItem />
-                  <Stack
-                    direction={{ xs: "column", md: "row-reverse" }}
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    rowGap={2}
-                  >
-                    <Stack
-                      direction="row-reverse"
-                      alignItems="center"
-                      columnGap={{ xs: 1.5, md: 0 }}
-                    >
-                      <IconButton
-                        disabled={isLoading}
-                        onClick={() => {
-                          refetch();
-                          resetForm({ values: { captchaCode: "" } });
-                        }}
-                        sx={{ width: 51, height: 51 }}
-                      >
-                        {isLoading ? (
-                          <CircularProgress size={16} />
-                        ) : (
-                          <RefreshOutlined fontSize="large" />
-                        )}
-                      </IconButton>
-                      {isLoading ? (
-                        <Skeleton
-                          variant="rectangular"
-                          width={180}
-                          height={50}
-                        />
-                      ) : (
-                        <img
-                          src={`data:image/jpeg;base64,${captchaData?.base64CaptchaImage}`}
-                          alt="captcha_image"
-                        />
-                      )}
-                    </Stack>
-                    <Field
-                      as={TextField}
-                      name="captchaCode"
-                      className="rtlPlaceHolder"
-                      size="small"
-                      label="کد امنیتی"
-                      fullWidth
-                      sx={{ width: { xs: "100%", md: 150 }, direction: "ltr" }}
-                      helperText={<ErrorMessage name="captchaCode" />}
-                      error={!!ErrorMessage}
-                    />
-                  </Stack>
-                  <Divider flexItem />
-                </Stack>
-                {countDownDate > Date.now() ? (
-                  <Countdown
-                    date={countDownDate}
-                    renderer={({ minutes, seconds }) => (
-                      <Typography
-                        color="secondary"
-                        sx={{ fontVariantNumeric: "tabular-nums" }}
-                      >
-                        ارسال مجدد کد تایید تا {("00" + minutes).slice(-2)}:
-                        {("00" + seconds).slice(-2)}
-                      </Typography>
-                    )}
-                    onComplete={() => setCountDownDate(Date.now())}
-                  />
-                ) : (
-                  <Button color="primary" onClick={() => resendCode(values)}>
-                    ارسال مجدد کد تایید
-                  </Button>
-                )}
-                <Stack direction="row" spacing={1}></Stack>
-              </Stack>
-              <LoadingButton
-                disabled={haveNull || isSubmitting}
-                component="button"
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{ py: 1.5 }}
-              >
-                ادامه
-              </LoadingButton>
-
-              <Button fullWidth href="./login">
-                ورود به حساب کاربری
-              </Button>
+      <Stack spacing={2} width="100%">
+        {countDownDate > Date.now() ? (
+          // Show code input when timer is running
+          <>
+            <Stack spacing={1} alignItems="start" width="100%">
+              <Typography fontSize={14} color="secondary">
+                کد تایید ارسال شده را وارد کنید:
+              </Typography>
+              <CodeField
+                characters={confirmCode}
+                setCharacters={setConfirmCode}
+              />
             </Stack>
-          </Form>
+
+            <Countdown
+              date={countDownDate}
+              renderer={({ minutes, seconds }) => (
+                <Typography
+                  color="secondary"
+                  sx={{ fontVariantNumeric: "tabular-nums" }}
+                >
+                  ارسال مجدد کد تایید تا {("00" + minutes).slice(-2)}:
+                  {("00" + seconds).slice(-2)}
+                </Typography>
+              )}
+              onComplete={() => setCountDownDate(Date.now())}
+            />
+
+            <LoadingButton
+              disabled={haveNull}
+              onClick={handleVerifyCode}
+              variant="contained"
+              fullWidth
+              sx={{ py: 1.5 }}
+            >
+              ادامه
+            </LoadingButton>
+          </>
+        ) : (
+          // Show resend form when timer is finished
+          <Formik
+            initialValues={{ captchaCode: "" }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => handleResendCode(values.captchaCode)}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <Stack spacing={2}>
+                  <Field
+                    name="captchaCode"
+                    as={TextField}
+                    label="کد امنیتی"
+                    fullWidth
+                    helperText={<ErrorMessage name="captchaCode" />}
+                  />
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    {isLoading ? (
+                      <Skeleton variant="rectangular" width={180} height={50} />
+                    ) : (
+                      <img
+                        src={`data:image/jpeg;base64,${captchaData?.base64CaptchaImage}`}
+                        alt="captcha"
+                      />
+                    )}
+                    <IconButton
+                      onClick={() => refetch()}
+                      disabled={isLoading}
+                    >
+                      <RefreshOutlined />
+                    </IconButton>
+                  </Stack>
+                 
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                    fullWidth
+                  >
+                    ارسال مجدد کد تایید
+                  </LoadingButton>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
         )}
-      </Formik>
+
+        <Button 
+          fullWidth 
+          href="./login"
+        >
+          ورود به حساب کاربری
+        </Button>
+      </Stack>
     </AuthTemplate>
   );
 };
