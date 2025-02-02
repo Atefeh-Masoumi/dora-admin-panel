@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -20,6 +20,8 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const {id, projectId} = useParams()
 
   const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildByIdMutation();
 
@@ -50,7 +52,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
       .unwrap()
       .then(() => {
         toast.success("درخواست با موفقیت انجام شد");
-        navigate("/vm");
+        navigate(`/vm/${projectId}/list`);
       })
       .catch(() => {});
     return;
