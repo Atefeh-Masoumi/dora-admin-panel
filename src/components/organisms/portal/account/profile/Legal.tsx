@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { FC, MouseEventHandler, useState } from "react";
+import { FC, MouseEventHandler, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetApiMyAccountCustomerGetQuery,
@@ -26,6 +26,7 @@ import { p2e } from "src/utils/p2e.utils";
 import { onlyNumber } from "src/utils/priceToPersian";
 import * as yup from "yup";
 import { LegalPersonalityDetail } from "./LegalPersonality";
+import moment from "moment";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("نام سازمان الزامی است"),
@@ -62,14 +63,6 @@ export const convertToLegalTypeModalTextFields: any[] = [
     label: "کد پستی",
     id: "postalCode",
   },
-  {
-    label: "شماره ثبت",
-    id: "registrationNumber",
-  },
-  {
-    label: "تاریخ ثبت",
-    id: "registrationDate",
-  },
 ];
 
 type LegalPersonalityPropsType = {};
@@ -80,8 +73,6 @@ type profileAccountFormInitialValuesType = {
   phoneNumber: string;
   postalCode: string;
   address: string;
-  registrationNumber: string | null;
-  registrationDate: string | null;
 };
 
 type InputTypes = {
@@ -108,8 +99,6 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
     phoneNumber: "",
     postalCode: "",
     address: "",
-    registrationNumber: null,
-    registrationDate: null,
   };
 
   const [callConvertToLegal] =
@@ -120,18 +109,32 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
     { setSubmitting, resetForm }
   ) => {
     callConvertToLegal({
-      convertCustomerToLegalModel: values,
+      convertCustomerToLegalModel: {
+        name: values.name,
+        nationalId: values.nationalId,
+        phoneNumber: values.phoneNumber,
+        postalCode: values.postalCode,
+        address: values.address,
+      },
     })
       .unwrap()
       .then(() => {
         toast.success("ثبت اطلاعات با موفقیت انجام شد.");
         forceClose();
-      })
-      .catch(() => {})
-      .finally(() => {
-        setSubmitting(false);
         resetForm();
-      });
+      })
+      .catch(() => {});
+
+    // .unwrap()
+    // .then(() => {
+    //   toast.success("ثبت اطلاعات با موفقیت انجام شد.");
+    //   forceClose();
+    // })
+    // .catch(() => {})
+    // .finally(() => {
+    //   setSubmitting(false);
+    //   resetForm();
+    // });
   };
 
   const formik = useFormik({
@@ -228,8 +231,12 @@ export const LegalFormRegistrationModal: FC<UserIdentityModalPropsType> = ({
 export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { data: userInformation } = useGetApiMyAccountProfileGetQuery();
   const { data: accountCustomerInfo } = useGetApiMyAccountCustomerGetQuery();
+
+  const isActive = useMemo(
+    () => accountCustomerInfo?.statusId === 1,
+    [accountCustomerInfo?.statusId]
+  );
 
   const closeDialogHandler = () => {
     setShowModal(false);
@@ -251,9 +258,9 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
         <Typography variant="text1" color="secondary" sx={{ p: 1 }}>
           مشخصات صورتحساب
         </Typography>
-        {userInformation?.idConfirmed ? (
+        {isActive ? (
           <Chip
-            label="تایید شده"
+            label={accountCustomerInfo?.status}
             sx={{
               color: "rgba(13, 191, 102, 1)",
               backgroundColor: "rgba(218, 246, 232, 1)",
@@ -264,7 +271,7 @@ export const LegalPersonality: FC<LegalPersonalityPropsType> = () => {
           />
         ) : (
           <Chip
-            label="احراز هویت نشده"
+            label={accountCustomerInfo?.status}
             sx={{
               color: "rgba(244, 95, 80, 1)",
               backgroundColor: "rgba(244, 95, 80, 0.12)",
