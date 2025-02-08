@@ -7,20 +7,21 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import KubernetesNodesTableRow from "./table/KubernetesNodesTableRow";
 import { kubernetesNodesTableStruct } from "./table/struct";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type KubernetesEditNodesPropsType = {};
 
 export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
   const { id: kubernetesId } = useParams();
 
-  const { data = [], isLoading } =
+  const { data = [], isLoading,refetch, isFetching } =
     useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery(
       {
         kubernetesHostId: Number(kubernetesId) || 0,
       },
       { skip: !kubernetesId }
     );
-
+  
   const navigate = useNavigate();
 
   const gotToAddNode = () =>
@@ -42,9 +43,17 @@ export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
           alignItems={{ xs: "start", md: "center" }}
           justifyContent="space-between"
         >
-          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+          <Typography fontSize={18} color="secondary">
             لیست نودهای کوبرنتیز ابری
           </Typography>
+          <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
+
           <Button
             onClick={gotToAddNode}
             variant="outlined"

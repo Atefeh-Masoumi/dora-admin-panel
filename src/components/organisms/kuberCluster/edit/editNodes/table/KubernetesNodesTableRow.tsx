@@ -1,10 +1,11 @@
 import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   KubernetesNodeListResponse,
   useDeleteApiMyKubernetesClusterNodeDeleteByIdMutation,
+  useGetApiMyKubernetesClusterHostGetByIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -25,8 +26,18 @@ const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
     useState<KubernetesNodeListResponse | null>(null);
 
   const navigate = useNavigate();
+  const { kubernetesId } = useParams();
 
-  const settingOnClick = () => navigate("/vm/" + row["hostId"]);
+  const { data: kubernetesInfo } = useGetApiMyKubernetesClusterHostGetByIdQuery(
+    {
+      id: Number(kubernetesId),
+    },
+    { skip: !kubernetesId }
+  );
+  const settingOnClick = () => {
+    if ( !kubernetesInfo) return;
+    navigate(`/vm/${kubernetesInfo.hostProjectId}/${row["hostId"]}/specification`);
+  };
 
   const handleOpenDelete = (kuberNode: KubernetesNodeListResponse) => {
     setSelectedKuberNode(kuberNode);

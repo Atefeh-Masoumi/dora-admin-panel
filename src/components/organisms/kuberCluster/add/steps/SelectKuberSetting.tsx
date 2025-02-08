@@ -84,7 +84,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   };
 
   const isInRange = (num: number) => {
-    return num > 2 && num < 100;
+    return num > 1 && num < 100;
   };
 
   const addOne = () => {

@@ -57,7 +57,7 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   setDataCenter: () => {},
   osVersion: null,
   setOsVersion: () => {},
-  workersCount: 3,
+  workersCount: 2,
   setWorkersCount: () => {},
   kubernetesVersion: null,
   setKubernetesVersion: () => {},
@@ -96,7 +96,7 @@ export const AddKubernetesContextProvider: FC<
   );
   const [kubernetesVersion, setKubernetesVersion] =
     useState<DatacenterListResponse | null>(null);
-  const [workersCount, setWorkersCount] = useState(3);
+  const [workersCount, setWorkersCount] = useState(2);
   const [osVersion, setOsVersion] =
     useState<DatacenterImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
