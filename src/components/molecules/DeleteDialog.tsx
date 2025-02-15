@@ -82,7 +82,7 @@ export const DeleteDialog: FC<DeleteDialogPropsType> = ({
       navigator.clipboard
         .writeText(text)
         .then(() => {
-          // toast.success("متن با موفقیت کپی شد");
+           toast.success("متن با موفقیت کپی شد");
         })
         .catch((err) => {});
     } else {
