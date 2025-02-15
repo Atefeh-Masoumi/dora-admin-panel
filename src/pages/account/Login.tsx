@@ -20,16 +20,17 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Captcha } from "src/components/molecules/Captcha";
 import { useAppSelector } from "src/app/hooks";
 
-const formInitialValues = { email: "", password: "" };
+const formInitialValues = { email: "", password: "", captchaCode:"" };
 
 const formValidation = yup.object().shape({
   email: emailValidator.required("ایمیل الزامیست!"),
   password: passwordValidator.required("گذرواژه الزامیست!"),
+  captchaCode: yup.string().optional(),
 });
 
 const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [captchaCode, setCaptchaCode] = useState("");
+ 
   const [captchaKey, setCaptchaKey] = useState("");
   const [loginUser, { isLoading }] = usePostApiMyAccountLoginMutation();
 
@@ -38,7 +39,7 @@ const Login: FC = () => {
   const needCaptcha = useAppSelector((store) => store.auth?.captchaRequired);
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
-    { email, password },
+    { email, password,captchaCode },
     { setSubmitting }
   ) => {
     loginUser({
@@ -113,7 +114,8 @@ const Login: FC = () => {
               <Button color="secondary" sx={{ fontSize: 14 }} href="./forget">
                 رمز عبور خود را فراموش کرده اید؟
               </Button>
-              {needCaptcha && <Captcha setCaptchaKey={setCaptchaKey} />}
+              {needCaptcha && <Captcha setCaptchaKey={setCaptchaKey} />
+              }
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
                   loading={isLoading}
