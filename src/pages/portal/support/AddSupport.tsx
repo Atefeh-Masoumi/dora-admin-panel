@@ -117,9 +117,11 @@ const AddTicket: FC = () => {
     setUploading(true);
   };
 
-  const abortController = useRef<AbortController | undefined>();
+  const abortController = useRef<AbortController |  null>(null);
 
-  abortController.current = new AbortController();
+  if (!abortController.current) {
+    abortController.current = new AbortController();
+  }
 
   const submit = () => {
     if (!businessUnitId || !content || !title) {
