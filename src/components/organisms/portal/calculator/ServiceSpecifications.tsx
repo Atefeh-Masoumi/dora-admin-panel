@@ -1,4 +1,4 @@
-import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Box, Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
 import type { FC } from "react";
 import { useSearchParams } from "react-router-dom";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -15,7 +15,8 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
 }) => {
   const [searchParams] = useSearchParams();
   const tab = searchParams.get("tab");
-
+  const theme = useTheme();
+  
   return (
     <Paper
       elevation={0}
@@ -36,14 +37,14 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
           sx={{ mb: 1.5 }}
           fontWeight={700}
           align="center"
-          color={({ palette }) => palette.secondary.main}
+          color={theme.palette.grey[700]} 
         >
           مشخصات سرویس مورد نظر را انتخاب کنید
         </Typography>
         <Typography
           variant="button1"
           align="center"
-          color={({ palette }) => palette.grey[700]}
+          color={theme.palette.grey[700]} 
         >
           بعد از ایجاد سرویس می توانید مشخصات سرویس مورد نیاز خود را تغییر دهید.
         </Typography>
@@ -67,7 +68,7 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
                 step={step}
               />
               <Typography
-                color={({ palette }) => palette.grey[700]}
+                color={theme.palette.grey[700]} 
                 sx={{ width: "125px" }}
                 align="right"
               >
@@ -100,7 +101,7 @@ const ServiceSpecifications: FC<ServiceSpecificationsPropsType> = ({
                     step={step}
                   />
                   <Typography
-                    color={({ palette }) => palette.grey[700]}
+                    color={theme.palette.grey[700]} 
                     sx={{ width: "125px" }}
                     align="right"
                   >

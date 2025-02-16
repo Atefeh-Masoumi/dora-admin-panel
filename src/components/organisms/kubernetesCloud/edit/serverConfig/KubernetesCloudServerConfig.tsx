@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography, useTheme } from "@mui/material";
 import { FC, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ export const KubernetesCloudServerConfig: FC = () => {
   const [diskUnitPrice, setDiskUnitPrice] = useState(0);
   const [tenPodsUnitPrice, setTenPodsUnitPrice] = useState(0);
   const { kubernetesCloudId } = useParams();
-
+  const theme = useTheme()
   const { data: unitsPrice, isLoading: getUnitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.KubernetesCloud,
@@ -183,7 +183,7 @@ export const KubernetesCloudServerConfig: FC = () => {
                   step={step}
                 />
                 <Typography
-                  color={({ palette }) => palette.grey[700]}
+                color={theme.palette.grey[700]} 
                   sx={{ width: "125px" }}
                   align="right"
                 >

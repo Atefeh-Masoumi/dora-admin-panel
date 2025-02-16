@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -22,7 +22,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const [disk, setDisk] = useState(25);
 
   const { id: serverId } = useParams();
-
+  const theme = useTheme()
   const { data } = useGetApiMyObjectStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
@@ -109,7 +109,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
                       step={step}
                     />
                     <Typography
-                      color={({ palette }) => palette.grey[700]}
+                     color={theme.palette.grey[700]}
                       sx={{ width: "125px" }}
                       align="right"
                     >
