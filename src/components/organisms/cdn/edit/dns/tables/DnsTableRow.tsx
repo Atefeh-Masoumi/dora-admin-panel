@@ -7,7 +7,6 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { ProxyStatus } from "../ProxyStatus";
@@ -47,7 +46,7 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
     deleteDnsRecord({ id: Number(selectedDns?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Dns رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("Dns رکورد مورد نظر حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});

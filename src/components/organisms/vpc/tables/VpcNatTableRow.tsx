@@ -6,7 +6,6 @@ import {
   useDeleteApiMyVpcNatDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcNatTableStruct } from "./struct";
@@ -41,7 +40,7 @@ const VpcNatTableRow: FC<{ row: any }> = ({ row }) => {
     deleteVpcNatRecord({ id: Number(selectedVpcNat?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Nat رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("Nat رکورد مورد نظر حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});

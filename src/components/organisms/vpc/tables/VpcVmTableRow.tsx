@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useDeleteApiMyVmHostDeleteByIdMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcStatusIdentifier } from "src/constant/vpcStatus";
@@ -42,7 +41,7 @@ const VpcVmTableRow: FC<{ row: any }> = ({ row }) => {
     deleteVmRecord({ id: Number(selectedVm?.id) })
       .unwrap()
       .then(() => {
-        toast.success("رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("رکورد مورد نظر حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});
