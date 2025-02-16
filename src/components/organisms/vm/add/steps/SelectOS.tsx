@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { FC, useContext, useEffect, useState } from "react";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
@@ -176,8 +176,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({ hostProjectId }) => {
         {osDropDownsState.map((osDropDown, index) => {
           return (
             <Grid2
-              xs={12}
-              sm
+             size={{xs:12,sm:6}} 
               key={osDropDown.osId}
               sx={{
                 minWidth: { sm: 100 },

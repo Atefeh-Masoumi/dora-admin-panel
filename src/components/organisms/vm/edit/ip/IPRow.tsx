@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { FC, useState } from "react";
 import { DeleteSvg } from "src/components/atoms/svg-icons/DeleteSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { CircularProgress, IconButton, Typography } from "@mui/material";
 import { IPDeleteDialog } from "./dialog/IPDeleteDialog";
 
@@ -51,9 +51,7 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
         sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
         alignItems="center"
       >
-        <Grid2
-          xs={6}
-          sm={4}
+        <Grid2 size={{xs:6,sm:4}} 
           container
           alignItems="center"
           justifyContent="center"
@@ -62,9 +60,8 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
             {ip}
           </Typography>
         </Grid2>
-        <Grid2
-          xs={2.8}
-          sm={3.9}
+        <Grid2 size={{xs:2.8,sm:3.9}}
+          
           container
           alignItems="center"
           justifyContent="center"
@@ -75,9 +72,7 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
             <CancelIcon sx={{ color: "grey.700" }} />
           )}
         </Grid2>
-        <Grid2
-          xs={2.8}
-          sm={3.9}
+        <Grid2 size={{xs:2.8,sm:3.9}}
           container
           alignItems="center"
           justifyContent="center"

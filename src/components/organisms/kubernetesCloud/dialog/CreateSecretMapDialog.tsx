@@ -13,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -283,7 +283,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
             ایجاد Secret
           </DialogTitle>
           <Grid2 container spacing={1}>
-            <Grid2 xs={12} md={12}>
+            <Grid2 size={{xs:12,md:12}}>
               <DorsaTextField
                 dir="ltr"
                 fullWidth
@@ -293,7 +293,7 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 {...formik.getFieldProps("name")}
               />
             </Grid2>
-            <Grid2 xs={12} md={12}>
+            <Grid2 size={{xs:12,md:12}}>
               <Select
                 dir="ltr"
                 value={formik.values.secretTypeId}

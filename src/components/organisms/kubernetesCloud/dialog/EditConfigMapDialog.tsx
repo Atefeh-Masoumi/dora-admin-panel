@@ -11,7 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment } from "react";
 import { useParams } from "react-router-dom";
@@ -178,7 +178,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container>
-              <Grid2 xs={12} md={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <DorsaTextField
                   fullWidth
                   label="*name"
