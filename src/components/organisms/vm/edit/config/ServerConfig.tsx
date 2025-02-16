@@ -33,7 +33,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [ipAddress, setIpAddress] = useState(0);
   const theme = useTheme()
 
-  const { data: unitsPrice, isLoading: getUnitsPrice } =
+  const { data: unitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });

@@ -14,7 +14,6 @@ import {
 import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment } from "react";
-import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
@@ -40,7 +39,6 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
   openDialog,
   configData,
 }) => {
-  const { kubernetesCloudId } = useParams();
 
   const [editConfigMap, { isLoading: editConfigMapLoading }] =
     usePutApiMyKubernetesCloudConfigmapEditMutation();

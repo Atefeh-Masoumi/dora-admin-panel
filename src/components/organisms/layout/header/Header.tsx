@@ -45,7 +45,7 @@ const Header: FC<HeaderPropsType> = ({
   const { id: kubernetesClusterID } = useParams();
   const { projectId } = useParams();
   const vpcId = searchParams.get("vpcId");
-  const { kubernetesCloudId } = useParams();
+  
   const theme = useTheme()
   const goToCalculator = () => navigate("/portal/calculator");
 

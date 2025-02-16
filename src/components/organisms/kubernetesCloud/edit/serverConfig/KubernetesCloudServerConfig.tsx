@@ -26,7 +26,7 @@ export const KubernetesCloudServerConfig: FC = () => {
   const [tenPodsUnitPrice, setTenPodsUnitPrice] = useState(0);
   const { kubernetesCloudId } = useParams();
   const theme = useTheme()
-  const { data: unitsPrice, isLoading: getUnitsPrice } =
+  const { data: unitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.KubernetesCloud,
     });
