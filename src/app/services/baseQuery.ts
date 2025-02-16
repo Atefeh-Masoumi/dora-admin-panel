@@ -39,22 +39,17 @@ export const baseQuery: BaseQueryFn<
 ) => {
   const { auth } = getState() as RootStateType;
   try {
-    type AuthorizedRequest = Express.Request & { authorization: string };
-
-    const axiosHeader = () => {
-      let result = { ...headers } as AuthorizedRequest;
-      if (auth?.accessToken) {
-        result.authorization = `Bearer ${auth.accessToken}`;
-      }
-      return result;
-    };
-
     const result = await axios({
       url: baseUrl + url,
       method,
       data: body,
       params,
-      headers: axiosHeader(),
+      headers: {
+        ...headers,
+        ...(auth?.accessToken && {
+          authorization: `Bearer ${auth.accessToken}`,
+        }),
+      },
       ...(abortController && { signal: abortController.signal }),
       onUploadProgress,
     });
