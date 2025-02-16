@@ -22,7 +22,7 @@ type CreateOriginUserCertDialogPropsType = {
 export const CreateOriginUserCertDialog: FC<
   CreateOriginUserCertDialogPropsType
 > = ({ openDialog, handleClose, dnsId }) => {
-  const formInitialValues = { dnsId, keyPem: "", certPem: "" };
+  const formInitialValues = { keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiMyDnsCdnOriginCertCreateUserCertMutation();
