@@ -102,7 +102,7 @@ export const CreateVpcLoadBalancerDialog: FC<
       vpcHostId: Number(vpcId),
     });
 
-  const { data: vmHostList, isLoading: vmHostListLoading } =
+  const { data: vmHostList} =
     useGetApiMyVmHostListByVmProjectIdQuery({
       vmProjectId: Number(projectId),
     });
@@ -277,7 +277,7 @@ export const CreateVpcLoadBalancerDialog: FC<
                   ))}
                 </DorsaTextField>
               </Grid2>
-              <Grid2 xs={12}>
+              <Grid2 size={{xs:12}}>
                 <DorsaTextField
                   fullWidth
                   label="Server Pool Port"
