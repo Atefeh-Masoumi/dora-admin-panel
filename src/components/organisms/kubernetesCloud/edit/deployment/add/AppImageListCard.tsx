@@ -17,7 +17,7 @@ import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   GetApiMyKubernetesCloudImageListApiResponse,

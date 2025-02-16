@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Paper, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useLazyGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api";
 import {

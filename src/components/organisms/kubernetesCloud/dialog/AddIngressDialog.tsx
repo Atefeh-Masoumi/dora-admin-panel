@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment, MouseEventHandler, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   RuleModelRequest,

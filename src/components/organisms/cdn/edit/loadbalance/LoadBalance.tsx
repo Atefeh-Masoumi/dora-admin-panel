@@ -1,6 +1,6 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetApiMyDnsCdnRouteListByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { CreateLoadBalanceDialog } from "src/components/organisms/cdn/edit/loadbalance/dialogs/CreateLoadBalanceDialog";
 import LoadBalanceTableRow from "src/components/organisms/cdn/edit/loadbalance/tables/LoadBalanceTableRow";

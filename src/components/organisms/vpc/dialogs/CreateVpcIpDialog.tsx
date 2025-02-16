@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, MouseEventHandler, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePostApiMyVpcIpCreateMutation } from "src/app/services/api.generated";
 

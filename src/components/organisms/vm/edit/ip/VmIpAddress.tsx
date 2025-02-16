@@ -12,7 +12,7 @@ import {  useGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api.gene
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import IpRow from "./IPRow";
 import { Add } from "@mui/icons-material";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
 
 const LoadingSkeleton: FC = () => (

@@ -17,7 +17,7 @@ import {
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
 import { FC, MouseEventHandler } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";

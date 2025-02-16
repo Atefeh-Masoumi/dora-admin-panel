@@ -15,7 +15,7 @@ import {
 import { Grid2 } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {

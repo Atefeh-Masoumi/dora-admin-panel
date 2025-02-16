@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateConfigMapDialog } from "../../dialog/CreateConfigMapDialog";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";

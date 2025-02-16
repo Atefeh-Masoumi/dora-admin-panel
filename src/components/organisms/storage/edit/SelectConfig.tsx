@@ -10,7 +10,7 @@ import {
 } from "src/app/services/api.generated";
 
 import ReverseSlider from "src/components/atoms/ReverseSlider";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { Grid2 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";

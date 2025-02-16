@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateSnapshotDialog } from "./dialog/CreateSnapshotDialog";
 import SnapshotTableRow from "./table/SnapshotTableRow";

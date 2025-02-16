@@ -23,7 +23,7 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { Add, DeleteOutline } from "@mui/icons-material";
 
 type InitialValuesType = {

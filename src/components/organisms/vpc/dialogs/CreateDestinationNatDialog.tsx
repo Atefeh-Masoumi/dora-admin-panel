@@ -27,7 +27,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import { useFormik } from "formik";
 import { FC, useCallback } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import CloudImage from "src/assets/images/cloudDestination.png";
 import GatewayImage from "src/assets/images/gateway.png";
 import SwitchImage from "src/assets/images/switch.png";
