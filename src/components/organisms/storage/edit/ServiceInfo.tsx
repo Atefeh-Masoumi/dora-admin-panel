@@ -26,10 +26,10 @@ export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
     [getStorageDataFetching, getStorageDataLoading]
   );
 
-  const isActive = useMemo(
-    () => storageData?.statusId === 2,
-    [storageData?.statusId]
-  );
+  // const isActive = useMemo(
+  //   () => storageData?.statusId === 2,
+  //   [storageData?.statusId]
+  // );
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">

@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
-  CreateCdnEdgeUserCertModel,
   usePostApiMyDnsCdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";

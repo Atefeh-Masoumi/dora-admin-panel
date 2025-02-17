@@ -1,7 +1,6 @@
 import {
   Divider,
   Paper,
-  SelectChangeEvent,
   Skeleton,
   Stack,
   Typography,

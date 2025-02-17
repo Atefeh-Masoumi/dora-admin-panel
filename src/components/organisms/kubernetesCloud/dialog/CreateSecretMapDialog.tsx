@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   MenuItem,
@@ -19,10 +18,8 @@ import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePostApiMyKubernetesCloudSecretCreateMutation } from "src/app/services/api.generated";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 

@@ -197,11 +197,11 @@ export const CreateDestinationNatDialog: FC<
     []
   );
 
-  const { data: vpcNetworkList, isLoading: vpcNetworkListLoading } =
+  const { data: vpcNetworkList } =
     useGetApiMyVpcNetworkShortListByVpcHostIdQuery({
       vpcHostId: Number(vpcId),
     });
-  const { data: vpcHostGatewayList, isLoading: vpcIpListLoading } =
+  const { data: vpcHostGatewayList } =
     useGetApiMyVpcIpListByVpcHostIdQuery({
       vpcHostId: Number(vpcId),
     });

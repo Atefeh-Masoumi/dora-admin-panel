@@ -47,7 +47,7 @@ const AddKubernetes: FC = () => {
   const [getKubernetesPrice] =
     useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery();
 
-  const { data: vmBundlesList, isLoading: vmBundlesListLoading } =
+  const { data: vmBundlesList } =
     useGetApiMyPortalProductBundleKuberClusterListQuery();
 
   useEffect(() => {

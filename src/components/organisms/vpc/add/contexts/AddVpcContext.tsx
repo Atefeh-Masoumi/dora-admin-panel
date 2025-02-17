@@ -9,7 +9,6 @@ import {
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { NetworkItemsType } from "../steps/SelectVpcNetwork";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import {
   DatacenterListResponse,
   HypervisorListResponse,

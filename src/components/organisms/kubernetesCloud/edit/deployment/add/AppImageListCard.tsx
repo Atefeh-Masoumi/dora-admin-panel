@@ -1,10 +1,7 @@
 import {
-  Box,
   FormControl,
-  FormHelperText,
   Grid,
   InputLabel,
-  Link,
   MenuItem,
   Select,
   Typography,
@@ -16,7 +13,6 @@ import { staticImageCategoryList } from "src/constant/kubernetesCloud.constant";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { AppImageCard } from "./AppImageCard";
 import { FormikProps } from "formik";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams } from "react-router-dom";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
@@ -37,7 +33,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
   formik,
 }) => {
   const [secret, setSecret] = useState<number | null>();
-  const [hub, setHub] = useState<string | "">("");
+  // const [hub, setHub] = useState<string | "">("");
   const [selectedCategory, setSelectedCategory] = useState<{
     id: number;
     name: string;
@@ -45,7 +41,7 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
 
   const { kubernetesCloudId } = useParams();
 
-  const { data: secretList, isLoading: secretListLoading } =
+  const { data: secretList } =
     useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
       {
         namespaceId: Number(kubernetesCloudId),

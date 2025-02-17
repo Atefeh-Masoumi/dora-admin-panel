@@ -21,7 +21,6 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { decodebase64 } from "src/utils/decodebase64";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 import { toast } from "react-toastify";
 

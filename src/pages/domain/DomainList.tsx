@@ -15,7 +15,6 @@ const DomainList: FC = () => {
   const {
     data,
     isLoading: getDataLoading,
-    refetch,
     isFetching,
   } = useGetApiMyDomainHostListQuery();
 
