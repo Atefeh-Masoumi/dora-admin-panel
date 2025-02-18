@@ -21,14 +21,16 @@ export const RefreshButton: FC<RefreshButtonPropsType> = ({
   return (
     <div>
       <Tooltip title="به روزرسانی" placement="top">
-        <IconButton disabled={isFetching} onClick={handleButtonClick}>
-          <RefreshIcon
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              transition: "transform 0.7s ease",
-            }}
-          />
-        </IconButton>
+        <span>
+          <IconButton disabled={isFetching} onClick={handleButtonClick}>
+            <RefreshIcon
+              style={{
+                transform: `rotate(${rotation}deg)`,
+                transition: "transform 0.7s ease",
+              }}
+            />
+          </IconButton>
+        </span>
       </Tooltip>
     </div>
   );
