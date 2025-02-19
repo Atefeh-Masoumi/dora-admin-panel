@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -28,6 +27,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import DomainIcon from "@mui/icons-material/Domain";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
@@ -205,7 +205,6 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createVmProjectLoading || editVmProjectLoading}
                 variant="contained"

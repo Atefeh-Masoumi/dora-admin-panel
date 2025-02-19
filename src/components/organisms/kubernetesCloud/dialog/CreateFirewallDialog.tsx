@@ -14,7 +14,6 @@ import { useFormik } from "formik";
 import { Stack } from "@mui/system";
 import { FC, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { LoadingButton } from "@mui/lab";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -24,6 +23,7 @@ import {
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const options = [
   { id: 1, label: "TCP", isTcp: true },
@@ -191,7 +191,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={isLoading}
               variant="contained"

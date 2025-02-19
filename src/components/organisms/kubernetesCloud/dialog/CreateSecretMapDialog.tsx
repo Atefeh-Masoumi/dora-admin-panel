@@ -564,7 +564,6 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createSecretMapLoading}
                 variant="contained"

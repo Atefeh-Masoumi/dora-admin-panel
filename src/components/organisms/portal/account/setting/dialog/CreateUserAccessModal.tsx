@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -30,6 +29,7 @@ import {
   roleAccessType,
 } from "src/constant/accessModal.constant";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
@@ -434,7 +434,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createUserIsLoading}
                 variant="contained"

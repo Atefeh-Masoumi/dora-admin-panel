@@ -6,7 +6,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { AuthTemplate } from "src/components/templates/AuthTemplate";
 import { toast } from "react-toastify";
@@ -19,6 +18,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Captcha } from "src/components/molecules/Captcha";
 import { useAppSelector } from "src/app/hooks";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const formInitialValues = { email: "", password: "", captchaCode:"" };
 
@@ -120,7 +120,6 @@ const Login: FC = () => {
                 <LoadingButton
                   loading={isLoading}
                   variant="contained"
-                  component="button"
                   type="submit"
                   fullWidth
                   sx={{ py: 1.5 }}

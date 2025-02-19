@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
 import { Grid2 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
@@ -28,6 +27,7 @@ import {
   DestinationModel,
   usePutApiMyDnsCdnRouteEditByIdMutation,
 } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   id: number;
@@ -344,7 +344,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                       انصراف
                     </Button>
                     <LoadingButton
-                      component="button"
                       type="submit"
                       loading={editLoadBalanceLoading}
                       variant="contained"

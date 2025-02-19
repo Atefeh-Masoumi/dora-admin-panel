@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -25,6 +24,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { Add, DeleteOutline } from "@mui/icons-material";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   ingressId: number;
@@ -220,7 +220,6 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createIngressRuleLoading}
                 variant="contained"

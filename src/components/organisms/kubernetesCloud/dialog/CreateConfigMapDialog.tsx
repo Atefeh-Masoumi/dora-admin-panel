@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -19,6 +18,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import * as yup from "yup";
 import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   name: string | null;
@@ -227,7 +227,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createConfigMapLoading}
                 variant="contained"

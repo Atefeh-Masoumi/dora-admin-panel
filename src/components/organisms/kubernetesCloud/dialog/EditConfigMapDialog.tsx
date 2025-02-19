@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -18,6 +17,7 @@ import { toast } from "react-toastify";
 import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import LoadingButton from "src/components/atoms/LoadingButton";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -276,7 +276,6 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={editConfigMapLoading}
                   variant="contained"

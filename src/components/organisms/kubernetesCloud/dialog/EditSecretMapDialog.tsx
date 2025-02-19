@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -23,6 +22,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 import { toast } from "react-toastify";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   alias?: string | null;
@@ -548,7 +548,6 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={editSecretMapLoading}
                   variant="contained"

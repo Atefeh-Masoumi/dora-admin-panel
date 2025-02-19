@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
@@ -28,6 +27,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import * as yup from "yup";
 import { SECRET_TYPES_ENUM } from "../../home/constants/secretTypesConstants";
 import { SelectIngressRule } from "../edit/ingress/SelectIngressRule";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const ProtocolTypeItems = [
   { id: 4, name: "HTTP" },
@@ -293,7 +293,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"

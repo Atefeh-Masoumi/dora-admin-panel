@@ -4,14 +4,14 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { LoadingButton } from "@mui/lab";
-import {
+ import {
   CreateCdnOriginUserCertModel,
   usePostApiMyDnsCdnOriginCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateOriginUserCertDialogPropsType = {
   openDialog: boolean;
@@ -115,7 +115,6 @@ export const CreateOriginUserCertDialog: FC<
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={isLoading}
                   variant="contained"

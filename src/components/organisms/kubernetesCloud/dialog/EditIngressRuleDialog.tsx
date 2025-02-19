@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -23,6 +22,7 @@ import {
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   ingressRuleId: number;
@@ -157,7 +157,6 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={editIngressRuleLoading}
                 variant="contained"
