@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes,  useParams } from "react-router-dom";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
   MainTemplate,
@@ -15,11 +15,11 @@ import AddStorageContextProvider from "src/components/organisms/storage/add/cont
 import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
-import EditServerContextProvider from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 import { NavigateSetter } from "src/utils/navigate";
+import { EditVmWrapper } from "./VmRouteWraper";
 
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
@@ -111,7 +111,9 @@ const EditKubernetesCloudDeployment = lazy(
   () =>
     import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
-const mainTemplate = (
+
+
+export const  mainTemplate = (
   PageComponent: FC<any>,
   templateProps?: Omit<MainTemplatePropsType, "children">,
   PageComponentWrapper?: FC<any>
@@ -367,104 +369,33 @@ const Router: FC = () => {
               AddServerContextProvider
             )}
           />
-         
-          <Route
+            <Route
             path="/vm/:projectId/:id/specification"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/analytics"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/ip"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/rebuild"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/config"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/snapshot"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           <Route
             path="/vm/:projectId/:id/firewall"
-            element={mainTemplate(
-              EditVm,
-              {
-                link: {
-                  text: "بازگشت به مدیریت سرور ابری",
-                  url: "/vm/:projectId/:id",
-                },
-                hideSidebar: false,
-              },
-              EditServerContextProvider
-            )}
+            element={<EditVmWrapper />}
           />
           {/* ======================================= Kubernetes Cluster ======================================= */}
           <Route
