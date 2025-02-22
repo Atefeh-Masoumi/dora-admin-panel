@@ -2,7 +2,6 @@ import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcIpTableStruct } from "./struct";
@@ -41,7 +40,7 @@ const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
     deleteVpcIpRecord({ id: Number(selectedVpcIp?.id) })
       .unwrap()
       .then(() => {
-        toast.success("IP مورد نظر حذف شد", { icon: Success });
+        toast.success("IP مورد نظر حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});

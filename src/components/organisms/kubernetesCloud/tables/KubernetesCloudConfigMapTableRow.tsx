@@ -1,13 +1,6 @@
 import {
-  Collapse,
   IconButton,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,14 +12,10 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   kubernetesCloudFireWallTableStruct,
-  kubernetesConfigListTableStruct,
 } from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Edit } from "src/components/atoms/svg-icons/EditSvg";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -38,9 +27,9 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   row: any;
   rowBgColor: any;
 }> = ({ row, rowBgColor }) => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const id = row.id!;
-  const configList = row.configMaps! || [];
+  // const configList = row.configMaps! || [];
 
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [openEditConfigMapDialog, setOpenEditConfigMapDialog] =
@@ -72,10 +61,10 @@ export const KubernetesCloudConfigMapTableRow: FC<{
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
-    setSelectedKubernetesCloudConfigMap(config);
-    setOpenEditConfigMapDialog(true);
-  }
+  // function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
+  //   setSelectedKubernetesCloudConfigMap(config);
+  //   setOpenEditConfigMapDialog(true);
+  // }
 
   function handleCloseEditConfigMapDialog() {
     setOpenEditConfigMapDialog(false);

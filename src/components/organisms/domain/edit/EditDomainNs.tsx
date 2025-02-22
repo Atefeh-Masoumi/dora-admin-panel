@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { Divider, Paper, Grid, Stack, Typography } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
@@ -11,6 +11,7 @@ import {
   usePutApiMyDomainHostChangeNsMutation,
 } from "src/app/services/api.generated";
 import { LoadingButton } from "@mui/lab";
+import { useTheme } from "@mui/material";
 
 type EditDomainNsPropsType = {};
 
@@ -18,7 +19,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
   const [nameServer1, setNameServer1] = useState("");
   const [nameServer2, setNameServer2] = useState("");
   const { id } = useParams();
-
+  const theme = useTheme();
   const {
     data: domainData,
     isLoading: getDataLoading,
@@ -81,7 +82,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
 
   return (
     <Grid2 container spacing={3}>
-      <Grid2 xs={12}>
+      <Grid2 size={{xs:12}}>
         <Paper
           component={Stack}
           rowGap={2}
@@ -109,7 +110,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
                     transform: "rotate(180deg)",
                     "&>path:first-of-type": {
                       opacity: 1,
-                      stroke: ({ palette }) => palette.grey[700],
+                      stroke: theme.palette.grey[700],
                       strokeWidth: 1,
                       fill: "transparent",
                     },
@@ -117,7 +118,7 @@ export const EditDomainNs: FC<EditDomainNsPropsType> = () => {
                 />
                 <Typography
                   align="center"
-                  sx={{ color: ({ palette }) => palette.grey[700] }}
+                  sx={{ color: theme.palette.grey[700] }}
                 >
                   تغییر NS کمی زمانبر است.
                 </Typography>

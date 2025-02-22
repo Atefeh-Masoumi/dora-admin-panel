@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { FC, useMemo } from "react";
 import { useGetApiMyPortalProductBundleVpcListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";

@@ -4,7 +4,7 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import Dropzone from "src/components/molecules/Dropzone";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { usePostApiMyPortalIssueItemCreateMutation } from "src/app/services/api.generated";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 type HeaderPropsType = {

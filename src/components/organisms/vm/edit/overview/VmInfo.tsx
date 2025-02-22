@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { ServerInfoActions } from "./serverInfoSections/ServerInfoActions";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 type VmInfoPropsType = {};
 

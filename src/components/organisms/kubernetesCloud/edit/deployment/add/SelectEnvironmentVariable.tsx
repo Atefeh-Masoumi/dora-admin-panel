@@ -10,7 +10,7 @@ import {
   useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
   useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getResourceItems } from "src/utils/getResourceItems.utils";
 import {
   KeyListInResourceType,

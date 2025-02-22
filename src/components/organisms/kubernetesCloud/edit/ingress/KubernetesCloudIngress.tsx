@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { kubernetesCloudIngressTableStruct } from "../../tables/struct";
 import { AddIngressDialog } from "../../dialog/AddIngressDialog";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
 
 type KubernetesCloudIngressPropsType = {};

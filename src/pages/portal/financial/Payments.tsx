@@ -36,7 +36,7 @@ const Payments: FC = () => {
         const a = document.createElement("a");
         a.href = url;
         a.target = "_blank";
-        a.download = "export.xlsx" || "";
+        a.download = "export.xlsx";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

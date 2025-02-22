@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, Fragment, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import {
   CartesianGrid,
   Line,

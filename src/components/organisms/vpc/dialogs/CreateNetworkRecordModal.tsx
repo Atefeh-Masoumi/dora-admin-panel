@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, MouseEventHandler } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { usePostApiMyVpcNetworkCreateMutation } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { formikOnSubmitType } from "src/types/form.type";

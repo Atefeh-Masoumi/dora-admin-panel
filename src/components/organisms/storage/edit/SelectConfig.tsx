@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Divider, Paper, Stack, Typography } from "@mui/material";
+import { Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -10,8 +10,8 @@ import {
 } from "src/app/services/api.generated";
 
 import ReverseSlider from "src/components/atoms/ReverseSlider";
-import { useParams } from "react-router";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { useParams } from "react-router-dom";
+import { Grid2 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
@@ -22,7 +22,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const [disk, setDisk] = useState(25);
 
   const { id: serverId } = useParams();
-
+  const theme = useTheme()
   const { data } = useGetApiMyObjectStorageHostGetByIdQuery({
     id: serverId ? +serverId : 0,
   });
@@ -75,7 +75,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   return (
     <>
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12} md={10}>
+        <Grid2 size={{xs:12,md:10}}>
           <Paper
             component={Stack}
             rowGap={2}
@@ -109,7 +109,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
                       step={step}
                     />
                     <Typography
-                      color={({ palette }) => palette.grey[700]}
+                     color={theme.palette.grey[700]}
                       sx={{ width: "125px" }}
                       align="right"
                     >

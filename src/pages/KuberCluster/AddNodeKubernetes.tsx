@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { NodeConfig } from "src/components/organisms/kuberCluster/edit/editNodes/addNode/NodeConfig";
 import { useAppSelector } from "src/app/hooks";
 import { usePostApiMyKubernetesClusterNodeCreateMutation } from "src/app/services/api.generated";
@@ -50,10 +50,10 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
 
   return (
     <Grid2 container spacing={4}>
-      <Grid2 xs={12} md={8}>
+      <Grid2 size={{xs:12,md:8}}>
         <NodeConfig />
       </Grid2>
-      <Grid2 xs={12} md={4} sx={{ position: "sticky", top: 0 }}>
+      <Grid2 size={{xs:12,md:4}} sx={{ position: "sticky", top: 0 }}>
         <ServiceReceipt
           receiptType={ReceiptTypeEnum.PREDEFINED_BUNDLE}
           submitHandler={onSubmitClick}

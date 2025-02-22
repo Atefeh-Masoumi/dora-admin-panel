@@ -3,7 +3,6 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { useDeleteApiMyVpcNetworkDeleteByIdMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcNetworkStruct } from "./struct";
@@ -35,7 +34,7 @@ const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
     deleteNetworkRecord({ id: Number(selectedNetwork?.id) })
       .unwrap()
       .then(() => {
-        toast.success("Network رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("Network رکورد مورد نظر حذف شد");
       })
       .catch(() => {});
 

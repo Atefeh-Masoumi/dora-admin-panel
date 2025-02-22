@@ -54,7 +54,7 @@ export const CreateNetworkModal: FC<CreateNetworkDialogPropsType> = ({
 
   const onSubmit: formikOnSubmitType<NetworkItemsType> = (values) => {
     setSelectedNetworkList([...selectedNetworkList, { ...values }]);
-    closeDialogHandler({}, "escapeKeyDown" || "backdropClick");
+    closeDialogHandler({}, "escapeKeyDown" );
   };
 
   const initialValues: NetworkItemsType = {

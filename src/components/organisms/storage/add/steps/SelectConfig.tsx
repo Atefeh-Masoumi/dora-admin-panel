@@ -1,5 +1,5 @@
 import { FC, useContext, useMemo } from "react";
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import AddStorageTableRow from "../tables/AddStorageTableRow";
 import { addStorageTableStruct } from "../tables/struct";

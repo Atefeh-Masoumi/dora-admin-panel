@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetApiMyVpcLoadBalanceListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { EmptyTable } from "src/components/molecules/EmptyTable";

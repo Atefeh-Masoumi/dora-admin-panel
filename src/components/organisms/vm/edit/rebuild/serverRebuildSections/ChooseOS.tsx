@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import {
   DatacenterImageListResponse,
@@ -175,9 +175,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
           ))}
         {osDropDownsState.map((osDropDown, index) => {
           return (
-            <Grid2
-              xs={12}
-              sm
+            <Grid2 size={{xs:12, sm:6}}
               key={osDropDown.osId}
               sx={{
                 minWidth: { sm: 100 },

@@ -7,6 +7,7 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
@@ -44,8 +45,8 @@ const Header: FC<HeaderPropsType> = ({
   const { id: kubernetesClusterID } = useParams();
   const { projectId } = useParams();
   const vpcId = searchParams.get("vpcId");
-  const { kubernetesCloudId } = useParams();
-
+  
+  const theme = useTheme()
   const goToCalculator = () => navigate("/portal/calculator");
 
   const closeMenuHandler = () => setAnchorEl(null);
@@ -233,7 +234,7 @@ const Header: FC<HeaderPropsType> = ({
                   fontWeight={700}
                   whiteSpace="nowrap"
                   lineHeight={1}
-                  color={({ palette }) => palette.grey[700]}
+                  color={theme.palette.grey[700]} 
                 >
                   {title}
                 </Typography>

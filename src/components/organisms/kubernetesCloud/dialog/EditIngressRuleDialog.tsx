@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -12,7 +11,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useMemo } from "react";
 import {
@@ -22,7 +21,8 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   ingressRuleId: number;
@@ -108,7 +108,7 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
           </DialogTitle>
           <Divider sx={{ marginTop: "20px !important" }} />
           <Grid2 container spacing={1}>
-            <Grid2 xs={12} md={6}>
+            <Grid2 size={{xs:12,md:6}}>
               <FormControl fullWidth size="small">
                 <InputLabel>Port</InputLabel>
                 <Select
@@ -133,7 +133,7 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
                 </Select>
               </FormControl>
             </Grid2>
-            <Grid2 xs={12} md={6}>
+            <Grid2 size={{xs:12,md:6}}>
               <DorsaTextField
                 dir="ltr"
                 fullWidth
@@ -157,7 +157,6 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={editIngressRuleLoading}
                 variant="contained"

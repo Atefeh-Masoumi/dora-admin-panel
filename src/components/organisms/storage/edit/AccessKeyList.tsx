@@ -8,9 +8,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { FC, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery,
@@ -61,7 +61,7 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
 
   return (
     <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-      <Grid2 xs={12} md={10}>
+      <Grid2 size={{xs:12,md:10}}>
         <Paper
           component={Stack}
           rowGap={2}

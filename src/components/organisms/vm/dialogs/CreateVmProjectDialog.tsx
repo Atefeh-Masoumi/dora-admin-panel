@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -27,9 +26,8 @@ import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextFiel
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
 import DomainIcon from "@mui/icons-material/Domain";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
   projectId?: VmProjectListResponse["id"];
@@ -45,7 +43,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
     usePostApiMyHostProjectCreateMutation();
   const [editVmProject, { isLoading: editVmProjectLoading }] =
     usePutApiMyHostProjectEditByIdMutation();
-  const { data: datacenterList, isLoading: datacenterListLoading } =
+  const { data: datacenterList } =
     useGetApiMyDatacenterListQuery();
 
   const initialValues: VmProjectCreateModel = {
@@ -112,16 +110,16 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
     formik.resetForm();
   };
 
-  const getImageByName = (name: string) => {
-    switch (name) {
-      case "asiatech":
-        return asiatechImage;
-      case "mobinnet":
-        return mobinNetImage;
-      default:
-        return "";
-    }
-  };
+  // const getImageByName = (name: string) => {
+  //   switch (name) {
+  //     case "asiatech":
+  //       return asiatechImage;
+  //     case "mobinnet":
+  //       return mobinNetImage;
+  //     default:
+  //       return "";
+  //   }
+  // };
 
   return (
     <Dialog
@@ -207,7 +205,6 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createVmProjectLoading || editVmProjectLoading}
                 variant="contained"

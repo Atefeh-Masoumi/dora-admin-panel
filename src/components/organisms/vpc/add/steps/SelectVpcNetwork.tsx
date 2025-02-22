@@ -1,7 +1,6 @@
-import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { FC, useContext, useState } from "react";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateNetworkModal } from "../../dialogs/CreateNetworkModal";
 import VpcNetworkTableRow from "../../tables/vpcNetworkTableRow";
 import { vpcTableNetworkStruct } from "../../tables/vpcTableNetworkStruct";

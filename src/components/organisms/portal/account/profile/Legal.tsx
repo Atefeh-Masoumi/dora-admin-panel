@@ -16,7 +16,6 @@ import { FC, MouseEventHandler, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetApiMyAccountCustomerGetQuery,
-  useGetApiMyAccountProfileGetQuery,
   usePutApiMyAccountCustomerConvertToLegalMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -26,7 +25,6 @@ import { p2e } from "src/utils/p2e.utils";
 import { onlyNumber } from "src/utils/priceToPersian";
 import * as yup from "yup";
 import { LegalPersonalityDetail } from "./LegalPersonality";
-import moment from "moment";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("نام سازمان الزامی است"),

@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -13,7 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
 import { usePutApiMyKubernetesCloudSecretEditMutation } from "src/app/services/api.generated";
@@ -21,9 +20,9 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { decodebase64 } from "src/utils/decodebase64";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 import { toast } from "react-toastify";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   alias?: string | null;
@@ -241,7 +240,7 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container spacing={1}>
-              <Grid2 xs={12} md={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <DorsaTextField
                   disabled
                   fullWidth
@@ -250,7 +249,7 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
                   value={secretData?.name}
                 />
               </Grid2>
-              <Grid2 xs={12} md={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <Select
                   disabled
                   size="small"
@@ -549,7 +548,6 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={editSecretMapLoading}
                   variant="contained"

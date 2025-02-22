@@ -12,7 +12,6 @@ import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import {
   createDnsRecordType,
@@ -31,6 +30,7 @@ import {
   usePutApiMyDnsCdnDnsRecordEditByIdMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateRecordDialogPropsType = {
   id?: number;
@@ -341,7 +341,6 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={createDnsRecordLoading || editDnsRecordLoading}
                   variant="contained"

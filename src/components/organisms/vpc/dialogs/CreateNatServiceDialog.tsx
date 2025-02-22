@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, MouseEventHandler } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { Stack } from "@mui/system";

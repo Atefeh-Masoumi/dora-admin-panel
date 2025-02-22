@@ -1,5 +1,5 @@
 import { FC, useContext, ChangeEvent } from "react";
-import { Paper, Stack, Typography } from "@mui/material";
+import {  Stack, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";

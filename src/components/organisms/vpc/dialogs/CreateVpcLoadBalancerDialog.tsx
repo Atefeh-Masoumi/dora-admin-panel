@@ -12,10 +12,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -102,7 +102,7 @@ export const CreateVpcLoadBalancerDialog: FC<
       vpcHostId: Number(vpcId),
     });
 
-  const { data: vmHostList, isLoading: vmHostListLoading } =
+  const { data: vmHostList} =
     useGetApiMyVmHostListByVmProjectIdQuery({
       vmProjectId: Number(projectId),
     });
@@ -210,7 +210,7 @@ export const CreateVpcLoadBalancerDialog: FC<
         <form onSubmit={formik.handleSubmit} autoComplete="on">
           <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
             <Grid2 container spacing={3}>
-              <Grid2 xs={12} sm={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <DorsaTextField
                   select
                   fullWidth
@@ -244,7 +244,7 @@ export const CreateVpcLoadBalancerDialog: FC<
                   ))}
                 </DorsaTextField>
               </Grid2>
-              <Grid2 xs={12} sm={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <DorsaTextField
                   select
                   fullWidth
@@ -277,7 +277,7 @@ export const CreateVpcLoadBalancerDialog: FC<
                   ))}
                 </DorsaTextField>
               </Grid2>
-              <Grid2 xs={12}>
+              <Grid2 size={{xs:12}}>
                 <DorsaTextField
                   fullWidth
                   label="Server Pool Port"
