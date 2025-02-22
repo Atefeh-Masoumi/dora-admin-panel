@@ -22,6 +22,7 @@ export const baseQuery: BaseQueryFn<
     headers?: AxiosRequestConfig["headers"];
     abortController?: AbortController;
     onUploadProgress?: AxiosRequestConfig["onUploadProgress"];
+    timeout?:number
   },
   unknown,
   unknown
@@ -34,6 +35,7 @@ export const baseQuery: BaseQueryFn<
     headers,
     abortController,
     onUploadProgress,
+    timeout= 500000,
   },
   { getState, dispatch }
 ) => {
@@ -50,12 +52,18 @@ export const baseQuery: BaseQueryFn<
           authorization: `Bearer ${auth.accessToken}`,
         }),
       },
+      timeout,
       ...(abortController && { signal: abortController.signal }),
       onUploadProgress,
     });
     return { data: result.data };
   } catch (axiosError) {
     const e = axiosError as AxiosError<string, any>;
+    
+    if (e.code === 'ECONNABORTED') {
+      toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
+      return { error: { status: 408, errorMessage: 'Request timeout' } };
+    }
 
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);
