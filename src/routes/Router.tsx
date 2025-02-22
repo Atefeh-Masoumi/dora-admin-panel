@@ -1,5 +1,5 @@
 import { FC, lazy, Suspense } from "react";
-import { BrowserRouter, Navigate, Route, Routes,  useParams } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
   MainTemplate,
