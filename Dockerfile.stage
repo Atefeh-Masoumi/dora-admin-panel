@@ -5,7 +5,7 @@ WORKDIR /app
 # Remove node_modules and yarn.lock if they exist
 RUN rm -rf node_modules package-lock.json* yarn.lock
 
-RUN npm install --global yarn
+#RUN npm install --global yarn
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json* ./
 
