@@ -2,10 +2,6 @@
 FROM repo.dorsacloud.com/docker/node:22-alpine AS builder
 WORKDIR /app
 
-# Remove node_modules and yarn.lock if they exist
-RUN rm -rf node_modules package-lock.json* yarn.lock
-
-#RUN npm install --global yarn
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json* ./
 
