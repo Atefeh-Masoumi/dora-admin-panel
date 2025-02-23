@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM repo.dorsa.cloud/docker/node:22-alpine AS builder
+FROM repo.dorsacloud.com/docker/node:22-alpine AS builder
 WORKDIR /app
 
 # Remove node_modules and yarn.lock if they exist
@@ -22,7 +22,7 @@ ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN yarn run build
 
 # Stage 2: Production stage
-FROM repo.dorsa.cloud/docker/nginx:1.25-alpine
+FROM repo.dorsacloud.com/docker/nginx:1.25-alpine
 
 # Set the working directory
 WORKDIR /usr/share/nginx/html
