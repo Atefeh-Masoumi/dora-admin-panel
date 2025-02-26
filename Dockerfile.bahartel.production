@@ -1,6 +1,6 @@
 # Stage 1
 #FROM node:18-bullseye-slim AS builder
-FROM repo.dorsacloud.com/docker/node:22-alpine AS builder
+FROM repo.dorsa.cloud/docker/node:22-alpine AS builder
 WORKDIR /app
 
 COPY package.json  ./
@@ -16,7 +16,7 @@ ENV REACT_APP_PRODUCTION_URL_V1="https://my.baharcloud.com"
 RUN yarn run build
 # Stage 2
 #FROM nginx:1.25-alpine
-FROM repo.dorsacloud.com/docker/nginx:1.25-alpine
+FROM repo.dorsa.cloud/docker/nginx:1.25-alpine
 #FROM hub.hamdocker.ir/nginx:1.25-alpine
 
 WORKDIR /usr/share/nginx/html
