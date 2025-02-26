@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   AlertTitle,
@@ -29,6 +28,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { BlurBackdrop } from "../atoms/BlurBackdrop";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { DorsaTextField } from "../atoms/DorsaTextField";
+import LoadingButton from "../atoms/LoadingButton";
 
 type DeleteDialogPropsType = DialogProps & {
   keyTitle: string;

@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { FC, useContext, useEffect, useState } from "react";
 import { UbuntuSvg } from "src/components/atoms/svg-icons/UbuntuSvg";
 import { WindowsSvg } from "src/components/atoms/svg-icons/WindowsSvg";
@@ -16,7 +16,6 @@ import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
-import { HYPERVISOR_ENUM } from "src/types/hypervisorEnum";
 import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
@@ -24,8 +23,7 @@ import {
 import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 
 type SelectOSPropsType = {
-  datacenterId?: number | null;
-  hostProjectId?: number | null;
+  hostProjectId: number;
 };
 
 type OsDropDownType = {
@@ -36,17 +34,14 @@ type OsDropDownType = {
   isSelected: boolean;
 };
 
-export const SelectOS: FC<SelectOSPropsType> = ({
-  datacenterId,
-  hostProjectId,
-}) => {
+export const SelectOS: FC<SelectOSPropsType> = ({ hostProjectId }) => {
   const { setOsVersion: setOsImage } = useContext(AddServerContext);
 
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
-      datacenterId: datacenterId || 0,
+      datacenterId: 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hostProjectId: hostProjectId || 0,
+      hostProjectId: hostProjectId,
     }
   );
 
@@ -180,8 +175,7 @@ export const SelectOS: FC<SelectOSPropsType> = ({
         {osDropDownsState.map((osDropDown, index) => {
           return (
             <Grid2
-              xs={12}
-              sm
+             size={{xs:12,sm:6}} 
               key={osDropDown.osId}
               sx={{
                 minWidth: { sm: 100 },

@@ -7,12 +7,12 @@ import {
   Skeleton,
   Button,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import {  useGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import IpRow from "./IPRow";
 import { Add } from "@mui/icons-material";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
 
 const LoadingSkeleton: FC = () => (
@@ -22,12 +22,11 @@ const LoadingSkeleton: FC = () => (
     alignItems="center"
     height={56}
   >
-    <Grid2 xs={6} sm={4} container alignItems="center" justifyContent="center">
+    <Grid2 size={{ xs:6, sm:4}} container alignItems="center" justifyContent="center">
       <Skeleton width={120} />
     </Grid2>
     <Grid2
-      xs={2.9}
-      sm={4}
+      size={{xs:2.9 ,sm:4}}
       container
       alignItems="center"
       justifyContent="center"
@@ -35,8 +34,7 @@ const LoadingSkeleton: FC = () => (
       <Skeleton variant="circular" width={25} height={25} />
     </Grid2>
     <Grid2
-      xs={2.9}
-      sm={3.9}
+     size={{ xs:2.9,sm:3.9}}
       container
       alignItems="center"
       justifyContent="center"
@@ -102,7 +100,7 @@ export const VmIpAddress: FC = () => {
         </Stack>
         <br />
         <Grid2 container spacing={2} sx={{ p: 1 }}>
-          <Grid2 xs={12} md={6}>
+          <Grid2 size={{xs:12, md:6}}>
             <Paper
               component={Stack}
               direction="column"
@@ -115,17 +113,17 @@ export const VmIpAddress: FC = () => {
               </Typography>
               <Divider />
               <Grid2 container alignItems="center">
-                <Grid2 xs={6} sm={4}>
+                <Grid2 size={{xs:6, sm:4}}>
                   <Typography color="grey.700" align="center">
                     آدرس IP
                   </Typography>
                 </Grid2>
-                <Grid2 xs={3} sm={3.9}>
+                <Grid2 size={{xs:3, sm:3.9}}>
                   <Typography color="grey.700" align="center">
                     Primary
                   </Typography>
                 </Grid2>
-                <Grid2 xs={3} sm={3.9} />
+                <Grid2 size={{xs:3, sm:3.9}} />
               </Grid2>
               {isLoading ? (
                 <LoadingSkeleton />
@@ -138,7 +136,7 @@ export const VmIpAddress: FC = () => {
               )}
             </Paper>
           </Grid2>
-          <Grid2 xs={12} md={6}>
+          <Grid2 size={{xs:12, md:6}}>
             <Paper
               component={Stack}
               direction="column"
@@ -151,17 +149,17 @@ export const VmIpAddress: FC = () => {
               </Typography>
               <Divider />
               <Grid2 container alignItems="center">
-                <Grid2 xs={6} sm={4}>
+                <Grid2 size={{xs:6, sm:4}}>
                   <Typography color="grey.700" align="center">
                     آدرس IP
                   </Typography>
                 </Grid2>
-                <Grid2 xs={3} sm={3.9}>
+                <Grid2 size={{xs:3, sm:3.9}}>
                   <Typography color="grey.700" align="center">
                     Primary
                   </Typography>
                 </Grid2>
-                <Grid2 xs={3} sm={3.9} />
+                <Grid2 size={{xs:3, sm:3.9}} />
               </Grid2>
               {isLoading ? (
                 <LoadingSkeleton />

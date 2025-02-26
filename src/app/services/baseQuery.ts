@@ -22,6 +22,7 @@ export const baseQuery: BaseQueryFn<
     headers?: AxiosRequestConfig["headers"];
     abortController?: AbortController;
     onUploadProgress?: AxiosRequestConfig["onUploadProgress"];
+    timeout?:number
   },
   unknown,
   unknown
@@ -34,33 +35,35 @@ export const baseQuery: BaseQueryFn<
     headers,
     abortController,
     onUploadProgress,
+    timeout= 500000,
   },
   { getState, dispatch }
 ) => {
   const { auth } = getState() as RootStateType;
   try {
-    type AuthorizedRequest = Express.Request & { authorization: string };
-
-    const axiosHeader = () => {
-      let result = { ...headers } as AuthorizedRequest;
-      if (auth?.accessToken) {
-        result.authorization = `Bearer ${auth.accessToken}`;
-      }
-      return result;
-    };
-
     const result = await axios({
       url: baseUrl + url,
       method,
       data: body,
       params,
-      headers: axiosHeader(),
+      headers: {
+        ...headers,
+        ...(auth?.accessToken && {
+          authorization: `Bearer ${auth.accessToken}`,
+        }),
+      },
+      timeout,
       ...(abortController && { signal: abortController.signal }),
       onUploadProgress,
     });
     return { data: result.data };
   } catch (axiosError) {
     const e = axiosError as AxiosError<string, any>;
+    
+    if (e.code === 'ECONNABORTED') {
+      toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
+      return { error: { status: 408, errorMessage: 'Request timeout' } };
+    }
 
     if (!e.response?.status) {
       toast.error(defaultErrorMessage);

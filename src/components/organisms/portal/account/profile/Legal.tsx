@@ -16,7 +16,6 @@ import { FC, MouseEventHandler, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   useGetApiMyAccountCustomerGetQuery,
-  useGetApiMyAccountProfileGetQuery,
   usePutApiMyAccountCustomerConvertToLegalMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";

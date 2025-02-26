@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetApiMyVpcNatListByVpcHostIdQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";

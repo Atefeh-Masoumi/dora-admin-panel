@@ -2,12 +2,20 @@ import type { FC } from "react";
 import { Input, InputAdornment } from "@mui/material";
 import { Search } from "src/components/atoms/svg-icons/SearchSvg";
 
-export const SearchBox: FC<{
+interface SearchBoxProps  {
   placeholder: string;
   search?: string;
   onChange?: (text: string) => void;
   fullWidth?: boolean;
-}> = ({ placeholder, search, onChange, fullWidth }, props) => {
+}
+
+export const SearchBox: FC<SearchBoxProps> = ({
+  placeholder,
+  search,
+  onChange,
+  fullWidth,
+  ...props
+}) => {
   return (
     <Input
       {...props}
@@ -17,7 +25,6 @@ export const SearchBox: FC<{
       disableUnderline={true}
       fullWidth={fullWidth}
       sx={{
-        ...props.sx,
         backgroundColor: "rgba(110, 118, 138, 0.06)",
         p: 1,
         borderRadius: 1,

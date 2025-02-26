@@ -7,8 +7,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import { FC, useContext, useEffect, useState } from "react";
+import { Grid2 } from "@mui/material";
+import { FC, useEffect, useState } from "react";
 import {
   DatacenterImageListResponse,
   useGetApiMyDatacenterImageListQuery,
@@ -23,8 +23,7 @@ import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
 
 type SelectOSPropsType = {
-  datacenterId?: number | null;
-  hostProjectId?: number | null;
+  hostProjectId: number;
   setImageId?: any;
 };
 
@@ -37,15 +36,14 @@ type OsDropDownType = {
 };
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
-  datacenterId,
   hostProjectId,
   setImageId,
 }) => {
   const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
     {
+      datacenterId: 0,
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      datacenterId: Number(datacenterId) || 0,
-      hostProjectId: hostProjectId || 0,
+      hostProjectId: hostProjectId,
     }
   );
 
@@ -177,9 +175,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
           ))}
         {osDropDownsState.map((osDropDown, index) => {
           return (
-            <Grid2
-              xs={12}
-              sm
+            <Grid2 size={{xs:12, sm:6}}
               key={osDropDown.osId}
               sx={{
                 minWidth: { sm: 100 },

@@ -1,5 +1,4 @@
 import { Done } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -26,6 +25,7 @@ import {
   usePostApiMyPortalIssueSubjectSelectListMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import LoadingButton from "src/components/atoms/LoadingButton";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
@@ -117,9 +117,11 @@ const AddTicket: FC = () => {
     setUploading(true);
   };
 
-  const abortController = useRef<AbortController | undefined>();
+  const abortController = useRef<AbortController |  null>(null);
 
-  abortController.current = new AbortController();
+  if (!abortController.current) {
+    abortController.current = new AbortController();
+  }
 
   const submit = () => {
     if (!businessUnitId || !content || !title) {
@@ -473,7 +475,7 @@ const AddTicket: FC = () => {
               انصراف
             </Button>
             <LoadingButton
-               loading={isLoading}
+              loading={isLoading}
               onClick={submit}
               fullWidth
               variant="contained"

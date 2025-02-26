@@ -13,7 +13,6 @@ import {
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { useDeleteApiMyVpcLoadBalanceDeleteByIdMutation } from "src/app/services/api.generated";
-import { Success } from "src/components/atoms/svg-icons/SuccessSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcLoadBalancerPollMembersTableStruct } from "./struct";
@@ -56,7 +55,7 @@ export const VpcLoadBalanceListTableRow: FC<
     })
       .unwrap()
       .then(() => {
-        toast.success("LoadBalance رکورد مورد نظر حذف شد", { icon: Success });
+        toast.success("LoadBalance رکورد مورد نظر حذف شد")
         closeDialogHandler();
       })
       .catch((err) => {});

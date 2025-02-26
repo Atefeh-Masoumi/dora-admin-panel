@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState, useMemo } from "react";
-import { Stack, Typography, Paper } from "@mui/material";
+import { Stack, Typography, Paper, useTheme } from "@mui/material";
 import { useLazyGetApiMyVmHostGetByIdQuery } from "src/app/services/api";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
@@ -31,12 +31,12 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [cpuUnitPrice, setCpuUnitPrice] = useState(0);
   const [diskUnitPrice, setDiskUnitPrice] = useState(0);
   const [ipAddress, setIpAddress] = useState(0);
+  const theme = useTheme()
 
-  const { data: unitsPrice, isLoading: getUnitsPrice } =
+  const { data: unitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
-
   const [getData] = useLazyGetApiMyVmHostGetByIdQuery();
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
@@ -155,7 +155,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
                   step={step}
                 />
                 <Typography
-                  color={({ palette }) => palette.grey[700]}
+                  color={theme.palette.grey[700]} 
                   sx={{ width: "125px" }}
                   align="right"
                 >

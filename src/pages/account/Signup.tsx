@@ -22,10 +22,10 @@ import { useNavigate } from "react-router-dom";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { Form, Formik } from "formik";
-import { LoadingButton } from "@mui/lab";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Captcha } from "src/components/molecules/Captcha";
 import { captchaRegex } from "src/utils/regexUtils";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const passValidationHandler = (value: string) =>
   !value ? false : passwordValidatorRegex.test(value);
@@ -206,7 +206,6 @@ const Signup: FC = () => {
               />
               <Stack pt={2} width="100%" spacing={2}>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={isLoading}
                   variant="contained"

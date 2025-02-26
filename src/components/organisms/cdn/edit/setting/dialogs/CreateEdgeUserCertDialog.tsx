@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
-  CreateCdnEdgeUserCertModel,
   usePostApiMyDnsCdnEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
@@ -18,13 +17,16 @@ type AddEdgeUserCertDialogPropsType = {
   handleClose: () => void;
   dnsId: number;
 };
-
+type FormValues = {
+  keyPem: string;
+  certPem: string;
+};
 export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   openDialog,
   handleClose,
   dnsId,
 }) => {
-  const formInitialValues = { dnsId, keyPem: "", certPem: "" };
+  const formInitialValues = { keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
     usePostApiMyDnsCdnEdgeCertCreateUserCertMutation();
@@ -37,7 +39,7 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
     bundleCertPem: yup.string(),
   });
 
-  const submitHandler: formikOnSubmitType<CreateCdnEdgeUserCertModel> = (
+  const submitHandler: formikOnSubmitType<FormValues> = (
     { keyPem, certPem },
     { setSubmitting }
   ) => {

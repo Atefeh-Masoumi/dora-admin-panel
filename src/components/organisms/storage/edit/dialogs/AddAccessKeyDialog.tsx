@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { Copy } from "src/components/atoms/svg-icons/CopySvg";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -122,7 +122,7 @@ export const AddAccessKeyDialog: FC<AddAccessKeyDialogPropsType> = ({
           alignItems="center"
           justifyContent="center"
         >
-          <Grid2 xs={12} md={10}>
+          <Grid2 size={{xs:12,md:10}}>
             <BoxRow
               title="Access Key"
               clipBoardText={accessKeyProp}

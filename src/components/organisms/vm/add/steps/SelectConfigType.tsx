@@ -4,7 +4,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Paper,
   Radio,
   RadioGroup,
   Stack,

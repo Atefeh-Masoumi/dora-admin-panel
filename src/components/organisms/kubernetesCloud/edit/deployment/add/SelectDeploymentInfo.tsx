@@ -5,8 +5,6 @@ import { Stack } from "@mui/system";
 import { Counter } from "src/components/organisms/kubernetesCloud/add/steps/Counter";
 import { FormControl, FormHelperText, Typography } from "@mui/material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 type CounterNewValueType = number | ((prevValue: number) => number);

@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
 import VolumeTableRow from "./table/VolumeTableRow";

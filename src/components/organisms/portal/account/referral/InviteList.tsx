@@ -9,7 +9,7 @@ import { referralTableStruct } from "./tables/struct";
 
 export const InviteList: FC = () => {
   const [customerReferralList, setCustomerReferralList] = useState<any>([]);
-  const { data: referralData, isLoading: referralDataLoading } =
+  const { data: referralData } =
     useGetApiMyPortalReferralGetQuery();
 
   const [callCustomerReferralList, { isLoading: customerReferralListLoaidng }] =
