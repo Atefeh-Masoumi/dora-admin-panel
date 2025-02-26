@@ -6,7 +6,7 @@ import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 
 export const homeProductsConstantListItems = [
   {
-    title: "CDN / DNS",
+    title: " DNS",
     text: "مدیریت و توزیع محتوا",
     Icon: CloudConnectionSvg,
     bgcolor: "rgba(60, 138, 255, 0.08)",
