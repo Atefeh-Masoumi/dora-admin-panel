@@ -13,7 +13,9 @@ body {
   font-family: dana, tahoma;
   overflow: overlay;
 }
-
+:root{
+  --toastify-font-family: dana, tahoma;
+}
 @supports (font-variation-settings: normal) {
   body {
     font-family: "dana", tahoma;
