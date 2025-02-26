@@ -5449,7 +5449,6 @@ export type GetVmResponse = {
   isMaster?: boolean;
   isPublic?: boolean;
   hypervisorTypeId: number;
-  hostProjectId: number;
   createDate: string;
   modifyDate: string;
 };
