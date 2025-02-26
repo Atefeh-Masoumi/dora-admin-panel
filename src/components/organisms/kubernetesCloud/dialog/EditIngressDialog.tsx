@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
@@ -16,9 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { FC, Fragment, MouseEventHandler, useState } from "react";
-import { useParams } from "react-router";
-import { toast } from "react-toastify";
+import { FC, MouseEventHandler, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   RuleModelRequest,
   RulesResponse,
@@ -30,7 +28,7 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import PageLoading from "src/components/atoms/PageLoading";
 import * as yup from "yup";
 import { SECRET_TYPES_ENUM } from "../../home/constants/secretTypesConstants";
-import { SelectIngressRule } from "../edit/ingress/SelectIngressRule";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const ProtocolTypeItems = [
   { id: 4, name: "HTTP" },
@@ -80,7 +78,7 @@ export const EditIngressDialog: FC<EditIngressDialogPropsType> = ({
       { skip: !kubernetesCloudId }
     );
 
-  const { data: ingress, isLoading } =
+  const { data: ingress } =
     useGetApiMyKubernetesCloudIngressGetByIdQuery({ id: ingressId });
 
   const closeDialogHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -298,7 +296,6 @@ export const EditIngressDialog: FC<EditIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"

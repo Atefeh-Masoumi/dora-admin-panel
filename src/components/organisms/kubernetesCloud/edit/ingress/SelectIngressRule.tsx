@@ -7,7 +7,7 @@ import {
 } from "../../dialog/AddIngressDialog";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery } from "src/app/services/api.generated";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { DeleteOutline } from "@mui/icons-material";
 
 type SelectIngressRulePropsType = {

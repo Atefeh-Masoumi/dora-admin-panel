@@ -1,12 +1,10 @@
 import { useContext, FC } from "react";
-import { Paper, Skeleton, Stack, Typography } from "@mui/material";
+import {  Skeleton, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
   DatacenterListResponse,
   useGetApiMyDatacenterListQuery,
 } from "src/app/services/api.generated";
-import asiatechImage from "src/assets/images/asiatech.png";
-import mobinNetImage from "src/assets/images/mobinnet.png";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import DomainIcon from "@mui/icons-material/Domain";
 

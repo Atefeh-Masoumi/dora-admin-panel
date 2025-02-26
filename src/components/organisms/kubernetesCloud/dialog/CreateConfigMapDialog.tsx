@@ -1,27 +1,24 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import * as yup from "yup";
 import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   name: string | null;
@@ -140,7 +137,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
             ایجاد Configmap
           </DialogTitle>
           <Grid2 container>
-            <Grid2 xs={12} md={12}>
+            <Grid2 size={{xs:12,md:12}} >
               <DorsaTextField
                 fullWidth
                 label="*name"
@@ -230,7 +227,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createConfigMapLoading}
                 variant="contained"

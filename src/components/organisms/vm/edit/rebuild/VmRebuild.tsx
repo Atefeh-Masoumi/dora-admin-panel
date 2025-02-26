@@ -15,14 +15,13 @@ type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const formInitialValues = { serverName: "", password: "" };
-  const { serverId, hostProjectId, datacenterId } =
-    useContext(EditServerContext);
+  const { serverId, hostProjectId } = useContext(EditServerContext);
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const {id, projectId} = useParams()
+  const { projectId} = useParams()
 
   const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildByIdMutation();
 
@@ -81,8 +80,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         </Typography>
         <ChooseOSForRebuild
           setImageId={setImageId}
-          hostProjectId={hostProjectId}
-          datacenterId={datacenterId}
+          hostProjectId={hostProjectId || 0}
         />
         <Typography
           align="center"

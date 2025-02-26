@@ -181,6 +181,7 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
                         />
                       ) : statusColor ? (
                         <BoxRow
+                          key={index}
                           title={label}
                           component={
                             <Typography color={statusColor}>{value}</Typography>

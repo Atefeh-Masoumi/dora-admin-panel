@@ -19,7 +19,7 @@ import { Stack } from "@mui/system";
 
 import { useFormik } from "formik";
 import { FC, useCallback } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import {
   CreateVpcGatewaySnatModel,
   useGetApiMyVpcIpListByVpcHostIdQuery,

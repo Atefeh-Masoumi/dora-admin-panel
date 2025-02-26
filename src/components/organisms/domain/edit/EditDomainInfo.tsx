@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import { LoadingButton } from "@mui/lab";
 import { Form, Formik } from "formik";
@@ -95,7 +95,7 @@ export const EditDomainInfo: FC<EditDomainInfoPropsType> = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <Grid2 xs={12}>
+              <Grid2 size={{xs:12}}>
                 <Paper
                   component={Stack}
                   rowGap={2}

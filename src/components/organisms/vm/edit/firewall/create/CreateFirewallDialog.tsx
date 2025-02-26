@@ -17,13 +17,13 @@ import {
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
 import { FC, MouseEventHandler } from "react";
-import { useParams } from "react-router";
-import { LoadingButton } from "@mui/lab";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { usePostApiMyVmFirewallCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const options = [
   { id: 1, label: "TCP Protocol", firewallProtocolType: "TCP" },
@@ -203,7 +203,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={isLoading}
               variant="contained"

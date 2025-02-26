@@ -1,6 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import { Grid2 } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -58,7 +58,7 @@ export const WebConfig: FC<WebConfigPropsType> = () => {
   return (
     <>
       <Grid2 container spacing={3} alignItems="center" justifyContent="center">
-        <Grid2 xs={12}>
+        <Grid2 size={{xs:12}}>
           <Stack
             bgcolor="white"
             py={3}

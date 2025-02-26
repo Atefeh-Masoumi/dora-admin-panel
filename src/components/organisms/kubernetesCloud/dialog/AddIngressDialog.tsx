@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Button,
@@ -8,7 +7,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   Grid,
   Link,
   MenuItem,
@@ -17,7 +15,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment, MouseEventHandler, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   RuleModelRequest,
@@ -29,6 +27,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import * as yup from "yup";
 import { SECRET_TYPES_ENUM } from "../../home/constants/secretTypesConstants";
 import { SelectIngressRule } from "../edit/ingress/SelectIngressRule";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const ProtocolTypeItems = [
   { id: 4, name: "HTTP" },
@@ -219,7 +218,7 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
 
               {formik.values.protocolTypeId === 3 && (
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                   {tLSSecretList && tLSSecretList.length > 0 ? (
                     <DorsaTextField
                       dir="ltr"
@@ -294,7 +293,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={createIngressLoading}
               variant="contained"

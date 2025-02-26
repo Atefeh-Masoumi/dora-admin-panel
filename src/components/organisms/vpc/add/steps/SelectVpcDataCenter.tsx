@@ -1,4 +1,4 @@
-import { Paper, Skeleton, Stack, Typography } from "@mui/material";
+import { Skeleton, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import {
   DatacenterListResponse,

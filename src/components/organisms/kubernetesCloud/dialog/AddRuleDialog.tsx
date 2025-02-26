@@ -1,4 +1,3 @@
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -23,8 +22,9 @@ import {
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { Add, DeleteOutline } from "@mui/icons-material";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   ingressId: number;
@@ -40,10 +40,12 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
   ...props
 }) => {
   const { kubernetesCloudId } = useParams();
-  const [rules, setRules] = useState<IngressRuleModelRequest[]>([{
-    "kuberCloudDeployPortId": 0,
-    "path": ""
-  }]);
+  const [rules, setRules] = useState<IngressRuleModelRequest[]>([
+    {
+      kuberCloudDeployPortId: 0,
+      path: "",
+    },
+  ]);
   const [createIngressRule, { isLoading: createIngressRuleLoading }] =
     usePostApiMyKubernetesCloudIngressRuleCreateMutation();
 
@@ -52,15 +54,15 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
       namespaceId: Number(kubernetesCloudId),
     });
 
-    const transformedPorts = useMemo(() => {
-      return deploymentPortList?.flatMap((deployment) =>
-        deployment.ports?.map((port) => ({
-          portId: port.portId,
-          nodePort: port.nodePort,
-          name: deployment.deployName,
-        }))
-      );
-    }, [deploymentPortList]);
+  const transformedPorts = useMemo(() => {
+    return deploymentPortList?.flatMap((deployment) =>
+      deployment.ports?.map((port) => ({
+        portId: port.portId,
+        nodePort: port.nodePort,
+        name: deployment.deployName,
+      }))
+    );
+  }, [deploymentPortList]);
 
   const addRules = () => {
     setRules((prevState) => {
@@ -218,7 +220,6 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
                 انصراف
               </Button>
               <LoadingButton
-                component="button"
                 type="submit"
                 loading={createIngressRuleLoading}
                 variant="contained"

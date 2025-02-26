@@ -1,4 +1,4 @@
-import { Paper, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { ChangeEvent, FC, useContext } from "react";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";

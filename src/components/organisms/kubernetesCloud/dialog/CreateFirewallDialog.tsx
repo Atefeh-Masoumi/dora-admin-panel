@@ -13,8 +13,7 @@ import {
 import { useFormik } from "formik";
 import { Stack } from "@mui/system";
 import { FC, useMemo } from "react";
-import { useParams } from "react-router";
-import { LoadingButton } from "@mui/lab";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -24,6 +23,7 @@ import {
   useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
   usePostApiMyKubernetesCloudFirewallCreateMutation,
 } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 const options = [
   { id: 1, label: "TCP", isTcp: true },
@@ -64,33 +64,35 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const [createKubernetesCloudFirewall, { isLoading }] =
     usePostApiMyKubernetesCloudFirewallCreateMutation();
 
-    const param = useParams()
-    const namespaceid = Number(param?.kubernetesCloudId)
+  const param = useParams();
+  const namespaceid = Number(param?.kubernetesCloudId);
 
   const initialValues: CreateKuberCloudFirewallModel = {
-    namespaceId:namespaceid,
+    namespaceId: namespaceid,
     firewallProtocolTypeId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
   };
 
-  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (values, { resetForm }) =>
-  {
-      createKubernetesCloudFirewall({
-        createKuberCloudFirewallModel: {
-          ...values,
-        },
+  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (
+    values,
+    { resetForm }
+  ) => {
+    createKubernetesCloudFirewall({
+      createKuberCloudFirewallModel: {
+        ...values,
+      },
+    })
+      .unwrap()
+      .then((res) => {
+        resetForm();
+        formik.resetForm();
+        forceClose();
+        refetch();
       })
-        .unwrap()
-        .then((res) => {
-          resetForm();
-          formik.resetForm();
-          forceClose();
-          refetch()
-        })
-        .catch((err) => {});
-    };
+      .catch((err) => {});
+  };
 
   const formik = useFormik({
     initialValues,
@@ -189,7 +191,6 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               انصراف
             </Button>
             <LoadingButton
-              component="button"
               type="submit"
               loading={isLoading}
               variant="contained"

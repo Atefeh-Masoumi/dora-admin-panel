@@ -12,8 +12,7 @@ import {
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { LoadingButton } from "@mui/lab";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
@@ -28,6 +27,7 @@ import {
   DestinationModel,
   usePutApiMyDnsCdnRouteEditByIdMutation,
 } from "src/app/services/api.generated";
+import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   id: number;
@@ -204,7 +204,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
             <Form autoComplete="on">
               <Stack p={{ xs: 1.8, md: 3 }} spacing={{ xs: 2, md: 5 }}>
                 <Grid2 container spacing={3}>
-                  <Grid2 xs={12} sm={6}>
+                  <Grid2 size={{xs:12, sm:6}}>
                     <DorsaTextField
                       fullWidth
                       label="نام هاست"
@@ -213,7 +213,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                       {...getFieldProps("host")}
                     />
                   </Grid2>
-                  <Grid2 xs={12} sm={6}>
+                  <Grid2 size={{xs:12, sm:6}}>
                     <DorsaTextField
                       select
                       fullWidth
@@ -246,7 +246,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                       ))}
                     </DorsaTextField>
                   </Grid2>
-                  <Grid2 xs={12}>
+                  <Grid2 size={{xs:12}}>
                     <DorsaTextField
                       fullWidth
                       label="حداکثر کانکشن هر سرور"
@@ -344,7 +344,6 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
                       انصراف
                     </Button>
                     <LoadingButton
-                      component="button"
                       type="submit"
                       loading={editLoadBalanceLoading}
                       variant="contained"

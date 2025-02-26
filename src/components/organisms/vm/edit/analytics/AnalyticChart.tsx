@@ -1,17 +1,12 @@
 import {
-  Box,
   Divider,
-  Grid,
-  MenuItem,
   Paper,
-  Select,
-  SelectChangeEvent,
   Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-import { FC, Fragment, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { FC, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   CartesianGrid,
   Line,
@@ -21,7 +16,6 @@ import {
   YAxis,
 } from "recharts";
 import { useGetApiMyVmHostGetAnalyticByIdAndPeriodIdQuery } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -38,10 +32,6 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const vmHostId = Number(id) || 0;
 
   const [categoryId, setCategoryId] = useState(0);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setCategoryId(+event.target.value);
-  };
 
   const {
     data: userAnalytics,
@@ -89,7 +79,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
                 </Typography>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
-                    data={item.data?.map((item2, index2) => ({
+                    data={item.data?.map((item2) => ({
                       uv: item2,
                       // name: index2,
                     }))}

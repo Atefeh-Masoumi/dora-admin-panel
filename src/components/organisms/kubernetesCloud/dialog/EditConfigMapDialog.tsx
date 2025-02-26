@@ -1,5 +1,4 @@
 import { Add } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -11,14 +10,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment } from "react";
-import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import LoadingButton from "src/components/atoms/LoadingButton";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -40,7 +39,6 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
   openDialog,
   configData,
 }) => {
-  const { kubernetesCloudId } = useParams();
 
   const [editConfigMap, { isLoading: editConfigMapLoading }] =
     usePutApiMyKubernetesCloudConfigmapEditMutation();
@@ -178,7 +176,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container>
-              <Grid2 xs={12} md={6}>
+              <Grid2 size={{xs:12,md:6}}>
                 <DorsaTextField
                   fullWidth
                   label="*name"
@@ -278,7 +276,6 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
                   انصراف
                 </Button>
                 <LoadingButton
-                  component="button"
                   type="submit"
                   loading={editConfigMapLoading}
                   variant="contained"

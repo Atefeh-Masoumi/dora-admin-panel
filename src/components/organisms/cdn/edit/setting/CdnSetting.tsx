@@ -1,6 +1,6 @@
 import { Divider, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useGetApiMyDnsCdnHostGetCdnByIdQuery } from "src/app/services/api.generated";
 import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/setting/CdnSecuritySetting";
 import { CdnTypeSetting } from "src/components/organisms/cdn/edit/setting/CdnTypeSetting";

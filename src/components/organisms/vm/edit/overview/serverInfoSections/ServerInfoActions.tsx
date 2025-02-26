@@ -22,7 +22,7 @@ import {
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
 import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
 type ServerInfoActionsPropsType = {};
