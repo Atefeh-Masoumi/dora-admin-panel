@@ -26,19 +26,17 @@ const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
     useState<KubernetesNodeListResponse | null>(null);
 
   const navigate = useNavigate();
-  const { kubernetesId } = useParams();
-
+  const { id } = useParams();
   const { data: kubernetesInfo } = useGetApiMyKubernetesClusterHostGetByIdQuery(
     {
-      id: Number(kubernetesId),
+      id: Number(id),
     },
-    { skip: !kubernetesId }
+    { skip: !id }
   );
   const settingOnClick = () => {
     if ( !kubernetesInfo) return;
     navigate(`/vm/${kubernetesInfo.hostProjectId}/${row["hostId"]}/specification`);
   };
-
   const handleOpenDelete = (kuberNode: KubernetesNodeListResponse) => {
     setSelectedKuberNode(kuberNode);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
