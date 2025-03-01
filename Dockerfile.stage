@@ -3,7 +3,7 @@ FROM repo.dorsa.cloud/docker/node:22-alpine AS builder
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production && yarn cache clean
+RUN yarn install 
 COPY . .
 ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN yarn run build
