@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Paper, Stack, Typography } from "@mui/material";
+import {  Button, Paper, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
+import { VmRebuildConfirmation } from "./dialog/VmRebuildConfirmation";
 
 type VmRebuildPropsType = {};
 
@@ -19,6 +20,21 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const [imageId, setImageId] = useState(0);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleOpen = ()=> {
+  if (!formik.values.serverName) {
+    toast.error("لطفا نام سرور را وارد کنید");
+    return; 
+  }
+
+  if (!formik.values.password) {
+    toast.error("لطفا رمز عبور را وارد کنید");
+    return; 
+  }
+
+  setShowDialog(true);
+  }
   const navigate = useNavigate();
 
   const { projectId} = useParams()
@@ -52,6 +68,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
       .unwrap()
       .then(() => {
         toast.success("درخواست با موفقیت انجام شد");
+        setShowDialog(false);
         navigate(`/vm/${projectId}/list`);
       })
       .catch(() => {});
@@ -63,6 +80,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     validationSchema: formValidation,
     onSubmit,
   });
+ 
 
   return (
     <>
@@ -99,10 +117,9 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
           formik={formik}
         />
         <Stack alignItems="center" justifyContent="center">
-          <LoadingButton
-            loading={isLoading}
+          <Button
             variant="contained"
-            onClick={submitHandler}
+            onClick={handleOpen}
             sx={{
               width: { xs: "100%", sm: "auto" },
               px: { sm: 8 },
@@ -111,9 +128,16 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
             }}
           >
             درخواست بازسازی
-          </LoadingButton>
+          </Button>
         </Stack>
       </Paper>
+     <VmRebuildConfirmation
+     open={showDialog}
+     onClose={()=>setShowDialog(false)}
+     securityPhrase={formik.values.serverName}
+     onSubmit={submitHandler}
+     submitLoading={isLoading}
+     />
     </>
   );
 };
