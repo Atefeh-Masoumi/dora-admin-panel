@@ -24,6 +24,7 @@ import { usePostApiMyVmFirewallCreateMutation } from "src/app/services/api.gener
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useEffect } from "react";
 
 const options = [
   { id: 1, label: "TCP Protocol", firewallProtocolType: "TCP" },
@@ -36,7 +37,6 @@ type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
   refetch:()=>void
 };
-
 export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   forceClose,
   refetch,
@@ -85,9 +85,9 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-      // firewallProtocolTypeId: yup.number().required("Protocol type is required"),
+       firewallProtocolTypeId: yup.number().required("Protocol type is required"),
       // directionId: yup.number().required("نوع درخواست را مشخص کنید."),
-      // remoteIp: yup.string().required("Remote IP is required"),
+       remoteIp: yup.string().required("Remote IP is required"),
       // minPort: yup.number().required("Minimum port الزامی است."),
       // maxPort: yup.number().required("Maximum port الزامی است."),
     }),
@@ -95,10 +95,25 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
     enableReinitialize: true,
   });
 
+  // اضافه کردن useEffect برای رصد تغییرات در firewallProtocolTypeId
+  useEffect(() => {
+    const selectedProtocol = options.find(
+      (option) => option.id === formik.values.firewallProtocolTypeId
+    );
+
+    if (selectedProtocol?.firewallProtocolType === "ICMP" || selectedProtocol?.firewallProtocolType === "any") {
+      formik.setFieldValue("minPort", 0);
+      formik.setFieldValue("maxPort", 0);
+    }
+  }, [formik.values.firewallProtocolTypeId]);
+
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
     props.onClose(event, "backdropClick");
   };
+
+  const isPortDisabled =
+    formik.values.firewallProtocolTypeId === 3 || formik.values.firewallProtocolTypeId === 4; // ICMP یا ANY
 
   return (
     <Dialog {...props}>
@@ -180,6 +195,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               error={Boolean(formik.errors.minPort && formik.touched.minPort)}
               helperText={formik.touched.minPort && formik.errors.minPort}
               inputProps={{ dir: "ltr" }}
+              disabled={isPortDisabled} // غیرفعال کردن فیلد
             />
             <DorsaTextField
               focused
@@ -189,6 +205,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               error={Boolean(formik.errors.maxPort && formik.touched.maxPort)}
               helperText={formik.touched.maxPort && formik.errors.maxPort}
               inputProps={{ dir: "ltr" }}
+              disabled={isPortDisabled} // غیرفعال کردن فیلد
             />
           </FormControl>
         </DialogContent>
