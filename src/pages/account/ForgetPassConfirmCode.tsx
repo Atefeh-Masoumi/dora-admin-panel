@@ -163,6 +163,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
             {({ isSubmitting }) => (
               <Form>
                 <Stack spacing={2}>
+                  <Stack direction="row" spacing={1} alignItems="center" flex={1}>
                   <Field
                     name="captchaCode"
                     as={TextField}
@@ -187,6 +188,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
                     </IconButton>
                   </Stack>
                  
+                  </Stack>
                   <LoadingButton
                     type="submit"
                     variant="contained"
@@ -195,7 +197,7 @@ export const ForgetPassConfirmCode: FC<ForgetPassConfirmCodePropsType> = ({
                   >
                     ارسال مجدد کد تایید
                   </LoadingButton>
-                </Stack>
+                  </Stack>
               </Form>
             )}
           </Formik>
