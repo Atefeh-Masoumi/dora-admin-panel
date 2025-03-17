@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Grid2 } from "@mui/material";
 import { Balance } from "./Balance";
 import { Analytics } from "./Analytics";
 import { GiftAndReferral } from "./GiftAndReferral";
 
 export const Wallet: FC = () => {
   return (
-    <Grid
+    <Grid2
       container
       justifyContent="space-between"
       rowGap={2}
@@ -16,6 +16,6 @@ export const Wallet: FC = () => {
       <GiftAndReferral />
       <Balance />
       <Analytics />
-    </Grid>
+    </Grid2>
   );
 };

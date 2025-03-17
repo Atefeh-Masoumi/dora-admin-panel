@@ -4,6 +4,7 @@ import {
   CircularProgress,
   Dialog,
   Grid,
+  Grid2,
   Stack,
   SxProps,
   Theme,
@@ -13,11 +14,6 @@ import { numberToWords } from "@persian-tools/persian-tools";
 import { Form, Formik } from "formik";
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import {
-  CreatePaymentResponse,
-  useGetApiMyPortalPaymentProviderListQuery,
-  usePostApiMyPortalPaymentCreateMutation,
-} from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
@@ -27,6 +23,11 @@ import MellatLogo from "src/components/atoms/svg-icons/mellat.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
+import {
+  CreatePaymentResponse,
+  useGetApiMyPortalPaymentProviderListQuery,
+  usePostApiMyPortalPaymentCreateMutation,
+} from "src/app/services/api.generated";
 
 const selectedStyle: SxProps<Theme> = {
   border: 1,
@@ -87,13 +88,11 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
           setMellatResponsePhoneNumber(mellatProviderRes.phoneNumber);
         } else {
           if (!res || !res.location || !res.status) return;
-          let a = document.createElement("a");
-          a.href = res.location;
-          a.click();
+          window.location.href = res.location;
           toast.success("در حال انتقال به صفحه پرداخت");
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
     setSubmitting(false);
   };
 
@@ -189,12 +188,12 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                       {amount === undefined || amount > 999999999999999
                         ? ""
                         : amount === 0
-                        ? "صفر تومان"
-                        : amount < 10 && amount > 0
-                        ? `${numberToWords(amount)} ریال`
-                        : `${numberToWords(
-                            Math.floor(amount / 10)
-                          )} تومان ${modeTen}`}
+                          ? "صفر تومان"
+                          : amount < 10 && amount > 0
+                            ? `${numberToWords(amount)} ریال`
+                            : `${numberToWords(
+                              Math.floor(amount / 10)
+                            )} تومان ${modeTen}`}
                     </Stack>
                   </Stack>
                   <Stack
@@ -238,7 +237,7 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                     <Typography variant="text14" color="secondary">
                       درگاه پرداخت
                     </Typography>
-                    <Grid container rowSpacing={1} columnSpacing={1}>
+                    <Grid2 container rowSpacing={1} columnSpacing={1}>
                       {paymentProviderListLoading ? (
                         <CircularProgress sx={{ margin: "0 auto" }} />
                       ) : (
@@ -287,7 +286,7 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
                             );
                           })
                       )}
-                    </Grid>
+                    </Grid2>
                   </Stack>
                   <Stack direction="row" justifyContent="end" spacing={1}>
                     <Button
