@@ -7,15 +7,15 @@ import { toast } from "react-toastify";
 import {
   GetKuberCloudConfigResponse,
   useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
+  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import {
-  kubernetesCloudFireWallTableStruct,
-} from "./struct";
+import { kubernetesCloudConfigMapTableStruct } from "./struct";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -30,7 +30,11 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   // const [open, setOpen] = useState(false);
   const id = row.id!;
   // const configList = row.configMaps! || [];
-
+  const { kubernetesCloudId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
+    { namespaceId: Number(kubernetesCloudId) || 0 },
+    { skip: !kubernetesCloudId }
+  );
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [openEditConfigMapDialog, setOpenEditConfigMapDialog] =
     useState<boolean>(false);
@@ -47,6 +51,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
       .unwrap()
       .then(() => {
         toast.success("با موفقیت حذف شد");
+        refetch();
         closeDialogHandler();
       })
       .catch((err) => {});
@@ -82,7 +87,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
           },
         }}
       >
-        {kubernetesCloudFireWallTableStruct.map((column, index) => {
+        {kubernetesCloudConfigMapTableStruct.map((column, index) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           // const id = row["statusId"];
