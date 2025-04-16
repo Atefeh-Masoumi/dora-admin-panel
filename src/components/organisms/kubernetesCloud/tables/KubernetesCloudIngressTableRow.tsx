@@ -186,7 +186,7 @@ export const KubernetesCloudIngressTableRow: FC<{
                 <>
                   {column.id === "createDate" || column.id === "modifyDate"
                     ? ConvertToJalali(String(text))
-                    : text || "__"}
+                    : Array.isArray(text) ? JSON.stringify(text) : text || "__"}
                 </>
               )}
             </DorsaTableCell>
