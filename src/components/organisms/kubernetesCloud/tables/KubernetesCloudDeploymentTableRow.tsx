@@ -17,6 +17,7 @@ import {
   KubernetesListResponse,
   PortResponse,
   useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
+  useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -47,7 +48,11 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   const navigate = useNavigate();
   const { kubernetesCloudId } = useParams();
   const nodePortList: PortResponse[] = row.ports! || [];
-
+  
+  const { refetch } = useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery(
+    { namespaceId: Number(kubernetesCloudId) || 0 },
+    { skip: !kubernetesCloudId }
+  );
   const [deleteDeployment, { isLoading: deleteDeploymentRecordLoading }] =
     useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation();
 
@@ -66,6 +71,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
       .then(() => {
         toast.success("سرویس deployment شما با موفقیت حذف شد");
         handleCloseDeleteDialog();
+        refetch();
       })
       .catch((err) => {});
 

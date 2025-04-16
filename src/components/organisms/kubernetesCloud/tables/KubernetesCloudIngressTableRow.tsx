@@ -20,6 +20,7 @@ import {
   RulesModel,
   useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation,
   useDeleteApiMyKubernetesCloudIngressRuleDeleteByIdMutation,
+  useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -33,6 +34,7 @@ import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 import { EditIngressRuleDialog } from "../dialog/EditIngressRuleDialog";
 import { Add } from "@mui/icons-material";
 import { AddRuleDialog } from "../dialog/AddRuleDialog";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -59,6 +61,11 @@ export const KubernetesCloudIngressTableRow: FC<{
 
   const ingressRuleList = row.rules || [];
 
+  const { kubernetesCloudId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery(
+    { namespaceId: Number(kubernetesCloudId) || 0 },
+    { skip: !kubernetesCloudId }
+  );
   const [deleteIngress, { isLoading: deleteIngressLoading }] =
     useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation();
 
@@ -76,6 +83,7 @@ export const KubernetesCloudIngressTableRow: FC<{
           .then(() => {
             toast.success("ingress با موفقیت حذف شد");
             handleCloseModal();
+            refetch();
           })
           .catch((err) => {})
       : deleteIngressRule({ id: Number(selectedIngressRule?.id) });
