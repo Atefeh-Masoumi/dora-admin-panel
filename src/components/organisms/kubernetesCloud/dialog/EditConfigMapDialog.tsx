@@ -176,7 +176,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
             </DialogTitle>
             <Divider sx={{ marginTop: "20px !important" }} />
             <Grid2 container>
-              <Grid2 size={{xs:12,md:6}}>
+              <Grid2 size={{xs:12,md:12}}>
                 <DorsaTextField
                   fullWidth
                   label="*name"

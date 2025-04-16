@@ -88,6 +88,7 @@ export const baseQuery: BaseQueryFn<
     }
     if (error.status === 401) {
       auth?.accessToken && dispatch(logoutAction());
+      navigateTo("/login");
       return { error };
     }
     if (error.status === 400) {

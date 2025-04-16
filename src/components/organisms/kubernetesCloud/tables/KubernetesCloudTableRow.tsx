@@ -1,10 +1,11 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   KubernetesListResponse,
   useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
+  useGetApiMyKubernetesCloudHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -29,7 +30,9 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () =>
     navigate("/kubernetes-cloud/" + row["id"] + "/overview");
-  const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
+
+  const { refetch } = useGetApiMyKubernetesCloudHostListQuery();
+  const [deleteKubernetes, { isLoading: deleteKubernetesLoading }] =
     useDeleteApiMyKubernetesCloudHostDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
@@ -38,6 +41,7 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
       .catch((err) => {});
 
@@ -121,7 +125,7 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
         subTitle="برای حذف سرویس کوبرنتیز, عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedKubernetes?.name || ""}
         onSubmit={deleteDnsRecordHandler}
-        submitLoading={deleteDnsRecordLoading}
+        submitLoading={deleteKubernetesLoading}
       />
     </>
   );

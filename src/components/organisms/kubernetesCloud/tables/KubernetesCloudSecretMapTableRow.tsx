@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import {
   KuberCloudSecretListResponse,
   useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
+  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -27,6 +28,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditSecretMapDialog } from "../dialog/EditSecretMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -49,6 +51,11 @@ export const KubernetesCloudSecretMapTableRow: FC<{
     setSelectedKubernetesCloudSecretMap,
   ] = useState<KuberCloudSecretListResponse | null>(null);
 
+  const { kubernetesCloudId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+    { namespaceId: Number(kubernetesCloudId) || 0 },
+    { skip: !kubernetesCloudId }
+  );
   const [deleteSecretMap, { isLoading: deleteSecretMapLoading }] =
     useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation();
 
@@ -58,6 +65,7 @@ export const KubernetesCloudSecretMapTableRow: FC<{
       .then(() => {
         toast.success("Secret با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
       .catch((err) => {});
 
