@@ -7,12 +7,14 @@ import {
   import {
     KuberCloudFirewallListResponse,
     useDeleteApiMyKubernetesCloudFirewallDeleteByIdMutation,
+    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
   } from "src/app/services/api.generated";
   import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
   import { DeleteDialog } from "src/components/molecules/DeleteDialog";
   import { kubernetesCloudFireWallTableStruct } from "./struct";
   import { ConvertToJalali } from "src/utils/convertToJalali";
   import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+import { useParams } from "react-router";
   
   enum DIALOG_TYPE_ENUM {
     CREATE = "CREATE",
@@ -27,7 +29,16 @@ import {
     // const [open, setOpen] = useState(false);
     const id = row.id!;
     // const configList = row.configMaps! || [];
-  
+    const { kubernetesCloudId } = useParams();
+
+    const { refetch } =
+    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
+        {
+          namespaceId: Number(kubernetesCloudId) || 0,
+        },
+        { skip: !kubernetesCloudId }
+      );
+     
     const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
     const [
       selectedKubernetesCloudFirewall,
@@ -43,6 +54,7 @@ import {
         .then(() => {
           toast.success("با موفقیت حذف شد");
           closeDialogHandler();
+          refetch();
         })
         .catch((err) => {});
   
