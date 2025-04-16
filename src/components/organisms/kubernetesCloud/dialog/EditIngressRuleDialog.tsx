@@ -108,6 +108,15 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
           </DialogTitle>
           <Divider sx={{ marginTop: "20px !important" }} />
           <Grid2 container spacing={1}>
+          <Grid2 size={{xs:12,md:6}}>
+              <DorsaTextField
+                dir="ltr"
+                fullWidth
+                label="*Path"
+                size="small"
+                {...formik.getFieldProps("serviceName")}
+              />
+            </Grid2>
             <Grid2 size={{xs:12,md:6}}>
               <FormControl fullWidth size="small">
                 <InputLabel>Port</InputLabel>
@@ -133,15 +142,7 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
                 </Select>
               </FormControl>
             </Grid2>
-            <Grid2 size={{xs:12,md:6}}>
-              <DorsaTextField
-                dir="ltr"
-                fullWidth
-                label="*Path"
-                size="small"
-                {...formik.getFieldProps("serviceName")}
-              />
-            </Grid2>
+            
           </Grid2>
 
           <DialogActions>
