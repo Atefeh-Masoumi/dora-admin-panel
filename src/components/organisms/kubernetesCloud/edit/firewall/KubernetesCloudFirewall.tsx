@@ -7,7 +7,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery } from "src/app/services/api.generated";
 import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/dialog/CreateFirewallDialog";
 import { Button, Divider, Stack, Typography } from "@mui/material";
-import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
+import { KubernetesCloudFirewallTableRow } from "../../tables/KubernetesCloudFirewallTableRow";
 import {  kubernetesCloudFireWallTableStruct } from "../../tables/struct";
 
 export const KubernetesCloudFirewall: FC = () => {
@@ -109,7 +109,7 @@ export const KubernetesCloudFirewall: FC = () => {
         <Stack py={1.5}>
           <BaseTable
             struct={kubernetesCloudFireWallTableStruct}
-            RowComponent={KubernetesCloudConfigMapTableRow}
+            RowComponent={KubernetesCloudFirewallTableRow}
             rows={filteredList || []}
             text="در حال حاضر رکورد وجود ندارد"
             isLoading={isLoading}
