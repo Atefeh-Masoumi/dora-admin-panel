@@ -1,7 +1,16 @@
 import {
   IconButton,
   Stack,
+  Collapse,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -16,6 +25,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useParams } from "react-router";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -23,13 +33,18 @@ enum DIALOG_TYPE_ENUM {
   EDIT = "EDIT",
 }
 
+const configMapListTableStruct = [
+  { id: "id", label: "شناسه" },
+  { id: "key", label: "کلید" },
+  { id: "value", label: "مقدار" },
+];
+
 export const KubernetesCloudConfigMapTableRow: FC<{
   row: any;
   rowBgColor: any;
 }> = ({ row, rowBgColor }) => {
-  // const [open, setOpen] = useState(false);
   const id = row.id!;
-  // const configList = row.configMaps! || [];
+  const configList = row.configMaps! || [];
   const { kubernetesCloudId } = useParams();
   const { refetch } = useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
     { namespaceId: Number(kubernetesCloudId) || 0 },
@@ -38,6 +53,7 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [openEditConfigMapDialog, setOpenEditConfigMapDialog] =
     useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [
     selectedKubernetesCloudConfigMap,
     setSelectedKubernetesCloudConfigMap,
@@ -66,10 +82,10 @@ export const KubernetesCloudConfigMapTableRow: FC<{
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  // function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
-  //   setSelectedKubernetesCloudConfigMap(config);
-  //   setOpenEditConfigMapDialog(true);
-  // }
+  function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
+    setSelectedKubernetesCloudConfigMap(config);
+    setOpenEditConfigMapDialog(true);
+  }
 
   function handleCloseEditConfigMapDialog() {
     setOpenEditConfigMapDialog(false);
@@ -90,7 +106,6 @@ export const KubernetesCloudConfigMapTableRow: FC<{
         {kubernetesCloudConfigMapTableStruct.map((column, index) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
-          // const id = row["statusId"];
           return (
             <DorsaTableCell
               key={index}
@@ -104,12 +119,12 @@ export const KubernetesCloudConfigMapTableRow: FC<{
                   spacing={0.6}
                   maxWidth="fit-content"
                 >
-                  {/* <IconButton
+                  <IconButton
                     sx={{ borderRadius: 1 }}
                     onClick={() => handleOpenEditConfigMapDialog(row)}
                   >
                     <Edit />
-                  </IconButton> */}
+                  </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
@@ -117,7 +132,13 @@ export const KubernetesCloudConfigMapTableRow: FC<{
                   >
                     <TrashSvg />
                   </IconButton>
-                  
+                  <IconButton
+                    aria-label="expand row"
+                    size="small"
+                    onClick={() => setOpen(!open)}
+                  >
+                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  </IconButton>
                 </Stack>
               ) : (
                 <>
@@ -130,6 +151,53 @@ export const KubernetesCloudConfigMapTableRow: FC<{
           );
         })}
       </DorsaTableRow>
+      <TableRow>
+        <TableCell style={{ padding: 0 }} colSpan={6} sx={{ border: "none" }}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <TableContainer sx={{ display: "flex" }}>
+              <Table size="small" sx={{ m: 3, borderRadius: "15px" }}>
+                <TableHead>
+                  <TableRow>
+                    {configMapListTableStruct.map((item, index) => (
+                      <TableCell
+                        key={index}
+                        align="center"
+                        sx={{
+                          bgcolor: "background.default",
+                        }}
+                      >
+                        {item.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {configList.length > 0
+                    ? configList?.map((item: any, index: any) => {
+                        return (
+                          <TableRow key={index}>
+                            <TableCell align="center" sx={{ border: "none" }}>
+                              {item.id}
+                            </TableCell>
+                            <TableCell align="center" sx={{ border: "none" }}>
+                              {item.key}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ borderBottom: "none !important" }}
+                            >
+                              {item.value}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
+                    : ""}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Collapse>
+        </TableCell>
+      </TableRow>
 
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
