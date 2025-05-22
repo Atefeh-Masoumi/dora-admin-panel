@@ -20,7 +20,6 @@ variables:
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
 
 ## Stage 1 : PACKAGE
-
 package_stage:
   stage: package
   script:
@@ -64,8 +63,8 @@ deploy_stage:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n stage apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
-    - kubectl -n stage rollout restart deployment front-my-v1
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
+    - kubectl -n development rollout restart deployment front-my-v1
   only:
     - main
 
@@ -75,8 +74,8 @@ deploy_dorsa_prod:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n dorsa-cloud apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-prod.yaml
-    - kubectl -n dorsa-cloud rollout restart deployment front-my-v1
+    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-prod.yaml
+    - kubectl -n main rollout restart deployment front-my-v1
   when: on_success
   only: 
     - main
