@@ -1,5 +1,6 @@
 import { Box, Stack } from "@mui/material";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { CloudConnectionSvg } from "src/components/atoms/svg-icons/CloudConnectionSvg";
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
 import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
@@ -13,73 +14,75 @@ import { ItemList } from "./ItemList";
 
 type SidebarPropsType = {};
 
-const listItems: sidebarItemType[] = [
-  {
-    title: "DNS",
-    text: " سرویس  DNS ابری ",
-    Icon: CloudConnectionSvg,
-    link: "/cdn",
-  },
-  {
-    title: "Virtual Machine",
-    text: "سرور های ابری",
-    Icon: VmSvg,
-    link: "/vm",
-    subList: [{ title: "مدیریت سرورها", link: "/vm" }],
-  },
-  {
-    title: "Kubernetes Cluster",
-    text: "کلاستر کوبرنتیز",
-    Icon: KubernetesSvg,
-    link: "/kubernetes-cluster",
-    subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
-  },
-  {
-    title: "Kubernetes Cloud",
-    text: "کوبرنتیز ابری",
-    Icon: KubernetesSvg,
-    link: "/kubernetes-cloud",
-  },
-  {
-    title: "Object Storage",
-    text: "ذخیره‌ساز ابری",
-    Icon: ObjectStorageSvg,
-    link: "/storage",
-  },
-  // {
-  //   title: "Web Hosting",
-  //   text: "هاستینگ ابری",
-  //   Icon: WebHostSvg,
-  //   link: "/web",
-  //   subList: [{ title: "مدیریت هاستینگ ابری", link: "/web" }],
-  // },
-  // {
-  //   title: "Domain Registration",
-  //   text: "ثبت/تمدید دامنه",
-  //   Icon: CdnSvg,
-  //   link: "/domain",
-  //   subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
-  // },
-  // {
-  //   title: "Private Cloud (VPC)",
-  //   text: "ابر اختصاصی مجازی",
-  //   Icon: WebHostSvg,
-  //   link: "/vpc",
-  //   subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
-  // },
-  {
-    Icon: WalletSvg,
-    link: "/portal/wallet",
-    subList: [
-      { title: "گزارش کیف پول", link: "/portal/wallet" },
-      { title: "فاکتور های فروش", link: "/portal/wallet/invoice" },
-      { title: "گزارش پرداخت ها", link: "/portal/wallet/payment" },
-      { title: "گزارش محاسبات", link: "/portal/wallet/bill" },
-    ],
-  },
-];
-
 export const Sidebar: FC<SidebarPropsType> = () => {
+  const selectedProjectId = useSelector((state: any) => state.project.selectedProjectId);
+
+  const listItems: sidebarItemType[] = useMemo(() => [
+    {
+      title: "DNS",
+      text: " سرویس  DNS ابری ",
+      Icon: CloudConnectionSvg,
+      link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
+    },
+    {
+      title: "Virtual Machine",
+      text: "سرور های ابری",
+      Icon: VmSvg,
+      link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/vm/list",
+      subList: [{ title: "مدیریت سرورها", link: selectedProjectId ? `/vm/${selectedProjectId}` : "/dashboard" }],
+    },
+    {
+      title: "Kubernetes Cluster",
+      text: "کلاستر کوبرنتیز",
+      Icon: KubernetesSvg,
+      link: selectedProjectId ? `/kubernetes-cluster/${selectedProjectId}` : "/dashboard",
+      subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
+    },
+    {
+      title: "Kubernetes Cloud",
+      text: "کوبرنتیز ابری",
+      Icon: KubernetesSvg,
+      link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
+    },
+    {
+      title: "Object Storage",
+      text: "ذخیره‌ساز ابری",
+      Icon: ObjectStorageSvg,
+      link: selectedProjectId ? `/storage/${selectedProjectId}` : "/dashboard",
+    },
+    // {
+    //   title: "Web Hosting",
+    //   text: "هاستینگ ابری",
+    //   Icon: WebHostSvg,
+    //   link: "/web",
+    //   subList: [{ title: "مدیریت هاستینگ ابری", link: "/web" }],
+    // },
+    // {
+    //   title: "Domain Registration",
+    //   text: "ثبت/تمدید دامنه",
+    //   Icon: CdnSvg,
+    //   link: "/domain",
+    //   subList: [{ title: "ثبت/تمدید دامنه", link: "/domain" }],
+    // },
+    // {
+    //   title: "Private Cloud (VPC)",
+    //   text: "ابر اختصاصی مجازی",
+    //   Icon: WebHostSvg,
+    //   link: "/vpc",
+    //   subList: [{ title: "ابر اختصاصی مجازی", link: "/vpc" }],
+    // },
+    {
+      Icon: WalletSvg,
+      link: "/portal/wallet",
+      subList: [
+        { title: "گزارش کیف پول", link: "/portal/wallet" },
+        { title: "فاکتور های فروش", link: "/portal/wallet/invoice" },
+        { title: "گزارش پرداخت ها", link: "/portal/wallet/payment" },
+        { title: "گزارش محاسبات", link: "/portal/wallet/bill" },
+      ],
+    },
+  ], [selectedProjectId]);
+
   return (
     <Box
       sx={{
