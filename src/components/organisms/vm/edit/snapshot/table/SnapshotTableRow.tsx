@@ -2,8 +2,8 @@ import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  VmSnapshotResponse,
-  useDeleteApiMyVmSnapshotDeleteByIdMutation,
+  VmHostSnapshotListResponse,
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -13,6 +13,7 @@ import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RevertVmSnapshotDialog } from "../dialog/RevertVmSnapshotDialog";
 import { snapShotTableStruct } from "./struct";
+import { useParams } from "react-router";
 
 enum VM_SNAPSHOT_STATUS_INFO {
   ACTIVE = 1,
@@ -87,17 +88,21 @@ const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
 export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedSnapshot, setSelectedSnapshot] =
-    useState<VmSnapshotResponse | null>(null);
+    useState<VmHostSnapshotListResponse | null>(null);
   const [openRevert, setOpenRevert] = useState(false);
 
   const handleOpenRevert = () => setOpenRevert(true);
   const handleCloseRevert = () => setOpenRevert(false);
 
   const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
-    useDeleteApiMyVmSnapshotDeleteByIdMutation();
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation();
 
+  const { id, projectId } = useParams();
   const deleteSnapshotRecordHandler = () =>
-    deleteItem({ id: Number(selectedSnapshot?.id) })
+    deleteItem({ id: Number(selectedSnapshot?.id),
+      projectId: Number(projectId),
+      vmHostId: Number(id) 
+     })
       .unwrap()
       .then(() => {
         toast.success("حدف snapshot مورد نظر در حال بررسی است");
@@ -110,7 +115,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedSnapshot(null);
   };
 
-  const handleOpenDelete = (snapshot: VmSnapshotResponse) => {
+  const handleOpenDelete = (snapshot: VmHostSnapshotListResponse) => {
     setSelectedSnapshot(snapshot);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
