@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { Grid2 } from "@mui/material";
-import {  useGetApiMyDatacenterIpListByIdQuery } from "src/app/services/api.generated";
+import {  useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import IpRow from "./IPRow";
 import { Add } from "@mui/icons-material";
@@ -47,8 +47,8 @@ const LoadingSkeleton: FC = () => (
 export const VmIpAddress: FC = () => {
   // const { serverId } = useContext(EditServerContext);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const { id } = useParams();
-  const {data, refetch ,isLoading} = useGetApiMyDatacenterIpListByIdQuery({id:Number(id)})
+  const {projectId, id } = useParams();
+  const {data, refetch ,isLoading} = useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery({ projectId: Number(projectId) ,vmHostId:Number(id)})
 
   // const [getData, { isLoading }] = useLazyGetApiMyDatacenterIpListByIdQuery();
   // const [data, setData] =
