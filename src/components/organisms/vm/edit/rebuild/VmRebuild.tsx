@@ -9,7 +9,7 @@ import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
-import { usePutApiMyVmHostRebuildByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation } from "src/app/services/api.generated";
 
 type VmRebuildPropsType = {};
 
@@ -23,7 +23,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
 
   const { projectId} = useParams()
 
-  const [rebuild, { isLoading }] = usePutApiMyVmHostRebuildByIdMutation();
+  const [rebuild, { isLoading }] = usePutApiMyVmByProjectIdHostRebuildAndIdMutation();
 
   const submitHandler = () => {
     formik.handleSubmit();
@@ -43,10 +43,12 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
       return;
     rebuild({
       id: serverId,
+      projectId: Number(projectId),
       rebuildVmModel: {
         name: formik.values.serverName,
         password: formik.values.password,
-        imageId: imageId,
+        vmImageId: imageId,
+        // vmKeyId: vmKeyId?.id,
       },
     })
       .unwrap()
