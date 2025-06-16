@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  usePostApiMyVmHostCreateMutation,
+  usePostApiMyVmByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -61,7 +61,7 @@ const AddVm: FC = () => {
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
-    usePostApiMyVmHostCreateMutation();
+  usePostApiMyVmByProjectIdHostCreateMutation();
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -127,18 +127,18 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-          publicKey: null,
-          imageId: osVersion?.id || 0,
+          
+          vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-          vmProjectId: Number(projectId),
-          vpcHostNetworkId: Number(selectedNetwork),
+         
           ipAddress: String(selectedIp),
           storageClassTypeId: 1,
         },
+        projectId: Number(projectId),
       })
         .unwrap()
         .then(() => {
