@@ -1,21 +1,21 @@
 import { FC, useMemo } from "react";
 import { ServerInfoActions } from "./serverInfoSections/ServerInfoActions";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
-import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
 
 type VmInfoPropsType = {};
 
 export const VmInfo: FC<VmInfoPropsType> = () => {
-  const { id } = useParams();
+  const { id,projectId } = useParams();
 
   const {
     data,
     isLoading: getVmDataLoading,
     isFetching: getVmDataFetching,
     refetch,
-  } = useGetApiMyVmHostGetByIdQuery({
-    id: Number(id)!,
+  } = useGetApiMyVmByProjectIdHostGetAndIdQuery({
+   projectId: Number(projectId)! ,id: Number(id)!,
   });
 
   const refetchOnClick = () => refetch();
@@ -61,11 +61,7 @@ export const VmInfo: FC<VmInfoPropsType> = () => {
       { id: "cpu", label: "CPU", value: `${data?.cpu || 0} Core` },
       { id: "memory", label: "Memory", value: `${data?.memory || 0} G` },
       { id: "disk", label: "Disk", value: `${data?.disk || 0} GB` },
-      {
-        id: "macAddress",
-        label: "MAC Address",
-        value: data?.macAddress || "---",
-      },
+    
     ],
   ];
 
