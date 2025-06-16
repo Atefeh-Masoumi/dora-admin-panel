@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
-import { useGetApiMyVmHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VM_ENUM } from "src/types/vmEnum";
@@ -65,16 +65,14 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
   const location = useLocation();
 
   const { data: vmData, isLoading: getVmDataLoading } =
-    useGetApiMyVmHostGetByIdQuery({
-      id: Number(id)!,
+  useGetApiMyVmByProjectIdHostGetAndIdQuery({
+      id: Number(id)!,projectId: Number(projectId)!
     });
 
   useEffect(() => {
     if (!id) return;
     setServerId(Number(id));
-    setHypervisorId(vmData?.hypervisorTypeId || 0);
     setDatacenterId(vmData?.datacenterId || 0);
-    setHostProjectId(vmData?.hostProjectId || 0);
   }, [
     id,
     vmData,
