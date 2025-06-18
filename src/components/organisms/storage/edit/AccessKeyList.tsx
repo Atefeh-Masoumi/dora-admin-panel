@@ -13,8 +13,8 @@ import { FC, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery,
-  usePostApiMyObjectStorageStorageUserCreateMutation,
+  useGetApiMyStorageByProjectIdHostAndStorageHostIdKeyListQuery,
+  usePostApiMyStorageByProjectIdHostAndStorageHostIdKeyCreateMutation,
 } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -24,19 +24,20 @@ import AccessKeyTableRow from "./tables/AccessKeyTableRow";
 type AccessKeyListPropsType = {};
 
 const AccessKeyList: FC<AccessKeyListPropsType> = () => {
-  const { id } = useParams();
+  const { id,projectId } = useParams();
 
   const {
     data,
     isLoading: getDataLoading,
     refetch,
     isFetching,
-  } = useGetApiMyObjectStorageStorageUserListByStorageHostIdQuery({
+  } = useGetApiMyStorageByProjectIdHostAndStorageHostIdKeyListQuery({
+    projectId: Number(projectId),
     storageHostId: id ? +id : 0,
   });
 
   const [callCreateAccessKey, { isLoading: createAccessKeyIsLoading }] =
-    usePostApiMyObjectStorageStorageUserCreateMutation();
+  usePostApiMyStorageByProjectIdHostAndStorageHostIdKeyCreateMutation();
 
   const [showDialog, setShowDialog] = useState(false);
 
@@ -49,7 +50,8 @@ const AccessKeyList: FC<AccessKeyListPropsType> = () => {
 
   const createAccessKey = () => {
     callCreateAccessKey({
-      createStorageUserModel: { storageHostId: id ? +id : 0 },
+        projectId: Number(projectId),
+         storageHostId: id ? +id : 0 ,
     })
       .unwrap()
       .then(() => {
