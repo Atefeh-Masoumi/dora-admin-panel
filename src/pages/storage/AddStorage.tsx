@@ -1,11 +1,10 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  useGetApiMyObjectStorageHostListQuery,
-  usePostApiMyObjectStorageHostCreateMutation,
+  usePostApiMyStorageByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -33,16 +32,16 @@ const AddStorageService: FC = () => {
   } = useContext(AddStorageContext);
 
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const [createStorageService, { isLoading }] =
-    usePostApiMyObjectStorageHostCreateMutation();
+  usePostApiMyStorageByProjectIdHostCreateMutation();
 
   const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
-  const { refetch } = useGetApiMyObjectStorageHostListQuery();
+  
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -73,10 +72,11 @@ const AddStorageService: FC = () => {
       toast.error(validationErrorMessage);
     } else {
       createStorageService({
+        projectId: Number(projectId),
         createStorageHostModel: {
           name: name,
-          isPublic: false,
-          datacenterId: dataCenter?.id || 0,
+          publicAccess:true,
+          // datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
           isPredefined: isPredefined,
           disk: customConfig.disk,
@@ -85,8 +85,8 @@ const AddStorageService: FC = () => {
         .unwrap()
         .then(() => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
-          navigate("/storage");
-          refetch();
+          navigate(`/storage/${projectId}`);
+          
         })
         .catch((err) => {});
     }
