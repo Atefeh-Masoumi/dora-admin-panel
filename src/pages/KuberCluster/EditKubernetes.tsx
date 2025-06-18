@@ -7,7 +7,7 @@ import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useParams, useNavigate } from "react-router-dom";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
-import { useGetApiMyKubernetesClusterHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesClusterByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const a11yProps = (index: number) => {
@@ -27,11 +27,12 @@ const EditKubernetes: FC = () => {
     navigate(`?tab=${newValue}`);
   };
 
-  const { id: kubernetesId } = useParams();
+  const {projectId, id: kubernetesId } = useParams();
 
   const { data, isLoading, refetch } =
-    useGetApiMyKubernetesClusterHostGetByIdQuery(
+  useGetApiMyKubernetesClusterByProjectIdHostGetAndIdQuery(
       {
+        projectId: Number(projectId) ,
         id: Number(kubernetesId) || 0,
       },
       { skip: !kubernetesId }
