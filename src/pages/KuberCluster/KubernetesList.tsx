@@ -3,8 +3,8 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate } from "react-router";
-import { useGetApiMyKubernetesClusterHostListQuery } from "src/app/services/api.generated";
+import { useNavigate, useParams } from "react-router";
+import { useGetApiMyKubernetesClusterByProjectIdHostListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { kubernetesTableStruct } from "src/components/organisms/kuberCluster/tables/struct";
 import KubernetesTableRow from "src/components/organisms/kuberCluster/tables/KubernetesTableRow";
@@ -12,8 +12,11 @@ import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const KubernetesList: FC = () => {
   const [search, setSearch] = useState("");
-
-  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesClusterHostListQuery();
+const{projectId} =useParams();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesClusterByProjectIdHostListQuery(
+    { projectId: Number(projectId) },
+    { skip: !projectId, }
+  );
 
   const filteredList =
     data?.filter((item) => {
