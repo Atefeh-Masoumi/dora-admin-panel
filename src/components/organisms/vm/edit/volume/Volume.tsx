@@ -3,21 +3,23 @@ import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
+// import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
 import VolumeTableRow from "./table/VolumeTableRow";
 import { volumeTableStruct } from "./table/struct";
-import { useGetApiMyVmVolumeListByVmHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery } from "src/app/services/api.generated";
 
 export const Volume: FC = () => {
   const { id } = useParams();
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [dialogType, setDialogType] = useState<null>(null);
 
+  const {  projectId } = useParams();
+
   const {
     data: volumeList,
     isLoading: getVolumeLoading,
     refetch,
-  } = useGetApiMyVmVolumeListByVmHostIdQuery({ vmHostId: Number(id) });
+  } = useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -80,14 +82,15 @@ export const Volume: FC = () => {
           />
         </Stack>
       </Paper>
-      <CreateVolumeDialog
+      
+      {/* <CreateVolumeDialog
         maxWidth="xs"
         fullWidth
         open={showCreateDialog}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
         refetch={refetch}
-      />
+      /> */}
     </>
   );
 };
