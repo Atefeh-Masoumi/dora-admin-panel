@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid2 } from "@mui/material";
 import { NodeConfig } from "src/components/organisms/kuberCluster/edit/editNodes/addNode/NodeConfig";
 import { useAppSelector } from "src/app/hooks";
-import { usePostApiMyKubernetesClusterNodeCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeCreateMutation } from "src/app/services/api.generated";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import ServiceReceipt, {
@@ -12,7 +12,7 @@ import ServiceReceipt, {
 type AddNodeKubernetesPropsType = {};
 
 const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
-  const { id: hostId } = useParams();
+  const { id: hostId, projectId } = useParams();
 
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
   );
 
   const [createNode, { isLoading: createNodeLoading }] =
-    usePostApiMyKubernetesClusterNodeCreateMutation();
+  usePostApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeCreateMutation();
 
   const onSubmitClick = () => {
     if (!hostId || !nodeType || !vmPassword || !productBundle) {
@@ -30,8 +30,9 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
     }
 
     createNode({
+      kuberClusterHostId: Number(hostId),
+      projectId: Number(projectId),
       createKubernetesNodeModel: {
-        kubernetesHostId: Number(hostId),
         kubernetesNodeTypeId: nodeType,
         isPredefined: true,
         productBundleId: productBundle?.id,
