@@ -7,13 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, Fragment, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   DnsCdnListResponse,
   DomainListResponse,
-  useDeleteApiMyDnsCdnHostDeleteByIdMutation,
-  useGetApiMyDnsCdnHostListQuery,
+  useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostListQuery,
 } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -35,12 +35,14 @@ const CdnList: FC = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-
+const { projectId } = useParams();
   const {
     data: zoneList,
     isLoading: getDataLoading,
     isFetching,
-  } = useGetApiMyDnsCdnHostListQuery();
+  } = useGetApiMyDnsCdnByProjectIdHostListQuery(
+    { projectId: Number(projectId) },
+  );
 
   const isLoading = useMemo(
     () => getDataLoading || isFetching,
@@ -87,11 +89,11 @@ const CdnList: FC = () => {
   };
 
   const [deleteCdn, { isLoading: deleteCdnLoading }] =
-    useDeleteApiMyDnsCdnHostDeleteByIdMutation();
+  useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation();
 
   const deleteCdnHandler = () => {
     if (!selectedCdn?.id) return;
-    deleteCdn({ id: selectedCdn.id })
+    deleteCdn({ id: selectedCdn.id, projectId: Number(projectId)  })
       .unwrap()
       .then(() => {
         toast.success("پروژه مورد نظر با موفقیت حذف شد");
