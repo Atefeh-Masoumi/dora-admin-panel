@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetApiMyVpcNetworkListByVpcHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceListQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -12,12 +12,13 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcNetwork: FC = () => {
   const [dialogType, setDialogType] = useState<"CREATE" | null>(null);
-  const { vpcId } = useParams();
+  const { vpcId , projectId} = useParams();
   const vpcHostId = Number(vpcId) || 0;
 
   const { data: vpcNetworkList, isLoading } =
-    useGetApiMyVpcNetworkListByVpcHostIdQuery({
-      vpcHostId: vpcHostId,
+  useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceListQuery({
+    projectId: Number(projectId),
+    vpcHostId: vpcHostId,
     });
 
   const [search, setSearch] = useState("");
