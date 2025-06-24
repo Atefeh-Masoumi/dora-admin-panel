@@ -27,7 +27,7 @@ const KubernetesCloudList: FC = () => {
 
   const navigate = useNavigate();
 
-  const gotToAddKubernetes = () => navigate("/kubernetes-cloud/add");
+  const gotToAddKubernetes = () => navigate(`/kubernetes-cloud/${projectId}/add`);
 
   return (
     <>
