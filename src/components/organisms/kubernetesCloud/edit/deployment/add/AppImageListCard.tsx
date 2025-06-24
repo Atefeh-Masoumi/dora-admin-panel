@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
   GetApiMyKubernetesCloudImageListApiResponse,
-  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
 } from "src/app/services/api.generated";
 import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
@@ -39,12 +39,13 @@ const AppImageListCard: FC<AppImageListCardPropsType> = ({
     name: string;
   }>(staticImageCategoryList[0]);
 
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId, projectId} = useParams();
 
   const { data: secretList } =
-    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery(
       {
-        namespaceId: Number(kubernetesCloudId),
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId) || 0,
       },
       { skip: !kubernetesCloudId }
     );

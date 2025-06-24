@@ -15,7 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 import * as yup from "yup";
 import {
   useGetApiMyKubernetesCloudImageListQuery,
-  usePostApiMyKubernetesCloudDeploymentCreateMutation,
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployCreateMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import AppImageListCard from "src/components/organisms/kubernetesCloud/edit/deployment/add/AppImageListCard";
@@ -42,13 +42,13 @@ const AddKubernetesCloudDeployment: FC = () => {
   >([]);
 
   const navigate = useNavigate();
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
 
   const { data: kuberCloudImageList, isLoading: kuberCloudImageLoading } =
     useGetApiMyKubernetesCloudImageListQuery();
 
   const [createDeployment, { isLoading: createDeploymentLoading }] =
-    usePostApiMyKubernetesCloudDeploymentCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployCreateMutation();
 
   const addEnvironmentVariable = () => {
     setEnvironmentVariableList((prevState) => {
@@ -94,19 +94,21 @@ const AddKubernetesCloudDeployment: FC = () => {
       toast.error(errorMessage);
     } else {
       createDeployment({
-        createKuberCloudDeploymentModel: {
+        createKuberDeployModel: {
           name: values.name,
           imageTagId: Number(values.imageTagId!),
-          namespaceId: values.namespaceId!,
+          // namespaceId: values.namespaceId!,
           keyValue: groupedByVariableType(values),
           replicaNumber: values.replicaNumber,
           isPublic: false,
         },
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId)
       })
         .unwrap()
         .then((res) => {
           toast.success("کانتینر با موفقیت ایجاد شد");
-          navigate("/kubernetes-cloud/" + kubernetesCloudId + "/deployment");
+          navigate("/kubernetes-cloud/"+ projectId + "/" + kubernetesCloudId + "/deployment");
         })
         .catch((err) => {});
     }
