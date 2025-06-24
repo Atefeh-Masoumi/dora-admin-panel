@@ -18,9 +18,9 @@ import { FC, Fragment, MouseEventHandler, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  RuleModelRequest,
-  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
-  usePostApiMyKubernetesCloudIngressCreateMutation,
+  CreateKuberIngressRuleItemModel,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressCreateMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -63,17 +63,18 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   onClose,
   ...props
 }) => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const [rules, setRules] = useState<CustomRuleModelRequest[]>([]);
 
   const [createIngress, { isLoading: createIngressLoading }] =
-    usePostApiMyKubernetesCloudIngressCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressCreateMutation();
 
   const { data: tLSSecretList } =
-    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery(
       {
-        namespaceId: Number(kubernetesCloudId),
-        secretTypeId: SECRET_TYPES_ENUM.TLS,
+        projectId: Number(projectId), 
+        kuberHostId: Number(kubernetesCloudId),
+        // secretTypeId: SECRET_TYPES_ENUM.TLS,
       },
       { skip: !kubernetesCloudId }
     );
@@ -104,13 +105,15 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       { setSubmitting, resetForm }
     ) => {
       createIngress({
-        createKuberCloudIngressModel: {
+        createKuberIngressModel: {
           name: name!,
           domainName: domainName!,
           protocolTypeId: protocolTypeId,
           secretId: protocolTypeId === 3 ? secretId! : null,
-          rules: rules as RuleModelRequest[],
+          rules: rules as CreateKuberIngressRuleItemModel[],
         },
+        projectId: Number(projectId), 
+        kuberHostId: Number(kubernetesCloudId)
       })
         .unwrap()
         .then(() => {
