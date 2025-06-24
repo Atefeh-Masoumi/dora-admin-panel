@@ -2,8 +2,8 @@ import { Add } from "@mui/icons-material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
-import { useGetApiMyVpcHostListQuery } from "src/app/services/api.generated";
+import { useNavigate, useParams } from "react-router";
+import { useGetApiMyVmByProjectIdVpcListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -13,8 +13,10 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const VpcList: FC = () => {
   const [search, setSearch] = useState("");
-
-  const { data, isLoading,isFetching,refetch } = useGetApiMyVpcHostListQuery();
+  const {projectId} = useParams();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyVmByProjectIdVpcListQuery({
+    projectId: Number(projectId),
+  });
 
   const filteredList =
     data?.filter((item) => {
@@ -27,7 +29,7 @@ const VpcList: FC = () => {
 
   const navigate = useNavigate();
 
-  const gotToAddVpc = () => navigate("/vpc/add");
+  const gotToAddVpc = () => navigate(`/vpc/${projectId}/add`);
 
   return (
     <>
