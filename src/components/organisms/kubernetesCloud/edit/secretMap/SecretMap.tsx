@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -16,13 +16,14 @@ export const KubernetesCloudSecretMap: FC<
   KubernetesCloudSecretMapPropsType
 > = () => {
   const [search, setSearch] = useState("");
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 
   const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId) || 0,
     });
 
   function handleOpenAddSecretMapDialog() {
