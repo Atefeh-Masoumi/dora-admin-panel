@@ -5,7 +5,7 @@ import ServiceReceipt, {
 } from "src/components/molecules/ServiceReceipt";
 import { AddVpcContext } from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 import { SelectVpcConfig } from "src/components/organisms/vpc/add/steps/SelectVpcConfig";
-import { SelectVpcDataCenter } from "src/components/organisms/vpc/add/steps/SelectVpcDataCenter";
+// import { SelectVpcDataCenter } from "src/components/organisms/vpc/add/steps/SelectVpcDataCenter";
 import SelectVpcNetwork from "src/components/organisms/vpc/add/steps/SelectVpcNetwork";
 import { SelectVpcServiceInfo } from "src/components/organisms/vpc/add/steps/SelectVpcServiceInfo";
 
@@ -36,10 +36,10 @@ const AddVpc: FC = () => {
               }}
             >
               <Grid container gap={2}>
-                <Grid xs={12} item>
+                {/* <Grid xs={12} item>
                   <SelectVpcDataCenter />
                   <Divider sx={{ mt: 10 }} />
-                </Grid>
+                </Grid> */}
                 {/* <Grid xs={12} item>
                 <SelectVpcHypervisor />
                   <Divider sx={{ mt: 10 }} />
