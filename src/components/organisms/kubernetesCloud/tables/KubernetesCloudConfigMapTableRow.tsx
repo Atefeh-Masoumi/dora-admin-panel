@@ -14,9 +14,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  GetKuberCloudConfigResponse,
-  useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation,
-  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
+  KuberConfigListResponse,
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -25,7 +24,6 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useParams } from "react-router";
-import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -57,13 +55,14 @@ export const KubernetesCloudConfigMapTableRow: FC<{
   const [
     selectedKubernetesCloudConfigMap,
     setSelectedKubernetesCloudConfigMap,
-  ] = useState<GetKuberCloudConfigResponse | null>(null);
+  ] = useState<KuberConfigListResponse | null>(null);
 
   const [deleteConfigMap, { isLoading: deleteConfigMapLoading }] =
-    useDeleteApiMyKubernetesCloudConfigmapDeleteByIdMutation();
+ useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapDeleteIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteConfigMap({ id: Number(selectedKubernetesCloudConfigMap?.id) })
+    deleteConfigMap({ id: Number(selectedKubernetesCloudConfigMap?.id),kuberHostId: Number(kubernetesCloudId) || 0,projectId: Number(projectId)
+    })
       .unwrap()
       .then(() => {
         toast.success("با موفقیت حذف شد");
@@ -76,8 +75,8 @@ export const KubernetesCloudConfigMapTableRow: FC<{
     setDialogType(null);
     setSelectedKubernetesCloudConfigMap(null);
   };
-
-  const handleOpenDeleteModal = (config: GetKuberCloudConfigResponse) => {
+  const { kubernetesCloudId,projectId } = useParams();
+  const handleOpenDeleteModal = (config: KuberConfigListResponse) => {
     setSelectedKubernetesCloudConfigMap(config);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
