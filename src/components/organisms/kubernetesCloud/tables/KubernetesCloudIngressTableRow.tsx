@@ -16,11 +16,10 @@ import {
 import { FC, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  KuberCloudIngressListResponse,
+  KuberIngressListResponse,
   RulesModel,
-  useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation,
-  useDeleteApiMyKubernetesCloudIngressRuleDeleteByIdMutation,
-  useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery,
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressDeleteIdMutation,
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -48,13 +47,13 @@ enum ITEM_TYPE_ENUM {
 }
 
 export const KubernetesCloudIngressTableRow: FC<{
-  row: KuberCloudIngressListResponse;
+  row: KuberIngressListResponse;
   rowBgColor: any;
 }> = ({ row, rowBgColor }) => {
   const [open, setOpen] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetesCloudIngress, setSelectedKubernetesCloudIngress] =
-    useState<KuberCloudIngressListResponse | null>(null);
+    useState<KuberIngressListResponse | null>(null);
   const [selectedIngressRule, setSelectedIngressRule] =
     useState<RulesModel | null>(null);
   const [keyTitle, setKeyTitle] = useState<ITEM_TYPE_ENUM | null>(null);
@@ -67,18 +66,21 @@ export const KubernetesCloudIngressTableRow: FC<{
     { skip: !kubernetesCloudId }
   );
   const [deleteIngress, { isLoading: deleteIngressLoading }] =
-    useDeleteApiMyKubernetesCloudIngressDeleteByIngressIdMutation();
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressDeleteIdMutation();
 
   const [deleteIngressRule, { isLoading: deleteIngressRuleLoading }] =
-    useDeleteApiMyKubernetesCloudIngressRuleDeleteByIdMutation();
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleDeleteIdMutation();
 
   const isLoading = useMemo(() => {
     return deleteIngressLoading && deleteIngressRuleLoading;
   }, [deleteIngressLoading, deleteIngressRuleLoading]);
 
+  const { kubernetesCloudId,projectId } = useParams();
   const handleDeleteItem = (itemType: ITEM_TYPE_ENUM | null) =>
     itemType === ITEM_TYPE_ENUM.INGRESS
-      ? deleteIngress({ ingressId: Number(selectedKubernetesCloudIngress?.id) })
+      ? deleteIngress({ id: Number(selectedKubernetesCloudIngress?.id),
+        projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId)
+       })
           .unwrap()
           .then(() => {
             toast.success("ingress با موفقیت حذف شد");
@@ -86,7 +88,8 @@ export const KubernetesCloudIngressTableRow: FC<{
             refetch();
           })
           .catch((err) => {})
-      : deleteIngressRule({ id: Number(selectedIngressRule?.id) });
+      : deleteIngressRule({ id: Number(selectedIngressRule?.id), projectId: Number(projectId),
+         kuberHostId: Number(kubernetesCloudId),kuberIngressId: Number(selectedKubernetesCloudIngress?.id) });
 
   const handleCloseModal = () => {
     setDialogType(null);
@@ -96,14 +99,14 @@ export const KubernetesCloudIngressTableRow: FC<{
   };
 
   const handleOpenModal = (
-    item: KuberCloudIngressListResponse | RulesModel,
+    item: KuberIngressListResponse | RulesModel,
     itemType: ITEM_TYPE_ENUM,
     dialogType: DIALOG_TYPE_ENUM
   ) => {
     switch (itemType) {
       case "INGRESS":
         setSelectedKubernetesCloudIngress(
-          item as KuberCloudIngressListResponse
+          item as KuberIngressListResponse
         );
         setKeyTitle(ITEM_TYPE_ENUM.INGRESS);
         break;
@@ -131,11 +134,11 @@ export const KubernetesCloudIngressTableRow: FC<{
         }}
       >
         {kubernetesCloudIngressTableStruct.map((column, index) => {
-          const value = row[column.id as keyof KuberCloudIngressListResponse];
+          const value = row[column.id as keyof KuberIngressListResponse];
           const text = column.format ? column.format(value) : value;
           return (
             <DorsaTableCell
-              key={index}
+              key={index} 
               align="center"
               sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
