@@ -3,9 +3,8 @@ import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  KubernetesListResponse,
-  useDeleteApiMyKubernetesCloudHostDeleteByIdMutation,
-  useGetApiMyKubernetesCloudHostListQuery,
+  KuberHostListResponse,
+  useDeleteApiMyKubernetesCloudByProjectIdHostDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -24,19 +23,17 @@ enum DIALOG_TYPE_ENUM {
 const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetes, setSelectedKubernetes] =
-    useState<KubernetesListResponse | null>(null);
-
+    useState<KuberHostListResponse | null>(null);
+    const { kubernetesCloudId,projectId } = useParams();
   const navigate = useNavigate();
 
   const settingOnClick = () =>
-    navigate("/kubernetes-cloud/" + row["id"] + "/overview");
-
-  const { refetch } = useGetApiMyKubernetesCloudHostListQuery();
-  const [deleteKubernetes, { isLoading: deleteKubernetesLoading }] =
-    useDeleteApiMyKubernetesCloudHostDeleteByIdMutation();
+    navigate("/kubernetes-cloud/" +projectId + "/" + row["id"] + "/overview");
+  const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
+  useDeleteApiMyKubernetesCloudByProjectIdHostDeleteAndIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteKubernetes({ id: Number(selectedKubernetes?.id) })
+    deleteKubernetes({ id: Number(selectedKubernetes?.id), projectId: Number(projectId),  })
       .unwrap()
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
@@ -50,7 +47,7 @@ const KubernetesCloudTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedKubernetes(null);
   };
 
-  const handleOpenDelete = (kubernetes: KubernetesListResponse) => {
+  const handleOpenDelete = (kubernetes: KuberHostListResponse) => {
     setSelectedKubernetes(kubernetes);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
