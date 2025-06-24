@@ -7,6 +7,8 @@ import {
   DialogContentText,
   DialogProps,
   DialogTitle,
+  MenuItem,
+  Skeleton,
   Stack,
   TextField,
   Typography,
@@ -14,23 +16,26 @@ import {
 import { useFormik } from "formik";
 import { FC, MouseEventHandler } from "react";
 import { useParams } from "react-router-dom";
-import { usePostApiMyVpcNetworkCreateMutation } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdNetworkShortListQuery, usePostApiMyVmByProjectIdVpcAndVpcHostIdInterfaceCreateMutation } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import { maskRegexOnly24 } from "src/utils/regex.utils";
 import * as yup from "yup";
 
 export type NetworkItemsType = {
-  id?: number;
-  gatewayCidr: string;
-  name: string;
+  // id?: number;
+  // gatewayCidr: string;
+  // name: string;
+  vmNetworkId:number
 };
 
 export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
-  const { vpcId } = useParams();
+  const { vpcId, projectId } = useParams();
   const vpcHostId = Number(vpcId) || 0;
   const [callCreateNetwork, { isLoading }] =
-    usePostApiMyVpcNetworkCreateMutation();
+    usePostApiMyVmByProjectIdVpcAndVpcHostIdInterfaceCreateMutation();
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
@@ -44,43 +49,48 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
   };
 
   const onSubmit: formikOnSubmitType<NetworkItemsType> = (
-    { name, gatewayCidr },
+    { vmNetworkId  },
     { resetForm }
   ) => {
     callCreateNetwork({
-      createVpcNetworkModel: {
-        name,
-        gatewayCidr,
-        vpcHostId,
+      createVpcInterfaceModel: {
+        // name,
+        // gatewayCidr,
+        vmNetworkId,
       },
+      projectId: Number(projectId),
+      vpcHostId: vpcHostId,
+
     })
       .unwrap()
       .then(() => {
         closeHandler(new Event("submit"), "escapeKeyDown");
         resetForm();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
-  const initialValues: NetworkItemsType = {
-    name: "",
-    gatewayCidr: "",
+  const initialValues = {
+    vmNetworkId: 0
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-      name: yup.string().required("این بخش الزامی می‌باشد"),
-      gatewayCidr: yup
-        .string()
-        .matches(maskRegexOnly24, {
-          message: "Ip طبق الگو و maskBits=24 باشد.",
-        })
-        .required("این بخش الزامی می‌باشد"),
+      vmNetworkId: yup.number().required(),
+      // name: yup.string().required("این بخش الزامی می‌باشد"),
+      // gatewayCidr: yup
+      //   .string()
+      //   .matches(maskRegexOnly24, {
+      //     message: "Ip طبق الگو و maskBits=24 باشد.",
+      //   })
+      //   .required("این بخش الزامی می‌باشد"),
     }),
     onSubmit,
   });
-
+  const { data: networkList, isLoading: networkLoading } = useGetApiMyVmByProjectIdNetworkShortListQuery({
+    projectId: Number(projectId),
+  });
   return (
     <Dialog {...props} onClose={closeHandler}>
       <DialogTitle justifyContent="left">
@@ -91,11 +101,41 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
           <Stack direction="column" rowGap={3}>
-            <DialogContentText justifyContent="left">
-              یک نام برای شناسایی Network خود مشخص کنید.
-            </DialogContentText>
+            {networkLoading ? (
+               <Stack spacing={2} justifyContent="center">
+                  {[...Array(2)].map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      variant="rectangular"
+                      height={70}
+                      width={240}
+                      sx={{
+                        bgcolor: "secondary.light",
+                        borderRadius: BORDER_RADIUS_1,
+                      }}
+                    />
+                  ))}
+               </Stack>
+            ) : (
+              <DorsaTextField
+              select
+                {...formik.getFieldProps("vmNetworkId")}
+                error={Boolean(formik.errors.vmNetworkId && formik.touched.vmNetworkId)}
+                fullWidth
+              >
+                {networkList?.map(({ name, id }) => (
+                  <MenuItem key={id} value={id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </DorsaTextField>
+            )}
 
-            <AlphaNumericTextField
+            {/* <DialogContentText justifyContent="left">
+              یک نام برای شناسایی Network خود مشخص کنید.
+            </DialogContentText> */}
+
+            {/* <AlphaNumericTextField
               formik={formik}
               id="name"
               size="small"
@@ -134,7 +174,7 @@ export const CreateNetworkRecordModal: FC<DialogProps> = ({ ...props }) => {
                   },
                 },
               }}
-            />
+            /> */}
           </Stack>
         </form>
       </DialogContent>
