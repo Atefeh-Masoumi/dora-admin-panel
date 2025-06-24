@@ -3,10 +3,10 @@ import { Paper, Stack, Typography, useTheme } from "@mui/material";
 import { FC, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useLazyGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api";
 import {
+  useGetApiMyKubernetesCloudByProjectIdHostGetAndIdQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
-  usePutApiMyKubernetesCloudHostEditByIdMutation,
+  usePutApiMyKubernetesCloudByProjectIdHostEditAndIdMutation,
 } from "src/app/services/api.generated";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import {
@@ -24,32 +24,25 @@ export const KubernetesCloudServerConfig: FC = () => {
   const [cpuUnitPrice, setCpuUnitPrice] = useState(0);
   const [diskUnitPrice, setDiskUnitPrice] = useState(0);
   const [tenPodsUnitPrice, setTenPodsUnitPrice] = useState(0);
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const theme = useTheme()
   const { data: unitsPrice } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.KubernetesCloud,
     });
 
-  const [getData] = useLazyGetApiMyKubernetesCloudHostGetByIdQuery();
+  const {data:getData} = useGetApiMyKubernetesCloudByProjectIdHostGetAndIdQuery({ id: Number(kubernetesCloudId), projectId: Number(projectId), });
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiMyKubernetesCloudHostEditByIdMutation();
+  usePutApiMyKubernetesCloudByProjectIdHostEditAndIdMutation();
 
   useEffect(() => {
-    if (kubernetesCloudId) {
-      getData({ id: Number(kubernetesCloudId) })
-        .unwrap()
-        .then((res) => {
-          if (res) {
-            setMemory(res.memory || 0);
-            setCpu(res.cpu || 0);
-            setDisk(res.disk || 0);
-          }
-        })
-        .catch(() => {});
+    if (!kubernetesCloudId) return
+      setMemory(getData?.memory || 0);
+      setCpu(getData?.cpu || 0);
+      setDisk(getData?.disk || 0);
     }
-  }, [getData, kubernetesCloudId]);
+  , [getData, kubernetesCloudId]);
 
   useEffect(() => {
     if (
@@ -141,7 +134,8 @@ export const KubernetesCloudServerConfig: FC = () => {
     if (!kubernetesCloudId) return;
     sendNewConfig({
       id: Number(kubernetesCloudId),
-      editKuberCloudHostModel: {
+      projectId: Number(projectId),
+      editKuberHostModel: {
         cpu,
         memory,
         disk,
