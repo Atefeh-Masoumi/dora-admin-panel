@@ -14,9 +14,9 @@ import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  KubernetesListResponse,
+  KuberDeployListResponse,
   PortResponse,
-  useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation,
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -42,18 +42,19 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   const [open, setOpen] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDeployment, setSelectedDeployment] =
-    useState<KubernetesListResponse | null>(null);
+    useState<KuberDeployListResponse | null>(null);
 
   const navigate = useNavigate();
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const nodePortList: PortResponse[] = row.ports! || [];
 
   const [deleteDeployment, { isLoading: deleteDeploymentRecordLoading }] =
-    useDeleteApiMyKubernetesCloudDeploymentDeleteByIdMutation();
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployDeleteIdMutation();
 
   const handleSettingButtonOnClick = () =>
     navigate(
       "/kubernetes-cloud/" +
+        projectId +
         kubernetesCloudId +
         "/deployment/" +
         row.id +
@@ -61,7 +62,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
     );
 
   const handleDeleteDeploymentRecord = () =>
-    deleteDeployment({ id: Number(selectedDeployment?.id) })
+    deleteDeployment({ id: Number(selectedDeployment?.id),kuberHostId : Number(kubernetesCloudId), projectId: Number(projectId),  })
       .unwrap()
       .then(() => {
         toast.success("سرویس deployment شما با موفقیت حذف شد");
@@ -74,7 +75,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
     setSelectedDeployment(null);
   };
 
-  const handleOpenDeleteDialog = (kubernetes: KubernetesListResponse) => {
+  const handleOpenDeleteDialog = (kubernetes: KuberDeployListResponse) => {
     setSelectedDeployment(kubernetes);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
