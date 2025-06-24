@@ -18,10 +18,10 @@ import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import {
-  CreateKuberCloudFirewallModel,
-  useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
-  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  usePostApiMyKubernetesCloudFirewallCreateMutation,
+  CreateKuberFirewallModel,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery,
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallCreateMutation,
 } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
 
@@ -42,47 +42,49 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   forceClose,
   ...props
 }) => {
-  const { kubernetesCloudId } = useParams();
-  const { refetch } = useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
-    { namespaceId: Number(kubernetesCloudId) || 0 },
+  const { kubernetesCloudId,projectId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery(
+    {  projectId: Number(projectId),
+      kuberHostId: Number(kubernetesCloudId) },
     { skip: !kubernetesCloudId }
   );
   const { data: kuberCloudObject } =
-    useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
-    });
-
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId),
+  })
   const deployPortList = useMemo(() => {
     return kuberCloudObject?.flatMap((item) =>
       item.ports?.map((port) => ({
         id: port.portId,
-        value: `${item.deployName}:${port.targetPort}`,
+        value: `${item.name}:${port.targetPort}`,
       }))
     );
   }, [kuberCloudObject]);
 
   const [createKubernetesCloudFirewall, { isLoading }] =
-    usePostApiMyKubernetesCloudFirewallCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallCreateMutation();
 
-  const param = useParams();
-  const namespaceid = Number(param?.kubernetesCloudId);
+  
 
-  const initialValues: CreateKuberCloudFirewallModel = {
-    namespaceId: namespaceid,
-    firewallProtocolTypeId: 0,
+  const initialValues: CreateKuberFirewallModel = {
+    // namespaceId: namespaceid,
+    firewallProtocolId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
   };
 
-  const onSubmit: formikOnSubmitType<CreateKuberCloudFirewallModel> = (
+  const onSubmit: formikOnSubmitType<CreateKuberFirewallModel> = (
     values,
     { resetForm }
   ) => {
     createKubernetesCloudFirewall({
-      createKuberCloudFirewallModel: {
+      createKuberFirewallModel: {
         ...values,
       },
+      projectId: Number(projectId),
+      kuberHostId: Number(kubernetesCloudId),
     })
       .unwrap()
       .then((res) => {

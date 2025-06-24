@@ -4,7 +4,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery } from "src/app/services/api.generated";
 import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/dialog/CreateFirewallDialog";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudConfigMapTableRow";
@@ -20,12 +20,13 @@ export const KubernetesCloudFirewall: FC = () => {
     setDialogType(null);
   };
 
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
 
   const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery(
       {
-        namespaceId: Number(kubernetesCloudId) || 0,
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId) || 0,
       },
       { skip: !kubernetesCloudId }
     );
