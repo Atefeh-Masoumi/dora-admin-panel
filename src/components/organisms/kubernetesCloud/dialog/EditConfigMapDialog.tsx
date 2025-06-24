@@ -13,8 +13,9 @@ import {
 import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, Fragment } from "react";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import { usePutApiMyKubernetesCloudConfigmapEditMutation } from "src/app/services/api.generated";
+import { usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapEditIdMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -39,9 +40,10 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
   openDialog,
   configData,
 }) => {
+  const { kubernetesCloudId,projectId } = useParams();
 
   const [editConfigMap, { isLoading: editConfigMapLoading }] =
-    usePutApiMyKubernetesCloudConfigmapEditMutation();
+  usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapEditIdMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -103,13 +105,15 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
         submittedConfigMapsArray
       );
       editConfigMap({
-        editKuberCloudConfigmapModel: {
-          configmapId: Number(configData?.id),
+        editKuberConfigmapModel: {
           alias: null,
           description: null,
           removeEnvIds: updatedConfigmap.removeEnvIds,
           envs: updatedConfigmap.envs,
         },
+        id: Number(configData?.id),
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId),
       })
         .unwrap()
         .then(() => {

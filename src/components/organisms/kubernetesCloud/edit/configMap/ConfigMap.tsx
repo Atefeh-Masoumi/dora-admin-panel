@@ -8,7 +8,7 @@ import { KubernetesCloudConfigMapTableRow } from "../../tables/KubernetesCloudCo
 import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery } from "src/app/services/api.generated";
 
 type KubernetesCloudConfigMapPropsType = {};
 
@@ -18,12 +18,11 @@ export const KubernetesCloudConfigMap: FC<
   const [search, setSearch] = useState("");
   const [openAddConfigMapDialog, setOpenAddConfigMapDialog] =
     useState<boolean>(false);
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId, projectId } = useParams();
 
-  const { data = [], isLoading } =
-    useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
-      {
-        namespaceId: Number(kubernetesCloudId) || 0,
+  const { data = [], isLoading } =useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
+      { projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId) || 0,
       },
       { skip: !kubernetesCloudId }
     );
