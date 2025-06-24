@@ -6,7 +6,7 @@ import {
   CustomRuleModelRequest,
 } from "../../dialog/AddIngressDialog";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
 import { DeleteOutline } from "@mui/icons-material";
 
@@ -21,18 +21,19 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
   mainIndex,
   setRules,
 }) => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
 
   const { data: kuberCloudObject , refetch } =
-    useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId) || 0,
     });
 
   const servicePortList = useMemo(() => {
     return kuberCloudObject?.flatMap((item, index) =>
       item.ports?.map((port, portIndex) => ({
         id: port.portId,
-        value: `${item.deployName}:${port.targetPort}`,
+        value: `${item.name}:${port.targetPort}`,
       }))
     );
   }, [kuberCloudObject]);
