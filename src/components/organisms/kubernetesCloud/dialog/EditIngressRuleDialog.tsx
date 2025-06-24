@@ -16,8 +16,8 @@ import { useFormik } from "formik";
 import { FC, useMemo } from "react";
 import {
   RulesModel,
-  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  usePutApiMyKubernetesCloudIngressRuleEditMutation,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery,
+  usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleEditIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
@@ -39,22 +39,23 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
   data,
   ...props
 }) => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
 
   const [editIngressRule, { isLoading: editIngressRuleLoading }] =
-    usePutApiMyKubernetesCloudIngressRuleEditMutation();
+  usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleEditIdMutation();
 
   const { data: deploymentPortList } =
-    useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
-    });
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId)
+  });
 
   const transformedPorts = useMemo(() => {
     return deploymentPortList?.flatMap((deployment) =>
       deployment.ports?.map((port) => ({
         portId: port.portId,
         nodePort: port.nodePort,
-        name: deployment.deployName,
+        name: deployment.name,
       }))
     );
   }, [deploymentPortList]);
@@ -72,11 +73,14 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
       { setSubmitting, resetForm }
     ) => {
       editIngressRule({
-        editKuberCloudIngressRuleModel: {
-          ingressRuleId,
+        editKuberIngressRuleModel: {
           path,
-          kuberCloudDeployPortId,
+          kuberDeployPortId:kuberCloudDeployPortId,
         },
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId),
+        kuberIngressId:ingressRuleId,
+        id:ingressRuleId,
       })
         .unwrap()
         .then(() => {
