@@ -1,8 +1,8 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
-import { useGetApiMyKubernetesCloudHostListQuery } from "src/app/services/api.generated";
+import { useNavigate, useParams } from "react-router";
+import { useGetApiMyKubernetesCloudByProjectIdHostListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import KubernetesCloudTableRow from "src/components/organisms/kubernetesCloud/tables/KubernetesCloudTableRow";
 import { kubernetesCloudTableStruct } from "src/components/organisms/kubernetesCloud/tables/struct";
@@ -13,8 +13,8 @@ import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const KubernetesCloudList: FC = () => {
   const [search, setSearch] = useState("");
-
-  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesCloudHostListQuery();
+  const { projectId } = useParams();
+  const { data, isLoading,isFetching,refetch } = useGetApiMyKubernetesCloudByProjectIdHostListQuery({ projectId: Number(projectId) });
 
   const filteredList =
     data?.filter((item) => {
