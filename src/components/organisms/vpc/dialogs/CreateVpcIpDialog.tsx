@@ -9,13 +9,15 @@ import {
   DialogProps,
   DialogTitle,
   FormControlLabel,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { FC, MouseEventHandler, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyVpcIpCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdVpcAndVpcHostIdIpCreateMutation } from "src/app/services/api.generated";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type CreateVpcIpDialogPropsType = DialogProps & {
   id?: number;
@@ -32,18 +34,20 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
   ...props
 }) => {
   const [isConfirm, setIsConfirm] = useState<boolean>(false);
-  const { vpcId } = useParams();
-
+  const { vpcId,projectId } = useParams();
+  const [isIpV4, setIsIpV4] = useState<boolean>(false);
   const [createVpcIp, { isLoading: createVpcIpLoading }] =
-    usePostApiMyVpcIpCreateMutation();
+  usePostApiMyVmByProjectIdVpcAndVpcHostIdIpCreateMutation();
 
   const handleButton = () => {
     if (!vpcId) return;
 
     createVpcIp({
-      createVpcHostGatewayIpModel: {
-        vpcHostId: Number(vpcId),
+      createVpcIpModel: {
+        useIpV4: isIpV4,
       },
+      vpcHostId: Number(vpcId),
+      projectId: Number(projectId),
     })
       .unwrap()
       .then(() => {
@@ -95,6 +99,22 @@ export const CreateVpcIpDialog: FC<CreateVpcIpDialogPropsType> = ({
                 />
               }
             />
+             <DorsaTextField
+             select
+                dir="rtl"
+                value={isIpV4 ? "IPv4" : "IPv6"}
+                onChange={(e) => setIsIpV4(e.target.value === "IPv4")}
+                id="ipVersion"
+                label="IP Version"
+                fullWidth
+                defaultValue="IPv4"
+              >
+                {["IPv6", "IPv4"].map((label) => (
+                  <MenuItem key={label} value={label}>
+                    {label}
+                  </MenuItem>
+                ))}
+              </DorsaTextField>
           </Alert>
         </Stack>
       </DialogContent>

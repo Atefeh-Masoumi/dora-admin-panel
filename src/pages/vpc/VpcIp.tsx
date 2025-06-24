@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetApiMyVpcIpListByVpcHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdVpcAndVpcHostIdIpListQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
@@ -11,16 +11,17 @@ import { vpcIpTableStruct } from "src/components/organisms/vpc/tables/struct";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const VpcIp: FC = () => {
-  const { vpcId } = useParams();
+  const { vpcId,projectId } = useParams();
   const vpcHostId = Number(vpcId) || 0;
 
-  const { data: vpcIpList, isLoading } = useGetApiMyVpcIpListByVpcHostIdQuery({
+  const { data: vpcIpList, isLoading } = useGetApiMyVmByProjectIdVpcAndVpcHostIdIpListQuery({
+    projectId: Number(projectId),
     vpcHostId: vpcHostId,
   });
 
   const [search, setSearch] = useState("");
 
-  const filteredList = vpcIpList?.filter((ip) => ip.ip?.includes(search));
+  const filteredList = vpcIpList?.filter((ip) => ip.ipAddress?.includes(search));
 
   const handleOpen = () => setShowDialog(true);
   const [showDialog, setShowDialog] = useState(false);
