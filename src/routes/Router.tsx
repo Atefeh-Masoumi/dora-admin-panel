@@ -65,13 +65,13 @@ const VmIndex = lazy(() => import("src/pages/vm/VmList"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
-const WebIndex = lazy(() => import("src/pages/web/Index"));
-const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
-const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
+// const WebIndex = lazy(() => import("src/pages/web/Index"));
+// const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
+// const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
 
-const DomainIndex = lazy(() => import("src/pages/domain/DomainList"));
-const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
-const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
+// const DomainIndex = lazy(() => import("src/pages/domain/DomainList"));
+// const AddDomain = lazy(() => import("src/pages/domain/AddDomain"));
+// const EditDomain = lazy(() => import("src/pages/domain/EditDomain"));
 
 const StorageIndex = lazy(() => import("src/pages/storage/StorageList"));
 const AddStorageService = lazy(() => import("src/pages/storage/AddStorage"));
@@ -447,7 +447,7 @@ const Router: FC = () => {
             )}
           />
           {/* ======================================= WEB ======================================= */}
-          <Route
+          {/* <Route
             path="/web/:projectId"
             element={mainTemplate(WebIndex, {
               pageTitle: "مدیریت هاستینگ ابری",
@@ -466,8 +466,8 @@ const Router: FC = () => {
               },
               AddWebContextProvider
             )}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/web/:projectId/:id"
             element={mainTemplate(
               EditWeb,
@@ -480,16 +480,16 @@ const Router: FC = () => {
               },
               EditWebContextProvider
             )}
-          />
+          /> */}
 
           {/* ======================================= Domain ======================================= */}
-          <Route
+          {/* <Route
             path="/domain/:projectId"
             element={mainTemplate(DomainIndex, {
               pageTitle: "مدیریت ثبت/تمدید دامنه",
             })}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/domain/:projectId/registerDomain"
             element={mainTemplate(
               AddDomain,
@@ -502,8 +502,8 @@ const Router: FC = () => {
               },
               AddDomainContextProvider
             )}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/domain/:projectId/:id"
             element={mainTemplate(
               EditDomain,
@@ -516,7 +516,7 @@ const Router: FC = () => {
               },
               EditDomainContextProvider
             )}
-          />
+          /> */}
           {/* ======================================= Storage ======================================= */}
           <Route
             path="/storage/:projectId"
