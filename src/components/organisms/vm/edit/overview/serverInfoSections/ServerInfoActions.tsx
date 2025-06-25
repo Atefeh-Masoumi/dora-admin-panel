@@ -10,45 +10,46 @@ import { PlaySvg } from "src/components/atoms/svg-icons/PlaySvg";
 import { ElectricitySvg } from "src/components/atoms/svg-icons/ElectricitySvg";
 import { LeftRotateSvg } from "src/components/atoms/svg-icons/LeftRotateSvg";
 import {
-  usePutApiMyVmHostDisconnectByIdMutation,
-  usePutApiMyVmHostConnectByIdMutation,
-  usePutApiMyVmHostStartByIdMutation,
-  usePutApiMyVmHostStopByIdMutation,
-  usePutApiMyVmHostRebootByIdMutation,
-  usePutApiMyVmHostShutdownByIdMutation,
-  useGetApiMyVmHostGetByIdQuery,
-  GetRemoteConsoleResponse,
+  // usePutApiMyVmHostDisconnectByIdMutation,
+  // usePutApiMyVmHostConnectByIdMutation,
+  usePutApiMyVmByProjectIdHostStartAndIdMutation,
+  usePutApiMyVmByProjectIdHostStopAndIdMutation,
+  usePutApiMyVmByProjectIdHostRebootAndIdMutation,
+  usePutApiMyVmByProjectIdHostShutdownAndIdMutation,
+  useGetApiMyVmByProjectIdHostGetAndIdQuery,
+  GetConsoleResponse,
 } from "src/app/services/api.generated";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { toast } from "react-toastify";
-import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery } from "src/app/services/api";
 import { useParams } from "react-router-dom";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 
 type ServerInfoActionsPropsType = {};
 
 export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
-  const { id } = useParams();
+  const { id,projectId } = useParams();
 
   const { serverId } = useContext(EditServerContext);
   const [getConsoleUrl, { isLoading: getConsoleUrlLoading }] =
-    useLazyGetApiMyVmKmsGetByIdQuery();
-  const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
-    usePutApiMyVmHostDisconnectByIdMutation();
-  const [connectServer, { isLoading: connectServerIsLoading }] =
-    usePutApiMyVmHostConnectByIdMutation();
+  useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery();
+  // const [disconnectServer, { isLoading: disconnectServerIsLoading }] =
+  //   usePutApiMyVmHostDisconnectByIdMutation();
+  // const [connectServer, { isLoading: connectServerIsLoading }] =
+    // usePutApiMyVmHostConnectByIdMutation();
   const [startServer, { isLoading: startServerIsLoading }] =
-    usePutApiMyVmHostStartByIdMutation();
+  usePutApiMyVmByProjectIdHostStartAndIdMutation();
   const [stopServer, { isLoading: stopServerIsLoading }] =
-    usePutApiMyVmHostStopByIdMutation();
+  usePutApiMyVmByProjectIdHostStopAndIdMutation();
   const [shutdownServer, { isLoading: shutdownServerIsLoading }] =
-    usePutApiMyVmHostShutdownByIdMutation();
+  usePutApiMyVmByProjectIdHostShutdownAndIdMutation();
   const [rebootServer, { isLoading: rebootServerIsLoading }] =
-    usePutApiMyVmHostRebootByIdMutation();
+  usePutApiMyVmByProjectIdHostRebootAndIdMutation();
 
   const { data: vmData, isLoading: getVmDataLoading ,refetch} =
-    useGetApiMyVmHostGetByIdQuery(
+  useGetApiMyVmByProjectIdHostGetAndIdQuery(
       {
+        projectId: Number(projectId),
         id: Number(id || 0)!,
       },
       { skip: !id }
@@ -65,7 +66,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
   );
 
   const sendUserToKmsConsole = (
-    remoteConsoleObject: GetRemoteConsoleResponse
+    remoteConsoleObject: GetConsoleResponse
   ) => {
     let a = document.createElement("a");
     const url: string = remoteConsoleObject?.location || "";
@@ -82,7 +83,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       label: "Web Console",
       Icon: MonitorSvg,
       onClick: () => {
-        getConsoleUrl({ id: serverId || 0 })
+        getConsoleUrl({projectId: Number(projectId), id: serverId || 0 })
           .unwrap()
           .then((res) => {
             sendUserToKmsConsole(res);
@@ -92,38 +93,38 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       isLoading: getVmDataLoading || getConsoleUrlLoading,
       isDisable: !powerOn,
     },
-    {
-      label: "Disconnect Network",
-      Icon: CloudRemoveSvg,
-      onClick: () => {
-        if (!serverId) return;
-        disconnectServer({ id: serverId })
-          .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت disconnect شد "))
-          .catch((err) => {});
-      },
-      isLoading: getVmDataLoading || disconnectServerIsLoading,
-      isDisable: !powerOn || !networkConnection,
-    },
-    {
-      label: "Connect Network",
-      Icon: CloudAddSvg,
-      onClick: () => {
-        if (!serverId) return;
-        connectServer({ id: serverId })
-          .unwrap()
-          .then(() => toast.success("سرور ابری با موفقیت connect شد "))
-          .catch((err) => {});
-      },
-      isLoading: getVmDataLoading || connectServerIsLoading,
-      isDisable: !powerOn || networkConnection,
-    },
+    // {
+    //   label: "Disconnect Network",
+    //   Icon: CloudRemoveSvg,
+    //   onClick: () => {
+    //     if (!serverId) return;
+    //     disconnectServer({ id: serverId })
+    //       .unwrap()
+    //       .then(() => toast.success("سرور ابری با موفقیت disconnect شد "))
+    //       .catch((err) => {});
+    //   },
+    //   isLoading: getVmDataLoading || disconnectServerIsLoading,
+    //   isDisable: !powerOn || !networkConnection,
+    // },
+    // {
+    //   label: "Connect Network",
+    //   Icon: CloudAddSvg,
+    //   onClick: () => {
+    //     if (!serverId) return;
+    //     connectServer({ id: serverId })
+    //       .unwrap()
+    //       .then(() => toast.success("سرور ابری با موفقیت connect شد "))
+    //       .catch((err) => {});
+    //   },
+    //   isLoading: getVmDataLoading || connectServerIsLoading,
+    //   isDisable: !powerOn || networkConnection,
+    // },
     {
       label: "Stop",
       Icon: StopSvg,
       onClick: () => {
         if (!serverId) return;
-        stopServer({ id: serverId })
+        stopServer({projectId: Number(projectId), id: serverId })
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت stop شد "))
           .catch((err) => {});
@@ -136,7 +137,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       Icon: PlaySvg,
       onClick: () => {
         if (!serverId) return;
-        startServer({ id: serverId })
+        startServer({ projectId: Number(projectId),id: serverId })
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت start شد "))
           .catch((err) => {});
@@ -149,7 +150,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       Icon: ElectricitySvg,
       onClick: () => {
         if (!serverId) return;
-        shutdownServer({ id: serverId })
+        shutdownServer({projectId: Number(projectId), id: serverId })
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت shutdown شد "))
           .catch((err) => {});
@@ -162,7 +163,7 @@ export const ServerInfoActions: FC<ServerInfoActionsPropsType> = () => {
       Icon: LeftRotateSvg,
       onClick: () => {
         if (!serverId) return;
-        rebootServer({ id: serverId })
+        rebootServer({ projectId: Number(projectId),id: serverId })
           .unwrap()
           .then(() => toast.success("سرور ابری با موفقیت reboot شد "))
           .catch((err) => {});
