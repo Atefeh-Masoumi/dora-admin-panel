@@ -1,9 +1,9 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   StorageHostListResponse,
-  useDeleteApiMyObjectStorageHostDeleteByIdMutation,
+  useDeleteApiMyStorageByProjectIdHostDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -23,11 +23,11 @@ const StorageTableRow: FC<{ row: any }> = ({ row }) => {
     useState<StorageHostListResponse | null>(null);
 
   const navigate = useNavigate();
-
-  const settingOnClick = () => navigate("/storage/" + row["id"]);
+  const {projectId} = useParams()
+  const settingOnClick = () => navigate("/storage/"+projectId+"/" + row["id"]);
 
   const [deleteStorage, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyObjectStorageHostDeleteByIdMutation();
+  useDeleteApiMyStorageByProjectIdHostDeleteAndIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -40,7 +40,7 @@ const StorageTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteDnsRecordHandler = () =>
-    deleteStorage({ id: Number(selectedStorage?.id) })
+    deleteStorage({ id: Number(selectedStorage?.id),projectId: Number(projectId) })
       .unwrap()
       .then(() => {
         closeDialogHandler();
