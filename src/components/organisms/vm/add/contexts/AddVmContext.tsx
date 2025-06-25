@@ -1,7 +1,7 @@
 import { FC, createContext, ReactNode, useState } from "react";
 import {
-  DatacenterListResponse,
-  DatacenterImageListResponse,
+  VmImageListResponse,
+  useGetApiMyVmByProjectIdImageListQuery,
   ProductBundleVmListResponse,
 } from "src/app/services/api.generated";
 
@@ -17,10 +17,10 @@ export type vmCustomConfigType = {
 type AddServerContextType = {
   step: addServerStepsType;
   setStep: (step: addServerStepsType) => void;
-  dataCenter: DatacenterListResponse | null;
-  setDataCenter: (dataCenter: DatacenterListResponse | null) => void;
-  osVersion: DatacenterImageListResponse | null;
-  setOsVersion: (osVersion: DatacenterImageListResponse | null) => void;
+  dataCenter: VmImageListResponse | null;
+  setDataCenter: (dataCenter: VmImageListResponse | null) => void;
+  osVersion: VmImageListResponse | null;
+  setOsVersion: (osVersion: VmImageListResponse | null) => void;
   serverConfig: ProductBundleVmListResponse | null;
   setServerConfig: (osConfig: ProductBundleVmListResponse | null) => void;
   serverName: string;
@@ -66,11 +66,11 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   children,
 }) => {
   const [step, setStep] = useState<addServerStepsType>(1);
-  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
+  const [dataCenter, setDataCenter] = useState<VmImageListResponse | null>(
     null
   );
   const [osVersion, setOsVersion] =
-    useState<DatacenterImageListResponse | null>(null);
+    useState<VmImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
