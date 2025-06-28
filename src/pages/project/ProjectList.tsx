@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
-import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/CreateVmProjectDialog";
+import { CreateVmProjectDialog } from "./CreateProjectDialog";
 import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {

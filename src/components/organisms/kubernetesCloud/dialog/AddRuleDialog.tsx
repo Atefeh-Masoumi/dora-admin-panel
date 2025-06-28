@@ -16,9 +16,9 @@ import {
 import { useFormik } from "formik";
 import { FC, useMemo, useState } from "react";
 import {
-  IngressRuleModelRequest,
-  useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery,
-  usePostApiMyKubernetesCloudIngressRuleCreateMutation,
+  CreateKuberIngressRuleItemModel,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery,
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleCreateMutation
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
   ingressId: number;
-  rules: IngressRuleModelRequest[];
+  rules: CreateKuberIngressRuleItemModel[];
 };
 
 type AddRuleDialogPropsType = DialogProps & {
@@ -39,19 +39,19 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
   ingressId,
   ...props
 }) => {
-  const { kubernetesCloudId } = useParams();
-  const [rules, setRules] = useState<IngressRuleModelRequest[]>([
+  const { kubernetesCloudId, projectId } = useParams();
+  const [rules, setRules] = useState<CreateKuberIngressRuleItemModel[]>([
     {
       kuberCloudDeployPortId: 0,
       path: "",
     },
   ]);
   const [createIngressRule, { isLoading: createIngressRuleLoading }] =
-    usePostApiMyKubernetesCloudIngressRuleCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleCreateMutation();
 
   const { data: deploymentPortList } =
-    useGetApiMyKubernetesCloudHostPortListByNamespaceIdQuery({
-      namespaceId: Number(kubernetesCloudId),
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
+    projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId)
     });
 
   const transformedPorts = useMemo(() => {
@@ -59,7 +59,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
       deployment.ports?.map((port) => ({
         portId: port.portId,
         nodePort: port.nodePort,
-        name: deployment.deployName,
+        name: deployment.name,
       }))
     );
   }, [deploymentPortList]);
@@ -96,10 +96,12 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
 
     onSubmit: ({ ingressId, rules }, { setSubmitting, resetForm }) => {
       createIngressRule({
-        createKuberCloudIngressRuleModel: {
-          ingressId,
+        createKuberIngressRuleModel: {
           rules: rules || [],
         },
+        projectId: Number(projectId),
+         kuberHostId: Number(kubernetesCloudId),
+        kuberIngressId:ingressId,
       })
         .unwrap()
         .then(() => {

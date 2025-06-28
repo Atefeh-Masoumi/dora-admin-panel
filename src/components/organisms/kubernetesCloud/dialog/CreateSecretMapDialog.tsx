@@ -17,7 +17,7 @@ import { useFormik } from "formik";
 import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { usePostApiMyKubernetesCloudSecretCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretCreateMutation } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import * as yup from "yup";
@@ -41,11 +41,11 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
   onClose,
   openDialog,
 }) => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createSecretMap, { isLoading: createSecretMapLoading }] =
-    usePostApiMyKubernetesCloudSecretCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretCreateMutation();
 
   const formValidation = yup.object().shape({
     name: yup.string().nullable().required("نام را وارد کنید"),
@@ -155,13 +155,15 @@ export const CreateSecretMapDialog: FC<CreateSecretDialogPropsType> = ({
       );
 
       createSecretMap({
-        createKuberCloudSecretModel: {
+        createKuberSecretModel: {
           name: values.name as string,
           alias: values.alias as string,
-          namespaceId: Number(kubernetesCloudId),
+          // namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
           secretTypeId: Number(values.secretTypeId),
         },
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId),
       })
         .unwrap()
         .then(() => {

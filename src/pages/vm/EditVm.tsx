@@ -15,7 +15,7 @@ import { VM_ENUM } from "src/types/vmEnum";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
-import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
+// import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
@@ -126,7 +126,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   const tabPanelArray = [
     VmInfo,
-    AnalyticChart,
+    // AnalyticChart,
     VmIpAddress,
     VmRebuild,
     ServerConfig,

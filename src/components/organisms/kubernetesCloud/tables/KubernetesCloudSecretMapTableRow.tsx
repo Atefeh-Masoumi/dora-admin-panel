@@ -14,8 +14,8 @@ import {
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  KuberCloudSecretListResponse,
-  useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation,
+  KuberSecretListResponse,
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -27,6 +27,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditSecretMapDialog } from "../dialog/EditSecretMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -42,18 +43,19 @@ export const KubernetesCloudSecretMapTableRow: FC<{
   const [open, setOpen] = useState(false);
 
   const secretList = row.secrets! || [];
-
+  const { kubernetesCloudId,projectId } = useParams();
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [
     selectedKubernetesCloudSecretMap,
     setSelectedKubernetesCloudSecretMap,
-  ] = useState<KuberCloudSecretListResponse | null>(null);
+  ] = useState<KuberSecretListResponse | null>(null);
 
   const [deleteSecretMap, { isLoading: deleteSecretMapLoading }] =
-    useDeleteApiMyKubernetesCloudSecretDeleteByIdMutation();
+  useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretDeleteIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteSecretMap({ id: Number(selectedKubernetesCloudSecretMap?.id) })
+    deleteSecretMap({ id: Number(selectedKubernetesCloudSecretMap?.id), 
+      projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId) })
       .unwrap()
       .then(() => {
         toast.success("Secret با موفقیت حذف شد");
@@ -66,12 +68,12 @@ export const KubernetesCloudSecretMapTableRow: FC<{
     setSelectedKubernetesCloudSecretMap(null);
   };
 
-  const handleOpenDeleteModal = (secret: KuberCloudSecretListResponse) => {
+  const handleOpenDeleteModal = (secret: KuberSecretListResponse) => {
     setSelectedKubernetesCloudSecretMap(secret);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  function handleOpenEditSecretDialog(secret: KuberCloudSecretListResponse) {
+  function handleOpenEditSecretDialog(secret: KuberSecretListResponse) {
     setSelectedKubernetesCloudSecretMap(secret);
     setOpenEditSecretDialog(true);
   }

@@ -6,7 +6,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { useGetApiMyKubernetesCloudHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { KubernetesCloudConfigMap } from "src/components/organisms/kubernetesCloud/edit/configMap/ConfigMap";
@@ -19,14 +19,15 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditKubernetesCloud: FC = () => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId,projectId } = useParams();
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
 
   const { data, isLoading, refetch } =
-    useGetApiMyKubernetesCloudHostGetByIdQuery(
-      {
+  useGetApiMyKubernetesCloudByProjectIdHostGetAndIdQuery(
+      { 
+        projectId: Number(projectId),
         id: Number(kubernetesCloudId) || 0,
       },
       { skip: !kubernetesCloudId }

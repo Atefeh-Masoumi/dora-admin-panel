@@ -6,11 +6,11 @@ import { Gateway } from "src/components/organisms/kubernetesCloud/edit/deploymen
 import { Settings } from "src/components/organisms/kubernetesCloud/edit/deployment/edit/Settings";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
-import { useGetApiMyKubernetesCloudDeploymentGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployGetIdQuery } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditKubernetesCloudDeployment: FC = () => {
-  const { deploymentId, kubernetesCloudId } = useParams();
+  const { deploymentId, kubernetesCloudId,projectId } = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -18,8 +18,9 @@ const EditKubernetesCloudDeployment: FC = () => {
     data,
     isLoading: getDeploymentDataLoading,
     isFetching: getDeploymentDataFetching,
-  } = useGetApiMyKubernetesCloudDeploymentGetByIdQuery(
-    {
+  } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployGetIdQuery(
+    {projectId: Number(projectId),
+		kuberHostId: Number(kubernetesCloudId),
       id: Number(deploymentId),
     },
     { skip: !deploymentId }
@@ -86,7 +87,7 @@ const EditKubernetesCloudDeployment: FC = () => {
 
   const handleChange = (_: SyntheticEvent, newValue: string) => {
     navigate(
-      `/kubernetes-cloud/${kubernetesCloudId}/deployment/${deploymentId}/${newValue}`
+      `/kubernetes-cloud/${projectId}/${kubernetesCloudId}/deployment/${deploymentId}/${newValue}`
     );
   };
 

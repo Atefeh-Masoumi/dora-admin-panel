@@ -15,7 +15,7 @@ import {
 import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
-import { usePutApiMyKubernetesCloudSecretEditMutation } from "src/app/services/api.generated";
+import { usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretEditIdMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -23,6 +23,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { secretTypesConstants } from "../../home/constants/secretTypesConstants";
 import { toast } from "react-toastify";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useParams } from "react-router";
 
 type InitialValuesType = {
   alias?: string | null;
@@ -43,8 +44,9 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
   secretData,
 }) => {
   const [editSecretMap, { isLoading: editSecretMapLoading }] =
-    usePutApiMyKubernetesCloudSecretEditMutation();
+  usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretEditIdMutation();
   const processedSecretData = secretData?.secrets;
+  const { projectId, kubernetesCloudId } = useParams();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -116,12 +118,14 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
       });
 
       editSecretMap({
-        editKuberCloudSecretModel: {
+        editKuberSecretModel: {
           alias: values.alias as string,
           envs: processedEnvsToObjectBase64,
-          secretId: Number(values.secretId),
           removeEnvIds: updatedConfigmap?.removeEnvIds,
         },
+        projectId: Number(projectId),
+        kuberHostId: Number(kubernetesCloudId),
+        id: Number(values.secretId),
       })
         .unwrap()
         .then(() => {

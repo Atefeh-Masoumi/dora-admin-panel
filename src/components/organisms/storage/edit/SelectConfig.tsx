@@ -4,8 +4,8 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
-  usePutApiMyObjectStorageHostEditByIdMutation,
-  useGetApiMyObjectStorageHostGetByIdQuery,
+  usePutApiMyStorageByProjectIdHostEditAndIdMutation,
+  useGetApiMyStorageByProjectIdHostGetAndIdQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
 } from "src/app/services/api.generated";
 
@@ -21,10 +21,11 @@ type SelectConfigPropsType = {};
 export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const [disk, setDisk] = useState(25);
 
-  const { id: serverId } = useParams();
+  const {projectId, id: serverId } = useParams();
   const theme = useTheme()
-  const { data } = useGetApiMyObjectStorageHostGetByIdQuery({
+  const { data } = useGetApiMyStorageByProjectIdHostGetAndIdQuery({
     id: serverId ? +serverId : 0,
+    projectId: Number(projectId),
   });
   const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
@@ -36,7 +37,7 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   )?.price;
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiMyObjectStorageHostEditByIdMutation();
+  usePutApiMyStorageByProjectIdHostEditAndIdMutation();
 
   useEffect(() => {
     if (serverId && data) {
@@ -64,8 +65,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
     if (!serverId) return;
     sendNewConfig({
       id: serverId ? +serverId : 0,
+      projectId: Number(projectId),
       editStorageHostModel: {
-        disk,
+        volumeSize:disk,
       },
     })
       .unwrap()

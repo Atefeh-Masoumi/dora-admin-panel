@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import * as yup from "yup";
-import { usePostApiMyKubernetesCloudConfigmapCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapCreateMutation } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
@@ -41,11 +41,11 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
   onClose,
   openDialog,
 }) => {
-  const { kubernetesCloudId } = useParams();
+  const { kubernetesCloudId, projectId } = useParams();
   const [envs, setEnvs] = useState<any[]>([{ key: null, value: null }]);
 
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
-    usePostApiMyKubernetesCloudConfigmapCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapCreateMutation();
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -65,12 +65,14 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
       );
 
       createConfigMap({
-        createKuberCloudConfigmapModel: {
+        createKuberConfigmapModel: {
           name: values.name as string,
-          // alias: values.alias as string,
-          namespaceId: Number(kubernetesCloudId),
+           alias: values.alias as string,
+          // namespaceId: Number(kubernetesCloudId),
           envs: processedEnvsToObject,
         },
+        projectId: Number(projectId), 
+        kuberHostId: Number(kubernetesCloudId)
       })
         .unwrap()
         .then(() => {
