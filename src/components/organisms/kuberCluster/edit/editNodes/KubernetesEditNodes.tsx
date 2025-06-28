@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeListQuery } from "src/app/services/api.generated";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import KubernetesNodesTableRow from "./table/KubernetesNodesTableRow";
@@ -12,12 +12,13 @@ import { RefreshButton } from "src/components/atoms/RefreshButton";
 type KubernetesEditNodesPropsType = {};
 
 export const KubernetesEditNodes: FC<KubernetesEditNodesPropsType> = () => {
-  const { id: kubernetesId } = useParams();
+  const { id: kubernetesId,projectId } = useParams();
 
   const { data = [], isLoading,refetch, isFetching } =
-    useGetApiMyKubernetesClusterNodeByKubernetesHostIdQuery(
+  useGetApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeListQuery(
       {
-        kubernetesHostId: Number(kubernetesId) || 0,
+        kuberClusterHostId: Number(kubernetesId) || 0,  
+        projectId: Number(projectId) || 0,
       },
       { skip: !kubernetesId }
     );
