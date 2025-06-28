@@ -2,13 +2,13 @@ import { FC, useContext } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { SelectDomain } from "src/components/organisms/cdn/add/steps/SelectDomain";
 import { RecordsList } from "src/components/organisms/cdn/add/steps/RecordsList";
 import { AddZoneStepper } from "src/components/organisms/cdn/add/AddStepper";
 import {
-  usePostApiMyDnsCdnHostCheckMutation,
-  usePostApiMyDnsCdnHostCreateMutation,
+  usePostApiMyDnsCdnByProjectIdHostCheckMutation,
+  usePostApiMyDnsCdnByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import {
   AddZoneContext,
@@ -19,7 +19,7 @@ const AddZone: FC = () => {
   const { step, setStep, domainName, term } = useContext(AddZoneContext);
 
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const goPreviousStep = () => {
     if (step === 1) {
       navigate("/cdn");
@@ -28,9 +28,9 @@ const AddZone: FC = () => {
     setStep((step - 1) as addZoneStepsType);
   };
 
-  const [checkZone, { isLoading }] = usePostApiMyDnsCdnHostCheckMutation();
+  const [checkZone, { isLoading }] = usePostApiMyDnsCdnByProjectIdHostCheckMutation();
   const [createCdn, { isLoading: createCdnLoading }] =
-    usePostApiMyDnsCdnHostCreateMutation();
+  usePostApiMyDnsCdnByProjectIdHostCreateMutation();
 
   const submitHandler = () => {
     if (term !== true) {
@@ -47,6 +47,7 @@ const AddZone: FC = () => {
       createDnsCdnModel: {
         zoneName: domainName,
       },
+      projectId:Number(projectId)
     })
       .unwrap()
       .then((res) => {
@@ -71,6 +72,7 @@ const AddZone: FC = () => {
           checkDnsCdnModel: {
             zoneName: domainName,
           },
+          projectId:Number(projectId)
         })
           .unwrap()
           .then(() => {
