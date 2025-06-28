@@ -24,13 +24,27 @@ import {
   dnsTypeValueLabelObject,
 } from "src/components/organisms/cdn/edit/dns/constants/createDnsRecord";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery } from "src/app/services/api";
 import {
-  usePostApiMyDnsCdnDnsRecordCreateMutation,
-  usePutApiMyDnsCdnDnsRecordEditByIdMutation,
+  usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordCreateMutation,
+  usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordEditIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useParams } from "react-router";
+
+// DNS type mapping to standard DNS record type numbers
+const dnsTypeToNumber: Record<dnsType, number> = {
+  A: 1,
+  AAAA: 28,
+  NS: 2,
+  MX: 15,
+  CNAME: 5,
+  TXT: 16,
+  PTR: 12,
+  SRV: 33,
+  CAA: 257,
+};
 
 type CreateRecordDialogPropsType = {
   id?: number;
@@ -45,8 +59,14 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   onClose,
   openDialog,
 }) => {
-  const [getInfo, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyDnsCdnDnsRecordGetByIdQuery();
+  const { projectId} = useParams();
+
+  const { data: getInfo, isLoading: getDetailsLoading } =
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
+    dnsCdnHostId: dnsId,
+    projectId: Number(projectId),
+    id: id!
+  }, { skip: !id });
 
   const [type, setType] = useState<dnsType>("A");
 
@@ -62,42 +82,30 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   });
 
   useEffect(() => {
-    if (!id) return;
-    getInfo({ id })
-      .unwrap()
-      .then((response) => {
-        if (
-          !response ||
-          !response.name ||
-          !response.value ||
-          !response.ttl ||
-          !response.type
-        )
-          return;
-
-        setType(response.type as dnsType);
+    if (!getInfo) return;
+    
+        setType(getInfo.type as dnsType);
 
         setInitialValues((prevState) => {
           let result = { ...prevState };
-          result.name = response.name!;
-          result.value = response.value!;
-          result.ttl = response.ttl!;
-          result.useProxy = response.useProxy!;
-          result.weight = response.weight || "";
-          result.port = response.port || "";
-          result.priority = response.priority || "";
-          result.preference = response.preference || "";
+          result.name = getInfo.name!;
+          result.value = getInfo.value!;
+          result.ttl = getInfo.ttl!.toString();
+          result.useProxy = getInfo.useProxy!;
+          result.weight = getInfo.weight || "";
+          result.port = getInfo.port || "";
+          result.priority = getInfo.priority || "";
+          result.preference = getInfo.preference || "";
 
           return result;
         });
-      });
-  }, [getInfo, id]);
+  }, [getInfo]);
 
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
-    usePostApiMyDnsCdnDnsRecordCreateMutation();
+    usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordCreateMutation();
 
   const [editDnsRecord, { isLoading: editDnsRecordLoading }] =
-    usePutApiMyDnsCdnDnsRecordEditByIdMutation();
+    usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordEditIdMutation();
 
   const submitHandler: formikOnSubmitType<createDnsRecordType> = (
     { ttl, name, weight, port, value, priority, preference, useProxy },
@@ -108,10 +116,9 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
       editDnsRecord({
         id: id,
         editDnsRecordModel: {
-          dnsCdnHostId: dnsId,
           name,
-          type,
-          ttl,
+          type: dnsTypeToNumber[type],
+          ttl: Number(ttl),
           value,
           useProxy,
           preference,
@@ -119,6 +126,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           weight,
           port,
         },
+        dnsCdnHostId: dnsId,
+        projectId:Number(projectId)
       })
         .unwrap()
         .then(() => {
@@ -129,10 +138,9 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     } else {
       createDnsRecord({
         createDnsRecordModel: {
-          dnsCdnHostId: dnsId,
           name,
-          type,
-          ttl,
+          type: dnsTypeToNumber[type],
+          ttl: Number(ttl),
           value,
           useProxy,
           preference,
@@ -140,6 +148,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           weight,
           port,
         },
+        dnsCdnHostId: dnsId,
+        projectId:Number(projectId)
       })
         .unwrap()
         .then(() => {
