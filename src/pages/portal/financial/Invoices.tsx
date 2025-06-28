@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import {
   InvoiceListResponse,
-  useGetApiMyPortalInvoiceListQuery,
+  useGetApiMyFinancialInvoiceListQuery,
 } from "src/app/services/api.generated";
 import moment from "jalali-moment";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -24,7 +24,7 @@ const Invoices: FC = () => {
   const [dateTo] = useState<Date | null>(null);
 
   const token = useAppSelector((store) => store.auth?.accessToken);
-  const { data: invoices, isLoading } = useGetApiMyPortalInvoiceListQuery();
+  const { data: invoices, isLoading } = useGetApiMyFinancialInvoiceListQuery();
 
   const [searchParams] = useSearchParams();
   const customerInvoiceId = searchParams.get("invoice-id");
@@ -35,7 +35,7 @@ const Invoices: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/portal/invoice/download`, {
+      .get(`${baseUrl}/api/my/financial/invoice/download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })

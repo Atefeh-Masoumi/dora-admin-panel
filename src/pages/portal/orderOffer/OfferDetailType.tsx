@@ -1,6 +1,6 @@
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useState, type FC } from "react";
-import { useGetApiMyPortalOfferListQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialOfferListQuery } from "src/app/services/api.generated";
 import { Cart } from "src/components/atoms/svg-icons/CartSvg";
 import { PurchaseOrderOfferDialog } from "src/components/organisms/portal/orderOffer/dialog/OrderOfferDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -16,7 +16,7 @@ const Sales: FC = () => {
     offerId: null,
   });
   const [openDialog, setOpenDialog] = useState(false);
-  const { data: offerList, isLoading } = useGetApiMyPortalOfferListQuery();
+  const { data: offerList, isLoading } = useGetApiMyFinancialOfferListQuery();
 
   return (
     <Grid
