@@ -20,7 +20,7 @@ import { FC, MouseEventHandler } from "react";
 import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmFirewallCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -42,13 +42,13 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   refetch,
   ...props
 }) => {
-  const { id } = useParams();
+  const { id,projectId } = useParams();
 
   const [createFirewall, { isLoading }] =
-    usePostApiMyVmFirewallCreateMutation();
+  usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation();
 
   const initialValues = {
-    firewallProtocolTypeId: 1,
+    firewallProtocolId: 1,
     directionId: 1,
     remoteIp: "0.0.0.0/0",
     minPort: 22,
@@ -56,14 +56,15 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   };
 
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
-    { firewallProtocolTypeId, directionId, remoteIp, minPort, maxPort },
+    { firewallProtocolId, directionId, remoteIp, minPort, maxPort },
     { setSubmitting }
   ) => {
     if (id === null || id === undefined || isNaN(Number(id))) return;
     createFirewall({
-      createVmFirewallModel: {
-        vmHostId: Number(id),
-        firewallProtocolTypeId,
+      vmHostId: Number(id),
+      projectId: Number(projectId),
+      createVmFirewallRuleModel: {
+        firewallProtocolId,
         directionId,
         remoteIp,
         minPort,
@@ -142,10 +143,10 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             <Select
               labelId="protocolSelection"
               label="انتخاب پروتکل"
-              value={formik.values.firewallProtocolTypeId}
+              value={formik.values.firewallProtocolId}
               onChange={(event) =>
                 formik.setFieldValue(
-                  "firewallProtocolTypeId",
+                  "firewallProtocolId",
                   event.target.value
                 )
               }

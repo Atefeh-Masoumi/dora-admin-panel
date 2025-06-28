@@ -1,4 +1,4 @@
-import { DatacenterIpListResponse, useDeleteApiMyDatacenterIpDeleteByIdMutation } from "src/app/services/api.generated";
+import {  useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation } from "src/app/services/api.generated";
 import {
     CheckCircleOutline as CheckCircleOutlineIcon,
     Cancel as CancelIcon,
@@ -10,18 +10,23 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Grid2 } from "@mui/material";
 import { CircularProgress, IconButton, Typography } from "@mui/material";
 import { IPDeleteDialog } from "./dialog/IPDeleteDialog";
+import { useParams } from "react-router";
 
-interface IpRowProps extends DatacenterIpListResponse {
+type IpRowProps = {
   refetch: () => void;
+  ipAddress: string | null;
+  isPrimary?: boolean;
+  id: number;
 }
 
-const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
-  const [deleteIp, { isLoading }] = useDeleteApiMyDatacenterIpDeleteByIdMutation();
+const IpRow: FC<IpRowProps> = ({ ipAddress,isPrimary, id, refetch }) => {
+  const [deleteIp, { isLoading }] = useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control the dialog
-
+  
+  const {projectId} = useParams();
   const handleDelete = () => {
     if (id) {
-      deleteIp({ id })
+      deleteIp({  projectId: Number(projectId),vmHostId: Number(id),id })
         .unwrap()
         .then(() => {
           toast.success("با موفقیت حذف شد");
@@ -57,7 +62,7 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
           justifyContent="center"
         >
           <Typography maxWidth={125} textOverflow="ellipsis">
-            {ip}
+            {ipAddress}
           </Typography>
         </Grid2>
         <Grid2 size={{xs:2.8,sm:3.9}}

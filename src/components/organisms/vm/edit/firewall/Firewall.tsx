@@ -7,8 +7,8 @@ import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/
 import { firewallTableStruct } from "./table/struct";
 import FirewallTableRow from "./table/FirewallTableRow";
 import {
-  useGetApiMyVmFirewallListByVmHostIdQuery,
-  VmFirewallListResponse,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
+  VmFirewallRuleListResponse,
 } from "src/app/services/api.generated";
 
 type FirewallPropsType = {};
@@ -21,12 +21,13 @@ enum DIALOG_TYPE_ENUM {
 export const Firewall: FC<FirewallPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  useState<VmFirewallListResponse | null>(null);
+  useState<VmFirewallRuleListResponse | null>(null);
 
-  const { id } = useParams();
+  const { id,projectId } = useParams();
   const { data: firewallList = [], isLoading: getFirewallLoading, refetch} =
-    useGetApiMyVmFirewallListByVmHostIdQuery(
-      { vmHostId: Number(id) },
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
+      { projectId: Number(projectId),
+        vmHostId: Number(id) },
       { skip: !id }
     );
   const openCreateDialogHandler = () => {

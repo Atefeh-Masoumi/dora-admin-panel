@@ -7,10 +7,11 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { volumeTableStruct } from "./struct";
 import {
-  VmVolumeListResponse,
-  useDeleteApiMyVmVolumeDeleteByIdMutation,
+  VmHostVolumeListResponse,
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -19,14 +20,14 @@ enum DIALOG_TYPE_ENUM {
 
 export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVm, setSelectedVm] = useState<VmVolumeListResponse | null>(
+  const [selectedVm, setSelectedVm] = useState<VmHostVolumeListResponse | null>(
     null
   );
-
+  const { id, projectId } = useParams();
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-    useDeleteApiMyVmVolumeDeleteByIdMutation();
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation();
 
-  const handleOpenDelete = (vm: VmVolumeListResponse) => {
+  const handleOpenDelete = (vm: VmHostVolumeListResponse) => {
     setSelectedVm(vm);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -37,7 +38,11 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteVmRecordHandler = () =>
-    deleteItem({ id: Number(selectedVm?.id) })
+    deleteItem(
+      { id: Number(selectedVm?.id),
+      projectId: Number(projectId),
+      vmHostId: Number(id),
+     })
       .unwrap()
       .then(() => {
         toast.success("سرور ابری با موفقیت حذف شد");

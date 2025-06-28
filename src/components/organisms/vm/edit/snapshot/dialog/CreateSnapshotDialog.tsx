@@ -11,10 +11,11 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmSnapshotCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdHostAndVmHostIdSnapshotCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useParams } from "react-router";
 
 type CreateSnapshotDialogPropsType = DialogProps & {
   vmId: number;
@@ -29,24 +30,26 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   ...props
 }) => {
   const [createSnapshot, { isLoading: createSnapshotLoading }] =
-    usePostApiMyVmSnapshotCreateMutation();
+  usePostApiMyVmByProjectIdHostAndVmHostIdSnapshotCreateMutation();
 
   const initialValues = {
     name: "",
     description: "",
   };
 
+  const { projectId } = useParams();
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { name, description },
     { setSubmitting }
   ) => {
     if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
     createSnapshot({
-      createSnapshotModel: {
-        vmHostId: Number(vmId),
+      createVmHostSnapshotModel: {
         name,
         description,
       },
+      projectId: Number(projectId),
+      vmHostId: Number(vmId),
     })
       .unwrap()
       .then(() => {
