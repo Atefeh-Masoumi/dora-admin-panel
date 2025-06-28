@@ -22,12 +22,13 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import PageLoading from "src/components/atoms/PageLoading";
-import { useLazyGetApiMyDnsCdnRouteGetByIdQuery } from "src/app/services/api";
 import {
   DestinationModel,
-  usePutApiMyDnsCdnRouteEditByIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteGetIdQuery,
+  usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteEditIdMutation,
 } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useParams } from "react-router-dom";
 
 type InitialValuesType = {
   id: number;
@@ -79,6 +80,8 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   dnsId,
   openDialog,
 }) => {
+  const { projectId } = useParams();
+  
   const [initialValues, setInitialValues] = useState<InitialValuesType>({
     id: 0,
     host: "",
@@ -89,30 +92,29 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
   });
   const [destinations, setDestinations] = useState<DestinationModel[]>([]);
   const [certificateSwitch, setCertificateSwitch] = useState(false);
-  const [getDetails, { isLoading: getDetailsLoading }] =
-    useLazyGetApiMyDnsCdnRouteGetByIdQuery();
+  
+  const { data: routeDetails, isLoading: getDetailsLoading } =
+    useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteGetIdQuery({
+      id: id!,
+      projectId: Number(projectId),
+      dnsCdnHostId: dnsId,
+    }, { skip: !id });
 
   useEffect(() => {
-    if (!id) return;
-    getDetails({ id: id })
-      .unwrap()
-      .then((res) => {
-        if (res) {
-          if (!res.destinations || !res.host) return;
+    if (!routeDetails) return;
+    
+    if (!routeDetails.destinations || !routeDetails.host) return;
 
-          setCertificateSwitch(res.dangerousAcceptAnyServerCertificate!);
-          setDestinations(res.destinations!);
-          setInitialValues((prevState) => {
-            let result = { ...prevState };
-            result.host = res.host as string;
-            result.maxConnectionsPerServer =
-              res.maxConnectionsPerServer as number;
-            result.loadBalancingPolicyId = res.loadBalancingPolicyId!;
-            return result;
-          });
-        }
-      });
-  }, [getDetails, id]);
+    // setCertificateSwitch(routeDetails.dangerousAcceptAnyServerCertificate || false);
+    setDestinations(routeDetails.destinations);
+    setInitialValues((prevState) => {
+      let result = { ...prevState };
+      result.host = routeDetails.host as string;
+      result.maxConnectionsPerServer = routeDetails.maxConnectionsPerServer as number;
+      // result.loadBalancingPolicyId = routeDetails.loadBalancingPolicyId!;
+      return result;
+    });
+  }, [routeDetails]);
 
   const addDestinationInput = () =>
     setDestinations((prevState) => {
@@ -133,7 +135,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     setCertificateSwitch((prevState) => !prevState);
 
   const [editLoadBalance, { isLoading: editLoadBalanceLoading }] =
-    usePutApiMyDnsCdnRouteEditByIdMutation();
+    usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteEditIdMutation();
 
   const submitHandler: formikOnSubmitType<InitialValuesType> = (
     { host, loadBalancingPolicyId, maxConnectionsPerServer },
@@ -142,12 +144,13 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
     if (id) {
       editLoadBalance({
         id: id,
+        projectId: Number(projectId),
+        dnsCdnHostId: dnsId,
         editCdnRouteModel: {
           destinations,
-          dangerousAcceptAnyServerCertificate: certificateSwitch,
           maxConnectionsPerServer: Number(maxConnectionsPerServer),
           host,
-          loadBalancingPolicyId,
+          // loadBalancingPolicyId,
         },
       })
         .unwrap()
@@ -155,7 +158,7 @@ export const CreateLoadBalanceDialog: FC<CreateLoadBalanceDialogPropsType> = ({
           toast.success("کلاستر با موفقیت بروز رسانی شد");
           onClose();
         })
-        .catch((err) => {});
+        .catch((err: any) => {});
     }
     //  else {
     //   createLoadBalance({
