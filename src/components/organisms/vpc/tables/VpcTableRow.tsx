@@ -1,10 +1,10 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   VpcListResponse,
-  useDeleteApiMyVpcHostDeleteByIdMutation,
+  useDeleteApiMyVmByProjectIdVpcDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -22,6 +22,7 @@ enum DIALOG_TYPE_ENUM {
 const VpcTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVpc, setSelectedVpc] = useState<VpcListResponse | null>(null);
+  const { projectId } = useParams();
 
   const navigate = useNavigate();
 
@@ -30,16 +31,19 @@ const VpcTableRow: FC<{ row: any }> = ({ row }) => {
       `/vpc/${row?.id}/overview?projectId=${row?.vpcHostProjectId}&vpcId=${row?.id}`
     );
   const [deleteVpc, { isLoading: deleteVpcLoading }] =
-    useDeleteApiMyVpcHostDeleteByIdMutation();
+    useDeleteApiMyVmByProjectIdVpcDeleteAndIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteVpc({ id: Number(selectedVpc?.id) })
+    deleteVpc({ 
+      id: Number(selectedVpc?.id),
+      projectId: Number(projectId)
+    })
       .unwrap()
       .then(() => {
         toast.success("ابر اختصاصی شما با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err: any) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);
