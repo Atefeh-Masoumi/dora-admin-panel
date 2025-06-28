@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   KubernetesNodeListResponse,
-  useDeleteApiMyKubernetesClusterNodeDeleteByIdMutation,
-  useGetApiMyKubernetesClusterHostGetByIdQuery,
+  useDeleteApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeDeleteIdMutation,
+  useGetApiMyKubernetesClusterByProjectIdHostGetAndIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -26,16 +26,18 @@ const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
     useState<KubernetesNodeListResponse | null>(null);
 
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { data: kubernetesInfo } = useGetApiMyKubernetesClusterHostGetByIdQuery(
+  const { kubernetesId, projectId } = useParams();
+
+  const { data: kubernetesInfo } = useGetApiMyKubernetesClusterByProjectIdHostGetAndIdQuery(
     {
-      id: Number(id),
+      id: Number(kubernetesId),
+      projectId: Number(projectId),
     },
     { skip: !id }
   );
   const settingOnClick = () => {
     if ( !kubernetesInfo) return;
-    navigate(`/vm/${kubernetesInfo.hostProjectId}/${row["hostId"]}/specification`);
+    navigate(`/vm/${kubernetesInfo.projectId}/${row["hostId"]}/specification`);
   };
   const handleOpenDelete = (kuberNode: KubernetesNodeListResponse) => {
     setSelectedKuberNode(kuberNode);
@@ -48,11 +50,13 @@ const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const [deleteKubernetesNode, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyKubernetesClusterNodeDeleteByIdMutation();
+    useDeleteApiMyKubernetesClusterByProjectIdHostAndKuberClusterHostIdNodeDeleteIdMutation();
 
   const deleteDnsRecordHandler = () => {
     deleteKubernetesNode({
-      id: Number(selectedKuberNode?.hostId),
+      id: Number(selectedKuberNode?.id),
+      projectId: Number(projectId),
+      kuberClusterHostId: Number(kubernetesId),
     })
       .unwrap()
       .then((res) => {

@@ -7,7 +7,7 @@ import ServiceReceipt, {
 } from "src/components/molecules/ServiceReceipt";
 import { AddKubernetesContext } from "src/components/organisms/kuberCluster/add/contexts/AddKubernetesContext";
 import { SelectKuberConfig } from "src/components/organisms/kuberCluster/add/steps/SelectKuberConfig";
-import { SelectKuberDataCenter } from "src/components/organisms/kuberCluster/add/steps/SelectKuberDataCenter";
+// import { SelectKuberDataCenter } from "src/components/organisms/kuberCluster/add/steps/SelectKuberDataCenter";
 import { SelectKuberSetting } from "src/components/organisms/kuberCluster/add/steps/SelectKuberSetting";
 import { ServerKuberInfo } from "src/components/organisms/kuberCluster/add/steps/ServerKuberInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
