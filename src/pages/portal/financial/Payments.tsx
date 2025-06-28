@@ -6,7 +6,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { paymentTableStruct } from "src/components/organisms/portal/financial/payment/tables/struct";
 import PaymentTableRow from "src/components/organisms/portal/financial/payment/tables/PaymentTableRow";
 import {
-  useGetApiMyPortalPaymentListQuery,
+  useGetApiMyFinancialPaymentListQuery,
   PaymentListResponse,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -16,7 +16,7 @@ import axios from "axios";
 import { baseUrl } from "src/app/services/baseQuery";
 
 const Payments: FC = () => {
-  const { data: payments, isLoading } = useGetApiMyPortalPaymentListQuery();
+  const { data: payments, isLoading } = useGetApiMyFinancialPaymentListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom] = useState<Date | null>(null);

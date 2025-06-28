@@ -6,7 +6,7 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { walletTableStruct } from "src/components/organisms/portal/financial/walletTransaction/tables/struct";
 import WalletTableRow from "src/components/organisms/portal/financial/walletTransaction/tables/WalletTableRow";
 import {
-  useGetApiMyPortalWalletTransactionListQuery,
+  useGetApiMyFinancialWalletListQuery,
   WalletTransactionListResponse,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -17,7 +17,7 @@ import { useAppSelector } from "src/app/hooks";
 
 const Wallet: FC = () => {
   const { data: walletList = [], isLoading } =
-    useGetApiMyPortalWalletTransactionListQuery();
+  useGetApiMyFinancialWalletListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom] = useState<Date | null>(null);
@@ -29,7 +29,7 @@ const Wallet: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/portal/wallet-transaction/download`, {
+      .get(`${baseUrl}/api/my/financial/wallet-transaction/download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })

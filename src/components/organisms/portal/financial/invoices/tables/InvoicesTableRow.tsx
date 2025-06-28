@@ -3,7 +3,7 @@ import { Button, Chip, Stack } from "@mui/material";
 import { FC, MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { usePostApiMyPortalInvoicePayMutation } from "src/app/services/api.generated";
+import { usePostApiMyFinancialInvoicePayMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { invoicesTableStruct } from "./struct";
@@ -12,7 +12,7 @@ const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-    usePostApiMyPortalInvoicePayMutation();
+  usePostApiMyFinancialInvoicePayMutation();
 
   const payInvoice: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();

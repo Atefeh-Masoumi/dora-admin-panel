@@ -15,8 +15,8 @@ import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   CreatePaymentResponse,
-  useGetApiMyPortalPaymentProviderListQuery,
-  usePostApiMyPortalPaymentCreateMutation,
+  useGetApiMyFinancialPaymentProviderListQuery,
+  usePostApiMyFinancialPaymentCreateMutation,
 } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -60,10 +60,10 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
   const [mellatResponsePhoneNumber, setMellatResponsePhoneNumber] =
     useState("");
   const [createDeposit, { isLoading }] =
-    usePostApiMyPortalPaymentCreateMutation();
+    usePostApiMyFinancialPaymentCreateMutation();
 
   const { data: paymentProviderList, isLoading: paymentProviderListLoading } =
-    useGetApiMyPortalPaymentProviderListQuery();
+    useGetApiMyFinancialPaymentProviderListQuery();
 
   const formRef = useRef<HTMLFormElement | null>(null);
 

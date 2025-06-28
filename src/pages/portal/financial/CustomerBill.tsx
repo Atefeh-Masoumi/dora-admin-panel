@@ -21,7 +21,7 @@ import { priceToPersian } from "src/utils/priceToPersian";
 import BillProductsTableRow from "src/components/organisms/portal/financial/tables/BillProductsTableRow";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
-import { useGetApiMyPortalCustomerBillGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialBillGetByIdQuery } from "src/app/services/api.generated";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
 
@@ -31,11 +31,11 @@ const Bill: FC = () => {
   const id = searchParams.get("customer-bill-id");
   const navigate = useNavigate();
 
-  const { data: bill, isLoading } = useGetApiMyPortalCustomerBillGetByIdQuery({
+  const { data: bill, isLoading } = useGetApiMyFinancialBillGetByIdQuery({
     id: parseInt(id as string),
   });
 
-  const productList = bill?.customerProductBills || [];
+  const productList = bill?.billOrders || [];
   const token = useAppSelector((state) => state.auth?.accessToken);
 
   const payBill = [
@@ -52,7 +52,7 @@ const Bill: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/portal/customer-bill/download/${bill?.id}`, {
+      .get(`${baseUrl}/api/my/financial/bill/download/${bill?.id}`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })

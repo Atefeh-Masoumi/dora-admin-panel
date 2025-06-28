@@ -11,7 +11,7 @@ import {
 import moment from "jalali-moment";
 import { FC, Fragment } from "react";
 import { useNavigate } from "react-router";
-import { useGetApiMyPortalCustomerBillShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialBillShortListQuery } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
 import { BORDER_RADIUS_1, BORDER_RADIUS_2 } from "src/configs/theme";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -20,7 +20,7 @@ export const ShortUserBill: FC = () => {
   const navigate = useNavigate();
 
   const { data: reports, isLoading } =
-    useGetApiMyPortalCustomerBillShortListQuery();
+    useGetApiMyFinancialBillShortListQuery();
 
   return (
     <Stack

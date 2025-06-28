@@ -13,8 +13,8 @@ import { invoiceTableStruct } from "src/components/organisms/portal/financial/in
 import InvoiceTableRow from "src/components/organisms/portal/financial/invoices/tables/InvoiceTableRow";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import {
-  useGetApiMyPortalInvoiceGetByIdQuery,
-  usePostApiMyPortalInvoicePayMutation,
+  useGetApiMyFinancialInvoiceGetByIdQuery,
+  usePostApiMyFinancialInvoicePayMutation,
 } from "src/app/services/api.generated";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -31,12 +31,12 @@ const Invoice: FC = () => {
   const navigate = useNavigate();
 
   const { data: invoiceItem, isLoading: getInvoiceItemLoading } =
-    useGetApiMyPortalInvoiceGetByIdQuery({
+    useGetApiMyFinancialInvoiceGetByIdQuery({
       id: parseInt(id as string),
     });
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-    usePostApiMyPortalInvoicePayMutation();
+    usePostApiMyFinancialInvoicePayMutation();
 
   const payInvoice = [
     {
