@@ -16,9 +16,9 @@ import { CreateVmProjectDialog } from "src/components/organisms/vm/dialogs/Creat
 import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
-  VmProjectListResponse,
-  useDeleteApiMyHostProjectDeleteByIdMutation,
-  useGetApiMyHostProjectListQuery,
+  ProjectListResponse,
+  useDeleteApiMyProjectDeleteByIdMutation,
+  useGetApiMyProjectListQuery,
 } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
@@ -37,7 +37,7 @@ const VmProjectList: FC = () => {
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedProject, setSelectedProject] =
-    useState<VmProjectListResponse | null>(null);
+    useState<ProjectListResponse | null>(null);
 
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const VmProjectList: FC = () => {
     isLoading: VmProjectListLoading,
     isFetching,
     refetch,
-  } = useGetApiMyHostProjectListQuery();
+  } = useGetApiMyProjectListQuery();
 
   const filteredList =
     vmProjectList?.filter((item) => {
@@ -57,7 +57,7 @@ const VmProjectList: FC = () => {
       return result;
     }) || [];
   const [deleteProject, { isLoading: deleteProjectLoading }] =
-    useDeleteApiMyHostProjectDeleteByIdMutation();
+    useDeleteApiMyProjectDeleteByIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -72,12 +72,12 @@ const VmProjectList: FC = () => {
     setDialogType(DIALOG_TYPE_ENUM.CREATE);
   };
 
-  const editBtnOnClick = (project: VmProjectListResponse) => {
+  const editBtnOnClick = (project: ProjectListResponse) => {
     setSelectedProject(project);
     setDialogType(DIALOG_TYPE_ENUM.CREATE);
   };
 
-  const deleteBtnOnClick = (project: VmProjectListResponse) => {
+  const deleteBtnOnClick = (project: ProjectListResponse) => {
     setSelectedProject(project);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -98,7 +98,7 @@ const VmProjectList: FC = () => {
       .catch(() => {});
   };
 
-  const cardOnClick = (project: VmProjectListResponse) => {
+  const cardOnClick = (project: ProjectListResponse) => {
     navigate(`/vm/${project.id}/list`);
   };
 

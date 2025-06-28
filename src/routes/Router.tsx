@@ -60,7 +60,7 @@ const CdnIndex = lazy(() => import("src/pages/cdn/DnsCdnList"));
 const AddZone = lazy(() => import("src/pages/cdn/AddZone"));
 const EditZone = lazy(() => import("src/pages/cdn/EditZone"));
 
-const VmProjectIndex = lazy(() => import("src/pages/vm/VmProjectList"));
+const VmProjectIndex = lazy(() => import("src/pages/project/ProjectList"));
 const VmIndex = lazy(() => import("src/pages/vm/VmList"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
