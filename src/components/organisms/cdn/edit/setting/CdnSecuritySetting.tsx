@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  usePutApiMyDnsCdnHostChangeHstsMutation,
-  usePutApiMyDnsCdnHostChangeHttpsRedirectMutation,
-  usePutApiMyDnsCdnHostChangeNonWwwRedirectMutation,
+  usePutApiMyDnsCdnByProjectIdHostChangeHstsAndIdMutation,
+  usePutApiMyDnsCdnByProjectIdHostChangeHttpsRedirectAndIdMutation,
+  usePutApiMyDnsCdnByProjectIdHostChangeNonWwwRedirectAndIdMutation,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useParams } from "react-router-dom";
 
 type CdnSecuritySettingPropsType = {
   dnsId: number;
@@ -24,40 +25,45 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   isNonWwwRedirect,
   loading,
 }) => {
+  const { projectId } = useParams();
+  
   const [changeHttpsRedirect, { isLoading: loadingRedirect }] =
-    usePutApiMyDnsCdnHostChangeHttpsRedirectMutation();
+    usePutApiMyDnsCdnByProjectIdHostChangeHttpsRedirectAndIdMutation();
 
   const onChangeHttpsRedirect = () => {
     if (isHttpsRedirect === undefined) return;
     changeHttpsRedirect({
+      id: dnsId,
+      projectId: Number(projectId),
       changeHttpsRedirectModel: {
-        id: dnsId,
         isHttpsRedirect: !isHttpsRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeNonWwwRedirect, { isLoading: loadingNonWwwRedirect }] =
-    usePutApiMyDnsCdnHostChangeNonWwwRedirectMutation();
+    usePutApiMyDnsCdnByProjectIdHostChangeNonWwwRedirectAndIdMutation();
 
   const onChangeNonWwwRedirect = () => {
     if (isNonWwwRedirect === undefined) return;
     changeNonWwwRedirect({
+      id: dnsId,
+      projectId: Number(projectId),
       changeNonWwwRedirectModel: {
-        id: dnsId,
         isNonWwwRedirect: !isNonWwwRedirect,
       },
     }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
-    usePutApiMyDnsCdnHostChangeHstsMutation();
+    usePutApiMyDnsCdnByProjectIdHostChangeHstsAndIdMutation();
 
   const onChangeHSTS = () => {
     if (isHSTS === undefined) return;
     changeHSTS({
+      id: dnsId,
+      projectId: Number(projectId),
       changeHstsModel: {
-        id: dnsId,
         isHsts: !isHSTS,
       },
     }).then(() => {
@@ -74,7 +80,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
     },
     {
       title: "فعالسازی تبدیل لینک های Http به Https",
-      text: "Automatic HTTPS Rewrites helps fix mixed content by changing “http”  to “https” for all resources or links on your web site that can be  served with HTTPS",
+      text: "Automatic HTTPS Rewrites helps fix mixed content by changing 'http'  to 'https' for all resources or links on your web site that can be  served with HTTPS",
       data: isHttpsRedirect,
       action: onChangeHttpsRedirect,
     },
