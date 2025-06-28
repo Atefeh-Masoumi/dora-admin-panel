@@ -57,7 +57,7 @@ const VmProjectList: FC = () => {
       return result;
     }) || [];
   const [deleteProject, { isLoading: deleteProjectLoading }] =
-  useDeleteApiMyProjectDeleteByIdMutation();
+    useDeleteApiMyProjectDeleteByIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
