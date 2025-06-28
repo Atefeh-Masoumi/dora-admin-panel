@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
-  usePostApiMyDnsCdnEdgeCertCreateMutation,
-  useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery,
+  usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateMutation,
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertGetQuery,
 } from "src/app/services/api.generated";
 import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
-
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { useParams } from "react-router-dom";
 
 type CdnEdgeCertPropsType = {
   dnsId: number;
@@ -19,19 +19,21 @@ type CdnEdgeCertPropsType = {
 };
 
 export const CdnEdgeCert: FC<CdnEdgeCertPropsType> = ({ dnsId, loading }) => {
+  const { projectId } = useParams();
+  
   const [createLicense, { isLoading: loadingCreate }] =
-    usePostApiMyDnsCdnEdgeCertCreateMutation();
+    usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateMutation();
 
   const { data: edgeCert, isLoading } =
-    useGetApiMyDnsCdnEdgeCertGetByDnsCdnHostIdQuery({
+    useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertGetQuery({
       dnsCdnHostId: dnsId,
+      projectId: Number(projectId),
     });
 
   const submit = () => {
     createLicense({
-      createCdnEdgeCertModel: {
-        dnsCdnHostId: dnsId,
-      },
+      projectId: Number(projectId),
+      dnsCdnHostId: dnsId,
     })
       .unwrap()
       .then(() => toast.success("Certificate created"))

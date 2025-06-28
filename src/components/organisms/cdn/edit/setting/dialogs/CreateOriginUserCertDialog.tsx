@@ -5,13 +5,13 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
  import {
-  CreateCdnOriginUserCertModel,
-  usePostApiMyDnsCdnOriginCertCreateUserCertMutation,
+  usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdOriginCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { useParams } from "react-router-dom";
 
 type CreateOriginUserCertDialogPropsType = {
   openDialog: boolean;
@@ -19,13 +19,19 @@ type CreateOriginUserCertDialogPropsType = {
   dnsId: number;
 };
 
+type FormValues = {
+  keyPem: string;
+  certPem: string;
+};
+
 export const CreateOriginUserCertDialog: FC<
   CreateOriginUserCertDialogPropsType
 > = ({ openDialog, handleClose, dnsId }) => {
-  const formInitialValues = { keyPem: "", certPem: "" };
+  const { projectId } = useParams();
+  const formInitialValues: FormValues = { keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiMyDnsCdnOriginCertCreateUserCertMutation();
+    usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdOriginCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -35,13 +41,15 @@ export const CreateOriginUserCertDialog: FC<
     bundleCertPem: yup.string(),
   });
 
-  const submitHandler: formikOnSubmitType<CreateCdnOriginUserCertModel> = (
-    { dnsCdnHostId, keyPem, certPem },
+  const submitHandler: formikOnSubmitType<FormValues> = (
+    { keyPem, certPem },
     { setSubmitting }
   ) => {
     if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnOriginUserCertModel: { dnsCdnHostId: dnsId, keyPem, certPem },
+      projectId: Number(projectId),
+      dnsCdnHostId: dnsId,
+      createCdnOriginUserCertModel: { keyPem, certPem },
     })
       .unwrap()
       .then(() => {

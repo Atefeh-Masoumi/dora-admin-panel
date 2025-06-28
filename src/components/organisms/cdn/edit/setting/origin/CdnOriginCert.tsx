@@ -1,12 +1,13 @@
 import type { FC } from "react";
 import { Stack, Typography } from "@mui/material";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
-import { useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdOriginCertGetQuery } from "src/app/services/api.generated";
 import { TextLoading } from "src/components/molecules/TextLoading";
 import { LoadingButton } from "@mui/lab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import EmptyTableSvg from "src/components/atoms/svg-icons/EmptyTableSvg.svg";
+import { useParams } from "react-router-dom";
 
 type CdnOriginCertPropsType = {
   dnsId: number;
@@ -17,9 +18,12 @@ export const CdnOriginCert: FC<CdnOriginCertPropsType> = ({
   dnsId,
   loading,
 }) => {
+  const { projectId } = useParams();
+  
   const { data: edgeCert, isLoading } =
-    useGetApiMyDnsCdnOriginCertGetByDnsCdnHostIdQuery({
+    useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdOriginCertGetQuery({
       dnsCdnHostId: dnsId,
+      projectId: Number(projectId),
     });
 
   return (
