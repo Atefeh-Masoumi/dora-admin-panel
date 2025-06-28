@@ -15,7 +15,7 @@ import {
 import * as yup from "yup";
 import { FC, SyntheticEvent, useEffect, useState } from "react";
 import {
-  useGetApiMyAccountRoleListQuery,
+  useGetApiMyAccountCustomerUserListQuery,
   usePostApiMyAccountCustomerUserCreateMutation,
 } from "src/app/services/api.generated";
 import { useFormik } from "formik";
@@ -54,7 +54,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
 
   const { data: roleList, isLoading: roleListIsLoading } =
-    useGetApiMyAccountRoleListQuery();
+    useGetApiMyAccountCustomerUserListQuery();
 
   const [createCustomerUser, { isLoading: createUserIsLoading }] =
     usePostApiMyAccountCustomerUserCreateMutation();
@@ -134,22 +134,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         isSuperUser: superUser,
         isAccountManager: superUser ? false : accountManager,
         isFinancialManager: superUser ? false : financialManager,
-        roleAccesses: superUser
-          ? []
-          : roleAccessList
-              ?.filter((roleAccess) => roleAccess.isRoleChecked)
-              ?.map((roleAccess) => {
-                return {
-                  roleId: roleAccess?.roleId!,
-                  roleAccessTypeId: roleAccess.roleAccessTypeId,
-                  accessTuples: roleAccess.accessTuples.map((access) => {
-                    return {
-                      accessId: access.accessId,
-                      hasAccess: access.hasAccess,
-                    };
-                  }),
-                };
-              }),
       },
     })
       .unwrap()
@@ -163,7 +147,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   };
 
   useEffect(() => {
-    const newRoleAccessList = roleList?.map((role) => {
+    const newRoleAccessList = roleList?.map((role: any) => {
       return {
         roleId: role.id,
         roleName: role.name,
@@ -183,7 +167,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   }, [selectAll]);
 
   useEffect(() => {
-    const newRoleAccessList = roleList?.map((role) => {
+    const newRoleAccessList = roleList?.map((role: any) => {
       return {
         roleId: role.id,
         roleName: role.name,
