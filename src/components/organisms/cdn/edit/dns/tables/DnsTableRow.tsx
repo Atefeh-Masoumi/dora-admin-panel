@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   GetDnsRecordResponse,
-  useDeleteApiMyDnsCdnDnsRecordDeleteByIdMutation,
+  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
@@ -13,13 +13,14 @@ import { ProxyStatus } from "../ProxyStatus";
 import { CreateRecordDialog } from "../dialogs/CreateRecordDialog";
 import { zoneTableStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-
+import { useParams } from "react-router";
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
 const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
+  const { projectId } = useParams();
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
     null
@@ -30,7 +31,7 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   const [deleteDnsRecord, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyDnsCdnDnsRecordDeleteByIdMutation();
+  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -43,7 +44,7 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteDnsRecordHandler = () =>
-    deleteDnsRecord({ id: Number(selectedDns?.id) })
+    deleteDnsRecord({ id: Number(selectedDns?.id),projectId:Number(projectId),dnsCdnHostId:0 })
       .unwrap()
       .then(() => {
         toast.success("Dns رکورد مورد نظر حذف شد");
