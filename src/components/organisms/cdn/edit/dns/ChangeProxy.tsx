@@ -1,9 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
-import { usePutApiMyDnsCdnDnsRecordChangeProxyByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordChangeProxyIdMutation } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-
+import { useParams } from "react-router-dom";
 type ChangeProxyStatusPropsType = {
   proxyStatus: boolean | undefined;
   id: number | undefined;
@@ -13,12 +13,15 @@ export const ChangeProxyStatus: FC<ChangeProxyStatusPropsType> = ({
   proxyStatus,
   id,
 }) => {
+  const { projectId } = useParams();
   const [changeProxyStatus] =
-    usePutApiMyDnsCdnDnsRecordChangeProxyByIdMutation();
+    usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordChangeProxyIdMutation();
 
   const changeProxy = () => {
     if (proxyStatus === undefined) return;
-    changeProxyStatus({ id: id as number });
+    changeProxyStatus({ id: id as number, 
+      projectId: Number(projectId), 
+      dnsCdnHostId: 0 })
   };
 
   const color = proxyStatus === true ? "primary" : "secondary";
