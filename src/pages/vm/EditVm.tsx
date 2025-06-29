@@ -105,7 +105,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   const tabArray = [
     "مشخصات سرور",
-    "آنالیز ترافیک",
+    // "آنالیز ترافیک",
     "آدرس IP",
     "بازسازی",
     "سخت افزاری",
@@ -116,7 +116,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
 
   const routes = [
     "/vm/:projectId/:id/specification",
-    "/vm/:projectId/:id/analytics",
+    // "/vm/:projectId/:id/analytics",
     "/vm/:projectId/:id/ip",
     "/vm/:projectId/:id/rebuild",
     "/vm/:projectId/:id/config",
