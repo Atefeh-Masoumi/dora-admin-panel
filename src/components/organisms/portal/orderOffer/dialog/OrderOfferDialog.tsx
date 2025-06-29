@@ -13,8 +13,8 @@ import { FC, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   CreatePaymentResponse,
-  useGetApiMyPortalPaymentProviderListQuery,
-  usePostApiMyPortalOfferPayMutation,
+  useGetApiMyFinancialPaymentProviderListQuery,
+  usePostApiMyFinancialOfferPayMutation,
 } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
@@ -54,10 +54,10 @@ export const PurchaseOrderOfferDialog: FC<DialogProps & OfferDetailType> = ({
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const [callOfferPayment, { isLoading }] =
-    usePostApiMyPortalOfferPayMutation();
+    usePostApiMyFinancialOfferPayMutation();
 
   const { data: paymentProviderList, isLoading: paymentProviderListLoading } =
-    useGetApiMyPortalPaymentProviderListQuery();
+    useGetApiMyFinancialPaymentProviderListQuery();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { paymentProviderId },
