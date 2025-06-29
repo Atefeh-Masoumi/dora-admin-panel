@@ -18,12 +18,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
   const selectedProjectId = useSelector((state: any) => state.project.selectedProjectId);
 
   const listItems: sidebarItemType[] = useMemo(() => [
-    {
-      title: "DNS",
-      text: " سرویس  DNS ابری ",
-      Icon: CloudConnectionSvg,
-      link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
-    },
+    // {
+    //   title: "DNS",
+    //   text: " سرویس  DNS ابری ",
+    //   Icon: CloudConnectionSvg,
+    //   link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
+    // },
     {
       title: "Virtual Machine",
       text: "سرور های ابری",
@@ -31,25 +31,25 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/vm/list",
       subList: [{ title: "مدیریت سرورها", link: selectedProjectId ? `/vm/${selectedProjectId}` : "/dashboard" }],
     },
-    {
-      title: "Kubernetes Cluster",
-      text: "کلاستر کوبرنتیز",
-      Icon: KubernetesSvg,
-      link: selectedProjectId ? `/kubernetes-cluster/${selectedProjectId}` : "/dashboard",
-      subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
-    },
-    {
-      title: "Kubernetes Cloud",
-      text: "کوبرنتیز ابری",
-      Icon: KubernetesSvg,
-      link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
-    },
-    {
-      title: "Object Storage",
-      text: "ذخیره‌ساز ابری",
-      Icon: ObjectStorageSvg,
-      link: selectedProjectId ? `/storage/${selectedProjectId}` : "/dashboard",
-    },
+    // {
+    //   title: "Kubernetes Cluster",
+    //   text: "کلاستر کوبرنتیز",
+    //   Icon: KubernetesSvg,
+    //   link: selectedProjectId ? `/kubernetes-cluster/${selectedProjectId}` : "/dashboard",
+    //   subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
+    // },
+    // {
+    //   title: "Kubernetes Cloud",
+    //   text: "کوبرنتیز ابری",
+    //   Icon: KubernetesSvg,
+    //   link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
+    // },
+    // {
+    //   title: "Object Storage",
+    //   text: "ذخیره‌ساز ابری",
+    //   Icon: ObjectStorageSvg,
+    //   link: selectedProjectId ? `/storage/${selectedProjectId}` : "/dashboard",
+    // },
     // {
     //   title: "Web Hosting",
     //   text: "هاستینگ ابری",
