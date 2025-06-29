@@ -23,6 +23,7 @@ export type kubernetesCustomConfigType = {
   cpu: number;
   memory: number;
   disk: number;
+  ipV4: number;
 };
 
 type AddKubernetesContextType = {
@@ -76,6 +77,7 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
     cpu: 1,
     memory: 1,
     disk: 25,
+    ipV4: 1,
   },
   setCustomConfig: (customConfig) => {},
   productItemPrices: null,
@@ -108,6 +110,7 @@ export const AddKubernetesContextProvider: FC<
     cpu: 1,
     memory: 1,
     disk: 25,
+    ipV4: 1,
   });
 
   const navigate = useNavigate();
