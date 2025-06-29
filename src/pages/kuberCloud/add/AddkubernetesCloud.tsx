@@ -8,7 +8,7 @@ import { AddKubernetesCloudContext } from "src/components/organisms/kubernetesCl
 import { KubernetesCloudInfo } from "src/components/organisms/kubernetesCloud/add/steps/KubernetesCloudInfo";
 import { SelectKubernetesCloudConfigType } from "src/components/organisms/kubernetesCloud/add/steps/SelectConfigType";
 import { SelectKubernetesCloudConfig } from "src/components/organisms/kubernetesCloud/add/steps/SelectKubernetesCloudConfig";
-import { SelectKubernetesCloudDataCenter } from "src/components/organisms/kubernetesCloud/add/steps/SelectKubernetesCloudDataCenter";
+// import { SelectKubernetesCloudDataCenter } from "src/components/organisms/kubernetesCloud/add/steps/SelectKubernetesCloudDataCenter";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 
@@ -89,10 +89,10 @@ const AddKubernetesCloud: FC = () => {
             }}
           >
             <Grid container gap={2}>
-              <Grid xs={12} item>
+              {/* <Grid xs={12} item>
                 <SelectKubernetesCloudDataCenter />
                 <Divider sx={{ margin: "50px 10px" }} />
-              </Grid>
+              </Grid> */}
               <Grid xs={12} item>
                 <SelectKubernetesCloudConfigType
                   isPredefined={isPredefined}
