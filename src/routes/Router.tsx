@@ -4,6 +4,8 @@ import PageLoading from "src/components/atoms/PageLoading";
 import {
   MainTemplate,
   MainTemplatePropsType,
+  HeaderOnlyTemplate,
+  HeaderOnlyTemplatePropsType,
 } from "src/components/templates/MainTemplate";
 import { PrivateRoute } from "./PrivateRoute";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
@@ -132,6 +134,24 @@ export const  mainTemplate = (
   </MainTemplate>
 );
 
+export const headerOnlyTemplate = (
+  PageComponent: FC<any>,
+  templateProps?: Omit<HeaderOnlyTemplatePropsType, "children">,
+  PageComponentWrapper?: FC<any>
+) => (
+  <HeaderOnlyTemplate {...templateProps}>
+    <Suspense fallback={<PageLoading />}>
+      {PageComponentWrapper ? (
+        <PageComponentWrapper>
+          <PageComponent />
+        </PageComponentWrapper>
+      ) : (
+        <PageComponent />
+      )}
+    </Suspense>
+  </HeaderOnlyTemplate>
+);
+
 const Router: FC = () => {
   return (
     <BrowserRouter>
@@ -148,7 +168,7 @@ const Router: FC = () => {
           /> */}
           <Route
             path="/"
-            element={<ProjectList />}
+            element={headerOnlyTemplate(ProjectList, { pageTitle: "داشبورد" })}
           />
           <Route
             path="/portal/calculator"
