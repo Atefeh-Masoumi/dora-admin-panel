@@ -7,8 +7,8 @@ import { SelectEnvType } from "./envVariable/SelectEnvType";
 import { SelectEnvKey } from "./envVariable/SelectEnvKey";
 import { SelectEnvValue } from "./envVariable/SelectEnvValue";
 import {
-  useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery,
-  useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router-dom";
 import { getResourceItems } from "src/utils/getResourceItems.utils";
@@ -32,18 +32,18 @@ export const SelectEnvironmentVariable: FC<SelectEnvironmentVariablePropsType> =
     >(null);
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up("sm"));
-    const { kubernetesCloudId } = useParams();
+    const { kubernetesCloudId, projectId } = useParams();
     const namespaceId = Number(kubernetesCloudId);
 
     const { data: configmapList = [] } =
-      useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
-        { namespaceId },
+      useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
+          { kuberHostId: Number(kubernetesCloudId), projectId: Number(projectId) },
         { skip: !namespaceId }
       );
 
     const { data: secretList = [] } =
-      useGetApiMyKubernetesCloudSecretListByNamespaceIdQuery(
-        { namespaceId },
+      useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery(
+        { kuberHostId: Number(kubernetesCloudId), projectId: Number(projectId) },
         { skip: !namespaceId }
       );
 
