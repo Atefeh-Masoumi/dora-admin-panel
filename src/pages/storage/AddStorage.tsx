@@ -11,7 +11,7 @@ import ServiceReceipt, {
 } from "src/components/molecules/ServiceReceipt";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
-import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
+// import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
@@ -23,7 +23,7 @@ const mapConfig = {
 
 const AddStorageService: FC = () => {
   const {
-    dataCenter,
+    // dataCenter,
     serverConfig,
     name,
     isPredefined,
@@ -58,9 +58,7 @@ const AddStorageService: FC = () => {
   const submitHandler = () => {
     let validationErrorMessage = "";
 
-    if (!dataCenter || !dataCenter.id) {
-      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
-    } else if (!name) {
+    if (!name) {
       validationErrorMessage = "لطفا نام سرویس را انتخاب کنید";
     } else if (name.length < 3) {
       validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
@@ -115,10 +113,10 @@ const AddStorageService: FC = () => {
               }}
             >
               <Grid container gap={2}>
-                <Grid xs={12} item>
+                {/* <Grid xs={12} item>
                   <SelectDataCenter />
                   <Divider sx={{ mt: 10 }} />
-                </Grid>
+                </Grid> */}
                 <Grid xs={12} item>
                   <SelectConfigType
                     isPredefined={isPredefined}
