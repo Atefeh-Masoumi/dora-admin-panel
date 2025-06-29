@@ -10,33 +10,16 @@ import * as yup from "yup";
 import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation } from "src/app/services/api.generated";
+import { passwordValidationRegex } from "src/utils/regexUtils";
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
   const formInitialValues = { serverName: "", password: "" };
-  const { serverId, hostProjectId } = useContext(EditServerContext);
-  const [imageId, setImageId] = useState(0);
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [showDialog, setShowDialog] = useState(false);
-
-  const handleOpen = ()=> {
-  if (!formik.values.serverName) {
-    toast.error("لطفا نام سرور را وارد کنید");
-    return; 
-  }
-
-  if (!formik.values.password) {
-    toast.error("لطفا رمز عبور را وارد کنید");
-    return; 
-  }
-
-  setShowDialog(true);
-  }
+  const { serverId } = useContext(EditServerContext);
+  const [imageId, setImageId] = useState<number | null>(null);
   const navigate = useNavigate();
-
-  const { projectId} = useParams()
+  const { projectId } = useParams();
 
   const [rebuild, { isLoading }] = usePutApiMyVmByProjectIdHostRebuildAndIdMutation();
 
@@ -48,14 +31,23 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     serverName: yup.string().required("نام سرور الزامیست!"),
     password: yup.string().required("گذرواژه الزامیست!"),
   });
+
   const onSubmit: formikOnSubmitType<typeof formInitialValues> = () => {
-    if (
-      !serverId ||
-      !formik.values.serverName ||
-      !formik.values.password ||
-      !imageId
-    )
+    if (!serverId || !formik.values.serverName || !formik.values.password || !imageId) {
+      toast.error("لطفا تمام فیلدها را پر کنید");
       return;
+    }
+
+    if (formik.values.serverName.length < 5) {
+      toast.error("نام سرور نباید کمتر از ۵ کارکتر باشد");
+      return;
+    }
+
+    if (!passwordValidationRegex.test(formik.values.password)) {
+      toast.error("رمز عبور باید حداقل ۸ حرف باشد و ترکیبی از حروف بزرگ و کوچک و عدد و یک کارکتر خاص باشد");
+      return;
+    }
+
     rebuild({
       id: serverId,
       projectId: Number(projectId),
@@ -63,7 +55,6 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         name: formik.values.serverName,
         password: formik.values.password,
         vmImageId: imageId,
-        // vmKeyId: vmKeyId?.id,
       },
     })
       .unwrap()
@@ -73,7 +64,6 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         navigate(`/vm/${projectId}/list`);
       })
       .catch(() => {});
-    return;
   };
 
   const formik = useFormik({
@@ -97,10 +87,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         <Typography align="center" color="grey.700">
           بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
         </Typography>
-        <ChooseOSForRebuild
-          setImageId={setImageId}
-          hostProjectId={hostProjectId || 0}
-        />
+        <ChooseOSForRebuild setImageId={setImageId} />
         <Typography
           align="center"
           fontWeight={700}
@@ -111,10 +98,10 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
           اطلاعات سرور
         </Typography>
         <ChooseInfo
-          name={name}
-          setName={setName}
-          password={password}
-          setPassword={setPassword}
+          name={formik.values.serverName}
+          setName={(name) => formik.setFieldValue('serverName', name)}
+          password={formik.values.password}
+          setPassword={(password) => formik.setFieldValue('password', password)}
           formik={formik}
         />
         <Stack alignItems="center" justifyContent="center">
