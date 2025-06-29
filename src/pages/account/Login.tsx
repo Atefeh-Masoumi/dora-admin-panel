@@ -53,7 +53,7 @@ const Login: FC = () => {
       .unwrap()
       .then((res) => {
         if (!res) return;
-        if (res.twoFactor) {
+        if (res.enableTwoFactor) {
           navigate("/account/two-factor-login");
           return;
         }
