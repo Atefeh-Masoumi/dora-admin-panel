@@ -1,19 +1,20 @@
 import { FC, useContext, useEffect, useState, useMemo } from "react";
 import { Stack, Typography, Paper, useTheme } from "@mui/material";
-import { useLazyGetApiMyVmHostGetByIdQuery } from "src/app/services/api";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import ReverseSlider from "src/components/atoms/ReverseSlider";
 import { LoadingButton } from "@mui/lab";
 import { priceToPersian } from "src/utils/priceToPersian";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  usePutApiMyVmHostEditByIdMutation,
+  useGetApiMyVmByProjectIdHostGetAndIdQuery,
+  usePutApiMyVmByProjectIdHostEditAndIdMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import {
   PRODUCT_CATEGORY_ENUM,
   PRODUCT_ITEMS_ENUM,
 } from "src/constant/productCategoryEnum";
+import { useParams } from "react-router";
 
 // const memoryUnitPrice = 600000;
 // const cpuUnitPrice = 500000;
@@ -37,24 +38,25 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
-  const [getData] = useLazyGetApiMyVmHostGetByIdQuery();
+
+  const { projectId } = useParams();
+
+  const {data:getData} = useGetApiMyVmByProjectIdHostGetAndIdQuery({
+    projectId: Number(projectId),
+    id: serverId || 0
+  });
 
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
-    usePutApiMyVmHostEditByIdMutation();
+  usePutApiMyVmByProjectIdHostEditAndIdMutation();
 
   useEffect(() => {
-    if (serverId) {
-      getData({ id: serverId })
-        .unwrap()
-        .then((res) => {
-          if (res) {
-            setMemory(res.memory || 0);
-            setCpu(res.cpu || 0);
-            setDisk(res.disk || 0);
-          }
-        })
-        .catch(() => {});
-    }
+    if (!getData) return
+    
+      setMemory(getData?.memory || 0);
+      setCpu(getData?.cpu || 0);
+      setDisk(getData?.disk || 0);
+          
+    
   }, [getData, serverId]);
 
   useEffect(() => {
@@ -113,12 +115,13 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const submitClickHandler = () => {
     if (!serverId) return;
     sendNewConfig({
-      id: serverId,
       editVmModel: {
         cpu,
         memory,
         disk,
       },
+      projectId: Number(projectId),
+      id: serverId,
     })
       .unwrap()
       .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"))
