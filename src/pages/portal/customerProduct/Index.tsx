@@ -8,14 +8,14 @@ import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import {
   useGetApiMyPortalProductListQuery,
-  useGetApiMyPortalCustomerProductListByProductIdQuery,
+  useGetApiMyPortalProductItemListByProductIdQuery,
 } from "src/app/services/api.generated";
 
 const Services: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
 
   const { data: services, isLoading: getServicesLoading } =
-    useGetApiMyPortalCustomerProductListByProductIdQuery({
+    useGetApiMyPortalProductItemListByProductIdQuery({
       productId: Number(selectedCategory),
     });
 
