@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
 import {
   AppBar,
   Button,
@@ -8,10 +8,13 @@ import {
   Toolbar,
   Typography,
   useTheme,
+  Menu,
+  MenuItem,
+  Box,
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
-import { ArrowForward as ArrowForwardIcon } from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon, ArrowDropDown } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
@@ -20,6 +23,10 @@ import { HeadphoneSvg } from "src/components/atoms/svg-icons/HeadphoneSvg";
 import { Notifications } from "./Notifications";
 import { ManageMenu } from "./ManageMenu";
 import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { setSelectedProjectId, setSelectedProject } from "src/app/slice/projectSlice";
+import { useGetApiMyProjectListQuery } from "src/app/services/api.generated";
+import { toast } from "react-toastify";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -39,15 +46,48 @@ const Header: FC<HeaderPropsType> = ({
   const [anchorEl, setAnchorEl] = useState<
     (EventTarget & HTMLButtonElement) | null
   >();
+  const [projectMenuAnchor, setProjectMenuAnchor] = useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { id: kubernetesClusterID } = useParams();
   const { projectId } = useParams();
   const vpcId = searchParams.get("vpcId");
   
-  const theme = useTheme()
+  const theme = useTheme();
   const goToCalculator = () => navigate("/portal/calculator");
+
+  // Get project data from Redux
+  const { data: projectList = [], isLoading: getProjectListLoading } =
+    useGetApiMyProjectListQuery();
+  const selectedProjectId = useAppSelector((state) => state.project?.selectedProjectId);
+  const selectedProject = useAppSelector((state) => state.project?.selectedProject);
+
+  // Effect to set selected project when project list is loaded and we have a stored project ID
+  useEffect(() => {
+    if (!getProjectListLoading && projectList.length > 0 && selectedProjectId && !selectedProject) {
+      const project = projectList.find(p => p.id === selectedProjectId);
+      if (project) {
+        dispatch(setSelectedProject(project));
+      }
+    }
+  }, [getProjectListLoading, projectList, selectedProjectId, selectedProject, dispatch]);
+
+  // Project menu handlers
+  const handleProjectMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setProjectMenuAnchor(event.currentTarget);
+  };
+
+  const handleProjectMenuClose = () => {
+    setProjectMenuAnchor(null);
+  };
+
+  const handleProjectSelect = (projectId: number) => {
+    dispatch(setSelectedProjectId(projectId));
+    handleProjectMenuClose();
+    navigate(`/vm/${projectId}/list`);
+  };
 
   const closeMenuHandler = () => setAnchorEl(null);
   const openMenuHandler = ({
@@ -60,6 +100,58 @@ const Header: FC<HeaderPropsType> = ({
 
   const desktopHeaderIcon = (
     <>
+      <Box>
+        <Button
+          endIcon={<ArrowDropDown />}
+          onClick={handleProjectMenuOpen}
+          variant="outlined"
+          size="small"
+          sx={{ 
+            width: 200,
+            height: 40,
+            borderRadius: BORDER_RADIUS_1,
+            borderColor: "rgba(110, 118, 138, 0.16)",
+            color: "text.primary",
+            '&:hover': {
+              borderColor: "primary.main",
+            }
+          }}
+        >
+          {selectedProject ? selectedProject.name : "انتخاب پروژه"}
+        </Button>
+        <Menu
+          anchorEl={projectMenuAnchor}
+          open={Boolean(projectMenuAnchor)}
+          onClose={handleProjectMenuClose}
+          PaperProps={{
+            sx: { 
+              width: 200,
+              mt: 1,
+              boxShadow: 4,
+              borderRadius: BORDER_RADIUS_1
+            },
+          }}
+        >
+          {projectList.map((project) => (
+            <MenuItem 
+              key={project.id} 
+              onClick={() => project?.id && handleProjectSelect(project?.id)}
+              selected={project.id === selectedProjectId}
+              sx={{
+                py: 1,
+                '&.Mui-selected': {
+                  backgroundColor: 'primary.light',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
+                  }
+                }
+              }}
+            >
+              {project.name}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Box>
       <Notifications />
       <IconButton
         sx={{
