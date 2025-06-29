@@ -496,8 +496,10 @@ export const {
   // useLazyGetApiMyVmKmsGetByIdQuery,
   useLazyGetApiMyPortalProductItemListByProductIdQuery,
   useLazyGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
-  useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery
+  useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery,
   // useLazyGetApiMyPortalReferralListByReferralIdQuery,
   // useLazyGetApiMyDatacenterImageListQuery,
   // useLazyGetApiMyKubernetesCloudHostGetByIdQuery,
+  useLazyGetApiMyFinancialOrderListByProductIdQuery,
+  useLazyGetApiMyFinancialReferralListByReferralIdQuery,
 } = api;
