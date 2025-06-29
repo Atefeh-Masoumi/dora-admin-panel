@@ -14,19 +14,20 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   useCustomCreateIssueMutation,
-  useLazyGetApiMyPortalCustomerProductListByProductIdQuery,
 } from "src/app/services/api";
 import {
-  GetApiMyPortalCustomerProductListByProductIdApiResponse,
+  useGetApiMyPortalProductGetByIdQuery,
+  GetApiMyPortalProductGetByIdApiResponse,
   IssueSubjectShortListResponse,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueCreateMutation,
-  usePostApiMyPortalIssueSubjectSelectListMutation,
+  usePostApiMyPortalIssueSubjectShortListMutation,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { useLazyGetApiMyFinancialOrderListByProductIdQuery } from "src/app/services/api";
 
 const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
 
@@ -44,20 +45,14 @@ const AddTicket: FC = () => {
   const { data: businessUnits, isLoading: loadingUnits } =
     useGetApiMyPortalBusinessUnitListQuery();
 
-  const [apiCloudCustomerProductList, setApiCloudCustomerProductList] =
-    useState<GetApiMyPortalCustomerProductListByProductIdApiResponse | null>(
-      null
-    );
-
   const [selectedApiCloudCustomerProduct, setSelectedApiCloudCustomerProduct] =
     useState<number>(0);
 
-  const [
-    callGetApiCloudCustomerProductList,
-    { isLoading: getApiCloudHostLoading },
-  ] = useLazyGetApiMyPortalCustomerProductListByProductIdQuery();
-
   const [productId, setProductId] = useState<number>();
+
+  const [apiCloudCustomerProductList, setApiCloudCustomerProductList] = useState<any[]>([]);
+  const [callGetApiCloudCustomerProductList] = useLazyGetApiMyFinancialOrderListByProductIdQuery();
+
   const { data: products, isLoading: loadingProducts } =
     useGetApiMyPortalProductListQuery();
 
@@ -65,11 +60,11 @@ const AddTicket: FC = () => {
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostApiMyPortalIssueSubjectSelectListMutation();
+  const [selectList] = usePostApiMyPortalIssueSubjectShortListMutation();
 
   useEffect(() => {
     selectList({
-      issueSubjectSelectListModel: {
+      issueSubjectShortListModel: {
         productId: productId,
         businessUnitId: businessUnitId,
       },
@@ -81,15 +76,14 @@ const AddTicket: FC = () => {
       );
 
     if (productId) {
-      callGetApiCloudCustomerProductList({ productId: Number(productId) })
+      callGetApiCloudCustomerProductList({
+        productId: Number(productId),
+      })
         .unwrap()
-        .then(
-          (
-            res: SetStateAction<GetApiMyPortalCustomerProductListByProductIdApiResponse | null>
-          ) => {
-            setApiCloudCustomerProductList(res);
-          }
-        );
+        .then((res: any) => {
+          setApiCloudCustomerProductList(res || []);
+        })
+        .catch(() => {});
     }
   }, [
     businessUnitId,
@@ -266,14 +260,16 @@ const AddTicket: FC = () => {
           </Box>
           {/* related projects */}
           <Box component="form" width="100%">
-            {getApiCloudHostLoading ? (
-              <Stack>
-                <Skeleton
-                  variant="rectangular"
-                  height={50}
-                  sx={{ bgcolor: "secondary.light", borderRadius: 2 }}
-                />
-              </Stack>
+            {!productId ? (
+              <DorsaTextField
+                select
+                fullWidth
+                label="محصولات کاربر"
+                value=""
+                disabled
+              >
+                <MenuItem value="">ابتدا محصول را انتخاب کنید</MenuItem>
+              </DorsaTextField>
             ) : (
               <DorsaTextField
                 select
