@@ -1,7 +1,7 @@
 import {
   SecretKeyValuePairsResponse,
-  GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiResponse,
-  GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse,
+  KuberConfigListResponse,
+  KuberSecretListResponse,
   ConfigMapKeyValuePairsResponse,
 } from "src/app/services/api.generated";
 
@@ -21,9 +21,7 @@ export type KuberCloudNamespaceImageType = {
   isPublic: boolean;
 };
 
-export type ResourceListType =
-  | GetApiMyKubernetesCloudConfigmapListByNamespaceIdApiResponse
-  | GetApiMyKubernetesCloudSecretListByNamespaceIdApiResponse;
+export type ResourceListType = KuberConfigListResponse[] | KuberSecretListResponse[];
 
 export type KeyListInResourceType =
   | ConfigMapKeyValuePairsResponse[]
