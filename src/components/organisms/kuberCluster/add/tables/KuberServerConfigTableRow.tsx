@@ -6,15 +6,15 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 
 const KuberServerConfigTableRow: FC<{ row: any }> = ({ row }) => {
-  const { serverConfig, setServerConfig } = useContext(AddKubernetesContext);
+  const { predefinedConfig, setPredefinedConfig } = useContext(AddKubernetesContext);
 
   const isChecked = useMemo(
-    () => serverConfig?.id === row["id"],
-    [row, serverConfig?.id]
+    () => predefinedConfig?.id === row["id"],
+    [row, predefinedConfig?.id]
   );
 
   const onCheckboxClick = () => {
-    setServerConfig(row);
+    setPredefinedConfig(row);
   };
 
   return (
