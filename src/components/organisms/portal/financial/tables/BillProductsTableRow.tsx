@@ -11,13 +11,13 @@ import {
   TableRow,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { CustomerProductBillModel } from "src/app/services/api.generated";
+import { BillOrderModel } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { customerProductItemsTableStruct } from "./billTableStruct";
 
 type BillProductsTableRowPropsType = {
-  rowData: CustomerProductBillModel;
+  rowData: BillOrderModel;
   rowBgColor: string;
 };
 const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
@@ -28,9 +28,9 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
   const fromDate = rowData.fromDate!;
   const toDate = rowData.toDate!;
   const product = rowData.product!;
-  const customerProductPrice = rowData.customerProductPrice!;
-  const customerProduct = rowData.customerProduct!;
-  const customerProductBillItems = rowData.customerProductBillItems || [];
+  const customerProductPrice = rowData.orderPrice!;
+  const customerProduct = rowData.product!;
+  const customerProductBillItems = rowData.orderItems || [];
 
   return (
     <>
@@ -92,7 +92,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
                         return (
                           <TableRow key={index}>
                             <TableCell sx={{ border: "none" }} align="center">
-                              {row.customerProductItem}
+                              {row.orderItem}
                             </TableCell>
                             <TableCell sx={{ border: "none" }} align="center">
                               {priceToPersian(row.quantity!)}
