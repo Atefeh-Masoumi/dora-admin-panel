@@ -9,21 +9,22 @@ import {
   Stack,
   useMediaQuery,
   useTheme,
+  TextField,
 } from "@mui/material";
 import {
   CommonSelectPropsType,
   KeyListInResourceType,
   ResourceListType,
 } from "src/types/kubernetesCloud.types";
+import { KuberConfigListResponse, KuberSecretListResponse } from "src/app/services/api.generated";
 import { DeleteOutline } from "@mui/icons-material";
-import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type SelectEnvValuePropsType = CommonSelectPropsType & {
   keyListInResource?: KeyListInResourceType;
   isResourceSelectionRequired?: boolean;
   selectedResourceItem?: number | null;
   handleResourceOnChange?: (resourceId: number) => void;
-  resourceList?: ResourceListType;
+  resourceList?: KuberConfigListResponse[] | KuberSecretListResponse[];
   onDelete?: () => void;
 };
 
@@ -46,7 +47,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
       id: "value-select",
       value: Number(value),
       onChange: (newValue: string | number) => onChange && onChange(newValue),
-      menuList: keyListInResource,
+      menuList: Array.isArray(keyListInResource) ? keyListInResource : [],
       menuItemKey: "key",
     },
     {
@@ -55,7 +56,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
       value: selectedResourceItem || "",
       onChange: (newValue: string | number) =>
         handleResourceOnChange && handleResourceOnChange(Number(newValue)),
-      menuList: resourceList,
+      menuList: Array.isArray(resourceList) ? resourceList : [],
       menuItemKey: "name",
     },
   ];
@@ -86,7 +87,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
                       },
                     }}
                   >
-                    {menuList?.map((item, index) => (
+                    {menuList?.map((item: any, index: number) => (
                       <MenuItem
                         key={index}
                         sx={{
@@ -105,7 +106,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
           )}
         </Grid>
       ) : (
-        <DorsaTextField
+        <TextField
           sx={{
             background: ({ palette }) => palette.primary.contrastText,
           }}
