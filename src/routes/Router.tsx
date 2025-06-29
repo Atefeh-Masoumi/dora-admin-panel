@@ -15,12 +15,13 @@ import AddStorageContextProvider from "src/components/organisms/storage/add/cont
 import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
-import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
-import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
+// import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
+// import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 import { NavigateSetter } from "src/utils/navigate";
 import { EditVmWrapper } from "./VmRouteWraper";
 
+const ProjectList = lazy(() => import("src/pages/project/ProjectList"));
 const Home = lazy(() => import("src/pages/Home"));
 const NotFound = lazy(() => import("src/pages/404"));
 const Forbidden = lazy(() => import("src/pages/Forbidden"));
@@ -141,9 +142,13 @@ const Router: FC = () => {
         <Route path="/account/signup" element={<Signup />} />
         <Route path="/account/forget" element={<Forget />} />
         <Route path="/" element={<PrivateRoute />}>
-          <Route
+        {/* <Route
             path="/"
             element={mainTemplate(Home, { pageTitle: "داشبورد" })}
+          /> */}
+          <Route
+            path="/"
+            element={<ProjectList />}
           />
           <Route
             path="/portal/calculator"
