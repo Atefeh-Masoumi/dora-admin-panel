@@ -1,75 +1,92 @@
 import { LoadingButton } from "@mui/lab";
 import { Paper, Stack, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
-import { formikOnSubmitType } from "src/types/form.type";
-import * as yup from "yup";
-import { ChooseInfo } from "./serverRebuildSections/ChooseInfo";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
-import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
+import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
+import { EditConfirmationDialog } from "src/components/molecule/EditConfirmationDialog";
+import { SelectSecuritySettings } from "src/components/molecule/createServices/SelectSecuritySettings";
+import { SelectPassword } from "src/components/molecule/createServices/SelectPassword";
+import { SelectServiceName } from "src/components/molecule/createServices/SelectServiceName";
+import { SelectVmKey } from "src/components/molecule/createServices/SelectVmKey";
 
 type VmRebuildPropsType = {};
 
 export const VmRebuild: FC<VmRebuildPropsType> = () => {
-  const formInitialValues = { serverName: "", password: "" };
-  const { serverId } = useContext(EditServerContext);
-  const [imageId, setImageId] = useState<number | null>(null);
+  const [name, setName] = useState("");
+  const [usePassword, setUsePassword] = useState(true);
+  const [useVmKey, setUseVmKey] = useState(false);
+  const [password, setPassword] = useState("");
+  const [vmKeyId, setVmKeyId] = useState<any>(null);
+  const [securityId, setSecurityId] = useState<VM_SECURITY_TYPE_SETTING>(
+    VM_SECURITY_TYPE_SETTING.PASSWORD
+  );
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
+
+  const [selectedOs, setSelectedOs] = useState<any>(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { id: vmId, projectId } = useParams();
 
-  const [rebuild, { isLoading }] = usePutApiMyVmByProjectIdHostRebuildAndIdMutation();
-
-  const submitHandler = () => {
-    formik.handleSubmit();
-  };
-
-  const formValidation = yup.object().shape({
-    serverName: yup.string().required("نام سرور الزامیست!"),
-    password: yup.string().required("گذرواژه الزامیست!"),
+  const { data: vmKeyList } = useGetApiMyVmByProjectIdKeyListQuery({
+    projectId: Number(projectId!),
   });
 
-  const onSubmit: formikOnSubmitType<typeof formInitialValues> = () => {
-    if (!serverId || !formik.values.serverName || !formik.values.password || !imageId) {
-      toast.error("لطفا تمام فیلدها را پر کنید");
-      return;
-    }
+  const [rebuild, { isLoading: rebuildLoading }] = usePutApiMyVmByProjectIdHostRebuildAndIdMutation();
 
-    if (formik.values.serverName.length < 5) {
+  const closeAllDialogs = () => {
+    setIsConfirmationDialogOpen(false);
+  };
+
+  const handleRebuildOnClick = () => {
+    if (!vmId) return;
+    if (!name) {
+      toast.error("لطفاً یک نام برای شناسایی سرویس خود انتخاب کنید");
+      return;
+    } else if (name.length < 5) {
       toast.error("نام سرور نباید کمتر از ۵ کارکتر باشد");
       return;
-    }
-
-    if (!passwordValidationRegex.test(formik.values.password)) {
-      toast.error("رمز عبور باید حداقل ۸ حرف باشد و ترکیبی از حروف بزرگ و کوچک و عدد و یک کارکتر خاص باشد");
+    } else if (securityId === VM_SECURITY_TYPE_SETTING.PASSWORD && !password) {
+      toast.error("لطفا رمز عبور را وارد کنید");
+      return;
+    } else if (
+      securityId === VM_SECURITY_TYPE_SETTING.PASSWORD &&
+      !passwordValidationRegex.test(password)
+    ) {
+      toast.error(
+        "رمز عبور باید حداقل ۸ حرف باشد و ترکیبی از حروف بزرگ و کوچک و عدد و یک کارکتر خاص باشد"
+      );
+      return;
+    } else if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && !vmKeyId) {
+      toast.error("لطفا کلید را وارد کنید");
+      return;
+    } else if (!selectedOs?.id) {
+      toast.error("لطفا ورژن سیستم عامل را انتخاب کنید");
       return;
     }
+    setIsConfirmationDialogOpen(true);
+  };
 
+  const submitBtnOnClick = () => {
     rebuild({
-      id: serverId,
-      projectId: Number(projectId),
+      id: Number(vmId),
+      projectId: Number(projectId!),
       rebuildVmModel: {
-        name: formik.values.serverName,
-        password: formik.values.password,
-        vmImageId: imageId,
+        name,
+        password,
+        vmImageId: selectedOs!.id,
+        vmKeyId: vmKeyId?.id,
       },
     })
       .unwrap()
       .then(() => {
-        toast.success("درخواست با موفقیت انجام شد");
+        toast.success("فرآیند بازسازی سرور مورد نظر با موفقیت شروع شد.");
         navigate(`/vm/${projectId}/list`);
       })
-      .catch(() => {});
+      .catch((err) => {});
   };
-
-  const formik = useFormik({
-    initialValues: formInitialValues,
-    validationSchema: formValidation,
-    onSubmit,
-  });
 
   return (
     <>
@@ -85,28 +102,30 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         <Typography align="center" color="grey.700">
           بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
         </Typography>
-        <ChooseOSForRebuild setImageId={setImageId} />
-        <Typography
-          align="center"
-          fontWeight={700}
-          fontSize={24}
-          color="#202020"
-          sx={{ mt: 10 }}
-        >
-          اطلاعات سرور
-        </Typography>
-        <ChooseInfo
-          name={formik.values.serverName}
-          setName={(name) => formik.setFieldValue('serverName', name)}
-          password={formik.values.password}
-          setPassword={(password) => formik.setFieldValue('password', password)}
-          formik={formik}
+        <ChooseOSForRebuild setImageId={setSelectedOs} />
+        <SelectServiceName serviceName={name} setServiceName={setName} />
+        <SelectSecuritySettings
+          securityId={securityId}
+          setSecurityId={setSecurityId}
+          usePassword={usePassword}
+          setUsePassword={setUsePassword}
+          useVmKey={useVmKey}
+          setUseVmKey={setUseVmKey}
         />
+        {useVmKey && (
+          <SelectVmKey
+            vmKeyList={vmKeyList}
+            setVmKeyId={setVmKeyId}
+          />
+        )}
+        {usePassword && (
+          <SelectPassword password={password} setPassword={setPassword} />
+        )}
         <Stack alignItems="center" justifyContent="center">
           <LoadingButton
-            loading={isLoading}
+            loading={rebuildLoading}
             variant="contained"
-            onClick={submitHandler}
+            onClick={handleRebuildOnClick}
             sx={{
               width: { xs: "100%", sm: "auto" },
               px: { sm: 8 },
@@ -114,10 +133,16 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
               mt: 2,
             }}
           >
-            درخواست بازسازی
+            بازسازی سرور
           </LoadingButton>
         </Stack>
       </Paper>
+      <EditConfirmationDialog
+        open={isConfirmationDialogOpen}
+        onClose={closeAllDialogs}
+        onSubmit={submitBtnOnClick}
+        submitLoading={rebuildLoading}
+      />
     </>
   );
 };
