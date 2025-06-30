@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -114,12 +114,13 @@ const VmReceipt: FC<ReceiptPropsType> = ({
   ipv4,
   ipv6,
   server,
+  
 }) => {
   const navigate = useNavigate();
   const { data: vmData } = useGetApiMyPortalProductItemListByProductIdQuery({
     productId: PRODUCT_CATEGORY_ENUM.VM,
   });
-
+  const { projectId } = useParams();
   const [receiptWidth, setReceiptWidth] = useState(0);
 
   const monthHours = 24 * 30;
@@ -333,7 +334,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          onClick={() => navigate("/vm")}
+          onClick={() => navigate(`/vm/${projectId}/list`)}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
