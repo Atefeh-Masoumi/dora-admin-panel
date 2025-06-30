@@ -107,7 +107,7 @@ const Header: FC<HeaderPropsType> = ({
           variant="outlined"
           size="small"
           sx={{ 
-            width: 200,
+            width: 120,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
