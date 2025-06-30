@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
-import { ArrowForward as ArrowForwardIcon, ArrowDropDown } from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
@@ -102,7 +102,7 @@ const Header: FC<HeaderPropsType> = ({
     <>
       <Box>
         <Button
-          endIcon={<ArrowDropDown />}
+          endIcon={<ExpandMoreIcon sx={{ fontSize: "1.5em !important" }} />}
           onClick={handleProjectMenuOpen}
           variant="outlined"
           size="small"
@@ -232,7 +232,7 @@ const Header: FC<HeaderPropsType> = ({
     let href: string | number = "";
     switch (url) {
       case BACK_URL_HINTS_ENUM.ADD_NODE:
-        href = `/kubernetes-cluster/${kubernetesClusterID}`;
+        href = `/kubernetes-cluster/${projectId}/${kubernetesClusterID}`;
         break;
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
         navigate(-1);
@@ -245,7 +245,7 @@ const Header: FC<HeaderPropsType> = ({
         break;
       case BACK_URL_HINTS_ENUM.EDIT_VM:
         href = !vpcId
-          ? `/vm`
+          ? `/vm/${projectId}/list`
           : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
 
         break;
