@@ -1,9 +1,10 @@
-import { Chip, IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   VmHostSnapshotListResponse,
   useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation,
+  useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -22,6 +23,8 @@ enum VM_SNAPSHOT_STATUS_INFO {
   WAIT = 4,
   FAIL = 5,
   DELETE = 6,
+  REVERTING = 7,
+  DELETING = 8,
 }
 
 enum DIALOG_TYPE_ENUM {
@@ -29,63 +32,80 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-const vmSnapshotStatusInfo = (vmSnapshotStatusId: number) => {
-  switch (vmSnapshotStatusId) {
+const vmSnapShotStatusList = (statusId: number) => {
+  switch (statusId) {
     case 1:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.ACTIVE,
+        id: 1,
         label: "فعال",
-        bgcolor: theme.palette.success.light,
-        color: theme.palette.success.main,
+        bgcolor: "success.light",
+        color: "success.main",
       };
+
     case 2:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.INACTIVE,
+        id: 2,
         label: "غیرفعال",
-        bgcolor: theme.palette.error.light,
-        color: theme.palette.error.main,
+        bgcolor: "error.light",
+        color: "error.main",
       };
     case 3:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.INQUEUE,
-        label: "درصف",
-        bgcolor: theme.palette.warning.light,
-        color: theme.palette.warning.main,
+        id: 3,
+        label: "درصف انتظار",
+        bgcolor: "warning.light",
+        color: "warning.main",
       };
-
     case 4:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.WAIT,
+        id: 4,
         label: "درانتظار",
-        bgcolor: theme.palette.warning.light,
-        color: theme.palette.warning.main,
+        bgcolor: "warning.light",
+        color: "warning.main",
       };
-
     case 5:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.FAIL,
+        id: 5,
         label: "ناموفق",
-        bgcolor: theme.palette.error.light,
-        color: theme.palette.error.main,
+        bgcolor: "error.light",
+        color: "error.main",
       };
 
     case 6:
       return {
-        id: VM_SNAPSHOT_STATUS_INFO.DELETE,
+        id: 6,
         label: "حذف شده",
-        bgcolor: theme.palette.error.light,
-        color: theme.palette.error.main,
+        bgcolor: "error.light",
+        color: "error.main",
       };
+      case 7:
+        return {
+          id: 7,
+          label: "درحال بازگردانی",
+          bgcolor: "warning.light",
+          color: "warning.main",
+        };
+      case 8:
+        return {
+          id: 8,
+          label: "درحال حذف",
+          bgcolor: "warning.light",
+          color: "warning.main",
+        };
     default:
       return {
+        id: 0,
         label: "نامشخص",
-        bgcolor: theme.palette.error.light,
-        color: theme.palette.error.main,
+        bgcolor: "error.light",
+        color: "error.main",
       };
   }
 };
 
 export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
+
+  const { id, projectId } = useParams();
+  
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedSnapshot, setSelectedSnapshot] =
     useState<VmHostSnapshotListResponse | null>(null);
@@ -97,7 +117,10 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
   useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation();
 
-  const { id, projectId } = useParams();
+  const {refetch} =useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
+      { projectId: Number(projectId), vmHostId: Number(id) },
+      { skip: !id }
+    );
   const deleteSnapshotRecordHandler = () =>
     deleteItem({ id: Number(selectedSnapshot?.id),
       projectId: Number(projectId),
@@ -107,6 +130,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("حدف snapshot مورد نظر در حال بررسی است");
         closeDialogHandler();
+        refetch();
       })
       .catch((err) => {});
 
@@ -126,8 +150,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
         {snapShotTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
-          const isCreated = row.isCreated;
-          const vmSnapshotStatusId = row.vmSnapshotStatusId;
+          const statusId = row.statusId;
 
           return (
             <DorsaTableCell
@@ -137,7 +160,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  {vmSnapshotStatusId === VM_SNAPSHOT_STATUS_INFO.INACTIVE && (
+                  {statusId === VM_SNAPSHOT_STATUS_INFO.INACTIVE && (
                     <IconButton onClick={handleOpenRevert}>
                       <RefreshSvg />
                     </IconButton>
@@ -147,28 +170,25 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
                     <TrashSvg />
                   </IconButton>
                 </Stack>
-              ) : column.id === "vmSnapshotStatus" ? (
+              ) : column.id === "statusId" ? (
                 <Chip
-                  label={vmSnapshotStatusInfo(vmSnapshotStatusId).label}
+                  label={vmSnapShotStatusList(statusId).label}
                   sx={{
-                    bgcolor: vmSnapshotStatusInfo(vmSnapshotStatusId).bgcolor,
-                    color: vmSnapshotStatusInfo(vmSnapshotStatusId).color,
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] = vmSnapShotStatusList(statusId).bgcolor.split('.');
+                      return (palette as any)[color][shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] = vmSnapShotStatusList(statusId).color.split('.');
+                      return (palette as any)[color][shade];
+                    },
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
-              ) : column.id === "isCreated" ? (
-                <Chip
-                  label={isCreated ? "فعال" : "غیرفعال"}
-                  sx={{
-                    bgcolor: ({ palette }) =>
-                      isCreated ? palette.success.light : palette.error.light,
-                    color: ({ palette }) =>
-                      isCreated ? palette.success.main : palette.error.main,
-                    borderRadius: BORDER_RADIUS_1,
-                  }}
-                />
-              ) : column.id === "isCreated" ? (
-                ""
+              )  : column.id === "description" ? (
+                <Typography>
+                  {row.description}
+                </Typography>
               ) : (
                 text
               )}
