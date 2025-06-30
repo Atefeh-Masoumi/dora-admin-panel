@@ -10,6 +10,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import {
   VmFirewallRuleListResponse,
   useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 
@@ -19,6 +20,8 @@ enum DIALOG_TYPE_ENUM {
 }
 
 export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
+  const {projectId,id } = useParams();
+
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVolume, setSelectedVolume] =
     useState<VmFirewallRuleListResponse | null>(null);
@@ -26,7 +29,11 @@ export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
   useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation();
 
-  const {projectId,id } = useParams();
+const { refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
+      { projectId: Number(projectId),
+        vmHostId: Number(id) },
+      { skip: !id }
+    );
 
   const deleteVolumeRecordHandler = () =>
     deleteItem({ id: Number(selectedVolume?.id) ,
@@ -35,6 +42,7 @@ export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then(() => {
         toast.success("حذف رول مورد نظر در حال بررسی است");
+        refetch();
         closeDialogHandler();
       })
       .catch(() => {});
