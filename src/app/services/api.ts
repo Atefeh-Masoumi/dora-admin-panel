@@ -93,9 +93,9 @@ export const api = enhancedApi
       postApiMyAccountProfileConfirmPhoneNumber: {
         invalidatesTags: () => ["Profile"],
       },
-      putApiMyAccountProfileEditTwoFactor: {
-        invalidatesTags: () => ["Profile"],
-      },
+      // putApiMyAccountProfileEditTwoFactor: {
+      //   invalidatesTags: () => ["Profile"],
+      // },
       putApiMyAccountProfileEdit: {
         invalidatesTags: () => ["Profile"],
       },
