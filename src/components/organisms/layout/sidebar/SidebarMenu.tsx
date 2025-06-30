@@ -18,17 +18,17 @@ export const Sidebar: FC<SidebarPropsType> = () => {
   const selectedProjectId = useSelector((state: any) => state.project.selectedProjectId);
 
   const listItems: sidebarItemType[] = useMemo(() => [
-    // {
-    //   title: "DNS",
-    //   text: " سرویس  DNS ابری ",
-    //   Icon: CloudConnectionSvg,
-    //   link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
-    // },
+    {
+      title: "DNS",
+      text: " سرویس  DNS ابری ",
+      Icon: CloudConnectionSvg,
+      link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
+    },
     {
       title: "Virtual Machine",
       text: "سرور های ابری",
       Icon: VmSvg,
-      link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/vm/list",
+      link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/",
       subList: [{ title: "مدیریت سرورها", link: selectedProjectId ? `/vm/${selectedProjectId}` : "/dashboard" }],
     },
     // {
