@@ -1,4 +1,5 @@
 import { Add } from "@mui/icons-material";
+import { Wallet } from "src/components/organisms/home/Wallet";
 import {
   Button,
   Divider,
@@ -22,10 +23,16 @@ import {
 } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
-
+import { Products } from "src/components/organisms/home/Products";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { useAppSelector } from "src/app/hooks";
 const vmDataList = [
-  { label: "زیرساخت:", id: "hypervisorType" },
-  { label: "مرکز داده:", id: "datacenter" },
+  { label: "مرکزداده:", id: "datacenter" },
+  { 
+    label: "نوع ابر:", 
+    id: "isPublic",
+    valueFormatter: (value: boolean) => value ? "عمومی" : "خصوصی"
+  },
 ];
 
 enum DIALOG_TYPE_ENUM {
@@ -73,8 +80,7 @@ const VmProjectList: FC = () => {
   };
 
   const editBtnOnClick = (project: ProjectListResponse) => {
-    setSelectedProject(project);
-    setDialogType(DIALOG_TYPE_ENUM.CREATE);
+    navigate(`/project/${project.id}/specification`);
   };
 
   const deleteBtnOnClick = (project: ProjectListResponse) => {
@@ -102,9 +108,42 @@ const VmProjectList: FC = () => {
     navigate(`/vm/${project.id}/list`);
   };
 
+  const profileCompleted = useAppSelector(
+    (state) => state.auth?.profileCompleted
+  );
+
+  const goToProfilePage = () => {
+    navigate("/portal/account");
+  };
   return (
     <>
-      
+      {!profileCompleted && (
+        <Stack
+          p={3}
+          mb={3}
+          bgcolor="warning.main"
+          direction="row"
+          gap={1}
+          borderRadius={BORDER_RADIUS_1}
+          width="100%"
+          color="white"
+          alignItems={{ xs: "start", md: "center" }}
+        >
+          <ErrorOutlineOutlinedIcon />
+          <Typography>
+            توجه: حساب کاربری شما به علت عدم احراز هویت، در وضعیت غیرفعال قرار
+            دارد.
+          </Typography>
+          <Button
+            onClick={goToProfilePage}
+            variant="outlined"
+            sx={{ ml: "auto", borderColor: "white", color: "white" }}
+          >
+            احراز هویت
+          </Button>
+        </Stack>
+      )}
+      <Wallet />
         <Stack
           borderRadius={BORDER_RADIUS_1}
           bgcolor="white"
