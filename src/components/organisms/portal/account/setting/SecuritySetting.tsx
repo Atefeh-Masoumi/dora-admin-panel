@@ -3,7 +3,7 @@ import { Divider, Stack, SwitchProps, Typography } from "@mui/material";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import {
   useGetApiMyAccountProfileGetQuery,
-  usePutApiMyAccountProfileEditTwoFactorMutation,
+  usePutApiMyAccountProfileEnableSmsMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -13,7 +13,7 @@ export const SecuritySetting: FC = () => {
   const { data: profileData, isLoading } = useGetApiMyAccountProfileGetQuery();
 
   const [changeTwoFactorSetting, { isLoading: changeTwoFactorSettingLoading }] =
-    usePutApiMyAccountProfileEditTwoFactorMutation();
+    usePutApiMyAccountProfileEnableSmsMutation();
 
   const twoFactorToggleButtonOnClick: SwitchProps["onChange"] = (
     _event,
