@@ -49,7 +49,7 @@ const { projectId } = useParams();
     [getDataLoading, isFetching]
   );
 
-  const createBtnOnClick = () => navigate("/cdn/add-zone");
+  const createBtnOnClick = () => navigate(`/cdn/${projectId}/add-zone`);
 
   const cardOnClick = (zone: DomainListResponse) => {
     navigate(`/cdn/${zone.id}/overview`);
