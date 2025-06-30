@@ -115,6 +115,8 @@ const EditKubernetesCloudDeployment = lazy(
     import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 
+const ProjectSpecification = lazy(() => import("../pages/project/EditProject"));
+const ProjectAccess = lazy(() => import("../pages/project/EditProject"));
 
 export const  mainTemplate = (
   PageComponent: FC<any>,
@@ -168,7 +170,7 @@ const Router: FC = () => {
           /> */}
           <Route
             path="/"
-            element={headerOnlyTemplate(ProjectList, { pageTitle: "داشبورد" })}
+            element={headerOnlyTemplate(ProjectList, { pageTitle: "پیشخوان" })}
           />
           <Route
             path="/portal/calculator"
@@ -209,7 +211,7 @@ const Router: FC = () => {
             path="/portal/sales"
             element={mainTemplate(Sales, {
               link: {
-                text: "بازگشت به داشبورد",
+                text: "بازگشت به پیشخوان",
                 url: "/",
               },
               hideSidebar: false,
@@ -294,6 +296,9 @@ const Router: FC = () => {
               hideSidebar: false,
             })}
           /> */}
+           {/* ============================= PROJECT ============================= */}
+           <Route path="/project/:projectId/specification" element={mainTemplate(ProjectSpecification)} />
+          <Route path="/project/:projectId/users" element={mainTemplate(ProjectAccess)} />
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/cdn/:projectId"
@@ -306,7 +311,7 @@ const Router: FC = () => {
             element={mainTemplate(
               AddZone,
               {
-                link: { text: "بازگشت به مدیریت زون‌ها", url: "/cdn" },
+                link: { text: "بازگشت به مدیریت زون‌ها", url: "/cdn/:projectId" },
                 hideSidebar: false,
               },
               AddZoneContextProvider
@@ -420,6 +425,10 @@ const Router: FC = () => {
           />
           <Route
             path="/vm/:projectId/:id/firewall"
+            element={<EditVmWrapper />}
+          />
+          <Route
+            path="/vm/:projectId/:id/volume"
             element={<EditVmWrapper />}
           />
           {/* ======================================= Kubernetes Cluster ======================================= */}
