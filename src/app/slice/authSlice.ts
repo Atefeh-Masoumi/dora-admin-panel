@@ -71,7 +71,7 @@ const authSlice = createSlice({
       }
     );
     addMatcher(
-      enhancedApi.endpoints.putApiMyAccountProfileEditTwoFactor.matchFulfilled,
+      enhancedApi.endpoints.putApiMyAccountProfileEnableSms.matchFulfilled,
       (state, actionPayload) => {
         const twoFactor =
           actionPayload.meta.arg.originalArgs.twoFactorModel.twoFactorStatus;
