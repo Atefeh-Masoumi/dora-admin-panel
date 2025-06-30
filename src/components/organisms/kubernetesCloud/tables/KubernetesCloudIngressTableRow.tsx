@@ -20,6 +20,7 @@ import {
   RulesModel,
   useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressDeleteIdMutation,
   useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleDeleteIdMutation,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressListQuery,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -60,9 +61,9 @@ export const KubernetesCloudIngressTableRow: FC<{
 
   const ingressRuleList = row.rules || [];
 
-  const { kubernetesCloudId } = useParams();
-  const { refetch } = useGetApiMyKubernetesCloudIngressListByNamespaceIdQuery(
-    { namespaceId: Number(kubernetesCloudId) || 0 },
+  const { kubernetesCloudId,projectId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressListQuery(
+    { kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId)},
     { skip: !kubernetesCloudId }
   );
   const [deleteIngress, { isLoading: deleteIngressLoading }] =
@@ -75,7 +76,6 @@ export const KubernetesCloudIngressTableRow: FC<{
     return deleteIngressLoading && deleteIngressRuleLoading;
   }, [deleteIngressLoading, deleteIngressRuleLoading]);
 
-  const { kubernetesCloudId,projectId } = useParams();
   const handleDeleteItem = (itemType: ITEM_TYPE_ENUM | null) =>
     itemType === ITEM_TYPE_ENUM.INGRESS
       ? deleteIngress({ id: Number(selectedKubernetesCloudIngress?.id),

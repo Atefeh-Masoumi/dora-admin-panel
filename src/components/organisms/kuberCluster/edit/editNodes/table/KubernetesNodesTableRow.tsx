@@ -33,7 +33,7 @@ const KubernetesNodesTableRow: FC<{ row: any }> = ({ row }) => {
       id: Number(kubernetesId),
       projectId: Number(projectId),
     },
-    { skip: !id }
+    { skip: !projectId }
   );
   const settingOnClick = () => {
     if ( !kubernetesInfo) return;

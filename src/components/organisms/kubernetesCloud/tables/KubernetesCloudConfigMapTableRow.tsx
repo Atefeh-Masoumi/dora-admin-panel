@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import {
   KuberConfigListResponse,
   useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapDeleteIdMutation,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery,
 } from "src/app/services/api.generated";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -24,6 +25,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useParams } from "react-router";
+import { Edit } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -43,9 +45,9 @@ export const KubernetesCloudConfigMapTableRow: FC<{
 }> = ({ row, rowBgColor }) => {
   const id = row.id!;
   const configList = row.configMaps! || [];
-  const { kubernetesCloudId } = useParams();
-  const { refetch } = useGetApiMyKubernetesCloudConfigmapListByNamespaceIdQuery(
-    { namespaceId: Number(kubernetesCloudId) || 0 },
+  const { kubernetesCloudId,projectId } = useParams();
+  const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
+    { kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId)},
     { skip: !kubernetesCloudId }
   );
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
@@ -75,13 +77,12 @@ export const KubernetesCloudConfigMapTableRow: FC<{
     setDialogType(null);
     setSelectedKubernetesCloudConfigMap(null);
   };
-  const { kubernetesCloudId,projectId } = useParams();
   const handleOpenDeleteModal = (config: KuberConfigListResponse) => {
     setSelectedKubernetesCloudConfigMap(config);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  function handleOpenEditConfigMapDialog(config: GetKuberCloudConfigResponse) {
+  function handleOpenEditConfigMapDialog(config: KuberConfigListResponse) {
     setSelectedKubernetesCloudConfigMap(config);
     setOpenEditConfigMapDialog(true);
   }

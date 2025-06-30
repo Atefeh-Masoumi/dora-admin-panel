@@ -99,14 +99,14 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   // اضافه کردن useEffect برای رصد تغییرات در firewallProtocolTypeId
   useEffect(() => {
     const selectedProtocol = options.find(
-      (option) => option.id === formik.values.firewallProtocolTypeId
+      (option) => option.id === formik.values.firewallProtocolId
     );
 
     if (selectedProtocol?.firewallProtocolType === "ICMP" || selectedProtocol?.firewallProtocolType === "any") {
       formik.setFieldValue("minPort", 0);
       formik.setFieldValue("maxPort", 0);
     }
-  }, [formik.values.firewallProtocolTypeId]);
+  }, [formik.values.firewallProtocolId]);
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
@@ -114,7 +114,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   };
 
   const isPortDisabled =
-    formik.values.firewallProtocolTypeId === 3 || formik.values.firewallProtocolTypeId === 4; // ICMP یا ANY
+    formik.values.firewallProtocolId === 3 || formik.values.firewallProtocolId === 4; // ICMP یا ANY
 
   return (
     <Dialog {...props}>

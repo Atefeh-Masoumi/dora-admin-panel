@@ -17,6 +17,7 @@ import {
   KuberDeployListResponse,
   PortResponse,
   useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployDeleteIdMutation,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -48,8 +49,8 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   const { kubernetesCloudId,projectId } = useParams();
   const nodePortList: PortResponse[] = row.ports! || [];
   
-  const { refetch } = useGetApiMyKubernetesCloudDeploymentListByNamespaceIdQuery(
-    { namespaceId: Number(kubernetesCloudId) || 0 },
+  const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployListQuery(
+    { kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId) },
     { skip: !kubernetesCloudId }
   );
   const [deleteDeployment, { isLoading: deleteDeploymentRecordLoading }] =
