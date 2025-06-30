@@ -20,7 +20,7 @@ import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
-
+import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 type TabPanelProps = {
   children?: ReactNode;
   index: number;
@@ -109,9 +109,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "آدرس IP",
     "بازسازی",
     "سخت افزاری",
-    // "دیسک",
     "اسنپ‌شات",
     "فایروال",
+    "دیسک",
   ];
 
   const routes = [
@@ -122,6 +122,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "/vm/:projectId/:id/config",
     "/vm/:projectId/:id/snapshot",
     "/vm/:projectId/:id/firewall",
+    "/vm/:projectId/:id/volume",
   ];
 
   const tabPanelArray = [
@@ -130,9 +131,9 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     VmIpAddress,
     VmRebuild,
     ServerConfig,
-    // Volume,
     Snapshot,
     Firewall,
+    Volume,
   ];
 
   if (!id) return <Navigate to="/vm" />;

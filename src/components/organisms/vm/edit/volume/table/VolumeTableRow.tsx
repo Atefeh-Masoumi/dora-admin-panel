@@ -45,7 +45,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
      })
       .unwrap()
       .then(() => {
-        toast.success("سرور ابری با موفقیت حذف شد");
+        toast.success("دیسک با موفقیت حذف شد");
         closeDialogHandler();
       })
       .catch((err) => {});

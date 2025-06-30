@@ -61,13 +61,13 @@ export const Volume: FC = () => {
           gap={1}
         >
           <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
+            {/* <Button
               onClick={openCreateDialogHandler}
               variant="outlined"
               startIcon={<Add />}
             >
               افزودن دیسک
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
