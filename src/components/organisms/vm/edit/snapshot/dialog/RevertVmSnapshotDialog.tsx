@@ -36,7 +36,7 @@ export const RevertVmSnapshotDialog: FC<RevertVmSnapshotDialogPropsType> = ({
           "فرآیند بازگرداندن به snapshot مورد نظر با موفقیت آغاز شد"
         );
         handleClose();
-        navigate("/vm");
+        navigate(`/vm/${projectId}/list`);
       })
       .catch((err) => {});
   };
