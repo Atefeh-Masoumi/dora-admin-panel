@@ -1,0 +1,4 @@
+export enum VM_SECURITY_TYPE_SETTING {
+  PASSWORD = 1,
+  VMKEY = 2,
+} 

@@ -12,6 +12,7 @@ import { FC, useEffect, useState } from "react";
 import {
   VmImageListResponse,
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
+  useGetApiMyVmByProjectIdImageListQuery,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
@@ -27,10 +28,18 @@ type SelectOSPropsType = {
   setImageId?: any;
 };
 
+type OsDropDownType = {
+  content: VmImageListResponse[];
+  osId: number;
+  os: string;
+  selectedImageId: string | null;
+  isSelected: boolean;
+};
+
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
   setImageId,
 }) => {
-  const { vmId, projectId } = useParams();
+  const { id:vmId, projectId } = useParams();
   
   const { data: vmProjectSpecification } =
     useGetApiMyVmByProjectIdHostGetAndIdQuery({
@@ -38,13 +47,83 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       projectId: Number(projectId!),
     });
 
+  const { data: osImagesList, isLoading } = useGetApiMyVmByProjectIdImageListQuery(
+    {
+      projectId: Number(projectId!),
+      productId: PRODUCT_CATEGORY_ENUM.VM,
+    },
+    {
+      skip: !projectId,
+    }
+  );
+
   const [selectedOs, setSelectedOs] = useState<VmImageListResponse | null>(null);
+  const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>([]);
+
+  useEffect(() => {
+    let newOsDropDownsState: OsDropDownType[] = [];
+    osImagesList?.forEach((osImage: VmImageListResponse) => {
+      const index = newOsDropDownsState.findIndex(
+        (dropDown) => dropDown.osId === osImage.operatingSystemId
+      );
+      if (index !== -1) {
+        newOsDropDownsState[index].content.push(osImage);
+      } else {
+        newOsDropDownsState.push({
+          content: [{ ...osImage }],
+          osId: osImage.operatingSystemId || 0,
+          os: osImage.operatingSystem || "",
+          selectedImageId: osImage.id?.toString() || "",
+          isSelected: false,
+        });
+      }
+    });
+    setOsDropDownsState(newOsDropDownsState);
+  }, [osImagesList]);
 
   useEffect(() => {
     if (selectedOs?.id) {
       setImageId(selectedOs.id);
     }
   }, [selectedOs, setImageId]);
+
+  const osTypeClickHandler = (id?: number) => {
+    setOsDropDownsState(
+      osDropDownsState.map((x) => {
+        if (x.osId !== id) {
+          return {
+            ...x,
+            isSelected: false,
+          };
+        }
+        const selectedImage = x.content.find((item) => item.id === +(x.selectedImageId || "0")) || null;
+        setSelectedOs(selectedImage);
+        return { ...x, isSelected: true };
+      })
+    );
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setOsDropDownsState(
+      osDropDownsState.map((dropDownState) => {
+        const selectedImageItem =
+          dropDownState.content.find(
+            (item) => item.id === +event.target.value
+          ) || null;
+
+        if (selectedImageItem) {
+          setSelectedOs(selectedImageItem);
+          return {
+            ...dropDownState,
+            selectedImageId: event.target.value,
+            isSelected: true,
+          };
+        } else {
+          return { ...dropDownState, isSelected: false };
+        }
+      })
+    );
+  };
 
   const dataCenterIconRenderHandler = (id: number) => {
     switch (id) {
@@ -80,13 +159,13 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       justifyContent="center"
       alignItems="center"
       spacing={4}
-      sx={{ px: 2 }}
+      sx={{ p: 2 }}
     >
       <Typography fontSize={24} fontWeight="bold" align="center">
         سیستم عامل ماشین را انتخاب کنید
       </Typography>
       <Grid2 container gap={2} justifyContent="center" width="100%">
-        {!vmProjectSpecification && (
+        {isLoading && (
           [...Array(2)].map((_, index) => (
             <Stack
               key={index}
@@ -110,105 +189,101 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
             </Stack>
           ))
         )}
-        {vmProjectSpecification && (
-          <Grid2 size={{xs:12, sm:6}}
-            sx={{
-              minWidth: { sm: 100 },
-              maxWidth: { sm: 184 },
-              height: { xs: 64, sm: 84 },
-              marginBottom: { xs: "50px", sm: "20px" },
-            }}
-          >
-            <Stack
-              direction="row"
+        {!isLoading && osDropDownsState.map((osDropDown, index) => {
+          return (
+            <Grid2 key={index} size={{xs:12, sm:6}}
               sx={{
-                py: 2,
-                transition: "200ms",
-                borderTopRightRadius: BORDER_RADIUS_1,
-                borderTopLeftRadius: BORDER_RADIUS_1,
-                border: ({ palette }) =>
-                  `2px solid ${
-                    selectedOs
-                      ? palette.primary.main
-                      : "rgba(110, 118, 138, 0.12)"
-                  }`,
-                borderBottom: "0px",
-                overflow: "hidden",
-                px: 1,
-                cursor: "pointer",
+                minWidth: { sm: 100 },
+                maxWidth: { sm: 184 },
+                height: { xs: 64, sm: 84 },
+                marginBottom: { xs: "50px", sm: "20px" },
               }}
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
             >
-              <Box
+              <Stack
+                direction="row"
                 sx={{
-                  transition: "150ms",
-                  filter: selectedOs
-                    ? "grayscale(0)"
-                    : "grayscale(100%)",
-                  height: 40,
-                  overflow: "hidden",
-                }}
-              >
-                {dataCenterIconRenderHandler(vmProjectSpecification.operatingSystemId || 0)}
-              </Box>
-              <Typography
-                noWrap
-                color={
-                  selectedOs ? "primary.main" : "secondary.main"
-                }
-                sx={{ transition: "200ms" }}
-                fontWeight="bold"
-              >
-                {vmProjectSpecification.operatingSystem || "Unknown OS"}
-              </Typography>
-            </Stack>
-            <Select
-              value={selectedOs?.id?.toString() || ""}
-              onChange={(e: SelectChangeEvent) => {
-                const os = {
-                  id: Number(e.target.value),
-                  name: vmProjectSpecification.name,
-                  operatingSystem: vmProjectSpecification.operatingSystem,
-                  operatingSystemId: vmProjectSpecification.operatingSystemId,
-                  status: Boolean(vmProjectSpecification.status),
-                } as VmImageListResponse;
-                setSelectedOs(os);
-              }}
-              sx={{
-                "&> fieldset": {
+                  py: 2,
+                  transition: "200ms",
+                  borderTopRightRadius: BORDER_RADIUS_1,
+                  borderTopLeftRadius: BORDER_RADIUS_1,
                   border: ({ palette }) =>
                     `2px solid ${
-                      selectedOs
-                        ? palette.primary.main
-                        : "rgba(110, 118, 138, 0.12)"
-                    } !important`,
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderBottomRightRadius: BORDER_RADIUS_1,
-                  borderBottomLeftRadius: BORDER_RADIUS_1,
-                  borderTopLeftRadius: 0,
-                  borderTopRightRadius: 0,
-                  border: ({ palette }) =>
-                    `2px solid ${
-                      selectedOs
+                      osDropDown.isSelected
                         ? palette.primary.main
                         : "rgba(110, 118, 138, 0.12)"
                     }`,
-                  borderTop: "1px solid",
-                },
-                direction: "rtl",
-              }}
-              fullWidth
-              style={{ height: 40 }}
-            >
-              <MenuItem dir="ltr" value={vmProjectSpecification.vmImageId?.toString() || ""}>
-                {vmProjectSpecification.operatingSystem || "---"}
-              </MenuItem>
-            </Select>
-          </Grid2>
-        )}
+                  borderBottom: "0px",
+                  overflow: "hidden",
+                  px: 1,
+                  cursor: "pointer",
+                }}
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+                onClick={() => osTypeClickHandler(osDropDown.osId)}
+              >
+                <Box
+                  sx={{
+                    transition: "150ms",
+                    filter: osDropDown.isSelected
+                      ? "grayscale(0)"
+                      : "grayscale(100%)",
+                    height: 40,
+                    overflow: "hidden",
+                  }}
+                >
+                  {dataCenterIconRenderHandler(osDropDown.osId)}
+                </Box>
+                <Typography
+                  noWrap
+                  color={
+                    osDropDown.isSelected ? "primary.main" : "secondary.main"
+                  }
+                  sx={{ transition: "200ms" }}
+                  fontWeight="bold"
+                >
+                  {osDropDown.os}
+                </Typography>
+              </Stack>
+              <Select
+                value={osDropDown.selectedImageId || ""}
+                onChange={handleChange}
+                sx={{
+                  "&> fieldset": {
+                    border: ({ palette }) =>
+                      `2px solid ${
+                        osDropDown.isSelected
+                          ? palette.primary.main
+                          : "rgba(110, 118, 138, 0.12)"
+                      } !important`,
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderBottomRightRadius: BORDER_RADIUS_1,
+                    borderBottomLeftRadius: BORDER_RADIUS_1,
+                    borderTopLeftRadius: 0,
+                    borderTopRightRadius: 0,
+                    border: ({ palette }) =>
+                      `2px solid ${
+                        osDropDown.isSelected
+                          ? palette.primary.main
+                          : "rgba(110, 118, 138, 0.12)"
+                      }`,
+                    borderTop: "1px solid",
+                  },
+                  direction: "rtl",
+                }}
+                fullWidth
+                style={{ height: 40 }}
+              >
+                {osDropDown.content.map((image) => (
+                  <MenuItem key={image.id} dir="ltr" value={image.id?.toString() || ""}>
+                    {image.name || "---"}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid2>
+          );
+        })}
       </Grid2>
     </Stack>
   );
