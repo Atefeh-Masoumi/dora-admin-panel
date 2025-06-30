@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useMemo } from "react";
+import { useNavigate } from "react-router";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -18,6 +19,7 @@ type detailsListType = {
   label: string;
   id: string;
   onClick?: (selectedRow: any) => any;
+  valueFormatter?: (value: any) => string;
 };
 
 type VmProjectCardPropsType = {
@@ -42,6 +44,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
   detailsList,
   isProjectCard = false,
 }) => {
+  const navigate = useNavigate();
   const isEditable = useMemo(() => {
     if (!vmProjectData[statusId]) return true;
     return vmProjectData[statusId] === 2;
@@ -106,18 +109,14 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         <Stack
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          {onEditClick && (
+          
             <IconButton
-              disabled={!isEditable}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onEditClick(vmProjectData);
-              }}
+            
+              onClick={() => navigate(`/project/${vmProjectData.id}/specification`)}
             >
               <Edit />
             </IconButton>
-          )}
+          
           <IconButton
             color="error"
             onClick={(e) => {
@@ -139,36 +138,31 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         }}
       >
         {detailsList.map((item, index) => (
-          <Typography
+          <Stack
             key={index}
-            noWrap
+            direction="row"
+            spacing={1}
+            alignItems="center"
             onClick={() => {
               if (!item.onClick) return;
               item.onClick(vmProjectData);
             }}
-            color="text.light"
           >
-            {item.label}
+            <Typography color="text.secondary">
+              {item.label}
+            </Typography>
             {item.id === "isPublic" ? (
-              <Chip
-                color={"default"}
-                label={e2p(vmProjectData[item.id] || "--")}
-                sx={{ borderRadius: BORDER_RADIUS_1 }}
-              />
-            ) : isProjectCard && item.id === "hypervisorType" ? (
-              <Chip
-                color="default"
-                label={e2p(vmProjectData[item.id] || "--")}
-                sx={{ borderRadius: BORDER_RADIUS_1 }}
-              />
-            ) : (
-              <Chip
-                color="default"
-                label={e2p(vmProjectData[item.id] || "--")}
-                sx={{ borderRadius: BORDER_RADIUS_1 }}
-              />
+              <Typography 
+                color="text.primary"
+              >
+                {vmProjectData[item.id] ? "عمومی" : "خصوصی"}
+              </Typography>
+            )  : (
+              <Typography color="text.primary">
+                {item.valueFormatter ? item.valueFormatter(vmProjectData[item.id] || "--") : e2p(vmProjectData[item.id] || "--")}
+              </Typography>
             )}
-          </Typography>
+          </Stack>
         ))}
       </Stack>
     </Stack>
