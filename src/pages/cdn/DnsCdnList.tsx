@@ -36,7 +36,7 @@ const DnsCdnList: FC = () => {
 
   const navigate = useNavigate();
 
-  const createCloudOnClick = () => navigate("/cdn/add-zone");
+  const createCloudOnClick = () => navigate(`/cdn/${projectId}/add-zone`);
 
   return (
     <Stack
