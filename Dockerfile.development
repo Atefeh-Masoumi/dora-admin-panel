@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM repo.dorsa.cloud/docker/node:22-alpine AS builder
+FROM nexus.dorsa.cloud/library/node:22-alpine AS builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json
@@ -18,9 +18,7 @@ ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN yarn run build
 
 # Stage 2: Production stage
-FROM repo.dorsa.cloud/docker/nginx:1.25-alpine
-
-# Set the working directory
+FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
 WORKDIR /usr/share/nginx/html
 
 # Copy the build output from the builder stage
