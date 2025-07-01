@@ -174,19 +174,19 @@ const Router: FC = () => {
           />
           <Route
             path="/portal/calculator"
-            element={mainTemplate(Calculator, {
+            element={headerOnlyTemplate(Calculator, {
               pageTitle: "ماشین حساب",
             })}
           />
           <Route
             path="/portal/account"
-            element={mainTemplate(Account, {
+            element={headerOnlyTemplate(Account, {
               pageTitle: "مدیریت اکانت",
             })}
           />
           <Route
             path="/portal/financial"
-            element={mainTemplate(Financial, {
+            element={headerOnlyTemplate(Financial, {
               pageTitle: "مدیریت مالی",
             })}
           />
@@ -203,86 +203,86 @@ const Router: FC = () => {
           {/* <Route path="/referral/:id" element={callbackTemplate(Referral)} /> */}
           <Route
             path="/portal/customer-products"
-            element={mainTemplate(CustomerProducts, {
+            element={headerOnlyTemplate(CustomerProducts, {
               pageTitle: "سرویس های من",
             })}
           />
           <Route
             path="/portal/sales"
-            element={mainTemplate(Sales, {
+            element={headerOnlyTemplate(Sales, {
               link: {
                 text: "بازگشت به پیشخوان",
                 url: "/",
               },
-              hideSidebar: false,
+              // hideSidebar: false,
             })}
           />
           {/* ======================================= SUPPORT ======================================= */}
           <Route
             path="/portal/supports"
-            element={mainTemplate(Supports, {
+            element={headerOnlyTemplate(Supports, {
               pageTitle: "مرکز پشتیبانی",
             })}
           />
           <Route
             path="/portal/support/:id"
-            element={mainTemplate(Support, {
+            element={headerOnlyTemplate(Support, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: false,
+              // hideSidebar: false,
             })}
           />
           <Route
             path="/portal/support/add-ticket"
-            element={mainTemplate(AddSupport, {
+            element={headerOnlyTemplate(AddSupport, {
               link: {
                 text: "بازگشت به مرکز پشتیبانی",
                 url: "/portal/supports",
               },
-              hideSidebar: false,
+              // hideSidebar: false,
             })}
           />
           {/* ======================================= Wallet ======================================= */}
           <Route path="/portal" element={<Navigate to="/portal/wallet" />} />
           <Route
             path="/portal/wallet"
-            element={mainTemplate(Wallet, {
+            element={headerOnlyTemplate(Wallet, {
               pageTitle: "گزارش کیف پول",
             })}
           />
           <Route
             path="/portal/wallet/invoice"
-            element={mainTemplate(Invoices, {
+            element={headerOnlyTemplate(Invoices, {
               pageTitle: "فاکتور های فروش",
             })}
           />
           <Route
             path="/portal/wallet/invoice/:id"
-            element={mainTemplate(Invoice, {
+            element={headerOnlyTemplate(Invoice, {
               link: {
                 text: "بازگشت به فاکتور‌های فروش",
                 url: "/portal/wallet/invoice",
               },
-              hideSidebar: false,
+              // hideSidebar: false,
             })}
           />
           <Route
             path="/portal/wallet/payment"
-            element={mainTemplate(Payments, {
+            element={headerOnlyTemplate(Payments, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
             path="/portal/wallet/payment/:id"
-            element={mainTemplate(Payment, {
+            element={headerOnlyTemplate(Payment, {
               pageTitle: "گزارش پرداخت ها",
             })}
           />
           <Route
             path="/portal/wallet/bill"
-            element={mainTemplate(CustomerBills, {
+            element={headerOnlyTemplate(CustomerBills, {
               pageTitle: "گزارش محاسبات",
             })}
           />
@@ -362,7 +362,7 @@ const Router: FC = () => {
           <Route
             path="/cdn/:projectId/add-zone"
             element={mainTemplate(AddZone, {
-              link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn" },
+              link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn/:projectId" },
               hideSidebar: false,
             })}
           />
@@ -429,6 +429,10 @@ const Router: FC = () => {
           />
           <Route
             path="/vm/:projectId/:id/volume"
+            element={<EditVmWrapper />}
+          />
+          <Route
+            path="/vm/:projectId/:id/network"
             element={<EditVmWrapper />}
           />
           {/* ======================================= Kubernetes Cluster ======================================= */}
