@@ -23,7 +23,7 @@ variables:
 package_stage:
   stage: package
   script:
-    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
+    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-my-stage
   only:
     - development
