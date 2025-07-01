@@ -21,6 +21,7 @@ import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
+import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
 type TabPanelProps = {
   children?: ReactNode;
   index: number;
@@ -112,6 +113,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "اسنپ‌شات",
     "فایروال",
     "دیسک",
+    "شبکه"
   ];
 
   const routes = [
@@ -123,6 +125,8 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     "/vm/:projectId/:id/snapshot",
     "/vm/:projectId/:id/firewall",
     "/vm/:projectId/:id/volume",
+    "/vm/:projectId/:id/network",
+
   ];
 
   const tabPanelArray = [
@@ -134,6 +138,7 @@ const EditCloudServer: FC<EditCloudServerPropsType> = () => {
     Snapshot,
     Firewall,
     Volume,
+    Network,
   ];
 
   if (!id) return <Navigate to="/vm" />;
