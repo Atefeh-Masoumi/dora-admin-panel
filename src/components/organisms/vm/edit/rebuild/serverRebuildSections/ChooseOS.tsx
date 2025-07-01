@@ -79,7 +79,17 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       }
     });
     setOsDropDownsState(newOsDropDownsState);
-  }, [osImagesList]);
+    
+    // Auto-select the first OS if available and no OS is currently selected
+    if (newOsDropDownsState.length > 0 && !selectedOs) {
+      const firstOs = newOsDropDownsState[0];
+      const firstImage = firstOs.content[0];
+      if (firstImage) {
+        setSelectedOs(firstImage);
+        setImageId(firstImage.id);
+      }
+    }
+  }, [osImagesList, setImageId]);
 
   useEffect(() => {
     if (selectedOs?.id) {

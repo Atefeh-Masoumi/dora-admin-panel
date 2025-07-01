@@ -7,11 +7,11 @@ import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
-import { EditConfirmationDialog } from "src/components/molecule/EditConfirmationDialog";
-import { SelectSecuritySettings } from "src/components/molecule/createServices/SelectSecuritySettings";
-import { SelectPassword } from "src/components/molecule/createServices/SelectPassword";
-import { SelectServiceName } from "src/components/molecule/createServices/SelectServiceName";
-import { SelectVmKey } from "src/components/molecule/createServices/SelectVmKey";
+import { EditConfirmationDialog } from "src/components/organisms/vm/edit/rebuild/dialog/EditConfirmationDialog";
+import { SelectSecuritySettings } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectSecuritySettings";
+import { SelectPassword } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectPassword";
+import { SelectServiceName } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectServiceName";
+import { SelectVmKey } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectVmKey";
 
 type VmRebuildPropsType = {};
 
@@ -62,7 +62,7 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     } else if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && !vmKeyId) {
       toast.error("لطفا کلید را وارد کنید");
       return;
-    } else if (!selectedOs?.id) {
+    } else if (!selectedOs) {
       toast.error("لطفا ورژن سیستم عامل را انتخاب کنید");
       return;
     }
@@ -70,15 +70,22 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   };
 
   const submitBtnOnClick = () => {
+    console.log("selectedOs", selectedOs);
+    const rebuildVmModel: any = {
+      name,
+      password,
+      vmImageId: selectedOs,
+    };
+
+    // Only include vmKeyId if VM key is being used and a key is selected
+    if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && vmKeyId?.id) {
+      rebuildVmModel.vmKeyId = vmKeyId.id;
+    }
+
     rebuild({
       id: Number(vmId),
       projectId: Number(projectId!),
-      rebuildVmModel: {
-        name,
-        password,
-        vmImageId: selectedOs!.id,
-        vmKeyId: vmKeyId?.id,
-      },
+      rebuildVmModel,
     })
       .unwrap()
       .then(() => {
