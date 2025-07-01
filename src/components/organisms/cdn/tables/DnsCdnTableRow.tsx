@@ -24,7 +24,7 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const settingOnClick = () => navigate("/cdn/" + row["id"] + "/overview");
+  const settingOnClick = () => navigate("/cdn/" + projectId + "/" + row["id"] + "/overview");
 
   const [deleteDnsCdn, { isLoading: deleteDnsRecordLoading }] =
   useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation();
