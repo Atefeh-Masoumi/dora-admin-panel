@@ -22,7 +22,7 @@ const AddZone: FC = () => {
   const { projectId } = useParams();
   const goPreviousStep = () => {
     if (step === 1) {
-      navigate("/cdn");
+      navigate(`/cdn/${projectId}`);
       return;
     }
     setStep((step - 1) as addZoneStepsType);
@@ -52,7 +52,7 @@ const AddZone: FC = () => {
       .unwrap()
       .then((res) => {
         toast.success("زون با موفقیت ایجاد شد");
-        navigate("/cdn");
+        navigate(`/cdn/${projectId}`);
       })
       .catch((err) => {});
   };
