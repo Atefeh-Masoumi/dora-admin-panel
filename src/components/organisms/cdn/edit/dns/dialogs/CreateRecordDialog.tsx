@@ -27,7 +27,8 @@ import PageLoading from "src/components/atoms/PageLoading";
 import {
   usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordCreateMutation,
   usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordEditIdMutation,
-  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery,
+  useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -61,6 +62,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
 }) => {
   const { projectId} = useParams();
 
+  const {refetch}=useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+    id: dnsId,
+    projectId: Number(projectId)
+  });
   const { data: getInfo, isLoading: getDetailsLoading } =
   useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
     dnsCdnHostId: dnsId,
@@ -92,10 +97,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           result.value = getInfo.value!;
           result.ttl = getInfo.ttl!.toString();
           result.useProxy = getInfo.useProxy!;
-          result.weight = getInfo.weight || "";
-          result.port = getInfo.port || "";
-          result.priority = getInfo.priority || "";
-          result.preference = getInfo.preference || "";
+          result.weight = getInfo.weight || null;
+          result.port = getInfo.port || null;
+          result.priority = getInfo.priority || null;
+          result.preference = getInfo.preference || null;
 
           return result;
         });
@@ -133,6 +138,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .then(() => {
           toast.success("رکورد مورد نظر با موفقیت بروز شد");
           onClose();
+          refetch();
         })
         .catch(() => {});
     } else {
@@ -154,7 +160,8 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .unwrap()
         .then(() => {
           toast.success("رکورد جدید با موفقیت ایجاد شد");
-          onClose();
+          onClose();  
+          refetch();
         })
         .catch(() => {});
     }
