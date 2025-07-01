@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   GetDnsRecordResponse,
   useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
@@ -20,7 +21,7 @@ enum DIALOG_TYPE_ENUM {
 }
 
 const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
-  const { projectId } = useParams();
+  const { projectId, id} = useParams();
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
     null
@@ -43,14 +44,20 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
+  const {refetch}=useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+    id: Number(id),
+    projectId: Number(projectId)
+  });
   const deleteDnsRecordHandler = () =>
     deleteDnsRecord({ id: Number(selectedDns?.id),projectId:Number(projectId),dnsCdnHostId:0 })
       .unwrap()
       .then(() => {
         toast.success("Dns رکورد مورد نظر حذف شد");
+        refetch()
         closeDialogHandler();
       })
       .catch((err) => {});
+
 
   return (
     <Fragment>
