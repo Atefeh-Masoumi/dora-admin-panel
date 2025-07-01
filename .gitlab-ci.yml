@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
       when: always
     - when: never
 
@@ -19,43 +19,14 @@ variables:
   KUBE_CONTEXT_BAHARTEL: ccloud-computing/core/front-my-core:bahartel-front-my
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
 
-## Stage 1 : PACKAGE
+## development
 package_stage:
   stage: package
   script:
     - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-my-stage
   only:
-    - main
-
-package_dorsa_prod:
-  stage: package
-  script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
-  when: manual
-  only:
-    - main
-
-package_raahbar_prod:
-  stage: package
-  script:
-    - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
-  when: manual
-  only:
-    - raahbar
-
-package_bahartel_prod:
-  stage: package
-  script:
-    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel-prod
-  when: manual
-  only:
-    - bahar
-
-# Stage 2 : DEPLOY
+    - development
 
 deploy_stage:
   stage: deploy
@@ -65,6 +36,17 @@ deploy_stage:
     - kubectl config use-context $KUBE_CONTEXT_DORSA
     - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
     - kubectl -n development rollout restart deployment front-my-v1
+  only:
+    - development
+
+# Dorsa main
+
+package_dorsa_prod:
+  stage: package
+  script:
+    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
+  when: manual
   only:
     - main
 
@@ -80,17 +62,16 @@ deploy_dorsa_prod:
   only: 
     - main
 
-deploy_raahbar_prod:
-  stage: deploy
-  needs: [package_raahbar_prod]
+# Bahar
+
+package_bahartel_prod:
+  stage: package
   script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
-    - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar-prod.yaml
-    - kubectl -n raahbar rollout restart deployment front-my-v1
-  when: on_success
-  only: 
-    - raahbar
+    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel-prod
+  when: manual
+  only:
+    - bahar
 
 deploy_bahartel_prod:
   stage: deploy
@@ -103,3 +84,26 @@ deploy_bahartel_prod:
   when: on_success
   only: 
     - bahar
+
+# Raahbar
+
+package_raahbar_prod:
+  stage: package
+  script:
+    - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
+  when: manual
+  only:
+    - raahbar
+
+deploy_raahbar_prod:
+  stage: deploy
+  needs: [package_raahbar_prod]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
+    - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar-prod.yaml
+    - kubectl -n raahbar rollout restart deployment front-my-v1
+  when: on_success
+  only: 
+    - raahbar
