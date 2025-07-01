@@ -106,42 +106,43 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         بازسازی سیستم عامل
       </Typography>
       <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}>
-        <Typography align="center" color="grey.700">
+        <Typography align="center" color="grey.700" sx={{ mb: 4 }}>
           بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
         </Typography>
-        <ChooseOSForRebuild setImageId={setSelectedOs} />
-        <SelectServiceName serviceName={name} setServiceName={setName} />
-        <SelectSecuritySettings
-          securityId={securityId}
-          setSecurityId={setSecurityId}
-          usePassword={usePassword}
-          setUsePassword={setUsePassword}
-          useVmKey={useVmKey}
-          setUseVmKey={setUseVmKey}
-        />
-        {useVmKey && (
-          <SelectVmKey
-            vmKeyList={vmKeyList}
-            setVmKeyId={setVmKeyId}
+        <Stack spacing={4} sx={{ width: "100%", maxWidth: "800px", mx: "auto" }}>
+          <ChooseOSForRebuild setImageId={setSelectedOs} />
+          <SelectServiceName serviceName={name} setServiceName={setName} />
+          <SelectSecuritySettings
+            securityId={securityId}
+            setSecurityId={setSecurityId}
+            usePassword={usePassword}
+            setUsePassword={setUsePassword}
+            useVmKey={useVmKey}
+            setUseVmKey={setUseVmKey}
           />
-        )}
-        {usePassword && (
-          <SelectPassword password={password} setPassword={setPassword} />
-        )}
-        <Stack alignItems="center" justifyContent="center">
-          <LoadingButton
-            loading={rebuildLoading}
-            variant="contained"
-            onClick={handleRebuildOnClick}
-            sx={{
-              width: { xs: "100%", sm: "auto" },
-              px: { sm: 8 },
-              py: 2.1,
-              mt: 2,
-            }}
-          >
-            بازسازی سرور
-          </LoadingButton>
+          {useVmKey && (
+            <SelectVmKey
+              vmKeyList={vmKeyList}
+              setVmKeyId={setVmKeyId}
+            />
+          )}
+          {usePassword && (
+            <SelectPassword password={password} setPassword={setPassword} />
+          )}
+          <Stack alignItems="center" justifyContent="center" sx={{ mt: 2 }}>
+            <LoadingButton
+              loading={rebuildLoading}
+              variant="contained"
+              onClick={handleRebuildOnClick}
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+                px: { sm: 8 },
+                py: 2.1,
+              }}
+            >
+              بازسازی سرور
+            </LoadingButton>
+          </Stack>
         </Stack>
       </Paper>
       <EditConfirmationDialog
