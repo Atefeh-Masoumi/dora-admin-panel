@@ -23,13 +23,13 @@ export const ProjectUsers: FC<ProjectUsersPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   useState<ProjectUserListResponse | null>(null);
 
-  const { id } = useParams();
+  const { projectId } = useParams();
   const { data: userList = [], isLoading: getUserListLoading, refetch} =
-    useGetApiMyByProjectIdUserListQuery(
-      { projectId: Number(id) },
-      { skip: !id }
+  useGetApiMyByProjectIdUserListQuery(
+      { projectId: Number(projectId) },
+      { skip: !projectId }
     );
-    
+  console.log(userList);
   const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
   };

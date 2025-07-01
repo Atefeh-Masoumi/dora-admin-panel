@@ -82,7 +82,7 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
                 <></>
               )}
             </DorsaTableCell>
-          );
+          );          
         })}
       </DorsaTableRow>
       <DeleteDialog
