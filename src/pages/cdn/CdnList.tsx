@@ -39,6 +39,7 @@ const { projectId } = useParams();
   const {
     data: zoneList,
     isLoading: getDataLoading,
+    refetch,
     isFetching,
   } = useGetApiMyDnsCdnByProjectIdHostListQuery(
     { projectId: Number(projectId) },
@@ -52,7 +53,7 @@ const { projectId } = useParams();
   const createBtnOnClick = () => navigate(`/cdn/${projectId}/add-zone`);
 
   const cardOnClick = (zone: DomainListResponse) => {
-    navigate(`/cdn/${zone.id}/overview`);
+    navigate(`/cdn/${projectId}/${zone.id}/overview`);
   };
 
   const filteredList = zoneList?.filter((zone) =>
@@ -97,6 +98,7 @@ const { projectId } = useParams();
       .unwrap()
       .then(() => {
         toast.success("پروژه مورد نظر با موفقیت حذف شد");
+        refetch();
         closeDialogHandler();
       })
       .catch(() => {});
