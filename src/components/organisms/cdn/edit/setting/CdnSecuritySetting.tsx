@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { DorsaSwitch } from "src/components/atoms/DorsaSwitch";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
+  useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
   usePutApiMyDnsCdnByProjectIdHostChangeHstsAndIdMutation,
   usePutApiMyDnsCdnByProjectIdHostChangeHttpsRedirectAndIdMutation,
   usePutApiMyDnsCdnByProjectIdHostChangeNonWwwRedirectAndIdMutation,
@@ -26,7 +27,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
   loading,
 }) => {
   const { projectId } = useParams();
-  
+  const {refetch} = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+    id: dnsId,
+    projectId: Number(projectId)
+  });
   const [changeHttpsRedirect, { isLoading: loadingRedirect }] =
     usePutApiMyDnsCdnByProjectIdHostChangeHttpsRedirectAndIdMutation();
 
@@ -38,7 +42,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
       changeHttpsRedirectModel: {
         isHttpsRedirect: !isHttpsRedirect,
       },
-    }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
+    }).then(() => {
+      toast.success("وضعیت تبدیل لینک بروز رسانی شد");
+      refetch();
+    });
   };
 
   const [changeNonWwwRedirect, { isLoading: loadingNonWwwRedirect }] =
@@ -52,7 +59,10 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
       changeNonWwwRedirectModel: {
         isNonWwwRedirect: !isNonWwwRedirect,
       },
-    }).then(() => toast.success("وضعیت تبدیل لینک بروز رسانی شد"));
+    }).then(() => {
+      toast.success("وضعیت تبدیل لینک بروز رسانی شد");
+      refetch();
+    });
   };
 
   const [changeHSTS, { isLoading: loadingHSTS }] =
@@ -68,6 +78,7 @@ export const CdnSecuritySetting: FC<CdnSecuritySettingPropsType> = ({
       },
     }).then(() => {
       toast.success("وضعیت HSTS بروز رسانی شد");
+      refetch();
     });
   };
 
