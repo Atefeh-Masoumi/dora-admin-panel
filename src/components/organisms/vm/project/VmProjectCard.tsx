@@ -112,7 +112,11 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
           
             <IconButton
             
-              onClick={() => navigate(`/project/${vmProjectData.id}/specification`)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigate(`/project/${vmProjectData.id}/specification`);
+              }}
             >
               <Edit />
             </IconButton>
