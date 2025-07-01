@@ -20,21 +20,21 @@ variables:
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
 
 ## development
-package_deployment:
+package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-my-deployment:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-deployment:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-deployment
+    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-my-development:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-development:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-development
   only:
     - development
 
 deploy_stage:
   stage: deploy
-  needs: [package_deployment]
+  needs: [package_development]
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-my-deployment.yaml
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-my-development.yaml
     - kubectl -n development rollout restart deployment front-my-v1
   only:
     - development
