@@ -61,7 +61,7 @@ const AddVm: FC = () => {
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
-  usePostApiMyVmByProjectIdHostCreateMutation();
+    usePostApiMyVmByProjectIdHostCreateMutation();
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -127,16 +127,18 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-          
+
           vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-         
+
           ipAddress: String(selectedIp),
           storageClassTypeId: 1,
+          usedPublicIpV4: true,
+          usedPublicIpV6: false
         },
         projectId: Number(projectId),
       })
@@ -145,7 +147,7 @@ const AddVm: FC = () => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
           navigate(-1);
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 

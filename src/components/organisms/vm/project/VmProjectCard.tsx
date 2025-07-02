@@ -82,11 +82,10 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         >
           <Avatar
             sx={{
-              bgcolor: `${
-                vmProjectData.isPublic
-                  ? "success.light"
-                  : "customColor.neutralVeryLight"
-              }`,
+              bgcolor: `${vmProjectData.isPublic
+                ? "success.light"
+                : "customColor.neutralVeryLight"
+                }`,
             }}
           >
             {vmProjectData.isPublic ? (
@@ -109,18 +108,17 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         <Stack
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          
-            <IconButton
-            
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navigate(`/project/${vmProjectData.id}/specification`);
-              }}
-            >
-              <Edit />
-            </IconButton>
-          
+          {/* <IconButton
+
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate(`/project/${vmProjectData.id}/specification`);
+            }}
+          >
+            <Edit />
+          </IconButton> */}
+
           <IconButton
             color="error"
             onClick={(e) => {
@@ -156,12 +154,12 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
               {item.label}
             </Typography>
             {item.id === "isPublic" ? (
-              <Typography 
+              <Typography
                 color="text.primary"
               >
                 {vmProjectData[item.id] ? "عمومی" : "خصوصی"}
               </Typography>
-            )  : (
+            ) : (
               <Typography color="text.primary">
                 {item.valueFormatter ? item.valueFormatter(vmProjectData[item.id] || "--") : e2p(vmProjectData[item.id] || "--")}
               </Typography>
