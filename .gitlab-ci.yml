@@ -36,7 +36,7 @@ deploy_development:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA_V2
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/dorsa/front-client-development.yaml
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
     - kubectl -n development rollout restart deployment front-client-development
   only:
     - development
