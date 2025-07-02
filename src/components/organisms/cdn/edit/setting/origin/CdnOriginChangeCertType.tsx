@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiMyDnsCdnByProjectIdHostChangeOriginCertTypeAndIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery, usePutApiMyDnsCdnByProjectIdHostChangeOriginCertTypeAndIdMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
@@ -25,7 +25,11 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
   
   const [changeClient, { isLoading }] =
     usePutApiMyDnsCdnByProjectIdHostChangeOriginCertTypeAndIdMutation();
-    
+   
+    const {refetch} = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+      id: dnsId,
+      projectId: Number(projectId)
+    });
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
@@ -34,6 +38,8 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
       changeOriginCertTypeModel: {
         cdnHostOriginCertTypeId: type,
       },
+    }).then(() => {
+      refetch();
     });
   };
   return (

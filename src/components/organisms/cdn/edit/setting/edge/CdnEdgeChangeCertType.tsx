@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiMyDnsCdnByProjectIdHostChangeEdgeCertTypeAndIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery, usePutApiMyDnsCdnByProjectIdHostChangeEdgeCertTypeAndIdMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
@@ -25,7 +25,11 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
   
   const [changeEdge, { isLoading }] =
     usePutApiMyDnsCdnByProjectIdHostChangeEdgeCertTypeAndIdMutation();
-    
+
+    const {refetch} = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+      id: dnsId,
+      projectId: Number(projectId)
+    });
   const onChangeEdge = (type: number) => {
     if (!certTypeId) return;
     changeEdge({
@@ -34,6 +38,8 @@ export const CdnEdgeChangeCertType: FC<CdnEdgeChangeCertTypePropsType> = ({
       changeEdgeCertTypeModel: {
         cdnEdgeCertTypeId: type,
       },
+    }).then(() => {
+      refetch();
     });
   };
 
