@@ -30,10 +30,10 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [getUrl, { isLoading: getUrlLoading }] =
-  useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery();
+    useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery();
 
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-  useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation();
+    useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation();
 
   const isDeactivate = useMemo(
     () => row["statusId"] !== 2 && row["statusId"] !== 8,
@@ -42,7 +42,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () => {
     if (isDeactivate) return;
-    navigate(`/vm/${projectId}/`+row["id"]+'/specification');
+    navigate(`/vm/${projectId}/` + row["id"] + '/specification');
   };
 
   const sendUserToKmsConsole = (
@@ -72,7 +72,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
         if (!res) return;
         sendUserToKmsConsole(res);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleOpenDelete = (vm: VmListResponse) => {
@@ -86,13 +86,13 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteVmRecordHandler = () =>
-    deleteItem({projectId: Number(projectId), id: Number(selectedVm?.id) })
+    deleteItem({ projectId: Number(projectId), id: Number(selectedVm?.id) })
       .unwrap()
       .then(() => {
         toast.success("سرور ابری با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
   return (
     <Fragment>
@@ -154,53 +154,53 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                          ? "فعال"
-                          : id === 3
-                          ? "غیرفعال"
-                          : id === 4
-                          ? "منقضی شده"
-                          : id === 5
-                          ? "حذف شده"
-                          : id === 6
-                          ? "در حال انجام عملیات"
-                          : id === 7
-                          ? "بازسازی"
-                          : id === 8
-                          ? "خطا در زیرساخت"
-                          : id === 9
-                          ? "بازسازی"
-                          : id === 10
-                          ? "خاموش"
-                          : id === 11
-                          ? "در صف انتظار"
-                          : id === 12
-                          ? "در صف حذف"
-                          : "ناموفق"
+                            ? "فعال"
+                            : id === 3
+                              ? "غیرفعال"
+                              : id === 4
+                                ? "منقضی شده"
+                                : id === 5
+                                  ? "حذف شده"
+                                  : id === 6
+                                    ? "در حال انجام عملیات"
+                                    : id === 7
+                                      ? "بازسازی"
+                                      : id === 8
+                                        ? "خطا در زیرساخت"
+                                        : id === 9
+                                          ? "بازسازی"
+                                          : id === 10
+                                            ? "خاموش"
+                                            : id === 11
+                                              ? "در صف انتظار"
+                                              : id === 12
+                                                ? "در صف حذف"
+                                                : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
                         backgroundColor:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.light"
                             : id === 2
-                            ? "success.light"
-                            : "error.light",
+                              ? "success.light"
+                              : "error.light",
                         color:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.main"
                             : id === 2
-                            ? "success.main"
-                            : "error.main",
+                              ? "success.main"
+                              : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",
