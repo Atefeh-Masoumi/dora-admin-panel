@@ -114,17 +114,17 @@
 //             >
 //               <Button
 //                 variant="outlined"
-//                 onClick={handleNavigatetoVm}
-//                 size="large"
-//                 sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
-//                 startIcon={
-//                   <Add sx={{ "& path": { stroke: "#00a651" } }} />
-//                 }
-//               >
-//                 افزودن VM
-//               </Button>
-//             </Stack>
-//           </Stack>
+        //         onClick={handleNavigatetoVm}
+        //         size="large"
+        //         sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
+        //         startIcon={
+        //             <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+        //         }
+        //       >
+        //         افزودن VM
+        //       </Button>
+        //     </Stack>
+        //   </Stack>
 //           <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
 //           <Stack py={1.5}>
 //             <BaseTable
