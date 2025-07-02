@@ -76,6 +76,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
         toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
         refetch();
+        formik.resetForm();
       })
       .catch((err) => {})
       .finally(() => {
@@ -86,9 +87,9 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-      // firewallProtocolTypeId: yup.number().required("Protocol type is required"),
+      //  firewallProtocolTypeId: yup.number().required("Protocol type is required"),
       // directionId: yup.number().required("نوع درخواست را مشخص کنید."),
-      // remoteIp: yup.string().required("Remote IP is required"),
+      //  remoteIp: yup.string().required("Remote IP is required"),
       // minPort: yup.number().required("Minimum port الزامی است."),
       // maxPort: yup.number().required("Maximum port الزامی است."),
     }),
