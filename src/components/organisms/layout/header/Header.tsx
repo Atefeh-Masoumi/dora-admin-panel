@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
-import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, } from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, Home as HomeIcon } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
@@ -85,6 +85,7 @@ const Header: FC<HeaderPropsType> = ({
 
   const handleProjectSelect = (projectId: number) => {
     dispatch(setSelectedProjectId(projectId));
+    localStorage.setItem('selectedProjectId', projectId.toString());
     handleProjectMenuClose();
     navigate(`/vm/${projectId}/list`);
   };
@@ -107,7 +108,7 @@ const Header: FC<HeaderPropsType> = ({
           variant="outlined"
           size="small"
           sx={{ 
-            width: 120,
+            width: 200,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
@@ -321,15 +322,38 @@ const Header: FC<HeaderPropsType> = ({
                 </Button>
               )}
               {title && (
-                <Typography
-                  variant="title5"
-                  fontWeight={700}
-                  whiteSpace="nowrap"
-                  lineHeight={1}
-                  color={theme.palette.grey[700]} 
-                >
-                  {title}
-                </Typography>
+                <>
+                  <IconButton
+                    onClick={() => navigate("/")}
+                    sx={{
+                      color: "primary.main",
+                      width: { xs: 40, md: 48 },
+                      height: { xs: 40, md: 48 },
+                      borderRadius: BORDER_RADIUS_1,
+                      border: "1px solid",
+                      borderColor: "primary.light",
+                      backgroundColor: "primary.50",
+                      "&:hover": {
+                        backgroundColor: "primary.light",
+                        borderColor: "primary.main",
+                        transform: "scale(1.05)",
+                        transition: "all 0.2s ease-in-out",
+                      },
+                      transition: "all 0.2s ease-in-out",
+                    }}
+                  >
+                    <HomeIcon sx={{ fontSize: { xs: 24, md: 28 } }} />
+                  </IconButton>
+                  <Typography
+                    variant="title5"
+                    fontWeight={700}
+                    whiteSpace="nowrap"
+                    lineHeight={1}
+                    color={theme.palette.grey[700]} 
+                  >
+                    {title}
+                  </Typography>
+                </>
               )}
               {RightComponent && <RightComponent />}
             </Stack>
