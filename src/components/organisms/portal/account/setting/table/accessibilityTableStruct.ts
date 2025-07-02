@@ -2,28 +2,28 @@ import { columnType } from "src/components/organisms/tables/table.types";
 
 export const accessibilityTableStruct: columnType[] = [
   {
-    id: "name",
+    id: "user",
     label: "نام",
   },
   {
-    id: "userName",
+    id: "email",
     label: "نام کاربری",
   },
-  // {
-  //   id: "phoneNumber",
-  //   label: "شماره تلفن",
-  // },
   {
-    id: "isSuperUser",
-    label: "سوپر ادمین",
+    id: "phoneNumber",
+    label: "شماره تلفن",
   },
   {
     id: "isActive",
     label: "وضعیت حساب",
   },
   {
-    id: "hasTwoFactor",
-    label: "ورود دومرحله‌ای",
+    id: "isSuperManager",
+    label: "سوپر ادمین",
+  },
+  {
+    id: "isFinancialManager",
+    label: "دسترسی مالی",
   },
   { id: "control", label: "عملیات", disableSort: true },
 ];

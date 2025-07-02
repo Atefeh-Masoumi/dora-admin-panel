@@ -35,17 +35,17 @@ const options = [
 
 type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
-  refetch:()=>void
+  refetch: () => void
 };
 export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   forceClose,
   refetch,
   ...props
 }) => {
-  const { id,projectId } = useParams();
+  const { id, projectId } = useParams();
 
   const [createFirewall, { isLoading }] =
-  usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation();
+    usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation();
 
   const initialValues = {
     firewallProtocolId: 1,
@@ -69,6 +69,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
         remoteIp,
         minPort,
         maxPort,
+        isIpV4: true
       },
     })
       .unwrap()
@@ -78,7 +79,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
         refetch();
         formik.resetForm();
       })
-      .catch((err) => {})
+      .catch((err) => { })
       .finally(() => {
         setSubmitting(false);
       });

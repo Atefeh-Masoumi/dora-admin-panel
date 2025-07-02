@@ -143,7 +143,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         handleReset();
         resetForm();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   useEffect(() => {
@@ -331,7 +331,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       textAlign: "start",
                       whiteSpace: "normal",
                     }}
-                    // pr={{ xs: 0, md: 1 }}
+                  // pr={{ xs: 0, md: 1 }}
                   >
                     <Stack
                       direction="row"
@@ -368,42 +368,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   </Grid>
                 ))}
               </Grid>
-            </Stack>
-
-            <Divider flexItem />
-
-            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-              <Box sx={{ width: "100%" }}>
-                <Typography>سطح‌های دسترسی</Typography>
-              </Box>
-              <Box sx={{ padding: 0, margin: 0 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectAll}
-                      disabled={superUser ? true : false}
-                      onChange={(e, checked) => {
-                        handleCheckbox(checked);
-                        if (checked === true) {
-                          setSuperUser(false);
-                        }
-                      }}
-                    />
-                  }
-                  label="همه"
-                />
-              </Box>
-              {roleListIsLoading || roleAccessList?.length === 0 ? (
-                <PageLoading />
-              ) : (
-                <RoleAccessList
-                  {...{
-                    setRoleAccessList,
-                    roleAccessList,
-                    disabled: superUser,
-                  }}
-                />
-              )}
             </Stack>
             <Stack direction="row" justifyContent="end" spacing={1}>
               <Button
