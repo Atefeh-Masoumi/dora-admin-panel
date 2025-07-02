@@ -2,8 +2,8 @@ import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  VpcListResponse,
-  useDeleteApiMyAccountCustomerUserDeleteByUserIdMutation,
+  CustomerUserListResponse,
+  useDeleteApiMyAccountCustomerUserDeleteByIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -11,7 +11,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { EditUserAccessModal } from "../dialog/EditUserAccessModal";
+// import { EditUserAccessModal } from "../dialog/EditUserAccessModal";
 import { accessibilityTableStruct } from "./accessibilityTableStruct";
 
 enum DIALOG_TYPE_ENUM {
@@ -21,7 +21,7 @@ enum DIALOG_TYPE_ENUM {
 
 const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>(null);
+  const [selectedCustomerUser, setSelectedCustomerUser] = useState<CustomerUserListResponse | null>(null);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -33,24 +33,24 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const [deleteCustomerUser, { isLoading: deleteCustomerUserLoading }] =
-    useDeleteApiMyAccountCustomerUserDeleteByUserIdMutation();
+    useDeleteApiMyAccountCustomerUserDeleteByIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteCustomerUser({ userId: selectedCustomerUser?.userId })
+    deleteCustomerUser({ id: selectedCustomerUser?.id! })
       .unwrap()
       .then(() => {
         toast.success("دسترسی کاربر با موفقیت حذف شد.");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err: any) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedCustomerUser(null);
   };
 
-  const handleOpenDelete = (vpc: VpcListResponse) => {
-    setSelectedCustomerUser(vpc);
+  const handleOpenDelete = (customerUser: CustomerUserListResponse) => {
+    setSelectedCustomerUser(customerUser);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
@@ -155,18 +155,18 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
         onClose={closeDialogHandler}
         keyTitle="دسترسی کاربر"
         subTitle="برای حذف دسترسی کاربر, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedCustomerUser?.userName || ""}
+        securityPhrase={selectedCustomerUser?.phoneNumber || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteCustomerUserLoading}
       />
-      <EditUserAccessModal
+      {/* <EditUserAccessModal
         open={editModalIsOpen}
         onClose={() => setEditModalIsOpen(false)}
         forceClose={() => setEditModalIsOpen(false)}
         userId={userId as string}
         userName={userName as string}
         maxWidth="md"
-      />
+      /> */}
     </>
   );
 };

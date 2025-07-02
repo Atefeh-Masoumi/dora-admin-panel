@@ -19,7 +19,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useGetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
@@ -44,14 +44,17 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setCategoryId(+event.target.value);
   };
-
+  const {projectId} = useParams();
   const {
     data: userAnalytics,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdQuery({
+  } = useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery({
+    projectId: Number(projectId),
     id: dnsId,
-    periodId: categoryId + 1,
+    getAnalyticModel:{
+      periodId: categoryId + 1,
+    },
   });
 
   const isLoading = useMemo(

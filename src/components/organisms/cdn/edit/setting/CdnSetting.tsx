@@ -1,7 +1,7 @@
 import { Divider, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useParams } from "react-router-dom";
-import { useGetApiMyDnsCdnHostGetCdnByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { CdnSecuritySetting } from "src/components/organisms/cdn/edit/setting/CdnSecuritySetting";
 import { CdnTypeSetting } from "src/components/organisms/cdn/edit/setting/CdnTypeSetting";
 import { CdnOriginChangeCertType } from "src/components/organisms/cdn/edit/setting/origin/CdnOriginChangeCertType";
@@ -9,11 +9,12 @@ import { CdnEdgeChangeCertType } from "src/components/organisms/cdn/edit/setting
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const CdnSetting: FC = () => {
-  const { id } = useParams();
+  const { id, projectId } = useParams();
   const dnsId = Number(id) || 0;
 
-  const { data: zoneData, isLoading } = useGetApiMyDnsCdnHostGetCdnByIdQuery({
+  const { data: zoneData, isLoading } = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
     id: dnsId,
+    projectId: Number(projectId)
   });
   return (
     <Stack width="100%" spacing={4}>
@@ -37,7 +38,7 @@ export const CdnSetting: FC = () => {
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <CdnTypeSetting
-          zoneTypeId={zoneData?.cdnHostTypeId as number}
+          zoneTypeId={zoneData?.cdnTypeId as number}
           loading={isLoading}
           dnsId={dnsId}
         />
@@ -76,7 +77,7 @@ export const CdnSetting: FC = () => {
         <CdnEdgeChangeCertType
           dnsId={dnsId}
           loading={isLoading}
-          certTypeId={zoneData?.cdnHostEdgeCertTypeId}
+          certTypeId={zoneData?.cdnEdgeCertTypeId}
         />
       </Stack>
 
@@ -97,7 +98,7 @@ export const CdnSetting: FC = () => {
         <CdnOriginChangeCertType
           dnsId={dnsId}
           loading={isLoading}
-          certTypeId={zoneData?.cdnHostOriginCertTypeId}
+          certTypeId={zoneData?.cdnOriginCertTypeId}
         />
       </Stack>
     </Stack>

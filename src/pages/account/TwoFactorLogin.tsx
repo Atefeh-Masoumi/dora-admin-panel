@@ -30,7 +30,7 @@ const TwoFactorLogin: FC = () => {
 
   const email = useAppSelector((state) => state.auth?.email);
   const password = useAppSelector((state) => state.auth?.password);
-  const twoFactor = useAppSelector((state) => state.auth?.twoFactor);
+  const twoFactor = useAppSelector((state) => state.auth?.enableTwoFactor);
 
   const disableSubmitButton = confirmCode.some((code) => code === null);
 

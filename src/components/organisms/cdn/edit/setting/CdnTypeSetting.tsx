@@ -11,8 +11,9 @@ import {
 import CloudSvg from "src/components/atoms/svg-icons/CloudSvg.svg";
 import { toast } from "react-toastify";
 import PageLoading from "src/components/atoms/PageLoading";
-import { usePutApiMyDnsCdnHostChangeCdnTypeMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnByProjectIdHostChangeCdnTypeAndIdMutation } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useParams } from "react-router-dom";
 
 const radioItems = [
   {
@@ -43,14 +44,18 @@ export const CdnTypeSetting: FC<CdnTypeSettingPropsType> = ({
   loading,
   dnsId,
 }) => {
+  const { projectId } = useParams();
+  
   const [changeCdnType, { isLoading: loadingChange }] =
-    usePutApiMyDnsCdnHostChangeCdnTypeMutation();
+    usePutApiMyDnsCdnByProjectIdHostChangeCdnTypeAndIdMutation();
+    
   const onChangeZoneType = (event: React.ChangeEvent<HTMLInputElement>) => {
     const zoneTypeId = +event.target.value;
     changeCdnType({
+      id: dnsId,
+      projectId: Number(projectId),
       changeCdnTypeModel: {
-        id: dnsId,
-        cdnHostTypeId: zoneTypeId,
+        cdnTypeId: zoneTypeId,
       },
     }).then(() => {
       toast.success("بروزرسانی پروتکل ارتباطی انجام شد");

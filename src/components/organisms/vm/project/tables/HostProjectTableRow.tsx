@@ -8,8 +8,8 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { hostProjectTableStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import {
-  VmProjectListResponse,
-  useDeleteApiMyHostProjectDeleteByIdMutation,
+  ProjectListResponse,
+  useDeleteApiMyProjectDeleteByIdMutation,
 } from "src/app/services/api.generated";
 
 enum DIALOG_TYPE_ENUM {
@@ -20,21 +20,21 @@ enum DIALOG_TYPE_ENUM {
 const HostableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedItem, setSelectedItem] =
-    useState<VmProjectListResponse | null>(null);
+    useState<ProjectListResponse | null>(null);
 
   const navigate = useNavigate();
 
   const settingOnClick = () => navigate(`/vm/${row["id"]}/list`);
 
   const [deleteItem, { isLoading: deleteItemLoading }] =
-    useDeleteApiMyHostProjectDeleteByIdMutation();
+  useDeleteApiMyProjectDeleteByIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedItem(null);
   };
 
-  const handleOpenDelete = (dnsCdn: VmProjectListResponse) => {
+  const handleOpenDelete = (dnsCdn: ProjectListResponse) => {
     setSelectedItem(dnsCdn);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };

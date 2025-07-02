@@ -7,7 +7,7 @@ import ServiceReceipt, {
 } from "src/components/molecules/ServiceReceipt";
 import { AddKubernetesContext } from "src/components/organisms/kuberCluster/add/contexts/AddKubernetesContext";
 import { SelectKuberConfig } from "src/components/organisms/kuberCluster/add/steps/SelectKuberConfig";
-import { SelectKuberDataCenter } from "src/components/organisms/kuberCluster/add/steps/SelectKuberDataCenter";
+// import { SelectKuberDataCenter } from "src/components/organisms/kuberCluster/add/steps/SelectKuberDataCenter";
 import { SelectKuberSetting } from "src/components/organisms/kuberCluster/add/steps/SelectKuberSetting";
 import { ServerKuberInfo } from "src/components/organisms/kuberCluster/add/steps/ServerKuberInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
@@ -33,8 +33,8 @@ type MapCustomConfigType = {
 
 const AddKubernetes: FC = () => {
   const {
-    serverConfig,
-    workersCount,
+    predefinedConfig,
+    nodeQuantity,
     submitHandler,
     submitLoading,
     isPredefined,
@@ -51,8 +51,8 @@ const AddKubernetes: FC = () => {
     useGetApiMyPortalProductBundleKuberClusterListQuery();
 
   useEffect(() => {
-    if (isPredefined && !serverConfig?.id) return;
-    getKubernetesPrice({ workerNodeCount: workersCount })
+    if (isPredefined && !predefinedConfig?.id) return;
+    getKubernetesPrice({ workerNodeCount: nodeQuantity })
       .unwrap()
       .then((res) => {
         setProductItemPrices(res);
@@ -62,8 +62,8 @@ const AddKubernetes: FC = () => {
     getKubernetesPrice,
     setProductItemPrices,
     isPredefined,
-    workersCount,
-    serverConfig?.id,
+    nodeQuantity,
+    predefinedConfig?.id,
   ]);
 
   const mapCustomConfig = useMemo(() => {
@@ -94,14 +94,14 @@ const AddKubernetes: FC = () => {
       fee: productItemPrices?.masterNodesInfo?.kubernetesManagementItemPrice,
     });
 
-    if (isPredefined && serverConfig?.id) {
+    if (isPredefined && predefinedConfig?.id) {
       const selectedProductBundle = vmBundlesList?.find(
-        (x) => x.id === serverConfig?.id
+        (x) => x.id === predefinedConfig?.id
       );
 
       return [
         {
-          numberOfItem: workersCount,
+          numberOfItem: nodeQuantity,
           name: selectedProductBundle?.name || "",
           fee: selectedProductBundle?.price,
         },
@@ -110,29 +110,29 @@ const AddKubernetes: FC = () => {
     } else if (!isPredefined) {
       return [
         {
-          numberOfItem: customConfig.cpu * workersCount,
-          name: `${mapConfig.cpu.toLowerCase()} (${workersCount} ورکر نود)`,
+          numberOfItem: customConfig.cpu * nodeQuantity,
+          name: `${mapConfig.cpu.toLowerCase()} (${nodeQuantity} ورکر نود)`,
           fee: productItemPrices?.vmProductItemsPrice?.find(
             (y) => y.name?.toLowerCase() === mapConfig.cpu.toLowerCase()
           )?.price,
         },
         {
-          numberOfItem: customConfig.disk * workersCount,
-          name: `${mapConfig.disk.toLowerCase()} (${workersCount} ورکر نود)`,
+          numberOfItem: customConfig.disk * nodeQuantity,
+          name: `${mapConfig.disk.toLowerCase()} (${nodeQuantity} ورکر نود)`,
           fee: productItemPrices?.vmProductItemsPrice?.find(
             (y) => y.name?.toLowerCase() === mapConfig.disk.toLowerCase()
           )?.price,
         },
         {
-          numberOfItem: customConfig.memory * workersCount,
-          name: `${mapConfig.memory.toLowerCase()} (${workersCount} ورکر نود)`,
+          numberOfItem: customConfig.memory * nodeQuantity,
+          name: `${mapConfig.memory.toLowerCase()} (${nodeQuantity} ورکر نود)`,
           fee: productItemPrices?.vmProductItemsPrice?.find(
             (y) => y.name?.toLowerCase() === mapConfig.memory.toLowerCase()
           )?.price,
         },
         {
-          numberOfItem: customConfig.ipV4 * workersCount,
-          name: `${mapConfig.ipv4.toLowerCase()} (${workersCount} ورکر نود)`,
+          numberOfItem: customConfig.ipV4 * nodeQuantity,
+          name: `${mapConfig.ipv4.toLowerCase()} (${nodeQuantity} ورکر نود)`,
           fee: productItemPrices?.vmProductItemsPrice?.find(
             (y) => y.name?.toLowerCase() === mapConfig.ipv4.toLowerCase()
           )?.price,
@@ -145,7 +145,7 @@ const AddKubernetes: FC = () => {
   }, [
     customConfig,
     isPredefined,
-    serverConfig?.id,
+    predefinedConfig?.id,
     vmBundlesList,
     productItemPrices,
   ]);
@@ -172,10 +172,10 @@ const AddKubernetes: FC = () => {
             }}
           >
             <Grid container gap={2}>
-              <Grid xs={12} item>
+              {/* <Grid xs={12} item>
                 <SelectKuberDataCenter />
                 <Divider sx={{ mt: 10 }} />
-              </Grid>
+              </Grid> */}
               <Grid xs={12} item>
                 <SelectKuberSetting />
                 <Divider sx={{ mt: 10 }} />
@@ -212,15 +212,15 @@ const AddKubernetes: FC = () => {
               receiptType={ReceiptTypeEnum.CUSTOM}
               submitHandler={submitHandler}
               submitButtonIsLoading={submitLoading}
-              receiptItemName={serverConfig?.id ? serverConfig.name : "--"}
-              receiptItemNumber={workersCount.toString() || ""}
+              receiptItemName={predefinedConfig?.id ? predefinedConfig.name : "--"}
+              receiptItemNumber={nodeQuantity.toString() || ""}
               reciptItemPrice={Math.floor(
-                serverConfig?.price || 0
+                predefinedConfig?.price || 0
               ).toLocaleString("fa-IR")}
               totalPrice={Math.floor(
-                (serverConfig?.price || 0) * 1.1
+                (predefinedConfig?.price || 0) * 1.1
               ).toLocaleString("fa-IR")}
-              vat={Math.floor((serverConfig?.price || 0) * 0.1).toLocaleString(
+              vat={Math.floor((predefinedConfig?.price || 0) * 0.1).toLocaleString(
                 "fa-IR"
               )}
             />

@@ -7,8 +7,8 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import BillsTableRow from "src/components/organisms/portal/financial/tables/BillsTableRow";
 import { billsTableStruct } from "src/components/organisms/portal/financial/tables/billsTableStruct";
 import {
-  useGetApiMyPortalCustomerBillListQuery,
-  CustomerBillListResponse,
+  useGetApiMyFinancialBillListQuery,
+  BillListResponse,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useSearchParams } from "react-router-dom";
@@ -16,7 +16,7 @@ import Bill from "./CustomerBill";
 
 const CustomerBills: FC = () => {
   const { data: customerBill, isLoading } =
-    useGetApiMyPortalCustomerBillListQuery();
+    useGetApiMyFinancialBillListQuery();
 
   const [search, setSearch] = useState("");
   const [dateFrom] = useState<Date | null>(null);
@@ -29,7 +29,7 @@ const CustomerBills: FC = () => {
 
   const filteredList =
     customerBill?.filter(
-      (bill: CustomerBillListResponse) =>
+      (bill: BillListResponse) =>
         bill.id?.toString().includes(search) &&
         (!dateFrom ||
           (bill.billDate && timeStringToDate(bill.billDate) > dateFrom)) &&

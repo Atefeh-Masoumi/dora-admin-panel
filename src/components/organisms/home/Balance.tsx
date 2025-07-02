@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useGetApiMyPortalWalletGetBalanceQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialWalletGetBalanceQuery } from "src/app/services/api.generated";
 import { DepositDialog } from "src/components/organisms/portal/financial/payment/dialog/DepositDialog";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -17,7 +17,7 @@ export const Balance: FC = () => {
   const closeDeposit = () => setOpenDeposit(false);
 
   const { data: balance, isLoading: loadingBalance } =
-    useGetApiMyPortalWalletGetBalanceQuery();
+  useGetApiMyFinancialWalletGetBalanceQuery();
   const separateBalance = balance
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");

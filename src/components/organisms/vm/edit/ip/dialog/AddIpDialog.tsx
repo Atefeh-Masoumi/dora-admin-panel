@@ -1,9 +1,10 @@
 import { LoadingButton } from "@mui/lab";
-import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Stack, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import React, { FC, MouseEventHandler } from "react";
+import React, { FC, MouseEventHandler, useState } from "react";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import {  usePostApiMyDatacenterIpAddByIdMutation } from "src/app/services/api.generated";
+import {  usePostApiMyVmByProjectIdHostAndVmHostIdIpCreateMutation } from "src/app/services/api.generated";
 
 type AddIpDialogPropsType = DialogProps & {
   vmId: number;
@@ -17,8 +18,10 @@ const AddIpDialog: FC<AddIpDialogPropsType> = ({
    refetch,
   ...props
 }) => {
+  const {projectId} = useParams();
+  const [isV4, setIsV4] = useState<boolean>(true);
   const [addIp, { isLoading: addIpLoading }] =
-    usePostApiMyDatacenterIpAddByIdMutation();
+  usePostApiMyVmByProjectIdHostAndVmHostIdIpCreateMutation();
   
     const initialValues = {
         id: vmId,
@@ -27,7 +30,11 @@ const AddIpDialog: FC<AddIpDialogPropsType> = ({
     const onSubmit = () => {
     if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
     addIp({
-      id: vmId,
+      projectId: Number(projectId),
+      vmHostId: vmId,
+      createVmIpModel: {
+        useIpV4: isV4
+      }
     })
       .unwrap()
       .then(() => {
@@ -57,7 +64,19 @@ const AddIpDialog: FC<AddIpDialogPropsType> = ({
           <Typography fontSize={16} >
             آیا از افزودن IP جدید مطمئن هستید؟
           </Typography>
-        
+            <InputLabel>IpV4</InputLabel>
+                <Select
+                  label="ipV4"
+                  size="small"
+                  value={isV4 ? 0 : 1}
+                  onChange={(e) => setIsV4(e.target.value === 0)}
+                >
+                  {["IPv4", "IPv6"].map((label, index) => (
+                    <MenuItem key={index} value={index}>
+                      {label}
+                    </MenuItem>
+                  ))}
+                </Select>
           </Stack>
         </DialogContent>
         <DialogActions>

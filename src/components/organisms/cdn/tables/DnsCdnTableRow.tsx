@@ -1,9 +1,9 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   DnsCdnListResponse,
-  useDeleteApiMyDnsCdnHostDeleteByIdMutation,
+  useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -23,11 +23,11 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
     useState<DnsCdnListResponse | null>(null);
 
   const navigate = useNavigate();
-
-  const settingOnClick = () => navigate("/cdn/" + row["id"] + "/overview");
+  const { projectId } = useParams();
+  const settingOnClick = () => navigate("/cdn/" + projectId + "/" + row["id"] + "/overview");
 
   const [deleteDnsCdn, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyDnsCdnHostDeleteByIdMutation();
+  useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -40,7 +40,9 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteCdnHandler = () =>
-    deleteDnsCdn({ id: Number(selectedDnsCdn?.id) })
+    deleteDnsCdn({ id: Number(selectedDnsCdn?.id), 
+      projectId: Number(projectId), 
+      })
       .unwrap()
       .then(() => {
         closeDialogHandler();

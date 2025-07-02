@@ -3,7 +3,7 @@ import { Chip, Divider, Paper, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Grid2 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { useGetApiMyObjectStorageHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyStorageByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { BoxRow } from "src/components/molecules/BoxRow";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
@@ -11,14 +11,14 @@ import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 type ServiceInfoPropsType = {};
 
 export const ServiceInfo: FC<ServiceInfoPropsType> = () => {
-  const { id } = useParams();
+  const { id ,projectId} = useParams();
 
   const {
     data: storageData,
     isLoading: getStorageDataLoading,
     isFetching: getStorageDataFetching,
-  } = useGetApiMyObjectStorageHostGetByIdQuery({
-    id: Number(id)!,
+  } = useGetApiMyStorageByProjectIdHostGetAndIdQuery({
+    id: Number(id)!, projectId: Number(projectId),
   });
 
   const isLoading = useMemo(

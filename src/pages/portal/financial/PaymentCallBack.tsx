@@ -4,7 +4,7 @@ import { SuccessfulPayment } from "src/components/atoms/svg-icons/SuccessfulSvg"
 import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/UnsuccessfulSvg";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { useNavigate, useParams } from "react-router";
-import { useLazyGetApiMyPortalPaymentGetByIdQuery } from "src/app/services/api";
+import { useGetApiMyFinancialPaymentGetByIdQuery } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
@@ -17,18 +17,15 @@ const PaymentCallBack: FC<PaymentCallBackPropsType> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [getInfo, { isLoading }] = useLazyGetApiMyPortalPaymentGetByIdQuery();
+  const { data: getInfo, isLoading } = useGetApiMyFinancialPaymentGetByIdQuery({
+    id: Number(id),
+  });
 
   useEffect(() => {
     if (id === null || id === undefined || isNaN(Number(id))) {
       navigate(-1);
     } else {
-      getInfo({ id: Number(id) })
-        .unwrap()
-        .then((res) => {
-          if (!res) return;
-          setPaymentInfo(res);
-        });
+      getInfo && setPaymentInfo(getInfo);
     }
   }, [getInfo, id, navigate]);
 

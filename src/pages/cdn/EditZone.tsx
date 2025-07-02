@@ -12,8 +12,8 @@ import { FC, Fragment, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyDnsCdnHostGetByIdQuery,
-  useGetApiMyDnsCdnHostGetNsByIdQuery,
+  useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
+  useGetApiMyDnsCdnByProjectIdHostGetNsAndIdQuery,
 } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -26,7 +26,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditZone: FC = () => {
-  const { id } = useParams();
+  const { id,projectId } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -62,13 +62,13 @@ const EditZone: FC = () => {
   };
 
   const { data: nsList, isLoading: nsListLoading } =
-    useGetApiMyDnsCdnHostGetNsByIdQuery({ id: Number(id) });
+    useGetApiMyDnsCdnByProjectIdHostGetNsAndIdQuery({ id: Number(id),projectId:Number(projectId) });
 
   const {
     data,
     isLoading: getDataLoading,
     refetch,
-  } = useGetApiMyDnsCdnHostGetByIdQuery({ id: Number(id) });
+  } = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({ id: Number(id),projectId:Number(projectId) });
 
   const refetchOnClick = () => refetch();
 
@@ -121,7 +121,7 @@ const EditZone: FC = () => {
   }, [pathname]);
 
   const handleChange = (_: SyntheticEvent, newValue: string) => {
-    navigate(`/cdn/${id}/${newValue}`);
+    navigate(`/cdn/${projectId}/${id}/${newValue}`);
   };
 
   const renderHandler = () => {

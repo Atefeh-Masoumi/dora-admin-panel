@@ -1,10 +1,10 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  KubernetesListResponse,
-  useDeleteApiMyKubernetesClusterHostDeleteByIdMutation,
+  KuberClusterListResponse,
+  useDeleteApiMyKubernetesClusterByProjectIdHostDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -22,16 +22,19 @@ enum DIALOG_TYPE_ENUM {
 const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedKubernetes, setSelectedKubernetes] =
-    useState<KubernetesListResponse | null>(null);
+    useState<KuberClusterListResponse | null>(null);
 
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const settingOnClick = () => navigate("/kubernetes-cluster/" + row["id"]);
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyKubernetesClusterHostDeleteByIdMutation();
+    useDeleteApiMyKubernetesClusterByProjectIdHostDeleteAndIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteKubernetes({ id: Number(selectedKubernetes?.id) })
+    deleteKubernetes({ 
+      id: Number(selectedKubernetes?.id),
+      projectId: Number(projectId),
+    })
       .unwrap()
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
@@ -44,7 +47,7 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedKubernetes(null);
   };
 
-  const handleOpenDelete = (kubernetes: KubernetesListResponse) => {
+  const handleOpenDelete = (kubernetes: KuberClusterListResponse) => {
     setSelectedKubernetes(kubernetes);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };

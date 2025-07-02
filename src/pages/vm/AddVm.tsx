@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  usePostApiMyVmHostCreateMutation,
+  usePostApiMyVmByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -13,7 +13,7 @@ import ServiceReceipt, {
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
-import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
+// import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
@@ -61,7 +61,7 @@ const AddVm: FC = () => {
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
-    usePostApiMyVmHostCreateMutation();
+  usePostApiMyVmByProjectIdHostCreateMutation();
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -127,18 +127,18 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-          publicKey: null,
-          imageId: osVersion?.id || 0,
+          
+          vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-          vmProjectId: Number(projectId),
-          vpcHostNetworkId: Number(selectedNetwork),
+         
           ipAddress: String(selectedIp),
           storageClassTypeId: 1,
         },
+        projectId: Number(projectId),
       })
         .unwrap()
         .then(() => {
@@ -179,7 +179,7 @@ const AddVm: FC = () => {
                 py: { xs: 1.8, lg: 2.25 },
               }}
             >
-              {Number(vmType) === VM_PUBLICITY_TYPE.VPC_VM && (
+              {/* {Number(vmType) === VM_PUBLICITY_TYPE.VPC_VM && (
                 <Grid xs={12} item>
                   <SelectNetworkIpForVpc
                     handleSelectedNetwork={handleSelectedNetworkOnChange}
@@ -187,7 +187,7 @@ const AddVm: FC = () => {
                   />
                   <Divider sx={{ mt: 3, mb: 3 }} />
                 </Grid>
-              )}
+              )} */}
               <Grid container gap={2}>
                 <Grid xs={12} item>
                   <SelectOS hostProjectId={Number(projectId)} />

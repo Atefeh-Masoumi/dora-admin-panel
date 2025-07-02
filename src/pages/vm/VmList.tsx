@@ -7,7 +7,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { addVmTableStruct } from "src/components/organisms/vm/tables/struct";
 import AddVmTableRow from "src/components/organisms/vm/tables/VmTableRow";
-import { useGetApiMyVmHostListByVmProjectIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const VmList: FC = () => {
@@ -21,8 +21,8 @@ const VmList: FC = () => {
     isLoading: getVmListLoading,
     refetch,
     isFetching
-  } = useGetApiMyVmHostListByVmProjectIdQuery({
-    vmProjectId: Number(projectId),
+  } = useGetApiMyVmByProjectIdHostListQuery({
+    projectId: Number(projectId),
   });
 
   useEffect(() => {

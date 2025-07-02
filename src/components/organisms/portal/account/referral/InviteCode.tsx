@@ -13,7 +13,7 @@ import { Share } from "src/components/atoms/svg-icons/ShareSvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ShareDialog } from "./ShareDialog";
 import { WelcomeTooltip } from "./WelcomeTooltip";
-import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialReferralGetQuery } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -29,7 +29,7 @@ export const InviteCode: FC = () => {
     setOpen(false);
   };
 
-  const { data: referralData, isLoading } = useGetApiMyPortalReferralGetQuery();
+  const { data: referralData, isLoading } = useGetApiMyFinancialReferralGetQuery();
 
   return (
     <Grid

@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import auth from "./slice/authSlice";
 import forgetPassword from "./slice/forgetPasswordSlice";
 import createNode from "./slice/createNodeSlice";
+import project from "./slice/projectSlice";
 import { api } from "./services/api";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth,
     forgetPassword,
     createNode,
+    project,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),

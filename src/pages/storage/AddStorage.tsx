@@ -1,18 +1,17 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  useGetApiMyObjectStorageHostListQuery,
-  usePostApiMyObjectStorageHostCreateMutation,
+  usePostApiMyStorageByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
 } from "src/components/molecules/ServiceReceipt";
 import { AddStorageContext } from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import { SelectConfig } from "src/components/organisms/storage/add/steps/SelectConfig";
-import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
+// import { SelectDataCenter } from "src/components/organisms/storage/add/steps/SelectDataCenter";
 import { ServerInfo } from "src/components/organisms/storage/add/steps/ServerInfo";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
@@ -24,7 +23,7 @@ const mapConfig = {
 
 const AddStorageService: FC = () => {
   const {
-    dataCenter,
+    // dataCenter,
     serverConfig,
     name,
     isPredefined,
@@ -33,16 +32,16 @@ const AddStorageService: FC = () => {
   } = useContext(AddStorageContext);
 
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const [createStorageService, { isLoading }] =
-    usePostApiMyObjectStorageHostCreateMutation();
+  usePostApiMyStorageByProjectIdHostCreateMutation();
 
   const { data: productItems } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
-  const { refetch } = useGetApiMyObjectStorageHostListQuery();
+  
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -59,9 +58,7 @@ const AddStorageService: FC = () => {
   const submitHandler = () => {
     let validationErrorMessage = "";
 
-    if (!dataCenter || !dataCenter.id) {
-      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
-    } else if (!name) {
+    if (!name) {
       validationErrorMessage = "لطفا نام سرویس را انتخاب کنید";
     } else if (name.length < 3) {
       validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
@@ -73,10 +70,11 @@ const AddStorageService: FC = () => {
       toast.error(validationErrorMessage);
     } else {
       createStorageService({
+        projectId: Number(projectId),
         createStorageHostModel: {
           name: name,
-          isPublic: false,
-          datacenterId: dataCenter?.id || 0,
+          publicAccess:true,
+          // datacenterId: dataCenter?.id || 0,
           productBundleId: serverConfig?.id || 0,
           isPredefined: isPredefined,
           disk: customConfig.disk,
@@ -85,8 +83,8 @@ const AddStorageService: FC = () => {
         .unwrap()
         .then(() => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
-          navigate("/storage");
-          refetch();
+          navigate(`/storage/${projectId}`);
+          
         })
         .catch((err) => {});
     }
@@ -115,10 +113,10 @@ const AddStorageService: FC = () => {
               }}
             >
               <Grid container gap={2}>
-                <Grid xs={12} item>
+                {/* <Grid xs={12} item>
                   <SelectDataCenter />
                   <Divider sx={{ mt: 10 }} />
-                </Grid>
+                </Grid> */}
                 <Grid xs={12} item>
                   <SelectConfigType
                     isPredefined={isPredefined}

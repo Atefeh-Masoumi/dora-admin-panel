@@ -6,14 +6,14 @@ import {
   createContext,
   useState,
 } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { NetworkItemsType } from "../steps/SelectVpcNetwork";
 import {
   DatacenterListResponse,
-  HypervisorListResponse,
+  // HypervisorListResponse,
   ProductBundleVpcListResponse,
-  usePostApiMyVpcHostCreateMutation,
+  usePostApiMyVmByProjectIdVpcCreateMutation,
 } from "src/app/services/api.generated";
 
 export type addVpcStepsType = 1 | 2 | 3;
@@ -34,8 +34,7 @@ const defaultNetworkList: NetworkItemsType[] = [
 type AddVpcContextType = {
   dataCenter: DatacenterListResponse | null;
   setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
-  hypervisor: HypervisorListResponse | null;
-  setHypervisor: Dispatch<SetStateAction<HypervisorListResponse | null>>;
+ 
   name: string | null;
   setName: Dispatch<SetStateAction<string | null>>;
   selectedNetworkList: NetworkItemsType[] | null;
@@ -49,8 +48,6 @@ type AddVpcContextType = {
 export const AddVpcContext = createContext<AddVpcContextType>({
   dataCenter: null,
   setDataCenter: () => {},
-  hypervisor: null,
-  setHypervisor: () => {},
   name: null,
   setName: () => {},
   selectedNetworkList: null,
@@ -71,9 +68,7 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
   const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
     null
   );
-  const [hypervisor, setHypervisor] = useState<HypervisorListResponse | null>(
-    null
-  );
+  
   const [serverConfig, setServerConfig] =
     useState<ProductBundleVpcListResponse | null>(null);
   const [name, setName] = useState<string | null>(null);
@@ -81,8 +76,9 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
     useState<NetworkItemsType[]>(defaultNetworkList);
 
   const navigate = useNavigate();
+  const { projectId} = useParams();
   const [createVpc, { isLoading: submitLoading }] =
-    usePostApiMyVpcHostCreateMutation();
+  usePostApiMyVmByProjectIdVpcCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -97,10 +93,11 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
     createVpc({
       createVpcHostModel: {
         name: name as string,
-        datacenterId: Number(dataCenter?.id),
+        // datacenterId: Number(dataCenter?.id),
         productBundleId: Number(serverConfig?.id),
-        defaultNetworks: selectedNetworkList,
+        // defaultNetworks: selectedNetworkList,
       },
+      projectId: Number(projectId),
     })
       .unwrap()
       .then(() => {
@@ -115,8 +112,6 @@ const AddVpcContextProvider: FC<AddVpcContextProviderPropsType> = ({
       value={{
         dataCenter,
         setDataCenter,
-        hypervisor,
-        setHypervisor,
         submitHandler,
         submitLoading,
         setServerConfig,

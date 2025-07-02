@@ -5,27 +5,28 @@ import { useSearchParams } from "react-router-dom";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { VpcIp } from "./VpcIp";
-import { VpcLoadBalancer } from "./VpcLoadBalancer";
-import { VpcNat } from "./VpcNat";
+// import { VpcLoadBalancer } from "./VpcLoadBalancer";
+// import { VpcNat } from "./VpcNat";
 import { VpcNetwork } from "./VpcNetwork";
-import { VpcVm } from "./VpcVm";
+// import { VpcVm } from "./VpcVm";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
-import { useGetApiMyVpcHostGetByIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdVpcGetAndIdQuery } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const EditZone: FC = () => {
-  const { vpcId } = useParams();
+  const { vpcId,projectId } = useParams();
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const projectId = searchParams.get("projectId");
+//   const projectId = searchParams.get("projectId");
 
   const {
     data,
     isLoading: getDataLoading,
     refetch,
     isFetching: getDataFetching,
-  } = useGetApiMyVpcHostGetByIdQuery({ id: Number(vpcId) }, { skip: !vpcId });
+  } = useGetApiMyVmByProjectIdVpcGetAndIdQuery({ id: Number(vpcId) , projectId: Number(projectId!)},
+   { skip: !vpcId });
 
   const refetchOnClick = () => refetch();
 
@@ -102,17 +103,17 @@ const EditZone: FC = () => {
       case `network`:
         result = <VpcNetwork />;
         break;
-      case `vpcVm`:
-        result = <VpcVm />;
+    //   case `vpcVm`:
+    //     result = <VpcVm />;
         break;
-      case `nat`:
-        result = <VpcNat />;
+    //   case `nat`:
+    //     result = <VpcNat />;
         break;
       case `ip`:
         result = <VpcIp />;
         break;
-      case `loadBalancer`:
-        result = <VpcLoadBalancer />;
+    //   case `loadBalancer`:
+    //     result = <VpcLoadBalancer />;
         break;
       case `overview`:
       default:
@@ -151,10 +152,10 @@ const EditZone: FC = () => {
         >
           <DorsaTab value={`overview`} label="مشخصات سرویس" />
           <DorsaTab value={`network`} label="Network" />
-          <DorsaTab value={`vpcVm`} label="Virtual Machine" />
-          <DorsaTab value={`nat`} label="NAT" />
+          {/* <DorsaTab value={`vpcVm`} label="Virtual Machine" /> */}
+          {/* <DorsaTab value={`nat`} label="NAT" /> */}
           <DorsaTab value={`ip`} label="Public IP" />
-          <DorsaTab value={`loadBalancer`} label="Load Balancer" />
+          {/* <DorsaTab value={`loadBalancer`} label="Load Balancer" /> */}
         </Tabs>
       </Box>
       {renderHandler()}

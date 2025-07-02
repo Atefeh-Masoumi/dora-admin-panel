@@ -14,6 +14,13 @@ export type MainTemplatePropsType = {
   hideSidebar?: boolean;
 };
 
+export type HeaderOnlyTemplatePropsType = {
+  children?: any;
+  pageTitle?: string;
+  link?: { text: string; url: string | number };
+  RightComponent?: FC;
+};
+
 export const MainTemplate: FC<MainTemplatePropsType> = ({
   children,
   pageTitle,
@@ -116,6 +123,89 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
               height: "100%",
               overflow: "overlay",
               // overflowY: "scroll",
+              overflowX: "hidden",
+              msOverflowStyle: "none",
+              mt: 4,
+              py: 8,
+              px: "0 !important",
+              maxWidth: "100% !important",
+            }}
+          >
+            {children}
+          </Container>
+        </Box>
+      </Box>
+    </Stack>
+  );
+};
+
+export const HeaderOnlyTemplate: FC<HeaderOnlyTemplatePropsType> = ({
+  children,
+  pageTitle,
+  link,
+  RightComponent,
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!containerRef?.current) {
+      return;
+    }
+    const container = containerRef.current;
+
+    const scrollListener = (event: Event) => {
+      if (container.scrollTop > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    container.addEventListener("wheel", scrollListener);
+    return () => {
+      container.removeEventListener("wheel", scrollListener);
+    };
+  }, []);
+
+  return (
+    <Stack
+      sx={{
+        pt: { xs: 1, lg: 2 },
+        px: 2,
+        bgcolor: "#F5F5F5",
+        height: "100vh",
+        width: "100%",
+      }}
+    >
+      <Box
+        sx={{
+          height: "100%",
+          overflowX: "scroll",
+        }}
+      >
+        <Box
+          sx={{
+            height: "100%",
+            overflowY: "hidden",
+            overflowX: "visible",
+            maxHeight: "100vh",
+            position: "relative",
+            width: "100%",
+          }}
+        >
+          <Header
+            setShowSidebar={() => {}}
+            title={pageTitle}
+            link={link}
+            isScrolled={isScrolled}
+            RightComponent={RightComponent}
+          />
+          <Container
+            ref={containerRef}
+            sx={{
+              height: "100%",
+              overflow: "overlay",
               overflowX: "hidden",
               msOverflowStyle: "none",
               mt: 4,
