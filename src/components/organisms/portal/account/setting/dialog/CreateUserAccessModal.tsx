@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   FormControlLabel,
   Grid,
   Stack,
@@ -14,14 +13,8 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import { FC, SyntheticEvent, useEffect, useState } from "react";
-import {
-  useGetApiMyAccountCustomerUserListQuery,
-  usePostApiMyAccountCustomerUserCreateMutation,
-} from "src/app/services/api.generated";
 import { useFormik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
-import RoleAccessList from "../RoleAccessList";
-import PageLoading from "src/components/atoms/PageLoading";
 import { toast } from "react-toastify";
 import {
   access,
@@ -30,6 +23,10 @@ import {
 } from "src/constant/accessModal.constant";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import {
+  useGetApiMyAccountCustomerUserListQuery,
+  usePostApiMyAccountCustomerUserCreateMutation,
+} from "src/app/services/api.generated";
 
 type CreateUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
@@ -132,8 +129,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       createCustomerUserModel: {
         userName,
         isSuperUser: superUser,
-        isAccountManager: superUser ? false : accountManager,
-        isFinancialManager: superUser ? false : financialManager,
+        isAccountManager: accountManager,
+        isFinancialManager: financialManager,
       },
     })
       .unwrap()
