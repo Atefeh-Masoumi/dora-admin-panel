@@ -153,9 +153,9 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="دسترسی کاربر"
+        keyTitle="ایمیل"
         subTitle="برای حذف دسترسی کاربر, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedCustomerUser?.phoneNumber || ""}
+        securityPhrase={selectedCustomerUser?.email || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteCustomerUserLoading}
       />
