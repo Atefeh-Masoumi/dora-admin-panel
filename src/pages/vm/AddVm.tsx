@@ -21,19 +21,6 @@ import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
-// const mapConfig = {
-//   cpu: "CPU",
-//   memory: "Memory",
-//   disk: "Disk",
-//   ipv4: "IPV4",
-//   ipv6: "IPV6",
-//   rackUnitSpace: "Rack Space Unit",
-//   powerAmp: "Power (A)",
-//   ipv4Count: "IPV4",
-//   networkPort10G: "Network 10G Port",
-//   networkPort1G: "Network 1G Port",
-// };
-
 const AddVm: FC = () => {
   const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<

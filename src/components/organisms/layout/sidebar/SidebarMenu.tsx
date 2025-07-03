@@ -19,17 +19,17 @@ export const Sidebar: FC<SidebarPropsType> = () => {
 
   const listItems: sidebarItemType[] = useMemo(() => [
     {
-      title: "DNS",
-      text: " سرویس  DNS ابری ",
-      Icon: CloudConnectionSvg,
-      link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/dashboard",
-    },
-    {
       title: "Virtual Machine",
       text: "سرور های ابری",
       Icon: VmSvg,
       link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/",
-      subList: [{ title: "مدیریت سرورها", link: selectedProjectId ? `/vm/${selectedProjectId}` : "/dashboard" }],
+      subList: [{ title: "مدیریت سرورها", link: selectedProjectId ? `/vm/${selectedProjectId}` : "/" }],
+    },
+    {
+      title: "DNS",
+      text: " سرویس  DNS ابری ",
+      Icon: CloudConnectionSvg,
+      link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/",
     },
     // {
     //   title: "Kubernetes Cluster",

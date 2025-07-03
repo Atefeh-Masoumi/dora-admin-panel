@@ -207,69 +207,39 @@ export const api = enhancedApi
       //   providesTags: () => ["CdnCert"],
       // },
       // ============================== VmHost ============================== //
-      // getApiMyHostProjectList: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // getApiMyVmHostListByVmProjectId: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // getApiMyVmKmsGetByIdAndTypeId: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // getApiMyVmHostGetById: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // getApiMyVmSnapshotListByVmHostId: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // getApiMyVmSnapshotGetById: {
-      //   providesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmSnapshotRevertById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // postApiMyVmSnapshotCreate: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // postApiMyVmHostCreate: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // deleteApiMyVmHostDeleteById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostEditById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // deleteApiMyVmSnapshotDeleteById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostConnectById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostDisconnectById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostShutdownById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostStartById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostStopById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyVmHostRebootById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // postApiMyHostProjectCreate: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // putApiMyHostProjectEditById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
-      // deleteApiMyHostProjectDeleteById: {
-      //   invalidatesTags: () => ["VmHost"],
-      // },
+      getApiMyVmByProjectIdHostList: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmByProjectIdHostShortList: {
+        providesTags: () => ["VmHost"],
+      },
+      getApiMyVmByProjectIdHostGetAndId: {
+        providesTags: () => ["VmHost"],
+      },
+      postApiMyVmByProjectIdHostCreate: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostEditAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      deleteApiMyVmByProjectIdHostDeleteAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostStartAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostShutdownAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostRebootAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostResetAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
+      putApiMyVmByProjectIdHostRebuildAndId: {
+        invalidatesTags: () => ["VmHost"],
+      },
       // ============================== KubernetesCluster ============================== //
       // getApiMyKubernetesClusterHostList: {
       //   providesTags: () => ["KubernetesCluster"],
