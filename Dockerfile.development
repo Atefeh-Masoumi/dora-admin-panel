@@ -5,7 +5,7 @@ FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
 WORKDIR /app
 
 # Set Nexus npm registry
-RUN echo "registry=https://nexus.dorsa.cloud/repository/npm-group/" > .npmrc
+RUN echo "registry=https://nexus.dorsa.cloud/repository/npm/" > .npmrc
 
 # Copy dependency definitions and install
 COPY package.json package-lock.json* ./
