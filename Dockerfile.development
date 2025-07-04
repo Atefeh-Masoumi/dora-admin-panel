@@ -5,7 +5,7 @@ FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
 WORKDIR /app
 
 # Set Nexus npm registry
-RUN echo "registry=https://nexus.dorsa.cloud/repository/npm/" > .npmrc
+#RUN echo "registry=https://nexus.dorsa.cloud/repository/npm/" > .npmrc
 
 # Copy dependency definitions and install
 COPY package.json package-lock.json* ./
@@ -15,7 +15,7 @@ RUN npm install --legacy-peer-deps
 COPY . .
 
 # Set environment variable for production build
-ENV REACT_APP_PRODUCTION_URL_V1="https://my.baharcloud.com"
+ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN npm run build
 
 # Optional: Clean up .npmrc if you don't want it in image layer
