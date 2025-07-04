@@ -52,6 +52,7 @@ type CreateRecordDialogPropsType = {
   dnsId: number;
   onClose: () => void;
   openDialog: boolean;
+  refetchRecords: () => void;
 };
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
@@ -59,13 +60,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   dnsId,
   onClose,
   openDialog,
+  refetchRecords,
 }) => {
   const { projectId } = useParams();
 
-  const { refetch } = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
-    id: dnsId,
-    projectId: Number(projectId)
-  });
   const { data: getInfo, isLoading: getDetailsLoading } =
     useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
       dnsCdnHostId: dnsId,
@@ -138,7 +136,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .then(() => {
           toast.success("رکورد مورد نظر با موفقیت بروز شد");
           onClose();
-          refetch();
+          refetchRecords();
         })
         .catch(() => { });
     } else {
@@ -161,7 +159,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
         .then(() => {
           toast.success("رکورد جدید با موفقیت ایجاد شد");
           onClose();
-          refetch();
+          refetchRecords();
         })
         .catch(() => { });
     }
