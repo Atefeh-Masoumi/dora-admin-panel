@@ -169,34 +169,44 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       justifyContent="center"
       alignItems="center"
       spacing={4}
-      sx={{ p: 2 }}
+      sx={{ p: 2, direction: "rtl" }}
     >
-      <Typography fontSize={24} fontWeight="bold" align="center">
+      <Typography fontSize={24} fontWeight="bold" align="center" sx={{ direction: "rtl" }}>
         سیستم عامل ماشین را انتخاب کنید
       </Typography>
-      <Grid2 container gap={2} justifyContent="center" width="100%">
+      <Grid2 container gap={2} justifyContent="center" width="100%" sx={{ direction: "rtl" }}>
         {isLoading && (
           [...Array(2)].map((_, index) => (
-            <Stack
-              key={index}
-              direction="row"
+            <Grid2 key={index} size={{xs:12, sm:6}}
               sx={{
-                width: { xs: "100%", sm: 200 },
-                height: 96,
-                transition: "150ms",
-                borderRadius: BORDER_RADIUS_1,
-                border: "1px solid rgba(110, 118, 138, 0.12)",
-                overflow: "hidden",
-                p: 1,
-                cursor: "pointer",
+                minWidth: { sm: 100 },
+                maxWidth: { sm: 184 },
+                height: { xs: 64, sm: 84 },
+                marginBottom: { xs: "50px", sm: "20px" },
+                direction: "rtl",
               }}
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
             >
-              <Skeleton variant="circular" width={44} height={44} />
-              <Skeleton width="30%" />
-            </Stack>
+              <Stack
+                direction="row"
+                sx={{
+                  width: { xs: "100%", sm: 200 },
+                  height: 96,
+                  transition: "150ms",
+                  borderRadius: BORDER_RADIUS_1,
+                  border: "1px solid rgba(110, 118, 138, 0.12)",
+                  overflow: "hidden",
+                  p: 1,
+                  cursor: "pointer",
+                  direction: "rtl",
+                }}
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+              >
+                <Skeleton variant="circular" width={44} height={44} />
+                <Skeleton width="30%" />
+              </Stack>
+            </Grid2>
           ))
         )}
         {!isLoading && osDropDownsState.map((osDropDown, index) => {
@@ -207,6 +217,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                 maxWidth: { sm: 184 },
                 height: { xs: 64, sm: 84 },
                 marginBottom: { xs: "50px", sm: "20px" },
+                direction: "rtl",
               }}
             >
               <Stack
@@ -226,6 +237,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                   overflow: "hidden",
                   px: 1,
                   cursor: "pointer",
+                  direction: "rtl",
                 }}
                 alignItems="center"
                 justifyContent="center"
@@ -249,7 +261,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                   color={
                     osDropDown.isSelected ? "primary.main" : "secondary.main"
                   }
-                  sx={{ transition: "200ms" }}
+                  sx={{ transition: "200ms", direction: "rtl", textAlign: "right" }}
                   fontWeight="bold"
                 >
                   {osDropDown.os}

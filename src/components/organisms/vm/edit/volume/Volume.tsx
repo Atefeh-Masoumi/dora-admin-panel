@@ -13,7 +13,7 @@ export const Volume: FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [dialogType, setDialogType] = useState<null>(null);
 
-  const {  projectId } = useParams();
+  const { projectId } = useParams();
 
   const {
     data: volumeList,
@@ -41,14 +41,6 @@ export const Volume: FC = () => {
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
-      >
-        مدیریت دیسک
-      </Typography>
       <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
@@ -57,18 +49,24 @@ export const Volume: FC = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="end"
+          justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            {/* <Button
+          <Typography
+            color="grey.700"
+            fontSize={24}
+            fontWeight={700}
+          >
+            مدیریت دیسک
+          </Typography>
+
+          {/* <Button
               onClick={openCreateDialogHandler}
               variant="outlined"
               startIcon={<Add />}
             >
               افزودن دیسک
             </Button> */}
-          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>
@@ -82,7 +80,7 @@ export const Volume: FC = () => {
           />
         </Stack>
       </Paper>
-      
+
       {/* <CreateVolumeDialog
         maxWidth="xs"
         fullWidth

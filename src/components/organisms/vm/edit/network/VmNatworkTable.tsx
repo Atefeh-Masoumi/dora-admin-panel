@@ -23,11 +23,13 @@ export const Network: FC<FirewallPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   useState<VmNetworkNodeListResponse | null>(null);
 
-  const { id,projectId } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading, refetch} =
-  useGetApiMyVmByProjectIdNetworkNodeListQuery(
-      { projectId: Number(projectId),
-        vmHostId: Number(id) },
+  const { id, projectId } = useParams();
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch } =
+    useGetApiMyVmByProjectIdNetworkNodeListQuery(
+      {
+        projectId: Number(projectId),
+        vmHostId: Number(id)
+      },
       { skip: !id }
     );
   const openCreateDialogHandler = () => {
@@ -40,14 +42,6 @@ export const Network: FC<FirewallPropsType> = () => {
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
-      >
-        مدیریت شبکه
-      </Typography>
       <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
@@ -56,20 +50,27 @@ export const Network: FC<FirewallPropsType> = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="end"
+          justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
-              onClick={openCreateDialogHandler}
-              variant="outlined"
-              startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-              }
-            >
-              اتصال به شبکه 
-            </Button>
-          </Stack>
+          <Typography
+            color="grey.700"
+            fontSize={24}
+            fontWeight={700}
+            sx={{ mb: 2 }}
+          >
+            مدیریت شبکه
+          </Typography>
+
+          <Button
+            onClick={openCreateDialogHandler}
+            variant="outlined"
+            startIcon={
+              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            }
+          >
+            اتصال به شبکه
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>

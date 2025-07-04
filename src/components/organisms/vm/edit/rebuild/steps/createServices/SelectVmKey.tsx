@@ -18,9 +18,6 @@ export const SelectVmKey: FC<SelectVmKeyPropsType> = ({
 
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
-      <Typography fontSize={24} fontWeight="bold" align="center">
-        انتخاب کلید SSH
-      </Typography>
       <FormControl sx={{ minWidth: 300 }}>
         <InputLabel>کلید SSH</InputLabel>
         <Select
