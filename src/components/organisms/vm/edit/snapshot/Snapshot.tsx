@@ -19,9 +19,9 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
-  const { id ,projectId} = useParams();
-  const { data: snapshotList = [], isLoading: getSnapshotLoading ,refetch} =
-  useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
+  const { id, projectId } = useParams();
+  const { data: snapshotList = [], isLoading: getSnapshotLoading, refetch } =
+    useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
       { projectId: Number(projectId), vmHostId: Number(id) },
       { skip: !id }
     );
@@ -35,15 +35,6 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
-      >
-        مدیریت اسنپ شات
-      </Typography>
-
       <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
@@ -52,28 +43,35 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="end"
+          justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
-              onClick={openCreateDialogHandler}
-              variant="outlined"
-              startIcon={<Add />}
-            >
-              افزودن اسنپ شات
-            </Button>
-          </Stack>
+          <Typography
+            color="grey.700"
+            fontSize={24}
+            fontWeight={700}
+          >
+            مدیریت اسنپ شات
+          </Typography>
+          <Button
+            onClick={openCreateDialogHandler}
+            variant="outlined"
+            startIcon={<Add />}
+          >
+            افزودن اسنپ شات
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-        <BaseTable
-          struct={snapShotTableStruct}
-          RowComponent={SnapshotTableRow}
-          rows={snapshotList}
-          text="در حال حاضر اسنپ شات وجود ندارد"
-          isLoading={getSnapshotLoading}
-          initialOrder={7}
-        />
+        <Stack>
+          <BaseTable
+            struct={snapShotTableStruct}
+            RowComponent={SnapshotTableRow}
+            rows={snapshotList}
+            text="در حال حاضر اسنپ شات وجود ندارد"
+            isLoading={getSnapshotLoading}
+            initialOrder={7}
+          />
+        </Stack>
       </Paper>
       <CreateSnapshotDialog
         maxWidth="xs"

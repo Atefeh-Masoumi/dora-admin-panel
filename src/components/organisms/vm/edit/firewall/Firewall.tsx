@@ -23,11 +23,13 @@ export const Firewall: FC<FirewallPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   useState<VmFirewallRuleListResponse | null>(null);
 
-  const { id,projectId } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading, refetch} =
-  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
-      { projectId: Number(projectId),
-        vmHostId: Number(id) },
+  const { id, projectId } = useParams();
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch } =
+    useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
+      {
+        projectId: Number(projectId),
+        vmHostId: Number(id)
+      },
       { skip: !id }
     );
   const openCreateDialogHandler = () => {
@@ -40,14 +42,6 @@ export const Firewall: FC<FirewallPropsType> = () => {
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
-      >
-        مدیریت رول ها
-      </Typography>
       <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
@@ -56,20 +50,25 @@ export const Firewall: FC<FirewallPropsType> = () => {
           pb={2}
           direction={{ xs: "column", sm: "row" }}
           alignItems="center"
-          justifyContent="end"
+          justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
-              onClick={openCreateDialogHandler}
-              variant="outlined"
-              startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-              }
-            >
-              افزودن رول
-            </Button>
-          </Stack>
+          <Typography
+            color="grey.700"
+            fontSize={24}
+            fontWeight={700}
+          >
+            مدیریت رول ها
+          </Typography>
+          <Button
+            onClick={openCreateDialogHandler}
+            variant="outlined"
+            startIcon={
+              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            }
+          >
+            افزودن رول
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>

@@ -1,14 +1,14 @@
 import { FC } from "react";
-import { 
-  Box, 
-  Checkbox, 
-  FormControlLabel, 
-  Stack, 
+import {
+  Box,
+  Stack,
   Typography,
   Paper
 } from "@mui/material";
 import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { SelectPassword } from "./SelectPassword";
+import { SelectVmKey } from "./SelectVmKey";
 
 type SelectSecuritySettingsPropsType = {
   securityId: VM_SECURITY_TYPE_SETTING;
@@ -17,6 +17,11 @@ type SelectSecuritySettingsPropsType = {
   setUsePassword: (usePassword: boolean) => void;
   useVmKey: boolean;
   setUseVmKey: (useVmKey: boolean) => void;
+  password: string;
+  setPassword: (password: string) => void;
+  vmKeyId: any;
+  setVmKeyId: (vmKeyId: any) => void;
+  vmKeyList: any;
 };
 
 export const SelectSecuritySettings: FC<SelectSecuritySettingsPropsType> = ({
@@ -26,136 +31,69 @@ export const SelectSecuritySettings: FC<SelectSecuritySettingsPropsType> = ({
   setUsePassword,
   useVmKey,
   setUseVmKey,
+  password,
+  setPassword,
+  vmKeyId,
+  setVmKeyId,
+  vmKeyList,
 }) => {
-  const handleSecurityChange = (value: VM_SECURITY_TYPE_SETTING) => {
-    setSecurityId(value);
-    
-    if (value === VM_SECURITY_TYPE_SETTING.PASSWORD) {
-      setUsePassword(true);
-      setUseVmKey(false);
-    } else {
-      setUsePassword(false);
-      setUseVmKey(true);
-    }
-  };
-
   return (
     <Stack spacing={3} justifyContent="center" alignItems="center">
       <Typography fontSize={24} fontWeight="bold" align="center">
         روش احراز هویت
       </Typography>
-      
-      <Stack direction="row" spacing={2} sx={{ width: "100%", maxWidth: 400 }}>
+
+      <Stack direction="column" spacing={2} sx={{ width: "100%", maxWidth: 600 }}>
+        {/* Password Section */}
         <Paper
-          elevation={securityId === VM_SECURITY_TYPE_SETTING.PASSWORD ? 4 : 1}
+          elevation={1}
           sx={{
-            flex: 1,
             p: 2,
-            cursor: "pointer",
             borderRadius: BORDER_RADIUS_1,
             border: 2,
-            borderColor: securityId === VM_SECURITY_TYPE_SETTING.PASSWORD 
-              ? "primary.main" 
-              : "grey.200",
-            bgcolor: securityId === VM_SECURITY_TYPE_SETTING.PASSWORD 
-              ? "primary.50" 
-              : "background.paper",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              borderColor: "primary.main",
-              bgcolor: "primary.50",
-              transform: "translateY(-2px)",
-            },
+            borderColor: "grey.200",
+            bgcolor: "background.paper",
           }}
-          onClick={() => handleSecurityChange(VM_SECURITY_TYPE_SETTING.PASSWORD)}
         >
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={securityId === VM_SECURITY_TYPE_SETTING.PASSWORD}
-                onChange={() => handleSecurityChange(VM_SECURITY_TYPE_SETTING.PASSWORD)}
-                sx={{
-                  color: "primary.main",
-                  "&.Mui-checked": {
-                    color: "primary.main",
-                  },
-                }}
-              />
-            }
-            label={
-              <Box>
-                <Typography fontWeight="bold" fontSize={16}>
-                  رمز عبور
-                </Typography>
-                <Typography fontSize={14} color="text.secondary">
-                  استفاده از رمز عبور برای ورود
-                </Typography>
-              </Box>
-            }
-            sx={{ 
-              width: "100%", 
-              margin: 0,
-              "& .MuiFormControlLabel-label": {
-                width: "100%",
-              }
-            }}
-          />
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box sx={{ flex: 1 }}>
+              <Typography fontWeight="bold" fontSize={16}>
+                رمز عبور
+              </Typography>
+              <Typography fontSize={14} color="text.secondary">
+                استفاده از رمز عبور برای ورود
+              </Typography>
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <SelectPassword password={password} setPassword={setPassword} />
+            </Box>
+          </Stack>
         </Paper>
 
+        {/* VM Key Section */}
         <Paper
-          elevation={securityId === VM_SECURITY_TYPE_SETTING.VMKEY ? 4 : 1}
+          elevation={1}
           sx={{
-            flex: 1,
             p: 2,
-            cursor: "pointer",
             borderRadius: BORDER_RADIUS_1,
             border: 2,
-            borderColor: securityId === VM_SECURITY_TYPE_SETTING.VMKEY 
-              ? "primary.main" 
-              : "grey.200",
-            bgcolor: securityId === VM_SECURITY_TYPE_SETTING.VMKEY 
-              ? "primary.50" 
-              : "background.paper",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              borderColor: "primary.main",
-              bgcolor: "primary.50",
-              transform: "translateY(-2px)",
-            },
+            borderColor: "grey.200",
+            bgcolor: "background.paper",
           }}
-          onClick={() => handleSecurityChange(VM_SECURITY_TYPE_SETTING.VMKEY)}
         >
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={securityId === VM_SECURITY_TYPE_SETTING.VMKEY}
-                onChange={() => handleSecurityChange(VM_SECURITY_TYPE_SETTING.VMKEY)}
-                sx={{
-                  color: "primary.main",
-                  "&.Mui-checked": {
-                    color: "primary.main",
-                  },
-                }}
-              />
-            }
-            label={
-              <Box>
-                <Typography fontWeight="bold" fontSize={16}>
-                  کلید SSH
-                </Typography>
-                <Typography fontSize={14} color="text.secondary">
-                  استفاده از کلید SSH برای ورود
-                </Typography>
-              </Box>
-            }
-            sx={{ 
-              width: "100%", 
-              margin: 0,
-              "& .MuiFormControlLabel-label": {
-                width: "100%",
-              }
-            }}
-          />
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box sx={{ flex: 1 }}>
+              <Typography fontWeight="bold" fontSize={16}>
+                کلید SSH
+              </Typography>
+              <Typography fontSize={14} color="text.secondary">
+                استفاده از کلید SSH برای ورود
+              </Typography>
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <SelectVmKey vmKeyList={vmKeyList} setVmKeyId={setVmKeyId} />
+            </Box>
+          </Stack>
         </Paper>
       </Stack>
     </Stack>
