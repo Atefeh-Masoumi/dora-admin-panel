@@ -7,10 +7,7 @@ import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
 import { EditConfirmationDialog } from "src/components/organisms/vm/edit/rebuild/dialog/EditConfirmationDialog";
-import { SelectSecuritySettings } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectSecuritySettings";
-import { SelectPassword } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectPassword";
 import { SelectServiceName } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectServiceName";
-import { SelectVmKey } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectVmKey";
 import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
 
 type VmRebuildPropsType = {};
@@ -70,7 +67,6 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   };
 
   const submitBtnOnClick = () => {
-    console.log("selectedOs", selectedOs);
     const rebuildVmModel: any = {
       name,
       password,
@@ -124,8 +120,8 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
             </Typography>
             <Stack spacing={4} sx={{ width: "100%" }}>
               <ChooseOSForRebuild setImageId={setSelectedOs} />
-              <SelectServiceName serviceName={name} setServiceName={setName} />
-              <SelectSecuritySettings
+              <SelectServiceName
+                serviceName={name} setServiceName={setName}
                 securityId={securityId}
                 setSecurityId={setSecurityId}
                 usePassword={usePassword}

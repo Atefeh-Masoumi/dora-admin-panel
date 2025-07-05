@@ -523,12 +523,13 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/dns-cdn/${queryArg.projectId}/host/get-ns/${queryArg.id}`,
       }),
     }),
-    getApiMyDnsCdnByProjectIdHostGetAnalyticAndId: build.query<
-      GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse,
-      GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg
+    postApiMyDnsCdnByProjectIdHostGetAnalyticAndId: build.mutation<
+      PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse,
+      PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/dns-cdn/${queryArg.projectId}/host/get-analytic/${queryArg.id}`,
+        method: "POST",
         body: queryArg.getAnalyticModel,
       }),
     }),
@@ -2532,12 +2533,13 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/list`,
       }),
     }),
-    getApiMyVmByProjectIdHostGetAnalyticAndId: build.query<
-      GetApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse,
-      GetApiMyVmByProjectIdHostGetAnalyticAndIdApiArg
+    postApiMyVmByProjectIdHostGetAnalyticAndId: build.mutation<
+      PostApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse,
+      PostApiMyVmByProjectIdHostGetAnalyticAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/get-analytic/${queryArg.id}`,
+        method: "POST",
         body: queryArg.getAnalyticModel,
       }),
     }),
@@ -2932,9 +2934,9 @@ export type GetApiMyDnsCdnByProjectIdHostGetNsAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse =
+export type PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse =
   /** status 200 OK */ GetAnalyticResponse;
-export type GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg = {
+export type PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg = {
   projectId: number;
   id: number;
   getAnalyticModel: GetAnalyticModel;
@@ -4255,9 +4257,9 @@ export type GetApiMyVmByProjectIdHostListApiResponse =
 export type GetApiMyVmByProjectIdHostListApiArg = {
   projectId: number;
 };
-export type GetApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse =
+export type PostApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse =
   /** status 200 OK */ GetAnalyticResponse;
-export type GetApiMyVmByProjectIdHostGetAnalyticAndIdApiArg = {
+export type PostApiMyVmByProjectIdHostGetAnalyticAndIdApiArg = {
   projectId: number;
   id: number;
   getAnalyticModel: GetAnalyticModel;
@@ -6736,7 +6738,7 @@ export type IssueItemListResponse = {
 };
 export type CreateIssueItemModel = {
   issueId?: number;
-  content?: string | null;
+  content: string | null;
   attachment?: Blob | null;
 };
 export type IssueShortListResponse = {
@@ -6756,10 +6758,10 @@ export type IssueListResponse = {
   modifyDate: string | null;
 };
 export type CreateIssueModel = {
-  content?: string | null;
   businessUnitId?: number;
   issueSubjectId?: number;
   issuePriorityId?: number;
+  content: string | null;
   orderId?: number | null;
   productId?: number | null;
   attachment?: Blob | null;
@@ -6871,10 +6873,11 @@ export type EditVpcSnatModel = {
 };
 export type CreateVpcDnatModel = {
   vpcHostIpId?: number;
-  vmNetworkNodeId?: number;
+  vmHostId?: number;
   name?: string | null;
-  destinationIp?: string | null;
-  destinationPort?: number;
+  isTcp?: boolean;
+  externalPort?: number;
+  internalPort?: number;
 };
 export type VpcHostIpListResponse = {
   id: number;
@@ -7014,7 +7017,6 @@ export type VmNetworkNodeListResponse = {
 export type AttachNetworkModel = {
   vmHostId?: number;
   vmNetworkId?: number;
-  isV4?: boolean;
   ipAddress?: string | null;
 };
 export type VmNetworkShortListResponse = {
@@ -7149,12 +7151,12 @@ export type RebuildVmModel = {
 export type VmListResponse = {
   id: number;
   name: string | null;
+  ipAddress?: string | null;
   status: string | null;
   statusId: number;
-  storageClassTypeId?: number;
   datacenter: string | null;
   operatingSystem: string | null;
-  createDate?: string;
+  createDate: string;
 };
 export type GetVmResponse = {
   datacenterId: number;
@@ -7330,7 +7332,7 @@ export const {
   usePostApiMyDnsCdnByProjectIdWebHostCheckDomainMutation,
   useGetApiMyDnsCdnByProjectIdHostListQuery,
   useGetApiMyDnsCdnByProjectIdHostGetNsAndIdQuery,
-  useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery,
+  usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation,
   useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
   useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation,
   usePostApiMyDnsCdnByProjectIdHostCreateMutation,
@@ -7562,7 +7564,7 @@ export const {
   usePutApiMyVmByProjectIdHostRebuildAndIdMutation,
   usePutApiMyVmByProjectIdHostRebootAndIdMutation,
   useGetApiMyVmByProjectIdHostListQuery,
-  useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery,
+  usePostApiMyVmByProjectIdHostGetAnalyticAndIdMutation,
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,

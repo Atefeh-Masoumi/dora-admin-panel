@@ -219,25 +219,16 @@ const EditVm: FC<EditVmProps> = () => {
           variant="scrollable"
           scrollButtons="auto"
         >
-          {getVmDataLoading ? (
-            <CircularProgress
-              size={20}
-              sx={{
-                margin: "10px auto",
-              }}
-            />
-          ) : (
-            TAB_CONFIGS.map(
-              (config, index) =>
-                !hiddenTabs.includes(index) && (
-                  <DorsaTab
-                    {...createA11yProps(index)}
-                    label={config.label}
-                    key={index}
-                    onClick={() => handleTabChange({} as SyntheticEvent, index)}
-                  />
-                )
-            )
+          {TAB_CONFIGS.map(
+            (config, index) =>
+              !hiddenTabs.includes(index) && (
+                <DorsaTab
+                  {...createA11yProps(index)}
+                  label={config.label}
+                  key={index}
+                  onClick={() => handleTabChange({} as SyntheticEvent, index)}
+                />
+              )
           )}
         </Tabs>
       </Box>
