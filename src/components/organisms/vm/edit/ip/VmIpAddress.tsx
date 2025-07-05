@@ -53,7 +53,6 @@ export const VmIpAddress: FC = () => {
   // const [getData, { isLoading }] = useLazyGetApiMyDatacenterIpListByIdQuery();
   // const [data, setData] =
   //   useState<GetApiMyDatacenterIpListByIdApiResponse | null>(null);
-  // console.log(serverId);
 
   // useEffect(() => {
   //   if (serverId) {

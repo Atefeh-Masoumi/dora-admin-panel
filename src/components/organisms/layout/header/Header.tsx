@@ -24,9 +24,8 @@ import { Notifications } from "./Notifications";
 import { ManageMenu } from "./ManageMenu";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { setSelectedProjectId, setSelectedProject } from "src/app/slice/projectSlice";
+import { setSelectedProjectId, setSelectedProject, setProjectList } from "src/app/slice/projectSlice";
 import { useGetApiMyProjectListQuery } from "src/app/services/api.generated";
-import { toast } from "react-toastify";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -54,7 +53,7 @@ const Header: FC<HeaderPropsType> = ({
   const { id: kubernetesClusterID } = useParams();
   const { projectId } = useParams();
   const vpcId = searchParams.get("vpcId");
-  
+
   const theme = useTheme();
   const goToCalculator = () => navigate("/portal/calculator");
 
@@ -74,6 +73,13 @@ const Header: FC<HeaderPropsType> = ({
     }
   }, [getProjectListLoading, projectList, selectedProjectId, selectedProject, dispatch]);
 
+  // Effect to update project list in Redux state
+  useEffect(() => {
+    if (!getProjectListLoading && projectList.length > 0) {
+      dispatch(setProjectList(projectList));
+    }
+  }, [getProjectListLoading, projectList, dispatch]);
+
   // Project menu handlers
   const handleProjectMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setProjectMenuAnchor(event.currentTarget);
@@ -84,6 +90,10 @@ const Header: FC<HeaderPropsType> = ({
   };
 
   const handleProjectSelect = (projectId: number) => {
+    const selectedProject = projectList.find(p => p.id === projectId);
+    if (selectedProject) {
+      dispatch(setSelectedProject(selectedProject));
+    }
     dispatch(setSelectedProjectId(projectId));
     localStorage.setItem('selectedProjectId', projectId.toString());
     handleProjectMenuClose();
@@ -107,7 +117,7 @@ const Header: FC<HeaderPropsType> = ({
           onClick={handleProjectMenuOpen}
           variant="outlined"
           size="small"
-          sx={{ 
+          sx={{
             width: 200,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
@@ -125,7 +135,7 @@ const Header: FC<HeaderPropsType> = ({
           open={Boolean(projectMenuAnchor)}
           onClose={handleProjectMenuClose}
           PaperProps={{
-            sx: { 
+            sx: {
               width: 200,
               mt: 1,
               boxShadow: 4,
@@ -134,8 +144,8 @@ const Header: FC<HeaderPropsType> = ({
           }}
         >
           {projectList.map((project) => (
-            <MenuItem 
-              key={project.id} 
+            <MenuItem
+              key={project.id}
               onClick={() => project?.id && handleProjectSelect(project?.id)}
               selected={project.id === selectedProjectId}
               sx={{
@@ -349,7 +359,7 @@ const Header: FC<HeaderPropsType> = ({
                     fontWeight={700}
                     whiteSpace="nowrap"
                     lineHeight={1}
-                    color={theme.palette.grey[700]} 
+                    color={theme.palette.grey[700]}
                   >
                     {title}
                   </Typography>

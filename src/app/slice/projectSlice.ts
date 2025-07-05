@@ -36,22 +36,31 @@ const projectSlice = createSlice({
         // Store in local storage if not null, remove if null
         if (action.payload) {
           localStorage.setItem('selectedProjectId', action.payload.toString());
+          // Update selectedProject only if we have a valid ID and project list
+          if (state.projectList.length > 0) {
+            const foundProject = state.projectList.find(project => project.id === action.payload);
+            if (foundProject) {
+              state.selectedProject = foundProject;
+            }
+          }
         } else {
           localStorage.removeItem('selectedProjectId');
-        }
-        // Update selectedProject only if we have a valid ID
-        if (action.payload) {
-          state.selectedProject = state.projectList.find(project => project.id === action.payload) || state.selectedProject;
+          state.selectedProject = null;
         }
       }
     },
     setProjectList: (state, action: PayloadAction<Project[]>) => {
       state.projectList = action.payload;
       // Only try to find selected project if we have a selectedProjectId
-      if (state.selectedProjectId) {
-        const foundProject = state.projectList.find(project => project.id === state.selectedProjectId);
+      if (state.selectedProjectId && action.payload.length > 0) {
+        const foundProject = action.payload.find(project => project.id === state.selectedProjectId);
         if (foundProject) {
           state.selectedProject = foundProject;
+        } else {
+          // If the selected project is not found in the new list, clear the selection
+          state.selectedProjectId = null;
+          state.selectedProject = null;
+          localStorage.removeItem('selectedProjectId');
         }
       }
     },

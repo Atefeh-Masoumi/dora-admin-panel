@@ -10,18 +10,18 @@ export const cdnDnsTableStruct: columnType[] = [
     id: "zoneName",
     label: "نام سرویس",
   },
-  {
-    id: "isHsts",
-    label: "HSTS",
-  },
-  {
-    id: "isHttpsRedirect",
-    label: "Https Redirection",
-  },
-  {
-    id: "isNonWwwRedirect",
-    label: "Non WWW Redirection",
-  },
+  // {
+  //   id: "isHsts",
+  //   label: "HSTS",
+  // },
+  // {
+  //   id: "isHttpsRedirect",
+  //   label: "Https Redirection",
+  // },
+  // {
+  //   id: "isNonWwwRedirect",
+  //   label: "Non WWW Redirection",
+  // },
   {
     id: "statusId",
     label: "وضعیت",
