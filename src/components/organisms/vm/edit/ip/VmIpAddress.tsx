@@ -45,25 +45,10 @@ const LoadingSkeleton: FC = () => (
 );
 
 export const VmIpAddress: FC = () => {
-  // const { serverId } = useContext(EditServerContext);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const { projectId, id } = useParams();
-  const { data, refetch, isLoading } = useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery({ projectId: Number(projectId), vmHostId: Number(id) })
-
-  // const [getData, { isLoading }] = useLazyGetApiMyDatacenterIpListByIdQuery();
-  // const [data, setData] =
-  //   useState<GetApiMyDatacenterIpListByIdApiResponse | null>(null);
-
-  // useEffect(() => {
-  //   if (serverId) {
-  //     getData({ id: serverId })
-  //       .unwrap()
-  //       .then((res) => {
-  //         res && setData(res);
-  //       })
-  //       .catch(() => {});
-  //   }
-  // }, [getData, serverId]);
+  const { data, refetch, isLoading } =
+    useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery({ projectId: Number(projectId), vmHostId: Number(id) })
 
   const openCreateDialogHandler = () => {
     setShowCreateDialog(true);
@@ -101,81 +86,42 @@ export const VmIpAddress: FC = () => {
             افزودن IP
           </Button>
         </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>
-          <Grid2 container spacing={2} sx={{ p: 1 }}>
-            <Grid2 size={{ xs: 12, md: 6 }}>
-              <Paper
-                component={Stack}
-                direction="column"
-                spacing={1}
-                elevation={0}
-                sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
-              >
-                <Typography fontWeight={700} fontSize={18} align="right">
-                  IPv6
+          <Paper
+            component={Stack}
+            direction="column"
+            spacing={1}
+            elevation={0}
+            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
+          >
+            <Grid2 container alignItems="center">
+              <Grid2 size={{ xs: 6, sm: 4 }}>
+                <Typography color="grey.700" align="center">
+                  آدرس IP
                 </Typography>
-                <Divider />
-                <Grid2 container alignItems="center">
-                  <Grid2 size={{ xs: 6, sm: 4 }}>
-                    <Typography color="grey.700" align="center">
-                      آدرس IP
-                    </Typography>
-                  </Grid2>
-                  <Grid2 size={{ xs: 3, sm: 3.9 }}>
-                    <Typography color="grey.700" align="center">
-                      Primary
-                    </Typography>
-                  </Grid2>
-                  <Grid2 size={{ xs: 3, sm: 3.9 }} />
-                </Grid2>
-                {isLoading ? (
-                  <LoadingSkeleton />
-                ) : (
-                  data
-                    ?.filter((item) => !item.isV4)
-                    .map((filteredItem, index) => {
-                      return <IpRow key={index} {...filteredItem} refetch={refetch} />;
-                    })
-                )}
-              </Paper>
-            </Grid2>
-            <Grid2 size={{ xs: 12, md: 6 }}>
-              <Paper
-                component={Stack}
-                direction="column"
-                spacing={1}
-                elevation={0}
-                sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
-              >
-                <Typography fontWeight={700} fontSize={18} align="right">
-                  IPv4
+              </Grid2>
+              <Grid2 size={{ xs: 3, sm: 3.9 }}>
+                <Typography color="grey.700" align="center">
+                  نوع
                 </Typography>
-                <Divider />
-                <Grid2 container alignItems="center">
-                  <Grid2 size={{ xs: 6, sm: 4 }}>
-                    <Typography color="grey.700" align="center">
-                      آدرس IP
-                    </Typography>
-                  </Grid2>
-                  <Grid2 size={{ xs: 3, sm: 3.9 }}>
-                    <Typography color="grey.700" align="center">
-                      Primary
-                    </Typography>
-                  </Grid2>
-                  <Grid2 size={{ xs: 3, sm: 3.9 }} />
-                </Grid2>
-                {isLoading ? (
-                  <LoadingSkeleton />
-                ) : (
-                  data
-                    ?.filter((item) => item.isV4)
-                    .map((filteredItem, index) => {
-                      return <IpRow key={index} {...filteredItem} refetch={refetch} />;
-                    })
-                )}
-              </Paper>
+              </Grid2>
+              <Grid2 size={{ xs: 3, sm: 3.9 }}>
+                <Typography color="grey.700" align="center">
+                  Primary
+                </Typography>
+              </Grid2>
+              <Grid2 size={{ xs: 0, sm: 0.2 }} />
             </Grid2>
-          </Grid2>
+            {isLoading ? (
+              <LoadingSkeleton />
+            ) : (
+              data
+                ?.map((item, index) => {
+                  return <IpRow key={index} {...item} vmHostId={Number(id)} refetch={refetch} />;
+                })
+            )}
+          </Paper>
         </Stack>
       </Paper>
       <AddIpDialog
