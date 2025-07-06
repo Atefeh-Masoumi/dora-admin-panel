@@ -23,8 +23,8 @@ variables:
 package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development-dorsa:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development-dorsa:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-client-development-dorsa
+    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-development
   only:
     - development
 
@@ -34,8 +34,8 @@ deploy_development:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development-dorsa.yaml
-    - kubectl -n development rollout restart deployment front-client-development-dorsa
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
+    - kubectl -n development rollout restart deployment front-client-development
   only:
     - development
 
@@ -102,7 +102,7 @@ deploy_dorsa_prod:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-main.yaml
+    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa.yaml
     - kubectl -n main rollout restart deployment front-my-v1
   when: on_success
   only: 
