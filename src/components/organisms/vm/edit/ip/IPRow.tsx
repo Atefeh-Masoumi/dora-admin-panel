@@ -1,7 +1,7 @@
-import { DatacenterIpListResponse, useDeleteApiMyDatacenterIpDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation } from "src/app/services/api.generated";
 import {
-    CheckCircleOutline as CheckCircleOutlineIcon,
-    Cancel as CancelIcon,
+  CheckCircleOutline as CheckCircleOutlineIcon,
+  Cancel as CancelIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { FC, useState } from "react";
@@ -10,28 +10,34 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Grid2 } from "@mui/material";
 import { CircularProgress, IconButton, Typography } from "@mui/material";
 import { IPDeleteDialog } from "./dialog/IPDeleteDialog";
+import { useParams } from "react-router";
 
-interface IpRowProps extends DatacenterIpListResponse {
+type IpRowProps = {
   refetch: () => void;
+  ipAddress: string | null;
+  isPrimary?: boolean;
+  vmHostId: number;
+  id: number;
 }
 
-const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
-  const [deleteIp, { isLoading }] = useDeleteApiMyDatacenterIpDeleteByIdMutation();
+const IpRow: FC<IpRowProps> = ({ ipAddress, isPrimary, vmHostId, id, refetch }) => {
+  const [deleteIp, { isLoading }] = useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control the dialog
 
+  const { projectId } = useParams();
   const handleDelete = () => {
     if (id) {
-      deleteIp({ id })
+      deleteIp({ projectId: Number(projectId), vmHostId, id })
         .unwrap()
         .then(() => {
           toast.success("با موفقیت حذف شد");
-          refetch(); 
+          refetch();
         })
         .catch((err) => {
           toast.error("حذف انجام نشد");
         })
         .finally(() => {
-          setIsDeleteDialogOpen(false); 
+          setIsDeleteDialogOpen(false);
         });
     }
   };
@@ -51,17 +57,17 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
         sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
         alignItems="center"
       >
-        <Grid2 size={{xs:6,sm:4}} 
+        <Grid2 size={{ xs: 6, sm: 4 }}
           container
           alignItems="center"
           justifyContent="center"
         >
           <Typography maxWidth={125} textOverflow="ellipsis">
-            {ip}
+            {ipAddress}
           </Typography>
         </Grid2>
-        <Grid2 size={{xs:2.8,sm:3.9}}
-          
+        <Grid2 size={{ xs: 2.8, sm: 3.9 }}
+
           container
           alignItems="center"
           justifyContent="center"
@@ -72,7 +78,7 @@ const IpRow: FC<IpRowProps> = ({ ip, isPrimary, id, refetch }) => {
             <CancelIcon sx={{ color: "grey.700" }} />
           )}
         </Grid2>
-        <Grid2 size={{xs:2.8,sm:3.9}}
+        <Grid2 size={{ xs: 2.8, sm: 3.9 }}
           container
           alignItems="center"
           justifyContent="center"

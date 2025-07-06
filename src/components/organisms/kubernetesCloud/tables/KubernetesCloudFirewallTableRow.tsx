@@ -5,9 +5,9 @@ import {
   import { FC, Fragment, useState } from "react";
   import { toast } from "react-toastify";
   import {
-    KuberCloudFirewallListResponse,
-    useDeleteApiMyKubernetesCloudFirewallDeleteByIdMutation,
-    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery,
+    KuberFirewallListResponse,
+    useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallDeleteIdMutation,
+    useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery,
   } from "src/app/services/api.generated";
   import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
   import { DeleteDialog } from "src/components/molecules/DeleteDialog";
@@ -29,12 +29,12 @@ import { useParams } from "react-router";
     // const [open, setOpen] = useState(false);
     const id = row.id!;
     // const configList = row.configMaps! || [];
-    const { kubernetesCloudId } = useParams();
+    const { kubernetesCloudId,projectId } = useParams();
 
     const { refetch } =
-    useGetApiMyKubernetesCloudFirewallListByNamespaceIdQuery(
+    useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery(
         {
-          namespaceId: Number(kubernetesCloudId) || 0,
+          kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId)
         },
         { skip: !kubernetesCloudId }
       );
@@ -43,13 +43,13 @@ import { useParams } from "react-router";
     const [
       selectedKubernetesCloudFirewall,
       setSelectedKubernetesCloudFirewall,
-    ] = useState<KuberCloudFirewallListResponse | null>(null);
+    ] = useState<KuberFirewallListResponse | null>(null);
   
     const [deleteFirewall, { isLoading: deleteFirewallLoading }] =
-      useDeleteApiMyKubernetesCloudFirewallDeleteByIdMutation();
+    useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallDeleteIdMutation();
   
     const deleteDnsRecordHandler = () =>
-      deleteFirewall({ id: Number(selectedKubernetesCloudFirewall?.id) })
+      deleteFirewall({ id: Number(selectedKubernetesCloudFirewall?.id), kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId)})
         .unwrap()
         .then(() => {
           toast.success("با موفقیت حذف شد");
@@ -63,7 +63,7 @@ import { useParams } from "react-router";
       setSelectedKubernetesCloudFirewall(null);
     };
   
-    const handleOpenDeleteModal = (config: KuberCloudFirewallListResponse) => {
+    const handleOpenDeleteModal = (config: KuberFirewallListResponse) => {
       setSelectedKubernetesCloudFirewall(config);
       setDialogType(DIALOG_TYPE_ENUM.DELETE);
     };

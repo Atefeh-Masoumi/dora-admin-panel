@@ -7,7 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { formikOnSubmitType } from "src/types/form.type";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
-import { usePostApiMyPortalVoucherUseMutation } from "src/app/services/api.generated";
+import { usePostApiMyFinancialVoucherUseMutation } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const formInitialValues = {
@@ -27,7 +27,7 @@ export const GiftDialog: FC<GiftDialogPropsType> = ({
   openDialog,
   handleClose,
 }) => {
-  const [addGift, { isLoading }] = usePostApiMyPortalVoucherUseMutation();
+  const [addGift, { isLoading }] = usePostApiMyFinancialVoucherUseMutation();
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { giftCode },

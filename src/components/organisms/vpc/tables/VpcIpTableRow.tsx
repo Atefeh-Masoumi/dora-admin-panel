@@ -8,10 +8,11 @@ import { vpcIpTableStruct } from "./struct";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import CloseIcon from "@mui/icons-material/Close";
 import {
-  VpcHostGatewayListResponse,
-  useDeleteApiMyVpcIpDeleteByIdMutation,
+  VpcHostIpListResponse,
+  useDeleteApiMyVmByProjectIdVpcAndVpcHostIdIpDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+import { useParams } from "react-router-dom";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -21,29 +22,34 @@ enum DIALOG_TYPE_ENUM {
 const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVpcIp, setSelectedVpcIp] =
-    useState<VpcHostGatewayListResponse | null>(null);
+    useState<VpcHostIpListResponse | null>(null);
+  const { projectId, vpcId } = useParams();
 
   const [deleteVpcIpRecord, { isLoading: deleteVpcIpRecordLoading }] =
-    useDeleteApiMyVpcIpDeleteByIdMutation();
+    useDeleteApiMyVmByProjectIdVpcAndVpcHostIdIpDeleteIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedVpcIp(null);
   };
 
-  const handleOpenDelete = (vpcIp: VpcHostGatewayListResponse) => {
+  const handleOpenDelete = (vpcIp: VpcHostIpListResponse) => {
     setSelectedVpcIp(vpcIp);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
   const deleteVpcIpRecordHandler = () =>
-    deleteVpcIpRecord({ id: Number(selectedVpcIp?.id) })
+    deleteVpcIpRecord({ 
+      id: Number(selectedVpcIp?.id),
+      projectId: Number(projectId),
+      vpcHostId: Number(vpcId)
+    })
       .unwrap()
       .then(() => {
         toast.success("IP مورد نظر حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err: any) => {});
 
   return (
     <Fragment>
@@ -107,7 +113,7 @@ const VpcIpTableRow: FC<{ row: any }> = ({ row }) => {
         keyTitle="IP"
         subjectTitle="مقدار"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedVpcIp?.ip || ""}
+        securityPhrase={selectedVpcIp?.ipAddress || ""}
         onSubmit={deleteVpcIpRecordHandler}
         submitLoading={deleteVpcIpRecordLoading}
       />

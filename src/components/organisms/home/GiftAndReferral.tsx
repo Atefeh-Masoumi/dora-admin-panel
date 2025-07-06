@@ -10,7 +10,7 @@ import {
 import { FC, Fragment, useState } from "react";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { GiftDialog } from "../portal/financial/payment/dialog/GiftDialog";
-import { useGetApiMyPortalReferralGetQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialReferralGetQuery } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { Copy } from "src/components/atoms/svg-icons/CopySvg";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -20,7 +20,7 @@ export const GiftAndReferral: FC = () => {
   const [giftCodeOpen, setGiftCodeOpen] = useState(false);
 
   const handleCloseGiftDialog = () => setGiftCodeOpen(false);
-  const { data: referralData, isLoading } = useGetApiMyPortalReferralGetQuery();
+  const { data: referralData, isLoading } = useGetApiMyFinancialReferralGetQuery();
 
   return (
     <Fragment>

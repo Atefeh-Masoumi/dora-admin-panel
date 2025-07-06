@@ -1,7 +1,7 @@
 import { Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FC, useState } from "react";
-import { useGetApiMyPortalCommissionListQuery } from "src/app/services/api.generated";
+import { useGetApiMyFinancialWalletCommissionListQuery } from "src/app/services/api.generated";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import CommissionTableRow from "src/components/organisms/portal/financial/commission/tables/CommissionTableRow";
 import { commissionTableStruct } from "src/components/organisms/portal/financial/commission/tables/struct";
@@ -10,7 +10,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const Commission: FC = () => {
   const { data: commissionList, isLoading: commissionListLoading } =
-    useGetApiMyPortalCommissionListQuery();
+    useGetApiMyFinancialWalletCommissionListQuery();
 
   const [search, setSearch] = useState("");
 

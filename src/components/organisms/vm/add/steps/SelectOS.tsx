@@ -17,17 +17,18 @@ import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVm
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import {
-  DatacenterImageListResponse,
-  useGetApiMyDatacenterImageListQuery,
+  VmImageListResponse,
+  useGetApiMyVmByProjectIdImageListQuery,
 } from "src/app/services/api.generated";
 import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
+import { useParams } from "react-router";
 
 type SelectOSPropsType = {
   hostProjectId: number;
 };
 
 type OsDropDownType = {
-  content: DatacenterImageListResponse[];
+  content: VmImageListResponse[];
   osId: number;
   os: string;
   selectedImageId: string | null;
@@ -36,12 +37,15 @@ type OsDropDownType = {
 
 export const SelectOS: FC<SelectOSPropsType> = ({ hostProjectId }) => {
   const { setOsVersion: setOsImage } = useContext(AddServerContext);
+  const { projectId } = useParams();
 
-  const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
+  const { data: osImagesList, isLoading } = useGetApiMyVmByProjectIdImageListQuery(
     {
-      datacenterId: 0,
+      projectId: Number(projectId),
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hostProjectId: hostProjectId,
+    },
+    {
+      skip: !projectId,
     }
   );
 
@@ -51,17 +55,17 @@ export const SelectOS: FC<SelectOSPropsType> = ({ hostProjectId }) => {
 
   useEffect(() => {
     let newOsDropDownsState: OsDropDownType[] = [];
-    osImagesList?.forEach((osImage) => {
+    osImagesList?.forEach((osImage: VmImageListResponse) => {
       const index = newOsDropDownsState.findIndex(
-        (dropDown) => dropDown.osId === osImage.osId
+        (dropDown) => dropDown.osId === osImage.operatingSystemId
       );
       if (index !== -1) {
         newOsDropDownsState[index].content.push(osImage);
       } else {
         newOsDropDownsState.push({
           content: [{ ...osImage }],
-          osId: osImage.osId || 0,
-          os: osImage.os || "",
+          osId: osImage.operatingSystemId || 0,
+          os: osImage.operatingSystem || "",
           selectedImageId: osImage.id?.toString() || "",
           isSelected: false,
         });

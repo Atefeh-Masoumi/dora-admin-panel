@@ -6,13 +6,13 @@ import {
   createContext,
   useState,
 } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
-  usePostApiMyKubernetesCloudHostCreateMutation,
+  usePostApiMyKubernetesCloudByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 
 export type kubernetesCloudCustomConfigType = {
@@ -92,9 +92,9 @@ const AddKubernetesCloudContextProvider: FC<
     });
 
   const navigate = useNavigate();
-
+  const { projectId } = useParams();
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyKubernetesCloudHostCreateMutation();
+  usePostApiMyKubernetesCloudByProjectIdHostCreateMutation();
 
   const submitHandler = () => {
     let validationErrorMessage = "";
@@ -114,17 +114,17 @@ const AddKubernetesCloudContextProvider: FC<
     }
 
     createKubernetes({
-      createKuberCloudHostModel: {
+      createKuberHostModel: {
         name: serviceName,
-        datacenterId: dataCenter!.id!,
+        // datacenterId: dataCenter!.id!,
         productBundleId: serverConfig?.id || 0,
         isPredefined: isPredefined,
         cpu: customConfig.cpu,
         memory: customConfig.memory,
         disk: customConfig.disk,
         tenPods: customConfig.pods10 /10,
-        hostProjectId: null,
       },
+      projectId: Number(projectId),
     })
       .unwrap()
       .then(() => {

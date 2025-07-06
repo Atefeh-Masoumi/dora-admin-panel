@@ -1,6 +1,6 @@
 import {
-  KuberCloudConfigListResponse,
-  KuberCloudSecretListResponse,
+  KuberConfigListResponse,
+  KuberSecretListResponse,
 } from "src/app/services/api.generated";
 import { ENVIRONMENT_TYPES } from "src/constant/kubernetesCloud.constant";
 import { KeyListInResourceType } from "src/types/kubernetesCloud.types";
@@ -8,8 +8,8 @@ import { KeyListInResourceType } from "src/types/kubernetesCloud.types";
 export const getResourceItems = (
   resourceType: number,
   resourceId: number,
-  configmapList: KuberCloudConfigListResponse[],
-  secretList: KuberCloudSecretListResponse[]
+  configmapList: KuberConfigListResponse[],
+  secretList: KuberSecretListResponse[]
 ) => {
   const resourceRetrievers: Record<number, () => KeyListInResourceType> = {
     [ENVIRONMENT_TYPES.CONFIG_MAP]: () =>

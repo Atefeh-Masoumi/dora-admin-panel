@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Divider,
   FormControlLabel,
   Grid,
   Stack,
@@ -14,14 +13,8 @@ import {
 } from "@mui/material";
 import * as yup from "yup";
 import { FC, SyntheticEvent, useEffect, useState } from "react";
-import {
-  useGetApiMyAccountRoleListQuery,
-  usePostApiMyAccountCustomerUserCreateMutation,
-} from "src/app/services/api.generated";
 import { useFormik } from "formik";
 import { formikOnSubmitType } from "src/types/form.type";
-import RoleAccessList from "../RoleAccessList";
-import PageLoading from "src/components/atoms/PageLoading";
 import { toast } from "react-toastify";
 import {
   access,
@@ -30,6 +23,10 @@ import {
 } from "src/constant/accessModal.constant";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import {
+  useGetApiMyAccountCustomerUserListQuery,
+  usePostApiMyAccountCustomerUserCreateMutation,
+} from "src/app/services/api.generated";
 
 type CreateUserAccessModalPropsType = DialogProps & {
   forceClose: () => any;
@@ -54,7 +51,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   const [roleAccessList, setRoleAccessList] = useState<RoleAccessStateType>([]);
 
   const { data: roleList, isLoading: roleListIsLoading } =
-    useGetApiMyAccountRoleListQuery();
+    useGetApiMyAccountCustomerUserListQuery();
 
   const [createCustomerUser, { isLoading: createUserIsLoading }] =
     usePostApiMyAccountCustomerUserCreateMutation();
@@ -132,24 +129,8 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
       createCustomerUserModel: {
         userName,
         isSuperUser: superUser,
-        isAccountManager: superUser ? false : accountManager,
-        isFinancialManager: superUser ? false : financialManager,
-        roleAccesses: superUser
-          ? []
-          : roleAccessList
-              ?.filter((roleAccess) => roleAccess.isRoleChecked)
-              ?.map((roleAccess) => {
-                return {
-                  roleId: roleAccess?.roleId!,
-                  roleAccessTypeId: roleAccess.roleAccessTypeId,
-                  accessTuples: roleAccess.accessTuples.map((access) => {
-                    return {
-                      accessId: access.accessId,
-                      hasAccess: access.hasAccess,
-                    };
-                  }),
-                };
-              }),
+        isAccountManager: accountManager,
+        isFinancialManager: financialManager,
       },
     })
       .unwrap()
@@ -159,11 +140,11 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
         handleReset();
         resetForm();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   useEffect(() => {
-    const newRoleAccessList = roleList?.map((role) => {
+    const newRoleAccessList = roleList?.map((role: any) => {
       return {
         roleId: role.id,
         roleName: role.name,
@@ -183,7 +164,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
   }, [selectAll]);
 
   useEffect(() => {
-    const newRoleAccessList = roleList?.map((role) => {
+    const newRoleAccessList = roleList?.map((role: any) => {
       return {
         roleId: role.id,
         roleName: role.name,
@@ -347,7 +328,7 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                       textAlign: "start",
                       whiteSpace: "normal",
                     }}
-                    // pr={{ xs: 0, md: 1 }}
+                  // pr={{ xs: 0, md: 1 }}
                   >
                     <Stack
                       direction="row"
@@ -384,42 +365,6 @@ export const CreateUserAccessModal: FC<CreateUserAccessModalPropsType> = ({
                   </Grid>
                 ))}
               </Grid>
-            </Stack>
-
-            <Divider flexItem />
-
-            <Stack direction="column" p={1} rowGap={1} columnGap={1}>
-              <Box sx={{ width: "100%" }}>
-                <Typography>سطح‌های دسترسی</Typography>
-              </Box>
-              <Box sx={{ padding: 0, margin: 0 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectAll}
-                      disabled={superUser ? true : false}
-                      onChange={(e, checked) => {
-                        handleCheckbox(checked);
-                        if (checked === true) {
-                          setSuperUser(false);
-                        }
-                      }}
-                    />
-                  }
-                  label="همه"
-                />
-              </Box>
-              {roleListIsLoading || roleAccessList?.length === 0 ? (
-                <PageLoading />
-              ) : (
-                <RoleAccessList
-                  {...{
-                    setRoleAccessList,
-                    roleAccessList,
-                    disabled: superUser,
-                  }}
-                />
-              )}
             </Stack>
             <Stack direction="row" justifyContent="end" spacing={1}>
               <Button

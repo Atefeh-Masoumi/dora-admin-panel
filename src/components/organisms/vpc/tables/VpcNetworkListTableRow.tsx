@@ -1,12 +1,13 @@
 import { IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import { useDeleteApiMyVpcNetworkDeleteByIdMutation } from "src/app/services/api.generated";
+import { useDeleteApiMyVmByProjectIdVpcAndVpcHostIdInterfaceRemoveIdMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { vpcNetworkStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+import { useParams } from "react-router-dom";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -16,9 +17,10 @@ enum DIALOG_TYPE_ENUM {
 const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<any>(null);
+  const { projectId, vpcId } = useParams();
 
   const [deleteNetworkRecord, { isLoading: deleteNetworkRecordLoading }] =
-    useDeleteApiMyVpcNetworkDeleteByIdMutation();
+    useDeleteApiMyVmByProjectIdVpcAndVpcHostIdInterfaceRemoveIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -31,7 +33,11 @@ const VpcNetworkListTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteNetworkRecordHandler = () =>
-    deleteNetworkRecord({ id: Number(selectedNetwork?.id) })
+    deleteNetworkRecord({ 
+      id: Number(selectedNetwork?.id),
+      projectId: Number(projectId),
+      vpcHostId: Number(vpcId)
+    })
       .unwrap()
       .then(() => {
         toast.success("Network رکورد مورد نظر حذف شد");

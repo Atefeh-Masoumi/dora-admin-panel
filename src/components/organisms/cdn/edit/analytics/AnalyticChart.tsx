@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FC, Fragment, useMemo, useState } from "react";
+import { FC, Fragment, useMemo, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   CartesianGrid,
@@ -19,7 +19,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useGetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdQuery } from "src/app/services/api.generated";
+import { usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
@@ -37,26 +37,37 @@ type AnalyticChartPropsType = {};
 
 export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const { id } = useParams();
-  const dnsId = Number(id) || 0;
-
+  const { projectId } = useParams();
   const [categoryId, setCategoryId] = useState(0);
+  const dnsId = Number(id) || 0;
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategoryId(+event.target.value);
   };
 
-  const {
-    data: userAnalytics,
-    isLoading: getDataLoading,
-    isFetching: getDataFetching,
-  } = useGetApiMyDnsCdnHostGetAnalyticByIdAndPeriodIdQuery({
-    id: dnsId,
-    periodId: categoryId + 1,
-  });
+  const [
+    getAnalytics,
+    {
+      data: userAnalytics,
+      isLoading: getDataLoading,
+    },
+  ] = usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation();
+
+  useEffect(() => {
+    if (projectId && dnsId) {
+      getAnalytics({
+        projectId: Number(projectId),
+        id: dnsId,
+        getAnalyticModel: {
+          periodId: categoryId + 1,
+        },
+      });
+    }
+  }, [projectId, dnsId, categoryId, getAnalytics]);
 
   const isLoading = useMemo(
-    () => getDataLoading || getDataFetching,
-    [getDataFetching, getDataLoading]
+    () => getDataLoading,
+    [getDataLoading]
   );
 
   return (
@@ -140,7 +151,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={userAnalytics?.series?.[0]?.data?.map(
-                    (item, index) => ({
+                    (item: number, index: number) => ({
                       uv: item,
                       name: index,
                     })

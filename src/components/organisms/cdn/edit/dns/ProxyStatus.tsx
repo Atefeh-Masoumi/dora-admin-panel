@@ -10,25 +10,28 @@ import {
 } from "@mui/material";
 import { CloudTrue } from "src/components/atoms/svg-icons/CloudTrueSvg";
 import { CloudFalse } from "src/components/atoms/svg-icons/CloudFalseSvg";
-import { usePutApiMyDnsCdnDnsRecordChangeProxyByIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordChangeProxyIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import PageLoading from "src/components/atoms/PageLoading";
-
+import { useParams } from "react-router-dom";
 type ProxyStatusProps = { status: boolean; id: number };
 
 export const ProxyStatus: FC<ProxyStatusProps> = ({ status, id }) => {
+  const { projectId } = useParams();
   const [open, setOpen] = useState(false);
   const handleTooltipClose = () => setOpen(false);
   const handleTooltipOpen = () => setOpen(!open);
 
   const [changeProxyStatus, { isLoading }] =
-    usePutApiMyDnsCdnDnsRecordChangeProxyByIdMutation();
+    usePutApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordChangeProxyIdMutation();
 
   const changeProxy = () => {
     if (status === undefined) return;
 
-    changeProxyStatus({ id })
+    changeProxyStatus({ id, 
+      projectId: Number(projectId), 
+      dnsCdnHostId: 0 })
       .unwrap()
       .then(() => toast.success("Proxy status updated"))
       .catch((res) => {});

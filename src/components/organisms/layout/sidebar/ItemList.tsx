@@ -89,7 +89,7 @@ export const ItemList: FC<ItemListPropsType> = ({ listItems }) => {
                 fontSize: "16px",
                 fontWeight: 400,
               }}
-              primary="داشبورد"
+              primary="پیشخوان"
             />
           </CustomListItemButton>
         </ListItem>

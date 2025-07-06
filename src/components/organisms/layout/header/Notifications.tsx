@@ -18,7 +18,7 @@ import {
 import { EmptyNotificationSvg } from "src/components/atoms/svg-icons/EmptyNotifSvg";
 import { NotificationSvg } from "src/components/atoms/svg-icons/NotificationSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { useGetApiMyAccountNotificationShortListQuery } from "src/app/services/api.generated";
+import { useGetApiMyPortalNotificationShortListQuery } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 export const Notifications: FC = () => {
@@ -28,7 +28,7 @@ export const Notifications: FC = () => {
   const theme = useTheme();
 
   const { data: notifications, isLoading } =
-    useGetApiMyAccountNotificationShortListQuery();
+  useGetApiMyPortalNotificationShortListQuery();
 
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>

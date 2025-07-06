@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
-  usePostApiMyVmHostCreateMutation,
+  usePostApiMyVmByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -13,26 +13,13 @@ import ServiceReceipt, {
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { SelectConfig } from "src/components/organisms/vm/add/steps/SelectConfig";
 import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectConfigType";
-import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
+// import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
-
-// const mapConfig = {
-//   cpu: "CPU",
-//   memory: "Memory",
-//   disk: "Disk",
-//   ipv4: "IPV4",
-//   ipv6: "IPV6",
-//   rackUnitSpace: "Rack Space Unit",
-//   powerAmp: "Power (A)",
-//   ipv4Count: "IPV4",
-//   networkPort10G: "Network 10G Port",
-//   networkPort1G: "Network 1G Port",
-// };
 
 const AddVm: FC = () => {
   const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
@@ -61,7 +48,7 @@ const AddVm: FC = () => {
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
-    usePostApiMyVmHostCreateMutation();
+    usePostApiMyVmByProjectIdHostCreateMutation();
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -127,25 +114,27 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-          publicKey: null,
-          imageId: osVersion?.id || 0,
+
+          vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-          vmProjectId: Number(projectId),
-          vpcHostNetworkId: Number(selectedNetwork),
+
           ipAddress: String(selectedIp),
           storageClassTypeId: 1,
+          usedPublicIpV4: true,
+          usedPublicIpV6: false
         },
+        projectId: Number(projectId),
       })
         .unwrap()
         .then(() => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
           navigate(-1);
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 
@@ -179,7 +168,7 @@ const AddVm: FC = () => {
                 py: { xs: 1.8, lg: 2.25 },
               }}
             >
-              {Number(vmType) === VM_PUBLICITY_TYPE.VPC_VM && (
+              {/* {Number(vmType) === VM_PUBLICITY_TYPE.VPC_VM && (
                 <Grid xs={12} item>
                   <SelectNetworkIpForVpc
                     handleSelectedNetwork={handleSelectedNetworkOnChange}
@@ -187,7 +176,7 @@ const AddVm: FC = () => {
                   />
                   <Divider sx={{ mt: 3, mb: 3 }} />
                 </Grid>
-              )}
+              )} */}
               <Grid container gap={2}>
                 <Grid xs={12} item>
                   <SelectOS hostProjectId={Number(projectId)} />

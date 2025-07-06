@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -103,6 +103,7 @@ type ReceiptPropsType = {
 };
 
 const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
+  const { projectId } = useParams();
   const { data: dnsData } = useGetApiMyPortalProductItemListByProductIdQuery({
     productId: PRODUCT_CATEGORY_ENUM.DNS,
   });
@@ -288,7 +289,7 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
         <Button
           variant="contained"
           onClick={() => {
-            navigate("/cdn/add-zone");
+            navigate(`/cdn/${projectId}/add-zone`);
           }}
           size="large"
           sx={{ padding: "5px" }}

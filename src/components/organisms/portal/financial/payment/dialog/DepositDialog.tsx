@@ -14,6 +14,11 @@ import { numberToWords } from "@persian-tools/persian-tools";
 import { Form, Formik } from "formik";
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import {
+  CreatePaymentResponse,
+  useGetApiMyFinancialPaymentProviderListQuery,
+  usePostApiMyFinancialPaymentCreateMutation,
+} from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ParsianLogo } from "src/components/atoms/svg-icons/ParsianSvg";
@@ -23,11 +28,7 @@ import MellatLogo from "src/components/atoms/svg-icons/mellat.png";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
-import {
-  CreatePaymentResponse,
-  useGetApiMyPortalPaymentProviderListQuery,
-  usePostApiMyPortalPaymentCreateMutation,
-} from "src/app/services/api.generated";
+
 
 const selectedStyle: SxProps<Theme> = {
   border: 1,
@@ -61,10 +62,10 @@ export const DepositDialog: FC<DepositDialogPropsType> = ({
   const [mellatResponsePhoneNumber, setMellatResponsePhoneNumber] =
     useState("");
   const [createDeposit, { isLoading }] =
-    usePostApiMyPortalPaymentCreateMutation();
+    usePostApiMyFinancialPaymentCreateMutation();
 
   const { data: paymentProviderList, isLoading: paymentProviderListLoading } =
-    useGetApiMyPortalPaymentProviderListQuery();
+    useGetApiMyFinancialPaymentProviderListQuery();
 
   const formRef = useRef<HTMLFormElement | null>(null);
 

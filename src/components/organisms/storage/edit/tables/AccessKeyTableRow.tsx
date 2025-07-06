@@ -10,15 +10,15 @@ import {
 import { FC, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  StorageUserListResponse,
-  useDeleteApiMyObjectStorageStorageUserDeleteByIdMutation,
+  StorageKeyListResponse,
+  useDeleteApiMyStorageByProjectIdHostAndStorageHostIdKeyDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { accessKeyTableStruct } from "./AccessKeyStruct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-
+import { useParams } from "react-router";
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
@@ -27,12 +27,13 @@ enum DIALOG_TYPE_ENUM {
 const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedAccessKey, setSelectedAccessKey] =
-    useState<StorageUserListResponse | null>(null);
+    useState<StorageKeyListResponse | null>(null);
   const [showSecretKey, setShowSecretKey] = useState(true);
 
   const handleShowSecretKeyOnClick = () => {
     setShowSecretKey(!showSecretKey);
   };
+  const { projectId,id:storageHostId } = useParams();
 
   const handleCopySecretKeyOnClick = () => {
     if (!row.secretKey) return;
@@ -46,16 +47,20 @@ const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedAccessKey(null);
   };
 
-  const handleOpenDelete = (accessKey: StorageUserListResponse) => {
+  const handleOpenDelete = (accessKey: StorageKeyListResponse) => {
     setSelectedAccessKey(accessKey);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
   const [DeleteAccessKey, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyObjectStorageStorageUserDeleteByIdMutation();
+    useDeleteApiMyStorageByProjectIdHostAndStorageHostIdKeyDeleteIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    DeleteAccessKey({ id: Number(selectedAccessKey?.id) })
+    DeleteAccessKey({ 
+      projectId: Number(projectId), 
+      storageHostId: Number(storageHostId), 
+      id: Number(selectedAccessKey?.id) 
+    })
       .unwrap()
       .then(() => {
         toast.success(" کلید دسترسی با موفقیت حذف شد");

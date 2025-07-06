@@ -1,7 +1,6 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetApiMyDnsCdnDnsRecordListByDnsCdnHostIdQuery } from "src/app/services/api.generated";
 import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { zoneTableStruct } from "src/components/organisms/cdn/edit/dns/tables/struct";
@@ -9,14 +8,15 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateRecordDialog } from "./dialogs/CreateRecordDialog";
 import ZoneTableRow from "./tables/DnsTableRow";
+import { useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordListQuery } from "src/app/services/api.generated";
 
 export const DnsRecord: FC = () => {
-  const { id } = useParams();
-  const dnsId = Number(id) || 0;
+  const { id, projectId } = useParams();
 
-  const { data: zoneList, isLoading } =
-    useGetApiMyDnsCdnDnsRecordListByDnsCdnHostIdQuery({
-      dnsCdnHostId: dnsId,
+  const { data: zoneList, isLoading, refetch } =
+    useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordListQuery({
+      dnsCdnHostId: Number(id),
+      projectId: Number(projectId)
     });
 
   const [search, setSearch] = useState("");
@@ -118,9 +118,10 @@ export const DnsRecord: FC = () => {
         </Stack>
       </Stack>
       <CreateRecordDialog
+        dnsId={Number(id)}
         openDialog={showDialog}
         onClose={handleClose}
-        dnsId={dnsId}
+        refetchRecords={refetch}
       />
     </Stack>
   );

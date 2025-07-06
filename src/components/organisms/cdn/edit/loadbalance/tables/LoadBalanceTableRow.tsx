@@ -3,7 +3,7 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
   CdnRouteListResponse,
-  useDeleteApiMyDnsCdnRouteDeleteByIdMutation,
+  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteDeleteIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
@@ -12,7 +12,7 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { CreateLoadBalanceDialog } from "../dialogs/CreateLoadBalanceDialog";
 import { loadBalanceTableStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-
+import { useParams } from "react-router-dom";
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
@@ -22,13 +22,13 @@ const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedCluster, setSelectedCluster] =
     useState<CdnRouteListResponse | null>(null);
-
+  const { projectId } = useParams();
   const handleOpenEdit = () => setOpenEdit(true);
   const [openEdit, setOpenEdit] = useState(false);
   const handleCloseEdit = () => setOpenEdit(false);
 
   const [deleteItem, { isLoading: deleteClusterRecordLoading }] =
-    useDeleteApiMyDnsCdnRouteDeleteByIdMutation();
+  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdCdnRouteDeleteIdMutation();
 
   const handleOpenDelete = (clusterInfo: CdnRouteListResponse) => {
     setSelectedCluster(clusterInfo);
@@ -41,7 +41,9 @@ const LoadBalanceTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteClusterRecordHandler = () =>
-    deleteItem({ id: Number(selectedCluster?.id) })
+    deleteItem({ id: Number(selectedCluster?.id), 
+      projectId: Number(projectId), 
+      dnsCdnHostId: 0 })
       .unwrap()
       .then(() => {
         toast.success("Load Balance با موفقیت حذف شد");

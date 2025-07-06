@@ -20,22 +20,25 @@ import { AddKubernetesContext } from "../contexts/AddKubernetesContext";
 import { Counter } from "../../../kubernetesCloud/add/steps/Counter";
 import {
   DatacenterListResponse,
-  useGetApiMyDatacenterImageListQuery,
   useGetApiMyKubernetesClusterVersionListQuery,
+  VmImageListResponse,
+  useGetApiMyVmByProjectIdImageListQuery,
 } from "src/app/services/api.generated";
+import { useParams } from "react-router";
 
 type SelectKuberSettingPropsType = {};
 
 export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   const {
-    dataCenter,
     kubernetesVersion,
     setKubernetesVersion,
-    osVersion,
-    setOsVersion,
-    workersCount,
-    setWorkersCount,
+    selectedOs,
+    setSelectedOs,
+    nodeQuantity,
+    setNodeQuantity,
   } = useContext(AddKubernetesContext);
+
+  const { projectId } = useParams();
 
   const { data } = useGetApiMyKubernetesClusterVersionListQuery();
 
@@ -58,11 +61,15 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
     setKubernetesVersion(enhancedValue);
   };
 
-  const { data: osVersionsList = [] } = useGetApiMyDatacenterImageListQuery({
-    datacenterId: dataCenter?.id || 1,
-    productId: PRODUCT_CATEGORY_ENUM.KubernetesCluster,
-    hostProjectId: 0,
-  });
+  const { data: osVersionsList = [] } = useGetApiMyVmByProjectIdImageListQuery(
+    {
+      projectId: Number(projectId),
+      productId: PRODUCT_CATEGORY_ENUM.KubernetesCluster,
+    },
+    {
+      skip: !projectId,
+    }
+  );
 
   useEffect(() => {
     if (
@@ -71,16 +78,16 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
       osVersionsList.length > 1
     )
       return;
-    setOsVersion(osVersionsList[0]);
-  }, [osVersionsList, setOsVersion]);
+    setSelectedOs(osVersionsList[0]);
+  }, [osVersionsList, setSelectedOs]);
 
   const osVersionOnChange = (
     event: SelectChangeEvent<number>,
     _: ReactNode
   ) => {
     const enhancedValue =
-      osVersionsList.find((item) => item.id === event.target.value) || null;
-    setOsVersion(enhancedValue);
+      osVersionsList.find((item: VmImageListResponse) => item.id === event.target.value) || null;
+    setSelectedOs(enhancedValue);
   };
 
   const isInRange = (num: number) => {
@@ -88,22 +95,22 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
   };
 
   const addOne = () => {
-    setWorkersCount((prevState) =>
+    setNodeQuantity((prevState: number) =>
       isInRange(prevState + 1) ? prevState + 1 : prevState
     );
   };
   const minusOne = () => {
-    setWorkersCount((prevState) =>
+    setNodeQuantity((prevState: number) =>
       isInRange(prevState - 1) ? prevState - 1 : prevState
     );
   };
   const workersCountOnChange = useCallback(
     (newValue: number) => {
-      setWorkersCount((prevState) =>
+      setNodeQuantity((prevState: number) =>
         isInRange(newValue) ? newValue : prevState
       );
     },
-    [setWorkersCount]
+    [setNodeQuantity]
   );
 
   return (
@@ -134,12 +141,12 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl disabled={!dataCenter}>
+        <FormControl>
           <InputLabel>نسخه سیستم عامل</InputLabel>
           <Select
             label="نسخه سیستم عامل"
             sx={{ width: 240 }}
-            value={osVersion?.id || ""}
+            value={selectedOs?.id || ""}
             onChange={osVersionOnChange}
           >
             {osVersionsList?.length === 0 ? (
@@ -147,7 +154,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
                 موردی یافت نشد
               </MenuItem>
             ) : (
-              osVersionsList?.map(({ id, name }) => {
+              osVersionsList?.map(({ id, name }: VmImageListResponse) => {
                 return (
                   <MenuItem key={id} value={id!}>
                     {name}
@@ -159,7 +166,7 @@ export const SelectKuberSetting: FC<SelectKuberSettingPropsType> = () => {
         </FormControl>
         <Counter
           label="تعداد نودهای کلاستر"
-          value={workersCount}
+          value={nodeQuantity}
           onChange={workersCountOnChange}
           onPlusClick={addOne}
           onMinusClick={minusOne}

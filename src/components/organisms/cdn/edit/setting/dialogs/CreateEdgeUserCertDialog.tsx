@@ -6,11 +6,12 @@ import * as yup from "yup";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { LoadingButton } from "@mui/lab";
 import {
-  usePostApiMyDnsCdnEdgeCertCreateUserCertMutation,
+  usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateUserCertMutation,
 } from "src/app/services/api.generated";
 import { formikOnSubmitType } from "src/types/form.type";
 import { toast } from "react-toastify";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useParams } from "react-router-dom";
 
 type AddEdgeUserCertDialogPropsType = {
   openDialog: boolean;
@@ -26,10 +27,11 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   handleClose,
   dnsId,
 }) => {
+  const { projectId } = useParams();
   const formInitialValues = { keyPem: "", certPem: "" };
 
   const [createUserCert, { isLoading }] =
-    usePostApiMyDnsCdnEdgeCertCreateUserCertMutation();
+    usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateUserCertMutation();
 
   const onClose = () => handleClose();
 
@@ -45,7 +47,9 @@ export const AddEdgeUserCertDialog: FC<AddEdgeUserCertDialogPropsType> = ({
   ) => {
     if (!dnsId || !keyPem || !certPem) return;
     createUserCert({
-      createCdnEdgeUserCertModel: { dnsCdnHostId: dnsId, keyPem, certPem },
+      projectId: Number(projectId),
+      dnsCdnHostId: dnsId,
+      createCdnEdgeUserCertModel: { keyPem, certPem },
     })
       .unwrap()
       .then(() => {

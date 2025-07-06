@@ -1,9 +1,9 @@
 import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   DnsCdnListResponse,
-  useDeleteApiMyDnsCdnHostDeleteByIdMutation,
+  useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -23,11 +23,11 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
     useState<DnsCdnListResponse | null>(null);
 
   const navigate = useNavigate();
-
-  const settingOnClick = () => navigate("/cdn/" + row["id"] + "/overview");
+  const { projectId } = useParams();
+  const settingOnClick = () => navigate("/cdn/" + projectId + "/" + row["id"] + "/overview");
 
   const [deleteDnsCdn, { isLoading: deleteDnsRecordLoading }] =
-    useDeleteApiMyDnsCdnHostDeleteByIdMutation();
+    useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -40,12 +40,12 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteCdnHandler = () =>
-    deleteDnsCdn({ id: Number(selectedDnsCdn?.id) })
+    deleteDnsCdn({ id: Number(selectedDnsCdn?.id), projectId: Number(projectId) })
       .unwrap()
       .then(() => {
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
   return (
     <Fragment>
@@ -92,53 +92,53 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                          ? "فعال"
-                          : id === 3
-                          ? "غیرفعال"
-                          : id === 4
-                          ? "منقضی شده"
-                          : id === 5
-                          ? "حذف شده"
-                          : id === 6
-                          ? "در حال انجام عملیات"
-                          : id === 7
-                          ? "بازسازی"
-                          : id === 8
-                          ? "خطا در زیرساخت"
-                          : id === 9
-                          ? "در انتظار تغییر NS"
-                          : id === 10
-                          ? "خاموش"
-                          : id === 11
-                          ? "در صف انتظار"
-                          : id === 12
-                          ? "در صف حذف"
-                          : "ناموفق"
+                            ? "فعال"
+                            : id === 3
+                              ? "غیرفعال"
+                              : id === 4
+                                ? "منقضی شده"
+                                : id === 5
+                                  ? "حذف شده"
+                                  : id === 6
+                                    ? "در حال انجام عملیات"
+                                    : id === 7
+                                      ? "بازسازی"
+                                      : id === 8
+                                        ? "خطا در زیرساخت"
+                                        : id === 9
+                                          ? "در انتظار تغییر NS"
+                                          : id === 10
+                                            ? "خاموش"
+                                            : id === 11
+                                              ? "در صف انتظار"
+                                              : id === 12
+                                                ? "در صف حذف"
+                                                : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
                         backgroundColor:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.light"
                             : id === 2
-                            ? "success.light"
-                            : "error.light",
+                              ? "success.light"
+                              : "error.light",
                         color:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.main"
                             : id === 2
-                            ? "success.main"
-                            : "error.main",
+                              ? "success.main"
+                              : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",
@@ -192,7 +192,7 @@ const DnsCdnTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="DNS ابری"
+        keyTitle="سرویس DNS"
         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedDnsCdn?.zoneName || ""}
         onSubmit={deleteCdnHandler}

@@ -8,9 +8,11 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { firewallTableStruct } from "./struct";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  VmFirewallListResponse,
-  useDeleteApiMyVmFirewallDeleteByIdMutation,
+  VmFirewallRuleListResponse,
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
 } from "src/app/services/api.generated";
+import { useParams } from "react-router";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -18,18 +20,29 @@ enum DIALOG_TYPE_ENUM {
 }
 
 export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
+  const {projectId,id } = useParams();
+
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVolume, setSelectedVolume] =
-    useState<VmFirewallListResponse | null>(null);
+    useState<VmFirewallRuleListResponse | null>(null);
 
   const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
-    useDeleteApiMyVmFirewallDeleteByIdMutation();
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation();
+
+const { refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
+      { projectId: Number(projectId),
+        vmHostId: Number(id) },
+      { skip: !id }
+    );
 
   const deleteVolumeRecordHandler = () =>
-    deleteItem({ id: Number(selectedVolume?.id) })
+    deleteItem({ id: Number(selectedVolume?.id) ,
+       projectId: Number(projectId),
+       vmHostId: Number(id),})
       .unwrap()
       .then(() => {
         toast.success("حذف رول مورد نظر در حال بررسی است");
+        refetch();
         closeDialogHandler();
       })
       .catch(() => {});
@@ -39,7 +52,7 @@ export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
     setSelectedVolume(null);
   };
 
-  const handleOpenDelete = (snapshot: VmFirewallListResponse) => {
+  const handleOpenDelete = (snapshot: VmFirewallRuleListResponse) => {
     setSelectedVolume(snapshot);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };

@@ -20,7 +20,7 @@ import { FC, MouseEventHandler } from "react";
 import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmFirewallCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -35,20 +35,20 @@ const options = [
 
 type CreateFirewallFormPropsType = DialogProps & {
   forceClose: () => void;
-  refetch:()=>void
+  refetch: () => void
 };
 export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   forceClose,
   refetch,
   ...props
 }) => {
-  const { id } = useParams();
+  const { id, projectId } = useParams();
 
   const [createFirewall, { isLoading }] =
-    usePostApiMyVmFirewallCreateMutation();
+    usePostApiMyVmByProjectIdHostAndVmHostIdFirewallCreateMutation();
 
   const initialValues = {
-    firewallProtocolTypeId: 1,
+    firewallProtocolId: 1,
     directionId: 1,
     remoteIp: "0.0.0.0/0",
     minPort: 22,
@@ -56,18 +56,20 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   };
 
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
-    { firewallProtocolTypeId, directionId, remoteIp, minPort, maxPort },
+    { firewallProtocolId, directionId, remoteIp, minPort, maxPort },
     { setSubmitting }
   ) => {
     if (id === null || id === undefined || isNaN(Number(id))) return;
     createFirewall({
-      createVmFirewallModel: {
-        vmHostId: Number(id),
-        firewallProtocolTypeId,
+      vmHostId: Number(id),
+      projectId: Number(projectId),
+      createVmFirewallRuleModel: {
+        firewallProtocolId,
         directionId,
         remoteIp,
         minPort,
         maxPort,
+        isIpV4: true
       },
     })
       .unwrap()
@@ -75,8 +77,9 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
         toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
         refetch();
+        formik.resetForm();
       })
-      .catch((err) => {})
+      .catch((err) => { })
       .finally(() => {
         setSubmitting(false);
       });
@@ -85,9 +88,9 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object().shape({
-       firewallProtocolTypeId: yup.number().required("Protocol type is required"),
+      //  firewallProtocolTypeId: yup.number().required("Protocol type is required"),
       // directionId: yup.number().required("نوع درخواست را مشخص کنید."),
-       remoteIp: yup.string().required("Remote IP is required"),
+      //  remoteIp: yup.string().required("Remote IP is required"),
       // minPort: yup.number().required("Minimum port الزامی است."),
       // maxPort: yup.number().required("Maximum port الزامی است."),
     }),
@@ -98,14 +101,14 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   // اضافه کردن useEffect برای رصد تغییرات در firewallProtocolTypeId
   useEffect(() => {
     const selectedProtocol = options.find(
-      (option) => option.id === formik.values.firewallProtocolTypeId
+      (option) => option.id === formik.values.firewallProtocolId
     );
 
     if (selectedProtocol?.firewallProtocolType === "ICMP" || selectedProtocol?.firewallProtocolType === "any") {
       formik.setFieldValue("minPort", 0);
       formik.setFieldValue("maxPort", 0);
     }
-  }, [formik.values.firewallProtocolTypeId]);
+  }, [formik.values.firewallProtocolId]);
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!props.onClose) return;
@@ -113,7 +116,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
   };
 
   const isPortDisabled =
-    formik.values.firewallProtocolTypeId === 3 || formik.values.firewallProtocolTypeId === 4; // ICMP یا ANY
+    formik.values.firewallProtocolId === 3 || formik.values.firewallProtocolId === 4; // ICMP یا ANY
 
   return (
     <Dialog {...props}>
@@ -157,10 +160,10 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             <Select
               labelId="protocolSelection"
               label="انتخاب پروتکل"
-              value={formik.values.firewallProtocolTypeId}
+              value={formik.values.firewallProtocolId}
               onChange={(event) =>
                 formik.setFieldValue(
-                  "firewallProtocolTypeId",
+                  "firewallProtocolId",
                   event.target.value
                 )
               }

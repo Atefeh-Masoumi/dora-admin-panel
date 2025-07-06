@@ -10,8 +10,9 @@ import {
 import { Grid2 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import {
-  DatacenterImageListResponse,
-  useGetApiMyDatacenterImageListQuery,
+  VmImageListResponse,
+  useGetApiMyVmByProjectIdHostGetAndIdQuery,
+  useGetApiMyVmByProjectIdImageListQuery,
 } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
@@ -21,14 +22,14 @@ import { CentOSIcon } from "src/components/atoms/svg-icons/centos-logo.svg";
 import { DebianSvgIcon } from "src/components/atoms/svg-icons/debian.svg";
 import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 import { SuseOSIcon } from "src/components/atoms/svg-icons/SuseSvg";
+import { useParams } from "react-router";
 
 type SelectOSPropsType = {
-  hostProjectId: number;
   setImageId?: any;
 };
 
 type OsDropDownType = {
-  content: DatacenterImageListResponse[];
+  content: VmImageListResponse[];
   osId: number;
   os: string;
   selectedImageId: string | null;
@@ -36,42 +37,65 @@ type OsDropDownType = {
 };
 
 export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
-  hostProjectId,
   setImageId,
 }) => {
-  const { data: osImagesList, isLoading } = useGetApiMyDatacenterImageListQuery(
+  const { id:vmId, projectId } = useParams();
+  
+  const { data: vmProjectSpecification } =
+    useGetApiMyVmByProjectIdHostGetAndIdQuery({
+      id: Number(vmId!),
+      projectId: Number(projectId!),
+    });
+
+  const { data: osImagesList, isLoading } = useGetApiMyVmByProjectIdImageListQuery(
     {
-      datacenterId: 0,
+      projectId: Number(projectId!),
       productId: PRODUCT_CATEGORY_ENUM.VM,
-      hostProjectId: hostProjectId,
+    },
+    {
+      skip: !projectId,
     }
   );
 
-  const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>(
-    []
-  );
+  const [selectedOs, setSelectedOs] = useState<VmImageListResponse | null>(null);
+  const [osDropDownsState, setOsDropDownsState] = useState<OsDropDownType[]>([]);
 
   useEffect(() => {
     let newOsDropDownsState: OsDropDownType[] = [];
-    osImagesList?.forEach((osImage) => {
+    osImagesList?.forEach((osImage: VmImageListResponse) => {
       const index = newOsDropDownsState.findIndex(
-        (dropDown) => dropDown.osId === osImage.osId
+        (dropDown) => dropDown.osId === osImage.operatingSystemId
       );
       if (index !== -1) {
         newOsDropDownsState[index].content.push(osImage);
       } else {
         newOsDropDownsState.push({
           content: [{ ...osImage }],
-          osId: osImage.osId || 0,
-          os: osImage.os || "",
+          osId: osImage.operatingSystemId || 0,
+          os: osImage.operatingSystem || "",
           selectedImageId: osImage.id?.toString() || "",
           isSelected: false,
         });
       }
     });
     setOsDropDownsState(newOsDropDownsState);
-    setImageId(null);
+    
+    // Auto-select the first OS if available and no OS is currently selected
+    if (newOsDropDownsState.length > 0 && !selectedOs) {
+      const firstOs = newOsDropDownsState[0];
+      const firstImage = firstOs.content[0];
+      if (firstImage) {
+        setSelectedOs(firstImage);
+        setImageId(firstImage.id);
+      }
+    }
   }, [osImagesList, setImageId]);
+
+  useEffect(() => {
+    if (selectedOs?.id) {
+      setImageId(selectedOs.id);
+    }
+  }, [selectedOs, setImageId]);
 
   const osTypeClickHandler = (id?: number) => {
     setOsDropDownsState(
@@ -82,7 +106,8 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
             isSelected: false,
           };
         }
-        setImageId(x.content.find((item) => item.id)?.id || null);
+        const selectedImage = x.content.find((item) => item.id === +(x.selectedImageId || "0")) || null;
+        setSelectedOs(selectedImage);
         return { ...x, isSelected: true };
       })
     );
@@ -97,7 +122,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
           ) || null;
 
         if (selectedImageItem) {
-          setImageId(selectedImageItem.id);
+          setSelectedOs(selectedImageItem);
           return {
             ...dropDownState,
             selectedImageId: event.target.value,
@@ -144,48 +169,55 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       justifyContent="center"
       alignItems="center"
       spacing={4}
-      sx={{ px: 2 }}
+      sx={{ p: 2, direction: "rtl" }}
     >
-      <Typography fontSize={24} fontWeight="bold" align="center">
+      <Typography fontSize={24} fontWeight="bold" align="center" sx={{ direction: "rtl" }}>
         سیستم عامل ماشین را انتخاب کنید
       </Typography>
-      <Grid2 container gap={2} justifyContent="center" width="100%">
-        {isLoading &&
+      <Grid2 container gap={2} justifyContent="center" width="100%" sx={{ direction: "rtl" }}>
+        {isLoading && (
           [...Array(2)].map((_, index) => (
-            <Stack
-              key={index}
-              direction="row"
-              sx={{
-                width: { xs: "100%", sm: 200 },
-                height: 96,
-                transition: "150ms",
-                borderRadius: BORDER_RADIUS_1,
-                border: "1px solid rgba(110, 118, 138, 0.12)",
-                overflow: "hidden",
-                p: 1,
-                cursor: "pointer",
-              }}
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
-            >
-              <Skeleton variant="circular" width={44} height={44} />
-              <Skeleton width="30%" />
-            </Stack>
-          ))}
-        {osDropDownsState.map((osDropDown, index) => {
-          return (
-            <Grid2 size={{xs:12, sm:6}}
-              key={osDropDown.osId}
+            <Grid2 key={index} size={{xs:12, sm:6}}
               sx={{
                 minWidth: { sm: 100 },
                 maxWidth: { sm: 184 },
                 height: { xs: 64, sm: 84 },
                 marginBottom: { xs: "50px", sm: "20px" },
-                // marginBottom:
-                //   index === 0
-                //     ? { xs: "50px", sm: "0px" }
-                //     : { xs: "0px", sm: "0px" },
+                direction: "rtl",
+              }}
+            >
+              <Stack
+                direction="row"
+                sx={{
+                  width: { xs: "100%", sm: 200 },
+                  height: 96,
+                  transition: "150ms",
+                  borderRadius: BORDER_RADIUS_1,
+                  border: "1px solid rgba(110, 118, 138, 0.12)",
+                  overflow: "hidden",
+                  p: 1,
+                  cursor: "pointer",
+                  direction: "rtl",
+                }}
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
+              >
+                <Skeleton variant="circular" width={44} height={44} />
+                <Skeleton width="30%" />
+              </Stack>
+            </Grid2>
+          ))
+        )}
+        {!isLoading && osDropDownsState.map((osDropDown, index) => {
+          return (
+            <Grid2 key={index} size={{xs:12, sm:6}}
+              sx={{
+                minWidth: { sm: 100 },
+                maxWidth: { sm: 184 },
+                height: { xs: 64, sm: 84 },
+                marginBottom: { xs: "50px", sm: "20px" },
+                direction: "rtl",
               }}
             >
               <Stack
@@ -205,6 +237,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                   overflow: "hidden",
                   px: 1,
                   cursor: "pointer",
+                  direction: "rtl",
                 }}
                 alignItems="center"
                 justifyContent="center"
@@ -221,19 +254,6 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                     overflow: "hidden",
                   }}
                 >
-                  {/* {osDropDown.osId === 1 ? (
-                    <WindowsSvg
-                      sx={{
-                        width: 40,
-                        height: 40,
-                        "&>path": {
-                          fill: ({ palette }) => palette.primary.main,
-                        },
-                      }}
-                    />
-                  ) : (
-                    <UbuntuSvg sx={{ width: 40, height: 40 }} />
-                  )} */}
                   {dataCenterIconRenderHandler(osDropDown.osId)}
                 </Box>
                 <Typography
@@ -241,7 +261,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                   color={
                     osDropDown.isSelected ? "primary.main" : "secondary.main"
                   }
-                  sx={{ transition: "200ms" }}
+                  sx={{ transition: "200ms", direction: "rtl", textAlign: "right" }}
                   fontWeight="bold"
                 >
                   {osDropDown.os}
@@ -270,7 +290,6 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                           ? palette.primary.main
                           : "rgba(110, 118, 138, 0.12)"
                       }`,
-
                     borderTop: "1px solid",
                   },
                   direction: "rtl",
@@ -278,9 +297,9 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
                 fullWidth
                 style={{ height: 40 }}
               >
-                {osDropDown.content.map((item) => (
-                  <MenuItem dir="ltr" key={item.id} value={item.id}>
-                    {item.name || "---"}
+                {osDropDown.content.map((image) => (
+                  <MenuItem key={image.id} dir="ltr" value={image.id?.toString() || ""}>
+                    {image.name || "---"}
                   </MenuItem>
                 ))}
               </Select>

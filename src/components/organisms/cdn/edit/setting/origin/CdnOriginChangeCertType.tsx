@@ -1,6 +1,6 @@
 import { Button, Skeleton, Stack, Typography } from "@mui/material";
 import { FC, Fragment } from "react";
-import { usePutApiMyDnsCdnHostChangeOriginCertTypeMutation } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery, usePutApiMyDnsCdnByProjectIdHostChangeOriginCertTypeAndIdMutation } from "src/app/services/api.generated";
 import { User } from "src/components/atoms/svg-icons/UserSvg";
 import Cloud from "src/components/atoms/svg-icons/Cloud.svg";
 import CloudOff from "src/components/atoms/svg-icons/CloudOff.svg";
@@ -8,6 +8,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { CdnOriginCertUserCert } from "./CdnOriginCertUserCert";
 import { CdnOriginCert } from "./CdnOriginCert";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { useParams } from "react-router-dom";
 
 type CdnOriginChangeCertTypePropsType = {
   dnsId: number;
@@ -20,15 +21,25 @@ export const CdnOriginChangeCertType: FC<CdnOriginChangeCertTypePropsType> = ({
   loading,
   certTypeId,
 }) => {
+  const { projectId } = useParams();
+  
   const [changeClient, { isLoading }] =
-    usePutApiMyDnsCdnHostChangeOriginCertTypeMutation();
+    usePutApiMyDnsCdnByProjectIdHostChangeOriginCertTypeAndIdMutation();
+   
+    const {refetch} = useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
+      id: dnsId,
+      projectId: Number(projectId)
+    });
   const onChangeClient = (type: number) => {
     if (!certTypeId) return;
     changeClient({
+      id: dnsId,
+      projectId: Number(projectId),
       changeOriginCertTypeModel: {
-        id: dnsId,
         cdnHostOriginCertTypeId: type,
       },
+    }).then(() => {
+      refetch();
     });
   };
   return (

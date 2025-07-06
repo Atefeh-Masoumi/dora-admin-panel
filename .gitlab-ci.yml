@@ -14,19 +14,17 @@ stages:
   - deploy
 
 variables:
-  KUBE_CONTEXT_DORSA: cloud-computing/core/front-my-core:dorsa-front-my
-  KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-front-my
-  KUBE_CONTEXT_BAHARTEL: ccloud-computing/core/front-my-core:bahartel-front-my
-  KUBE_CONTEXT_DORSA_V2: cloud-computing/core/front-my-core:dorsa-front-ver2-client
-  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
+  KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
+  KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
+  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
 
 ## development
 
 package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development-dorsa:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development-dorsa:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-client-development-dorsa
+    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-development
   only:
     - development
 
@@ -35,9 +33,9 @@ deploy_development:
   needs: [package_development]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA_V2
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development-dorsa.yaml
-    - kubectl -n development rollout restart deployment front-client-development-dorsa
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
+    - kubectl -n development rollout restart deployment front-client-development
   only:
     - development
 
@@ -57,43 +55,20 @@ deploy_dorsa_master:
   needs: [package_dorsa_master]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA_V2
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
     - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-dorsa.yaml
     - kubectl -n production rollout restart deployment front-ver2-client
   when: on_success
   only: 
     - master
 
-# ----*** Dorsa main ***----
-
-package_dorsa_prod:
-  stage: package
-  script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
-  when: manual
-  only:
-    - main
-
-deploy_dorsa_prod:
-  stage: deploy
-  needs: [package_dorsa_prod]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-prod.yaml
-    - kubectl -n main rollout restart deployment front-my-v1
-  when: on_success
-  only: 
-    - main
-
-# ----*** Bahar ***----
+# ----### Bahar ###----
 
 package_bahartel_prod:
   stage: package
   script:
-    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel-prod
+    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel
   when: manual
   only:
     - bahar
@@ -104,31 +79,31 @@ deploy_bahartel_prod:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
-    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-my-bahartel-prod.yaml
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
     - kubectl -n production rollout restart deployment front-my-v1
   when: on_success
   only: 
     - bahar
 
-# Raahbar
+# ----*** Dorsa main ***----
 
-package_raahbar_prod:
+package_dorsa_prod:
   stage: package
   script:
-    - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
+    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-main:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-main:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-main
   when: manual
   only:
-    - raahbar
+    - main
 
-deploy_raahbar_prod:
+deploy_dorsa_prod:
   stage: deploy
-  needs: [package_raahbar_prod]
+  needs: [package_dorsa_prod]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
-    - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar-prod.yaml
-    - kubectl -n raahbar rollout restart deployment front-my-v1
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
+    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa.yaml
+    - kubectl -n main rollout restart deployment front-my-v1
   when: on_success
   only: 
-    - raahbar
+    - main

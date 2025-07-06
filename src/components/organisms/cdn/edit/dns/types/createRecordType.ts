@@ -14,8 +14,8 @@ export type createDnsRecordType = {
   value: string;
   ttl: string;
   useProxy: boolean;
-  weight?: string;
-  port?: string;
-  priority?: string;
-  preference?: string;
+  weight?: string | null;
+  port?: string | null;
+  priority?: string | null;
+  preference?: string | null;
 };

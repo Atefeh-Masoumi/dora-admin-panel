@@ -22,7 +22,7 @@ const oneSectionOverview: { id: number; label: string; gridItemMd: number }[] =
     },
   ];
 
-const towSectionOverview: { id: number; label: string; gridItemMd: number }[] =
+const twoSectionOverview: { id: number; label: string; gridItemMd: number }[] =
   [
     {
       id: 1,
@@ -51,61 +51,55 @@ const Header: FC<HeaderPropsType> = ({
     case 1:
       return (
         <Stack
-          direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "start", md: "center" }}
+          direction="row"
           justifyContent="space-between"
           width="100%"
+          alignItems="center"
         >
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            alignItems={{ xs: "start", md: "center" }}
-            width="100%"
-          >
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
+              {label}
+            </Typography>
+          </Stack>
+          {refetchOnClick ? (
             <Stack
+              display={{ xs: "none", md: "flex" }}
               direction="row"
-              justifyContent="space-between"
-              width="100%"
+              spacing={2}
               alignItems="center"
             >
-              <Stack direction="row" alignItems="center" spacing={1.5}>
-                <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  Overview
-                </Typography>
-              </Stack>
-              {refetchOnClick ? (
-                <Stack
-                  display={{ xs: "none", md: "flex" }}
-                  direction="row"
-                  spacing={2}
-                  alignItems="center"
-                >
-                  <Button
-                    onClick={refetchOnClick}
-                    variant="outlined"
-                    size="large"
-                    sx={{
-                      whiteSpace: "nowrap",
-                      px: 1.2,
-                      borderRadius: BORDER_RADIUS_1,
-                    }}
-                    startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
-                  >
-                    بررسی مجدد
-                  </Button>
-                </Stack>
-              ) : (
-                <></>
-              )}
+              <Button
+                onClick={refetchOnClick}
+                variant="outlined"
+                size="large"
+                sx={{
+                  whiteSpace: "nowrap",
+                  px: 1.2,
+                  borderRadius: BORDER_RADIUS_1,
+                }}
+                startIcon={<RefreshSvg sx={{ width: 20, height: 20 }} />}
+              >
+                بررسی مجدد
+              </Button>
             </Stack>
-          </Stack>
+          ) : null}
         </Stack>
       );
     case 2:
     default:
       return (
-        <Typography align="right" fontWeight={700} fontSize={18}>
-          {label}
-        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          width="100%"
+          alignItems="center"
+        >
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
+              {label}
+            </Typography>
+          </Stack>
+        </Stack>
       );
   }
 };
@@ -137,7 +131,7 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
         alignItems="stretch"
         width="100%"
       >
-        {(infoList.length === 1 ? oneSectionOverview : towSectionOverview).map(
+        {(infoList.length === 1 ? oneSectionOverview : twoSectionOverview).map(
           ({ label, gridItemMd }, index) => {
             return (
               <Grid key={index} item xs={12} md={gridItemMd}>

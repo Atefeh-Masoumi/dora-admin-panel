@@ -2,11 +2,12 @@ import { Button, Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-import { useLazyGetApiMyVmKmsGetByIdQuery } from "src/app/services/api";
+import { useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery } from "src/app/services/api";
 import {
-  GetRemoteConsoleResponse,
+  GetConsoleResponse,
   GetVmResponse,
-  useDeleteApiMyVmHostDeleteByIdMutation,
+  useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
+  VmListResponse,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import PageLoading from "src/components/atoms/PageLoading";
@@ -25,14 +26,14 @@ enum DIALOG_TYPE_ENUM {
 
 const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVm, setSelectedVm] = useState<GetVmResponse | null>(null);
+  const [selectedVm, setSelectedVm] = useState<VmListResponse | null>(null);
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [getUrl, { isLoading: getUrlLoading }] =
-    useLazyGetApiMyVmKmsGetByIdQuery();
+    useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery();
 
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-    useDeleteApiMyVmHostDeleteByIdMutation();
+    useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation();
 
   const isDeactivate = useMemo(
     () => row["statusId"] !== 2 && row["statusId"] !== 8,
@@ -41,11 +42,11 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
 
   const settingOnClick = () => {
     if (isDeactivate) return;
-    navigate(`/vm/${projectId}/`+row["id"]+'/specification');
+    navigate(`/vm/${projectId}/` + row["id"] + '/specification');
   };
 
   const sendUserToKmsConsole = (
-    remoteConsoleObject: GetRemoteConsoleResponse
+    remoteConsoleObject: GetConsoleResponse
   ) => {
     let a = document.createElement("a");
     const url: string = remoteConsoleObject?.location || "";
@@ -63,6 +64,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
       return;
     }
     getUrl({
+      projectId: Number(projectId),
       id: row["id"],
     })
       .unwrap()
@@ -70,10 +72,10 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
         if (!res) return;
         sendUserToKmsConsole(res);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  const handleOpenDelete = (vm: GetVmResponse) => {
+  const handleOpenDelete = (vm: VmListResponse) => {
     setSelectedVm(vm);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -84,13 +86,13 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const deleteVmRecordHandler = () =>
-    deleteItem({ id: Number(selectedVm?.id) })
+    deleteItem({ projectId: Number(projectId), id: Number(selectedVm?.id) })
       .unwrap()
       .then(() => {
         toast.success("سرور ابری با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
   return (
     <Fragment>
@@ -152,53 +154,53 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                         id === 1
                           ? "پرداخت نشده"
                           : id === 2
-                          ? "فعال"
-                          : id === 3
-                          ? "غیرفعال"
-                          : id === 4
-                          ? "منقضی شده"
-                          : id === 5
-                          ? "حذف شده"
-                          : id === 6
-                          ? "در حال انجام عملیات"
-                          : id === 7
-                          ? "بازسازی"
-                          : id === 8
-                          ? "خطا در زیرساخت"
-                          : id === 9
-                          ? "بازسازی"
-                          : id === 10
-                          ? "خاموش"
-                          : id === 11
-                          ? "در صف انتظار"
-                          : id === 12
-                          ? "در صف حذف"
-                          : "ناموفق"
+                            ? "فعال"
+                            : id === 3
+                              ? "غیرفعال"
+                              : id === 4
+                                ? "منقضی شده"
+                                : id === 5
+                                  ? "حذف شده"
+                                  : id === 6
+                                    ? "در حال انجام عملیات"
+                                    : id === 7
+                                      ? "بازسازی"
+                                      : id === 8
+                                        ? "خطا در زیرساخت"
+                                        : id === 9
+                                          ? "بازسازی"
+                                          : id === 10
+                                            ? "خاموش"
+                                            : id === 11
+                                              ? "در صف انتظار"
+                                              : id === 12
+                                                ? "در صف حذف"
+                                                : "ناموفق"
                       }
                       sx={{
                         cursor: "pointer",
                         backgroundColor:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.light"
                             : id === 2
-                            ? "success.light"
-                            : "error.light",
+                              ? "success.light"
+                              : "error.light",
                         color:
                           id === 6 ||
-                          id === 7 ||
-                          id === 8 ||
-                          id === 9 ||
-                          id === 10 ||
-                          id === 11
+                            id === 7 ||
+                            id === 8 ||
+                            id === 9 ||
+                            id === 10 ||
+                            id === 11
                             ? "warning.main"
                             : id === 2
-                            ? "success.main"
-                            : "error.main",
+                              ? "success.main"
+                              : "error.main",
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",

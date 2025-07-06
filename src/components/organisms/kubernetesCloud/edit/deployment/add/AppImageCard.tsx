@@ -11,14 +11,14 @@ import {
 } from "@mui/material";
 import { FormikProps } from "formik";
 import { FC } from "react";
-import { KuberCloudImageResponse } from "src/app/services/api.generated";
+import { KuberImageResponse } from "src/app/services/api.generated";
 import InfoSvg from "src/components/atoms/svg-icons/InfoSvg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { appImageList } from "src/constant/kubernetesCloud.constant";
 import { KuberCloudNamespaceImageType } from "src/types/kubernetesCloud.types";
 
 type AppImageCardPropsType = {
-  item: KuberCloudImageResponse;
+  item: KuberImageResponse;
   formik: FormikProps<KuberCloudNamespaceImageType>;
 };
 

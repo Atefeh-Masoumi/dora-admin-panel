@@ -5,15 +5,17 @@ import {
   SetStateAction,
   createContext,
   useState,
+  useEffect,
 } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  DatacenterImageListResponse,
+  VmImageListResponse,
   DatacenterListResponse,
   KubernetesPriceResponse,
-  ProductBundleVmListResponse,
-  usePostApiMyKubernetesClusterHostCreateMutation,
+  useGetApiMyPortalProductBundleKuberClusterListQuery,
+  usePostApiMyKubernetesClusterByProjectIdHostCreateMutation,
+  useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
 } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
@@ -27,18 +29,16 @@ export type kubernetesCustomConfigType = {
 type AddKubernetesContextType = {
   kubernetesVersion: DatacenterListResponse | null;
   setKubernetesVersion: Dispatch<SetStateAction<DatacenterListResponse | null>>;
-  dataCenter: DatacenterListResponse | null;
-  setDataCenter: Dispatch<SetStateAction<DatacenterListResponse | null>>;
-  osVersion: DatacenterImageListResponse | null;
-  setOsVersion: Dispatch<SetStateAction<DatacenterImageListResponse | null>>;
-  serverConfig: ProductBundleVmListResponse | null;
-  setServerConfig: Dispatch<SetStateAction<ProductBundleVmListResponse | null>>;
+  selectedOs: VmImageListResponse | null;
+  setSelectedOs: Dispatch<SetStateAction<VmImageListResponse | null>>;
+  predefinedConfig: any | null;
+  setPredefinedConfig: Dispatch<SetStateAction<any | null>>;
   serverName: string;
   setServerName: Dispatch<SetStateAction<string>>;
   serverPassword: string;
   setServerPassword: Dispatch<SetStateAction<string>>;
-  workersCount: number;
-  setWorkersCount: Dispatch<SetStateAction<number>>;
+  nodeQuantity: number;
+  setNodeQuantity: Dispatch<SetStateAction<number>>;
   submitHandler: () => void;
   submitLoading: boolean;
   isPredefined: boolean;
@@ -49,29 +49,29 @@ type AddKubernetesContextType = {
   setProductItemPrices: Dispatch<
     SetStateAction<KubernetesPriceResponse | null>
   >;
+  rows: any | undefined;
+  kubernetesPriceIsLoading: boolean;
 };
 
 export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   //------main-------//
-  dataCenter: null,
-  setDataCenter: () => {},
-  osVersion: null,
-  setOsVersion: () => {},
-  workersCount: 2,
-  setWorkersCount: () => {},
+  selectedOs: null,
+  setSelectedOs: () => {},
+  nodeQuantity: 2,
+  setNodeQuantity: () => {},
   kubernetesVersion: null,
   setKubernetesVersion: () => {},
 
   //-------------//
-  serverConfig: null,
-  setServerConfig: () => {},
+  predefinedConfig: null,
+  setPredefinedConfig: () => {},
   serverName: "",
   setServerName: () => {},
   serverPassword: "",
   setServerPassword: () => {},
   submitHandler: () => {},
   submitLoading: false,
-  isPredefined: false,
+  isPredefined: true,
   setIsPredefined: (isPredefined) => {},
   customConfig: {
     cpu: 1,
@@ -82,6 +82,8 @@ export const AddKubernetesContext = createContext<AddKubernetesContextType>({
   setCustomConfig: (customConfig) => {},
   productItemPrices: null,
   setProductItemPrices: () => {},
+  rows: undefined,
+  kubernetesPriceIsLoading: false,
 });
 
 type AddKubernetesContextProviderPropsType = {
@@ -91,16 +93,13 @@ type AddKubernetesContextProviderPropsType = {
 export const AddKubernetesContextProvider: FC<
   AddKubernetesContextProviderPropsType
 > = ({ children }) => {
-  const [dataCenter, setDataCenter] = useState<DatacenterListResponse | null>(
-    null
-  );
+  const [selectedOs, setSelectedOs] =
+    useState<VmImageListResponse | null>(null);
+  const [predefinedConfig, setPredefinedConfig] =
+    useState<any | null>(null);
   const [kubernetesVersion, setKubernetesVersion] =
     useState<DatacenterListResponse | null>(null);
-  const [workersCount, setWorkersCount] = useState(2);
-  const [osVersion, setOsVersion] =
-    useState<DatacenterImageListResponse | null>(null);
-  const [serverConfig, setServerConfig] =
-    useState<ProductBundleVmListResponse | null>(null);
+  const [nodeQuantity, setNodeQuantity] = useState(2);
   const [serverName, setServerName] = useState("");
   const [serverPassword, setServerPassword] = useState("");
   const [isPredefined, setIsPredefined] = useState(true);
@@ -108,61 +107,73 @@ export const AddKubernetesContextProvider: FC<
     useState<KubernetesPriceResponse | null>(null);
 
   const [customConfig, setCustomConfig] = useState<kubernetesCustomConfigType>({
-    cpu: 4,
-    memory: 4,
-    disk: 75,
+    cpu: 1,
+    memory: 1,
+    disk: 25,
     ipV4: 1,
   });
 
   const navigate = useNavigate();
+  const { projectId } = useParams();
 
+  const { data: rows } = useGetApiMyPortalProductBundleKuberClusterListQuery();
+  const { data: kubernetesPriceData, isLoading: kubernetesPriceIsLoading } = 
+    useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery(
+      { workerNodeCount: nodeQuantity },
+      { skip: isPredefined && !predefinedConfig?.id }
+    );
   const [createKubernetes, { isLoading: submitLoading }] =
-    usePostApiMyKubernetesClusterHostCreateMutation();
+    usePostApiMyKubernetesClusterByProjectIdHostCreateMutation();
+
+  useEffect(() => {
+    if (kubernetesPriceData) {
+      setProductItemPrices(kubernetesPriceData);
+    }
+  }, [kubernetesPriceData]);
 
   const submitHandler = () => {
-    let validationErrorMessage = "";
+    let errMessage = "";
 
-    if (!dataCenter || !dataCenter.id) {
-      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
-    } else if (!osVersion || !osVersion.id) {
-      validationErrorMessage = "لطفا ورژن سیستم عامل را انتخاب کنید";
+    if (!selectedOs) {
+      errMessage = "لطفا ورژن سیستم عامل را انتخاب کنید";
     } else if (!kubernetesVersion) {
-      validationErrorMessage = "لطفا ورژن کوبرنتیز خود را مشخص کنید";
-    } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
-      validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
+      errMessage = "لطفا ورژن کوبرنتیز خود را مشخص کنید";
+    } else if (isPredefined && (!predefinedConfig || !predefinedConfig.id)) {
+      errMessage = "لطفا مشخصات سرور را انتخاب کنید";
     } else if (!serverName) {
-      validationErrorMessage = "لطفا نام سرور را انتخاب کنید";
-    } else if (serverName.length < 3) {
-      validationErrorMessage = "نام سرور نباید کمتر از سه حرف باشد";
+      errMessage = "لطفا نام سرویس را انتخاب کنید";
+    } else if (serverName.length < 5) {
+      errMessage = "نام سرور نباید کمتر از پنج حرف باشد";
     } else if (!passwordValidationRegex.test(serverPassword)) {
-      validationErrorMessage = "رمز عبور نامعتبر است";
+      errMessage =
+        "رمز عبور باید حداقل ۸ حرف باشد و ترکیبی از حروف بزرگ و کوچک و عدد و یک کارکتر خاص باشد";
     }
 
-    if (validationErrorMessage) {
-      return toast.error(validationErrorMessage);
+    if (errMessage) {
+      return toast.error(errMessage);
     }
 
     createKubernetes({
-      createKubernetesModel: {
+      projectId: Number(projectId),
+      createKuberClusterModel: {
         clusterName: serverName,
-        datacenterId: dataCenter!.id!,
-        imageId: osVersion!.id!,
-        kubernetesVersionId: kubernetesVersion!.id!,
-        vmPassword: serverPassword,
-        nodeCount: workersCount,
-        productBundleId: serverConfig?.id || 0,
-        isPredefined: isPredefined,
-        cpu: customConfig.cpu,
-        memory: customConfig.memory,
-        disk: customConfig.disk,
+        vmImageId: selectedOs?.id!,
+        kubernetesVersionId: kubernetesVersion?.id!,
+        password: serverPassword,
+        isPredefined,
+        productBundleId: predefinedConfig?.id,
+        nodeCount: nodeQuantity,
+        cpu: isPredefined ? null : customConfig.cpu,
+        memory: isPredefined ? null : customConfig.memory,
+        disk: isPredefined ? null : customConfig.disk,
       },
     })
       .unwrap()
       .then(() => {
-        toast.success("سرویس کوبرنتیز شما با موفقیت ایجاد شد");
-        navigate("/kubernetes-cluster");
+        toast.success("کلاستر کوبرنتیز شما با موفقیت ایجاد شد");
+        navigate(`/kubernetes/${projectId}`);
       })
-      .catch((err) => {});
+      .catch((err: any) => {});
   };
 
   return (
@@ -170,18 +181,16 @@ export const AddKubernetesContextProvider: FC<
       value={{
         kubernetesVersion,
         setKubernetesVersion,
-        dataCenter,
-        setDataCenter,
-        osVersion,
-        setOsVersion,
-        serverConfig,
-        setServerConfig,
+        selectedOs,
+        setSelectedOs,
+        predefinedConfig,
+        setPredefinedConfig,
         serverName,
         setServerName,
         serverPassword,
         setServerPassword,
-        workersCount,
-        setWorkersCount,
+        nodeQuantity,
+        setNodeQuantity,
         submitHandler,
         submitLoading,
         isPredefined,
@@ -190,6 +199,8 @@ export const AddKubernetesContextProvider: FC<
         setCustomConfig,
         productItemPrices,
         setProductItemPrices,
+        rows,
+        kubernetesPriceIsLoading,
       }}
     >
       {children}
