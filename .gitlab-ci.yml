@@ -15,8 +15,8 @@ stages:
 
 variables:
   KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
-  KUBE_CONTEXT_BAHARTEL: ccloud-computing/dorsa/front-my-core:bahartel-front-my
-  DOCKER_REGISTRY: git.dorsa.cloud:5050/dorsa-computing/dorsa/front-my-core
+  KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
+  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
 
 ## development
 
