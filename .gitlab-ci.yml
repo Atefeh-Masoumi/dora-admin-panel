@@ -71,7 +71,7 @@ package_bahartel_prod:
     - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel
   when: manual
   only:
-    - bahar
+    - master
 
 deploy_bahartel_prod:
   stage: deploy
@@ -83,27 +83,4 @@ deploy_bahartel_prod:
     - kubectl -n production rollout restart deployment front-my-v1
   when: on_success
   only: 
-    - bahar
-
-# ----*** Dorsa main ***----
-
-package_dorsa_prod:
-  stage: package
-  script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-main:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-main:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-main
-  when: manual
-  only:
-    - main
-
-deploy_dorsa_prod:
-  stage: deploy
-  needs: [package_dorsa_prod]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa.yaml
-    - kubectl -n main rollout restart deployment front-my-v1
-  when: on_success
-  only: 
-    - main
+    - master
