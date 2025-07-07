@@ -25,7 +25,8 @@ import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { Products } from "src/components/organisms/home/Products";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { useAppSelector } from "src/app/hooks";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { setSelectedProjectId } from "src/app/slice/projectSlice";
 const vmDataList = [
   { label: "مرکزداده:", id: "datacenter" },
   { 
@@ -47,6 +48,7 @@ const VmProjectList: FC = () => {
     useState<ProjectListResponse | null>(null);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     data: vmProjectList,
@@ -103,8 +105,11 @@ const VmProjectList: FC = () => {
       })
       .catch(() => {});
   };
-
   const cardOnClick = (project: ProjectListResponse) => {
+    if (project.id) {
+      dispatch(setSelectedProjectId(project.id));
+      localStorage.setItem('selectedProjectId', project.id.toString());
+    }
     navigate(`/vm/${project.id}/list`);
   };
 
