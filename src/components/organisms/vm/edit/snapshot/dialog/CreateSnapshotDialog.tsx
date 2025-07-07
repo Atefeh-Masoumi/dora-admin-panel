@@ -43,6 +43,12 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
     { setSubmitting }
   ) => {
     if (vmId === null || vmId === undefined || isNaN(Number(vmId))) return;
+    
+    if (name.length < 5 || name.length > 50) {
+      toast.error("تعداد کارکترهای نام اسنپ شات باید حداقل 5 عدد باشد و حداکثر 50 عدد باشد");
+      return;
+    }
+
     createSnapshot({
       createVmHostSnapshotModel: {
         name,
