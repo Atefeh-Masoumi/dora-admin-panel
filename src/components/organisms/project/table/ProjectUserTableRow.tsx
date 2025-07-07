@@ -13,10 +13,12 @@ import {
   useGetApiMyByProjectIdUserListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-
+import EditProjectUserDialog from "../edit/EditProjectUserDialog";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
+  EDIT = "EDIT",
 }
 
 export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
@@ -25,6 +27,7 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedUser, setSelectedUser] =
     useState<ProjectUserListResponse | null>(null);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   const [deleteItem, { isLoading: deleteUserRecordLoading }] =
     useDeleteApiMyByProjectIdUserDeleteAndIdMutation();
@@ -57,29 +60,43 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
+  const handleOpenEdit = (user: ProjectUserListResponse) => {
+    setSelectedUser(user);
+    setShowEditDialog(true);
+  };
+
+  const closeEditDialogHandler = () => {
+    setShowEditDialog(false);
+    setSelectedUser(null);
+  };
+
   return (
     <Fragment>
       {deleteUserRecordLoading && <PageLoading />}
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
         {projectUserTableStruct.map((column) => {
           const value = row[column.id];
+          const text = column.format && typeof value === "number"
+            ? column.format(value)
+            : value;
+
           return (
             <DorsaTableCell
               key={column.id}
               align="center"
-              sx={{ px: 1, whiteSpace: "nowrap" }}
+              sx={{ px: column.id === "control" ? 0 : 5, whiteSpace: "nowrap" }}
             >
-              {column.format && typeof value === "number"
-                ? column.format(value)
-                : value}
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
+                  <IconButton onClick={() => handleOpenEdit(row)}>
+                    <Edit />
+                  </IconButton>
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
                   </IconButton>
                 </Stack>
               ) : (
-                <></>
+                text || "-"
               )}
             </DorsaTableCell>
           );          
@@ -93,6 +110,12 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
         securityPhrase={selectedUser?.user || ""}
         onSubmit={deleteUserRecordHandler}
         submitLoading={deleteUserRecordLoading}
+      />
+      <EditProjectUserDialog
+        open={showEditDialog}
+        onClose={closeEditDialogHandler}
+        selectedUser={selectedUser}
+        refetch={refetch}
       />
     </Fragment>
   );
