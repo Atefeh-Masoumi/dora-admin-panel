@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AttachNodeDialog } from "./AttachNodeDialog";
 import { VmnetworkTableTableStruct } from "./struct";
@@ -10,6 +9,7 @@ import {
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
   VmNetworkNodeListResponse,
 } from "src/app/services/api.generated";
+import { Add } from "@mui/icons-material";
 
 type FirewallPropsType = {};
 
