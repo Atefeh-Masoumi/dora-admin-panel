@@ -11,6 +11,8 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
+import { LockSvg } from "src/components/atoms/svg-icons/LockSvg";
+import { NetworkSvg } from "src/components/atoms/svg-icons/NetworkSvg";
 
 type SidebarPropsType = {};
 
@@ -34,8 +36,14 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     {
       title: "Network",
       text: "شبکه ها",
-      Icon: WebHostSvg,
+      Icon: NetworkSvg,
       link: selectedProjectId ? `/network/${selectedProjectId}` : "/",
+    },
+    {
+      title: "Key",
+      text: "کلید ها",
+      Icon: LockSvg,
+      link: selectedProjectId ? `/key/${selectedProjectId}` : "/",
     },
     // {
     //   title: "Kubernetes Cluster",
