@@ -26,7 +26,6 @@ import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { setSelectedProjectId, setSelectedProject } from "src/app/slice/projectSlice";
 import { useGetApiMyProjectListQuery } from "src/app/services/api.generated";
-import { toast } from "react-toastify";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -108,7 +107,7 @@ const Header: FC<HeaderPropsType> = ({
           variant="outlined"
           size="small"
           sx={{ 
-            width: 200,
+            width: 150,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
@@ -126,7 +125,7 @@ const Header: FC<HeaderPropsType> = ({
           onClose={handleProjectMenuClose}
           PaperProps={{
             sx: { 
-              width: 200,
+              width: 150,
               mt: 1,
               boxShadow: 4,
               borderRadius: BORDER_RADIUS_1
