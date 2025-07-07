@@ -31,6 +31,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: CloudConnectionSvg,
       link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/",
     },
+    {
+      title: "Network",
+      text: "شبکه ها",
+      Icon: WebHostSvg,
+      link: selectedProjectId ? `/network/${selectedProjectId}` : "/",
+    },
     // {
     //   title: "Kubernetes Cluster",
     //   text: "کلاستر کوبرنتیز",
