@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { Add } from "@mui/icons-material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/create/CreateFirewallDialog";
 import { firewallTableStruct } from "./table/struct";
@@ -53,22 +53,15 @@ export const Firewall: FC<FirewallPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
-          >
-            مدیریت رول ها
-          </Typography>
-          <Button
-            onClick={openCreateDialogHandler}
-            variant="outlined"
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
-          >
-            افزودن رول
-          </Button>
+          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
+            <Button
+              onClick={openCreateDialogHandler}
+              variant="outlined"
+              startIcon={ <Add/>}
+            >
+              افزودن رول
+            </Button>
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>
