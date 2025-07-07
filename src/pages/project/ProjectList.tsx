@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { CreateVmProjectDialog } from "./CreateProjectDialog";
-import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
+import { VmProjectCard } from "src/components/organisms/vm/project/ProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 import {
