@@ -51,14 +51,14 @@ export const ProjectInfo: FC<ProjectInfoPropsType> = () => {
                 <Typography>در حال بارگذاری...</Typography>
               ) : (
                 <Grid container spacing={3}>
-                  <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"}>
+                  <Grid item xs={12}  display={"flex"} flexDirection={"column"}>
                     <Stack spacing={2}>
-                      <Stack direction="row" spacing={2} alignItems="center">
+                      <Stack direction="row" spacing={2} alignItems="center" justifyContent={"space-between"}>
                         <Typography fontWeight="bold">نام پروژه:</Typography>
                         <Typography>{projectData?.name || "--"}</Typography>
                       </Stack>
                       
-                      <Stack direction="row" spacing={2} alignItems="center">
+                      <Stack direction="row" spacing={2} alignItems="center"justifyContent={"space-between"} >
                         <Typography fontWeight="bold">نوع پروژه:</Typography>
                         <Chip
                           label={projectData?.isPublic ? "عمومی" : "خصوصی"}
@@ -66,17 +66,15 @@ export const ProjectInfo: FC<ProjectInfoPropsType> = () => {
                           sx={{ borderRadius: BORDER_RADIUS_1 }}
                         />
                       </Stack>
-                    </Stack>
-                  </Grid>
+                   
                   
-                  <Grid item xs={12} md={6} display={"flex"} flexDirection={"column"}>
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={2} alignItems="center">
+                    
+                      <Stack direction="row" spacing={2} alignItems="center" justifyContent={"space-between"}>
                         <Typography fontWeight="bold">مرکز داده:</Typography>
                         <Typography>{projectData?.datacenterName || "--"}</Typography>
                       </Stack>
                       
-                      <Stack direction="row" spacing={2} alignItems="center">
+                      <Stack direction="row" spacing={2} alignItems="center" justifyContent={"space-between"}>
                         <Typography fontWeight="bold">تاریخ ایجاد:</Typography>
                         <Typography>{projectData?.createDate ? e2p(ConvertToJalali(projectData?.createDate)) : "--"}</Typography>
                       </Stack>
