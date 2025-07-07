@@ -37,14 +37,14 @@ import { useParams } from "react-router";
 // DNS type mapping to standard DNS record type numbers
 const dnsTypeToNumber: Record<dnsType, number> = {
   A: 1,
-  AAAA: 28,
-  NS: 2,
-  MX: 15,
-  CNAME: 5,
-  TXT: 16,
-  PTR: 12,
-  SRV: 33,
-  CAA: 257,
+  AAAA: 2,
+  CNAME: 3,
+  NS: 4,
+  TXT: 5,
+  MX: 6,
+  PTR: 7,
+  SRV: 8,
+  CAA: 9,
 };
 
 type CreateRecordDialogPropsType = {
@@ -52,6 +52,7 @@ type CreateRecordDialogPropsType = {
   dnsId: number;
   onClose: () => void;
   openDialog: boolean;
+  refetchRecords: () => void;
 };
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
@@ -59,19 +60,16 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   dnsId,
   onClose,
   openDialog,
+  refetchRecords,
 }) => {
-  const { projectId} = useParams();
+  const { projectId } = useParams();
 
-  const {refetch}=useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
-    id: dnsId,
-    projectId: Number(projectId)
-  });
   const { data: getInfo, isLoading: getDetailsLoading } =
-  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
-    dnsCdnHostId: dnsId,
-    projectId: Number(projectId),
-    id: id!
-  }, { skip: !id });
+    useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
+      dnsCdnHostId: dnsId,
+      projectId: Number(projectId),
+      id: id!
+    }, { skip: !id });
 
   const [type, setType] = useState<dnsType>("A");
 
@@ -88,22 +86,22 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
 
   useEffect(() => {
     if (!getInfo) return;
-    
-        setType(getInfo.type as dnsType);
 
-        setInitialValues((prevState) => {
-          let result = { ...prevState };
-          result.name = getInfo.name!;
-          result.value = getInfo.value!;
-          result.ttl = getInfo.ttl!.toString();
-          result.useProxy = getInfo.useProxy!;
-          result.weight = getInfo.weight || null;
-          result.port = getInfo.port || null;
-          result.priority = getInfo.priority || null;
-          result.preference = getInfo.preference || null;
+    setType(getInfo.type as dnsType);
 
-          return result;
-        });
+    setInitialValues((prevState) => {
+      let result = { ...prevState };
+      result.name = getInfo.name!;
+      result.value = getInfo.value!;
+      result.ttl = getInfo.ttl!.toString();
+      result.useProxy = getInfo.useProxy!;
+      result.weight = getInfo.weight || null;
+      result.port = getInfo.port || null;
+      result.priority = getInfo.priority || null;
+      result.preference = getInfo.preference || null;
+
+      return result;
+    });
   }, [getInfo]);
 
   const [createDnsRecord, { isLoading: createDnsRecordLoading }] =
@@ -132,15 +130,15 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           port,
         },
         dnsCdnHostId: dnsId,
-        projectId:Number(projectId)
+        projectId: Number(projectId)
       })
         .unwrap()
         .then(() => {
           toast.success("رکورد مورد نظر با موفقیت بروز شد");
           onClose();
-          refetch();
+          refetchRecords();
         })
-        .catch(() => {});
+        .catch(() => { });
     } else {
       createDnsRecord({
         createDnsRecordModel: {
@@ -155,15 +153,15 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           port,
         },
         dnsCdnHostId: dnsId,
-        projectId:Number(projectId)
+        projectId: Number(projectId)
       })
         .unwrap()
         .then(() => {
           toast.success("رکورد جدید با موفقیت ایجاد شد");
-          onClose();  
-          refetch();
+          onClose();
+          refetchRecords();
         })
-        .catch(() => {});
+        .catch(() => { });
     }
 
     setSubmitting(false);

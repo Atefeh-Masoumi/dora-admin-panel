@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
       when: always
     - when: never
 
@@ -14,83 +14,64 @@ stages:
   - deploy
 
 variables:
-  KUBE_CONTEXT_DORSA: cloud-computing/core/front-my-core:dorsa-front-client
-  KUBE_CONTEXT_RAAHBAR: cloud-computing/core/front-my-core:raahbar-front-my
-  KUBE_CONTEXT_BAHARTEL: ccloud-computing/core/front-my-core:bahartel-front-my
-  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/core/front-my-core
+  KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
+  KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
+  DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
 
-## Stage 1 : PACKAGE
-package_stage:
+## development
+
+package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-my-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-stage:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-stage
+    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-development
   only:
-    - main
+    - development
 
-package_dorsa_prod:
+deploy_development:
+  stage: deploy
+  needs: [package_development]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
+    - kubectl -n development rollout restart deployment front-client-development
+  only:
+    - development
+
+# ---- *** Dorsa master ***---
+
+package_dorsa_master:
   stage: package
   script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-my-dorsa-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-dorsa-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-dorsa-prod
+    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-client:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client
   when: manual
   only:
-    - main
+    - master
 
-package_raahbar_prod:
-  stage: package
+deploy_dorsa_master:
+  stage: deploy
+  needs: [package_dorsa_master]
   script:
-    - docker build -f Dockerfile.raahbar.production -t $DOCKER_REGISTRY/front-my-raahbar-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-raahbar-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-raahbar-prod
-  when: manual
-  only:
-    - raahbar
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-dorsa.yaml
+    - kubectl -n production rollout restart deployment front-ver2-client
+  when: on_success
+  only: 
+    - master
+
+# ----### Bahar ###----
 
 package_bahartel_prod:
   stage: package
   script:
-    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel-prod:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel-prod:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel-prod
+    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel
   when: manual
   only:
-    - bahar
-
-# Stage 2 : DEPLOY
-
-deploy_stage:
-  stage: deploy
-  needs: [package_stage]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-my-stage.yaml
-    - kubectl -n development rollout restart deployment front-my-v1
-  only:
-    - main
-
-deploy_dorsa_prod:
-  stage: deploy
-  needs: [package_dorsa_prod]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n main apply -f $CI_PROJECT_DIR/deployments/front-my-dorsa-prod.yaml
-    - kubectl -n main rollout restart deployment front-my-v1
-  when: on_success
-  only: 
-    - main
-
-deploy_raahbar_prod:
-  stage: deploy
-  needs: [package_raahbar_prod]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_RAAHBAR
-    - kubectl -n raahbar apply -f $CI_PROJECT_DIR/deployments/front-my-raahbar-prod.yaml
-    - kubectl -n raahbar rollout restart deployment front-my-v1
-  when: on_success
-  only: 
-    - raahbar
+    - master
 
 deploy_bahartel_prod:
   stage: deploy
@@ -98,8 +79,8 @@ deploy_bahartel_prod:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
-    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-my-bahartel-prod.yaml
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
     - kubectl -n production rollout restart deployment front-my-v1
   when: on_success
   only: 
-    - bahar
+    - master

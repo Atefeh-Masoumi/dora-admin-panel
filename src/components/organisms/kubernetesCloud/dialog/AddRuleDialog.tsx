@@ -47,11 +47,11 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
     },
   ]);
   const [createIngressRule, { isLoading: createIngressRuleLoading }] =
-  usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleCreateMutation();
+    usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressKuberIngressIdRuleCreateMutation();
 
   const { data: deploymentPortList } =
-  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
-    projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId)
+    useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployPortListQuery({
+      projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId)
     });
 
   const transformedPorts = useMemo(() => {
@@ -100,8 +100,8 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
           rules: rules || [],
         },
         projectId: Number(projectId),
-         kuberHostId: Number(kubernetesCloudId),
-        kuberIngressId:ingressId,
+        kuberHostId: Number(kubernetesCloudId),
+        kuberIngressId: ingressId,
       })
         .unwrap()
         .then(() => {
@@ -109,7 +109,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
           resetForm();
           props.onClose && props.onClose({}, "backdropClick");
         })
-        .catch(() => {});
+        .catch(() => { });
 
       setSubmitting(false);
     },

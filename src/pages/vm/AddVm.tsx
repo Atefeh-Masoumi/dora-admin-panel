@@ -23,19 +23,6 @@ import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
-// const mapConfig = {
-//   cpu: "CPU",
-//   memory: "Memory",
-//   disk: "Disk",
-//   ipv4: "IPV4",
-//   ipv6: "IPV6",
-//   rackUnitSpace: "Rack Space Unit",
-//   powerAmp: "Power (A)",
-//   ipv4Count: "IPV4",
-//   networkPort10G: "Network 10G Port",
-//   networkPort1G: "Network 1G Port",
-// };
-
 const AddVm: FC = () => {
   const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<
@@ -69,7 +56,7 @@ const AddVm: FC = () => {
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
-  usePostApiMyVmByProjectIdHostCreateMutation();
+    usePostApiMyVmByProjectIdHostCreateMutation();
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -135,16 +122,18 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-          
+
           vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-         
+
           ipAddress: String(selectedIp),
           storageClassTypeId: 1,
+          usedPublicIpV4: true,
+          usedPublicIpV6: false
         },
         projectId: Number(projectId),
       })
@@ -154,7 +143,7 @@ const AddVm: FC = () => {
           navigate(-1);
           refetch();
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 

@@ -1,11 +1,6 @@
 import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import {
-  GetDnsRecordResponse,
-  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation,
-  useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
-} from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -15,13 +10,19 @@ import { CreateRecordDialog } from "../dialogs/CreateRecordDialog";
 import { zoneTableStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { useParams } from "react-router";
+import {
+  GetDnsRecordResponse,
+  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordListQuery,
+} from "src/app/services/api.generated";
+
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
 const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
-  const { projectId, id} = useParams();
+  const { projectId, id } = useParams();
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedDns, setSelectedDns] = useState<GetDnsRecordResponse | null>(
     null
@@ -32,7 +33,7 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   const [deleteDnsRecord, { isLoading: deleteDnsRecordLoading }] =
-  useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation();
+    useDeleteApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordDeleteIdMutation();
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -44,20 +45,20 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
 
-  const {refetch}=useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery({
-    id: Number(id),
+  const { refetch } = useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordListQuery({
+    dnsCdnHostId: Number(id),
     projectId: Number(projectId)
   });
+
   const deleteDnsRecordHandler = () =>
-    deleteDnsRecord({ id: Number(selectedDns?.id),projectId:Number(projectId),dnsCdnHostId:0 })
+    deleteDnsRecord({ id: Number(selectedDns?.id), projectId: Number(projectId), dnsCdnHostId: Number(id) })
       .unwrap()
       .then(() => {
         toast.success("Dns رکورد مورد نظر حذف شد");
         refetch()
         closeDialogHandler();
       })
-      .catch((err) => {});
-
+      .catch((err) => { });
 
   return (
     <Fragment>
@@ -142,6 +143,7 @@ const ZoneTableRow: FC<{ row: any }> = ({ row }) => {
           dnsId={row.DnsCdnHostId}
           openDialog={openEdit}
           onClose={handleCloseEdit}
+          refetchRecords={refetch}
         />
       )}
     </Fragment>

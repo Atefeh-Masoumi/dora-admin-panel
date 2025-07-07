@@ -1,17 +1,14 @@
 import { LoadingButton } from "@mui/lab";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography, Divider } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { ChooseOSForRebuild } from "./serverRebuildSections/ChooseOS";
-import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
 import { EditConfirmationDialog } from "src/components/organisms/vm/edit/rebuild/dialog/EditConfirmationDialog";
-import { SelectSecuritySettings } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectSecuritySettings";
-import { SelectPassword } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectPassword";
 import { SelectServiceName } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectServiceName";
-import { SelectVmKey } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectVmKey";
+import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
 
 type VmRebuildPropsType = {};
 
@@ -70,7 +67,6 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   };
 
   const submitBtnOnClick = () => {
-    console.log("selectedOs", selectedOs);
     const rebuildVmModel: any = {
       name,
       password,
@@ -92,57 +88,68 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
         toast.success("فرآیند بازسازی سرور مورد نظر با موفقیت شروع شد.");
         navigate(`/vm/${projectId}/list`);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
+      <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
       >
-        بازسازی سیستم عامل
-      </Typography>
-      <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}>
-        <Typography align="center" color="grey.700" sx={{ mb: 4 }}>
-          بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
-        </Typography>
-        <Stack spacing={4} sx={{ width: "100%", maxWidth: "800px", mx: "auto" }}>
-          <ChooseOSForRebuild setImageId={setSelectedOs} />
-          <SelectServiceName serviceName={name} setServiceName={setName} />
-          <SelectSecuritySettings
-            securityId={securityId}
-            setSecurityId={setSecurityId}
-            usePassword={usePassword}
-            setUsePassword={setUsePassword}
-            useVmKey={useVmKey}
-            setUseVmKey={setUseVmKey}
-          />
-          {useVmKey && (
-            <SelectVmKey
-              vmKeyList={vmKeyList}
-              setVmKeyId={setVmKeyId}
-            />
-          )}
-          {usePassword && (
-            <SelectPassword password={password} setPassword={setPassword} />
-          )}
-          <Stack alignItems="center" justifyContent="center" sx={{ mt: 2 }}>
-            <LoadingButton
-              loading={rebuildLoading}
-              variant="contained"
-              onClick={handleRebuildOnClick}
-              sx={{
-                width: { xs: "100%", sm: "auto" },
-                px: { sm: 8 },
-                py: 2.1,
-              }}
-            >
-              بازسازی سرور
-            </LoadingButton>
-          </Stack>
+        <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Typography
+            color="grey.700"
+            fontSize={24}
+            fontWeight={700}
+          >
+            بازسازی سیستم عامل
+          </Typography>
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack>
+          <Paper elevation={0} sx={{ py: 5 }}>
+            <Typography align="center" color="grey.700" sx={{ mb: 4 }}>
+              بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
+            </Typography>
+            <Stack spacing={4} sx={{ width: "100%" }}>
+              <ChooseOSForRebuild setImageId={setSelectedOs} />
+              <SelectServiceName
+                serviceName={name} setServiceName={setName}
+                securityId={securityId}
+                setSecurityId={setSecurityId}
+                usePassword={usePassword}
+                setUsePassword={setUsePassword}
+                useVmKey={useVmKey}
+                setUseVmKey={setUseVmKey}
+                password={password}
+                setPassword={setPassword}
+                vmKeyId={vmKeyId}
+                setVmKeyId={setVmKeyId}
+                vmKeyList={vmKeyList}
+              />
+              <Stack alignItems="center" justifyContent="center" sx={{ mt: 2 }}>
+                <LoadingButton
+                  loading={rebuildLoading}
+                  variant="contained"
+                  onClick={handleRebuildOnClick}
+                  sx={{
+                    width: { xs: "100%", sm: "auto" },
+                    px: { sm: 8 },
+                    py: 2.1,
+                  }}
+                >
+                  بازسازی سرور
+                </LoadingButton>
+              </Stack>
+            </Stack>
+          </Paper>
         </Stack>
       </Paper>
       <EditConfirmationDialog

@@ -42,7 +42,7 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
         toast.success("دسترسی کاربر با موفقیت حذف شد.");
         closeDialogHandler();
       })
-      .catch((err: any) => {});
+      .catch((err: any) => { });
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -56,14 +56,14 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
 
   function handleChip(name: string, row: any) {
     switch (name) {
-      case "isSuperUser":
+      case "isSuperManager":
         return (
           <Chip
             clickable={false}
-            label={row.isSuperUser ? "فعال" : "غیرفعال"}
+            label={row.isSuperManager ? "فعال" : "غیرفعال"}
             sx={{
-              bgcolor: row.isSuperUser ? "success.light" : "error.light",
-              color: row.isSuperUser ? "success.main" : "error.main",
+              bgcolor: row.isSuperManager ? "success.light" : "error.light",
+              color: row.isSuperManager ? "success.main" : "error.main",
               py: 2.2,
               borderRadius: BORDER_RADIUS_1,
               fontSize: "14px",
@@ -84,14 +84,14 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
             }}
           />
         );
-      case "hasTwoFactor":
+      case "isFinancialManager":
         return (
           <Chip
             clickable={false}
-            label={row.hasTwoFactor ? "فعال" : "غیرفعال"}
+            label={row.isFinancialManager ? "فعال" : "غیرفعال"}
             sx={{
-              bgcolor: row.hasTwoFactor ? "success.light" : "error.light",
-              color: row.hasTwoFactor ? "success.main" : "error.main",
+              bgcolor: row.isFinancialManager ? "success.light" : "error.light",
+              color: row.isFinancialManager ? "success.main" : "error.main",
               py: 2.2,
               borderRadius: BORDER_RADIUS_1,
               fontSize: "14px",
@@ -137,9 +137,9 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
                 </Stack>
               ) : (
                 <>
-                  {column.id === "isSuperUser" ||
-                  column.id === "isActive" ||
-                  column.id === "hasTwoFactor" ? (
+                  {column.id === "isSuperManager" ||
+                    column.id === "isActive" ||
+                    column.id === "isFinancialManager" ? (
                     <>{handleChip(column.id, row)}</>
                   ) : (
                     text || "-"
@@ -153,9 +153,9 @@ const AccessibilityTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="دسترسی کاربر"
+        keyTitle="ایمیل"
         subTitle="برای حذف دسترسی کاربر, عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedCustomerUser?.phoneNumber || ""}
+        securityPhrase={selectedCustomerUser?.email || ""}
         onSubmit={deleteDnsRecordHandler}
         submitLoading={deleteCustomerUserLoading}
       />

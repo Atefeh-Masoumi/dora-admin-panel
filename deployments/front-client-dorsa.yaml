@@ -1,25 +1,25 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: front-my-v1
+  name: front-ver2-client
   labels:
-    app: front-my
+    app: front-client
     version: v1
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: front-my
+      app: front-client
       version: v1
   template:
     metadata:
       labels:
-        app: front-my
+        app: front-client
         version: v1
     spec:
       containers:
-        - name: front-my
-          image: git.dorsa.cloud:5050/cloud-computing/core/front-my-core/front-my-bahartel-prod:latest
+        - name: front-client
+          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client:latest
           ports:
             - name: http-0
               containerPort: 80
@@ -36,7 +36,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - front-my
+                  - front-client
               topologyKey: kubernetes.io/hostname
       topologySpreadConstraints:
       - maxSkew: 1
@@ -44,7 +44,7 @@ spec:
         whenUnsatisfiable: ScheduleAnyway
         labelSelector:
           matchLabels:
-            app: front-my
+            app: front-client
       restartPolicy: Always
       imagePullSecrets:
         - name: dorsa-git
