@@ -114,7 +114,7 @@ const VmProjectList: FC = () => {
   };
 
   const profileCompleted = useAppSelector(
-    (state) => state.auth?.profileCompleted
+    (state) => state.auth?.profileCompleted ?? false
   );
 
   const goToProfilePage = () => {
