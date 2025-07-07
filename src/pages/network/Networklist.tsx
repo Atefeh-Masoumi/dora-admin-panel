@@ -162,7 +162,7 @@ const NetworkList: FC = () => {
             initialOrder={0}
           />
         </Box>
-      </Stack>
+      </Stack> 
       <AddNetworkDialog
         open={dialogType === DIALOG_TYPE_ENUM.CREATE}
         onClose={closeDialogHandler}
