@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { AttachNodeDialog } from "./AttachNodeDialog";
 import { VmnetworkTableTableStruct } from "./struct";
@@ -10,6 +9,7 @@ import {
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
   VmNetworkNodeListResponse,
 } from "src/app/services/api.generated";
+import { Add } from "@mui/icons-material";
 
 type FirewallPropsType = {};
 
@@ -53,24 +53,17 @@ export const Network: FC<FirewallPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
-            sx={{ mb: 2 }}
-          >
-            مدیریت شبکه
-          </Typography>
-
-          <Button
-            onClick={openCreateDialogHandler}
-            variant="outlined"
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
-          >
-            اتصال به شبکه
-          </Button>
+          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
+            <Button
+              onClick={openCreateDialogHandler}
+              variant="outlined"
+              startIcon={
+                <Add/>
+              }
+            >
+              اتصال به شبکه 
+            </Button>
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>
