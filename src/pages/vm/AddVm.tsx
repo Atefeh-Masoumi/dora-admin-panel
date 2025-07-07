@@ -5,7 +5,9 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
+  useGetApiMyVmByProjectIdHostListQuery,
   usePostApiMyVmByProjectIdHostCreateMutation,
+
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -58,6 +60,12 @@ const AddVm: FC = () => {
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
 
+  const {
+    refetch,
+  } = useGetApiMyVmByProjectIdHostListQuery({
+    projectId: Number(projectId),
+  });
+  
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
@@ -144,6 +152,7 @@ const AddVm: FC = () => {
         .then(() => {
           toast.success("ماشین مجازی با موفقیت ایجاد گردید");
           navigate(-1);
+          refetch();
         })
         .catch(() => {});
     }
