@@ -79,6 +79,10 @@ export const baseQuery: BaseQueryFn<
       toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
+    if (error.status == 422){
+      toast.error("اطلاعات وارد شده معتبر نمی باشد");
+      return { error };
+    }
     if (error.status === 403) {
       navigateTo("/forbidden");
       return { error };
@@ -94,7 +98,7 @@ export const baseQuery: BaseQueryFn<
       toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
-
+  
     toast.error(error.errorMessage || `\n ${defaultErrorMessage}`);
 
     return { error };
