@@ -1,7 +1,6 @@
 import { FC, createContext, ReactNode, useState } from "react";
 import {
   VmImageListResponse,
-  useGetApiMyVmByProjectIdImageListQuery,
   ProductBundleVmListResponse,
 } from "src/app/services/api.generated";
 
