@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { Add } from "@mui/icons-material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/create/CreateFirewallDialog";
 import { firewallTableStruct } from "./table/struct";
@@ -63,9 +63,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
             <Button
               onClick={openCreateDialogHandler}
               variant="outlined"
-              startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-              }
+              startIcon={ <Add/>}
             >
               افزودن رول
             </Button>
