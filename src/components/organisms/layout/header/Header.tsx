@@ -85,6 +85,10 @@ const Header: FC<HeaderPropsType> = ({
   const handleProjectSelect = (projectId: number) => {
     dispatch(setSelectedProjectId(projectId));
     localStorage.setItem('selectedProjectId', projectId.toString());
+    const selectedProjectData = projectList.find(p => p.id === projectId);
+    if (selectedProjectData) {
+      dispatch(setSelectedProject(selectedProjectData));
+    }
     handleProjectMenuClose();
     navigate(`/vm/${projectId}/list`);
   };
