@@ -117,8 +117,8 @@ const Header: FC<HeaderPropsType> = ({
           onClick={handleProjectMenuOpen}
           variant="outlined"
           size="small"
-          sx={{
-            width: 200,
+          sx={{ 
+            width: 150,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
@@ -135,8 +135,8 @@ const Header: FC<HeaderPropsType> = ({
           open={Boolean(projectMenuAnchor)}
           onClose={handleProjectMenuClose}
           PaperProps={{
-            sx: {
-              width: 200,
+            sx: { 
+              width: 150,
               mt: 1,
               boxShadow: 4,
               borderRadius: BORDER_RADIUS_1
