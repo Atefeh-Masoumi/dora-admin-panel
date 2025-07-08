@@ -13,6 +13,9 @@ import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
 import { LockSvg } from "src/components/atoms/svg-icons/LockSvg";
 import { NetworkSvg } from "src/components/atoms/svg-icons/NetworkSvg";
+import { VpcSvg } from "src/components/atoms/svg-icons/VpcSvg";
+import { DocCloud } from "src/components/atoms/svg-icons/DocCloudSvg";
+import { VpnKey, VpnKeyOutlined } from "@mui/icons-material";
 
 type SidebarPropsType = {};
 
@@ -42,7 +45,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     {
       title: "Key",
       text: "کلید ها",
-      Icon: LockSvg,
+      Icon: VpnKeyOutlined,
       link: selectedProjectId ? `/key/${selectedProjectId}` : "/",
     },
     // {
@@ -58,12 +61,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     //   Icon: KubernetesSvg,
     //   link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
     // },
-    // {
-    //   title: "Object Storage",
-    //   text: "ذخیره‌ساز ابری",
-    //   Icon: ObjectStorageSvg,
-    //   link: selectedProjectId ? `/storage/${selectedProjectId}` : "/dashboard",
-    // },
+    {
+      title: "Object Storage",
+      text: "ذخیره‌ساز ابری",
+      Icon: ObjectStorageSvg,
+      link: selectedProjectId ? `/storage/${selectedProjectId}` : "/",
+    },
     // {
     //   title: "Web Hosting",
     //   text: "هاستینگ ابری",
