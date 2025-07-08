@@ -446,7 +446,11 @@ const Router: FC = () => {
             pageTitle: "مدیریت شبکه",
           })} />
           <Route path="/network/:projectId/:networkId/node-list" element={mainTemplate(EditNetwork,{
-            pageTitle: "مدیریت شبکه",
+          link: {
+            text: "بازگشت به مدیریت شبکه",
+            url: BACK_URL_HINTS_ENUM.NETWORK_LIST,
+          },
+          hideSidebar: false,
           })} />
           {/* ======================================= KEY MANAGEMENT ======================================= */}
           <Route path="/key/:projectId" element={mainTemplate(KeyList,{
