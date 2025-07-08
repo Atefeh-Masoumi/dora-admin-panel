@@ -63,7 +63,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
     {
       title: "Object Storage",
-      text: "ذخیره‌ساز ابری",
+      text: "فضای ابری",
       Icon: ObjectStorageSvg,
       link: selectedProjectId ? `/storage/${selectedProjectId}` : "/",
     },
