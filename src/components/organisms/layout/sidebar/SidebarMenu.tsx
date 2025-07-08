@@ -32,19 +32,19 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     },
     {
       title: "DNS",
-      text: " سرویس  DNS ابری ",
+      text: "   DNS ابری ",
       Icon: CloudConnectionSvg,
       link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/",
     },
     {
       title: "Network",
-      text: "شبکه ها",
+      text: "شبکه ",
       Icon: NetworkSvg,
       link: selectedProjectId ? `/network/${selectedProjectId}` : "/",
     },
     {
       title: "Key",
-      text: "کلید ها",
+      text: "کلیدهای دسترسی",
       Icon: VpnKeyOutlined,
       link: selectedProjectId ? `/key/${selectedProjectId}` : "/",
     },
@@ -63,7 +63,7 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     // },
     {
       title: "Object Storage",
-      text: "ذخیره‌ساز ابری",
+      text: "فضای ابری",
       Icon: ObjectStorageSvg,
       link: selectedProjectId ? `/storage/${selectedProjectId}` : "/",
     },

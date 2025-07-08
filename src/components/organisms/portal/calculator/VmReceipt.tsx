@@ -7,6 +7,7 @@ import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { priceToPersian } from "src/utils/priceToPersian";
+import { toast } from "react-toastify";
 
 const receiptImage = (
   <Box
@@ -263,6 +264,19 @@ const VmReceipt: FC<ReceiptPropsType> = ({
     </Stack>
   );
 
+  const handleCreateVmClick = () => {
+    // Get projectId from localStorage as fallback
+    const storedProjectId = localStorage.getItem('selectedProjectId');
+    const currentProjectId = projectId || storedProjectId;
+    
+    if (!currentProjectId) {
+      toast.error("لطفا ابتدا یک پروژه انتخاب کنید");
+      return;
+    }
+    
+    navigate(`/vm/${currentProjectId}/list`);
+  };
+
   return (
     <Paper
       ref={receiptRef}
@@ -334,7 +348,7 @@ const VmReceipt: FC<ReceiptPropsType> = ({
         </Stack>
         <Button
           variant="contained"
-          onClick={() => navigate(`/vm/${projectId}/list`)}
+          onClick={handleCreateVmClick}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth

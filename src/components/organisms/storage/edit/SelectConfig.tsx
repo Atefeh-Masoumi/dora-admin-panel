@@ -15,6 +15,7 @@ import { Grid2 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
+import { handleApiError } from "src/utils/errorHandler";
 
 type SelectConfigPropsType = {};
 
@@ -77,7 +78,8 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       .then(() => {
         toast.success("تغییرات جدید با موفقیت اعمال شد");
         refetch();
-      });
+      })
+      .catch(() => {});
   };
 
   return (
