@@ -39,6 +39,9 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
   const [sendNewConfig, { isLoading: sendNewConfigLoading }] =
   usePutApiMyStorageByProjectIdHostEditAndIdMutation();
 
+  const { refetch } = useGetApiMyStorageByProjectIdHostGetAndIdQuery({
+    id: Number(serverId)!,projectId: Number(projectId),
+  });
   useEffect(() => {
     if (serverId && data) {
       setDisk(data.disk || 0);
@@ -71,7 +74,10 @@ export const SelectConfig: FC<SelectConfigPropsType> = () => {
       },
     })
       .unwrap()
-      .then(() => toast.success("تغییرات جدید با موفقیت اعمال شد"));
+      .then(() => {
+        toast.success("تغییرات جدید با موفقیت اعمال شد");
+        refetch();
+      });
   };
 
   return (

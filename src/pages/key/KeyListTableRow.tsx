@@ -5,46 +5,43 @@ import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { projectUserTableStruct } from "./struct";
+import { keyTableStruct } from "./struct";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-  ProjectUserListResponse,
-  useDeleteApiMyByProjectIdUserDeleteAndIdMutation,
-  useGetApiMyByProjectIdUserListQuery,
+  VmKeyListResponse,
+  useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdKeyListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-import EditProjectUserDialog from "../edit/EditProjectUserDialog";
-import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
-  EDIT = "EDIT",
 }
 
-export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
+export const KeyListTableRow: FC<{ row: any }> = ({ row }) => {
   const { projectId } = useParams();
 
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedUser, setSelectedUser] =
-    useState<ProjectUserListResponse | null>(null);
-  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [selectedKey, setSelectedKey] =
+    useState<VmKeyListResponse | null>(null);
 
-  const [deleteItem, { isLoading: deleteUserRecordLoading }] =
-    useDeleteApiMyByProjectIdUserDeleteAndIdMutation();
+  const [deleteItem, { isLoading: deleteKeyRecordLoading }] =
+    useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation();
 
-  const { refetch } = useGetApiMyByProjectIdUserListQuery(
+  const { refetch } = useGetApiMyVmByProjectIdKeyListQuery(
     { projectId: Number(projectId) },
     { skip: !projectId }
   );
 
-  const deleteUserRecordHandler = () =>
+  const deleteKeyRecordHandler = () =>
     deleteItem({ 
-      id: Number(selectedUser?.id),
+      id: Number(selectedKey?.id),
       projectId: Number(projectId),
     })
       .unwrap()
       .then(() => {
-        toast.success("حذف کاربر مورد نظر در حال بررسی است");
+        toast.success("کلید مورد نظر با موفقیت حذف شد");
         refetch();
         closeDialogHandler();
       })
@@ -52,29 +49,19 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedUser(null);
+    setSelectedKey(null);
   };
 
-  const handleOpenDelete = (user: ProjectUserListResponse) => {
-    setSelectedUser(user);
+  const handleOpenDelete = (key: VmKeyListResponse) => {
+    setSelectedKey(key);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
-  };
-
-  const handleOpenEdit = (user: ProjectUserListResponse) => {
-    setSelectedUser(user);
-    setShowEditDialog(true);
-  };
-
-  const closeEditDialogHandler = () => {
-    setShowEditDialog(false);
-    setSelectedUser(null);
   };
 
   return (
     <Fragment>
-      {deleteUserRecordLoading && <PageLoading />}
+      {deleteKeyRecordLoading && <PageLoading />}
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {projectUserTableStruct.map((column) => {
+        {keyTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format && typeof value === "number"
             ? column.format(value)
@@ -88,9 +75,6 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  <IconButton onClick={() => handleOpenEdit(row)}>
-                    <Edit />
-                  </IconButton>
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
                   </IconButton>
@@ -105,20 +89,14 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="کاربر"
-        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedUser?.user || ""}
-        onSubmit={deleteUserRecordHandler}
-        submitLoading={deleteUserRecordLoading}
-      />
-      <EditProjectUserDialog
-        open={showEditDialog}
-        onClose={closeEditDialogHandler}
-        selectedUser={selectedUser}
-        refetch={refetch}
+        keyTitle="کلید"
+        subTitle="برای حذف کلید موردنظر، عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedKey?.name || ""}
+        onSubmit={deleteKeyRecordHandler}
+        submitLoading={deleteKeyRecordLoading}
       />
     </Fragment>
   );
 };
 
-export default withTableRowWrapper(ProjectUserTableRow); 
+export default withTableRowWrapper(KeyListTableRow);

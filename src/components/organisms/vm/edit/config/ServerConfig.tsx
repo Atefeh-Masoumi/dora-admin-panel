@@ -11,6 +11,7 @@ import {
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
 } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 import {
   PRODUCT_CATEGORY_ENUM,
@@ -42,7 +43,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
 
   const { projectId } = useParams();
 
-  const { data: getData } = useGetApiMyVmByProjectIdHostGetAndIdQuery({
+  const { data: getData, refetch, isFetching } = useGetApiMyVmByProjectIdHostGetAndIdQuery({
     projectId: Number(projectId),
     id: serverId || 0
   });
@@ -58,7 +59,7 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     setDisk(getData?.disk || 0);
 
 
-  }, [getData, serverId]);
+  }, [getData, serverId,refetch]);
 
   useEffect(() => {
     if (memoryUnitPrice || cpuUnitPrice || diskUnitPrice || !unitsPrice) return;
@@ -142,13 +143,20 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
           >
-            تغییر مشخصات سخت افزاری
-          </Typography>
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              تغییر مشخصات سخت افزاری
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>

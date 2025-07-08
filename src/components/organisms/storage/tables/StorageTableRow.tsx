@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import {
   StorageHostListResponse,
   useDeleteApiMyStorageByProjectIdHostDeleteAndIdMutation,
+  useGetApiMyStorageByProjectIdHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -26,6 +27,10 @@ const StorageTableRow: FC<{ row: any }> = ({ row }) => {
   const {projectId} = useParams()
   const settingOnClick = () => navigate("/storage/"+projectId+"/" + row["id"]);
 
+  const { refetch } = useGetApiMyStorageByProjectIdHostListQuery({
+    projectId: Number(projectId),
+  });
+  
   const [deleteStorage, { isLoading: deleteDnsRecordLoading }] =
   useDeleteApiMyStorageByProjectIdHostDeleteAndIdMutation();
 
@@ -44,6 +49,7 @@ const StorageTableRow: FC<{ row: any }> = ({ row }) => {
       .unwrap()
       .then(() => {
         closeDialogHandler();
+        refetch();
       })
       .catch((err) => {});
 

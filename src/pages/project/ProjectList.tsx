@@ -14,19 +14,20 @@ import { toast } from "react-toastify";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { EmptyTable } from "src/components/molecules/EmptyTable";
 import { CreateVmProjectDialog } from "./CreateProjectDialog";
-import { VmProjectCard } from "src/components/organisms/vm/project/VmProjectCard";
+import { VmProjectCard } from "src/components/organisms/vm/project/ProjectCard";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { RefreshButton } from "src/components/atoms/RefreshButton";
-import { SearchBox } from "src/components/molecules/SearchBox";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { useAppSelector, useAppDispatch } from "src/app/hooks";
-import { setSelectedProjectId } from "src/app/slice/projectSlice";
+
 import {
   ProjectListResponse,
   useDeleteApiMyProjectDeleteByIdMutation,
   useGetApiMyProjectListQuery,
 } from "src/app/services/api.generated";
-
+import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { SearchBox } from "src/components/molecules/SearchBox";
+import { Products } from "src/components/organisms/home/Products";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { setSelectedProjectId } from "src/app/slice/projectSlice";
 const vmDataList = [
   { label: "مرکزداده:", id: "datacenter" },
   {
@@ -105,16 +106,16 @@ const VmProjectList: FC = () => {
       })
       .catch(() => { });
   };
-
   const cardOnClick = (project: ProjectListResponse) => {
-    // Set the selected project in Redux state
-    dispatch(setSelectedProjectId(project.id || null));
-    localStorage.setItem('selectedProjectId', (project.id || '').toString());
+    if (project.id) {
+      dispatch(setSelectedProjectId(project.id));
+      localStorage.setItem('selectedProjectId', project.id.toString());
+    }
     navigate(`/vm/${project.id}/list`);
   };
 
   const profileCompleted = useAppSelector(
-    (state) => state.auth?.profileCompleted
+    (state) => state.auth?.profileCompleted ?? false
   );
 
   const goToProfilePage = () => {

@@ -68,6 +68,11 @@ const VmIndex = lazy(() => import("src/pages/vm/VmList"));
 const AddVm = lazy(() => import("src/pages/vm/AddVm"));
 const EditVm = lazy(() => import("src/pages/vm/EditVm"));
 
+const NetworkList = lazy(() => import("src/pages/network/Networklist"));
+const EditNetwork = lazy(() => import("src/pages/network/EditNetwork"));
+
+const KeyList = lazy(() => import("src/pages/key/KeyList"));
+
 // const WebIndex = lazy(() => import("src/pages/web/Index"));
 // const AddWeb = lazy(() => import("src/pages/web/AddWeb"));
 // const EditWeb = lazy(() => import("src/pages/web/EditWeb"));
@@ -435,6 +440,18 @@ const Router: FC = () => {
             path="/vm/:projectId/:id/network"
             element={<EditVmWrapper />}
           />
+          {/* ======================================= NETWORK  ======================================= */}
+
+          <Route path="/network/:projectId" element={mainTemplate(NetworkList,{
+            pageTitle: "مدیریت شبکه",
+          })} />
+          <Route path="/network/:projectId/:networkId/node-list" element={mainTemplate(EditNetwork,{
+            pageTitle: "مدیریت شبکه",
+          })} />
+          {/* ======================================= KEY MANAGEMENT ======================================= */}
+          <Route path="/key/:projectId" element={mainTemplate(KeyList,{
+            pageTitle: "مدیریت کلید",
+          })} />
           {/* ======================================= Kubernetes Cluster ======================================= */}
           <Route
             path="/kubernetes-cluster/:projectId"
@@ -563,7 +580,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/storage/:projectId/addStorageService"
+            path="/storage/:projectId/add"
             element={mainTemplate(
               AddStorageService,
               {

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
-import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, Home as HomeIcon } from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, Home as HomeIcon, HomeMaxOutlined } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
@@ -96,6 +96,10 @@ const Header: FC<HeaderPropsType> = ({
     }
     dispatch(setSelectedProjectId(projectId));
     localStorage.setItem('selectedProjectId', projectId.toString());
+    const selectedProjectData = projectList.find(p => p.id === projectId);
+    if (selectedProjectData) {
+      dispatch(setSelectedProject(selectedProjectData));
+    }
     handleProjectMenuClose();
     navigate(`/vm/${projectId}/list`);
   };
@@ -117,8 +121,8 @@ const Header: FC<HeaderPropsType> = ({
           onClick={handleProjectMenuOpen}
           variant="outlined"
           size="small"
-          sx={{
-            width: 200,
+          sx={{ 
+            width: 150,
             height: 40,
             borderRadius: BORDER_RADIUS_1,
             borderColor: "rgba(110, 118, 138, 0.16)",
@@ -135,8 +139,8 @@ const Header: FC<HeaderPropsType> = ({
           open={Boolean(projectMenuAnchor)}
           onClose={handleProjectMenuClose}
           PaperProps={{
-            sx: {
-              width: 200,
+            sx: { 
+              width: 150,
               mt: 1,
               boxShadow: 4,
               borderRadius: BORDER_RADIUS_1
@@ -336,23 +340,28 @@ const Header: FC<HeaderPropsType> = ({
                   <IconButton
                     onClick={() => navigate("/")}
                     sx={{
-                      color: "primary.main",
                       width: { xs: 40, md: 48 },
                       height: { xs: 40, md: 48 },
                       borderRadius: BORDER_RADIUS_1,
-                      border: "1px solid",
                       borderColor: "primary.light",
                       backgroundColor: "primary.50",
+                      transition: "all 0.2s ease-in-out",
                       "&:hover": {
-                        backgroundColor: "primary.light",
                         borderColor: "primary.main",
                         transform: "scale(1.05)",
-                        transition: "all 0.2s ease-in-out",
+                        "& .MuiSvgIcon-root": {
+                          color: "primary.main",
+                        },
                       },
-                      transition: "all 0.2s ease-in-out",
                     }}
                   >
-                    <HomeIcon sx={{ fontSize: { xs: 24, md: 28 } }} />
+                    <HomeMaxOutlined
+                      sx={{
+                        fontSize: { xs: 24, md: 28 },
+                        color: "grey.600",
+                        transition: "color 0.2s",
+                      }}
+                    />
                   </IconButton>
                   <Typography
                     variant="title5"

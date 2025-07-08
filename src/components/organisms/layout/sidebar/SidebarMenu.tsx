@@ -11,6 +11,11 @@ import { sidebarWidth } from "src/components/templates/MainTemplate";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { sidebarItemType } from "src/types/itemsList.type";
 import { ItemList } from "./ItemList";
+import { LockSvg } from "src/components/atoms/svg-icons/LockSvg";
+import { NetworkSvg } from "src/components/atoms/svg-icons/NetworkSvg";
+import { VpcSvg } from "src/components/atoms/svg-icons/VpcSvg";
+import { DocCloud } from "src/components/atoms/svg-icons/DocCloudSvg";
+import { VpnKey, VpnKeyOutlined } from "@mui/icons-material";
 
 type SidebarPropsType = {};
 
@@ -31,6 +36,18 @@ export const Sidebar: FC<SidebarPropsType> = () => {
       Icon: CloudConnectionSvg,
       link: selectedProjectId ? `/cdn/${selectedProjectId}` : "/",
     },
+    {
+      title: "Network",
+      text: "شبکه ها",
+      Icon: NetworkSvg,
+      link: selectedProjectId ? `/network/${selectedProjectId}` : "/",
+    },
+    {
+      title: "Key",
+      text: "کلید ها",
+      Icon: VpnKeyOutlined,
+      link: selectedProjectId ? `/key/${selectedProjectId}` : "/",
+    },
     // {
     //   title: "Kubernetes Cluster",
     //   text: "کلاستر کوبرنتیز",
@@ -44,12 +61,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     //   Icon: KubernetesSvg,
     //   link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
     // },
-    // {
-    //   title: "Object Storage",
-    //   text: "ذخیره‌ساز ابری",
-    //   Icon: ObjectStorageSvg,
-    //   link: selectedProjectId ? `/storage/${selectedProjectId}` : "/dashboard",
-    // },
+    {
+      title: "Object Storage",
+      text: "ذخیره‌ساز ابری",
+      Icon: ObjectStorageSvg,
+      link: selectedProjectId ? `/storage/${selectedProjectId}` : "/",
+    },
     // {
     //   title: "Web Hosting",
     //   text: "هاستینگ ابری",

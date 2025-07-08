@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { logoutAction } from "../slice/authSlice";
 import { RootStateType } from "../store";
 import { navigateTo } from "src/utils/navigate";
+import { CleaningServices } from "@mui/icons-material";
+import { handleApiError } from "src/utils/errorHandler";
 
 const defaultErrorMessage =
   "مشکلی پیش آمده است، لطفاً چند دقیقه دیگر دوباره امتحان کنید";
@@ -27,36 +29,32 @@ export const baseQuery: BaseQueryFn<
   unknown,
   unknown
 > = async (
-  {
-    url,
-    method = "GET",
-    body,
-    params,
-    headers,
-    abortController,
-    onUploadProgress,
-    timeout= 500000,
-  },
-  { getState, dispatch }
+  { url, method, body, params, headers, abortController, onUploadProgress, timeout },
+  { getState, dispatch, signal }
 ) => {
-  const { auth } = getState() as RootStateType;
+  const state = getState() as RootStateType;
+  const auth = state.auth;
+
+  const config: AxiosRequestConfig = {
+    url: `${baseUrl}${url}`,
+    method: method || "GET",
+    data: body,
+    params,
+    headers: {
+      "Content-Type": "application/json",
+      ...(auth?.accessToken && {
+        Authorization: `Bearer ${auth.accessToken}`,
+      }),
+      ...headers,
+    },
+    signal: abortController?.signal || signal,
+    onUploadProgress,
+    timeout: timeout || 30000,
+  };
+
   try {
-    const result = await axios({
-      url: baseUrl + url,
-      method,
-      data: body,
-      params,
-      headers: {
-        ...headers,
-        ...(auth?.accessToken && {
-          authorization: `Bearer ${auth.accessToken}`,
-        }),
-      },
-      timeout,
-      ...(abortController && { signal: abortController.signal }),
-      onUploadProgress,
-    });
-    return { data: result.data };
+    const response = await axios(config);
+    return { data: response.data };
   } catch (axiosError) {
     const e = axiosError as AxiosError<string, any>;
     
@@ -79,6 +77,10 @@ export const baseQuery: BaseQueryFn<
       toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
+    if (error.status == 422){
+      handleApiError(error.errorMessage as any, "اطلاعات وارد شده معتبر نمی باشد");
+      return { error };
+    }
     if (error.status === 403) {
       navigateTo("/forbidden");
       return { error };
@@ -95,7 +97,7 @@ export const baseQuery: BaseQueryFn<
       toast.error(error.errorMessage || defaultErrorMessage);
       return { error };
     }
-
+  
     toast.error(error.errorMessage || `\n ${defaultErrorMessage}`);
 
     return { error };

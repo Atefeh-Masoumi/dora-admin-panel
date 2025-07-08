@@ -108,7 +108,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
         <Stack
           sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
-          {/* <IconButton
+          <IconButton
 
             onClick={(e) => {
               e.preventDefault();
@@ -117,7 +117,7 @@ export const VmProjectCard: FC<VmProjectCardPropsType> = ({
             }}
           >
             <Edit />
-          </IconButton> */}
+          </IconButton>
 
           <IconButton
             color="error"

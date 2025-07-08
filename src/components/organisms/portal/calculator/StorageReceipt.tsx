@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useGetApiMyPortalProductItemListByProductIdQuery } from "src/app/services/api.generated";
 import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -105,6 +105,8 @@ type ReceiptPropsType = {
 
 const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
   const navigate = useNavigate();
+  const { projectId } = useParams();
+
   const { data: storageData } =
     useGetApiMyPortalProductItemListByProductIdQuery({
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
@@ -298,7 +300,7 @@ const StorageReceipt: FC<ReceiptPropsType> = ({ storage }) => {
         <Button
           variant="contained"
           // href="/storage/addStorageService"
-          onClick={() => navigate("/storage/addStorageService")}
+          onClick={() => navigate(`/storage/${projectId}/add`)}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth

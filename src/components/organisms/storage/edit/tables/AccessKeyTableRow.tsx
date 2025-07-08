@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import {
   StorageKeyListResponse,
   useDeleteApiMyStorageByProjectIdHostAndStorageHostIdKeyDeleteIdMutation,
+  useGetApiMyStorageByProjectIdHostAndStorageHostIdKeyListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -55,6 +56,11 @@ const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
   const [DeleteAccessKey, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyStorageByProjectIdHostAndStorageHostIdKeyDeleteIdMutation();
 
+  const { refetch } = useGetApiMyStorageByProjectIdHostAndStorageHostIdKeyListQuery({
+    projectId: Number(projectId),
+    storageHostId: Number(storageHostId),
+  });
+
   const deleteDnsRecordHandler = () =>
     DeleteAccessKey({ 
       projectId: Number(projectId), 
@@ -65,6 +71,7 @@ const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success(" کلید دسترسی با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
       .catch(() => {});
 
@@ -90,7 +97,7 @@ const AccessKeyTableRow: FC<{ row: any }> = ({ row }) => {
                     <TrashSvg />
                   </IconButton>
                 </Stack>
-              ) : column.id === "secretKey" ? (
+              ) : column.id === "accessKey" ? (
                 <OutlinedInput
                   color="secondary"
                   disabled

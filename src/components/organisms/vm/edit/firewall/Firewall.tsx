@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
+import { Add } from "@mui/icons-material";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateFirewallDialog } from "src/components/organisms/vm/edit/firewall/create/CreateFirewallDialog";
 import { firewallTableStruct } from "./table/struct";
@@ -10,6 +10,7 @@ import {
   useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
   VmFirewallRuleListResponse,
 } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type FirewallPropsType = {};
 
@@ -24,7 +25,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
   useState<VmFirewallRuleListResponse | null>(null);
 
   const { id, projectId } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading, refetch } =
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch, isFetching } =
     useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
       {
         projectId: Number(projectId),
@@ -53,13 +54,20 @@ export const Firewall: FC<FirewallPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
           >
-            مدیریت رول ها
-          </Typography>
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              مدیریت رول ها
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
           <Button
             onClick={openCreateDialogHandler}
             variant="outlined"
