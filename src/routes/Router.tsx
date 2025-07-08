@@ -580,7 +580,7 @@ const Router: FC = () => {
             })}
           />
           <Route
-            path="/storage/:projectId/addStorageService"
+            path="/storage/:projectId/add"
             element={mainTemplate(
               AddStorageService,
               {
