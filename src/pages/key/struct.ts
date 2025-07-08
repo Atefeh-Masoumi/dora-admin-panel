@@ -5,5 +5,5 @@ export const keyTableStruct: columnType[] = [
   { label: "نام کلید", id: "name" },
   { label: "Finger print", id: "fingerPrint" },
   { label: "تاریخ ایجاد", id: "createDate" },
-  { label: "عملیات", id: "control" },
+  { label: "", id: "control" },
 ]; 

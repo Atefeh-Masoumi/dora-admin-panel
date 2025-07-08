@@ -7,5 +7,5 @@ export const networkTableStruct: columnType[] = [
   { label: "Subnet Mask", id: "subnetMask" },
   { label: "Gateway IP", id: "gatewayIp" },
   { label: "تاریخ ایجاد", id: "createDate" },
-  { label: "عملیات", id: "control" },
+  { label: "", id: "control" },
 ];
