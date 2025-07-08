@@ -38,7 +38,7 @@ const StorageList: FC = () => {
 
   const navigate = useNavigate();
 
-  const createCloudOnClick = () => navigate("/storage/addStorageService");
+  const createCloudOnClick = () => navigate(`/storage/${projectId}/add`);
 
   return (
     <Stack
