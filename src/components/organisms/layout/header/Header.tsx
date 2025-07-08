@@ -264,6 +264,9 @@ const Header: FC<HeaderPropsType> = ({
           : `/vpc/${vpcId}/vpcVm?projectId=${projectId}&vpcId=${vpcId}`;
 
         break;
+      case BACK_URL_HINTS_ENUM.NETWORK_LIST:
+        href = `/network/${projectId}`;
+        break;
       default:
         href = typeof url === "string" ? url : "";
         break;
