@@ -14,6 +14,7 @@ import IpRow from "./IPRow";
 import { Add } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 const LoadingSkeleton: FC = () => (
   <Grid2
@@ -47,7 +48,7 @@ const LoadingSkeleton: FC = () => (
 export const VmIpAddress: FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const { projectId, id } = useParams();
-  const { data, refetch, isLoading } =
+  const { data, refetch, isLoading, isFetching } =
     useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery({ projectId: Number(projectId), vmHostId: Number(id) })
 
   const openCreateDialogHandler = () => {
@@ -71,13 +72,20 @@ export const VmIpAddress: FC = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
           >
-            آدرس IP سرور
-          </Typography>
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              آدرس IP سرور
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
           <Button
             onClick={openCreateDialogHandler}
             variant="outlined"

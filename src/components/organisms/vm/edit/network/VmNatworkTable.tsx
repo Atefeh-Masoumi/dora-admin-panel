@@ -10,6 +10,7 @@ import {
   VmNetworkNodeListResponse,
 } from "src/app/services/api.generated";
 import { Add } from "@mui/icons-material";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type FirewallPropsType = {};
 
@@ -24,7 +25,7 @@ export const Network: FC<FirewallPropsType> = () => {
   useState<VmNetworkNodeListResponse | null>(null);
 
   const { id, projectId } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading, refetch } =
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch, isFetching } =
     useGetApiMyVmByProjectIdNetworkNodeListQuery(
       {
         projectId: Number(projectId),
@@ -53,17 +54,30 @@ export const Network: FC<FirewallPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
-              onClick={openCreateDialogHandler}
-              variant="outlined"
-              startIcon={
-                <Add/>
-              }
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
             >
-              اتصال به شبکه 
-            </Button>
+              مدیریت شبکه
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
+
+          <Button
+            onClick={openCreateDialogHandler}
+            variant="outlined"
+            startIcon={
+              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            }
+          >
+            اتصال به شبکه
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>

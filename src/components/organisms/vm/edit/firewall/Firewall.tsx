@@ -10,6 +10,7 @@ import {
   useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
   VmFirewallRuleListResponse,
 } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type FirewallPropsType = {};
 
@@ -24,7 +25,7 @@ export const Firewall: FC<FirewallPropsType> = () => {
   useState<VmFirewallRuleListResponse | null>(null);
 
   const { id, projectId } = useParams();
-  const { data: firewallList = [], isLoading: getFirewallLoading, refetch } =
+  const { data: firewallList = [], isLoading: getFirewallLoading, refetch, isFetching } =
     useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
       {
         projectId: Number(projectId),
@@ -53,15 +54,29 @@ export const Firewall: FC<FirewallPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-            <Button
-              onClick={openCreateDialogHandler}
-              variant="outlined"
-              startIcon={ <Add/>}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
             >
-              افزودن رول
-            </Button>
+              مدیریت رول ها
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
+          <Button
+            onClick={openCreateDialogHandler}
+            variant="outlined"
+            startIcon={
+              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+            }
+          >
+            افزودن رول
+          </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>

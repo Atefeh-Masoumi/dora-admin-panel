@@ -7,6 +7,7 @@ import { CreateSnapshotDialog } from "./dialog/CreateSnapshotDialog";
 import SnapshotTableRow from "./table/SnapshotTableRow";
 import { snapShotTableStruct } from "./table/struct";
 import { useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type SnapshotPropsType = {};
 
@@ -20,7 +21,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
 
   const { id, projectId } = useParams();
-  const { data: snapshotList = [], isLoading: getSnapshotLoading, refetch } =
+  const { data: snapshotList = [], isLoading: getSnapshotLoading, refetch, isFetching } =
     useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
       { projectId: Number(projectId), vmHostId: Number(id) },
       { skip: !id }
@@ -46,13 +47,20 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
           >
-            مدیریت اسنپ شات
-          </Typography>
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              مدیریت اسنپ شات
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
           <Button
             onClick={openCreateDialogHandler}
             variant="outlined"
