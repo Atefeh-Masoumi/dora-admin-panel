@@ -7,6 +7,7 @@ import ReceiptItem from "src/components/atoms/svg-icons/ReceiptItem.svg";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { priceToPersian } from "src/utils/priceToPersian";
+import { toast } from "react-toastify";
 
 const receiptImage = (
   <Box
@@ -226,6 +227,19 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
     </Stack>
   );
 
+  const handleCreateDnsClick = () => {
+    // Get projectId from localStorage as fallback
+    const storedProjectId = localStorage.getItem('selectedProjectId');
+    const currentProjectId = projectId || storedProjectId;
+    
+    if (!currentProjectId) {
+      toast.error("لطفا ابتدا یک پروژه انتخاب کنید");
+      return;
+    }
+    
+    navigate(`/cdn/${currentProjectId}/add-zone`);
+  };
+
   return (
     <Paper
       ref={receiptRef}
@@ -288,9 +302,7 @@ const DnsReceipt: FC<ReceiptPropsType> = ({ dnsRecord }) => {
         </Stack>
         <Button
           variant="contained"
-          onClick={() => {
-            navigate(`/cdn/${projectId}/add-zone`);
-          }}
+          onClick={handleCreateDnsClick}
           size="large"
           sx={{ padding: "5px" }}
           fullWidth
