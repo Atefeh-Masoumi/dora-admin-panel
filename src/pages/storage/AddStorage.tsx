@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
+  useGetApiMyStorageByProjectIdHostListQuery,
   usePostApiMyStorageByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
@@ -41,7 +42,9 @@ const AddStorageService: FC = () => {
       productId: PRODUCT_CATEGORY_ENUM.STORAGE,
     });
 
-  
+  const { refetch } = useGetApiMyStorageByProjectIdHostListQuery({
+    projectId: Number(projectId),
+  });
 
   const mapCustomConfig = useMemo(() => {
     return [
@@ -60,8 +63,8 @@ const AddStorageService: FC = () => {
 
     if (!name) {
       validationErrorMessage = "لطفا نام سرویس را انتخاب کنید";
-    } else if (name.length < 3) {
-      validationErrorMessage = "نام سرویس نمی تواند کمتر از سه حرف باشد";
+    } else if (name.length < 5) {
+      validationErrorMessage = "نام سرویس نمی تواند کمتر از ۵ حرف باشد";
     } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرور را انتخاب کنید";
     }
@@ -84,6 +87,7 @@ const AddStorageService: FC = () => {
         .then(() => {
           toast.success("سرویس فضای ابری با موفقیت ایجاد شد");
           navigate(`/storage/${projectId}`);
+          refetch();
           
         })
         .catch((err) => {});
