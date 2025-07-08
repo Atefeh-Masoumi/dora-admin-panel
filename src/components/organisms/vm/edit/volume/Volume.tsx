@@ -7,6 +7,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import VolumeTableRow from "./table/VolumeTableRow";
 import { volumeTableStruct } from "./table/struct";
 import { useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 export const Volume: FC = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export const Volume: FC = () => {
     data: volumeList,
     isLoading: getVolumeLoading,
     refetch,
+    isFetching,
   } = useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
 
   useEffect(() => {
@@ -52,13 +54,20 @@ export const Volume: FC = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Typography
-            color="grey.700"
-            fontSize={24}
-            fontWeight={700}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
           >
-            مدیریت دیسک
-          </Typography>
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              مدیریت دیسک
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
 
           {/* <Button
               onClick={openCreateDialogHandler}

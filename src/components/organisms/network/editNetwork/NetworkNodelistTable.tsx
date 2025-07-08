@@ -3,7 +3,6 @@ import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import {
   VmNetworkNodeListResponse,
@@ -60,23 +59,24 @@ const NetworkNodelistTable: FC = () => {
           justifyContent="space-between"
           gap={1}
         >
-          <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
             <Typography
               color="grey.700"
               fontSize={24}
               fontWeight={700}
-              sx={{ mb: 2 }}
             >
-              نودهای شبکه
+              لیست شبکه
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
           <Button
             onClick={openAttachDialogHandler}
             variant="outlined"
-            startIcon={
-              <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
-            }
+            startIcon={<Add />}
           >
             اتصال نود
           </Button>
