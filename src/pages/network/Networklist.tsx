@@ -81,6 +81,7 @@ const NetworkList: FC = () => {
       .then(() => {
         toast.success("شبکه مورد نظر با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
       .catch(() => {});
   };
