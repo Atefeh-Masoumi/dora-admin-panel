@@ -77,7 +77,7 @@ const EditRabbitService: FC<EditStoragePropsType> = () => {
 
   const tabPanelArray = [ServiceInfo, AccessKeyList, SelectConfig];
 
-  if (!id) return <Navigate to="/storage" />;
+  if (!id) return <Navigate to="/storage/:projectId" />;
 
   return (
     <Stack
