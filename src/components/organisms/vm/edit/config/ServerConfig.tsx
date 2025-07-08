@@ -141,7 +141,6 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     return m + c + d + ip4 + ip6;
   }, [cpu, cpuUnitPrice, disk, diskUnitPrice, memory, memoryUnitPrice, ipv4UnitPrice, ipv6UnitPrice]);
 
-  console.log(totalPrice)
   const submitClickHandler = () => {
     if (!serverId) return;
     sendNewConfig({
