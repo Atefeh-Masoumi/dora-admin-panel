@@ -24,7 +24,7 @@ export const baseQuery: BaseQueryFn<
     headers?: AxiosRequestConfig["headers"];
     abortController?: AbortController;
     onUploadProgress?: AxiosRequestConfig["onUploadProgress"];
-    timeout?:number
+    timeout?: number
   },
   unknown,
   unknown
@@ -32,74 +32,74 @@ export const baseQuery: BaseQueryFn<
   { url, method, body, params, headers, abortController, onUploadProgress, timeout },
   { getState, dispatch, signal }
 ) => {
-  const state = getState() as RootStateType;
-  const auth = state.auth;
+    const state = getState() as RootStateType;
+    const auth = state.auth;
 
-  const config: AxiosRequestConfig = {
-    url: `${baseUrl}${url}`,
-    method: method || "GET",
-    data: body,
-    params,
-    headers: {
-      "Content-Type": "application/json",
-      ...(auth?.accessToken && {
-        Authorization: `Bearer ${auth.accessToken}`,
-      }),
-      ...headers,
-    },
-    signal: abortController?.signal || signal,
-    onUploadProgress,
-    timeout: timeout || 30000,
-  };
-
-  try {
-    const response = await axios(config);
-    return { data: response.data };
-  } catch (axiosError) {
-    const e = axiosError as AxiosError<string, any>;
-    
-    if (e.code === 'ECONNABORTED') {
-      toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
-      return { error: { status: 408, errorMessage: 'Request timeout' } };
-    }
-
-    if (!e.response?.status) {
-      toast.error(defaultErrorMessage);
-      return { e };
-    }
-
-    const error = {
-      status: e.response.status,
-      errorMessage: e.response?.data,
+    const config: AxiosRequestConfig = {
+      url: `${baseUrl}${url}`,
+      method: method || "GET",
+      data: body,
+      params,
+      headers: {
+        "Content-Type": body instanceof FormData ? "multipart/form-data" : "application/json",
+        ...(auth?.accessToken && {
+          Authorization: `Bearer ${auth.accessToken}`,
+        }),
+        ...headers,
+      },
+      signal: abortController?.signal || signal,
+      onUploadProgress,
+      timeout: timeout || 30000,
     };
 
-    if (error.status >= 500) {
-      toast.error(error.errorMessage || defaultErrorMessage);
-      return { error };
-    }
-    if (error.status == 422){
-      handleApiError(error.errorMessage as any, "اطلاعات وارد شده معتبر نمی باشد");
-      return { error };
-    }
-    if (error.status === 403) {
-      navigateTo("/forbidden");
-      return { error };
-    }
-    if (error.status === 404) {
-      return { error };
-    }
-    if (error.status === 401) {
-      auth?.accessToken && dispatch(logoutAction());
-      navigateTo("/login");
-      return { error };
-    }
-    if (error.status === 400) {
-      toast.error(error.errorMessage || defaultErrorMessage);
-      return { error };
-    }
-  
-    toast.error(error.errorMessage || `\n ${defaultErrorMessage}`);
+    try {
+      const response = await axios(config);
+      return { data: response.data };
+    } catch (axiosError) {
+      const e = axiosError as AxiosError<string, any>;
 
-    return { error };
-  }
-};
+      if (e.code === 'ECONNABORTED') {
+        toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
+        return { error: { status: 408, errorMessage: 'Request timeout' } };
+      }
+
+      if (!e.response?.status) {
+        toast.error(defaultErrorMessage);
+        return { e };
+      }
+
+      const error = {
+        status: e.response.status,
+        errorMessage: e.response?.data,
+      };
+
+      if (error.status >= 500) {
+        toast.error(error.errorMessage || defaultErrorMessage);
+        return { error };
+      }
+      if (error.status == 422) {
+        handleApiError(error.errorMessage as any, "اطلاعات وارد شده معتبر نمی باشد");
+        return { error };
+      }
+      if (error.status === 403) {
+        navigateTo("/forbidden");
+        return { error };
+      }
+      if (error.status === 404) {
+        return { error };
+      }
+      if (error.status === 401) {
+        auth?.accessToken && dispatch(logoutAction());
+        navigateTo("/login");
+        return { error };
+      }
+      if (error.status === 400) {
+        toast.error(error.errorMessage || defaultErrorMessage);
+        return { error };
+      }
+
+      toast.error(error.errorMessage || `\n ${defaultErrorMessage}`);
+
+      return { error };
+    }
+  };

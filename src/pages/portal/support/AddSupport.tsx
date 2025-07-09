@@ -23,6 +23,7 @@ import {
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueCreateMutation,
   usePostApiMyPortalIssueSubjectShortListMutation,
+  CreateIssueModel,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -83,7 +84,7 @@ const AddTicket: FC = () => {
         .then((res: any) => {
           setApiCloudCustomerProductList(res || []);
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [
     businessUnitId,
@@ -97,8 +98,6 @@ const AddTicket: FC = () => {
   const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
 
   const [upload] = useCustomCreateIssueMutation();
-  const [createissue, {isLoading }] = usePostApiMyPortalIssueCreateMutation();
-  
 
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -111,7 +110,7 @@ const AddTicket: FC = () => {
     setUploading(true);
   };
 
-  const abortController = useRef<AbortController |  null>(null);
+  const abortController = useRef<AbortController | null>(null);
 
   if (!abortController.current) {
     abortController.current = new AbortController();
@@ -122,30 +121,20 @@ const AddTicket: FC = () => {
       toast.error("لطفا تمام فیلد ها را پر کنید");
       return;
     }
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("content", content);
     formData.append("businessUnitId", businessUnitId.toString());
     formData.append("issueSubjectId", title.toString());
     formData.append("issuePriorityId", ticketPriorityLevel?.toString()!);
-    productId && formData.append("productId", productId.toString());
-    
+    if (productId) formData.append("productId", productId.toString());
     if (selectedApiCloudCustomerProduct !== 0) {
-      formData.append(
-        "customerProductId",
-        selectedApiCloudCustomerProduct.toString()
-      );
+      formData.append("customerProductId", selectedApiCloudCustomerProduct.toString());
     }
-    !!file && formData.append("attachment", file as Blob)
-    
-    // upload({
-    //   body: formData as any,
-    //   abortController: abortController.current,
-    // })
-      createissue({
-        createIssueModel: formData as any
-      })
+    if (file) formData.append("attachment", file);
+
+    upload(formData)
       .unwrap()
-      .then((res:any) => {
+      .then((res: any) => {
         toast.success("تیکت با موفقیت اضافه شد");
         navigate("/portal/supports");
       })
@@ -153,7 +142,7 @@ const AddTicket: FC = () => {
         if (res.status === 401 || res.status === 404) {
           toast.error("مشکلی پیش آمده");
         } else {
-          toast.error(res?.data[""][0]);
+          toast.error(res?.data?.[""]?.[0] || "خطایی رخ داده است");
         }
       });
   };
@@ -282,12 +271,12 @@ const AddTicket: FC = () => {
               >
                 {(!apiCloudCustomerProductList ||
                   apiCloudCustomerProductList?.length === 0) && (
-                  <ListSubheader>
-                    <Typography sx={{ py: 1.6 }}>
-                      داده ای موجودی نیست
-                    </Typography>
-                  </ListSubheader>
-                )}
+                    <ListSubheader>
+                      <Typography sx={{ py: 1.6 }}>
+                        داده ای موجودی نیست
+                      </Typography>
+                    </ListSubheader>
+                  )}
                 {apiCloudCustomerProductList?.map((option) => (
                   <MenuItem
                     key={option.id}
@@ -471,7 +460,6 @@ const AddTicket: FC = () => {
               انصراف
             </Button>
             <LoadingButton
-              loading={isLoading}
               onClick={submit}
               fullWidth
               variant="contained"
@@ -480,7 +468,7 @@ const AddTicket: FC = () => {
             >
               ارسال تیکت
             </LoadingButton>
-            
+
           </Stack>
         </Stack>
       </Stack>
