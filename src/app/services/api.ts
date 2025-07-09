@@ -1,6 +1,7 @@
 import {
-  PostApiMyPortalIssueCreateApiArg,
   PostApiMyPortalIssueItemCreateApiResponse,
+  PostApiMyPortalIssueCreateApiResponse,
+  PostApiMyPortalIssueCreateApiArg,
 } from "./api.generated";
 import { enhancedApi } from "./api.generated";
 
@@ -39,16 +40,16 @@ export const api = enhancedApi
   .injectEndpoints({
     endpoints: (build) => ({
       customCreateIssue: build.mutation<
-        PostApiMyPortalIssueItemCreateApiResponse,
-        PostApiMyPortalIssueCreateApiArg & {
-          abortController?: AbortController;
-        }
+        PostApiMyPortalIssueCreateApiResponse,
+        FormData
       >({
-        query: ({ createIssueModel, abortController }) => ({
+        query: (formData) => ({
           url: `/api/my/portal/issue/create`,
           method: "POST",
-          createIssueModel,
-          signal: abortController?.signal, 
+          body: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }),
       }),
     }),
