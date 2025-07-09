@@ -30,10 +30,13 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
   const [memory, setMemory] = useState(1);
   const [cpu, setCpu] = useState(1);
   const [disk, setDisk] = useState(25);
+  const [ipv4, setIpv4] = useState(0);
+  const [ipv6, setIpv6] = useState(0);
   const [memoryUnitPrice, setMemoryUnitPrice] = useState(0);
   const [cpuUnitPrice, setCpuUnitPrice] = useState(0);
   const [diskUnitPrice, setDiskUnitPrice] = useState(0);
-  const [ipAddress, setIpAddress] = useState(0);
+  const [ipv4UnitPrice, setIpv4UnitPrice] = useState(0);
+  const [ipv6UnitPrice, setIpv6UnitPrice] = useState(0);
   const theme = useTheme()
 
   const { data: unitsPrice } =
@@ -57,12 +60,13 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
     setMemory(getData?.memory || 0);
     setCpu(getData?.cpu || 0);
     setDisk(getData?.disk || 0);
-
+    setIpv4(getData?.ipV4 || 0);
+    setIpv6(getData?.ipV6 || 0);
 
   }, [getData, serverId,refetch]);
 
   useEffect(() => {
-    if (memoryUnitPrice || cpuUnitPrice || diskUnitPrice || !unitsPrice) return;
+    if (memoryUnitPrice || cpuUnitPrice || diskUnitPrice || ipv4UnitPrice || ipv6UnitPrice || !unitsPrice) return;
 
     setMemoryUnitPrice(
       unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VMemory)
@@ -75,10 +79,13 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
       unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.VDisk)?.price ||
       0
     );
-    setIpAddress(
-      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.Ipv4)?.price || 0
+    setIpv4UnitPrice(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.IPV4)?.price || 0
     );
-  }, [cpuUnitPrice, diskUnitPrice, memoryUnitPrice, unitsPrice]);
+    setIpv6UnitPrice(
+      unitsPrice.find((item) => item.id === PRODUCT_ITEMS_ENUM.IPV6)?.price || 0
+    );
+  }, [cpuUnitPrice, diskUnitPrice, memoryUnitPrice, ipv4UnitPrice, ipv6UnitPrice, unitsPrice]);
 
   const resourceList = [
     {
@@ -105,14 +112,34 @@ export const ServerConfig: FC<ServerConfigPropsType> = () => {
       max: 1000,
       step: 25,
     },
+    {
+      name: "IPv4",
+      value: ipv4,
+      onChange: () => {},
+      min: 0,
+      max: 10,
+      step: 1,
+      price: ipv4UnitPrice,
+    },
+    {
+      name: "IPv6",
+      value: ipv6,
+      onChange: () => {},
+      min: 0,
+      max: 10,
+      step: 1,
+      price: ipv6UnitPrice,
+    },
   ];
 
   const totalPrice = useMemo(() => {
     const m = memoryUnitPrice * memory;
     const c = cpuUnitPrice * cpu;
     const d = diskUnitPrice * disk;
-    return m + c + d + ipAddress;
-  }, [cpu, cpuUnitPrice, disk, diskUnitPrice, memory, memoryUnitPrice]);
+    const ip4 = ipv4UnitPrice;
+    const ip6 = ipv6UnitPrice;
+    return m + c + d + ip4 + ip6;
+  }, [cpu, cpuUnitPrice, disk, diskUnitPrice, memory, memoryUnitPrice, ipv4UnitPrice, ipv6UnitPrice]);
 
   const submitClickHandler = () => {
     if (!serverId) return;
