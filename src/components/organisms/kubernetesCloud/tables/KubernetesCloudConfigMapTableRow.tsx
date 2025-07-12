@@ -17,6 +17,8 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import { EditConfigMapDialog } from "../dialog/EditConfigMapDialog";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { useParams } from "react-router";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
+
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
