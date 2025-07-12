@@ -8,6 +8,7 @@ import { kubernetesCloudIngressTableStruct } from "../../tables/struct";
 import { AddIngressDialog } from "../../dialog/AddIngressDialog";
 import { useParams } from "react-router-dom";
 import { KubernetesCloudIngressTableRow } from "../../tables/KubernetesCloudIngressTableRow";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type KubernetesCloudIngressPropsType = {};
 
@@ -19,7 +20,7 @@ export const KubernetesCloudIngress: FC<
 
   const { kubernetesCloudId ,projectId} = useParams();
 
-  const { data = [], isLoading } =
+  const { data = [], isLoading, refetch, isFetching } =
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressListQuery({
     projectId: Number(projectId),
     kuberHostId: Number(kubernetesCloudId) || 0,
@@ -53,9 +54,12 @@ export const KubernetesCloudIngress: FC<
           alignItems="center"
           spacing={2}
         >
-          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
-            لیست اینگرس
-          </Typography>
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography fontSize={18} color="secondary">
+              لیست اینگرس
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
         </Stack>
         <Button
           onClick={handleOpenAddIngressDialog}
@@ -70,17 +74,9 @@ export const KubernetesCloudIngress: FC<
             <Stack
               alignItems="center"
               justifyContent="center"
-              sx={{
-                width: 24,
-                height: 24,
-                border: ({ palette }) => "1px solid " + palette.primary.main,
-                borderRadius: BORDER_RADIUS_1,
-              }}
+              
             >
-              <Add
-                fontSize="small"
-                sx={{ "& path": { stroke: "#00a651" } }}
-              />
+              <Add />
             </Stack>
           }
         >

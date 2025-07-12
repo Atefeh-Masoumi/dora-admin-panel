@@ -9,6 +9,7 @@ import { kubernetesCloudConfigMapTableStruct } from "../../tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery } from "src/app/services/api.generated";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type KubernetesCloudConfigMapPropsType = {};
 
@@ -20,7 +21,7 @@ export const KubernetesCloudConfigMap: FC<
     useState<boolean>(false);
   const { kubernetesCloudId, projectId } = useParams();
 
-  const { data = [], isLoading } =useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
+  const { data = [], isLoading, refetch, isFetching } =useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
       { projectId: Number(projectId),
         kuberHostId: Number(kubernetesCloudId) || 0,
       },
@@ -64,13 +65,13 @@ export const KubernetesCloudConfigMap: FC<
           alignItems="center"
           spacing={2}
         >
-          <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
-            لیست کانفیگ‌مپ
-          </Typography>
-          <SearchBox
-            onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام سرویس"
-          />
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography fontSize={18} color="secondary">
+              لیست کانفیگ‌مپ
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
+        
         </Stack>
         <Button
           onClick={handleOpenAddConfigMapDialog}
@@ -85,17 +86,9 @@ export const KubernetesCloudConfigMap: FC<
             <Stack
               alignItems="center"
               justifyContent="center"
-              sx={{
-                width: 24,
-                height: 24,
-                border: ({ palette }) => "1px solid " + palette.primary.main,
-                borderRadius: BORDER_RADIUS_1,
-              }}
+             
             >
-              <Add
-                fontSize="small"
-                sx={{ "& path": { stroke: "#00a651" } }}
-              />
+              <Add />
             </Stack>
           }
         >
