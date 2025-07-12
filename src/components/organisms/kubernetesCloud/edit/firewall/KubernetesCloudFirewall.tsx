@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { Add } from "src/components/atoms/svg-icons/AddSvg";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery } from "src/app/services/api.generated";
@@ -9,6 +8,8 @@ import { CreateFirewallDialog } from "src/components/organisms/kubernetesCloud/d
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { KubernetesCloudFirewallTableRow } from "../../tables/KubernetesCloudFirewallTableRow";
 import {  kubernetesCloudFireWallTableStruct } from "../../tables/struct";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { Add } from "@mui/icons-material";
 
 export const KubernetesCloudFirewall: FC = () => {
   const [search, setSearch] = useState("");
@@ -22,7 +23,7 @@ export const KubernetesCloudFirewall: FC = () => {
 
   const { kubernetesCloudId,projectId } = useParams();
 
-  const { data = [], isLoading } =
+  const { data = [], isLoading, refetch, isFetching } =
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallListQuery(
       {
         projectId: Number(projectId),
@@ -71,13 +72,11 @@ export const KubernetesCloudFirewall: FC = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Typography fontSize={18} color="secondary" whiteSpace="nowrap">
-                  لیست Firewall
+                  لیست فایروال
                 </Typography>
                 <Stack display={{ xs: "none", md: "flex" }}>
-                  <SearchBox
-                    placeholder="جستجو "
-                    onChange={(text) => setSearch(text)}
-                  />
+                <RefreshButton isFetching={isFetching} refetchData={refetch} />
+                 
                 </Stack>
               </Stack>
             </Stack>
@@ -97,7 +96,7 @@ export const KubernetesCloudFirewall: FC = () => {
                 size="large"
                 sx={{ whiteSpace: "nowrap", px: { xs: 0.2, md: 1.2 } }}
                 startIcon={
-                  <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                  <Add/>
                 }
               >
                 افزودن رول

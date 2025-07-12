@@ -87,7 +87,7 @@ const EditKubernetesCloud: FC = () => {
   }, [pathname]);
 
   const handleChange = (_: SyntheticEvent, newValue: string) => {
-    navigate(`/kubernetes-cloud/${kubernetesCloudId}/${newValue}`);
+    navigate(`/kubernetes-cloud/${projectId}/${kubernetesCloudId}/${newValue}`);
   };
 
   const renderHandler = () => {
@@ -125,7 +125,7 @@ const EditKubernetesCloud: FC = () => {
     return result;
   };
 
-  if (!kubernetesCloudId) return <Navigate to={`/kubernetes-cloud`} />;
+  if (!kubernetesCloudId) return <Navigate to={`/kubernetes-cloud/${projectId}`} />;
 
   return (
     <Stack

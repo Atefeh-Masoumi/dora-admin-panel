@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import * as yup from "yup";
-import { usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapCreateMutation } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery, usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapCreateMutation } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
 
 type InitialValuesType = {
@@ -47,6 +47,12 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
   const [createConfigMap, { isLoading: createConfigMapLoading }] =
   usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapCreateMutation();
 
+  const { refetch } =useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery(
+    { projectId: Number(projectId),
+      kuberHostId: Number(kubernetesCloudId) || 0,
+    },
+    { skip: !kubernetesCloudId }
+  );
   const formik = useFormik<InitialValuesType>({
     initialValues: {
       name: null,
@@ -79,6 +85,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
           toast.success("Configmap با موفقیت ساخته شد");
           resetForm();
           onClose();
+          refetch();
         })
         .catch(() => {});
 

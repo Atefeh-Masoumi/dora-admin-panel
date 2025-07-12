@@ -718,7 +718,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
+              url: "/kubernetes-cloud/:projectId",
             },
             hideSidebar: false,
           })}
@@ -729,7 +729,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
+              url: "/kubernetes-cloud/:projectId",
             },
             hideSidebar: false,
           })}
@@ -740,8 +740,8 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
-            },
+              url: "/kubernetes-cloud/:projectId",
+            },  
             hideSidebar: false,
           })}
         />
@@ -751,7 +751,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
+              url: "/kubernetes-cloud/:projectId",
             },
             hideSidebar: false,
           })}
@@ -762,7 +762,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
+              url: "/kubernetes-cloud/:projectId",
             },
             hideSidebar: false,
           })}
@@ -773,7 +773,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud",
+              url: "/kubernetes-cloud/:projectId",
             },
             hideSidebar: false,
           })}
@@ -811,7 +811,6 @@ const Router: FC = () => {
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "مشخصات Deployment",
-            // RightComponent: DomainSelect,
           })}
         />
         <Route

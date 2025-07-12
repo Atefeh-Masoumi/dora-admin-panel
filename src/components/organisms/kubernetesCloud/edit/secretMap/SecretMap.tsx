@@ -9,6 +9,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { CreateSecretMapDialog } from "../../dialog/CreateSecretMapDialog";
 import { KubernetesCloudSecretMapTableRow } from "../../tables/KubernetesCloudSecretMapTableRow";
 import { kubernetesCloudSecretMapTableStruct } from "../../tables/struct";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type KubernetesCloudSecretMapPropsType = {};
 
@@ -20,7 +21,7 @@ export const KubernetesCloudSecretMap: FC<
   const [openAddSecretMapDialog, setOpenAddSecretMapDialog] =
     useState<boolean>(false);
 
-  const { data = [], isLoading } =
+  const { data = [], isLoading, refetch, isFetching } =
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery({
     projectId: Number(projectId),
     kuberHostId: Number(kubernetesCloudId) || 0,
@@ -63,13 +64,13 @@ export const KubernetesCloudSecretMap: FC<
           alignItems="center"
           spacing={2}
         >
-          <Typography fontSize={18} color="secondary">
-            لیست سکرت
-          </Typography>
-          <SearchBox
-            onChange={(text) => setSearch(text)}
-            placeholder="جستجو در نام سرویس"
-          />
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography fontSize={18} color="secondary">
+              لیست سکرت
+            </Typography>
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
+          </Stack>
+         
         </Stack>
         <Button
           onClick={handleOpenAddSecretMapDialog}
@@ -84,17 +85,8 @@ export const KubernetesCloudSecretMap: FC<
             <Stack
               alignItems="center"
               justifyContent="center"
-              sx={{
-                width: 24,
-                height: 24,
-                border: ({ palette }) => "1px solid " + palette.primary.main,
-                borderRadius: BORDER_RADIUS_1,
-              }}
             >
-              <Add
-                fontSize="small"
-                sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
-              />
+              <Add/>
             </Stack>
           }
         >

@@ -5,7 +5,7 @@ import { onlyNumber } from "src/utils/onlyNumber.utils";
 import { p2e } from "src/utils/p2e.utils";
 import { FormikProps } from "formik";
 import { priceToPersian } from "src/utils/priceToPersian.utils";
-import { onlyEnCharacter } from "src/utils/regex.utils";
+import { onlyEnCharacter, projectNameRegex } from "src/utils/regex.utils";
 import { toast } from "react-toastify";
 import { CacheProvider } from "@emotion/react";
 import createEmotionCache from "src/createEmotionCache";
@@ -41,6 +41,7 @@ export const AlphaNumericTextField: FC<AlphaNumericTextFieldPropsType> = ({
     }
     return newValue;
   }, [enableE2p, formik.values, id, isPrice]);
+  
   const enhancedOnChange: ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = useCallback(
@@ -52,18 +53,26 @@ export const AlphaNumericTextField: FC<AlphaNumericTextFieldPropsType> = ({
       if (isNumber || isPrice) {
         newValue = onlyNumber(value);
       }
-      const validChars = newValue.split("").filter((char) => {
-        if (onlyEnCharacter.test(char)) {
-          return char;
-        } else {
-          !toast.isActive("noneEnglishChar") &&
-            toast.warning("لطفاً زبان سیستم خود را بر روی انگلیسی تنظیم کنید", {
-              toastId: "noneEnglishChar",
-            });
-          return "";
-        }
-      });
-      newValue = validChars.join("");
+      
+      // Only apply character validation if not a number-only field
+      if (!isNumber && !isPrice) {
+        const validChars = newValue.split("").filter((char) => {
+          // Use projectNameRegex for better validation
+          if (projectNameRegex.test(char)) {
+            return true;
+          } else {
+            // Only show warning for non-valid characters
+            if (!toast.isActive("noneEnglishChar")) {
+              toast.warning("لطفاً فقط از حروف انگلیسی، اعداد، فاصله، خط تیره و زیرخط استفاده کنید", {
+                toastId: "noneEnglishChar",
+              });
+            }
+            return false;
+          }
+        });
+        newValue = validChars.join("");
+      }
+      
       formik.setFieldValue(id, newValue);
     },
     [enableE2p, formik, id, isNumber, isPrice]
