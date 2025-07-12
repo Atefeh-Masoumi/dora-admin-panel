@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Container, Stack, SwipeableDrawer } from "@mui/material";
 import { Box } from "@mui/material";
 import Header from "src/components/organisms/layout/header/Header";
-import { Sidebar } from "src/components/organisms/layout/sidebar/SidebarMenu";
+import { NewSidebar } from "src/components/organisms/layout/sidebar/NewSidebar";
 
 export const sidebarWidth = 240;
 
@@ -29,6 +29,7 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
   hideSidebar = false,
 }) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [isAccumulated, setIsAccumulated] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -74,7 +75,11 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
               display: { xs: "none", lg: "block" },
             }}
           >
-            <Sidebar />
+            <NewSidebar 
+              setShowSidebar={setShowSidebar}
+              isAccumulated={isAccumulated}
+              setIsAccumulated={setIsAccumulated}
+            />
           </Box>
           <SwipeableDrawer
             dir="rtl"
@@ -85,7 +90,11 @@ export const MainTemplate: FC<MainTemplatePropsType> = ({
             PaperProps={{ sx: { width: sidebarWidth, overflow: "overlay" } }}
             sx={{ display: { xs: "block", lg: "none" } }}
           >
-            <Sidebar />
+            <NewSidebar 
+              setShowSidebar={setShowSidebar}
+              isAccumulated={isAccumulated}
+              setIsAccumulated={setIsAccumulated}
+            />
           </SwipeableDrawer>
         </>
       )}
