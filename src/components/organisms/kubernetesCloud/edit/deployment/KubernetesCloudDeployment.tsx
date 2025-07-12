@@ -9,6 +9,7 @@ import { kubernetesCloudDeploymentTableStruct } from "../../tables/struct";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { KubernetesCloudDeploymentTableRow } from "../../tables/KubernetesCloudDeploymentTableRow";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 export const KubernetesCloudDeployment: FC = () => {
   const [search, setSearch] = useState("");
@@ -16,7 +17,7 @@ export const KubernetesCloudDeployment: FC = () => {
   const navigate = useNavigate();
   const { kubernetesCloudId,projectId } = useParams();
 
-  const { data, isLoading } =
+  const { data, isLoading ,refetch,isFetching} =
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployListQuery({
      projectId: Number(projectId), kuberHostId: Number(kubernetesCloudId),
     });
@@ -57,10 +58,7 @@ export const KubernetesCloudDeployment: FC = () => {
             <Typography fontSize={18} color="rgba(110, 118, 138, 1)">
               لیست دپلویمنت
             </Typography>
-            <SearchBox
-              onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام سرویس"
-            />
+            <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
           <Button
             onClick={gotToAddKubernetesCloudDeployment}
@@ -75,21 +73,12 @@ export const KubernetesCloudDeployment: FC = () => {
               <Stack
                 alignItems="center"
                 justifyContent="center"
-                sx={{
-                  width: 24,
-                  height: 24,
-                  border: ({ palette }) => "1px solid " + palette.primary.main,
-                  borderRadius: BORDER_RADIUS_1,
-                }}
               >
-                <Add
-                  fontSize="small"
-                  sx={{ "& path": { stroke: "#00a651" } }}
-                />
+                <Add/>
               </Stack>
             }
           >
-           افزودن
+           افزودن دیپلویمنت
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
