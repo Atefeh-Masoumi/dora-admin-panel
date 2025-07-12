@@ -18,6 +18,7 @@ export const ipValidation = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/;
 export const captchaRegex = /^[a-zA-Z0-9!@#]{6}$/;
 
 export const onlyEnCharacter = /^[a-zA-Z0-9]+$/;
+export const projectNameRegex = /^[a-zA-Z0-9\s\-_.]+$/;
 export const eppRegex = /^[A-Za-z0-9]{5,20}$/;
 
 export const maskRegex =
