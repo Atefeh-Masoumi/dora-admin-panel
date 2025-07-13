@@ -4480,7 +4480,8 @@ export type ConvertCustomerToLegalModel = {
   registrationDate?: string | null;
 };
 export type LoginResponse = {
-  enableTwoFactor?: boolean;
+  hasSmsTwoFactor?: boolean;
+  hasTotpTwoFactor?: boolean;
   accessToken?: string | null;
   userId?: number;
   userTitle?: string | null;
