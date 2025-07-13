@@ -3,7 +3,7 @@ import { Button, Chip, Stack } from "@mui/material";
 import { FC, MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { usePostApiMyFinancialInvoicePayMutation } from "src/app/services/api.generated";
+import { usePostApiMyFinancialOfferPayMutation } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { invoicesTableStruct } from "./struct";
@@ -12,7 +12,7 @@ const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
   const navigate = useNavigate();
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-  usePostApiMyFinancialInvoicePayMutation();
+  usePostApiMyFinancialOfferPayMutation();
 
   const payInvoice: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -20,7 +20,7 @@ const InvoicesTableRow: FC<{ row: any }> = ({ row }) => {
 
     if (row["invoiceStatusId"] !== 3 || !row["id"]) return;
 
-    invoicePayment({ payInvoiceModel: { id: row["id"] } })
+    invoicePayment({ orderOfferPayModel: { offerId: row["id"] } })
       .unwrap()
       .then(() => {
         toast.success(".پرداخت با موفقیت انجام شد");
