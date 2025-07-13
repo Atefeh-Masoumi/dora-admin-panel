@@ -259,11 +259,7 @@ const injectedRtkApi = api.injectEndpoints({
       PostApiMyAccountLogoutApiResponse,
       PostApiMyAccountLogoutApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/account/logout`,
-        method: "POST",
-        body: queryArg.iHttpContextAccessor,
-      }),
+      query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
     getApiMyAccountSsoUrl: build.query<
       GetApiMyAccountSsoUrlApiResponse,
@@ -1051,16 +1047,6 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyFinancialInvoiceSummaryApiArg
     >({
       query: () => ({ url: `/api/my/financial/invoice/summary` }),
-    }),
-    postApiMyFinancialInvoicePay: build.mutation<
-      PostApiMyFinancialInvoicePayApiResponse,
-      PostApiMyFinancialInvoicePayApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/financial/invoice/pay`,
-        method: "POST",
-        body: queryArg.payInvoiceModel,
-      }),
     }),
     getApiMyFinancialInvoiceListDownload: build.query<
       GetApiMyFinancialInvoiceListDownloadApiResponse,
@@ -1871,6 +1857,14 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/vpc/${queryArg.vpcHostId}/network-access/create`,
         method: "POST",
         body: queryArg.createVpcNetworkAccessModel,
+      }),
+    }),
+    getApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortList: build.query<
+      GetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListApiResponse,
+      GetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vpc/${queryArg.vpcHostId}/interface/short-list`,
       }),
     }),
     deleteApiMyVmByProjectIdVpcAndVpcHostIdInterfaceRemoveId: build.mutation<
@@ -2785,9 +2779,7 @@ export type PostApiMyAccountRegisterApiArg = {
   registerModel: RegisterModel;
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
-export type PostApiMyAccountLogoutApiArg = {
-  iHttpContextAccessor: IHttpContextAccessor;
-};
+export type PostApiMyAccountLogoutApiArg = void;
 export type GetApiMyAccountSsoUrlApiResponse =
   /** status 200 OK */ SsoLoginResponse;
 export type GetApiMyAccountSsoUrlApiArg = void;
@@ -3269,11 +3261,6 @@ export type GetApiMyFinancialInvoiceUnpaidApiArg = void;
 export type GetApiMyFinancialInvoiceSummaryApiResponse =
   /** status 200 OK */ InvoiceSummaryResponse;
 export type GetApiMyFinancialInvoiceSummaryApiArg = void;
-export type PostApiMyFinancialInvoicePayApiResponse =
-  /** status 200 OK */ PayInvoiceResponse;
-export type PostApiMyFinancialInvoicePayApiArg = {
-  payInvoiceModel: PayInvoiceModel;
-};
 export type GetApiMyFinancialInvoiceListDownloadApiResponse =
   /** status 200 OK */ Blob;
 export type GetApiMyFinancialInvoiceListDownloadApiArg = void;
@@ -3810,6 +3797,12 @@ export type PostApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessCreateApiArg = {
   projectId: number;
   vpcHostId: number;
   createVpcNetworkAccessModel: CreateVpcNetworkAccessModel;
+};
+export type GetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListApiResponse =
+  /** status 200 OK */ VpcInterfaceShortListResponse[];
+export type GetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListApiArg = {
+  projectId: number;
+  vpcHostId: number;
 };
 export type DeleteApiMyVmByProjectIdVpcAndVpcHostIdInterfaceRemoveIdApiResponse =
   unknown;
@@ -4363,7 +4356,8 @@ export type GetProfileResponse = {
   email: string | null;
   emailConfirmed: boolean;
   idConfirmed: boolean;
-  hasTwoFactor: boolean;
+  hasSmsTwoFactor: boolean;
+  hasTotpTwoFactor: boolean;
   isLegal: boolean;
   firstName: string | null;
   lastName: string | null;
@@ -4486,7 +4480,8 @@ export type ConvertCustomerToLegalModel = {
   registrationDate?: string | null;
 };
 export type LoginResponse = {
-  enableTwoFactor?: boolean;
+  hasSmsTwoFactor?: boolean;
+  hasTotpTwoFactor?: boolean;
   accessToken?: string | null;
   userId?: number;
   userTitle?: string | null;
@@ -4510,1048 +4505,6 @@ export type RegisterModel = {
   captchaKey?: string;
   captchaCode?: string | null;
   referralCode?: string | null;
-};
-export type HostString = {
-  value?: string | null;
-};
-export type HostStringRead = {
-  value?: string | null;
-  hasValue?: boolean;
-  host?: string | null;
-  port?: number | null;
-};
-export type PathString = {
-  value?: string | null;
-};
-export type PathStringRead = {
-  value?: string | null;
-  hasValue?: boolean;
-};
-export type QueryString = {
-  value?: string | null;
-};
-export type QueryStringRead = {
-  value?: string | null;
-  hasValue?: boolean;
-};
-export type StringStringValuesKeyValuePair = {
-  key?: string | null;
-  value?: string[];
-};
-export type StringStringKeyValuePair = {
-  key?: string | null;
-  value?: string | null;
-};
-export type HttpRequest = {
-  httpContext?: HttpContext;
-  method?: string | null;
-  scheme?: string | null;
-  isHttps?: boolean;
-  host?: HostString;
-  pathBase?: PathString;
-  path?: PathString;
-  queryString?: QueryString;
-  query?: StringStringValuesKeyValuePair[] | null;
-  protocol?: string | null;
-  cookies?: StringStringKeyValuePair[] | null;
-  contentLength?: number | null;
-  contentType?: string | null;
-  body?: Blob | null;
-  form?: StringStringValuesKeyValuePair[] | null;
-  routeValues?: {
-    [key: string]: any;
-  } | null;
-};
-export type HttpRequestRead = {
-  httpContext?: HttpContext;
-  method?: string | null;
-  scheme?: string | null;
-  isHttps?: boolean;
-  host?: HostStringRead;
-  pathBase?: PathStringRead;
-  path?: PathStringRead;
-  queryString?: QueryStringRead;
-  query?: StringStringValuesKeyValuePair[] | null;
-  protocol?: string | null;
-  headers?: {
-    [key: string]: string[];
-  } | null;
-  cookies?: StringStringKeyValuePair[] | null;
-  contentLength?: number | null;
-  contentType?: string | null;
-  body?: Blob | null;
-  bodyReader?: Blob | null;
-  hasFormContentType?: boolean;
-  form?: StringStringValuesKeyValuePair[] | null;
-  routeValues?: {
-    [key: string]: any;
-  } | null;
-};
-export type PipeWriter = {};
-export type PipeWriterRead = {
-  canGetUnflushedBytes?: boolean;
-  unflushedBytes?: number;
-};
-export type IResponseCookies = object;
-export type HttpResponse = {
-  httpContext?: HttpContext;
-  statusCode?: number;
-  body?: Blob | null;
-  bodyWriter?: PipeWriter;
-  contentLength?: number | null;
-  contentType?: string | null;
-  cookies?: IResponseCookies;
-};
-export type HttpResponseRead = {
-  httpContext?: HttpContext;
-  statusCode?: number;
-  headers?: {
-    [key: string]: string[];
-  } | null;
-  body?: Blob | null;
-  bodyWriter?: PipeWriterRead;
-  contentLength?: number | null;
-  contentType?: string | null;
-  cookies?: IResponseCookies;
-  hasStarted?: boolean;
-};
-export type AddressFamily =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
-  | 19
-  | 21
-  | 22
-  | 23
-  | 24
-  | 25
-  | 26
-  | 28
-  | 29
-  | 65536
-  | 65537
-  | -1;
-export type IpAddress = {
-  addressFamily?: AddressFamily;
-  scopeId?: number;
-  address?: number;
-};
-export type IpAddressRead = {
-  addressFamily?: AddressFamily;
-  scopeId?: number;
-  isIPv6Multicast?: boolean;
-  isIPv6LinkLocal?: boolean;
-  isIPv6SiteLocal?: boolean;
-  isIPv6Teredo?: boolean;
-  isIPv6UniqueLocal?: boolean;
-  isIPv4MappedToIPv6?: boolean;
-  address?: number;
-};
-export type IntPtr = object;
-export type ByteReadOnlySpan = {};
-export type ByteReadOnlySpanRead = {
-  length?: number;
-  isEmpty?: boolean;
-};
-export type ByteReadOnlyMemory = {
-  span?: ByteReadOnlySpan;
-};
-export type ByteReadOnlyMemoryRead = {
-  length?: number;
-  isEmpty?: boolean;
-  span?: ByteReadOnlySpanRead;
-};
-export type AsymmetricAlgorithm = {
-  keySize?: number;
-};
-export type KeySizes = {
-  minSize?: number;
-  maxSize?: number;
-  skipSize?: number;
-};
-export type AsymmetricAlgorithmRead = {
-  keySize?: number;
-  legalKeySizes?: KeySizes[] | null;
-  signatureAlgorithm?: string | null;
-  keyExchangeAlgorithm?: string | null;
-};
-export type Oid = {
-  value?: string | null;
-  friendlyName?: string | null;
-};
-export type X500DistinguishedName = {
-  oid?: Oid;
-  rawData?: string | null;
-};
-export type X500DistinguishedNameRead = {
-  oid?: Oid;
-  rawData?: string | null;
-  name?: string | null;
-};
-export type AsnEncodedData = {
-  oid?: Oid;
-  rawData?: string | null;
-};
-export type PublicKey = {
-  encodedKeyValue?: AsnEncodedData;
-  encodedParameters?: AsnEncodedData;
-  key?: AsymmetricAlgorithm;
-  oid?: Oid;
-};
-export type PublicKeyRead = {
-  encodedKeyValue?: AsnEncodedData;
-  encodedParameters?: AsnEncodedData;
-  key?: AsymmetricAlgorithmRead;
-  oid?: Oid;
-};
-export type X509Certificate2 = {
-  handle?: IntPtr;
-  serialNumberBytes?: ByteReadOnlyMemory;
-  archived?: boolean;
-  friendlyName?: string | null;
-  privateKey?: AsymmetricAlgorithm;
-  issuerName?: X500DistinguishedName;
-  publicKey?: PublicKey;
-  rawDataMemory?: ByteReadOnlyMemory;
-  signatureAlgorithm?: Oid;
-  subjectName?: X500DistinguishedName;
-};
-export type X509Extension = {
-  oid?: Oid;
-  rawData?: string | null;
-  critical?: boolean;
-};
-export type X509Certificate2Read = {
-  handle?: IntPtr;
-  issuer?: string | null;
-  subject?: string | null;
-  serialNumberBytes?: ByteReadOnlyMemoryRead;
-  archived?: boolean;
-  extensions?: X509Extension[] | null;
-  friendlyName?: string | null;
-  hasPrivateKey?: boolean;
-  privateKey?: AsymmetricAlgorithmRead;
-  issuerName?: X500DistinguishedNameRead;
-  notAfter?: string;
-  notBefore?: string;
-  publicKey?: PublicKeyRead;
-  rawData?: string | null;
-  rawDataMemory?: ByteReadOnlyMemoryRead;
-  serialNumber?: string | null;
-  signatureAlgorithm?: Oid;
-  subjectName?: X500DistinguishedNameRead;
-  thumbprint?: string | null;
-  version?: number;
-};
-export type ConnectionInfo = {
-  id?: string | null;
-  remoteIpAddress?: IpAddress;
-  remotePort?: number;
-  localIpAddress?: IpAddress;
-  localPort?: number;
-  clientCertificate?: X509Certificate2;
-};
-export type ConnectionInfoRead = {
-  id?: string | null;
-  remoteIpAddress?: IpAddressRead;
-  remotePort?: number;
-  localIpAddress?: IpAddressRead;
-  localPort?: number;
-  clientCertificate?: X509Certificate2Read;
-};
-export type WebSocketManager = {};
-export type WebSocketManagerRead = {
-  isWebSocketRequest?: boolean;
-  webSocketRequestedProtocols?: string[] | null;
-};
-export type IIdentity = {};
-export type IIdentityRead = {
-  name?: string | null;
-  authenticationType?: string | null;
-  isAuthenticated?: boolean;
-};
-export type ClaimsPrincipal = {
-  identity?: IIdentity;
-};
-export type ClaimsIdentity = {
-  actor?: ClaimsIdentity;
-  bootstrapContext?: any | null;
-  label?: string | null;
-};
-export type ClaimsIdentityRead = {
-  authenticationType?: string | null;
-  isAuthenticated?: boolean;
-  actor?: ClaimsIdentityRead;
-  bootstrapContext?: any | null;
-  claims?: Claim[] | null;
-  label?: string | null;
-  name?: string | null;
-  nameClaimType?: string | null;
-  roleClaimType?: string | null;
-};
-export type Claim = {
-  subject?: ClaimsIdentity;
-};
-export type ClaimRead = {
-  issuer?: string | null;
-  originalIssuer?: string | null;
-  properties?: {
-    [key: string]: string;
-  } | null;
-  subject?: ClaimsIdentityRead;
-  type?: string | null;
-  value?: string | null;
-  valueType?: string | null;
-};
-export type ClaimsPrincipalRead = {
-  claims?: ClaimRead[] | null;
-  identities?: ClaimsIdentityRead[] | null;
-  identity?: IIdentityRead;
-};
-export type IServiceProvider = object;
-export type SafeWaitHandle = {};
-export type SafeWaitHandleRead = {
-  isClosed?: boolean;
-  isInvalid?: boolean;
-};
-export type WaitHandle = {
-  handle?: IntPtr;
-  safeWaitHandle?: SafeWaitHandle;
-};
-export type WaitHandleRead = {
-  handle?: IntPtr;
-  safeWaitHandle?: SafeWaitHandleRead;
-};
-export type CancellationToken = {
-  waitHandle?: WaitHandle;
-};
-export type CancellationTokenRead = {
-  isCancellationRequested?: boolean;
-  canBeCanceled?: boolean;
-  waitHandle?: WaitHandleRead;
-};
-export type ISession = {};
-export type ISessionRead = {
-  isAvailable?: boolean;
-  id?: string | null;
-  keys?: string[] | null;
-};
-export type HttpContext = {
-  request?: HttpRequest;
-  response?: HttpResponse;
-  connection?: ConnectionInfo;
-  webSockets?: WebSocketManager;
-  user?: ClaimsPrincipal;
-  items?: {
-    [key: string]: any | null;
-  } | null;
-  requestServices?: IServiceProvider;
-  requestAborted?: CancellationToken;
-  traceIdentifier?: string | null;
-  session?: ISession;
-};
-export type MemberTypes = 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 191;
-export type ModuleHandle = {};
-export type ModuleHandleRead = {
-  mdStreamVersion?: number;
-};
-export type Module = {
-  assembly?: Assembly;
-  moduleHandle?: ModuleHandle;
-};
-export type MethodAttributes =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 16
-  | 32
-  | 64
-  | 128
-  | 256
-  | 512
-  | 1024
-  | 2048
-  | 4096
-  | 8192
-  | 16384
-  | 32768
-  | 53248;
-export type MethodImplAttributes =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 8
-  | 16
-  | 32
-  | 64
-  | 128
-  | 256
-  | 512
-  | 4096
-  | 65535;
-export type CallingConventions = 1 | 2 | 3 | 32 | 64;
-export type RuntimeMethodHandle = {
-  value?: IntPtr;
-};
-export type ConstructorInfo = {
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  methodHandle?: RuntimeMethodHandle;
-  memberType?: MemberTypes;
-};
-export type ConstructorInfoRead = {
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeData[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  isAbstract?: boolean;
-  isConstructor?: boolean;
-  isFinal?: boolean;
-  isHideBySig?: boolean;
-  isSpecialName?: boolean;
-  isStatic?: boolean;
-  isVirtual?: boolean;
-  isAssembly?: boolean;
-  isFamily?: boolean;
-  isFamilyAndAssembly?: boolean;
-  isFamilyOrAssembly?: boolean;
-  isPrivate?: boolean;
-  isPublic?: boolean;
-  isConstructedGenericMethod?: boolean;
-  isGenericMethod?: boolean;
-  isGenericMethodDefinition?: boolean;
-  containsGenericParameters?: boolean;
-  methodHandle?: RuntimeMethodHandle;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-  memberType?: MemberTypes;
-};
-export type CustomAttributeData = {
-  attributeType?: Type;
-  constructor?: ConstructorInfo;
-};
-export type CustomAttributeTypedArgument = {
-  argumentType?: Type;
-  value?: any | null;
-};
-export type CustomAttributeTypedArgumentRead = {
-  argumentType?: Type;
-  value?: any | null;
-};
-export type MemberInfo = {
-  memberType?: MemberTypes;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-};
-export type MemberInfoRead = {
-  memberType?: MemberTypes;
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-};
-export type CustomAttributeNamedArgument = {
-  memberInfo?: MemberInfo;
-  typedValue?: CustomAttributeTypedArgument;
-};
-export type CustomAttributeNamedArgumentRead = {
-  memberInfo?: MemberInfoRead;
-  typedValue?: CustomAttributeTypedArgumentRead;
-  memberName?: string | null;
-  isField?: boolean;
-};
-export type CustomAttributeDataRead = {
-  attributeType?: Type;
-  constructor?: ConstructorInfoRead;
-  constructorArguments?: CustomAttributeTypedArgumentRead[] | null;
-  namedArguments?: CustomAttributeNamedArgumentRead[] | null;
-};
-export type ModuleRead = {
-  assembly?: Assembly;
-  fullyQualifiedName?: string | null;
-  name?: string | null;
-  mdStreamVersion?: number;
-  moduleVersionId?: string;
-  scopeName?: string | null;
-  moduleHandle?: ModuleHandleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  metadataToken?: number;
-};
-export type ParameterAttributes =
-  | 0
-  | 1
-  | 2
-  | 4
-  | 8
-  | 16
-  | 4096
-  | 8192
-  | 16384
-  | 32768
-  | 61440;
-export type ParameterInfo = {
-  attributes?: ParameterAttributes;
-  member?: MemberInfo;
-  parameterType?: Type;
-};
-export type ParameterInfoRead = {
-  attributes?: ParameterAttributes;
-  member?: MemberInfoRead;
-  name?: string | null;
-  parameterType?: Type;
-  position?: number;
-  isIn?: boolean;
-  isLcid?: boolean;
-  isOptional?: boolean;
-  isOut?: boolean;
-  isRetval?: boolean;
-  defaultValue?: any | null;
-  rawDefaultValue?: any | null;
-  hasDefaultValue?: boolean;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  metadataToken?: number;
-};
-export type ICustomAttributeProvider = object;
-export type MethodInfo = {
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  methodHandle?: RuntimeMethodHandle;
-  memberType?: MemberTypes;
-  returnParameter?: ParameterInfo;
-  returnType?: Type;
-  returnTypeCustomAttributes?: ICustomAttributeProvider;
-};
-export type MethodInfoRead = {
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  isAbstract?: boolean;
-  isConstructor?: boolean;
-  isFinal?: boolean;
-  isHideBySig?: boolean;
-  isSpecialName?: boolean;
-  isStatic?: boolean;
-  isVirtual?: boolean;
-  isAssembly?: boolean;
-  isFamily?: boolean;
-  isFamilyAndAssembly?: boolean;
-  isFamilyOrAssembly?: boolean;
-  isPrivate?: boolean;
-  isPublic?: boolean;
-  isConstructedGenericMethod?: boolean;
-  isGenericMethod?: boolean;
-  isGenericMethodDefinition?: boolean;
-  containsGenericParameters?: boolean;
-  methodHandle?: RuntimeMethodHandle;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-  memberType?: MemberTypes;
-  returnParameter?: ParameterInfoRead;
-  returnType?: Type;
-  returnTypeCustomAttributes?: ICustomAttributeProvider;
-};
-export type SecurityRuleSet = 0 | 1 | 2;
-export type Assembly = {
-  entryPoint?: MethodInfo;
-  manifestModule?: Module;
-  securityRuleSet?: SecurityRuleSet;
-};
-export type MethodBase = {
-  memberType?: MemberTypes;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  methodHandle?: RuntimeMethodHandle;
-};
-export type MethodBaseRead = {
-  memberType?: MemberTypes;
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  attributes?: MethodAttributes;
-  methodImplementationFlags?: MethodImplAttributes;
-  callingConvention?: CallingConventions;
-  isAbstract?: boolean;
-  isConstructor?: boolean;
-  isFinal?: boolean;
-  isHideBySig?: boolean;
-  isSpecialName?: boolean;
-  isStatic?: boolean;
-  isVirtual?: boolean;
-  isAssembly?: boolean;
-  isFamily?: boolean;
-  isFamilyAndAssembly?: boolean;
-  isFamilyOrAssembly?: boolean;
-  isPrivate?: boolean;
-  isPublic?: boolean;
-  isConstructedGenericMethod?: boolean;
-  isGenericMethod?: boolean;
-  isGenericMethodDefinition?: boolean;
-  containsGenericParameters?: boolean;
-  methodHandle?: RuntimeMethodHandle;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-};
-export type GenericParameterAttributes = 0 | 1 | 2 | 3 | 4 | 8 | 16 | 28 | 32;
-export type TypeAttributes =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 16
-  | 24
-  | 32
-  | 128
-  | 256
-  | 1024
-  | 2048
-  | 4096
-  | 8192
-  | 16384
-  | 65536
-  | 131072
-  | 196608
-  | 262144
-  | 264192
-  | 1048576
-  | 12582912;
-export type LayoutKind = 0 | 2 | 3;
-export type StructLayoutAttribute = {
-  value?: LayoutKind;
-};
-export type StructLayoutAttributeRead = {
-  typeId?: any | null;
-  value?: LayoutKind;
-};
-export type RuntimeTypeHandle = {
-  value?: IntPtr;
-};
-export type TypeInfo = {
-  memberType?: MemberTypes;
-  assembly?: Assembly;
-  module?: Module;
-  declaringType?: Type;
-  declaringMethod?: MethodBase;
-  reflectedType?: Type;
-  underlyingSystemType?: Type;
-  genericParameterAttributes?: GenericParameterAttributes;
-  attributes?: TypeAttributes;
-  structLayoutAttribute?: StructLayoutAttribute;
-  typeInitializer?: ConstructorInfo;
-  typeHandle?: RuntimeTypeHandle;
-  baseType?: Type;
-};
-export type EventAttributes = 0 | 512 | 1024;
-export type EventInfo = {
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  memberType?: MemberTypes;
-  attributes?: EventAttributes;
-  addMethod?: MethodInfo;
-  removeMethod?: MethodInfo;
-  raiseMethod?: MethodInfo;
-  eventHandlerType?: Type;
-};
-export type EventInfoRead = {
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  memberType?: MemberTypes;
-  attributes?: EventAttributes;
-  isSpecialName?: boolean;
-  addMethod?: MethodInfoRead;
-  removeMethod?: MethodInfoRead;
-  raiseMethod?: MethodInfoRead;
-  isMulticast?: boolean;
-  eventHandlerType?: Type;
-};
-export type FieldAttributes =
-  | 0
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 16
-  | 32
-  | 64
-  | 128
-  | 256
-  | 512
-  | 1024
-  | 4096
-  | 8192
-  | 32768
-  | 38144;
-export type RuntimeFieldHandle = {
-  value?: IntPtr;
-};
-export type FieldInfo = {
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  memberType?: MemberTypes;
-  attributes?: FieldAttributes;
-  fieldType?: Type;
-  fieldHandle?: RuntimeFieldHandle;
-};
-export type FieldInfoRead = {
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  memberType?: MemberTypes;
-  attributes?: FieldAttributes;
-  fieldType?: Type;
-  isInitOnly?: boolean;
-  isLiteral?: boolean;
-  isNotSerialized?: boolean;
-  isPinvokeImpl?: boolean;
-  isSpecialName?: boolean;
-  isStatic?: boolean;
-  isAssembly?: boolean;
-  isFamily?: boolean;
-  isFamilyAndAssembly?: boolean;
-  isFamilyOrAssembly?: boolean;
-  isPrivate?: boolean;
-  isPublic?: boolean;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-  fieldHandle?: RuntimeFieldHandle;
-};
-export type PropertyAttributes =
-  | 0
-  | 512
-  | 1024
-  | 4096
-  | 8192
-  | 16384
-  | 32768
-  | 62464;
-export type PropertyInfo = {
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: Module;
-  memberType?: MemberTypes;
-  propertyType?: Type;
-  attributes?: PropertyAttributes;
-  getMethod?: MethodInfo;
-  setMethod?: MethodInfo;
-};
-export type PropertyInfoRead = {
-  name?: string | null;
-  declaringType?: Type;
-  reflectedType?: Type;
-  module?: ModuleRead;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  memberType?: MemberTypes;
-  propertyType?: Type;
-  attributes?: PropertyAttributes;
-  isSpecialName?: boolean;
-  canRead?: boolean;
-  canWrite?: boolean;
-  getMethod?: MethodInfoRead;
-  setMethod?: MethodInfoRead;
-};
-export type TypeInfoRead = {
-  name?: string | null;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  memberType?: MemberTypes;
-  namespace?: string | null;
-  assemblyQualifiedName?: string | null;
-  fullName?: string | null;
-  assembly?: AssemblyRead;
-  module?: ModuleRead;
-  isInterface?: boolean;
-  isNested?: boolean;
-  declaringType?: Type;
-  declaringMethod?: MethodBaseRead;
-  reflectedType?: Type;
-  underlyingSystemType?: Type;
-  isTypeDefinition?: boolean;
-  isArray?: boolean;
-  isByRef?: boolean;
-  isPointer?: boolean;
-  isConstructedGenericType?: boolean;
-  isGenericParameter?: boolean;
-  isGenericTypeParameter?: boolean;
-  isGenericMethodParameter?: boolean;
-  isGenericType?: boolean;
-  isGenericTypeDefinition?: boolean;
-  isSZArray?: boolean;
-  isVariableBoundArray?: boolean;
-  isByRefLike?: boolean;
-  isFunctionPointer?: boolean;
-  isUnmanagedFunctionPointer?: boolean;
-  hasElementType?: boolean;
-  genericTypeArguments?: Type[] | null;
-  genericParameterPosition?: number;
-  genericParameterAttributes?: GenericParameterAttributes;
-  attributes?: TypeAttributes;
-  isAbstract?: boolean;
-  isImport?: boolean;
-  isSealed?: boolean;
-  isSpecialName?: boolean;
-  isClass?: boolean;
-  isNestedAssembly?: boolean;
-  isNestedFamANDAssem?: boolean;
-  isNestedFamily?: boolean;
-  isNestedFamORAssem?: boolean;
-  isNestedPrivate?: boolean;
-  isNestedPublic?: boolean;
-  isNotPublic?: boolean;
-  isPublic?: boolean;
-  isAutoLayout?: boolean;
-  isExplicitLayout?: boolean;
-  isLayoutSequential?: boolean;
-  isAnsiClass?: boolean;
-  isAutoClass?: boolean;
-  isUnicodeClass?: boolean;
-  isCOMObject?: boolean;
-  isContextful?: boolean;
-  isEnum?: boolean;
-  isMarshalByRef?: boolean;
-  isPrimitive?: boolean;
-  isValueType?: boolean;
-  isSignatureType?: boolean;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-  structLayoutAttribute?: StructLayoutAttributeRead;
-  typeInitializer?: ConstructorInfoRead;
-  typeHandle?: RuntimeTypeHandle;
-  guid?: string;
-  baseType?: Type;
-  isSerializable?: boolean;
-  containsGenericParameters?: boolean;
-  isVisible?: boolean;
-  genericTypeParameters?: Type[] | null;
-  declaredConstructors?: ConstructorInfoRead[] | null;
-  declaredEvents?: EventInfoRead[] | null;
-  declaredFields?: FieldInfoRead[] | null;
-  declaredMembers?: MemberInfoRead[] | null;
-  declaredMethods?: MethodInfoRead[] | null;
-  declaredNestedTypes?: TypeInfoRead[] | null;
-  declaredProperties?: PropertyInfoRead[] | null;
-  implementedInterfaces?: Type[] | null;
-};
-export type AssemblyRead = {
-  definedTypes?: TypeInfoRead[] | null;
-  exportedTypes?: Type[] | null;
-  codeBase?: string | null;
-  entryPoint?: MethodInfoRead;
-  fullName?: string | null;
-  imageRuntimeVersion?: string | null;
-  isDynamic?: boolean;
-  location?: string | null;
-  reflectionOnly?: boolean;
-  isCollectible?: boolean;
-  isFullyTrusted?: boolean;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  escapedCodeBase?: string | null;
-  manifestModule?: ModuleRead;
-  modules?: ModuleRead[] | null;
-  globalAssemblyCache?: boolean;
-  hostContext?: number;
-  securityRuleSet?: SecurityRuleSet;
-};
-export type Type = {
-  memberType?: MemberTypes;
-  assembly?: Assembly;
-  module?: Module;
-  declaringType?: Type;
-  declaringMethod?: MethodBase;
-  reflectedType?: Type;
-  underlyingSystemType?: Type;
-  genericParameterAttributes?: GenericParameterAttributes;
-  attributes?: TypeAttributes;
-  structLayoutAttribute?: StructLayoutAttribute;
-  typeInitializer?: ConstructorInfo;
-  typeHandle?: RuntimeTypeHandle;
-  baseType?: Type;
-};
-export type TypeRead = {
-  name?: string | null;
-  customAttributes?: CustomAttributeDataRead[] | null;
-  isCollectible?: boolean;
-  metadataToken?: number;
-  memberType?: MemberTypes;
-  namespace?: string | null;
-  assemblyQualifiedName?: string | null;
-  fullName?: string | null;
-  assembly?: AssemblyRead;
-  module?: ModuleRead;
-  isInterface?: boolean;
-  isNested?: boolean;
-  declaringType?: TypeRead;
-  declaringMethod?: MethodBaseRead;
-  reflectedType?: TypeRead;
-  underlyingSystemType?: TypeRead;
-  isTypeDefinition?: boolean;
-  isArray?: boolean;
-  isByRef?: boolean;
-  isPointer?: boolean;
-  isConstructedGenericType?: boolean;
-  isGenericParameter?: boolean;
-  isGenericTypeParameter?: boolean;
-  isGenericMethodParameter?: boolean;
-  isGenericType?: boolean;
-  isGenericTypeDefinition?: boolean;
-  isSZArray?: boolean;
-  isVariableBoundArray?: boolean;
-  isByRefLike?: boolean;
-  isFunctionPointer?: boolean;
-  isUnmanagedFunctionPointer?: boolean;
-  hasElementType?: boolean;
-  genericTypeArguments?: TypeRead[] | null;
-  genericParameterPosition?: number;
-  genericParameterAttributes?: GenericParameterAttributes;
-  attributes?: TypeAttributes;
-  isAbstract?: boolean;
-  isImport?: boolean;
-  isSealed?: boolean;
-  isSpecialName?: boolean;
-  isClass?: boolean;
-  isNestedAssembly?: boolean;
-  isNestedFamANDAssem?: boolean;
-  isNestedFamily?: boolean;
-  isNestedFamORAssem?: boolean;
-  isNestedPrivate?: boolean;
-  isNestedPublic?: boolean;
-  isNotPublic?: boolean;
-  isPublic?: boolean;
-  isAutoLayout?: boolean;
-  isExplicitLayout?: boolean;
-  isLayoutSequential?: boolean;
-  isAnsiClass?: boolean;
-  isAutoClass?: boolean;
-  isUnicodeClass?: boolean;
-  isCOMObject?: boolean;
-  isContextful?: boolean;
-  isEnum?: boolean;
-  isMarshalByRef?: boolean;
-  isPrimitive?: boolean;
-  isValueType?: boolean;
-  isSignatureType?: boolean;
-  isSecurityCritical?: boolean;
-  isSecuritySafeCritical?: boolean;
-  isSecurityTransparent?: boolean;
-  structLayoutAttribute?: StructLayoutAttributeRead;
-  typeInitializer?: ConstructorInfoRead;
-  typeHandle?: RuntimeTypeHandle;
-  guid?: string;
-  baseType?: TypeRead;
-  isSerializable?: boolean;
-  containsGenericParameters?: boolean;
-  isVisible?: boolean;
-};
-export type TypeObjectKeyValuePair = {
-  key?: Type;
-  value?: any | null;
-};
-export type TypeObjectKeyValuePairRead = {
-  key?: TypeRead;
-  value?: any | null;
-};
-export type HttpContextRead = {
-  features?: TypeObjectKeyValuePairRead[] | null;
-  request?: HttpRequestRead;
-  response?: HttpResponseRead;
-  connection?: ConnectionInfoRead;
-  webSockets?: WebSocketManagerRead;
-  user?: ClaimsPrincipalRead;
-  items?: {
-    [key: string]: any | null;
-  } | null;
-  requestServices?: IServiceProvider;
-  requestAborted?: CancellationTokenRead;
-  traceIdentifier?: string | null;
-  session?: ISessionRead;
-};
-export type IHttpContextAccessor = {
-  httpContext?: HttpContext;
-};
-export type IHttpContextAccessorRead = {
-  httpContext?: HttpContextRead;
 };
 export type SsoLoginResponse = {
   url: string | null;
@@ -6107,13 +5060,6 @@ export type UnPaidInvoiceResponse = {
 export type InvoiceSummaryResponse = {
   totalPaid: number;
   totalUnpaid: number;
-};
-export type PayInvoiceResponse = {
-  status: boolean;
-  location: string | null;
-};
-export type PayInvoiceModel = {
-  id?: number;
 };
 export type InvoiceListResponse = {
   id: number;
@@ -6844,6 +5790,10 @@ export type VpcPrivateNetworkRequestListResponse = {
 export type CreateVpcNetworkAccessModel = {
   vpcNetworkAccessId?: number;
 };
+export type VpcInterfaceShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type VmNetworkListResponse = {
   id?: number;
   name: string | null;
@@ -6872,8 +5822,9 @@ export type EditVpcSnatModel = {
   enabledSnat?: boolean;
 };
 export type CreateVpcDnatModel = {
-  vpcHostIpId?: number;
+  vmIpId?: number;
   vmHostId?: number;
+  vpcInterfaceId?: number;
   name?: string | null;
   isTcp?: boolean;
   externalPort?: number;
@@ -6978,9 +5929,11 @@ export type VolumeListResponse = {
   id: number;
   datacenter: string | null;
   name: string | null;
+  volumeSize: number;
+  isRootDisk: string | null;
+  isActiveDisk: string | null;
   status: string | null;
   statusId: number;
-  volumeSize: number;
   createDate: string;
 };
 export type GetVolumeHostResponse = {
@@ -7393,7 +6346,6 @@ export const {
   useGetApiMyFinancialOrderListByProductIdQuery,
   useGetApiMyFinancialInvoiceUnpaidQuery,
   useGetApiMyFinancialInvoiceSummaryQuery,
-  usePostApiMyFinancialInvoicePayMutation,
   useGetApiMyFinancialInvoiceListDownloadQuery,
   useGetApiMyFinancialInvoiceListQuery,
   useGetApiMyFinancialInvoiceGetByIdQuery,
@@ -7491,6 +6443,7 @@ export const {
   usePostApiMyCreateMutation,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListQuery,
   usePostApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessCreateMutation,
+  useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListQuery,
   useDeleteApiMyVmByProjectIdVpcAndVpcHostIdInterfaceRemoveIdMutation,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceListQuery,
   usePostApiMyVmByProjectIdVpcAndVpcHostIdInterfaceCreateMutation,

@@ -55,12 +55,12 @@ export const Sidebar: FC<SidebarPropsType> = () => {
     //   link: selectedProjectId ? `/kubernetes-cluster/${selectedProjectId}` : "/dashboard",
     //   subList: [{ title: "مدیریت کوبرنتیز ابری", link: "/kubernetes-cluster" }],
     // },
-    // {
-    //   title: "Kubernetes Cloud",
-    //   text: "کوبرنتیز ابری",
-    //   Icon: KubernetesSvg,
-    //   link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
-    // },
+    {
+      title: "Kubernetes Cloud",
+      text: "کوبرنتیز ابری",
+      Icon: KubernetesSvg,
+      link: selectedProjectId ? `/kubernetes-cloud/${selectedProjectId}` : "/dashboard",
+    },
     {
       title: "Object Storage",
       text: "فضای ابری",

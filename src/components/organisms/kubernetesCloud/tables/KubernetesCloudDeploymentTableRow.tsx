@@ -116,7 +116,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                   spacing={0.6}
                   maxWidth="fit-content"
                 >
-                  <IconButton
+                  {/* <IconButton
                     sx={{ borderRadius: 1 }}
                     onClick={handleSettingButtonOnClick}
                   >
@@ -127,7 +127,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                         },
                       }}
                     />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"

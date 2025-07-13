@@ -15,7 +15,7 @@ import {
 import { Grid2 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
-import { usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretEditIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery, usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretEditIdMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -47,6 +47,12 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
   usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretEditIdMutation();
   const processedSecretData = secretData?.secrets;
   const { projectId, kubernetesCloudId } = useParams();
+
+  const { refetch } =
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId) || 0,
+  });
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -129,9 +135,10 @@ export const EditSecretMapDialog: FC<CreateVpcLoadBalancerDialogPropsType> = ({
       })
         .unwrap()
         .then(() => {
-          toast.success("با موفقیت ایجاد شد");
+          toast.success("با موفقیت آپدیت شد");
           resetForm();
           onClose();
+          refetch();
         })
         .catch(() => {});
 

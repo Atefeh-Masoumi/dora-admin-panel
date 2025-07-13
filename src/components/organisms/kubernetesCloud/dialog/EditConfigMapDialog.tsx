@@ -15,7 +15,7 @@ import { useFormik } from "formik";
 import { FC, Fragment } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import { usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapEditIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery, usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapEditIdMutation } from "src/app/services/api.generated";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -44,6 +44,12 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
 
   const [editConfigMap, { isLoading: editConfigMapLoading }] =
   usePutApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapEditIdMutation();
+
+  const { refetch } =
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdConfigmapListQuery({
+    projectId: Number(projectId),
+    kuberHostId: Number(kubernetesCloudId) || 0,
+  });
 
   const formik = useFormik<InitialValuesType>({
     initialValues: {
@@ -120,6 +126,7 @@ export const EditConfigMapDialog: FC<EditConfigmapDialogPropsType> = ({
           toast.success("با موفقیت آپدیت شد");
           resetForm();
           onClose();
+          refetch();
         })
         .catch(() => {});
 

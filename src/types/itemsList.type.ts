@@ -24,3 +24,13 @@ export type sidebarItemType = {
   Icon: FC<SvgIconProps>;
   subList?: sidebarSubItemType[];
 };
+
+export type listItem = {
+  title: string;
+  Icon: FC<SvgIconProps>;
+  link: string;
+  subList?: {
+    title: string;
+    link: string;
+  }[];
+};
