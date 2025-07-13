@@ -124,7 +124,7 @@ export const ListItemWithChild: FC<ListItemWithChildPropsType> = ({
                       bgcolor: isSubItemSelected ? "rgb(186, 222, 255)" : "transparent",
                       color: isSubItemSelected ? "primary.main" : "inherit",
                       "&:hover": {
-                        bgcolor: isSubItemSelected ? "primary.dark" : "action.hover",
+                        bgcolor: isSubItemSelected ? "action.hover" : "action.hover",
                       },
                     }}
                   >

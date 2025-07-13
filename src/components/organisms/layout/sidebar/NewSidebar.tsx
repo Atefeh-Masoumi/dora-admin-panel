@@ -5,11 +5,8 @@ import { useTranslation } from "react-i18next";
 import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
-import { BareMetalSvg } from "src/components/atoms/svg-icons/BareMetalSvg";
-import { ColocationSvg } from "src/components/atoms/svg-icons/ColocationSvg";
 import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
 import { DashboardSvg } from "src/components/atoms/svg-icons/DashboardSvg";
-import DomainIcon from "@mui/icons-material/Domain";
 import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 import { ListItemWithChild } from "./ListItemWithChild";
 import { ListItemWithoutChild } from "./ListItemWithoutChild";
@@ -38,7 +35,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
       link: `/vm/${selectedProjectId}/list`,
       subList: [
         {
-          title: "مدیریت سرورهای مجازی",
+          title: " سرورهای مجازی",
           link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/dashboard",
         },
       
