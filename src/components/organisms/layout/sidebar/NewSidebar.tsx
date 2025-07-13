@@ -5,11 +5,8 @@ import { useTranslation } from "react-i18next";
 import { VmSvg } from "src/components/atoms/svg-icons/VmSvg";
 import { ObjectStorageSvg } from "src/components/atoms/svg-icons/ObjectStorageSvg";
 import { KubernetesSvg } from "src/components/atoms/svg-icons/KubernetesSvg";
-import { BareMetalSvg } from "src/components/atoms/svg-icons/BareMetalSvg";
-import { ColocationSvg } from "src/components/atoms/svg-icons/ColocationSvg";
 import { CdnSvg } from "src/components/atoms/svg-icons/CdnSvg";
 import { DashboardSvg } from "src/components/atoms/svg-icons/DashboardSvg";
-import DomainIcon from "@mui/icons-material/Domain";
 import { WebHostSvg } from "src/components/atoms/svg-icons/WebHostSvg";
 import { ListItemWithChild } from "./ListItemWithChild";
 import { ListItemWithoutChild } from "./ListItemWithoutChild";
@@ -33,12 +30,12 @@ export const NewSidebar: FC<SidebarPropsType> = ({
   const { t } = useTranslation();
   const firstList: listItem[] = [
     {
-      title: "زیرساخت ابری (IaaS)",
+      title: "زیرساخت ابری ",
       Icon: VmSvg,
       link: `/vm/${selectedProjectId}/list`,
       subList: [
         {
-          title: "مدیریت سرورهای مجازی",
+          title: " سرورهای مجازی",
           link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/dashboard",
         },
       
@@ -57,7 +54,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
       ],
     },
     {
-      title: "پلتفرم ابری (PaaS)",
+      title: "پلتفرم ابری ",
       Icon: KubernetesSvg,
       link: `/kubernetes/${selectedProjectId}`,
       subList: [
@@ -70,14 +67,14 @@ export const NewSidebar: FC<SidebarPropsType> = ({
     },
  
     {
-      title: "ذخیره ساز ابری (STaaS)",
+      title: "ذخیره ساز ابری ",
       Icon: ObjectStorageSvg,
       link: `/storage/${selectedProjectId}`,
       subList: [{ title: "ذخیره ساز ابری", link: `/storage/${selectedProjectId}` }],
     },
     
     {
-      title: "سرویس DNS ابری",
+      title: " DNS ابری",
       Icon: CdnSvg,
       link: `/dns/${selectedProjectId}`,
       subList: [

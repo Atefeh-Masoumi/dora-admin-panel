@@ -14,7 +14,7 @@ import InvoiceTableRow from "src/components/organisms/portal/financial/invoices/
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import {
   useGetApiMyFinancialInvoiceGetByIdQuery,
-  usePostApiMyFinancialInvoicePayMutation,
+  usePostApiMyFinancialOfferPayMutation,
 } from "src/app/services/api.generated";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { priceToPersian } from "src/utils/priceToPersian";
@@ -36,7 +36,7 @@ const Invoice: FC = () => {
     });
 
   const [invoicePayment, { isLoading: invoicePaymentLoading }] =
-    usePostApiMyFinancialInvoicePayMutation();
+    usePostApiMyFinancialOfferPayMutation();
 
   const payInvoice = [
     {
@@ -60,7 +60,7 @@ const Invoice: FC = () => {
   const invoicePaymentHandler = () => {
     if (invoiceItem?.invoiceStatusId !== 3 || !invoiceItem.id) return;
 
-    invoicePayment({ payInvoiceModel: { id: invoiceItem.id } })
+    invoicePayment({ orderOfferPayModel: { offerId: invoiceItem.id } })
       .unwrap()
       .then(() => {
         toast.success(".پرداخت با موفقیت انجام شد");
