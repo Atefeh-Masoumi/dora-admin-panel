@@ -10,7 +10,7 @@ import PageLoading from "src/components/atoms/PageLoading";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const SecuritySetting: FC = () => {
-  const { data: profileData, isLoading } = useGetApiMyAccountProfileGetQuery();
+  const { data: profileData, isLoading,refetch } = useGetApiMyAccountProfileGetQuery();
 
   const [changeTwoFactorSetting, { isLoading: changeTwoFactorSettingLoading }] =
     usePutApiMyAccountProfileEnableSmsMutation();
@@ -29,6 +29,7 @@ export const SecuritySetting: FC = () => {
         toast.success(
           `تایید دو مرحله‌ای شما ${checked ? "فعال" : "غیرفعال"}  شد`
         );
+        refetch();  
       });
   };
 
@@ -59,7 +60,7 @@ export const SecuritySetting: FC = () => {
           </Stack>
           <DorsaSwitch
             disabled={changeTwoFactorSettingLoading}
-            checked={!!profileData?.hasTwoFactor}
+            checked={!!profileData?.hasSmsTwoFactor}
             onChange={twoFactorToggleButtonOnClick}
             sx={{ mx: { xs: 0, md: 2 } }}
           />
