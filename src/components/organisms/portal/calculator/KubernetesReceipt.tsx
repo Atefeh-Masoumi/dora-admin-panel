@@ -375,7 +375,7 @@ const KubernetesReceipt: FC<ReceiptPropsType> = ({
       return;
     }
     
-    navigate("/kubernetes-cluster/add");
+    navigate(`/kubernetes-cluster/${storedProjectId}/add`);
   };
 
   return (
