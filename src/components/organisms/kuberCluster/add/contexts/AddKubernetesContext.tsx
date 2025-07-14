@@ -171,7 +171,7 @@ export const AddKubernetesContextProvider: FC<
       .unwrap()
       .then(() => {
         toast.success("کلاستر کوبرنتیز شما با موفقیت ایجاد شد");
-        navigate(`/kubernetes/${projectId}`);
+        navigate(`/kubernetes-cluster/${projectId}`);
       })
       .catch((err: any) => {});
   };
