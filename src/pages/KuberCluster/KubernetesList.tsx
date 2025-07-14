@@ -29,7 +29,7 @@ const{projectId} =useParams();
 
   const navigate = useNavigate();
 
-  const gotToAddKubernetes = () => navigate("/kubernetes-cluster/add");
+  const gotToAddKubernetes = () => navigate(`/kubernetes-cluster/${projectId}/add`);
 
   return (
     <>
