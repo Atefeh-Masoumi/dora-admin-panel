@@ -82,10 +82,10 @@ export const ListItemWithChild: FC<ListItemWithChildPropsType> = ({
           sx={{
             borderRadius: 1,
             mb: 0.5,
-            bgcolor: isSelected ? "primary.main" : "transparent",
-            color: isSelected ? "white" : "inherit",
+            bgcolor: isSelected ? "rgb(186, 222, 255)" : "transparent",
+            color: isSelected ? "primary.main" : "inherit",
             "&:hover": {
-              bgcolor: isSelected ? "primary.dark" : "action.hover",
+              bgcolor: isSelected ? "action.hover" : "action.hover",
             },
           }}
         >
