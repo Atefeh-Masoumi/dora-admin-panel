@@ -26,12 +26,12 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const settingOnClick = () => navigate("/kubernetes-cluster/" + row["id"]);
+
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyKubernetesClusterByProjectIdHostDeleteAndIdMutation();
 
   const deleteDnsRecordHandler = () =>
-    deleteKubernetes({ 
+    deleteKubernetes({
       id: Number(selectedKubernetes?.id),
       projectId: Number(projectId),
     })
@@ -46,6 +46,9 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
     setDialogType(null);
     setSelectedKubernetes(null);
   };
+
+  const settingOnClick = () =>
+    navigate(`/kubernetes-cluster/${projectId}/${row["id"]}`);
 
   const handleOpenDelete = (kubernetes: KuberClusterListResponse) => {
     setSelectedKubernetes(kubernetes);
