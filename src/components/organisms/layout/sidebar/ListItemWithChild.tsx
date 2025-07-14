@@ -38,13 +38,20 @@ export const ListItemWithChild: FC<ListItemWithChildPropsType> = ({
 
   const isSelected = useMemo(() => {
     let result = false;
-    pathname.split("/").forEach((subString, index) => {
-      if (`/${subString}` === listItem.link && index < 2) {
-        result = true;
-      }
-    });
+    const pathSegments = pathname.split("/");
+    
+    // Check if the current path matches the item's link
+    if (pathname === listItem.link) {
+      result = true;
+    }
+    
+    // Check if any sub-item is selected
+    if (listItem.subList) {
+      result = listItem.subList.some(subItem => pathname.includes(subItem.link));
+    }
+    
     return result;
-  }, [listItem.link, pathname]);
+  }, [listItem.link, listItem.subList, pathname]);
 
   const isExpanded = expandedItem?.title === listItem.title;
 
