@@ -56,7 +56,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
     {
       title: "پلتفرم ابری ",
       Icon: KubernetesSvg,
-      link: `/kubernetes/${selectedProjectId}`,
+      link: `/kubernetes-cluster/${selectedProjectId}`,
       subList: [
         { title: "کلاستر کوبرنتیز", link: `/kubernetes-cluster/${selectedProjectId}` },
         {
@@ -76,7 +76,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
     {
       title: " DNS ابری",
       Icon: CdnSvg,
-      link: `/dns/${selectedProjectId}`,
+      link: `/cdn/${selectedProjectId}`,
       subList: [
         {
           title: "مدیریت زون ها",
