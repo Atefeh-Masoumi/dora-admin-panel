@@ -5,6 +5,6 @@ export const kubernetesNodesTableStruct: columnType[] = [
   { id: "ip", label: "ip" },
   { id: "name", label: "نام نود" },
   { id: "statusId", label: "وضعیت" },
-  { id: "kubernetesNodeType", label: "نوع نود" },
+  { id: "kuberClusterNodeType", label: "نوع نود" },
   { id: "control", label: "", disableSort: true },
 ];
