@@ -44,7 +44,7 @@ const AddNodeKubernetes: FC<AddNodeKubernetesPropsType> = () => {
     })
       .unwrap()
       .then(() => {
-        navigate(`/kubernetes/${hostId}`);
+        navigate(`/kubernetes-cluster/${projectId}/${hostId}`);
       })
       .catch((err) => {});
   };
