@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import {
   KuberClusterListResponse,
   useDeleteApiMyKubernetesClusterByProjectIdHostDeleteAndIdMutation,
+  useGetApiMyKubernetesClusterByProjectIdHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { Setting } from "src/components/atoms/svg-icons/SettingSvg";
@@ -26,6 +27,9 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
+  const { refetch } = useGetApiMyKubernetesClusterByProjectIdHostListQuery({
+    projectId: Number(projectId) || 0,
+  });
 
   const [deleteKubernetes, { isLoading: deleteDnsRecordLoading }] =
     useDeleteApiMyKubernetesClusterByProjectIdHostDeleteAndIdMutation();
@@ -39,6 +43,7 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
       .then(() => {
         toast.success("سرویس کوبرنتیز شما با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
       .catch((err) => {});
 
