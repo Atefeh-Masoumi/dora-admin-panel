@@ -8,14 +8,14 @@ import { UnsuccessfulPayment } from "src/components/atoms/svg-icons/Unsuccessful
 
 type PaymentDialogPropsType = DialogProps & {
   handleClose: () => void;
+  paymentInfo?: any;
 };
 
 const PaymentDialog: FC<PaymentDialogPropsType> = ({
   handleClose,
+  paymentInfo = {},
   ...props
 }) => {
-  const [paymentInfo] = useState<any>({});
-
   const isSuccess = useMemo(() => {
     let result: boolean = false;
     if (paymentInfo.paymentStatusId) {
@@ -23,7 +23,7 @@ const PaymentDialog: FC<PaymentDialogPropsType> = ({
     }
     return result;
   }, [paymentInfo.paymentStatusId]);
-
+  console.log(paymentInfo);
   return (
     <Dialog
       onClose={handleClose}
@@ -70,7 +70,7 @@ const PaymentDialog: FC<PaymentDialogPropsType> = ({
             <Typography variant="text14">زمان تراکنش</Typography>
             <Typography variant="text14" dir="ltr">
               {paymentInfo.transactionDate
-                ? ConvertToJalali(String(paymentInfo.transactionDate))
+                ? String(paymentInfo.transactionDate)
                 : "---"}
             </Typography>
           </Stack>
