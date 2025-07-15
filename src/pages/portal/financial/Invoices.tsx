@@ -35,7 +35,7 @@ const Invoices: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/financial/invoice/download`, {
+      .get(`${baseUrl}/api/my/financial/invoice/list-download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })

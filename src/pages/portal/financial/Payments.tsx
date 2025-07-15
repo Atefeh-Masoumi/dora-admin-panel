@@ -27,7 +27,7 @@ const Payments: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/portal/payment/download`, {
+      .get(`${baseUrl}/api/my/financial/payment/list-download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })
