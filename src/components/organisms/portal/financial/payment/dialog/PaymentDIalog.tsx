@@ -1,5 +1,5 @@
 import Dialog, { DialogProps } from "@mui/material/Dialog";
-import { FC, useState, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { priceToPersian } from "src/utils/priceToPersian";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 import { Stack, Typography, Paper } from "@mui/material";
@@ -23,7 +23,7 @@ const PaymentDialog: FC<PaymentDialogPropsType> = ({
     }
     return result;
   }, [paymentInfo.paymentStatusId]);
-  console.log(paymentInfo);
+
   return (
     <Dialog
       onClose={handleClose}
