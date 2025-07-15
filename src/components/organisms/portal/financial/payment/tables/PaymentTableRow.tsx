@@ -87,7 +87,12 @@ const PaymentTableRow: FC<{ row: any }> = ({ row }) => {
         })}
       </DorsaTableRow>
 
-      <PaymentDialog handleClose={closeDialog} open={dialog} maxWidth="xs" />
+      <PaymentDialog 
+        handleClose={closeDialog} 
+        open={dialog} 
+        maxWidth="xs" 
+        paymentInfo={row}
+      />
     </>
   );
 };
