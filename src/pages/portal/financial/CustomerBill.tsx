@@ -52,7 +52,7 @@ const Bill: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/financial/bill/download/${bill?.id}`, {
+      .get(`${baseUrl}/api/my/financial/bill/list-download/${bill?.id}`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })
