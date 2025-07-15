@@ -29,7 +29,7 @@ const Wallet: FC = () => {
   const downloadBtnOnClick = () => {
     setLoading(true);
     axios
-      .get(`${baseUrl}/api/my/financial/wallet-transaction/download`, {
+      .get(`${baseUrl}/api/my/financial/wallet/list-download`, {
         headers: { authorization: `Bearer ${token}` },
         responseType: "blob",
       })
