@@ -1,5 +1,5 @@
 workflow:
-  # This specifies the valid branches for this workflow
+  ## This specifies the valid branches for this workflow
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development" || $CI_COMMIT_BRANCH == "raahbar" || $CI_COMMIT_BRANCH == "bahar"'
       when: always
