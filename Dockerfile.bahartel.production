@@ -1,13 +1,10 @@
 # Stage 1
 #FROM node:18-bullseye-slim AS builder
-FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+FROM nexus.dorsa.cloud/library/node:22-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-# Install dependencies
 RUN yarn install 
-
-# Copy the rest of the application code
 COPY . .
 
 ENV REACT_APP_PRODUCTION_URL_V1="https://my.baharcloud.com"

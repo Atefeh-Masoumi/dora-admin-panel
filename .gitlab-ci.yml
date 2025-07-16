@@ -14,64 +14,19 @@ stages:
   - deploy
 
 variables:
-  KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
   KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
-
-# development
-
-package_development:
-  stage: package
-  script:
-    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development-dorsa:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development-dorsa:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-client-development-dorsa
-  only:
-    - development
-
-deploy_development:
-  stage: deploy
-  needs: [package_development]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
-    - kubectl -n development rollout restart deployment front-client-development-dorsa
-  only:
-    - development
-
-# ---- *** Dorsa master ***---
-
-package_dorsa_master:
-  stage: package
-  script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-client:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-client
-  when: manual
-  only:
-    - master
-
-deploy_dorsa_master:
-  stage: deploy
-  needs: [package_dorsa_master]
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-dorsa.yaml
-    - kubectl -n production rollout restart deployment front-ver2-client
-  when: on_success
-  only: 
-    - master
 
 # ----### Bahar ###----
 
 package_bahartel_prod:
   stage: package
   script:
-    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-my-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-my-bahartel:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-my-bahartel
+    - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-client-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-bahartel:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-bahartel
   when: manual
   only:
-    - master
+    - bahar
 
 deploy_bahartel_prod:
   stage: deploy
@@ -80,7 +35,7 @@ deploy_bahartel_prod:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
     - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
-    - kubectl -n production rollout restart deployment front-my-v1
+    - kubectl -n production rollout restart deployment front-ver2-client
   when: on_success
   only: 
-    - master
+    - bahar
