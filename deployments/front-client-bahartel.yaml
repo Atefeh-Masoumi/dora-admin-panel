@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: front-client
-          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/fron-client-bahartel:latest
+          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client-bahartel:latest
           ports:
             - name: http-0
               containerPort: 80
