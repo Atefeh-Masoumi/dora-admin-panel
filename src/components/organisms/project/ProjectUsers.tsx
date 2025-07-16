@@ -64,7 +64,7 @@ export const ProjectUsers: FC<ProjectUsersPropsType> = () => {
               onClick={openCreateDialogHandler}
               variant="outlined"
               startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                <Add  />
               }
             >
               افزودن کاربر

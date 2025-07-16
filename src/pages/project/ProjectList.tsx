@@ -190,7 +190,7 @@ const VmProjectList: FC = () => {
                 borderRadius: BORDER_RADIUS_1,
               }}
               startIcon={
-                <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
+                <Add  />
               }
             >
               افزودن پروژه
