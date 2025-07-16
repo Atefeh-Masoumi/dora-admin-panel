@@ -261,20 +261,22 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
-    getApiMyAccountSsoUrl: build.query<
-      GetApiMyAccountSsoUrlApiResponse,
-      GetApiMyAccountSsoUrlApiArg
+    getApiMyAccountLoginItoUrl: build.query<
+      GetApiMyAccountLoginItoUrlApiResponse,
+      GetApiMyAccountLoginItoUrlApiArg
     >({
-      query: () => ({ url: `/api/my/account/sso-url` }),
+      query: () => ({ url: `/api/my/account/login-ito-url` }),
     }),
-    postApiMyAccountSsoLogin: build.mutation<
-      PostApiMyAccountSsoLoginApiResponse,
-      PostApiMyAccountSsoLoginApiArg
+    postApiMyAccountLoginItoCallback: build.mutation<
+      PostApiMyAccountLoginItoCallbackApiResponse,
+      PostApiMyAccountLoginItoCallbackApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/account/sso-login`,
+        url: `/api/my/account/login-ito-callback`,
         method: "POST",
-        body: queryArg.ssoLoginModel,
+        params: {
+          code: queryArg.code,
+        },
       }),
     }),
     getApiMyAccountLoginGoogleUrl: build.query<
@@ -2780,13 +2782,13 @@ export type PostApiMyAccountRegisterApiArg = {
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
-export type GetApiMyAccountSsoUrlApiResponse =
+export type GetApiMyAccountLoginItoUrlApiResponse =
   /** status 200 OK */ SsoLoginResponse;
-export type GetApiMyAccountSsoUrlApiArg = void;
-export type PostApiMyAccountSsoLoginApiResponse =
+export type GetApiMyAccountLoginItoUrlApiArg = void;
+export type PostApiMyAccountLoginItoCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
-export type PostApiMyAccountSsoLoginApiArg = {
-  ssoLoginModel: SsoLoginModel;
+export type PostApiMyAccountLoginItoCallbackApiArg = {
+  code: string;
 };
 export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
 export type GetApiMyAccountLoginGoogleUrlApiArg = void;
@@ -4508,9 +4510,6 @@ export type RegisterModel = {
 };
 export type SsoLoginResponse = {
   url: string | null;
-};
-export type SsoLoginModel = {
-  code?: string | null;
 };
 export type LoginModel = {
   email?: string | null;
@@ -6254,8 +6253,8 @@ export const {
   usePostApiMyAccountTwoFactorLoginMutation,
   usePostApiMyAccountRegisterMutation,
   usePostApiMyAccountLogoutMutation,
-  useGetApiMyAccountSsoUrlQuery,
-  usePostApiMyAccountSsoLoginMutation,
+  useGetApiMyAccountLoginItoUrlQuery,
+  usePostApiMyAccountLoginItoCallbackMutation,
   useGetApiMyAccountLoginGoogleUrlQuery,
   useGetApiMyAccountLoginGoogleCallbackQuery,
   usePostApiMyAccountLoginMutation,
