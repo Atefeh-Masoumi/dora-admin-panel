@@ -111,9 +111,7 @@ const AddVm: FC = () => {
     } else if (serverName.trim().length < 5 || serverName.length > 50) {
       validationErrorMessage =
         "طول کارکترهای بخش نام سرور ابری باید بین ۵ تا ۵۰ کارکتر باشد";
-    } else if (!passwordValidationRegex.test(serverPassword)) {
-      validationErrorMessage = "رمز عبور نامعتبر است";
-    }
+    } 
 
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
