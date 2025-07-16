@@ -24,7 +24,6 @@ package_bahartel_prod:
   script:
     - docker build -f Dockerfile.bahartel.production -t $DOCKER_REGISTRY/front-client-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-bahartel:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-bahartel
-  when: manual
   only:
     - bahar
 
