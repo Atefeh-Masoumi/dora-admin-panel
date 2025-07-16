@@ -25,7 +25,7 @@ spec:
               containerPort: 80
               protocol: TCP
           imagePullPolicy: Always
-      # Try to schedule at least one pod of the app in each node:
+      ## Try to schedule at least one pod of the app in each node:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
