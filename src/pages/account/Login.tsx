@@ -30,13 +30,13 @@ const formValidation = yup.object().shape({
 
 const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
- 
   const [captchaKey, setCaptchaKey] = useState("");
+  const [localCaptchaRequired, setLocalCaptchaRequired] = useState(false);
   const [loginUser, { isLoading }] = usePostApiMyAccountLoginMutation();
 
   const navigate = useNavigate();
 
-  const needCaptcha = useAppSelector((store) => store.auth?.captchaRequired);
+  const needCaptcha = useAppSelector((store) => store.auth?.captchaRequired) || localCaptchaRequired;
 
   const submitHandler: formikOnSubmitType<typeof formInitialValues> = (
     { email, password,captchaCode },
@@ -64,11 +64,23 @@ const Login: FC = () => {
         toast.success("شما با موفقیت وارد شدید");
         navigate("/");
       })
-      .catch(
-        ({ status }: { status: number }) =>
-          (status === 401 || status === 404) &&
-          toast.error("ایمیل یا گذرواژه صحیح اشتباه است")
-      );
+      .catch((error) => {
+        const { status } = error;
+        
+        if (status === 400) {
+          setLocalCaptchaRequired(true);
+          toast.error("لطفا کد کپچا را وارد کنید");
+          return;
+        }
+        
+        if (status === 422 ) {
+          toast.error("ایمیل یا گذرواژه صحیح اشتباه است");
+          return;
+        }
+        
+        // Handle other errors
+        toast.error("خطایی رخ داده است. لطفا دوباره تلاش کنید");
+      });
     setSubmitting(false);
   };
 
