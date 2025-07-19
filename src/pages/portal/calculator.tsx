@@ -97,7 +97,7 @@ const Calculator: FC = () => {
               <DorsaTab {...a11yProps(2)} label="کلاستر کوبرنتیز" value="2" />
               <DorsaTab {...a11yProps(3)} label="DNS ابری" value="3" />
               <DorsaTab {...a11yProps(4)} label="ذخیره‌ساز ابری" value="4" />
-              <DorsaTab {...a11yProps(5)} label="VPC" value="5" />
+              {/* <DorsaTab {...a11yProps(5)} label="VPC" value="5" /> */}
             </Tabs>
           </Container>
           <Stack
@@ -121,9 +121,9 @@ const Calculator: FC = () => {
             <TabPanel value="4" sx={{ p: 0, my: 3 }}>
               <StorageCostEstimator />
             </TabPanel>
-            <TabPanel value="5" sx={{ p: 0, my: 3 }}>
+            {/* <TabPanel value="5" sx={{ p: 0, my: 3 }}>
               <VpcCostEstimator />
-            </TabPanel>
+            </TabPanel> */}
           </Stack>
         </TabContext>
       </Stack>
