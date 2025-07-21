@@ -110,14 +110,15 @@ export const VmIpAddress: FC = () => {
                 </Typography>
               </Grid2>
               <Grid2 size={{ xs: 3, sm: 3.9 }}>
-                <Typography color="grey.700" align="center">
+                {/* <Typography color="grey.700" align="center">
                   نوع
-                </Typography>
-              </Grid2>
-              <Grid2 size={{ xs: 3, sm: 3.9 }}>
+                </Typography> */}
                 <Typography color="grey.700" align="center">
                   Primary
                 </Typography>
+              </Grid2>
+              <Grid2 size={{ xs: 3, sm: 3.9 }}>
+                
               </Grid2>
               <Grid2 size={{ xs: 0, sm: 0.2 }} />
             </Grid2>
