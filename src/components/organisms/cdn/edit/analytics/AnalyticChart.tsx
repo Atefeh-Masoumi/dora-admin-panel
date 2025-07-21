@@ -19,7 +19,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
@@ -45,23 +45,20 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     setCategoryId(+event.target.value);
   };
 
-  const [
-    getAnalytics,
-    {
-      data: userAnalytics,
-      isLoading: getDataLoading,
-    },
-  ] = usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation();
+  const {
+    data: userAnalytics,
+    isLoading: getDataLoading,
+    refetch: getAnalytics,
+  } = useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery({
+    projectId: Number(projectId),
+    id: dnsId,
+    periodId: categoryId + 1,
+    
+  });
 
   useEffect(() => {
     if (projectId && dnsId) {
-      getAnalytics({
-        projectId: Number(projectId),
-        id: dnsId,
-        getAnalyticModel: {
-          periodId: categoryId + 1,
-        },
-      });
+      getAnalytics();
     }
   }, [projectId, dnsId, categoryId, getAnalytics]);
 
