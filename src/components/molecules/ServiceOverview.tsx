@@ -108,6 +108,7 @@ type ServiceOverviewPropsType = {
   infoList: infoListType[][];
   isLoading: boolean;
   refetchOnClick?: () => void;
+  customStatusIdentifier?: (statusId: number) => { label: string; bgColor: string; typographyColor: string };
 };
 
 type infoListType = {
@@ -121,6 +122,7 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
   infoList = [],
   isLoading,
   refetchOnClick,
+  customStatusIdentifier,
 }) => {
   return (
     <Grid container>
@@ -160,13 +162,11 @@ export const ServiceOverview: FC<ServiceOverviewPropsType> = ({
                           component={
                             <Chip
                               label={
-                                serviceStatusIdentifier(Number(value)).label
+                                (customStatusIdentifier ?? serviceStatusIdentifier)(Number(value)).label
                               }
                               sx={{
-                                bgcolor: serviceStatusIdentifier(Number(value))
-                                  .bgColor,
-                                color: serviceStatusIdentifier(Number(value))
-                                  .typographyColor,
+                                bgcolor: (customStatusIdentifier ?? serviceStatusIdentifier)(Number(value)).bgColor,
+                                color: (customStatusIdentifier ?? serviceStatusIdentifier)(Number(value)).typographyColor,
                                 borderRadius: BORDER_RADIUS_1,
                               }}
                             />

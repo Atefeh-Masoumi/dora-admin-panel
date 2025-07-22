@@ -9,6 +9,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ServiceOverview } from "src/components/molecules/ServiceOverview";
 import { useGetApiMyKubernetesClusterByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { ConvertToJalali } from "src/utils/convertToJalali";
+import { clusterStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 const a11yProps = (index: number) => {
   return {
@@ -123,6 +124,7 @@ const EditKubernetes: FC = () => {
           isLoading={isLoading}
           infoList={infoList}
           refetchOnClick={refetchOnClick}
+          customStatusIdentifier={clusterStatusIdentifier}
         />
       </TabPanel>
       <TabPanel value="2" sx={{ p: 0, my: 3 }}>
