@@ -57,16 +57,16 @@ type CreateRecordDialogPropsType = {
 
 export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
   id,
-  dnsId,
+  // dnsId,
   onClose,
   openDialog,
   refetchRecords,
 }) => {
-  const { projectId } = useParams();
-
+  const { projectId, id: dnsId } = useParams();
+console.log(dnsId)
   const { data: getInfo, isLoading: getDetailsLoading } =
     useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdDnsRecordGetIdQuery({
-      dnsCdnHostId: dnsId,
+      dnsCdnHostId: Number(dnsId),
       projectId: Number(projectId),
       id: id!
     }, { skip: !id });
@@ -78,10 +78,10 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
     value: "",
     ttl: "120",
     useProxy: false,
-    weight: "",
-    port: "",
-    priority: "",
-    preference: "",
+    weight: null,
+    port: null,
+    priority: null,
+    preference: null,
   });
 
   useEffect(() => {
@@ -129,7 +129,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           weight,
           port,
         },
-        dnsCdnHostId: dnsId,
+        dnsCdnHostId: Number(dnsId),
         projectId: Number(projectId)
       })
         .unwrap()
@@ -152,7 +152,7 @@ export const CreateRecordDialog: FC<CreateRecordDialogPropsType> = ({
           weight,
           port,
         },
-        dnsCdnHostId: dnsId,
+        dnsCdnHostId: Number(dnsId),
         projectId: Number(projectId)
       })
         .unwrap()

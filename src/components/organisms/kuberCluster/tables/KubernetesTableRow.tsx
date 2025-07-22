@@ -13,7 +13,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { kubernetesTableStruct } from "./struct";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
+import { clusterStatusIdentifier, serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -97,10 +97,10 @@ const KubernetesTableRow: FC<{ row: any }> = ({ row }) => {
                   {column.id === "statusId" ? (
                     <Chip
                       clickable={false}
-                      label={serviceStatusIdentifier(id).label}
+                      label={clusterStatusIdentifier(id).label}
                       sx={{
-                        bgcolor: serviceStatusIdentifier(id).bgColor,
-                        color: serviceStatusIdentifier(id).typographyColor,
+                        bgcolor: clusterStatusIdentifier(id).bgColor,
+                        color: clusterStatusIdentifier(id).typographyColor,
                         py: 2.2,
                         borderRadius: 1,
                         fontSize: "14px",
