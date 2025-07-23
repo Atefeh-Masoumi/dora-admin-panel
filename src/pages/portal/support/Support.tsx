@@ -81,7 +81,7 @@ const Detail: FC = () => {
             </Typography>
             <Stack direction="row" spacing={1} color="secondary">
               <Typography variant="text9">
-                تاریخ ایجاد: {ConvertToJalali(String(date))}
+                تاریخ ایجاد: {(String(date))}
               </Typography>
             </Stack>
           </Stack>

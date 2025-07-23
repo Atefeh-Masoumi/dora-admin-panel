@@ -16,6 +16,7 @@ import {
   useGetApiMyPortalProductBundleKuberClusterListQuery,
   usePostApiMyKubernetesClusterByProjectIdHostCreateMutation,
   useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
+  useGetApiMyKubernetesClusterByProjectIdHostListQuery,
 } from "src/app/services/api.generated";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 
@@ -116,6 +117,10 @@ export const AddKubernetesContextProvider: FC<
   const navigate = useNavigate();
   const { projectId } = useParams();
 
+  const { refetch } = useGetApiMyKubernetesClusterByProjectIdHostListQuery({
+    projectId: Number(projectId) || 0,
+  });
+
   const { data: rows } = useGetApiMyPortalProductBundleKuberClusterListQuery();
   const { data: kubernetesPriceData, isLoading: kubernetesPriceIsLoading } = 
     useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery(
@@ -172,6 +177,7 @@ export const AddKubernetesContextProvider: FC<
       .then(() => {
         toast.success("کلاستر کوبرنتیز شما با موفقیت ایجاد شد");
         navigate(`/kubernetes-cluster/${projectId}`);
+        refetch();
       })
       .catch((err: any) => {});
   };
