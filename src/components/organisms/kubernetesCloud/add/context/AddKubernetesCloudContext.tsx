@@ -99,9 +99,8 @@ const AddKubernetesCloudContextProvider: FC<
   const submitHandler = () => {
     let validationErrorMessage = "";
 
-    if (!dataCenter || !dataCenter.id) {
-      validationErrorMessage = "لطفا مرکز داده را انتخاب کنید";
-    } else if (isPredefined && (!serverConfig || !serverConfig.id)) {
+  
+    if (isPredefined && (!serverConfig || !serverConfig.id)) {
       validationErrorMessage = "لطفا مشخصات سرویس را انتخاب کنید";
     } else if (!serviceName) {
       validationErrorMessage = "لطفا نام سرویس را انتخاب کنید";
@@ -129,7 +128,7 @@ const AddKubernetesCloudContextProvider: FC<
       .unwrap()
       .then(() => {
         toast.success("سرویس namespace شما با موفقیت ایجاد شد");
-        navigate("/kubernetes-cloud");
+        navigate(`/kubernetes-cloud/${projectId}`);
       })
       .catch(() => {});
   };
