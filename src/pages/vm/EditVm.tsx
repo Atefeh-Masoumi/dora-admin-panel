@@ -24,6 +24,7 @@ import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
+import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
 
 // Types
 interface TabPanelProps {
@@ -48,11 +49,11 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/vm/:projectId/:id/specification",
     component: VmInfo,
   },
-  // {
-  //   label: "آنالیز ترافیک",
-  //   route: "/vm/:projectId/:id/analytics",
-  //   component: AnalyticChart,
-  // },
+  {
+    label: "آنالیز ترافیک",
+    route: "/vm/:projectId/:id/analytics",
+    component: AnalyticChart,
+  },
   {
     label: "آدرس IP",
     route: "/vm/:projectId/:id/ip",
@@ -192,7 +193,7 @@ const EditVm: FC<EditVmProps> = () => {
   const hiddenTabs = useMemo(() => getHiddenTabs(vmData), [vmData]);
 
   if (!id) {
-    return <Navigate to="/vm" />;
+    return <Navigate to="/vm/:projectId/list" />;
   }
 
   return (
