@@ -261,20 +261,22 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
-    getApiMyAccountSsoUrl: build.query<
-      GetApiMyAccountSsoUrlApiResponse,
-      GetApiMyAccountSsoUrlApiArg
+    getApiMyAccountLoginItoUrl: build.query<
+      GetApiMyAccountLoginItoUrlApiResponse,
+      GetApiMyAccountLoginItoUrlApiArg
     >({
-      query: () => ({ url: `/api/my/account/sso-url` }),
+      query: () => ({ url: `/api/my/account/login-ito-url` }),
     }),
-    postApiMyAccountSsoLogin: build.mutation<
-      PostApiMyAccountSsoLoginApiResponse,
-      PostApiMyAccountSsoLoginApiArg
+    postApiMyAccountLoginItoCallback: build.mutation<
+      PostApiMyAccountLoginItoCallbackApiResponse,
+      PostApiMyAccountLoginItoCallbackApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/account/sso-login`,
+        url: `/api/my/account/login-ito-callback`,
         method: "POST",
-        body: queryArg.ssoLoginModel,
+        params: {
+          code: queryArg.code,
+        },
       }),
     }),
     getApiMyAccountLoginGoogleUrl: build.query<
@@ -519,14 +521,15 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/dns-cdn/${queryArg.projectId}/host/get-ns/${queryArg.id}`,
       }),
     }),
-    postApiMyDnsCdnByProjectIdHostGetAnalyticAndId: build.mutation<
-      PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse,
-      PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg
+    getApiMyDnsCdnByProjectIdHostGetAnalyticAndId: build.query<
+      GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse,
+      GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/dns-cdn/${queryArg.projectId}/host/get-analytic/${queryArg.id}`,
-        method: "POST",
-        body: queryArg.getAnalyticModel,
+        params: {
+          PeriodId: queryArg.periodId,
+        },
       }),
     }),
     getApiMyDnsCdnByProjectIdHostGetAndId: build.query<
@@ -2527,14 +2530,15 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/list`,
       }),
     }),
-    postApiMyVmByProjectIdHostGetAnalyticAndId: build.mutation<
-      PostApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse,
-      PostApiMyVmByProjectIdHostGetAnalyticAndIdApiArg
+    getApiMyVmByProjectIdHostGetAnalyticAndId: build.query<
+      GetApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse,
+      GetApiMyVmByProjectIdHostGetAnalyticAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/get-analytic/${queryArg.id}`,
-        method: "POST",
-        body: queryArg.getAnalyticModel,
+        params: {
+          PeriodId: queryArg.periodId,
+        },
       }),
     }),
     getApiMyVmByProjectIdHostGetAndId: build.query<
@@ -2780,13 +2784,13 @@ export type PostApiMyAccountRegisterApiArg = {
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
-export type GetApiMyAccountSsoUrlApiResponse =
+export type GetApiMyAccountLoginItoUrlApiResponse =
   /** status 200 OK */ SsoLoginResponse;
-export type GetApiMyAccountSsoUrlApiArg = void;
-export type PostApiMyAccountSsoLoginApiResponse =
+export type GetApiMyAccountLoginItoUrlApiArg = void;
+export type PostApiMyAccountLoginItoCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
-export type PostApiMyAccountSsoLoginApiArg = {
-  ssoLoginModel: SsoLoginModel;
+export type PostApiMyAccountLoginItoCallbackApiArg = {
+  code: string;
 };
 export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
 export type GetApiMyAccountLoginGoogleUrlApiArg = void;
@@ -2926,12 +2930,12 @@ export type GetApiMyDnsCdnByProjectIdHostGetNsAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse =
+export type GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiResponse =
   /** status 200 OK */ GetAnalyticResponse;
-export type PostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg = {
+export type GetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdApiArg = {
+  periodId: number;
   projectId: number;
   id: number;
-  getAnalyticModel: GetAnalyticModel;
 };
 export type GetApiMyDnsCdnByProjectIdHostGetAndIdApiResponse =
   /** status 200 OK */ GetDnsCdnResponse;
@@ -4250,12 +4254,12 @@ export type GetApiMyVmByProjectIdHostListApiResponse =
 export type GetApiMyVmByProjectIdHostListApiArg = {
   projectId: number;
 };
-export type PostApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse =
+export type GetApiMyVmByProjectIdHostGetAnalyticAndIdApiResponse =
   /** status 200 OK */ GetAnalyticResponse;
-export type PostApiMyVmByProjectIdHostGetAnalyticAndIdApiArg = {
+export type GetApiMyVmByProjectIdHostGetAnalyticAndIdApiArg = {
+  periodId: number;
   projectId: number;
   id: number;
-  getAnalyticModel: GetAnalyticModel;
 };
 export type GetApiMyVmByProjectIdHostGetAndIdApiResponse =
   /** status 200 OK */ GetVmResponse;
@@ -4509,9 +4513,6 @@ export type RegisterModel = {
 export type SsoLoginResponse = {
   url: string | null;
 };
-export type SsoLoginModel = {
-  code?: string | null;
-};
 export type LoginModel = {
   email?: string | null;
   password?: string | null;
@@ -4686,9 +4687,6 @@ export type SeriesModel = {
 export type GetAnalyticResponse = {
   categories?: string[] | null;
   series?: SeriesModel[] | null;
-};
-export type GetAnalyticModel = {
-  periodId?: number;
 };
 export type GetDnsCdnResponse = {
   id: number;
@@ -6254,8 +6252,8 @@ export const {
   usePostApiMyAccountTwoFactorLoginMutation,
   usePostApiMyAccountRegisterMutation,
   usePostApiMyAccountLogoutMutation,
-  useGetApiMyAccountSsoUrlQuery,
-  usePostApiMyAccountSsoLoginMutation,
+  useGetApiMyAccountLoginItoUrlQuery,
+  usePostApiMyAccountLoginItoCallbackMutation,
   useGetApiMyAccountLoginGoogleUrlQuery,
   useGetApiMyAccountLoginGoogleCallbackQuery,
   usePostApiMyAccountLoginMutation,
@@ -6285,7 +6283,7 @@ export const {
   usePostApiMyDnsCdnByProjectIdWebHostCheckDomainMutation,
   useGetApiMyDnsCdnByProjectIdHostListQuery,
   useGetApiMyDnsCdnByProjectIdHostGetNsAndIdQuery,
-  usePostApiMyDnsCdnByProjectIdHostGetAnalyticAndIdMutation,
+  useGetApiMyDnsCdnByProjectIdHostGetAnalyticAndIdQuery,
   useGetApiMyDnsCdnByProjectIdHostGetAndIdQuery,
   useDeleteApiMyDnsCdnByProjectIdHostDeleteAndIdMutation,
   usePostApiMyDnsCdnByProjectIdHostCreateMutation,
@@ -6517,7 +6515,7 @@ export const {
   usePutApiMyVmByProjectIdHostRebuildAndIdMutation,
   usePutApiMyVmByProjectIdHostRebootAndIdMutation,
   useGetApiMyVmByProjectIdHostListQuery,
-  usePostApiMyVmByProjectIdHostGetAnalyticAndIdMutation,
+  useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery,
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
