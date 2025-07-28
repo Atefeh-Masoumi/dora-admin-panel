@@ -76,7 +76,13 @@ const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
                   <IconButton onClick={settingOnClick}>
-                    <Setting />
+                  <Setting
+                      sx={{
+                        "&> path": {
+                          stroke: ({ palette }) => palette.grey[700],
+                        },
+                      }}
+                    />
                   </IconButton>
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
