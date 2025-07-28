@@ -120,8 +120,11 @@ const EditKubernetesCloudDeployment = lazy(
     import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 
-const ProjectSpecification = lazy(() => import("../pages/project/EditProject"));
-const ProjectAccess = lazy(() => import("../pages/project/EditProject"));
+const ProjectSpecification = lazy(() => import("src/pages/project/EditProject"));
+const ProjectAccess = lazy(() => import("src/pages/project/EditProject"));
+
+const VolumeList = lazy(() => import("src/pages/volume/VolumeList"));
+const AddVolume = lazy(() => import("src/pages/volume/AddVolume"));
 
 export const  mainTemplate = (
   PageComponent: FC<any>,
@@ -440,6 +443,28 @@ const Router: FC = () => {
             path="/vm/:projectId/:id/network"
             element={<EditVmWrapper />}
           />
+          {/* ======================================= VOLUME ======================================= */}
+          <Route
+            path="/block-storage/:projectId"
+            element={mainTemplate(VolumeList, {
+              pageTitle: "ابری مدیریت دیسک",
+            })}
+          />
+          
+          <Route
+            path="/block-storage/:projectId/create"
+            element={mainTemplate(
+              AddVolume,
+              {
+                link: {
+                  text: "بازگشت به مدیریت دیسک ابری",
+                  url: "/block-storage/:projectId",
+                },
+                hideSidebar: false,
+              },
+              // AddVolumeContextProvider
+            )}
+            />
           {/* ======================================= NETWORK  ======================================= */}
 
           <Route path="/network/:projectId" element={mainTemplate(NetworkList,{
