@@ -1,7 +1,8 @@
 export enum PRODUCT_CATEGORY_ENUM {
   VM = 101,
   DNS = 102,
-  CDN = 103,
+  BlockStorage = 103,
+  CDN = 113,
   STORAGE = 104,
   KubernetesCloud = 105,
   KubernetesCluster = 106,
@@ -38,4 +39,5 @@ export enum PRODUCT_ITEMS_ENUM {
   ColocationIpv4 = 134,
   VpcIpv4 = 138,
   Vpc10Rules = 139,
+  CloudBlockDisk = 140,
 }

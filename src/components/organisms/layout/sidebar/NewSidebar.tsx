@@ -38,7 +38,10 @@ export const NewSidebar: FC<SidebarPropsType> = ({
           title: " سرورهای مجازی",
           link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/dashboard",
         },
-      
+        {
+          title:"دیسک ابری",
+          link:`/block-storage/${selectedProjectId}`,
+        },
         {
           title:"کلیدهای دسترسی",
           link:`/key/${selectedProjectId}`,

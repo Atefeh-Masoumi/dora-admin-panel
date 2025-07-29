@@ -17,6 +17,7 @@ import AddStorageContextProvider from "src/components/organisms/storage/add/cont
 import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
+import AddVolumeContextProvider from "src/components/organisms/volume/add/contexts/AddVolumeContext";
 // import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 // import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
@@ -120,8 +121,12 @@ const EditKubernetesCloudDeployment = lazy(
     import("src/pages/kuberCloud/edit/deployment/EditKubernetesCloudDeployment")
 );
 
-const ProjectSpecification = lazy(() => import("../pages/project/EditProject"));
-const ProjectAccess = lazy(() => import("../pages/project/EditProject"));
+const ProjectSpecification = lazy(() => import("src/pages/project/EditProject"));
+const ProjectAccess = lazy(() => import("src/pages/project/EditProject"));
+
+const VolumeList = lazy(() => import("src/pages/volume/VolumeList"));
+const AddVolume = lazy(() => import("src/pages/volume/AddVolume"));
+const EditVolume = lazy(() => import("src/pages/volume/EditVolume"));
 
 export const  mainTemplate = (
   PageComponent: FC<any>,
@@ -440,6 +445,84 @@ const Router: FC = () => {
             path="/vm/:projectId/:id/network"
             element={<EditVmWrapper />}
           />
+          {/* ======================================= VOLUME ======================================= */}
+          <Route
+            path="/block-storage/:projectId"
+            element={mainTemplate(VolumeList, {
+              pageTitle: "ابری مدیریت دیسک",
+            })}
+          />
+          
+          <Route
+            path="/block-storage/:projectId/create"
+            element={mainTemplate(
+              AddVolume,
+              {
+                link: {
+                  text: "بازگشت به مدیریت دیسک ابری",
+                  url: "/block-storage/:projectId",
+                },
+                hideSidebar: false,
+              },
+              // AddVolumeContextProvider
+            )}
+            />
+          <Route
+            path="/block-storage/:projectId/:blockstorageId/specification"
+            element={mainTemplate(EditVolume, {
+              pageTitle: "مشخصات دیسک ابری",
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+          <Route
+            path="/block-storage/:projectId/:blockstorageId/change-config"
+            element={mainTemplate(EditVolume, {
+              pageTitle: "تغییر مشخصات سخت افزاری",
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+          <Route
+            path="/block-storage/:projectId/:blockstorageId/attach-vm"
+            element={mainTemplate(EditVolume, {
+              pageTitle: "اتصال به سرور",
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+          <Route
+            path="/block-storage/:projectId/:blockstorageId/backup"
+            element={mainTemplate(EditVolume, {
+              pageTitle: "مدیریت بکاپ",
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+          <Route
+            path="/block-storage/:projectId/:blockstorageId/snapshot"
+            element={mainTemplate(EditVolume, {
+              pageTitle: "مدیریت اسنپ شات",
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+            
           {/* ======================================= NETWORK  ======================================= */}
 
           <Route path="/network/:projectId" element={mainTemplate(NetworkList,{
