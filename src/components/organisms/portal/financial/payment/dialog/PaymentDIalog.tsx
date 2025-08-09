@@ -19,7 +19,7 @@ const PaymentDialog: FC<PaymentDialogPropsType> = ({
   const isSuccess = useMemo(() => {
     let result: boolean = false;
     if (paymentInfo.paymentStatusId) {
-      result = paymentInfo.paymentStatusId !== 1;
+      result = paymentInfo.paymentStatusId == 2;
     }
     return result;
   }, [paymentInfo.paymentStatusId]);
