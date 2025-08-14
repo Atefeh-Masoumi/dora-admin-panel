@@ -1105,11 +1105,11 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/financial/bill/get/${queryArg.id}`,
       }),
     }),
-    getApiMyHomeIndex: build.query<
-      GetApiMyHomeIndexApiResponse,
-      GetApiMyHomeIndexApiArg
+    postApiMyHomeIndex: build.mutation<
+      PostApiMyHomeIndexApiResponse,
+      PostApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index` }),
+      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
     }),
     getApiMyInfraDatacenterList: build.query<
       GetApiMyInfraDatacenterListApiResponse,
@@ -2020,6 +2020,18 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/vpc/create`,
         method: "POST",
         body: queryArg.createVpcHostModel,
+      }),
+    }),
+    getApiMyVmByProjectIdVolumeNodeList: build.query<
+      GetApiMyVmByProjectIdVolumeNodeListApiResponse,
+      GetApiMyVmByProjectIdVolumeNodeListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/node/list`,
+        params: {
+          VmHostId: queryArg.vmHostId,
+          VmVolumeHostId: queryArg.vmVolumeHostId,
+        },
       }),
     }),
     getApiMyVmByProjectIdVolumeNodeGet: build.query<
@@ -3295,8 +3307,8 @@ export type GetApiMyFinancialBillGetByIdApiResponse =
 export type GetApiMyFinancialBillGetByIdApiArg = {
   id: number;
 };
-export type GetApiMyHomeIndexApiResponse = unknown;
-export type GetApiMyHomeIndexApiArg = void;
+export type PostApiMyHomeIndexApiResponse = unknown;
+export type PostApiMyHomeIndexApiArg = void;
 export type GetApiMyInfraDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyInfraDatacenterListApiArg = void;
@@ -3912,6 +3924,13 @@ export type PostApiMyVmByProjectIdVpcCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdVpcCreateApiArg = {
   projectId: number;
   createVpcHostModel: CreateVpcHostModel;
+};
+export type GetApiMyVmByProjectIdVolumeNodeListApiResponse =
+  /** status 200 OK */ VmVolumeNodeListResponse;
+export type GetApiMyVmByProjectIdVolumeNodeListApiArg = {
+  vmHostId: number;
+  vmVolumeHostId: number;
+  projectId: number;
 };
 export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
   /** status 200 OK */ GetVmVolumeNodeResponse;
@@ -4687,6 +4706,8 @@ export type SeriesModel = {
 export type GetAnalyticResponse = {
   categories?: string[] | null;
   series?: SeriesModel[] | null;
+  totalUpload?: number;
+  totalDownload?: number;
 };
 export type GetDnsCdnResponse = {
   id: number;
@@ -5872,6 +5893,14 @@ export type CreateVpcHostModel = {
   name?: string | null;
   productBundleId?: number;
 };
+export type VmVolumeNodeListResponse = {
+  id?: number;
+  statusId?: number;
+  status: string | null;
+  vmVolumeHost: string | null;
+  vmHost: string | null;
+  createDate?: string;
+};
 export type GetVmVolumeNodeResponse = {
   id: number;
   vmVolumeHostId?: number | null;
@@ -6352,7 +6381,7 @@ export const {
   useGetApiMyFinancialBillListDownloadByIdQuery,
   useGetApiMyFinancialBillListQuery,
   useGetApiMyFinancialBillGetByIdQuery,
-  useGetApiMyHomeIndexQuery,
+  usePostApiMyHomeIndexMutation,
   useGetApiMyInfraDatacenterListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretGetIdQuery,
@@ -6459,6 +6488,7 @@ export const {
   usePutApiMyVmByProjectIdVpcEditAndIdMutation,
   useDeleteApiMyVmByProjectIdVpcDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVpcCreateMutation,
+  useGetApiMyVmByProjectIdVolumeNodeListQuery,
   useGetApiMyVmByProjectIdVolumeNodeGetQuery,
   usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
   usePostApiMyVmByProjectIdVolumeNodeAttachMutation,
