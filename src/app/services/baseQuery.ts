@@ -59,7 +59,7 @@ export const baseQuery: BaseQueryFn<
       const e = axiosError as AxiosError<string, any>;
 
       if (e.code === 'ECONNABORTED') {
-        toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
+        toast.error("Request timeout");
         return { error: { status: 408, errorMessage: 'Request timeout' } };
       }
 
