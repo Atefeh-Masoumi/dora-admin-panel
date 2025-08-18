@@ -81,6 +81,10 @@ export const baseQuery: BaseQueryFn<
         handleApiError(error.errorMessage as any, "اطلاعات وارد شده معتبر نمی باشد");
         return { error };
       }
+      if (error.status == 429) {
+        handleApiError(error.errorMessage as any, "تعداد درخواست های شما بیش از حد مجاز است. لطفا بعدا تلاش نمایید");
+        return { error };
+      }
       if (error.status === 403) {
         navigateTo("/forbidden");
         return { error };
