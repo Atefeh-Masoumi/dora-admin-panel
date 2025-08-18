@@ -206,7 +206,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                         fontSize: "14px",
                       }}
                     />
-                  ) : column.id === "ipv4" ? (
+                  ) : column.id === "ipAddressString" ? (
                     <Button
                       sx={{ py: 0, px: 0.5 }}
                       onClick={() => {
