@@ -166,6 +166,17 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.changePasswordModel,
       }),
     }),
+    getApiMyAccountCustomerUserShortList: build.query<
+      GetApiMyAccountCustomerUserShortListApiResponse,
+      GetApiMyAccountCustomerUserShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/customer-user/short-list`,
+        params: {
+          userId: queryArg.userId,
+        },
+      }),
+    }),
     getApiMyAccountCustomerUserList: build.query<
       GetApiMyAccountCustomerUserListApiResponse,
       GetApiMyAccountCustomerUserListApiArg
@@ -2753,6 +2764,11 @@ export type PostApiMyAccountProfileChangePasswordApiResponse = unknown;
 export type PostApiMyAccountProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
 };
+export type GetApiMyAccountCustomerUserShortListApiResponse =
+  /** status 200 OK */ CustomerUserShortListResponse[];
+export type GetApiMyAccountCustomerUserShortListApiArg = {
+  userId: number;
+};
 export type GetApiMyAccountCustomerUserListApiResponse =
   /** status 200 OK */ CustomerUserListResponse[];
 export type GetApiMyAccountCustomerUserListApiArg = void;
@@ -4438,6 +4454,13 @@ export type ChangePasswordModel = {
   currentPassword?: string | null;
   password?: string | null;
 };
+export type CustomerUserShortListResponse = {
+  id: number;
+  userId: number;
+  customerId: number;
+  customer: string | null;
+  isActive: boolean;
+};
 export type CustomerUserListResponse = {
   id: number;
   userId: number;
@@ -5704,7 +5727,7 @@ export type IssueItemListResponse = {
 export type CreateIssueItemModel = {
   issueId?: number;
   content: string | null;
-  attachment?: Blob | null;
+  attachments?: Blob[] | null;
 };
 export type IssueShortListResponse = {
   id: number;
@@ -5729,7 +5752,7 @@ export type CreateIssueModel = {
   content: string | null;
   orderId?: number | null;
   productId?: number | null;
-  attachment?: Blob | null;
+  attachments?: Blob[] | null;
 };
 export type ResourceUsageResponse = {
   maxCpuUsage?: number;
@@ -5825,6 +5848,7 @@ export type VmNetworkListResponse = {
 };
 export type CreateVpcInterfaceModel = {
   vmNetworkId?: number;
+  gatewayIp?: string | null;
 };
 export type GetVpcNatResponse = {
   id: number;
@@ -6131,7 +6155,10 @@ export type RebuildVmModel = {
 export type VmListResponse = {
   id: number;
   name: string | null;
-  ipAddress?: string | null;
+  ipAddress?: string[] | null;
+  ipAddressString?: string | null;
+  privateIp?: string[] | null;
+  privateIpString?: string | null;
   status: string | null;
   statusId: number;
   datacenter: string | null;
@@ -6270,6 +6297,7 @@ export const {
   usePostApiMyAccountProfileConfirmPhoneNumberMutation,
   usePostApiMyAccountProfileConfirmEmailMutation,
   usePostApiMyAccountProfileChangePasswordMutation,
+  useGetApiMyAccountCustomerUserShortListQuery,
   useGetApiMyAccountCustomerUserListQuery,
   useGetApiMyAccountCustomerUserGetByIdQuery,
   useDeleteApiMyAccountCustomerUserDeleteByIdMutation,

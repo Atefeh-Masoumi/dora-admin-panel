@@ -16,20 +16,20 @@ import {
 } from "src/app/services/api.generated";
 
 const Detail: FC = () => {
-  const [file, setFile] = useState<string | Blob>();
+  const [files, setFiles] = useState<File[]>([]);
   const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
   const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    setFile(file);
+    const selectedFiles: File[] = Array.from(e.target.files || []);
+    setFiles(selectedFiles);
   };
   const [isDisableButton, setIsDisableButton] = useState<boolean>();
 
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    if (file && content === "") setIsDisableButton(true);
+    if (files.length > 0 && content === "") setIsDisableButton(true);
     else setIsDisableButton(false);
-  }, [content, file]);
+  }, [content, files]);
 
   const { id } = useParams();
   const { data: issueItems, isLoading } =
@@ -51,18 +51,36 @@ const Detail: FC = () => {
 
   const [itemCreate, { isLoading: LoadingSend }] =
     usePostApiMyPortalIssueItemCreateMutation();
-  const submit = () => {
+  const readFileAsBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        const base64 = result.includes(",") ? result.split(",")[1] : result;
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  const submit = async () => {
     if (!id || !content) return;
 
-    let formData = new FormData();
-    formData.append("issueId", id as string);
-    formData.append("content", content);
-    formData.append("attachment", (file as Blob) || null);
-    itemCreate({ createIssueItemModel: formData as any })
+    const attachments = files.length
+      ? await Promise.all(files.map((f) => readFileAsBase64(f)))
+      : [];
+
+    const payload = {
+      issueId: Number(id),
+      content,
+      attachments,
+    } as any;
+
+    itemCreate({ createIssueItemModel: payload })
       .unwrap()
       .then(() => {
         setContent("");
-        setFile(undefined);
+        setFiles([]);
       });
   };
 
@@ -143,9 +161,9 @@ const Detail: FC = () => {
                       py: { xs: 1, md: 1.5 },
                       whiteSpace: "nowrap",
                     }}
-                    disabled={Boolean(file)}
+                    disabled={files.length > 0}
                   >
-                    {!file ? (
+                    {files.length === 0 ? (
                       <Typography>بارگذاری پیوست</Typography>
                     ) : (
                       <Typography
@@ -155,7 +173,9 @@ const Detail: FC = () => {
                           justifyContent: "center",
                         }}
                       >
-                        با موفقیت بارگذاری شد <Done />
+                        {files.length === 1
+                          ? "1 فایل انتخاب شد"
+                          : `${files.length} فایل انتخاب شد`} <Done />
                       </Typography>
                     )}
                     <Input

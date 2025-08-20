@@ -12,18 +12,18 @@ const supportedSize = 80;
 const dropzoneOptions = {
   maxSize: supportedSize * (1024 * 1024),
   accept: { "application/pdf": ["image/* , .pdf"] },
-  multiple: false,
+  multiple: true,
 };
 
 type DropzonePropsType = {
-  setFile: (file: File) => void;
-  file?: File;
+  setFiles: (files: File[]) => void;
+  files?: File[];
   uploading: boolean;
   percent: number;
 };
 
 export default forwardRef<HTMLInputElement, DropzonePropsType>(
-  ({ setFile, file, uploading, percent }, ref) => {
+  ({ setFiles, files, uploading, percent }, ref) => {
     const { t } = useTranslation();
 
     const largeFileErrorMessage = useCallback(
@@ -41,18 +41,11 @@ export default forwardRef<HTMLInputElement, DropzonePropsType>(
             }
           })
         );
-        acceptedFiles.forEach((file) => {
-          const reader = new FileReader();
-
-          if (file) setFile(file);
-
-          reader.onabort = () => console.log("file reading was aborted");
-          reader.onerror = () => console.log("file reading has failed");
-          reader.onload = () => {};
-          reader.readAsArrayBuffer(file);
-        });
+        if (acceptedFiles && acceptedFiles.length > 0) {
+          setFiles(acceptedFiles);
+        }
       },
-      [largeFileErrorMessage, setFile]
+      [largeFileErrorMessage, setFiles]
     );
 
     const { getRootProps, getInputProps, inputRef } = useDropzone({
@@ -72,12 +65,12 @@ export default forwardRef<HTMLInputElement, DropzonePropsType>(
         direction="row"
         justifyContent="center"
         spacing={1}
-        py={!file ? 4 : 2}
+        py={!files || files.length === 0 ? 4 : 2}
         bgcolor="rgba(60, 138, 255, 0.08)"
         borderRadius={1}
         sx={{
           border: ({ palette }) =>
-            `1px ${!file ? "dashed" : "solid"}${palette.primary.main}`,
+            `1px ${!files || files.length === 0 ? "dashed" : "solid"}${palette.primary.main}`,
           color: "primary.main",
           cursor: "pointer",
         }}
@@ -86,7 +79,7 @@ export default forwardRef<HTMLInputElement, DropzonePropsType>(
       >
         <input {...getInputProps()} />
 
-        {!file ? (
+        {!files || files.length === 0 ? (
           <Stack alignItems="center" spacing={2}>
             <DocCloud
               sx={{ width: "55px", height: "55px", color: "primary.main" }}
@@ -102,7 +95,11 @@ export default forwardRef<HTMLInputElement, DropzonePropsType>(
           </Stack>
         ) : (
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography>{file.name}</Typography>
+            <Typography>
+              {files.length === 1
+                ? files[0].name
+                : `${files.length} فایل انتخاب شد`}
+            </Typography>
             <DocCloud
               sx={{ width: "40px", height: "40px", color: "primary.main" }}
             />
