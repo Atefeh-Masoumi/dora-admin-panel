@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useMemo, useRef, useState } from "react";
 import { Button, Stack, Typography, Dialog } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
 import Dropzone from "src/components/molecules/Dropzone";
@@ -20,33 +20,53 @@ export const UploadDialog: FC<HeaderPropsType> = ({
 
   const [itemCreate] = usePostApiMyPortalIssueItemCreateMutation();
 
-  const [fileSelected, setFileSelected] = useState<File>();
+  const [filesSelected, setFilesSelected] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
 
   const [content, setContent] = useState("");
 
   const fileInput = useRef<HTMLInputElement | null>(null);
 
-  const onSubmit = () => {
-    if (fileSelected) setUploading(true);
+  const readFileAsBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        const base64 = result.includes(",") ? result.split(",")[1] : result;
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  const onSubmit = async () => {
+    if (filesSelected.length > 0) setUploading(true);
     else if (fileInput.current) fileInput.current.click();
 
-    if (!id || !content || !fileSelected) return;
-    let formData = new FormData();
-    formData.append("issueId", id as string);
-    formData.append("content", content);
-    formData.append("attachment", fileSelected);
-    itemCreate({ createIssueItemModel: formData as any })
+    if (!id || !content || filesSelected.length === 0) return;
+
+    const attachments = await Promise.all(
+      filesSelected.map((f) => readFileAsBase64(f))
+    );
+
+    const payload = {
+      issueId: Number(id),
+      content,
+      attachments,
+    } as any;
+
+    itemCreate({ createIssueItemModel: payload })
       .unwrap()
       .then(() => {
         setContent("");
         handleClose();
-      });
+      })
+      .finally(() => setUploading(false));
   };
 
   const onClose = () => {
     setUploading(false);
-    setFileSelected(undefined);
+    setFilesSelected([]);
     handleClose();
   };
 
@@ -65,10 +85,10 @@ export const UploadDialog: FC<HeaderPropsType> = ({
         </Typography>
         <Stack spacing={1.5}>
           <Dropzone
-            setFile={(file: File) => setFileSelected(file)}
+            setFiles={(files: File[]) => setFilesSelected(files)}
             ref={fileInput}
             uploading={uploading}
-            file={fileSelected}
+            files={filesSelected}
             percent={12}
           />
           <DorsaTextField
@@ -97,7 +117,7 @@ export const UploadDialog: FC<HeaderPropsType> = ({
             component="label"
             sx={{ px: 3, py: 0.8 }}
           >
-            {!fileSelected ? " انتخاب فایل" : "ارسال پیام"}
+            {filesSelected.length === 0 ? " انتخاب فایل" : "ارسال پیام"}
           </Button>
         </Stack>
       </Stack>

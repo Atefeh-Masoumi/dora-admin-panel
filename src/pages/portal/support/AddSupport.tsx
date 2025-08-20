@@ -8,6 +8,7 @@ import {
   Skeleton,
   Stack,
   Typography,
+  Chip,
 } from "@mui/material";
 import { FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
@@ -94,20 +95,32 @@ const AddTicket: FC = () => {
   ]);
 
   const [uploading, setUploading] = useState(false);
-  const [file, setFile] = useState<File>();
+  const [files, setFiles] = useState<File[]>([]);
   const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
 
   const [upload] = useCustomCreateIssueMutation();
 
   const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = () => setFile(file);
-    reader.onerror = () => {
-      toast.error(`file error: ${reader.error}`);
-    };
+    const selected = Array.from(e.target.files || []) as File[];
+    if (!selected || selected.length === 0) return;
+    const merged: File[] = [...files];
+    selected.forEach((sf) => {
+      const exists = merged.some(
+        (f) => f.name === sf.name && f.size === sf.size && f.lastModified === sf.lastModified
+      );
+      if (!exists) merged.push(sf);
+    });
+    setFiles(merged);
     setUploading(true);
+    if (e?.target) e.target.value = ""; // allow re-selecting the same files
+  };
+
+  const removeFile = (fileToRemove: File) => {
+    const remaining = files.filter(
+      (f) => !(f.name === fileToRemove.name && f.size === fileToRemove.size && f.lastModified === fileToRemove.lastModified)
+    );
+    setFiles(remaining);
+    if (remaining.length === 0) setUploading(false);
   };
 
   const abortController = useRef<AbortController | null>(null);
@@ -130,13 +143,17 @@ const AddTicket: FC = () => {
     if (selectedApiCloudCustomerProduct !== 0) {
       formData.append("customerProductId", selectedApiCloudCustomerProduct.toString());
     }
-    if (file) formData.append("attachment", file);
+    if (files && files.length > 0) {
+      files.forEach((f) => formData.append("attachments", f));
+    }
 
     upload(formData)
       .unwrap()
       .then((res: any) => {
         toast.success("تیکت با موفقیت اضافه شد");
         navigate("/portal/supports");
+        setFiles([]);
+        setUploading(false);
       })
       .catch((res: any) => {
         if (res.status === 401 || res.status === 404) {
@@ -144,6 +161,7 @@ const AddTicket: FC = () => {
         } else {
           toast.error(res?.data?.[""]?.[0] || "خطایی رخ داده است");
         }
+        setUploading(false);
       });
   };
 
@@ -426,19 +444,11 @@ const AddTicket: FC = () => {
               />
             </Button>
           </Stack>
-          {uploading && (
-            <Stack
-              direction="row"
-              borderRadius={1.5}
-              alignItems="center"
-              bgcolor="rgba(60, 138, 255, 1)"
-              p={2}
-              width="100%"
-              justifyContent="space-between"
-              color="white"
-            >
-              <Typography fontSize="14px">{file?.name}</Typography>
-              <Done />
+          {files.length > 0 && (
+            <Stack direction="row" flexWrap="wrap" gap={1} width="100%">
+              {files.map((f, idx) => (
+                <Chip key={`${f.name}-${f.size}-${f.lastModified}-${idx}`} label={f.name} onDelete={() => removeFile(f)} />
+              ))}
             </Stack>
           )}
 

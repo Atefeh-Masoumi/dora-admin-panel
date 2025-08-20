@@ -59,7 +59,7 @@ export const baseQuery: BaseQueryFn<
       const e = axiosError as AxiosError<string, any>;
 
       if (e.code === 'ECONNABORTED') {
-        toast.error('درخواست شما زمان زیادی طول کشید. لطفا دوباره تلاش کنید');
+        toast.error("Request timeout");
         return { error: { status: 408, errorMessage: 'Request timeout' } };
       }
 
@@ -79,6 +79,10 @@ export const baseQuery: BaseQueryFn<
       }
       if (error.status == 422) {
         handleApiError(error.errorMessage as any, "اطلاعات وارد شده معتبر نمی باشد");
+        return { error };
+      }
+      if (error.status == 429) {
+        handleApiError(error.errorMessage as any, "تعداد درخواست های شما بیش از حد مجاز است. لطفا بعدا تلاش نمایید");
         return { error };
       }
       if (error.status === 403) {
