@@ -7,7 +7,7 @@ export const loadBalanceTableStruct: columnType[] = [
     label: "نام هاست",
   },
   {
-    id: "loadBalancingPolicy",
+    id: "cdnLbPolicy",
     label: "نحوه توزیع بار",
   },
   {
