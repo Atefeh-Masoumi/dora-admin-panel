@@ -114,28 +114,13 @@ export const AddNetworkDialog: FC<AddNetworkDialogPropsType> = ({
                 helperText={formik.touched.name && formik.errors.name}
                 placeholder="نام موردنظر را وارد کنید"
                 size="small"
+                inputProps={{
+                  dir: "ltr"
+                }}
               />
             </Stack>
             <Stack direction="row" spacing={2} alignItems="flex-end" sx={{ flexWrap: "nowrap" }}>
-
-              <Stack direction="column" rowGap={1} sx={{ flex: 1 }}>
-                <InputLabel>آدرس شبکه</InputLabel>
-                <TextField
-                  {...formik.getFieldProps("network")}
-                  fullWidth
-                  error={Boolean(formik.errors.network && formik.touched.network)}
-                  helperText={formik.touched.network && formik.errors.network}
-                  placeholder="مثال: 192.168.1.0"
-                  inputProps={{ dir: "ltr" }}
-                  size="small"
-                />
-              </Stack>
-              <Stack direction="row" alignItems="center" justifyContent="center" sx={{ alignSelf: "flex-end" }}>
-                <svg style={{ height: "30px", width: "30px" }} viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M7 21L14.9 3H17L9.1 21H7Z"></path>
-                </svg>
-              </Stack>
-              <Stack direction="column" rowGap={1} sx={{ minWidth: 120 }}>
+            <Stack direction="column" rowGap={1} sx={{ minWidth: 120 }}>
                 <InputLabel>پریفیکس</InputLabel>
                 <TextField
                   {...formik.getFieldProps("prefix")}
@@ -148,6 +133,23 @@ export const AddNetworkDialog: FC<AddNetworkDialogPropsType> = ({
                     max: 32,
                     dir: "ltr"
                   }}
+                  size="small"
+                />
+              </Stack>
+              <Stack direction="row" alignItems="center" justifyContent="center" sx={{ alignSelf: "flex-end" }}>
+                <svg style={{ height: "35px", width: "35px" }} viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M7 21L14.9 3H17L9.1 21H7Z"></path>
+                </svg>
+              </Stack>
+              <Stack direction="column" rowGap={1} sx={{ flex: 1 }}>
+                <InputLabel>آدرس شبکه</InputLabel>
+                <TextField
+                  {...formik.getFieldProps("network")}
+                  fullWidth
+                  error={Boolean(formik.errors.network && formik.touched.network)}
+                  helperText={formik.touched.network && formik.errors.network}
+                  placeholder="مثال: 192.168.1.0"
+                  inputProps={{ dir: "ltr" }}
                   size="small"
                 />
               </Stack>
