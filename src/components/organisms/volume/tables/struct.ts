@@ -5,7 +5,7 @@ export const volumeListTableStruct: columnType[] = [
   { id: "name", label: "نام سرویس" },
   { id: "datacenter", label: "مرکز داده" },
   { id: "volumeSize", label: "حجم (GB)" },
-  { id: "status", label: "وضعیت" },
+  { id: "statusId", label: "وضعیت" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
 ]; 
