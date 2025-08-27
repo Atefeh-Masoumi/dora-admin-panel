@@ -19,9 +19,26 @@ const Detail: FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const dropzoneOptions = { accept: "image/* , .pdf", multiple: true };
   const handleFileChange = (e: any) => {
-    const selectedFiles: File[] = Array.from(e.target.files || []);
-    setFiles(selectedFiles);
+    const selected = Array.from(e.target.files || []) as File[];
+    if (!selected || selected.length === 0) return;
+    const merged: File[] = [...files];
+    selected.forEach((sf) => {
+      const exists = merged.some(
+        (f) => f.name === sf.name && f.size === sf.size && f.lastModified === sf.lastModified
+      );
+      if (!exists) merged.push(sf);
+    });
+    setFiles(merged);
+    if (e?.target) e.target.value = ""; // allow re-selecting the same files
   };
+
+  const removeFile = (fileToRemove: File) => {
+    const remaining = files.filter(
+      (f) => !(f.name === fileToRemove.name && f.size === fileToRemove.size && f.lastModified === fileToRemove.lastModified)
+    );
+    setFiles(remaining);
+  };
+
   const [isDisableButton, setIsDisableButton] = useState<boolean>();
 
   const [content, setContent] = useState("");
@@ -51,32 +68,21 @@ const Detail: FC = () => {
 
   const [itemCreate, { isLoading: LoadingSend }] =
     usePostApiMyPortalIssueItemCreateMutation();
-  const readFileAsBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        const base64 = result.includes(",") ? result.split(",")[1] : result;
-        resolve(base64);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
 
   const submit = async () => {
     if (!id || !content) return;
 
-    const attachments = files.length
-      ? await Promise.all(files.map((f) => readFileAsBase64(f)))
-      : [];
+    const formData = new FormData();
+    formData.append("issueId", id);
+    formData.append("content", content);
+    
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append("attachments", file);
+      });
+    }
 
-    const payload = {
-      issueId: Number(id),
-      content,
-      attachments,
-    } as any;
-
-    itemCreate({ createIssueItemModel: payload })
+    itemCreate({ createIssueItemModel: formData as any })
       .unwrap()
       .then(() => {
         setContent("");
@@ -151,7 +157,6 @@ const Detail: FC = () => {
                   arrow
                 >
                   <Button
-                    // onClick={handleOpen}
                     component="label"
                     variant="outlined"
                     size="large"
@@ -161,23 +166,8 @@ const Detail: FC = () => {
                       py: { xs: 1, md: 1.5 },
                       whiteSpace: "nowrap",
                     }}
-                    disabled={files.length > 0}
                   >
-                    {files.length === 0 ? (
-                      <Typography>بارگذاری پیوست</Typography>
-                    ) : (
-                      <Typography
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {files.length === 1
-                          ? "1 فایل انتخاب شد"
-                          : `${files.length} فایل انتخاب شد`} <Done />
-                      </Typography>
-                    )}
+                    <Typography>بارگذاری پیوست</Typography>
                     <Input
                       inputProps={{ ...dropzoneOptions }}
                       onChange={handleFileChange}
@@ -198,6 +188,13 @@ const Detail: FC = () => {
                   ارسال پیام
                 </LoadingButton>
               </Stack>
+              {files.length > 0 && (
+                <Stack direction="row" flexWrap="wrap" gap={1} width="100%">
+                  {files.map((f, idx) => (
+                    <Chip key={`${f.name}-${f.size}-${f.lastModified}-${idx}`} label={f.name} onDelete={() => removeFile(f)} />
+                  ))}
+                </Stack>
+              )}
             </Stack>
           </Stack>
         )}
