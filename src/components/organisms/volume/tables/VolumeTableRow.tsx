@@ -1,4 +1,4 @@
-import { IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { volumeListTableStruct } from "./struct";
+import { DiskStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -64,15 +65,16 @@ const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
       <DorsaTableRow hover tabIndex={-1} key={row.id}>
         {volumeListTableStruct.map((column) => {
           const value = row[column.id];
+          const text = column.format ? column.format(value) : value;
+          const id = row["statusId"];
           return (
             <DorsaTableCell
               key={column.id}
               align="center"
               sx={{ px: 1, whiteSpace: "nowrap" }}
             >
-              {column.format && typeof value === "number"
-                ? column.format(value)
-                : value}
+             
+             
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
                   <IconButton onClick={settingOnClick}>
@@ -89,7 +91,23 @@ const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
                   </IconButton>
                 </Stack>
               ) : (
-                <></>
+                <>
+                {column.id === "statusId" ? (
+                  <Chip
+                    clickable={false}
+                    label={DiskStatusIdentifier(id).label}
+                    sx={{
+                      bgcolor: DiskStatusIdentifier(id).bgColor,
+                      color: DiskStatusIdentifier(id).typographyColor,
+                      py: 2.2,
+                      borderRadius: 1,
+                      fontSize: "14px",
+                    }}
+                  />
+                  ) : (
+                    text || "__"
+                  )}
+                </>
               )}
             </DorsaTableCell>
           );
