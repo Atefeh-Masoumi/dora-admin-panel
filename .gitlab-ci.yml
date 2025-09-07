@@ -46,7 +46,6 @@ package_dorsa_master:
   script:
     - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-client:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client
-  when: manual
   only:
     - master
 
@@ -58,7 +57,7 @@ deploy_dorsa_master:
     - kubectl config use-context $KUBE_CONTEXT_DORSA
     - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-dorsa.yaml
     - kubectl -n production rollout restart deployment front-ver2-client
-  when: on_success
-  only: 
+  when: manual
+  only:
     - master
 
