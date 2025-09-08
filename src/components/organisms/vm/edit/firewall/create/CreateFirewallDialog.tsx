@@ -30,6 +30,7 @@ const options = [
   { id: 1, label: "TCP Protocol", firewallProtocolType: "TCP" },
   { id: 2, label: "UDP Protocol", firewallProtocolType: "UDP" },
   { id: 3, label: "ICMP Protocol", firewallProtocolType: "ICMP" },
+  { id: 5, label: "GRE Protocol", firewallProtocolType: "GRE" },
   { id: 4, label: "Any", firewallProtocolType: "any" },
 ];
 

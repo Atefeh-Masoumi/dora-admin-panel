@@ -106,16 +106,18 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 		formik.resetForm();
 	};
 
-	// const getImageByName = (name: string) => {
-	//   switch (name) {
-	//     case "asiatech":
-	//       return asiatechImage;
-	//     case "mobinnet":
-	//       return mobinNetImage;
-	//     default:
-	//       return "";
-	//   }
-	// };
+	const dataCenterIconRenderHandler = (name: string) => {
+		switch (name) {
+			case "asiatech":
+				return "icons/asiatech.svg";
+			case "mobinnet":
+				return "icons/mobinnet.png";
+			case "fanhub":
+				return "icons/fanhub.png";
+			default:
+				return "";
+		}
+	};
 
 	return (
 		<Dialog
@@ -180,7 +182,13 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 															alignItems="center"
 															spacing={1}
 														>
-															<DomainIcon />
+															<img
+																style={{ width: "100px", height: "100px" }}
+																src={`/assets/${dataCenterIconRenderHandler(
+																	photoName || ""
+																)}`}
+																alt={name || ""}
+															/>
 															<Box>{name}</Box>
 														</Stack>
 													}
