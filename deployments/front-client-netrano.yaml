@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: front-ver2-client
+  labels:
+    app: front-client
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front-client
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: front-client
+        version: v1
+    spec:
+      containers:
+        - name: front-client
+          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client-netrano:latest
+          ports:
+            - name: http-0
+              containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+      # Try to schedule at least one pod of the app in each node:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - front-client
+              topologyKey: kubernetes.io/hostname
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: front-client
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: dorsa-git

@@ -1,7 +1,7 @@
 workflow:
   # This specifies the valid branches for this workflow
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development" || $CI_COMMIT_BRANCH == "raahbar"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"'
       when: always
     - when: never
 
@@ -16,6 +16,7 @@ stages:
 variables:
   KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
   KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
+  KUBE_CONTEXT_NETRANO: cloud-computing/dorsa/front-my-core:netrano-front-client
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
 
 # development
@@ -61,3 +62,25 @@ deploy_dorsa_master:
   only:
     - master
 
+
+# ---- *** Dorsa master ***---
+
+package_netrano_master:
+  stage: package
+  script:
+    - docker build -f Dockerfile.netrano.production -t $DOCKER_REGISTRY/front-client-netrano:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-netrano:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-netrano
+  only:
+    - master
+
+deploy_netrano_master:
+  stage: deploy
+  needs: [package_netrano_master]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_NETRANO
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-netrano.yaml
+    - kubectl -n production rollout restart deployment front-ver2-client
+  when: manual
+  only:
+    - master
