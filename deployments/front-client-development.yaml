@@ -18,7 +18,7 @@ spec:
         version: v1
     spec:
       containers:
-        - name: front-client-development
+        - name: front-ver2-client
           image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client-stage:latest
           ports:
             - name: http-0
