@@ -1,5 +1,4 @@
 workflow:
-  # This specifies the valid branches for this workflow
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"'
       when: always
@@ -24,8 +23,8 @@ variables:
 package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.development -t $DOCKER_REGISTRY/front-client-development-dorsa:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-development-dorsa:latest .
-    - docker push --all-tags $DOCKER_REGISTRY/front-client-development-dorsa
+    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-client-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/frontfront-client-stage:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-stage
   only:
     - development
 
@@ -35,17 +34,17 @@ deploy_development:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
-    - kubectl -n development rollout restart deployment front-client-development-dorsa
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-stage.yaml
+    - kubectl -n development rollout restart deployment front-client-stage
   only:
     - development
 
-# ---- *** Dorsa master ***---
+# ---- *** dorsa master ***---
 
 package_dorsa_master:
   stage: package
   script:
-    - docker build -f Dockerfile.dorsa.production -t $DOCKER_REGISTRY/front-client:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client:latest .
+    - docker build -f Dockerfile.dorsa -t $DOCKER_REGISTRY/front-client:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client
   only:
     - master
@@ -62,13 +61,35 @@ deploy_dorsa_master:
   only:
     - master
 
+# ---- *** bahar master ***---
 
-# ---- *** Dorsa master ***---
+package_bahartel_master:
+  stage: package
+  script:
+    - docker build -f Dockerfile.dorsa -t $DOCKER_REGISTRY/front-client-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-bahartel:latest .
+    - docker push --all-tags $DOCKER_REGISTRY/front-client-bahartel
+  only:
+    - master
+
+deploy_bahartel_master:
+  stage: deploy
+  needs: [package_bahartel_master]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
+    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
+    - kubectl -n production rollout restart deployment front-ver2-client
+  when: manual
+  only:
+    - master
+
+
+# ---- *** netrano master ***---
 
 package_netrano_master:
   stage: package
   script:
-    - docker build -f Dockerfile.netrano.production -t $DOCKER_REGISTRY/front-client-netrano:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-netrano:latest .
+    - docker build -f Dockerfile.netrano -t $DOCKER_REGISTRY/front-client-netrano:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-netrano:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-netrano
   only:
     - master

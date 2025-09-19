@@ -1,25 +1,25 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: front-client-development-dorsa
+  name: front-ver2-client
   labels:
-    app: front-client-development-dorsa
+    app: front-ver2-client
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front-client-development-dorsa
+      app: front-ver2-client
       version: v1
   template:
     metadata:
       labels:
-        app: front-client-development-dorsa
+        app: front-ver2-client
         version: v1
     spec:
       containers:
         - name: front-client-development
-          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client-development-dorsa:latest
+          image: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core/front-client-stage:latest
           ports:
             - name: http-0
               containerPort: 80
