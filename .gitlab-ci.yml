@@ -23,7 +23,7 @@ variables:
 package_development:
   stage: package
   script:
-    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-client-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/frontfront-client-stage:latest .
+    - docker build -f Dockerfile.stage -t $DOCKER_REGISTRY/front-client-stage:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-stage:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-stage
   only:
     - development
@@ -34,8 +34,8 @@ deploy_development:
   script:
     - kubectl config get-contexts
     - kubectl config use-context $KUBE_CONTEXT_DORSA
-    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-stage.yaml
-    - kubectl -n development rollout restart deployment front-client-stage
+    - kubectl -n development apply -f $CI_PROJECT_DIR/deployments/front-client-development.yaml
+    - kubectl -n development rollout restart deployment front-ver2-client
   only:
     - development
 
