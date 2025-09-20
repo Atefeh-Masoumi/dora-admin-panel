@@ -1,6 +1,6 @@
 workflow:
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"'
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development" || $CI_COMMIT_BRANCH == "bahar"'
       when: always
     - when: never
 
@@ -69,7 +69,7 @@ package_bahartel_master:
     - docker build -f Dockerfile.dorsa -t $DOCKER_REGISTRY/front-client-bahartel:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-bahartel:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-bahartel
   only:
-    - master
+    - bahar
 
 deploy_bahartel_master:
   stage: deploy
@@ -81,8 +81,7 @@ deploy_bahartel_master:
     - kubectl -n production rollout restart deployment front-ver2-client
   when: manual
   only:
-    - master
-
+    - bahar
 
 # ---- *** netrano master ***---
 
@@ -92,7 +91,7 @@ package_netrano_master:
     - docker build -f Dockerfile.netrano -t $DOCKER_REGISTRY/front-client-netrano:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-netrano:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-netrano
   only:
-    - master
+    - netrano
 
 deploy_netrano_master:
   stage: deploy
@@ -104,4 +103,4 @@ deploy_netrano_master:
     - kubectl -n production rollout restart deployment front-ver2-client
   when: manual
   only:
-    - master
+    - netrano
