@@ -1,11 +1,12 @@
 # Stage 1
-#FROM node
-FROM nexus.dorsa.cloud/library/node:22-alpine AS builder
+#FROM node:18-bullseye-slim AS builder
+FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 COPY . .
+ENV REACT_APP_PRODUCTION_URL_V1="https://my.baharcloud.com"
 RUN npm run build
 
 # Stage 2

@@ -91,7 +91,7 @@ package_netrano_master:
     - docker build -f Dockerfile.netrano -t $DOCKER_REGISTRY/front-client-netrano:$CI_PIPELINE_ID -t $DOCKER_REGISTRY/front-client-netrano:latest .
     - docker push --all-tags $DOCKER_REGISTRY/front-client-netrano
   only:
-    - master
+    - netrano
 
 deploy_netrano_master:
   stage: deploy
@@ -103,4 +103,4 @@ deploy_netrano_master:
     - kubectl -n production rollout restart deployment front-ver2-client
   when: manual
   only:
-    - master
+    - netrano
