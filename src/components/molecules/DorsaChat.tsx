@@ -3,25 +3,25 @@ import { LoadingButton } from "@mui/lab";
 import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useAppSelector } from "src/app/hooks";
-import { IssueItemModel } from "src/app/services/api.generated";
+import { IssueItemResponse } from "src/app/services/api.generated";
 import { baseUrl } from "src/app/services/baseQuery";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { ConvertToJalali } from "src/utils/convertToJalali";
 
 const downloadFileUrl = baseUrl + "/api/my/portal/issue-item/download/";
 
-export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
+export const DorsaChat: FC<{ message: IssueItemResponse }> = ({ message }) => {
   const [isLoading, setIsLoading] = useState(false);
   const token = useAppSelector((state) => state.auth?.accessToken);
   const userId = useAppSelector((state) => state.auth?.userId);
 
-  const downloadFile = () => {
-    if (!message || !message.id) return;
+  const downloadFile = (fileId: string | number) => {
+    if (!fileId) return;
 
     let headers = new Headers();
     headers.append("Authorization", `Bearer ${token}`);
     setIsLoading(true);
-    fetch(downloadFileUrl + message.id, {
+    fetch(downloadFileUrl + encodeURIComponent(String(fileId)), {
       headers,
     })
       .then((response) => (response as any).blob())
@@ -32,7 +32,7 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
         let objectUrl = window.URL.createObjectURL(blobby);
 
         anchor.href = objectUrl;
-        anchor.download = message.fileName || "";
+        anchor.download = "";
         anchor.click();
 
         window.URL.revokeObjectURL(objectUrl);
@@ -67,25 +67,31 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
                 </Typography>
               </Stack>
               <Typography variant="text4">{message.content}</Typography>
-              {message.fileName && (
-                <Tooltip title={message.fileName}>
-                  <LoadingButton
-                    loading={isLoading}
-                    onClick={downloadFile}
-                    sx={{ color: "#fff", border: "1px solid #fff" }}
-                    startIcon={
-                      <Download
-                        sx={{
-                          "& path": {
-                            color: "#fff",
-                          },
-                        }}
-                      />
-                    }
-                  >
-                    دانلود پیوست
-                  </LoadingButton>
-                </Tooltip>
+              {message.files && message.files.length > 0 && (
+                <Stack spacing={1}>
+                  {message.files.map((file, index) => (
+                    file?.file && (
+                      <Tooltip key={index} title={file.fileName || ""}>
+                        <LoadingButton
+                          loading={isLoading}
+                          onClick={() => downloadFile(file.file!)}
+                          sx={{ color: "#fff", border: "1px solid #fff" }}
+                          startIcon={
+                            <Download
+                              sx={{
+                                "& path": {
+                                  color: "#fff",
+                                },
+                              }}
+                            />
+                          }
+                        >
+                          دانلود پیوست
+                        </LoadingButton>
+                      </Tooltip>
+                    )
+                  ))}
+                </Stack>
               )}
             </Stack>
             <Stack direction="row" px={1}>
@@ -124,25 +130,31 @@ export const DorsaChat: FC<{ message: IssueItemModel }> = ({ message }) => {
               <Typography variant="text9">ادمین</Typography>
             </Stack>
             <Typography variant="text4">{message.content}</Typography>
-            {message.fileName && (
-              <Tooltip title={message.fileName}>
-                <LoadingButton
-                  loading={isLoading}
-                  onClick={downloadFile}
-                  sx={{ border: "1px solid" }}
-                  startIcon={
-                    <Download
-                      sx={{
-                        "& path": {
-                          stroke: ({ palette }) => palette.secondary.main,
-                        },
-                      }}
-                    />
-                  }
-                >
-                  دانلود پیوست
-                </LoadingButton>
-              </Tooltip>
+            {message.files && message.files.length > 0 && (
+              <Stack spacing={1}>
+                {message.files.map((file, index) => (
+                  file?.file && (
+                    <Tooltip key={index} title={file.fileName || ""}>
+                      <LoadingButton
+                        loading={isLoading}
+                        onClick={() => downloadFile(file.file!)}
+                        sx={{ border: "1px solid" }}
+                        startIcon={
+                          <Download
+                            sx={{
+                              "& path": {
+                                stroke: ({ palette }) => palette.secondary.main,
+                              },
+                            }}
+                          />
+                        }
+                      >
+                        دانلود پیوست
+                      </LoadingButton>
+                    </Tooltip>
+                  )
+                ))}
+              </Stack>
             )}
           </Stack>
           <Stack direction="row" justifyContent="end" px={1}>

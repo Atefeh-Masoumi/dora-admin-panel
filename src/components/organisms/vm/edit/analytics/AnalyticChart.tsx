@@ -16,6 +16,9 @@ import {
   YAxis,
 } from "recharts";
 import { useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery } from "src/app/services/api.generated";
+import { StatBox } from "src/components/molecules/StatBox";
+import UploadImage from "src/assets/images/upload.png";
+import DownloadImage from "src/assets/images/download.png";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -56,9 +59,59 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
         fontWeight={700}
         sx={{ mb: 2 }}
       >
-        گزارش میزان درخواست
       </Typography>
       <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 1 }}>
+        <Stack
+          p={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              گزارش میزان درخواست
+
+            </Typography>
+          </Stack>
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          sx={{ m: 3 }}
+          
+        >
+
+          <StatBox
+            title="Total"
+            value={(userAnalytics?.totalUpload ?? 0) + (userAnalytics?.totalDownload ?? 0)}
+            unit="GB"
+            img={UploadImage}
+          />
+          <StatBox
+            title="Download"
+            value={userAnalytics?.totalDownload ?? 0}
+            unit="GB"
+            img={DownloadImage}
+          />
+          <StatBox
+            title="Upload"
+            value={userAnalytics?.totalUpload ?? 0}
+            unit="GB"color="green"
+            img={UploadImage}
+          />
+
+        </Stack>
+
         <Stack rowGap={{ xs: 3, md: 7.4 }} sx={{ p: 4 }}>
           {isLoading ? (
             <Stack spacing={4} alignItems="center" justifyContent="center">
