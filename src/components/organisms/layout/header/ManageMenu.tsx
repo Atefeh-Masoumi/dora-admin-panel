@@ -12,6 +12,8 @@ import { FC, MouseEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "src/app/hooks";
 import { logoutAction } from "src/app/slice/authSlice";
+import { setSelectedProjectId, setSelectedProject, setProjectList } from "src/app/slice/projectSlice";
+import { api } from "src/app/services/api";
 import { AccountSvg } from "src/components/atoms/svg-icons/AccountSvg";
 import { Logout } from "src/components/atoms/svg-icons/LogoutSvg";
 import { Service } from "src/components/atoms/svg-icons/ServiceSvg";
@@ -30,6 +32,12 @@ export const ManageMenu: FC = () => {
 
   const handleLogout = () => {
     dispatch(logoutAction());
+    localStorage.removeItem("selectedProjectId")
+    // Clear project-related state and RTK Query cache so next user sees fresh data
+    dispatch(setSelectedProject(undefined as any));
+    dispatch(setSelectedProjectId(undefined as any));
+    dispatch(setProjectList([] as any));
+    dispatch(api.util.resetApiState());
     handleClose();
     navigate("/");
   };
