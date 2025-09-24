@@ -1678,6 +1678,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/bare-metal-list` }),
     }),
+    getApiMyPortalProductShortList: build.query<
+      GetApiMyPortalProductShortListApiResponse,
+      GetApiMyPortalProductShortListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/product/short-list` }),
+    }),
     getApiMyPortalProductList: build.query<
       GetApiMyPortalProductListApiResponse,
       GetApiMyPortalProductListApiArg
@@ -1795,13 +1801,13 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/my/${queryArg.projectId}/user/list` }),
     }),
-    postApiMyByProjectIdUserEditAndId: build.mutation<
-      PostApiMyByProjectIdUserEditAndIdApiResponse,
-      PostApiMyByProjectIdUserEditAndIdApiArg
+    putApiMyByProjectIdUserEditAndId: build.mutation<
+      PutApiMyByProjectIdUserEditAndIdApiResponse,
+      PutApiMyByProjectIdUserEditAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/${queryArg.projectId}/user/edit/${queryArg.id}`,
-        method: "POST",
+        method: "PUT",
         body: queryArg.editProjectUserModel,
       }),
     }),
@@ -2041,7 +2047,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/node/list`,
         params: {
           VmHostId: queryArg.vmHostId,
-          VmVolumeHostId: queryArg.vmVolumeHostId,
         },
       }),
     }),
@@ -2330,6 +2335,46 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/key/create`,
         method: "POST",
         body: queryArg.createVmKeyModel,
+      }),
+    }),
+    postApiMyVmByProjectIdVmIsoNodeUnmount: build.mutation<
+      PostApiMyVmByProjectIdVmIsoNodeUnmountApiResponse,
+      PostApiMyVmByProjectIdVmIsoNodeUnmountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/unmount`,
+        method: "POST",
+        body: queryArg.vmIsoNodeUnmountModel,
+      }),
+    }),
+    postApiMyVmByProjectIdVmIsoNodeMount: build.mutation<
+      PostApiMyVmByProjectIdVmIsoNodeMountApiResponse,
+      PostApiMyVmByProjectIdVmIsoNodeMountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/mount`,
+        method: "POST",
+        body: queryArg.vmIsoNodeMountModel,
+      }),
+    }),
+    getApiMyVmByProjectIdVmIsoNodeList: build.query<
+      GetApiMyVmByProjectIdVmIsoNodeListApiResponse,
+      GetApiMyVmByProjectIdVmIsoNodeListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/list`,
+        params: {
+          VmIsoId: queryArg.vmIsoId,
+          VmHostId: queryArg.vmHostId,
+        },
+      }),
+    }),
+    getApiMyVmByProjectIdIsoShortList: build.query<
+      GetApiMyVmByProjectIdIsoShortListApiResponse,
+      GetApiMyVmByProjectIdIsoShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/iso/short-list`,
       }),
     }),
     getApiMyVmByProjectIdImageList: build.query<
@@ -3724,6 +3769,9 @@ export type GetApiMyPortalProductBundleKuberCloudListApiArg = void;
 export type GetApiMyPortalProductBundleBareMetalListApiResponse =
   /** status 200 OK */ ProductBundleBareMetalListResponse[];
 export type GetApiMyPortalProductBundleBareMetalListApiArg = void;
+export type GetApiMyPortalProductShortListApiResponse =
+  /** status 200 OK */ ProductShortListResponse[];
+export type GetApiMyPortalProductShortListApiArg = void;
 export type GetApiMyPortalProductListApiResponse =
   /** status 200 OK */ ProductListResponse[];
 export type GetApiMyPortalProductListApiArg = void;
@@ -3785,8 +3833,8 @@ export type GetApiMyByProjectIdUserListApiResponse =
 export type GetApiMyByProjectIdUserListApiArg = {
   projectId: number;
 };
-export type PostApiMyByProjectIdUserEditAndIdApiResponse = unknown;
-export type PostApiMyByProjectIdUserEditAndIdApiArg = {
+export type PutApiMyByProjectIdUserEditAndIdApiResponse = unknown;
+export type PutApiMyByProjectIdUserEditAndIdApiArg = {
   projectId: number;
   id: number;
   editProjectUserModel: EditProjectUserModel;
@@ -3942,10 +3990,9 @@ export type PostApiMyVmByProjectIdVpcCreateApiArg = {
   createVpcHostModel: CreateVpcHostModel;
 };
 export type GetApiMyVmByProjectIdVolumeNodeListApiResponse =
-  /** status 200 OK */ VmVolumeNodeListResponse;
+  /** status 200 OK */ VmVolumeNodeListResponse[];
 export type GetApiMyVmByProjectIdVolumeNodeListApiArg = {
   vmHostId: number;
-  vmVolumeHostId: number;
   projectId: number;
 };
 export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
@@ -4135,6 +4182,28 @@ export type PostApiMyVmByProjectIdKeyCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdKeyCreateApiArg = {
   projectId: number;
   createVmKeyModel: CreateVmKeyModel;
+};
+export type PostApiMyVmByProjectIdVmIsoNodeUnmountApiResponse = unknown;
+export type PostApiMyVmByProjectIdVmIsoNodeUnmountApiArg = {
+  projectId: number;
+  vmIsoNodeUnmountModel: VmIsoNodeUnmountModel;
+};
+export type PostApiMyVmByProjectIdVmIsoNodeMountApiResponse = unknown;
+export type PostApiMyVmByProjectIdVmIsoNodeMountApiArg = {
+  projectId: number;
+  vmIsoNodeMountModel: VmIsoNodeMountModel;
+};
+export type GetApiMyVmByProjectIdVmIsoNodeListApiResponse =
+  /** status 200 OK */ VmIsoNodeListResponse[];
+export type GetApiMyVmByProjectIdVmIsoNodeListApiArg = {
+  vmIsoId?: number;
+  vmHostId?: number;
+  projectId: number;
+};
+export type GetApiMyVmByProjectIdIsoShortListApiResponse =
+  /** status 200 OK */ VmIsoShortListResponse[];
+export type GetApiMyVmByProjectIdIsoShortListApiArg = {
+  projectId: number;
 };
 export type GetApiMyVmByProjectIdImageListApiResponse =
   /** status 200 OK */ VmImageListResponse[];
@@ -5566,8 +5635,9 @@ export type StorageHostListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
-  isPublic: boolean;
   public: string | null;
+  storageSize: number;
+  isPublic: boolean;
   createDate: string;
   expireDate?: string | null;
 };
@@ -5675,6 +5745,10 @@ export type ProductBundleBareMetalListResponse = {
   networkPort: number;
   bareMetalIpv4: number;
 };
+export type ProductShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type ProductListResponse = {
   id: number;
   name: string | null;
@@ -5705,14 +5779,18 @@ export type IssueSubjectListResponse = {
   id: number;
   name: string | null;
 };
-export type IssueItemModel = {
+export type FileResponse = {
+  file?: string | null;
+  fileName?: string | null;
+  fileSize?: number | null;
+};
+export type IssueItemResponse = {
   id: number;
   issueDate: string;
   content: string | null;
   user: string | null;
   userId: number;
-  fileName?: string | null;
-  fileSize?: number | null;
+  files?: FileResponse[] | null;
 };
 export type IssueItemListResponse = {
   issueId: number;
@@ -5722,7 +5800,7 @@ export type IssueItemListResponse = {
   issueStatusId: number;
   createDate: string;
   modifyDate?: string | null;
-  issueItems?: IssueItemModel[] | null;
+  issueItems?: IssueItemResponse[] | null;
 };
 export type CreateIssueItemModel = {
   issueId?: number;
@@ -5793,6 +5871,7 @@ export type ProjectListResponse = {
   name: string | null;
   customer: string | null;
   customerId: number;
+  user: string | null;
   datacenterId: number;
   datacenter: string | null;
   hypervisorId: number;
@@ -6058,6 +6137,27 @@ export type CreateVmKeyModel = {
   name?: string | null;
   publicKey?: string | null;
 };
+export type VmIsoNodeUnmountModel = {
+  vmIsoNodeId?: number;
+  vmHostId?: number;
+};
+export type VmIsoNodeMountModel = {
+  vmIsoId?: number;
+  vmHostId?: number;
+};
+export type VmIsoNodeListResponse = {
+  id?: number;
+  statusId?: number;
+  status: string | null;
+  vmIso: string | null;
+  vmHost: string | null;
+  createDate?: string;
+};
+export type VmIsoShortListResponse = {
+  id?: number;
+  name: string | null;
+  description?: string | null;
+};
 export type VmImageListResponse = {
   id: number;
   name: string | null;
@@ -6209,6 +6309,8 @@ export type CreateVmModel = {
   disk?: number | null;
   vmNetworkId?: number | null;
   ipAddress?: string | null;
+  autoBackup?: boolean;
+  autoSnapshot?: boolean;
 };
 export type GetConsoleResponse = {
   location: string | null;
@@ -6473,6 +6575,7 @@ export const {
   useGetApiMyPortalProductBundleKuberClusterListQuery,
   useGetApiMyPortalProductBundleKuberCloudListQuery,
   useGetApiMyPortalProductBundleBareMetalListQuery,
+  useGetApiMyPortalProductShortListQuery,
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalProductGetByIdQuery,
   useGetApiMyPortalNotificationShortListQuery,
@@ -6489,7 +6592,7 @@ export const {
   useGetApiMyPortalCustomerLimitResourceUsagesQuery,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyByProjectIdUserListQuery,
-  usePostApiMyByProjectIdUserEditAndIdMutation,
+  usePutApiMyByProjectIdUserEditAndIdMutation,
   useDeleteApiMyByProjectIdUserDeleteAndIdMutation,
   usePostApiMyByProjectIdUserCreateMutation,
   useGetApiMyProjectListQuery,
@@ -6548,6 +6651,10 @@ export const {
   useGetApiMyVmByProjectIdKeyListQuery,
   useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation,
   usePostApiMyVmByProjectIdKeyCreateMutation,
+  usePostApiMyVmByProjectIdVmIsoNodeUnmountMutation,
+  usePostApiMyVmByProjectIdVmIsoNodeMountMutation,
+  useGetApiMyVmByProjectIdVmIsoNodeListQuery,
+  useGetApiMyVmByProjectIdIsoShortListQuery,
   useGetApiMyVmByProjectIdImageListQuery,
   useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery,
   useGetApiMyVmByProjectIdHostAndVmHostIdVolumeGetIdQuery,
