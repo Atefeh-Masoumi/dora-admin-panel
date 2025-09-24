@@ -42,7 +42,7 @@ export const VmInfo: FC<VmInfoPropsType> = () => {
       {
         id: "os",
         label: "Operating System",
-        value: data?.operatingSystem || "",
+        value: data?.vmImage || "",
       },
       {
         id: "powerStatus",
