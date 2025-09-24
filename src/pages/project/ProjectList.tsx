@@ -179,7 +179,7 @@ const VmProjectList: FC = () => {
           >
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام سرویس"
+              placeholder="جستجو در نام پروژه"
             />
             <Button
               variant="outlined"
