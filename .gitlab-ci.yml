@@ -14,7 +14,6 @@ stages:
 
 variables:
   KUBE_CONTEXT_DORSA: cloud-computing/dorsa/front-my-core:dorsa-front-my
-  KUBE_CONTEXT_BAHARTEL: cloud-computing/dorsa/front-my-core:bahartel-front-my
   KUBE_CONTEXT_NETRANO: cloud-computing/dorsa/front-my-core:netrano-front-client
   DOCKER_REGISTRY: git.dorsa.cloud:5050/cloud-computing/dorsa/front-my-core
 
@@ -76,9 +75,9 @@ deploy_bahartel_master:
   needs: [package_bahartel_master]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context $KUBE_CONTEXT_BAHARTEL
-    - kubectl -n production apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
-    - kubectl -n production rollout restart deployment front-ver2-client
+    - kubectl config use-context $KUBE_CONTEXT_DORSA
+    - kubectl -n baharcloud apply -f $CI_PROJECT_DIR/deployments/front-client-bahartel.yaml
+    - kubectl -n baharcloud rollout restart deployment front-ver2-client
   when: manual
   only:
     - bahar
