@@ -1116,11 +1116,11 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/financial/bill/get/${queryArg.id}`,
       }),
     }),
-    postApiMyHomeIndex: build.mutation<
-      PostApiMyHomeIndexApiResponse,
-      PostApiMyHomeIndexApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyInfraDatacenterList: build.query<
       GetApiMyInfraDatacenterListApiResponse,
@@ -1787,7 +1787,12 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyPortalCustomerLimitResourceUsagesApiResponse,
       GetApiMyPortalCustomerLimitResourceUsagesApiArg
     >({
-      query: () => ({ url: `/api/my/portal/customer-limit/resource-usages` }),
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-limit/resource-usages`,
+        params: {
+          projectId: queryArg.projectId,
+        },
+      }),
     }),
     getApiMyPortalBusinessUnitList: build.query<
       GetApiMyPortalBusinessUnitListApiResponse,
@@ -3368,8 +3373,8 @@ export type GetApiMyFinancialBillGetByIdApiResponse =
 export type GetApiMyFinancialBillGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyHomeIndexApiResponse = unknown;
-export type PostApiMyHomeIndexApiArg = void;
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyInfraDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyInfraDatacenterListApiArg = void;
@@ -3824,7 +3829,9 @@ export type PostApiMyPortalIssueCreateApiArg = {
 };
 export type GetApiMyPortalCustomerLimitResourceUsagesApiResponse =
   /** status 200 OK */ ResourceUsageResponse;
-export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = void;
+export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = {
+  projectId?: number;
+};
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
@@ -5780,6 +5787,7 @@ export type IssueSubjectListResponse = {
   name: string | null;
 };
 export type FileResponse = {
+  fileId?: number | null;
   file?: string | null;
   fileName?: string | null;
   fileSize?: number | null;
@@ -6309,8 +6317,8 @@ export type CreateVmModel = {
   disk?: number | null;
   vmNetworkId?: number | null;
   ipAddress?: string | null;
-  autoBackup?: boolean;
-  autoSnapshot?: boolean;
+  vmBackup?: boolean;
+  vmSnapshot?: boolean;
 };
 export type GetConsoleResponse = {
   location: string | null;
@@ -6511,7 +6519,7 @@ export const {
   useGetApiMyFinancialBillListDownloadByIdQuery,
   useGetApiMyFinancialBillListQuery,
   useGetApiMyFinancialBillGetByIdQuery,
-  usePostApiMyHomeIndexMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyInfraDatacenterListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretGetIdQuery,
