@@ -74,7 +74,7 @@ export const DorsaChat: FC<{ message: IssueItemResponse }> = ({ message }) => {
                       <Tooltip key={index} title={file.fileName || ""}>
                         <LoadingButton
                           loading={isLoading}
-                          onClick={() => downloadFile(file.file!)}
+                          onClick={() => downloadFile(file.fileId!)}
                           sx={{ color: "#fff", border: "1px solid #fff" }}
                           startIcon={
                             <Download
