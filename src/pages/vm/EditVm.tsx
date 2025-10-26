@@ -25,6 +25,7 @@ import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
 import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
+import { Backup } from "src/components/organisms/vm/edit/backup/VmBackup";
 
 // Types
 interface TabPanelProps {
@@ -73,6 +74,11 @@ const TAB_CONFIGS: TabConfig[] = [
     label: "اسنپ‌شات",
     route: "/vm/:projectId/:id/snapshot",
     component: Snapshot,
+  },
+  {
+    label: "بکاپ",
+    route: "/vm/:projectId/:id/backup",
+    component: Backup,
   },
   {
     label: "فایروال",
