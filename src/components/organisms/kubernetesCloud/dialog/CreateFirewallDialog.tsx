@@ -69,7 +69,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
   const initialValues: CreateKuberFirewallModel = {
     // namespaceId: namespaceid,
-    firewallProtocolId: 0,
+    // firewallProtocolId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
