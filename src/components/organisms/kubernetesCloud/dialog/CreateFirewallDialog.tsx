@@ -69,7 +69,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
 
   const initialValues: CreateKuberFirewallModel = {
     // namespaceId: namespaceid,
-    firewallProtocolId: 0,
+    // firewallProtocolId: 0,
     deployPortId: 0,
     sourceIp: null,
     description: null,
@@ -163,6 +163,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
               label="Source IP"
               error={Boolean(formik.errors.sourceIp && formik.touched.sourceIp)}
               helperText={formik.touched.sourceIp && formik.errors.sourceIp}
+              inputProps={{ dir: "ltr" }}
             />
           </FormControl>
           <FormControl fullWidth>

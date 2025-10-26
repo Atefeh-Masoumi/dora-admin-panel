@@ -434,6 +434,10 @@ const Router: FC = () => {
             element={<EditVmWrapper />}
           />
           <Route
+            path="/vm/:projectId/:id/backup"
+            element={<EditVmWrapper />}
+          />
+          <Route
             path="/vm/:projectId/:id/firewall"
             element={<EditVmWrapper />}
           />
