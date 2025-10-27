@@ -468,13 +468,12 @@ const Router: FC = () => {
                 },
                 hideSidebar: false,
               },
-              // AddVolumeContextProvider
+              AddVolumeContextProvider
             )}
             />
           <Route
             path="/block-storage/:projectId/:blockstorageId/specification"
             element={mainTemplate(EditVolume, {
-              pageTitle: "مشخصات دیسک ابری",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
@@ -485,7 +484,6 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId/:blockstorageId/change-config"
             element={mainTemplate(EditVolume, {
-              pageTitle: "تغییر مشخصات سخت افزاری",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
@@ -496,7 +494,6 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId/:blockstorageId/attach-vm"
             element={mainTemplate(EditVolume, {
-              pageTitle: "اتصال به سرور",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
@@ -507,7 +504,6 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId/:blockstorageId/backup"
             element={mainTemplate(EditVolume, {
-              pageTitle: "مدیریت بکاپ",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
@@ -518,7 +514,6 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId/:blockstorageId/snapshot"
             element={mainTemplate(EditVolume, {
-              pageTitle: "مدیریت اسنپ شات",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
@@ -779,7 +774,7 @@ const Router: FC = () => {
         {/* ======================================= KUBERNETES CLOUD ======================================= */}
 
         <Route
-          path="/kubernetes-cloud/:projectId"
+          path="/kubernetes-cloud/:projectId/"
           element={mainTemplate(KubernetesCloud, {
             pageTitle: "مدیریت کوبرنتیز ابری",
           })}
@@ -805,7 +800,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud/:projectId",
+              url: "/kubernetes-cloud/:projectId/",
             },
             hideSidebar: false,
           })}
@@ -816,7 +811,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloud, {
             link: {
               text: "بازگشت به مدیریت کوبرنتیز ابری",
-              url: "/kubernetes-cloud/:projectId",
+              url: "/kubernetes-cloud/:projectId/",
             },
             hideSidebar: false,
           })}
@@ -887,7 +882,7 @@ const Router: FC = () => {
             hideSidebar: false,
           })}
         />
-        <Route
+        {/* <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             link: {
@@ -896,21 +891,30 @@ const Router: FC = () => {
             },
             hideSidebar: false,
           })}
-        />
+        /> */}
 
-        <Route
-          path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
-          element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "مشخصات Deployment",
-          })}
-        />
+       
         <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/setting"
           element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "تغییر مشخصات سخت افزاری",
+            link: {
+              text: "بازگشت به مدیریت Deployment ها",
+              url: BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT,
+            },
+            hideSidebar: false,
           })}
         />
-        <Route
+         <Route
+          path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            link: {
+              text: "بازگشت به مدیریت Deployment ها",
+              url: "/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment",
+            },
+            hideSidebar: false,
+          })}
+        />
+        {/* <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/gateway"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "Gateway",
@@ -921,7 +925,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "monitoring",
           })}
-        />
+        /> */}
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>

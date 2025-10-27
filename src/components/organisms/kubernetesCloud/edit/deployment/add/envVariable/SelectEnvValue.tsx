@@ -75,7 +75,7 @@ export const SelectEnvValue: FC<SelectEnvValuePropsType> = ({
                   <Select
                     label={label}
                     id={id}
-                    dir="ltr"
+                    // dir="ltr"
                     value={Number(value)}
                     onChange={(e) => onChange(e.target.value)}
                     sx={{

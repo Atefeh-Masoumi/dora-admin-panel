@@ -58,14 +58,14 @@ const volumeBackupStatusList = (statusId: number) => {
     case 4:
       return {
         id: 4,
-        label: "درانتظار",
+        label: "حذف شده",
         bgcolor: "warning.light",
         color: "warning.main",
       };
     case 5:
       return {
         id: 5,
-        label: "ناموفق",
+        label: "بازگردانی ناموفق",
         bgcolor: "error.light",
         color: "error.main",
       };
@@ -73,24 +73,18 @@ const volumeBackupStatusList = (statusId: number) => {
     case 6:
       return {
         id: 6,
-        label: "حذف شده",
+        label: " در حال بازگردانی",
         bgcolor: "error.light",
         color: "error.main",
       };
       case 7:
         return {
           id: 7,
-          label: "درحال بازگردانی",
-          bgcolor: "warning.light",
-          color: "warning.main",
-        };
-      case 8:
-        return {
-          id: 8,
           label: "درحال حذف",
           bgcolor: "warning.light",
           color: "warning.main",
         };
+      
     default:
       return {
         id: 0,
@@ -160,7 +154,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  {statusId === VOLUME_BACKUP_STATUS_INFO.INACTIVE && (
+                  {statusId === VOLUME_BACKUP_STATUS_INFO.ACTIVE && (
                     <IconButton onClick={handleOpenRestore}>
                       <RefreshSvg />
                     </IconButton>

@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, Settings } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useNavigate, useParams } from "react-router";
