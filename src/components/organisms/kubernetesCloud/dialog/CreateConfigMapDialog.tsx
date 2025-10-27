@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, DeleteOutline } from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -149,10 +149,14 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
             <Grid2 size={{xs:12,md:12}} >
               <DorsaTextField
                 fullWidth
-                label="*name"
+                label="Name"
                 error={Boolean(formik.errors.name && formik.touched.name)}
                 helperText={formik.errors.name}
                 {...formik.getFieldProps("name")}
+                inputProps={{
+                  dir: "ltr",
+                }}
+              
               />
             </Grid2>
           </Grid2>
@@ -187,20 +191,29 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                     <DorsaTextField
                       fullWidth
                       label="key"
+                      size="small"
                       value={formik.values.envs[index]?.key || ""}
                       onChange={(e) =>
                         handleKeyChange(index, String(e.target.value))
                       }
+                      inputProps={{
+                         dir:"ltr",
+                      }}
                     />
                   </Grid>
                   <Grid item xs={7} mb={2}>
                     <DorsaTextField
                       fullWidth
                       label="value"
+                      size="small"
                       value={formik.values.envs[index]?.value || ""}
                       onChange={(e) =>
                         handleValueChange(index, String(e.target.value))
                       }
+                      dir="ltr"
+                      inputProps={{
+                        dir: "ltr",
+                      }}
                     />
                   </Grid>
                   <Grid
@@ -218,7 +231,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                     }}
                   >
                     <IconButton onClick={() => removeEnvsInput(index)}>
-                      <TrashSvg />
+                      <DeleteOutline sx={{ color: "error.main" }} />
                     </IconButton>
                   </Grid>
                 </Fragment>
@@ -230,7 +243,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
               <Button
                 variant="outlined"
                 color="secondary"
-                sx={{ px: 3, py: 0.8 }}
+                sx={{ px: 3, py: 0.8}}
                 onClick={onClose}
               >
                 انصراف
