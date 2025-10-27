@@ -247,7 +247,7 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         iconColor: "warning",
         typographyColor: "warning.main",
         bgColor: "warning.light",
-        label: "بازسازی",
+        label: "در حال تغییر سایز",
       };
     case 8:
       return {
@@ -375,12 +375,26 @@ export const vmStatusIdentifier = (StatusId: number) => {
         label: "درحال حذف",
       };
       case 13:
-      return {
-        iconColor: "warning",
-        typographyColor: "warning.main",
-        bgColor: "warning.light",
-        label: "در انتظارتغییر خودکار زیر ساخت",
-      };
+        return {
+          iconColor: "error",
+          typographyColor: "error.main",
+          bgColor: "error.light",
+          label: "درحال تغییر سایز",
+        };
+      case 14:
+        return {
+          iconColor: "error",
+          typographyColor: "error.main",
+          bgColor: "error.light",
+          label: "درحال شروع بازسازی",
+        };
+        case 15:
+        return {
+          iconColor: "error",
+          typographyColor: "error.main",
+          bgColor: "error.light",
+          label: "در حال بازگردانی",
+        };
     default:
       return {
         iconColor: "error",
