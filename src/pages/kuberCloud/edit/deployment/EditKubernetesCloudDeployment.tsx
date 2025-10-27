@@ -95,13 +95,15 @@ const EditKubernetesCloudDeployment: FC = () => {
     let result = <></>;
 
     switch (selectedTab) {
+      case `overview`:
+        result = <ServiceOverview infoList={infoList} isLoading={isLoading} />;
+        break;
       case `setting`:
         result = <Settings />;
         break;
       case `gateway`:
         result = <Gateway />;
         break;
-      case `overview`:
       default:
         result = <ServiceOverview infoList={infoList} isLoading={isLoading} />;
         break;
@@ -131,8 +133,8 @@ const EditKubernetesCloudDeployment: FC = () => {
           scrollButtons="auto"
         >
           <DorsaTab value={`overview`} label="مشخصات" />
-          <DorsaTab disabled value={`setting`} label="تنظیمات" />
-          <DorsaTab disabled value={`gateway`} label="gateway" />
+          <DorsaTab value={`setting`} label="تنظیمات" />
+          {/* <DorsaTab disabled value={`gateway`} label="gateway" /> */}
           {/* <DorsaTab value={`monitoring`} label="monitoring" /> */}
         </Tabs>
       </Box>
