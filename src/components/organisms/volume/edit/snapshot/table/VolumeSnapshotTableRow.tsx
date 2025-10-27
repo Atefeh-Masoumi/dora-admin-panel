@@ -24,6 +24,7 @@ enum VOLUME_SNAPSHOT_STATUS_INFO {
   DELETE = 6,
   REVERTING = 7,
   DELETING = 8,
+  FAILED_REVERTING = 9,
 }
 
 enum DIALOG_TYPE_ENUM {
@@ -90,6 +91,13 @@ const volumeSnapShotStatusList = (statusId: number) => {
           label: "درحال حذف",
           bgcolor: "warning.light",
           color: "warning.main",
+        };
+      case 9:
+        return {
+          id: 9,
+          label: "ناموفق در بازگردانی",
+          bgcolor: "error.light",
+          color: "error.main",
         };
     default:
       return {

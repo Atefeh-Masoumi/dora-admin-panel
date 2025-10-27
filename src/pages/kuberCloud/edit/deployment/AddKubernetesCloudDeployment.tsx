@@ -291,9 +291,7 @@ const AddKubernetesCloudDeployment: FC = () => {
                   fontSize: "16px !important",
                 }}
                 onClick={() =>
-                  navigate(
-                    "/kubernetes-cloud/" + kubernetesCloudId + "/deployment"
-                  )
+                  navigate("/kubernetes-cloud/"+ projectId + "/" + kubernetesCloudId + "/deployment")
                 }
               >
                 انصراف
