@@ -31,6 +31,7 @@ import { ConvertToJalali } from "src/utils/convertToJalali";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { serviceStatusIdentifier } from "src/constant/serviceStatusIdentifier";
+import { Edit } from "src/components/atoms/svg-icons/EditSvg";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -57,14 +58,7 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
   useDeleteApiMyKubernetesCloudByProjectIdHostAndKuberHostIdDeployDeleteIdMutation();
 
   const handleSettingButtonOnClick = () =>
-    navigate(
-      "/kubernetes-cloud/" +
-        projectId +
-        kubernetesCloudId +
-        "/deployment/" +
-        row.id +
-        "/overview"
-    );
+    navigate("/kubernetes-cloud/" + projectId + "/" + kubernetesCloudId + "/deployment/" + row.id + "/setting");
 
   const handleDeleteDeploymentRecord = () =>
     deleteDeployment({ id: Number(selectedDeployment?.id),kuberHostId : Number(kubernetesCloudId), projectId: Number(projectId),  })
@@ -116,18 +110,16 @@ export const KubernetesCloudDeploymentTableRow: FC<{ row: any }> = ({
                   spacing={0.6}
                   maxWidth="fit-content"
                 >
-                  {/* <IconButton
+                  <IconButton
                     sx={{ borderRadius: 1 }}
                     onClick={handleSettingButtonOnClick}
                   >
-                    <Setting
-                      sx={{
-                        "&> path": {
-                          stroke: ({ palette }) => palette.grey[700],
-                        },
-                      }}
-                    />
-                  </IconButton> */}
+                   <Setting sx={{
+                    "&> path": {
+                      stroke: ({ palette }) => palette.grey[700],
+                    },
+                  }} />
+                  </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     color="error"
