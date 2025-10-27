@@ -256,7 +256,7 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         bgColor: "error.light",
         label: "خطا در زیرساخت",
       };
-   
+
     case 10:
       return {
         iconColor: "warning",
@@ -278,7 +278,7 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         bgColor: "error.light",
         label: "درحال حذف",
       };
-    
+
     default:
       return {
         iconColor: "error",
@@ -374,27 +374,48 @@ export const vmStatusIdentifier = (StatusId: number) => {
         bgColor: "error.light",
         label: "درحال حذف",
       };
-      case 13:
-        return {
-          iconColor: "error",
-          typographyColor: "error.main",
-          bgColor: "error.light",
-          label: "درحال تغییر سایز",
-        };
-      case 14:
-        return {
-          iconColor: "error",
-          typographyColor: "error.main",
-          bgColor: "error.light",
-          label: "درحال شروع بازسازی",
-        };
-        case 15:
-        return {
-          iconColor: "error",
-          typographyColor: "error.main",
-          bgColor: "error.light",
-          label: "در حال بازگردانی",
-        };
+    case 13:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "درحال تغییر سایز",
+      };
+    case 14:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "درحال شروع بازسازی",
+      };
+    case 15:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی اسنپ شات",
+      };
+    case 16:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی بک آپ",
+      };
+    case 17:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی شده",
+      };
+    case 18:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی شده",
+      };
     default:
       return {
         iconColor: "error",
