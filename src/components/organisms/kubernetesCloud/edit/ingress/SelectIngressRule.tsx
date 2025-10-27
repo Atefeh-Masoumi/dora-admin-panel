@@ -177,7 +177,6 @@ export const SelectIngressRule: FC<SelectIngressRulePropsType> = ({
               {RestOfComponent && RestOfComponent()}
               <DorsaTextField
                 dir="ltr"
-                size="small"
                 sx={{ width: width }}
                 placeholder={placeHolder}
                 value={value}

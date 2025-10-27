@@ -154,7 +154,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                   inputProps={{
                     dir: "ltr",
                   }}
-                  dir="ltr"
+                
                 />
               </Grid2>
             </Grid2>
@@ -189,7 +189,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                       <DorsaTextField
                         fullWidth
                         label="key"
-                        size="small"
                       placeholder="key"
                         value={formik.values.envs[index]?.key || ""}
                         onChange={(e) =>
@@ -197,7 +196,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                         }
                         inputProps={{
                           dir: "ltr",
-                          style: { textAlign: "left" },
                         }}
                       />
                     </Grid>
@@ -205,7 +203,6 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
                       <DorsaTextField
                         fullWidth
                         label="value"
-                        size="small"
                       placeholder="value"
                         value={formik.values.envs[index]?.value || ""}
                         onChange={(e) =>
