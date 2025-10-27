@@ -160,7 +160,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  {statusId === VOLUME_BACKUP_STATUS_INFO.INACTIVE && (
+                  {statusId === VOLUME_BACKUP_STATUS_INFO.ACTIVE && (
                     <IconButton onClick={handleOpenRestore}>
                       <RefreshSvg />
                     </IconButton>
