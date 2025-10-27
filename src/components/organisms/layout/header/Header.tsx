@@ -267,6 +267,9 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.NETWORK_LIST:
         href = `/network/${projectId}`;
         break;
+      case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
+        href = `/kubernetes-cloud/${projectId}/${kubernetesCloudId}/deployment`;
+      break;
       default:
         if (typeof url === "number") {
           navigate(url);
