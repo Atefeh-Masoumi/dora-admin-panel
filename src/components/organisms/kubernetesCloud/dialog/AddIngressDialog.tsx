@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   CreateKuberIngressRuleItemModel,
+  useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
   usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressCreateMutation,
 } from "src/app/services/api.generated";
@@ -78,7 +79,10 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       },
       { skip: !kubernetesCloudId }
     );
-
+    const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdIngressListQuery(
+      { kuberHostId: Number(kubernetesCloudId) || 0 , projectId: Number(projectId)},
+      { skip: !kubernetesCloudId }
+    );
   const closeDialogHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (!onClose) return;
     onClose(event, "backdropClick");
@@ -117,8 +121,9 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
       })
         .unwrap()
         .then(() => {
-          toast.success("Configmap با موفقیت ساخته شد");
+          toast.success("ingress با موفقیت ساخته شد");
           closeHandler(new Event("submit"), "escapeKeyDown");
+          refetch();
         })
         .catch(() => {});
       setSubmitting(false);
@@ -197,7 +202,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
               <Grid item xs={12} sm={12}>
                 <DorsaTextField
-                  dir="ltr"
                   fullWidth
                   label="Name"
                   error={Boolean(formik.errors.name && formik.touched.name)}
@@ -208,7 +212,6 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
               </Grid>
               <Grid item xs={12} sm={12}>
                 <DorsaTextField
-                  dir="ltr"
                   fullWidth
                   label="Domain Name"
                   error={Boolean(

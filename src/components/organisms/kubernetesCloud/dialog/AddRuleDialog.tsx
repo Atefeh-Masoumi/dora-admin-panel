@@ -58,7 +58,7 @@ export const AddRuleDialog: FC<AddRuleDialogPropsType> = ({
     return deploymentPortList?.flatMap((deployment) =>
       deployment.ports?.map((port) => ({
         portId: port.portId,
-        nodePort: port.nodePort,
+        nodePort: port.targetPort,
         name: deployment.name,
       }))
     );

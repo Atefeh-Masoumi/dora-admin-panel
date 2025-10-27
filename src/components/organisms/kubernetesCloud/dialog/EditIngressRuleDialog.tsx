@@ -54,7 +54,7 @@ export const EditIngressRuleDialog: FC<EditIngressRuleDialogPropsType> = ({
     return deploymentPortList?.flatMap((deployment) =>
       deployment.ports?.map((port) => ({
         portId: port.portId,
-        nodePort: port.nodePort,
+        nodePort: port.targetPort,
         name: deployment.name,
       }))
     );
