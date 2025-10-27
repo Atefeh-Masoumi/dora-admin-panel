@@ -51,7 +51,7 @@ const Header: FC<HeaderPropsType> = ({
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { id: kubernetesClusterID } = useParams();
-  const { projectId } = useParams();
+  const { projectId, kubernetesCloudId } = useParams();
   const vpcId = searchParams.get("vpcId");
 
   const theme = useTheme();
@@ -268,7 +268,15 @@ const Header: FC<HeaderPropsType> = ({
         href = `/network/${projectId}`;
         break;
       default:
-        href = typeof url === "string" ? url : "";
+        if (typeof url === "number") {
+          navigate(url);
+          return;
+        }
+        // Replace route placeholders with actual params
+        href = (url as string)
+          .replace(":projectId", projectId ?? "")
+          .replace(":kubernetesCloudId", kubernetesCloudId ?? "")
+          .replace(":id", kubernetesClusterID ?? "");
         break;
     }
     if (href) {
