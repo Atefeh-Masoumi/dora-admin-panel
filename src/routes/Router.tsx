@@ -484,7 +484,6 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId/:blockstorageId/change-config"
             element={mainTemplate(EditVolume, {
-              pageTitle: "تغییر مشخصات سخت افزاری",
               link: {
                 text: "بازگشت به مدیریت دیسک ابری",
                 url: "/block-storage/:projectId",
