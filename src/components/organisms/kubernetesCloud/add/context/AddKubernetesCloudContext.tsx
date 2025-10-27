@@ -12,6 +12,7 @@ import {
   DatacenterListResponse,
   KubernetesPriceResponse,
   ProductBundleVmListResponse,
+  useGetApiMyKubernetesCloudByProjectIdHostListQuery,
   usePostApiMyKubernetesCloudByProjectIdHostCreateMutation,
 } from "src/app/services/api.generated";
 
@@ -96,6 +97,8 @@ const AddKubernetesCloudContextProvider: FC<
   const [createKubernetes, { isLoading: submitLoading }] =
   usePostApiMyKubernetesCloudByProjectIdHostCreateMutation();
 
+  const { refetch } = useGetApiMyKubernetesCloudByProjectIdHostListQuery({ projectId: Number(projectId) });
+  
   const submitHandler = () => {
     let validationErrorMessage = "";
 
@@ -129,6 +132,7 @@ const AddKubernetesCloudContextProvider: FC<
       .then(() => {
         toast.success("سرویس namespace شما با موفقیت ایجاد شد");
         navigate(`/kubernetes-cloud/${projectId}`);
+        refetch();
       })
       .catch(() => {});
   };
