@@ -883,7 +883,7 @@ const Router: FC = () => {
             hideSidebar: false,
           })}
         />
-        <Route
+        {/* <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             link: {
@@ -892,21 +892,30 @@ const Router: FC = () => {
             },
             hideSidebar: false,
           })}
-        />
+        /> */}
 
-        <Route
-          path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
-          element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "مشخصات Deployment",
-          })}
-        />
+       
         <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/setting"
           element={mainTemplate(EditKubernetesCloudDeployment, {
-            pageTitle: "تغییر مشخصات سخت افزاری",
+            link: {
+              text: "بازگشت به مدیریت Deployment ها",
+              url: BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT,
+            },
+            hideSidebar: false,
           })}
         />
-        <Route
+         <Route
+          path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
+          element={mainTemplate(EditKubernetesCloudDeployment, {
+            link: {
+              text: "بازگشت به مدیریت Deployment ها",
+              url: "/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment",
+            },
+            hideSidebar: false,
+          })}
+        />
+        {/* <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/gateway"
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "Gateway",
@@ -917,7 +926,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "monitoring",
           })}
-        />
+        /> */}
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>
