@@ -134,12 +134,12 @@ export const AddIngressDialog: FC<AddIngressDialogPropsType> = ({
   const addRules = () => {
     setRules((prevState) => {
       let result = [...prevState];
-      result.push({ kuberCloudDeployPortId: null, path: "" });
+      result.push({ kuberCloudDeployPortId: null, path: "/" });
       return result;
     });
     formik.setFieldValue("rules", [
       ...formik.values.rules,
-      { kuberCloudDeployPortId: 0, path: "" },
+      { kuberCloudDeployPortId: 0, path: "/" },
     ]);
   };
 
