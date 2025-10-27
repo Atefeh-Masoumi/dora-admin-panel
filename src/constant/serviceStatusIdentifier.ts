@@ -278,7 +278,34 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         bgColor: "error.light",
         label: "درحال حذف",
       };
-
+    case 13:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی اسنپ شات",
+      };
+    case 14:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بازگردانی بک آپ",
+      };
+    case 15:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: " اسنپ شات بازگردانی شده",
+      };
+    case 16:
+      return {
+        iconColor: "error",
+        typographyColor: "error.main",
+        bgColor: "error.light",
+        label: "بک آپ بازگردانی شده",
+      };
     default:
       return {
         iconColor: "error",
@@ -407,14 +434,14 @@ export const vmStatusIdentifier = (StatusId: number) => {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بازگردانی شده",
+        label: " اسنپ شات بازگردانی شده",
       };
     case 18:
       return {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بازگردانی شده",
+        label: "بک آپ بازگردانی شده",
       };
     default:
       return {
