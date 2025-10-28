@@ -35,7 +35,7 @@ enum DIALOG_TYPE_ENUM {
 }
 
 const configMapListTableStruct = [
-  { id: "id", label: "شناسه" },
+  // { id: "id", label: "شناسه" },
   { id: "key", label: "کلید" },
   { id: "value", label: "مقدار" },
 ];
