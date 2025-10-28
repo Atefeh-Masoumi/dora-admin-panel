@@ -10,7 +10,7 @@ export const kubernetesCloudTableStruct: columnType[] = [
 ];
 
 export const kubernetesCloudDeploymentTableStruct: columnType[] = [
-  { id: "id", label: "", invisibility: true, disableSort: true },
+  // { id: "id", label: "", invisibility: true, disableSort: true },
   { id: "name", label: "نام" },
   { id: "image", label: "image" },
   { id: "namespace", label: "namespace" },
@@ -25,14 +25,14 @@ export const kubernetesCloudDeploymentInnerListTableStruct: columnType[] = [
 ];
 
 export const kubernetesCloudConfigMapTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "name", label: "نام" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const kubernetesCloudFireWallTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "sourceIp", label: "آی پی مبدا" },
   { id: "targetPort", label: "پورت مقصد" },
   { id: "protocol", label: "پروتکل" },
@@ -42,28 +42,28 @@ export const kubernetesCloudFireWallTableStruct: columnType[] = [
 ];
 
 export const kubernetesCloudSecretMapTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "name", label: "نام" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const kubernetesSecretListTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "key", label: "key" },
   { id: "value", label: "value" },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const kubernetesConfigListTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "key", label: "key" },
   { id: "value", label: "value" },
   { id: "control", label: "", disableSort: true },
 ];
 
 export const kubernetesCloudIngressTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "name", label: "نام" },
   { id: "ruleCount", label: "ruleCount" },
   { id: "createDate", label: "تاریخ ایجاد" },
@@ -72,7 +72,7 @@ export const kubernetesCloudIngressTableStruct: columnType[] = [
 ];
 
 export const kubernetesCloudIngressRuleTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "port", label: "پورت" },
   { id: "path", label: "Path" },
   { id: "serviceName", label: "نام سرویس" },
