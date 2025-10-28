@@ -19,6 +19,7 @@ const AddKubernetesCloud: FC = () => {
     isPredefined,
     setIsPredefined,
     customConfig,
+    submitLoading,
   } = useContext(AddKubernetesCloudContext);
 
   const { data: productItems } =
@@ -128,7 +129,7 @@ const AddKubernetesCloud: FC = () => {
                   : ReceiptTypeEnum.CUSTOM
               }
               submitHandler={() => submitHandler()}
-              submitButtonIsLoading={false}
+              submitButtonIsLoading={submitLoading}
               receiptItemName={serverConfig?.id ? serverConfig.name : "سرور"}
               receiptItemNumber={serverConfig?.id ? "۱" : "---"}
               reciptItemPrice={Math.floor(
