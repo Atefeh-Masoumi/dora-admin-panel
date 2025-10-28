@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { CommonSelectPropsType } from "src/types/kubernetesCloud.types";
-
+import { TextField } from "@mui/material";
 type SelectEnvKeyPropsType = CommonSelectPropsType;
 
 export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
@@ -9,7 +9,7 @@ export const SelectEnvKey: FC<SelectEnvKeyPropsType> = ({
   onChange,
 }) => {
   return (
-    <DorsaTextField
+    <TextField  
       sx={{
         background: ({ palette }) => palette.primary.contrastText,
       }}

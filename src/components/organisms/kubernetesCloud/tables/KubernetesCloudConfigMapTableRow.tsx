@@ -35,7 +35,7 @@ enum DIALOG_TYPE_ENUM {
 }
 
 const configMapListTableStruct = [
-  { id: "id", label: "شناسه" },
+  // { id: "id", label: "شناسه" },
   { id: "key", label: "کلید" },
   { id: "value", label: "مقدار" },
 ];
@@ -177,9 +177,9 @@ export const KubernetesCloudConfigMapTableRow: FC<{
                     ? configList?.map((item: any, index: any) => {
                         return (
                           <TableRow key={index}>
-                            <TableCell align="center" sx={{ border: "none" }}>
+                            {/* <TableCell align="center" sx={{ border: "none" }}>
                               {item.id}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="center" sx={{ border: "none" }}>
                               {item.key}
                             </TableCell>

@@ -24,6 +24,7 @@ import {
   usePostApiMyKubernetesCloudByProjectIdHostAndKuberHostIdFirewallCreateMutation,
 } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
+import { toast } from "react-toastify";
 
 const options = [
   { id: 1, label: "TCP", isTcp: true },
@@ -92,6 +93,7 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
         formik.resetForm();
         forceClose();
         refetch();
+        toast.success("رول جدید با موفقیت ایجاد شد");
       })
       .catch((err) => {});
   };
@@ -122,8 +124,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
             rowGap: 4,
           }}
         >
-          <FormControl fullWidth>
-            <InputLabel id="protocolSelection">انتخاب پروتکل</InputLabel>
+          {/* <FormControl fullWidth> */}
+            {/* <InputLabel id="protocolSelection">انتخاب پروتکل</InputLabel>
             <Select
               labelId="protocolSelection"
               label="انتخاب پروتکل"
@@ -140,8 +142,8 @@ export const CreateFirewallDialog: FC<CreateFirewallFormPropsType> = ({
                   {item.label}
                 </MenuItem>
               ))}
-            </Select>
-          </FormControl>
+            </Select> */}
+          {/* </FormControl> */}
           <FormControl fullWidth>
             <InputLabel id="e">Deploy Port</InputLabel>
             <Select
