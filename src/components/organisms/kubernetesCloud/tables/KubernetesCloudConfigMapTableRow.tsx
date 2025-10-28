@@ -177,9 +177,9 @@ export const KubernetesCloudConfigMapTableRow: FC<{
                     ? configList?.map((item: any, index: any) => {
                         return (
                           <TableRow key={index}>
-                            <TableCell align="center" sx={{ border: "none" }}>
+                            {/* <TableCell align="center" sx={{ border: "none" }}>
                               {item.id}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="center" sx={{ border: "none" }}>
                               {item.key}
                             </TableCell>
