@@ -132,7 +132,7 @@ export const CreateConfigMapDialog: FC<CreateConfigmapDialogPropsType> = ({
   };
 
   return (
-    <Dialog open={openDialog} onClose={onClose} maxWidth={"xs"}>
+    <Dialog open={openDialog} onClose={onClose}  fullWidth maxWidth="md">
       <DialogTitle
         fontWeight="bold"
         variant="text1"
