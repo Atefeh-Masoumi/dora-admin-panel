@@ -35,6 +35,7 @@ export const kubernetesCloudFireWallTableStruct: columnType[] = [
   { id: "id", label: "" },
   { id: "sourceIp", label: "آی پی مبدا" },
   { id: "targetPort", label: "پورت مقصد" },
+  { id: "nodePort", label: "پورت ارایه سرویس" },
   { id: "protocol", label: "پروتکل" },
   { id: "deployment", label: " Deployment" },
   { id: "createDate", label: "تاریخ ایجاد" },
