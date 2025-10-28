@@ -240,9 +240,9 @@ export const KubernetesCloudIngressTableRow: FC<{
                       ? ingressRuleList?.map((rule, index) => {
                           return (
                             <TableRow key={index}>
-                              <TableCell align="center" sx={{ border: "none" }}>
+                              {/* <TableCell align="center" sx={{ border: "none" }}>
                                 {rule.id}
-                              </TableCell>
+                              </TableCell> */}
                               <TableCell align="center" sx={{ border: "none" }}>
                                 {rule.port}
                               </TableCell>
