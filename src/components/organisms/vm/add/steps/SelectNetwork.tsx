@@ -36,9 +36,17 @@ export const SelectNetwork: FC = () => {
   return (
     <Paper sx={{ p: 2,boxShadow: "none" }}>
       <Stack direction="column" rowGap={2}>
-        <Typography variant="text2">تنظیمات شبکه</Typography>
-        <Divider flexItem sx={{ borderWidth: 1.5 }} />
+      <Typography fontSize={24} fontWeight="bold" align="center">
 
+        تنظیمات شبکه</Typography>
+        {/* <Divider flexItem sx={{ borderWidth: 1.5 }} /> */}
+        <Typography
+          align="center"
+          fontSize={16}
+          sx={{ color: ({ palette }) => palette.grey[700] }}
+        >
+          از این قسمت می توانید تنظیمات شبکه خود را تنظیم کنید
+        </Typography>
         <Stack gap={2} direction={{ md: "column", xl: "column" }}>
           <Box p={1.5} sx={{ width: "100%", border: ({ palette }) => `1px solid ${palette.grey}` }}>
             <FormControlLabel
