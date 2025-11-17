@@ -23,7 +23,7 @@ import {
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueCreateMutation,
-  usePostApiMyPortalIssueSubjectShortListMutation,
+  useGetApiMyPortalIssueSubjectShortListQuery,
   CreateIssueModel,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
@@ -62,43 +62,32 @@ const AddTicket: FC = () => {
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostApiMyPortalIssueSubjectShortListMutation();
-
-  useEffect(() => {
-    selectList({
-      issueSubjectShortListModel: {
-        productId: productId,
-        businessUnitId: businessUnitId,
+  const { data: issueSubjectData } =
+    useGetApiMyPortalIssueSubjectShortListQuery(
+      {
+        issueSubjectShortListModel: {
+          productId: productId,
+          businessUnitId: businessUnitId,
+        },
       },
-    })
-      .unwrap()
-      .then((res: SetStateAction<IssueSubjectShortListResponse[]>) =>
-        res !== undefined &&
-        setList(res)
-      );
-
-    if (productId) {
-      callGetApiCloudCustomerProductList({
-        productId: Number(productId),
-      })
-        .unwrap()
-        .then((res: any) => {
-          setApiCloudCustomerProductList(res || []);
-        })
-        .catch(() => { });
-    }
-  }, [
-    businessUnitId,
-    productId,
-    callGetApiCloudCustomerProductList,
-    selectList,
-  ]);
+      {
+        skip: !productId || !businessUnitId,
+      }
+    );
 
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
 
-  const [upload] = useCustomCreateIssueMutation();
+  const [upload, { isLoading: submitLoading }] = useCustomCreateIssueMutation();
+
+  useEffect(() => {
+    if (issueSubjectData) {
+      setList(issueSubjectData);
+    } else {
+      setList([]);
+    }
+  }, [issueSubjectData]);
 
   const handleFileChange = (e: any) => {
     const selected = Array.from(e.target.files || []) as File[];
@@ -474,6 +463,7 @@ const AddTicket: FC = () => {
               fullWidth
               variant="contained"
               size="large"
+              loading={submitLoading}
               sx={{ px: 5, py: 1.5 }}
             >
               ارسال تیکت
