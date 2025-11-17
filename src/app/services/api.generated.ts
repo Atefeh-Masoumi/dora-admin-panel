@@ -1116,11 +1116,11 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/financial/bill/get/${queryArg.id}`,
       }),
     }),
-    postApiMyHomeIndex: build.mutation<
-      PostApiMyHomeIndexApiResponse,
-      PostApiMyHomeIndexApiArg
+    getApiMyHomeIndex: build.query<
+      GetApiMyHomeIndexApiResponse,
+      GetApiMyHomeIndexApiArg
     >({
-      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
+      query: () => ({ url: `/api/my/home/index` }),
     }),
     getApiMyInfraDatacenterList: build.query<
       GetApiMyInfraDatacenterListApiResponse,
@@ -1719,13 +1719,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/notification/list` }),
     }),
-    postApiMyPortalIssueSubjectShortList: build.mutation<
-      PostApiMyPortalIssueSubjectShortListApiResponse,
-      PostApiMyPortalIssueSubjectShortListApiArg
+    getApiMyPortalIssueSubjectShortList: build.query<
+      GetApiMyPortalIssueSubjectShortListApiResponse,
+      GetApiMyPortalIssueSubjectShortListApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-subject/short-list`,
-        method: "POST",
         body: queryArg.issueSubjectShortListModel,
       }),
     }),
@@ -2218,8 +2217,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
         method: "PUT",
         params: {
-          ScheduleTypeId: queryArg.scheduleTypeId,
-          CaculateTypeId: queryArg.caculateTypeId,
+          CalculateTypeId: queryArg.calculateTypeId,
         },
       }),
     }),
@@ -2231,8 +2229,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
         method: "PUT",
         params: {
-          ScheduleTypeId: queryArg.scheduleTypeId,
-          CaculateTypeId: queryArg.caculateTypeId,
+          CalculateTypeId: queryArg.calculateTypeId,
         },
       }),
     }),
@@ -2726,8 +2723,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/enable-snapshot/${queryArg.id}`,
         method: "PUT",
         params: {
-          ScheduleTypeId: queryArg.scheduleTypeId,
-          CaculateTypeId: queryArg.caculateTypeId,
+          CalculateTypeId: queryArg.calculateTypeId,
         },
       }),
     }),
@@ -2739,8 +2735,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/enable-backup/${queryArg.id}`,
         method: "PUT",
         params: {
-          ScheduleTypeId: queryArg.scheduleTypeId,
-          CaculateTypeId: queryArg.caculateTypeId,
+          CalculateTypeId: queryArg.calculateTypeId,
         },
       }),
     }),
@@ -3513,8 +3508,8 @@ export type GetApiMyFinancialBillGetByIdApiResponse =
 export type GetApiMyFinancialBillGetByIdApiArg = {
   id: number;
 };
-export type PostApiMyHomeIndexApiResponse = unknown;
-export type PostApiMyHomeIndexApiArg = void;
+export type GetApiMyHomeIndexApiResponse = unknown;
+export type GetApiMyHomeIndexApiArg = void;
 export type GetApiMyInfraDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyInfraDatacenterListApiArg = void;
@@ -3935,9 +3930,9 @@ export type PutApiMyPortalNotificationSeenByIdApiArg = {
 export type GetApiMyPortalNotificationListApiResponse =
   /** status 200 OK */ NotificationListResponse[];
 export type GetApiMyPortalNotificationListApiArg = void;
-export type PostApiMyPortalIssueSubjectShortListApiResponse =
+export type GetApiMyPortalIssueSubjectShortListApiResponse =
   /** status 200 OK */ IssueSubjectShortListResponse[];
-export type PostApiMyPortalIssueSubjectShortListApiArg = {
+export type GetApiMyPortalIssueSubjectShortListApiArg = {
   issueSubjectShortListModel: IssueSubjectShortListModel;
 };
 export type GetApiMyPortalIssueSubjectListApiResponse =
@@ -4259,15 +4254,13 @@ export type GetApiMyVmByProjectIdVolumeGetAndIdApiArg = {
 };
 export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
-  scheduleTypeId: number;
-  caculateTypeId: number;
+  calculateTypeId: number;
   projectId: number;
   id: number;
 };
 export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
-  scheduleTypeId: number;
-  caculateTypeId: number;
+  calculateTypeId: number;
   projectId: number;
   id: number;
 };
@@ -4585,15 +4578,13 @@ export type GetApiMyVmByProjectIdHostGetAndIdApiArg = {
 };
 export type PutApiMyVmByProjectIdHostEnableSnapshotAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEnableSnapshotAndIdApiArg = {
-  scheduleTypeId: number;
-  caculateTypeId: number;
+  calculateTypeId: number;
   projectId: number;
   id: number;
 };
 export type PutApiMyVmByProjectIdHostEnableBackupAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEnableBackupAndIdApiArg = {
-  scheduleTypeId: number;
-  caculateTypeId: number;
+  calculateTypeId: number;
   projectId: number;
   id: number;
 };
@@ -5670,6 +5661,8 @@ export type KuberFirewallListResponse = {
   sourceIp: string | null;
   protocol: string | null;
   targetPort: number;
+  nodePort: number;
+  deployment: string | null;
   createDate?: string;
 };
 export type CreateKuberFirewallModel = {
@@ -6299,6 +6292,14 @@ export type VolumeListResponse = {
   isActiveDisk: string | null;
   status: string | null;
   statusId: number;
+  scheduleType: string | null;
+  scheduleTypeId?: number;
+  calculateTypeId?: number;
+  calculateType: string | null;
+  isAutoBackup: string | null;
+  isAutoSnapshot: string | null;
+  vmHostId: number;
+  vmHostName: string | null;
   createDate: string;
 };
 export type GetVolumeHostResponse = {
@@ -6309,6 +6310,8 @@ export type GetVolumeHostResponse = {
   status: string | null;
   statusId: number;
   volumeSize: number;
+  isAutoBackup: string | null;
+  isAutoSnapshot: string | null;
   createDate: string;
 };
 export type EditVolumeHostModel = {
@@ -6365,9 +6368,12 @@ export type CreateVmLbModel = {
   vmLbAlgorithmId: number;
   vmLbListeners: VmLbListenerModel[] | null;
 };
+export type VmKeyStatusEnum = 1 | 2 | 3 | 4 | 5;
 export type VmKeyListResponse = {
   id: number;
   name: string | null;
+  statusId?: VmKeyStatusEnum;
+  status: string | null;
   fingerPrint: string | null;
   createDate: string;
 };
@@ -6409,6 +6415,10 @@ export type VmHostVolumeListResponse = {
   volumeSize: number;
   rootDisk: string | null;
   activeDisk: string | null;
+  scheduleType: string | null;
+  scheduleTypeId?: number;
+  calculateTypeId?: number;
+  calculateType: string | null;
   createDate: string;
 };
 export type GetVmHostVolumeResponse = {
@@ -6459,6 +6469,10 @@ export type VmBackupListResponse = {
   vmVolumeHost: string | null;
   statusId: number;
   status: string | null;
+  scheduleType: string | null;
+  scheduleTypeId?: number;
+  calculateTypeId?: number;
+  calculateType: string | null;
   createDate: string;
 };
 export type GetVmBackupResponse = {
@@ -6770,7 +6784,7 @@ export const {
   useGetApiMyFinancialBillListDownloadByIdQuery,
   useGetApiMyFinancialBillListQuery,
   useGetApiMyFinancialBillGetByIdQuery,
-  usePostApiMyHomeIndexMutation,
+  useGetApiMyHomeIndexQuery,
   useGetApiMyInfraDatacenterListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretGetIdQuery,
@@ -6840,7 +6854,7 @@ export const {
   useGetApiMyPortalNotificationShortListQuery,
   usePutApiMyPortalNotificationSeenByIdMutation,
   useGetApiMyPortalNotificationListQuery,
-  usePostApiMyPortalIssueSubjectShortListMutation,
+  useGetApiMyPortalIssueSubjectShortListQuery,
   useGetApiMyPortalIssueSubjectListQuery,
   useGetApiMyPortalIssueItemListByIssueIdQuery,
   useGetApiMyPortalIssueItemDownloadByIdQuery,
