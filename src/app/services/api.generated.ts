@@ -2216,9 +2216,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
         method: "PUT",
-        params: {
-          CalculateTypeId: queryArg.calculateTypeId,
-        },
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
     putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
@@ -2228,9 +2226,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
         method: "PUT",
-        params: {
-          CalculateTypeId: queryArg.calculateTypeId,
-        },
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
     putApiMyVmByProjectIdVolumeEditAndId: build.mutation<
@@ -2722,9 +2718,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/enable-snapshot/${queryArg.id}`,
         method: "PUT",
-        params: {
-          CalculateTypeId: queryArg.calculateTypeId,
-        },
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
     putApiMyVmByProjectIdHostEnableBackupAndId: build.mutation<
@@ -2734,9 +2728,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/enable-backup/${queryArg.id}`,
         method: "PUT",
-        params: {
-          CalculateTypeId: queryArg.calculateTypeId,
-        },
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
     putApiMyVmByProjectIdHostEditAndId: build.mutation<
@@ -4254,15 +4246,15 @@ export type GetApiMyVmByProjectIdVolumeGetAndIdApiArg = {
 };
 export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
-  calculateTypeId: number;
   projectId: number;
   id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
 export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
-  calculateTypeId: number;
   projectId: number;
   id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiArg = {
@@ -4578,15 +4570,15 @@ export type GetApiMyVmByProjectIdHostGetAndIdApiArg = {
 };
 export type PutApiMyVmByProjectIdHostEnableSnapshotAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEnableSnapshotAndIdApiArg = {
-  calculateTypeId: number;
   projectId: number;
   id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
 export type PutApiMyVmByProjectIdHostEnableBackupAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEnableBackupAndIdApiArg = {
-  calculateTypeId: number;
   projectId: number;
   id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
 export type PutApiMyVmByProjectIdHostEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEditAndIdApiArg = {
@@ -6313,6 +6305,9 @@ export type GetVolumeHostResponse = {
   isAutoBackup: string | null;
   isAutoSnapshot: string | null;
   createDate: string;
+};
+export type EnableBackupSnapshotModel = {
+  calculateTypeId?: number;
 };
 export type EditVolumeHostModel = {
   volumeSize?: number;
