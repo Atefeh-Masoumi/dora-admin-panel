@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Stack, Tabs } from "@mui/material";
+import { Box,  Stack, Tabs } from "@mui/material";
 import {
   FC,
   ReactNode,
@@ -10,7 +10,6 @@ import {
   useCallback,
 } from "react";
 import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
-import {  useGetApiMyVmByProjectIdVolumeGetAndIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -19,6 +18,7 @@ import { ChangeConfig } from "src/components/organisms/volume/edit/changeConfig/
 import { VolumeSnapshot } from "src/components/organisms/volume/edit/snapshot/VolumeSnapShot";
 import { VolumeBackup } from "src/components/organisms/volume/edit/backup/VolumeBackup";
 import { AttachVm } from "src/components/organisms/volume/edit/attachVm/AttachVm";
+import VolumeAutoBackup from "src/components/organisms/volume/edit/autoBackup/VolumeAutoBackup";
 // Types
 interface TabPanelProps {
   children?: ReactNode;
@@ -57,12 +57,17 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/block-storage/:projectId/:blockstorageId/backup",
     component: VolumeBackup,
   },
- 
+  {
+    label: "بکاپ خودکار",
+    route: "/block-storage/:projectId/:blockstorageId/autobackup",
+    component: VolumeAutoBackup,
+  },
   {
     label: "اتصال به سرور ابری ",
     route: "/block-storage/:projectId/:blockstorageId/attach-vm",
     component: AttachVm,
   },
+
 ];
 
 // Utility functions

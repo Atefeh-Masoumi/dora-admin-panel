@@ -512,6 +512,16 @@ const Router: FC = () => {
             })}
           />
           <Route
+            path="/block-storage/:projectId/:blockstorageId/autobackup"
+            element={mainTemplate(EditVolume, {
+              link: {
+                text: "بازگشت به مدیریت دیسک ابری",
+                url: "/block-storage/:projectId",
+              },
+              hideSidebar: false,
+            })}
+          />
+          <Route
             path="/block-storage/:projectId/:blockstorageId/snapshot"
             element={mainTemplate(EditVolume, {
               link: {
