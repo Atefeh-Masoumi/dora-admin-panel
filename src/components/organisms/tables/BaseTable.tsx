@@ -31,6 +31,7 @@ type BaseTablePropsType = {
   initialOrder?: number;
   initialSortDirection?: 1 | -1;
   rowsPerPage?: number;
+  rowExtraProps?: any;
 };
 
 export const BaseTable: FC<BaseTablePropsType> = ({
@@ -42,6 +43,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
   initialOrder = -1,
   initialSortDirection = -1,
   rowsPerPage = 10,
+  rowExtraProps,
 }) => { 
   const [page, setPage] = useState(1);
   const [orderBy, setOrderBy] = useState<number>(initialOrder);
@@ -141,6 +143,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
                             <RowComponent
                               key={page * rowsPerPage + index}
                               row={row}
+                              {...rowExtraProps}
                             />
                           ))
                       : rows
@@ -149,6 +152,7 @@ export const BaseTable: FC<BaseTablePropsType> = ({
                             <RowComponent
                               key={page * rowsPerPage + index}
                               row={row}
+                              {...rowExtraProps}
                             />
                           ))}
                   </TableBody>
