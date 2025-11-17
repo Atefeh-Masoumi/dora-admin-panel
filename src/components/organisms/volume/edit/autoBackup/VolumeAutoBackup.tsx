@@ -217,7 +217,8 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
     enableAutoBackup({
       id: Number(blockstorageId),
       projectId: Number(projectId),
-      calculateTypeId: calculateTypeId,
+      enableBackupSnapshotModel:
+      {calculateTypeId: calculateTypeId},
     })
       .unwrap()
       .then(() => {
