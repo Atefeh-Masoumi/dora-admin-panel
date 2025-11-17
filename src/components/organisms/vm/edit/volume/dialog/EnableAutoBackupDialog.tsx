@@ -64,7 +64,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
     enableAutoBackup({
       id: vmBackupId,
       projectId: Number(projectId),
-      calculateTypeId: calculateTypeId,
+      enableBackupSnapshotModel: { calculateTypeId: calculateTypeId },
     })
       .unwrap()
       .then(() => {
@@ -73,7 +73,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
         forceClose();
         refetch();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
