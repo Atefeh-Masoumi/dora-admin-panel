@@ -1,5 +1,5 @@
-import { IconButton, Stack } from "@mui/material";
-import { FC, Fragment, useState } from "react";
+import { IconButton, Stack, Tooltip } from "@mui/material";
+import { FC, Fragment, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -12,20 +12,46 @@ import {
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { useParams } from "react-router";
+import { Backup, BackupOutlined } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
+type VolumeTableRowProps = {
+  row: VmHostVolumeListResponse;
+  autoBackupEnabledIds: Set<number>;
+  onEnableAutoBackupClick: (volume: VmHostVolumeListResponse) => void;
+  onDisableAutoBackupClick: (volume: VmHostVolumeListResponse) => void;
+};
+
+export const VolumeTableRow: FC<VolumeTableRowProps> = ({
+  row,
+  autoBackupEnabledIds,
+  onEnableAutoBackupClick,
+  onDisableAutoBackupClick,
+}) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedVm, setSelectedVm] = useState<VmHostVolumeListResponse | null>(
     null
   );
   const { id, projectId } = useParams();
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation();
+
+  const isAutoBackupEnabled = useMemo(
+    () => autoBackupEnabledIds.has(row.id!),
+    [autoBackupEnabledIds, row.id]
+  );
+
+  const onEnableAutoBackupBtnClick = () => {
+    onEnableAutoBackupClick(row);
+  };
+
+  const onDisableAutoBackupBtnClick = () => {
+    onDisableAutoBackupClick(row);
+  };
 
   const handleOpenDelete = (vm: VmHostVolumeListResponse) => {
     setSelectedVm(vm);
@@ -39,23 +65,24 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
 
   const deleteVmRecordHandler = () =>
     deleteItem(
-      { id: Number(selectedVm?.id),
-      projectId: Number(projectId),
-      vmHostId: Number(id),
-     })
+      {
+        id: Number(selectedVm?.id),
+        projectId: Number(projectId),
+        vmHostId: Number(id),
+      })
       .unwrap()
       .then(() => {
         toast.success("دیسک با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
   return (
     <Fragment>
       {deleteVmRecordLoading && <PageLoading />}
-      <DorsaTableRow hover tabIndex={-1} key={row.value}>
+      <DorsaTableRow hover tabIndex={-1}>
         {volumeTableStruct.map((column) => {
-          const value = row[column.id];
+          const value = (row as any)[column.id as keyof VmHostVolumeListResponse];
           return (
             <DorsaTableCell
               key={column.id}
@@ -70,6 +97,25 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
                   </IconButton>
+                  {isAutoBackupEnabled ? (
+                    <Tooltip title="غیرفعال‌سازی بکاپ خودکار">
+                      <IconButton
+                        onClick={onDisableAutoBackupBtnClick}
+                        color="error"
+                      >
+                        <BackupOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="فعال‌سازی بکاپ خودکار">
+                      <IconButton
+                        onClick={onEnableAutoBackupBtnClick}
+                        color="success"
+                      >
+                        <Backup />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </Stack>
               ) : (
                 <></>
