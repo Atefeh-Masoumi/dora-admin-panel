@@ -1725,7 +1725,10 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-subject/short-list`,
-        body: queryArg.issueSubjectShortListModel,
+        params: {
+          ProductId: queryArg.productId,
+          BusinessUnitId: queryArg.businessUnitId,
+        },
       }),
     }),
     getApiMyPortalIssueSubjectList: build.query<
@@ -2286,6 +2289,24 @@ const injectedRtkApi = api.injectEndpoints({
           VmHostId: queryArg.vmHostId,
           VmNetworkId: queryArg.vmNetworkId,
         },
+      }),
+    }),
+    putApiMyVmByProjectIdNetworkNodeEnableAndId: build.mutation<
+      PutApiMyVmByProjectIdNetworkNodeEnableAndIdApiResponse,
+      PutApiMyVmByProjectIdNetworkNodeEnableAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/network/node/enable/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyVmByProjectIdNetworkNodeDisableAndId: build.mutation<
+      PutApiMyVmByProjectIdNetworkNodeDisableAndIdApiResponse,
+      PutApiMyVmByProjectIdNetworkNodeDisableAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/network/node/disable/${queryArg.id}`,
+        method: "PUT",
       }),
     }),
     putApiMyVmByProjectIdNetworkNodeDetachAndId: build.mutation<
@@ -3925,7 +3946,8 @@ export type GetApiMyPortalNotificationListApiArg = void;
 export type GetApiMyPortalIssueSubjectShortListApiResponse =
   /** status 200 OK */ IssueSubjectShortListResponse[];
 export type GetApiMyPortalIssueSubjectShortListApiArg = {
-  issueSubjectShortListModel: IssueSubjectShortListModel;
+  productId: number;
+  businessUnitId: number;
 };
 export type GetApiMyPortalIssueSubjectListApiResponse =
   /** status 200 OK */ IssueSubjectListResponse[];
@@ -4289,6 +4311,16 @@ export type GetApiMyVmByProjectIdNetworkNodeListApiArg = {
   vmHostId?: number;
   vmNetworkId?: number;
   projectId: number;
+};
+export type PutApiMyVmByProjectIdNetworkNodeEnableAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdNetworkNodeEnableAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PutApiMyVmByProjectIdNetworkNodeDisableAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdNetworkNodeDisableAndIdApiArg = {
+  projectId: number;
+  id: number;
 };
 export type PutApiMyVmByProjectIdNetworkNodeDetachAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdNetworkNodeDetachAndIdApiArg = {
@@ -5990,10 +6022,6 @@ export type IssueSubjectShortListResponse = {
   id?: number;
   name: string | null;
 };
-export type IssueSubjectShortListModel = {
-  productId?: number;
-  businessUnitId?: number;
-};
 export type IssueSubjectListResponse = {
   id: number;
   name: string | null;
@@ -6280,18 +6308,16 @@ export type VolumeListResponse = {
   datacenter: string | null;
   name: string | null;
   volumeSize: number;
-  isRootDisk: string | null;
-  isActiveDisk: string | null;
   status: string | null;
   statusId: number;
-  scheduleType: string | null;
-  scheduleTypeId?: number;
-  calculateTypeId?: number;
-  calculateType: string | null;
   isAutoBackup: string | null;
   isAutoSnapshot: string | null;
-  vmHostId: number;
-  vmHostName: string | null;
+  scheduleType: string | null;
+  scheduleTypeId: number;
+  calculateTypeId: number;
+  calculateType: string | null;
+  vmHostId?: number | null;
+  vmHostName?: string | null;
   createDate: string;
 };
 export type GetVolumeHostResponse = {
@@ -6411,8 +6437,8 @@ export type VmHostVolumeListResponse = {
   rootDisk: string | null;
   activeDisk: string | null;
   scheduleType: string | null;
-  scheduleTypeId?: number;
-  calculateTypeId?: number;
+  scheduleTypeId: number;
+  calculateTypeId: number;
   calculateType: string | null;
   createDate: string;
 };
@@ -6913,6 +6939,8 @@ export const {
   useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVolumeCreateMutation,
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
+  usePutApiMyVmByProjectIdNetworkNodeEnableAndIdMutation,
+  usePutApiMyVmByProjectIdNetworkNodeDisableAndIdMutation,
   usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation,
   usePostApiMyVmByProjectIdNetworkNodeAttachMutation,
   useGetApiMyVmByProjectIdNetworkShortListQuery,

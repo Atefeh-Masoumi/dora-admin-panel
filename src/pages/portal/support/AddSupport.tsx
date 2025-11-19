@@ -65,10 +65,9 @@ const AddTicket: FC = () => {
   const { data: issueSubjectData } =
     useGetApiMyPortalIssueSubjectShortListQuery(
       {
-        issueSubjectShortListModel: {
-          productId: productId,
-          businessUnitId: businessUnitId,
-        },
+        productId: productId ?? 0,
+        businessUnitId: businessUnitId ?? 0,
+       
       },
       {
         skip: !productId || !businessUnitId,
@@ -88,6 +87,23 @@ const AddTicket: FC = () => {
       setList([]);
     }
   }, [issueSubjectData]);
+
+  useEffect(() => {
+    if (productId) {
+      callGetApiCloudCustomerProductList({
+        productId: Number(productId),
+      })
+        .unwrap()
+        .then((res: any) => {
+          setApiCloudCustomerProductList(res || []);
+        })
+        .catch(() => {});
+    } else {
+      setApiCloudCustomerProductList([]);
+    }
+    // Reset selected product when productId changes
+    setSelectedApiCloudCustomerProduct(0);
+  }, [productId, callGetApiCloudCustomerProductList]);
 
   const handleFileChange = (e: any) => {
     const selected = Array.from(e.target.files || []) as File[];
@@ -271,38 +287,39 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="محصولات کاربر"
-                value={selectedApiCloudCustomerProduct || ""}
+                value={selectedApiCloudCustomerProduct === 0 ? "" : selectedApiCloudCustomerProduct}
                 onChange={(e) =>
                   setSelectedApiCloudCustomerProduct(+e.target.value)
                 }
               >
                 {(!apiCloudCustomerProductList ||
-                  apiCloudCustomerProductList?.length === 0) && (
+                  apiCloudCustomerProductList?.length === 0) ? (
                     <ListSubheader>
                       <Typography sx={{ py: 1.6 }}>
                         داده ای موجودی نیست
                       </Typography>
                     </ListSubheader>
+                  ) : (
+                    apiCloudCustomerProductList.map((option) => (
+                      <MenuItem
+                        key={option.id}
+                        value={option.id}
+                        sx={{
+                          borderRadius: 1,
+                          backgroundColor: "#F3F4F6",
+                          m: 0.5,
+                          py: 1.5,
+                          color: "secondary",
+                          "&: focus": {
+                            color: "rgba(60, 138, 255, 1)",
+                            backgroundColor: "rgba(60, 138, 255, 0.1)",
+                          },
+                        }}
+                      >
+                        {option.name}
+                      </MenuItem>
+                    ))
                   )}
-                {apiCloudCustomerProductList?.map((option) => (
-                  <MenuItem
-                    key={option.id}
-                    value={option.id}
-                    sx={{
-                      borderRadius: 1,
-                      backgroundColor: "#F3F4F6",
-                      m: 0.5,
-                      py: 1.5,
-                      color: "secondary",
-                      "&: focus": {
-                        color: "rgba(60, 138, 255, 1)",
-                        backgroundColor: "rgba(60, 138, 255, 0.1)",
-                      },
-                    }}
-                  >
-                    {option.name}
-                  </MenuItem>
-                ))}
               </DorsaTextField>
             )}
           </Box>
