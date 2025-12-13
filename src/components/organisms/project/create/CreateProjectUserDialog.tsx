@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
-  usePostApiMyByProjectIdUserCreateMutation,
+  usePostApiMyProjectByProjectIdUserCreateMutation,
 } from "src/app/services/api.generated";
 
 type CreateProjectUserDialogPropsType = {
@@ -51,7 +51,7 @@ export const CreateProjectUserDialog: FC<CreateProjectUserDialogPropsType> = ({
 }) => {
   const { projectId } = useParams();
   const [createUser, { isLoading: createLoading }] =
-    usePostApiMyByProjectIdUserCreateMutation();
+  usePostApiMyProjectByProjectIdUserCreateMutation();
 
   const formik = useFormik({
     initialValues,
