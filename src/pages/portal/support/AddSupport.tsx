@@ -24,6 +24,8 @@ import {
   usePostApiMyPortalIssueCreateMutation,
   usePostApiMyPortalIssueSubjectShortListMutation,
   CreateIssueModel,
+  ProductListResponse,
+  BusinessUnitListResponse,
 } from "src/app/services/api.generated";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -185,7 +187,7 @@ const AddTicket: FC = () => {
                 value={businessUnitId || ""}
                 onChange={(e) => setBusinessUnitId(+e.target.value)}
               >
-                {businessUnits.map((option) => (
+                {businessUnits.map((option: BusinessUnitListResponse) => (
                   <MenuItem
                     key={option.id}
                     value={option.id}
@@ -225,7 +227,7 @@ const AddTicket: FC = () => {
                 value={productId || ""}
                 onChange={(e) => setProductId(+e.target.value)}
               >
-                {products.map((product) => (
+                {products.map((product: ProductListResponse) => (
                   <MenuItem
                     key={product.id}
                     value={product.id}
