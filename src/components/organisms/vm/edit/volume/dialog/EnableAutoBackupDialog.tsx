@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import {
-  useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery,
-  usePutApiMyVmByProjectIdHostEnableBackupAndIdMutation,
+  useGetApiMyVmByProjectIdVolumeListQuery,
+  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -44,7 +44,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
   const { projectId, id: vmId } = useParams();
 
   const [enableAutoBackup, { isLoading: enableAutoBackupLoading }] =
-    usePutApiMyVmByProjectIdHostEnableBackupAndIdMutation();
+    usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation();
 
   const [calculateTypeId, setCalculateTypeId] = useState<number>(1);
 
@@ -55,7 +55,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
   }, [props.open]);
 
   const { refetch } =
-    useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery({
+    useGetApiMyVmByProjectIdVolumeListQuery({
       projectId: Number(projectId),
       vmHostId: Number(vmId),
     });

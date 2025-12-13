@@ -11,7 +11,7 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmByProjectIdHostAndVmHostIdSnapshotCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdSnapshotCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -30,7 +30,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
   ...props
 }) => {
   const [createSnapshot, { isLoading: createSnapshotLoading }] =
-  usePostApiMyVmByProjectIdHostAndVmHostIdSnapshotCreateMutation();
+  usePostApiMyVmByProjectIdSnapshotCreateMutation();
 
   const initialValues = {
     name: "",
@@ -50,12 +50,12 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
     }
 
     createSnapshot({
-      createVmHostSnapshotModel: {
+      createVolumeSnapshotModel: {
+        vmVolumeHostId: Number(vmId),
         name,
         description,
       },
       projectId: Number(projectId),
-      vmHostId: Number(vmId),
     })
       .unwrap()
       .then(() => {
@@ -63,7 +63,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
         forceClose();
         refetch();
       })
-      .catch((err) => {})
+      .catch((_err: unknown) => {})
       .finally(() => {
         setSubmitting(false);
       });

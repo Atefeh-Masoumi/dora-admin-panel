@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVolumeSnapshotDialog } from "./dialog/CreateVolumeSnapshotDialog";
 import VolumeSnapshotTableRow from "./table/VolumeSnapshotTableRow";
 import { volumeSnapShotTableStruct } from "./table/struct";
-import { useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdSnapshotListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type VolumeSnapshotPropsType = {};
@@ -22,7 +22,7 @@ export const VolumeSnapshot: FC<VolumeSnapshotPropsType> = () => {
 
   const { blockstorageId, projectId } = useParams();
   const { data: snapshotList = [], isLoading: getSnapshotLoading, refetch, isFetching } =
-    useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotListQuery(
+    useGetApiMyVmByProjectIdSnapshotListQuery(
       { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
       { skip: !blockstorageId }
     );

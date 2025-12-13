@@ -28,7 +28,7 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   useGetApiMyVmByProjectIdVolumeListQuery,
   usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
-  useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery,
+  useGetApiMyVmByProjectIdBackupListQuery,
   usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
@@ -119,7 +119,7 @@ const VolumeAutoBackup: FC = () => {
                    
                     sx={{ color: "text.secondary" }}
                   >
-                    {getBackupTypeLabel(volumeData?.calculateTypeId)}
+                    {getBackupTypeLabel(volumeData?.calculateTypeId ?? undefined)}
                   </Typography>
                 </>
               )}
@@ -202,7 +202,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
   const [calculateTypeId, setCalculateTypeId] = useState<number>(1);
 
   const { refetch } =
-    useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery({
+    useGetApiMyVmByProjectIdBackupListQuery({
       projectId: Number(projectId),
       vmVolumeHostId: Number(blockstorageId),
     });

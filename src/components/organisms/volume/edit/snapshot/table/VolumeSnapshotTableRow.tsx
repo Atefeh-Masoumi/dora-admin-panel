@@ -2,8 +2,8 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useDeleteApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotDeleteIdMutation,
-  useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotListQuery,
+  useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdSnapshotListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -121,9 +121,9 @@ export const VolumeSnapshotTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseRevert = () => setOpenRevert(false);
 
   const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
-    useDeleteApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation();
 
-  const {refetch} = useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotListQuery(
+  const {refetch} = useGetApiMyVmByProjectIdSnapshotListQuery(
       { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
       { skip: !blockstorageId }
     );
@@ -132,7 +132,6 @@ export const VolumeSnapshotTableRow: FC<{ row: any }> = ({ row }) => {
     deleteItem({ 
       id: Number(selectedSnapshot?.id),
       projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId) 
      })
       .unwrap()
       .then(() => {
@@ -140,7 +139,7 @@ export const VolumeSnapshotTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);

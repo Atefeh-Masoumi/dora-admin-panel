@@ -2,8 +2,8 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdBackupDeleteIdMutation,
-  useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery,
+  useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdBackupListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -107,9 +107,9 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseRestore = () => setOpenRestore(false);
 
   const [deleteItem, { isLoading: deleteBackupRecordLoading }] =
-    useDeleteApiMyVmByProjectIdHostAndVmHostIdBackupDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation();
 
-  const {refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery(
+  const {refetch} = useGetApiMyVmByProjectIdBackupListQuery(
       { projectId: Number(projectId), vmHostId: Number(vmId) },
       { skip: !vmId }
     );
@@ -118,7 +118,6 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
     deleteItem({ 
       id: Number(selectedBackup?.id),
       projectId: Number(projectId),
-      vmHostId: Number(vmId) 
      })
       .unwrap()
       .then(() => {
@@ -126,7 +125,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);

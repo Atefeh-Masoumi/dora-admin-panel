@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateSnapshotDialog } from "./dialog/CreateSnapshotDialog";
 import SnapshotTableRow from "./table/SnapshotTableRow";
 import { snapShotTableStruct } from "./table/struct";
-import { useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdSnapshotListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type SnapshotPropsType = {};
@@ -22,7 +22,7 @@ export const Snapshot: FC<SnapshotPropsType> = () => {
 
   const { id, projectId } = useParams();
   const { data: snapshotList = [], isLoading: getSnapshotLoading, refetch, isFetching } =
-    useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
+    useGetApiMyVmByProjectIdSnapshotListQuery(
       { projectId: Number(projectId), vmHostId: Number(id) },
       { skip: !id }
     );
