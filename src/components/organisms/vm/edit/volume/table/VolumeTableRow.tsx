@@ -7,8 +7,8 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { volumeTableStruct } from "./struct";
 import {
-  VmHostVolumeListResponse,
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation,
+  VolumeListResponse,
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { useParams } from "react-router";
@@ -18,16 +18,42 @@ enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
 
-export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
+type VolumeTableRowProps = {
+  row: VolumeListResponse;
+  autoBackupEnabledIds: Set<number>;
+  onEnableAutoBackupClick: (volume: VolumeListResponse) => void;
+  onDisableAutoBackupClick: (volume: VolumeListResponse) => void;
+};
+
+export const VolumeTableRow: FC<VolumeTableRowProps> = ({
+  row,
+  autoBackupEnabledIds,
+  onEnableAutoBackupClick,
+  onDisableAutoBackupClick,
+}) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVm, setSelectedVm] = useState<VmHostVolumeListResponse | null>(
+  const [selectedVm, setSelectedVm] = useState<VolumeListResponse | null>(
     null
   );
   const { id, projectId } = useParams();
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdVolumeDeleteIdMutation();
+  useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation
+  ();
 
-  const handleOpenDelete = (vm: VmHostVolumeListResponse) => {
+  const isAutoBackupEnabled = useMemo(
+    () => autoBackupEnabledIds.has(row.id!),
+    [autoBackupEnabledIds, row.id]
+  );
+
+  const onEnableAutoBackupBtnClick = () => {
+    onEnableAutoBackupClick(row);
+  };
+
+  const onDisableAutoBackupBtnClick = () => {
+    onDisableAutoBackupClick(row);
+  };
+
+  const handleOpenDelete = (vm: VolumeListResponse) => {
     setSelectedVm(vm);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -55,7 +81,7 @@ export const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
       {deleteVmRecordLoading && <PageLoading />}
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
         {volumeTableStruct.map((column) => {
-          const value = row[column.id];
+          const value = (row as any)[column.id as keyof VolumeListResponse];
           return (
             <DorsaTableCell
               key={column.id}

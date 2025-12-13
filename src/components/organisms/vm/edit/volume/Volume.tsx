@@ -6,7 +6,11 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 // import { CreateVolumeDialog } from "./dialog/CreateVolumeDialog";
 import VolumeTableRow from "./table/VolumeTableRow";
 import { volumeTableStruct } from "./table/struct";
-import { useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery } from "src/app/services/api.generated";
+import {
+  useGetApiMyVmByProjectIdVolumeListQuery,
+  VolumeListResponse,
+  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
+} from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 export const Volume: FC = () => {
@@ -21,7 +25,16 @@ export const Volume: FC = () => {
     isLoading: getVolumeLoading,
     refetch,
     isFetching,
-  } = useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
+  } = useGetApiMyVmByProjectIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
+
+  const [selectedVolume, setSelectedVolume] =
+    useState<VolumeListResponse | null>(null);
+  const [autoBackupEnabledIds, setAutoBackupEnabledIds] = useState<
+    Set<number>
+  >(new Set());
+
+  const [disableAutoBackup, { isLoading: disableAutoBackupLoading }] =
+    usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -86,6 +99,17 @@ export const Volume: FC = () => {
             text="در حال حاضر دیسک وجود ندارد"
             isLoading={getVolumeLoading}
             initialOrder={1}
+            rowExtraProps={{
+              autoBackupEnabledIds,
+              onEnableAutoBackupClick: (volume: VolumeListResponse) => {
+                setSelectedVolume(volume);
+                setDialogType("ENABLE_AUTO_BACKUP");
+              },
+              onDisableAutoBackupClick: (volume: VolumeListResponse) => {
+                setSelectedVolume(volume);
+                setDialogType("DISABLE_AUTO_BACKUP");
+              },
+            }}
           />
         </Stack>
       </Paper>
