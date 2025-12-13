@@ -50,6 +50,18 @@ export const NewSidebar: FC<SidebarPropsType> = ({
           title:"شبکه",
           link:`/network/${selectedProjectId}`,
         },
+        {
+          title:"فایروال",
+          link:`/firewall/${selectedProjectId}`,
+        },
+        {
+          title:"بک آپ",
+          link:`/backup/${selectedProjectId}`,
+        },
+        {
+          title:"اسنپ شات",
+          link:`/snapshot/${selectedProjectId}`,
+        },
         // {
         //   title: "ابر اختصاصی(vPC)",
         //   link: `/vpc/${selectedProjectId}`,
