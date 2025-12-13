@@ -7,7 +7,7 @@ import { CreateProjectUserDialog } from "./create/CreateProjectUserDialog";
 import { projectUserTableStruct } from "./table/struct";
 import ProjectUserTableRow from "./table/ProjectUserTableRow";
 import {
-  useGetApiMyByProjectIdUserListQuery,
+  useGetApiMyProjectByProjectIdUserListQuery,
   ProjectUserListResponse,
 } from "src/app/services/api.generated";
 
@@ -25,7 +25,7 @@ export const ProjectUsers: FC<ProjectUsersPropsType> = () => {
 
   const { projectId } = useParams();
   const { data: userList = [], isLoading: getUserListLoading, refetch } =
-    useGetApiMyByProjectIdUserListQuery(
+    useGetApiMyProjectByProjectIdUserListQuery(
       { projectId: Number(projectId) },
       { skip: !projectId }
     );

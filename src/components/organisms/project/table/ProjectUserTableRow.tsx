@@ -9,8 +9,8 @@ import { projectUserTableStruct } from "./struct";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
   ProjectUserListResponse,
-  useDeleteApiMyByProjectIdUserDeleteAndIdMutation,
-  useGetApiMyByProjectIdUserListQuery,
+  useDeleteApiMyProjectByProjectIdUserDeleteAndIdMutation,
+  useGetApiMyProjectByProjectIdUserListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import EditProjectUserDialog from "../edit/EditProjectUserDialog";
@@ -30,9 +30,9 @@ export const ProjectUserTableRow: FC<{ row: any }> = ({ row }) => {
   const [showEditDialog, setShowEditDialog] = useState(false);
 
   const [deleteItem, { isLoading: deleteUserRecordLoading }] =
-    useDeleteApiMyByProjectIdUserDeleteAndIdMutation();
+  useDeleteApiMyProjectByProjectIdUserDeleteAndIdMutation();
 
-  const { refetch } = useGetApiMyByProjectIdUserListQuery(
+  const { refetch } = useGetApiMyProjectByProjectIdUserListQuery(
     { projectId: Number(projectId) },
     { skip: !projectId }
   );

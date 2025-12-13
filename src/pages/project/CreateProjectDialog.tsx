@@ -21,7 +21,7 @@ import {
 	ProjectListResponse,
 	useGetApiMyInfraDatacenterListQuery,
 	useGetApiMyProjectListQuery,
-	usePostApiMyCreateMutation,
+	usePostApiMyProjectCreateMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -41,7 +41,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 	...props
 }) => {
 	const [createVmProject, { isLoading: createVmProjectLoading }] =
-		usePostApiMyCreateMutation();
+	usePostApiMyProjectCreateMutation();
 	//   const [editVmProject, { isLoading: editVmProjectLoading }] =
 	// 	usePutApiMyHostProjectEditByIdMutation();
 	const { data: datacenterList } =
