@@ -2,14 +2,14 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useDeleteApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupDeleteIdMutation,
-  useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery,
+  useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdBackupListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import theme, { BORDER_RADIUS_1 } from "src/configs/theme";
+import  { BORDER_RADIUS_1 } from "src/configs/theme";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RestoreVolumeBackupDialog } from "../dialog/RestoreVolumeBackupDialog";
 import { volumeBackupTableStruct } from "./struct";
@@ -113,9 +113,9 @@ export const VolumeBackupTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseRestore = () => setOpenRestore(false);
 
   const [deleteItem, { isLoading: deleteBackupRecordLoading }] =
-    useDeleteApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation();
 
-  const {refetch} = useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery(
+  const {refetch} = useGetApiMyVmByProjectIdBackupListQuery(
       { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
       { skip: !blockstorageId }
     );
@@ -124,7 +124,6 @@ export const VolumeBackupTableRow: FC<{ row: any }> = ({ row }) => {
     deleteItem({ 
       id: Number(selectedBackup?.id),
       projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId) 
      })
       .unwrap()
       .then(() => {
@@ -132,7 +131,7 @@ export const VolumeBackupTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);

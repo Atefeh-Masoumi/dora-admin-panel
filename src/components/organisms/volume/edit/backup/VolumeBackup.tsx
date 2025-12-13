@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateVolumeBackupDialog } from "./dialog/CreateVolumeBackupDialog";
 import VolumeBackupTableRow from "./table/VolumeBackupTableRow";
 import { volumeBackupTableStruct } from "./table/struct";
-import { useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdBackupListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type VolumeBackupPropsType = {};
@@ -22,7 +22,7 @@ export const VolumeBackup: FC<VolumeBackupPropsType> = () => {
 
   const { blockstorageId, projectId } = useParams();
   const { data: backupList = [], isLoading: getBackupLoading, refetch, isFetching } =
-    useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery(
+    useGetApiMyVmByProjectIdBackupListQuery(
       { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
       { skip: !blockstorageId }
     );
