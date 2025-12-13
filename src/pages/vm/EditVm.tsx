@@ -20,7 +20,7 @@ import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
-import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
+// import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
 import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
@@ -79,11 +79,11 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/vm/:projectId/:id/backup",
     component: Backup,
   },
-  {
-    label: "فایروال",
-    route: "/vm/:projectId/:id/firewall",
-    component: Firewall,
-  },
+  // {
+  //   label: "فایروال",
+  //   route: "/vm/:projectId/:id/firewall",
+  //   component: Firewall,
+  // },
   {
     label: "دیسک",
     route: "/vm/:projectId/:id/volume",
