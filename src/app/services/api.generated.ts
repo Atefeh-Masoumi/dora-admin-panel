@@ -1850,6 +1850,18 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({ url: `/api/my/project/get/${queryArg.id}` }),
     }),
+    putApiMyProjectEditById: build.mutation<
+      PutApiMyProjectEditByIdApiResponse,
+      PutApiMyProjectEditByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/project/edit/${queryArg.id}`,
+        method: "PUT",
+        params: {
+          Name: queryArg.name,
+        },
+      }),
+    }),
     deleteApiMyProjectDeleteById: build.mutation<
       DeleteApiMyProjectDeleteByIdApiResponse,
       DeleteApiMyProjectDeleteByIdApiArg
@@ -1875,6 +1887,18 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/my/report/usage/${queryArg.categoryId}`,
+      }),
+    }),
+    getApiMyReportSearch: build.query<
+      GetApiMyReportSearchApiResponse,
+      GetApiMyReportSearchApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/report/search`,
+        params: {
+          OrderName: queryArg.orderName,
+          ProductName: queryArg.productName,
+        },
       }),
     }),
     getApiMyReportFinancial: build.query<
@@ -2061,6 +2085,18 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createVpcHostModel,
       }),
     }),
+    getApiMyVmByProjectIdSnapshotShortList: build.query<
+      GetApiMyVmByProjectIdSnapshotShortListApiResponse,
+      GetApiMyVmByProjectIdSnapshotShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/snapshot/short-list`,
+        params: {
+          VmVolumeHostId: queryArg.vmVolumeHostId,
+          VmHostId: queryArg.vmHostId,
+        },
+      }),
+    }),
     putApiMyVmByProjectIdSnapshotRevertAndId: build.mutation<
       PutApiMyVmByProjectIdSnapshotRevertAndIdApiResponse,
       PutApiMyVmByProjectIdSnapshotRevertAndIdApiArg
@@ -2100,6 +2136,16 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/snapshot/delete/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    postApiMyVmByProjectIdSnapshotCreateBatch: build.mutation<
+      PostApiMyVmByProjectIdSnapshotCreateBatchApiResponse,
+      PostApiMyVmByProjectIdSnapshotCreateBatchApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/snapshot/create-batch`,
+        method: "POST",
+        body: queryArg.createVolumeSnapshotBatchModel,
       }),
     }),
     postApiMyVmByProjectIdSnapshotCreate: build.mutation<
@@ -2154,6 +2200,18 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.attachVolumeModel,
       }),
     }),
+    getApiMyVmByProjectIdBackupShortList: build.query<
+      GetApiMyVmByProjectIdBackupShortListApiResponse,
+      GetApiMyVmByProjectIdBackupShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/backup/short-list`,
+        params: {
+          VmVolumeHostId: queryArg.vmVolumeHostId,
+          VmHostId: queryArg.vmHostId,
+        },
+      }),
+    }),
     postApiMyVmByProjectIdBackupRestoreAndId: build.mutation<
       PostApiMyVmByProjectIdBackupRestoreAndIdApiResponse,
       PostApiMyVmByProjectIdBackupRestoreAndIdApiArg
@@ -2192,6 +2250,16 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    postApiMyVmByProjectIdBackupCreateBatch: build.mutation<
+      PostApiMyVmByProjectIdBackupCreateBatchApiResponse,
+      PostApiMyVmByProjectIdBackupCreateBatchApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/backup/create-batch`,
+        method: "POST",
+        body: queryArg.createVolumeBackupBatchModel,
+      }),
+    }),
     postApiMyVmByProjectIdBackupCreate: build.mutation<
       PostApiMyVmByProjectIdBackupCreateApiResponse,
       PostApiMyVmByProjectIdBackupCreateApiArg
@@ -2200,6 +2268,17 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/backup/create`,
         method: "POST",
         body: queryArg.createVolumeBackupModel,
+      }),
+    }),
+    getApiMyVmByProjectIdVolumeShortList: build.query<
+      GetApiMyVmByProjectIdVolumeShortListApiResponse,
+      GetApiMyVmByProjectIdVolumeShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/short-list`,
+        params: {
+          VmHostId: queryArg.vmHostId,
+        },
       }),
     }),
     getApiMyVmByProjectIdVolumeList: build.query<
@@ -2309,31 +2388,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "PUT",
       }),
     }),
-    putApiMyVmByProjectIdNetworkNodeEnableFirewallAndId: build.mutation<
-      PutApiMyVmByProjectIdNetworkNodeEnableFirewallAndIdApiResponse,
-      PutApiMyVmByProjectIdNetworkNodeEnableFirewallAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/network/node/enable-firewall/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableFirewallNetworkNodeModel,
-      }),
-    }),
     putApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndId: build.mutation<
       PutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdApiResponse,
       PutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/network/node/disable-port-security/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmByProjectIdNetworkNodeDisableFirewallAndId: build.mutation<
-      PutApiMyVmByProjectIdNetworkNodeDisableFirewallAndIdApiResponse,
-      PutApiMyVmByProjectIdNetworkNodeDisableFirewallAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/network/node/disable-firewall/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -2496,31 +2556,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "PUT",
       }),
     }),
-    putApiMyVmByProjectIdHostIpEnableFirewallAndId: build.mutation<
-      PutApiMyVmByProjectIdHostIpEnableFirewallAndIdApiResponse,
-      PutApiMyVmByProjectIdHostIpEnableFirewallAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/host/ip/enable-firewall/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableFirewallVmIpModel,
-      }),
-    }),
     putApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityId: build.mutation<
       PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiResponse,
       PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/ip/disable-port-security/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmByProjectIdHostIpDisableFirewallAndId: build.mutation<
-      PutApiMyVmByProjectIdHostIpDisableFirewallAndIdApiResponse,
-      PutApiMyVmByProjectIdHostIpDisableFirewallAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/host/ip/disable-firewall/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -3949,6 +3990,11 @@ export type GetApiMyProjectGetByIdApiResponse =
 export type GetApiMyProjectGetByIdApiArg = {
   id: number;
 };
+export type PutApiMyProjectEditByIdApiResponse = unknown;
+export type PutApiMyProjectEditByIdApiArg = {
+  name: string;
+  id: number;
+};
 export type DeleteApiMyProjectDeleteByIdApiResponse = unknown;
 export type DeleteApiMyProjectDeleteByIdApiArg = {
   id: number;
@@ -3961,6 +4007,12 @@ export type GetApiMyReportUsageByCategoryIdApiResponse =
   /** status 200 OK */ DashboardUsageResponse[];
 export type GetApiMyReportUsageByCategoryIdApiArg = {
   categoryId: number;
+};
+export type GetApiMyReportSearchApiResponse =
+  /** status 200 OK */ DashboardSearchResponse;
+export type GetApiMyReportSearchApiArg = {
+  orderName?: string;
+  productName?: string;
 };
 export type GetApiMyReportFinancialApiResponse =
   /** status 200 OK */ DashboardFinancialResponse;
@@ -4089,6 +4141,13 @@ export type PostApiMyVmByProjectIdVpcCreateApiArg = {
   projectId: number;
   createVpcHostModel: CreateVpcHostModel;
 };
+export type GetApiMyVmByProjectIdSnapshotShortListApiResponse =
+  /** status 200 OK */ VmVolumeSnapshotShortListResponse[];
+export type GetApiMyVmByProjectIdSnapshotShortListApiArg = {
+  vmVolumeHostId?: number;
+  vmHostId?: number;
+  projectId: number;
+};
 export type PutApiMyVmByProjectIdSnapshotRevertAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdSnapshotRevertAndIdApiArg = {
   isRootDisk: boolean;
@@ -4112,6 +4171,11 @@ export type DeleteApiMyVmByProjectIdSnapshotDeleteAndIdApiResponse = unknown;
 export type DeleteApiMyVmByProjectIdSnapshotDeleteAndIdApiArg = {
   projectId: number;
   id: number;
+};
+export type PostApiMyVmByProjectIdSnapshotCreateBatchApiResponse = unknown;
+export type PostApiMyVmByProjectIdSnapshotCreateBatchApiArg = {
+  projectId: number;
+  createVolumeSnapshotBatchModel: CreateVolumeSnapshotBatchModel;
 };
 export type PostApiMyVmByProjectIdSnapshotCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdSnapshotCreateApiArg = {
@@ -4141,6 +4205,13 @@ export type PostApiMyVmByProjectIdVolumeNodeAttachApiArg = {
   projectId: number;
   attachVolumeModel: AttachVolumeModel;
 };
+export type GetApiMyVmByProjectIdBackupShortListApiResponse =
+  /** status 200 OK */ VmVolumeBackupShortListDto[];
+export type GetApiMyVmByProjectIdBackupShortListApiArg = {
+  vmVolumeHostId?: number;
+  vmHostId?: number;
+  projectId: number;
+};
 export type PostApiMyVmByProjectIdBackupRestoreAndIdApiResponse = unknown;
 export type PostApiMyVmByProjectIdBackupRestoreAndIdApiArg = {
   projectId: number;
@@ -4164,10 +4235,21 @@ export type DeleteApiMyVmByProjectIdBackupDeleteAndIdApiArg = {
   projectId: number;
   id: number;
 };
+export type PostApiMyVmByProjectIdBackupCreateBatchApiResponse = unknown;
+export type PostApiMyVmByProjectIdBackupCreateBatchApiArg = {
+  projectId: number;
+  createVolumeBackupBatchModel: CreateVolumeBackupBatchModel;
+};
 export type PostApiMyVmByProjectIdBackupCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdBackupCreateApiArg = {
   projectId: number;
   createVolumeBackupModel: CreateVolumeBackupModel;
+};
+export type GetApiMyVmByProjectIdVolumeShortListApiResponse =
+  /** status 200 OK */ VolumeShortListResponse[];
+export type GetApiMyVmByProjectIdVolumeShortListApiArg = {
+  vmHostId?: number;
+  projectId: number;
 };
 export type GetApiMyVmByProjectIdVolumeListApiResponse =
   /** status 200 OK */ VolumeListResponse[];
@@ -4233,22 +4315,9 @@ export type PutApiMyVmByProjectIdNetworkNodeEnablePortSecurityAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type PutApiMyVmByProjectIdNetworkNodeEnableFirewallAndIdApiResponse =
-  unknown;
-export type PutApiMyVmByProjectIdNetworkNodeEnableFirewallAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableFirewallNetworkNodeModel: EnableFirewallNetworkNodeModel;
-};
 export type PutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdApiResponse =
   unknown;
 export type PutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdApiArg = {
-  projectId: number;
-  id: number;
-};
-export type PutApiMyVmByProjectIdNetworkNodeDisableFirewallAndIdApiResponse =
-  unknown;
-export type PutApiMyVmByProjectIdNetworkNodeDisableFirewallAndIdApiArg = {
   projectId: number;
   id: number;
 };
@@ -4343,12 +4412,6 @@ export type PutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdApiArg = {
   vmHostId: number;
   id: number;
 };
-export type PutApiMyVmByProjectIdHostIpEnableFirewallAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdHostIpEnableFirewallAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableFirewallVmIpModel: EnableFirewallVmIpModel;
-};
 export type PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiResponse =
   unknown;
 export type PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiArg =
@@ -4357,12 +4420,6 @@ export type PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiArg =
     vmHostId: number;
     id: number;
   };
-export type PutApiMyVmByProjectIdHostIpDisableFirewallAndIdApiResponse =
-  unknown;
-export type PutApiMyVmByProjectIdHostIpDisableFirewallAndIdApiArg = {
-  projectId: number;
-  id: number;
-};
 export type DeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdApiResponse =
   unknown;
 export type DeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdApiArg = {
@@ -6016,6 +6073,15 @@ export type DashboardUsageResponse = {
   month: string | null;
   count: number;
 };
+export type DashboardSearchResponse = {
+  orderId: number;
+  name: string | null;
+  productId: number;
+  productName: string | null;
+  projectId?: number | null;
+  projectName?: string | null;
+  createDate: string;
+};
 export type DashboardFinancialResponse = {
   walletBalance?: number;
   billPrice?: number;
@@ -6119,6 +6185,10 @@ export type CreateVpcHostModel = {
   name?: string | null;
   productBundleId?: number;
 };
+export type VmVolumeSnapshotShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type VmVolumeSnapshotListResponse = {
   id: number;
   name: string | null;
@@ -6135,6 +6205,12 @@ export type GetVmVolumeSnapshotResponse = {
   status: string | null;
   createDate: string;
   modifyDate: string;
+};
+export type CreateVolumeSnapshotBatchModel = {
+  vmHostId?: number;
+  vmVolumeHostId?: number[] | null;
+  name?: string | null;
+  description?: string | null;
 };
 export type CreateVolumeSnapshotModel = {
   vmVolumeHostId?: number;
@@ -6164,6 +6240,10 @@ export type AttachVolumeModel = {
   vmHostId?: number;
   vmVolumeHostId?: number;
 };
+export type VmVolumeBackupShortListDto = {
+  id: number;
+  name: string | null;
+};
 export type VmVolumeBackupListResponse = {
   id: number;
   name: string | null;
@@ -6184,10 +6264,20 @@ export type GetVmVolumeBackupResponse = {
   backupSize: number;
   description?: string | null;
 };
+export type CreateVolumeBackupBatchModel = {
+  vmHostId?: number;
+  vmVolumeHostId?: number[] | null;
+  name?: string | null;
+  description?: string | null;
+};
 export type CreateVolumeBackupModel = {
   vmVolumeHostId?: number;
   name?: string | null;
   description?: string | null;
+};
+export type VolumeShortListResponse = {
+  id: number;
+  name: string | null;
 };
 export type VolumeListResponse = {
   id: number;
@@ -6249,12 +6339,8 @@ export type VmNetworkNodeListResponse = {
   isV4: boolean;
   status: string | null;
   statusId: number;
-  enabledFirewall: boolean;
-  firwallName?: string | null;
+  isEnableSecurity: boolean;
   createDate?: string;
-};
-export type EnableFirewallNetworkNodeModel = {
-  vmFirewallId?: number;
 };
 export type AttachNetworkModel = {
   vmHostId?: number;
@@ -6333,12 +6419,8 @@ export type VmHostIpListResponse = {
   isV4: boolean;
   isPrimary: boolean;
   isFloating: boolean;
-  enabledFirewall: boolean;
-  firwallName?: string | null;
+  isEnableSecurity: boolean;
   createDate: string;
-};
-export type EnableFirewallVmIpModel = {
-  vmFirewallId?: number;
 };
 export type CreateVmIpModel = {
   useIpV4?: boolean;
@@ -6401,15 +6483,22 @@ export type CreateVmModel = {
   name?: string | null;
   password?: string | null;
   vmKeyId?: number | null;
-  isPredefined?: boolean;
   usedPublicIpV4?: boolean;
   usedPublicIpV6?: boolean;
+  usedPrivateNetwork?: boolean;
+  vmNetworkId?: number | null;
+  ipAddress?: string | null;
+  usedFirewall?: boolean;
+  vmFirewallId?: number | null;
+  allowRemoteAccess?: boolean;
+  allowHttpAccess?: boolean;
+  allowHttpsAccess?: boolean;
+  remoteAccessIp?: string | null;
+  isPredefined?: boolean;
   productBundleId?: number | null;
   cpu?: number | null;
   memory?: number | null;
   disk?: number | null;
-  vmNetworkId?: number | null;
-  ipAddress?: string | null;
   autoBackupEnabled?: boolean;
   calculateTypeId?: number | null;
 };
@@ -6734,9 +6823,11 @@ export const {
   usePostApiMyProjectByProjectIdUserCreateMutation,
   useGetApiMyProjectListQuery,
   useGetApiMyProjectGetByIdQuery,
+  usePutApiMyProjectEditByIdMutation,
   useDeleteApiMyProjectDeleteByIdMutation,
   usePostApiMyProjectCreateMutation,
   useGetApiMyReportUsageByCategoryIdQuery,
+  useGetApiMyReportSearchQuery,
   useGetApiMyReportFinancialQuery,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListQuery,
   usePostApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessCreateMutation,
@@ -6758,20 +6849,25 @@ export const {
   usePutApiMyVmByProjectIdVpcEditAndIdMutation,
   useDeleteApiMyVmByProjectIdVpcDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVpcCreateMutation,
+  useGetApiMyVmByProjectIdSnapshotShortListQuery,
   usePutApiMyVmByProjectIdSnapshotRevertAndIdMutation,
   useGetApiMyVmByProjectIdSnapshotListQuery,
   useGetApiMyVmByProjectIdSnapshotGetAndIdQuery,
   useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
+  usePostApiMyVmByProjectIdSnapshotCreateBatchMutation,
   usePostApiMyVmByProjectIdSnapshotCreateMutation,
   useGetApiMyVmByProjectIdVolumeNodeListQuery,
   useGetApiMyVmByProjectIdVolumeNodeGetQuery,
   usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
   usePostApiMyVmByProjectIdVolumeNodeAttachMutation,
+  useGetApiMyVmByProjectIdBackupShortListQuery,
   usePostApiMyVmByProjectIdBackupRestoreAndIdMutation,
   useGetApiMyVmByProjectIdBackupListQuery,
   useGetApiMyVmByProjectIdBackupGetAndIdQuery,
   useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
+  usePostApiMyVmByProjectIdBackupCreateBatchMutation,
   usePostApiMyVmByProjectIdBackupCreateMutation,
+  useGetApiMyVmByProjectIdVolumeShortListQuery,
   useGetApiMyVmByProjectIdVolumeListQuery,
   useGetApiMyVmByProjectIdVolumeGetAndIdQuery,
   usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
@@ -6783,9 +6879,7 @@ export const {
   usePostApiMyVmByProjectIdVolumeCreateMutation,
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
   usePutApiMyVmByProjectIdNetworkNodeEnablePortSecurityAndIdMutation,
-  usePutApiMyVmByProjectIdNetworkNodeEnableFirewallAndIdMutation,
   usePutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdMutation,
-  usePutApiMyVmByProjectIdNetworkNodeDisableFirewallAndIdMutation,
   usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation,
   usePostApiMyVmByProjectIdNetworkNodeAttachMutation,
   useGetApiMyVmByProjectIdNetworkShortListQuery,
@@ -6803,9 +6897,7 @@ export const {
   useGetApiMyVmByProjectIdImageListQuery,
   useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery,
   usePutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdMutation,
-  usePutApiMyVmByProjectIdHostIpEnableFirewallAndIdMutation,
   usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation,
-  usePutApiMyVmByProjectIdHostIpDisableFirewallAndIdMutation,
   useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation,
   usePostApiMyVmByProjectIdHostAndVmHostIdIpCreateMutation,
   usePutApiMyVmByProjectIdHostStopAndIdMutation,
