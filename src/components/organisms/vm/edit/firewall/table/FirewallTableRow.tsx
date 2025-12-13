@@ -1,101 +1,101 @@
-import { IconButton, Stack } from "@mui/material";
-import { FC, Fragment, useState } from "react";
-import { toast } from "react-toastify";
-import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
-import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
-import { firewallTableStruct } from "./struct";
-import PageLoading from "src/components/atoms/PageLoading";
-import {
-  VmFirewallRuleListResponse,
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation,
-  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
-} from "src/app/services/api.generated";
-import { useParams } from "react-router";
+// import { IconButton, Stack } from "@mui/material";
+// import { FC, Fragment, useState } from "react";
+// import { toast } from "react-toastify";
+// import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
+// import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
+// import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+// import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
+// import { firewallTableStruct } from "./struct";
+// import PageLoading from "src/components/atoms/PageLoading";
+// import {
+//   VmFirewallRuleListResponse,
+//   useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation,
+//   useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
+// } from "src/app/services/api.generated";
+// import { useParams } from "react-router";
 
-enum DIALOG_TYPE_ENUM {
-  CREATE = "CREATE",
-  DELETE = "DELETE",
-}
+// enum DIALOG_TYPE_ENUM {
+//   CREATE = "CREATE",
+//   DELETE = "DELETE",
+// }
 
-export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
-  const {projectId,id } = useParams();
+// export const FirewallTableRow: FC<{ row: any }> = ({ row }) => {
+//   const {projectId,id } = useParams();
 
-  const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVolume, setSelectedVolume] =
-    useState<VmFirewallRuleListResponse | null>(null);
+//   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
+//   const [selectedVolume, setSelectedVolume] =
+//     useState<VmFirewallRuleListResponse | null>(null);
 
-  const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation();
+//   const [deleteItem, { isLoading: deleteVolumeRecordLoading }] =
+//   useDeleteApiMyVmByProjectIdHostAndVmHostIdFirewallDeleteIdMutation();
 
-const { refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
-      { projectId: Number(projectId),
-        vmHostId: Number(id) },
-      { skip: !id }
-    );
+// const { refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery(
+//       { projectId: Number(projectId),
+//         vmHostId: Number(id) },
+//       { skip: !id }
+//     );
 
-  const deleteVolumeRecordHandler = () =>
-    deleteItem({ id: Number(selectedVolume?.id) ,
-       projectId: Number(projectId),
-       vmHostId: Number(id),})
-      .unwrap()
-      .then(() => {
-        toast.success("حذف رول مورد نظر در حال بررسی است");
-        refetch();
-        closeDialogHandler();
-      })
-      .catch(() => {});
+//   const deleteVolumeRecordHandler = () =>
+//     deleteItem({ id: Number(selectedVolume?.id) ,
+//        projectId: Number(projectId),
+//        vmHostId: Number(id),})
+//       .unwrap()
+//       .then(() => {
+//         toast.success("حذف رول مورد نظر در حال بررسی است");
+//         refetch();
+//         closeDialogHandler();
+//       })
+//       .catch(() => {});
 
-  const closeDialogHandler = () => {
-    setDialogType(null);
-    setSelectedVolume(null);
-  };
+//   const closeDialogHandler = () => {
+//     setDialogType(null);
+//     setSelectedVolume(null);
+//   };
 
-  const handleOpenDelete = (snapshot: VmFirewallRuleListResponse) => {
-    setSelectedVolume(snapshot);
-    setDialogType(DIALOG_TYPE_ENUM.DELETE);
-  };
+//   const handleOpenDelete = (snapshot: VmFirewallRuleListResponse) => {
+//     setSelectedVolume(snapshot);
+//     setDialogType(DIALOG_TYPE_ENUM.DELETE);
+//   };
 
-  return (
-    <Fragment>
-      {deleteVolumeRecordLoading && <PageLoading />}
-      <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {firewallTableStruct.map((column) => {
-          const value = row[column.id];
-          return (
-            <DorsaTableCell
-              key={column.id}
-              align="center"
-              sx={{ px: 1, whiteSpace: "nowrap" }}
-            >
-              {column.format && typeof value === "number"
-                ? column.format(value)
-                : value}
-              {column.id === "control" ? (
-                <Stack direction="row" columnGap={1} alignItems="center">
-                  <IconButton onClick={() => handleOpenDelete(row)}>
-                    <TrashSvg />
-                  </IconButton>
-                </Stack>
-              ) : (
-                <></>
-              )}
-            </DorsaTableCell>
-          );
-        })}
-      </DorsaTableRow>
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="رول"
-        subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedVolume?.id.toString() || ""}
-        onSubmit={deleteVolumeRecordHandler}
-        submitLoading={deleteVolumeRecordLoading}
-      />
-    </Fragment>
-  );
-};
+//   return (
+//     <Fragment>
+//       {deleteVolumeRecordLoading && <PageLoading />}
+//       <DorsaTableRow hover tabIndex={-1} key={row.value}>
+//         {firewallTableStruct.map((column) => {
+//           const value = row[column.id];
+//           return (
+//             <DorsaTableCell
+//               key={column.id}
+//               align="center"
+//               sx={{ px: 1, whiteSpace: "nowrap" }}
+//             >
+//               {column.format && typeof value === "number"
+//                 ? column.format(value)
+//                 : value}
+//               {column.id === "control" ? (
+//                 <Stack direction="row" columnGap={1} alignItems="center">
+//                   <IconButton onClick={() => handleOpenDelete(row)}>
+//                     <TrashSvg />
+//                   </IconButton>
+//                 </Stack>
+//               ) : (
+//                 <></>
+//               )}
+//             </DorsaTableCell>
+//           );
+//         })}
+//       </DorsaTableRow>
+//       <DeleteDialog
+//         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
+//         onClose={closeDialogHandler}
+//         keyTitle="رول"
+//         subTitle="برای حذف عبارت امنیتی زیر را وارد کنید."
+//         securityPhrase={selectedVolume?.id.toString() || ""}
+//         onSubmit={deleteVolumeRecordHandler}
+//         submitLoading={deleteVolumeRecordLoading}
+//       />
+//     </Fragment>
+//   );
+// };
 
-export default withTableRowWrapper(FirewallTableRow);
+// export default withTableRowWrapper(FirewallTableRow);
