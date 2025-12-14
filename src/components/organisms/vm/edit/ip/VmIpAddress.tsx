@@ -15,6 +15,7 @@ import { Add } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { Network } from "../network/VmNatworkTable";
 
 const LoadingSkeleton: FC = () => (
   <Grid2
@@ -82,7 +83,7 @@ export const VmIpAddress: FC = () => {
               fontSize={24}
               fontWeight={700}
             >
-              آدرس IP سرور
+             شبکه عمومی
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
@@ -133,6 +134,7 @@ export const VmIpAddress: FC = () => {
           </Paper>
         </Stack>
       </Paper>
+      <Network/>
       <AddIpDialog
         maxWidth="xs"
         fullWidth
