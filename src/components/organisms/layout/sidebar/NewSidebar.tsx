@@ -35,7 +35,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
       link: `/vm/${selectedProjectId}/list`,
       subList: [
         {
-          title: " سرورهای مجازی",
+          title: " سرورهای ابری",
           link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/dashboard",
         },
         {
