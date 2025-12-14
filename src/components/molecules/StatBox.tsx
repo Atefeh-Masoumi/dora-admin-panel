@@ -13,7 +13,7 @@ export const StatBox = ({ title, value, unit, color, img }: StatBoxProps) => {
     <Paper
       elevation={0}
       sx={{
-        p: 3,
+        p: 2,
         borderRadius: 3,
         border: "1px solid rgba(0,0,0,0.08)",
         flex: 1,
@@ -35,7 +35,7 @@ export const StatBox = ({ title, value, unit, color, img }: StatBoxProps) => {
         <img
               src={img}
               alt="stat box"
-              style={{ width: "200px", height: "100px", margin: "0" }}
+              style={{ width: "120px", height: "80px", margin: "0" }}
             />
         </Stack>
       </Stack>
