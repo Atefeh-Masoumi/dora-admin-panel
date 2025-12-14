@@ -101,7 +101,7 @@ const VmProjectList: FC = () => {
     deleteProject({ id: selectedProject.id })
       .unwrap()
       .then(() => {
-        toast.success("پروژه مورد نظر با موفقیت حذف شد");
+        toast.success("مرکز داده مجازی مورد نظر با موفقیت حذف شد");
         closeDialogHandler();
       })
       .catch(() => { });
@@ -168,7 +168,7 @@ const VmProjectList: FC = () => {
               color="rgba(110, 118, 138, 1)"
               whiteSpace="nowrap"
             >
-              لیست پروژه‌ها
+              لیست مرکز داده مجازی 
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
@@ -179,7 +179,7 @@ const VmProjectList: FC = () => {
           >
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام پروژه"
+              placeholder="جستجو در نام مرکز داده مجازی"
             />
             <Button
               variant="outlined"
@@ -194,7 +194,7 @@ const VmProjectList: FC = () => {
                 <Add sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }} />
               }
             >
-              افزودن پروژه
+              افزودن مرکز داده مجازی
             </Button>
           </Stack>
         </Stack>
@@ -225,7 +225,7 @@ const VmProjectList: FC = () => {
           ) : filteredList?.length === 0 ? (
             <Stack py={3} sx={{ width: "100%" }}>
               <Stack bgcolor="white" borderRadius={3}>
-                <EmptyTable text="در حال حاضر پروژه‌ای وجود ندارد" />
+                <EmptyTable text="در حال حاضر مرکز داده مجازی‌ وجود ندارد" />
               </Stack>
             </Stack>
           ) : (
@@ -269,8 +269,8 @@ const VmProjectList: FC = () => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="پروژه"
-        subTitle="برای حذف پروژه موردنظر، عبارت امنیتی زیر را وارد کنید."
+        keyTitle="مرکز داده مجازی"
+        subTitle="برای حذف مرکز داده مجازی موردنظر، عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedProject?.name || ""}
         onSubmit={deleteProjectHandler}
         submitLoading={deleteProjectLoading}
