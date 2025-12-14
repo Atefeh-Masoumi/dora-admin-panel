@@ -7,11 +7,15 @@ import {
   Stack,
   Button,
   DialogActions,
+  Typography,
+  Skeleton,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmByProjectIdBackupCreateMutation } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdVolumeShortListQuery, usePostApiMyVmByProjectIdBackupCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -27,16 +31,20 @@ export const CreateBackupDialog: FC<CreateBackupDialogPropsType> = ({
   refetch,
   ...props
 }) => {
+  const { projectId, id:vmId } = useParams();
+  
   const [createBackup, { isLoading: createBackupLoading }] =
   usePostApiMyVmByProjectIdBackupCreateMutation();
 
+  const { data: volumeList, isLoading: volumeLoading } = useGetApiMyVmByProjectIdVolumeShortListQuery({
+    projectId: Number(projectId),
+  });
   const initialValues = {
     name: "",
     description: "",
+    vmVolumeHostId:0,
   };
 
-  const { projectId, id:vmId } = useParams();
-  console.log(projectId, vmId);
   const onSubmit: formikOnSubmitType<typeof initialValues> = (
     { name, description },
     { setSubmitting }
@@ -73,8 +81,8 @@ export const CreateBackupDialog: FC<CreateBackupDialogPropsType> = ({
       name: yup
         .string()
         .min(2, "تعداد کارکترهای نام بکاپ باید حداقل 2 عدد باشد")
-        .max(50, "تعداد کارکترهای نام بکاپ باید حداقل ۵۰ عدد باشد")
-        .required("این بخش الزامی می‌باشد"),
+        .max(50, "تعداد کارکترهای نام بکاپ باید حداقل ۵۰ عدد باشد"),
+      vmVolumeHostId: yup.number()
     }),
     onSubmit,
   });
@@ -98,6 +106,27 @@ export const CreateBackupDialog: FC<CreateBackupDialogPropsType> = ({
               label="نام"
               inputProps={{ dir: "ltr" }}
             />
+             <Stack width={"100%"} justifyContent={"start"}>
+                <Typography>لیست دیسک ها  </Typography>
+                {volumeLoading ? (
+                  <Skeleton width="100%" height={37} sx={{ transform: "none" }} />
+                ) : (
+                  <Select
+                    {...formik.getFieldProps("vmVolumeHostId")}
+                    error={Boolean(formik.errors.vmVolumeHostId && formik.touched.vmVolumeHostId)}
+                    fullWidth
+                  >
+                    {volumeList?.map(({ name, id }) => (
+                      <MenuItem key={id} value={id}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+                {formik.errors.vmVolumeHostId && formik.touched.vmVolumeHostId && (
+                  <Typography color="error">{formik.errors.vmVolumeHostId}</Typography>
+                )}
+              </Stack>
             <DorsaTextField
               {...formik.getFieldProps("description")}
               error={Boolean(

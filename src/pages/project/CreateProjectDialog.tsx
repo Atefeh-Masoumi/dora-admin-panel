@@ -82,7 +82,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 		API.unwrap()
 			.then(() => {
 				toast.success(
-					"پروژه با موفقیت ایجاد شد"
+					"مرکز داده مجازی با موفقیت ایجاد شد"
 				);
 				refetch();
 				closeDialogHandler({});
@@ -128,13 +128,13 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 		// }}
 		>
 			<DialogTitle textAlign="left">
-				{projectId ? "بروزرسانی پروژه" : "افزودن پروژه"}
+				{projectId ? "بروزرسانی مرکز داده مجازی" : "افزودن مرکز داده مجازی"}
 			</DialogTitle>
 			<DialogContent>
 				<form onSubmit={formik.handleSubmit}>
 					<Stack direction="column" rowGap={2}>
 						<Stack direction="column" rowGap={1}>
-							<InputLabel>نام پروژه</InputLabel>
+							<InputLabel>نام مرکز داده مجازی</InputLabel>
 							<AlphaNumericTextField
 								formik={formik}
 								id="name"
@@ -144,7 +144,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 								placeholder="نام موردنظر را وارد کنید"
 							/>
 						</Stack>
-						{!projectId && (
+						{/* {!projectId && (
 							<Stack direction="column" rowGap={1}>
 								<InputLabel>نام مرکز داده</InputLabel>
 								<RadioGroup
@@ -190,7 +190,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 									</Grid>
 								</RadioGroup>
 							</Stack>
-						)}
+						)} */}
 						{/* <Stack direction="column" rowGap={1}>
 							<InputLabel>نوع پروژه</InputLabel>
 							<RadioGroup
