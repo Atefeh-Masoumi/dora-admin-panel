@@ -5,6 +5,7 @@ export const addVmTableStruct: columnType[] = [
   { id: "name", label: "نام ماشین" },
   { id: "operatingSystem", label: "سیستم عامل" },
   { id: "ipAddressString", label: "آی پی آدرس عمومی" },
+  { id: "privateIpString", label: "آی پی آدرس خصوصی" },
   { id: "statusId", label: "وضعیت" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
