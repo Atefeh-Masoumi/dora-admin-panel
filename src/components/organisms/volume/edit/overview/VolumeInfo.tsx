@@ -34,6 +34,7 @@ export const VolumeInfo: FC<VolumeInfoPropsType> = () => {
         <Paper
           component={Stack}
           rowGap={2}
+          pb={2}
           elevation={0}
           sx={{
             borderRadius: BORDER_RADIUS_1,
@@ -41,9 +42,13 @@ export const VolumeInfo: FC<VolumeInfoPropsType> = () => {
             height: "100%",
           }}
         >
-          <Typography align="center" fontWeight={700} fontSize={18}>
-            دیسک ابری
-          </Typography>
+          <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              مشخصات دیسک ابری
+            </Typography>
           <Divider />
           <BoxRow
             title="وضعیت"
