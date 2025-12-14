@@ -32,6 +32,7 @@ import {
   usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type DialogType = "ENABLE" | "DISABLE" | null;
 
@@ -96,20 +97,63 @@ const VolumeAutoBackup: FC = () => {
 
   return (
     <>
-      <Paper sx={{ p: 2 }}>
-        <Stack direction="column" rowGap={2}>
-          <Typography color="grey.700"
+       <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
+        <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
               fontSize={24}
-              fontWeight={700}>بکاپ خودکار دیسک</Typography>
-          <Divider flexItem sx={{ borderWidth: 1.5 }} />
+              fontWeight={700}
+            >
+              فعال‌سازی بکاپ خودکار
+            </Typography>
+            <RefreshButton isFetching={volumeLoading} refetchData={refetchVolume} />
+          </Stack>
+          <Stack direction="row" columnGap={2}>
+              {isAutoBackupEnabled ? (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => setDialogType("DISABLE")}
+                  disabled={volumeLoading}
+                >
+                  غیرفعال‌سازی بکاپ خودکار
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => setDialogType("ENABLE")}
+                  disabled={volumeLoading}
+                >
+                  فعال‌سازی بکاپ خودکار
+                </Button>
+              )}
+            </Stack>
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack>
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            sx={{ mt: 2 }}
+            sx={{ mt: 6 }}
           >
             <Stack direction="row" alignItems="center" columnGap={1}>
-              <Typography >
+              <Typography variant="text2" fontWeight={"bold"}>
                 بکاپ خودکار برای این دیسک
               </Typography>
               {isAutoBackupEnabled && (
@@ -136,27 +180,7 @@ const VolumeAutoBackup: FC = () => {
               />
               <Typography >است</Typography>
             </Stack>
-            <Stack direction="row" columnGap={2}>
-              {isAutoBackupEnabled ? (
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => setDialogType("DISABLE")}
-                  disabled={volumeLoading}
-                >
-                  غیرفعال‌سازی بکاپ خودکار
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setDialogType("ENABLE")}
-                  disabled={volumeLoading}
-                >
-                  فعال‌سازی بکاپ خودکار
-                </Button>
-              )}
-            </Stack>
+            
           </Stack>
         </Stack>
       </Paper>
