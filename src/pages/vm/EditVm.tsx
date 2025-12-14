@@ -55,7 +55,7 @@ const TAB_CONFIGS: TabConfig[] = [
   //   component: AnalyticChart,
   // },
   {
-    label: "آدرس IP",
+    label: "شبکه ها",
     route: "/vm/:projectId/:id/ip",
     component: VmIpAddress,
   },
@@ -89,11 +89,11 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/vm/:projectId/:id/volume",
     component: Volume,
   },
-  {
-    label: "شبکه",
-    route: "/vm/:projectId/:id/network",
-    component: Network,
-  },
+  // {
+  //   label: "شبکه",
+  //   route: "/vm/:projectId/:id/network",
+  //   component: Network,
+  // },
 ];
 
 // Utility functions
