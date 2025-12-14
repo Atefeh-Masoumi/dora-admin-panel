@@ -64,7 +64,7 @@ export const Network: FC<FirewallPropsType> = () => {
               fontSize={24}
               fontWeight={700}
             >
-              مدیریت شبکه
+              شبکه خصوصی 
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
