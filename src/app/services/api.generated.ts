@@ -1881,31 +1881,33 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createProjectModel,
       }),
     }),
-    getApiMyReportUsageByCategoryId: build.query<
-      GetApiMyReportUsageByCategoryIdApiResponse,
-      GetApiMyReportUsageByCategoryIdApiArg
+    getApiMyReportStatisticFinancialFinancialReport: build.query<
+      GetApiMyReportStatisticFinancialFinancialReportApiResponse,
+      GetApiMyReportStatisticFinancialFinancialReportApiArg
     >({
-      query: (queryArg) => ({
-        url: `/api/my/report/usage/${queryArg.categoryId}`,
+      query: () => ({
+        url: `/api/my/report/statistic/financial/financial-report`,
       }),
     }),
-    getApiMyReportSearch: build.query<
-      GetApiMyReportSearchApiResponse,
-      GetApiMyReportSearchApiArg
+    getApiMyReportSearchFinancialSearchOrderReport: build.query<
+      GetApiMyReportSearchFinancialSearchOrderReportApiResponse,
+      GetApiMyReportSearchFinancialSearchOrderReportApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/report/search`,
+        url: `/api/my/report/search/financial/search-order-report`,
         params: {
           OrderName: queryArg.orderName,
           ProductName: queryArg.productName,
         },
       }),
     }),
-    getApiMyReportFinancial: build.query<
-      GetApiMyReportFinancialApiResponse,
-      GetApiMyReportFinancialApiArg
+    getApiMyReportChartFinancialUsageChartByCategoryId: build.query<
+      GetApiMyReportChartFinancialUsageChartByCategoryIdApiResponse,
+      GetApiMyReportChartFinancialUsageChartByCategoryIdApiArg
     >({
-      query: () => ({ url: `/api/my/report/financial` }),
+      query: (queryArg) => ({
+        url: `/api/my/report/chart/financial/usage-chart/${queryArg.categoryId}`,
+      }),
     }),
     getApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessList: build.query<
       GetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListApiResponse,
@@ -2547,12 +2549,12 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/ip/list`,
       }),
     }),
-    putApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityId: build.mutation<
-      PutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdApiResponse,
-      PutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdApiArg
+    putApiMyVmByProjectIdHostIpEnablePortSecurityAndId: build.mutation<
+      PutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdApiResponse,
+      PutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/ip/enable-port-security/${queryArg.id}`,
+        url: `/api/my/vm/${queryArg.projectId}/host/ip/enable-port-security/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -2674,6 +2676,24 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/get/${queryArg.id}`,
       }),
     }),
+    getApiMyVmByProjectIdHostFirewallList: build.query<
+      GetApiMyVmByProjectIdHostFirewallListApiResponse,
+      GetApiMyVmByProjectIdHostFirewallListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/host/firewall/list`,
+      }),
+    }),
+    putApiMyVmByProjectIdHostAndVmHostIdAssignFirewall: build.mutation<
+      PutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallApiResponse,
+      PutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/assign-firewall`,
+        method: "PUT",
+        body: queryArg.assignFirewallModel,
+      }),
+    }),
     putApiMyVmByProjectIdHostEditAndId: build.mutation<
       PutApiMyVmByProjectIdHostEditAndIdApiResponse,
       PutApiMyVmByProjectIdHostEditAndIdApiArg
@@ -2746,6 +2766,14 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createVmFirewallRuleModel,
       }),
     }),
+    getApiMyVmByProjectIdFirewallShortList: build.query<
+      GetApiMyVmByProjectIdFirewallShortListApiResponse,
+      GetApiMyVmByProjectIdFirewallShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/firewall/short-list`,
+      }),
+    }),
     getApiMyVmByProjectIdFirewallList: build.query<
       GetApiMyVmByProjectIdFirewallListApiResponse,
       GetApiMyVmByProjectIdFirewallListApiArg
@@ -2760,6 +2788,16 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/firewall/get/${queryArg.id}`,
+      }),
+    }),
+    putApiMyVmByProjectIdFirewallEditAndId: build.mutation<
+      PutApiMyVmByProjectIdFirewallEditAndIdApiResponse,
+      PutApiMyVmByProjectIdFirewallEditAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/firewall/edit/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.editVmFirewallModel,
       }),
     }),
     deleteApiMyVmByProjectIdFirewallDeleteAndId: build.mutation<
@@ -4003,20 +4041,20 @@ export type PostApiMyProjectCreateApiResponse = unknown;
 export type PostApiMyProjectCreateApiArg = {
   createProjectModel: CreateProjectModel;
 };
-export type GetApiMyReportUsageByCategoryIdApiResponse =
-  /** status 200 OK */ DashboardUsageResponse[];
-export type GetApiMyReportUsageByCategoryIdApiArg = {
-  categoryId: number;
-};
-export type GetApiMyReportSearchApiResponse =
-  /** status 200 OK */ DashboardSearchResponse;
-export type GetApiMyReportSearchApiArg = {
+export type GetApiMyReportStatisticFinancialFinancialReportApiResponse =
+  /** status 200 OK */ FinancialReportResponse;
+export type GetApiMyReportStatisticFinancialFinancialReportApiArg = void;
+export type GetApiMyReportSearchFinancialSearchOrderReportApiResponse =
+  /** status 200 OK */ SearchOrderReportResponse;
+export type GetApiMyReportSearchFinancialSearchOrderReportApiArg = {
   orderName?: string;
   productName?: string;
 };
-export type GetApiMyReportFinancialApiResponse =
-  /** status 200 OK */ DashboardFinancialResponse;
-export type GetApiMyReportFinancialApiArg = void;
+export type GetApiMyReportChartFinancialUsageChartByCategoryIdApiResponse =
+  /** status 200 OK */ UsageChartResponse[];
+export type GetApiMyReportChartFinancialUsageChartByCategoryIdApiArg = {
+  categoryId: number;
+};
 export type GetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListApiResponse =
   /** status 200 OK */ VpcPrivateNetworkRequestListResponse[];
 export type GetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListApiArg = {
@@ -4405,11 +4443,10 @@ export type GetApiMyVmByProjectIdHostAndVmHostIdIpListApiArg = {
   projectId: number;
   vmHostId: number;
 };
-export type PutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdApiResponse =
+export type PutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdApiResponse =
   unknown;
-export type PutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdApiArg = {
+export type PutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdApiArg = {
   projectId: number;
-  vmHostId: number;
   id: number;
 };
 export type PutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdApiResponse =
@@ -4487,6 +4524,18 @@ export type GetApiMyVmByProjectIdHostGetAndIdApiArg = {
   projectId: number;
   id: number;
 };
+export type GetApiMyVmByProjectIdHostFirewallListApiResponse =
+  /** status 200 OK */ FirewallListResponse[];
+export type GetApiMyVmByProjectIdHostFirewallListApiArg = {
+  projectId: number;
+};
+export type PutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallApiResponse =
+  unknown;
+export type PutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallApiArg = {
+  projectId: number;
+  vmHostId: number;
+  assignFirewallModel: AssignFirewallModel;
+};
 export type PutApiMyVmByProjectIdHostEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdHostEditAndIdApiArg = {
   projectId: number;
@@ -4537,6 +4586,11 @@ export type PostApiMyVmByProjectIdFirewallAndVmFirewallIdRuleCreateApiArg = {
   vmFirewallId: number;
   createVmFirewallRuleModel: CreateVmFirewallRuleModel;
 };
+export type GetApiMyVmByProjectIdFirewallShortListApiResponse =
+  /** status 200 OK */ VmFirewallShortListResponse[];
+export type GetApiMyVmByProjectIdFirewallShortListApiArg = {
+  projectId: number;
+};
 export type GetApiMyVmByProjectIdFirewallListApiResponse =
   /** status 200 OK */ VmFirewallListResponse[];
 export type GetApiMyVmByProjectIdFirewallListApiArg = {
@@ -4547,6 +4601,12 @@ export type GetApiMyVmByProjectIdFirewallGetAndIdApiResponse =
 export type GetApiMyVmByProjectIdFirewallGetAndIdApiArg = {
   projectId: number;
   id: number;
+};
+export type PutApiMyVmByProjectIdFirewallEditAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdFirewallEditAndIdApiArg = {
+  id: number;
+  projectId: number;
+  editVmFirewallModel: EditVmFirewallModel;
 };
 export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiResponse =
   /** status 200 OK */ VmFirewallRuleListResponse[];
@@ -6069,11 +6129,13 @@ export type CreateProjectModel = {
   description?: string | null;
   isPublic?: boolean;
 };
-export type DashboardUsageResponse = {
-  month: string | null;
-  count: number;
+export type FinancialReportResponse = {
+  walletBalance?: number;
+  billPrice?: number;
+  unpaidInvoiceCount?: number;
+  activeServiceCount?: number;
 };
-export type DashboardSearchResponse = {
+export type SearchOrderReportResponse = {
   orderId: number;
   name: string | null;
   productId: number;
@@ -6082,11 +6144,9 @@ export type DashboardSearchResponse = {
   projectName?: string | null;
   createDate: string;
 };
-export type DashboardFinancialResponse = {
-  walletBalance?: number;
-  billPrice?: number;
-  unpaidInvoiceCount?: number;
-  activeServiceCount?: number;
+export type UsageChartResponse = {
+  month: string | null;
+  count: number;
 };
 export type VpcPrivateNetworkRequestListResponse = {
   id?: number;
@@ -6314,7 +6374,7 @@ export type GetVolumeHostResponse = {
 };
 export type EnableBackupSnapshotModel = {
   calculateTypeId?: number;
-  cleanUpDuration?: number | null;
+  cleanUpDuration?: number;
 };
 export type EditVolumeHostModel = {
   volumeSize?: number;
@@ -6472,6 +6532,17 @@ export type GetVmResponse = {
   createDate: string;
   modifyDate: string;
 };
+export type FirewallListResponse = {
+  vmHostId?: number;
+  vmHostName: string | null;
+  vmFirewallId?: number | null;
+  firewall?: string | null;
+  projectId?: number;
+  isSecurityEnabled?: boolean;
+};
+export type AssignFirewallModel = {
+  vmFirewallId?: number;
+};
 export type EditVmModel = {
   cpu?: number;
   memory?: number;
@@ -6533,6 +6604,10 @@ export type CreateVmFirewallRuleModel = {
   maxPort?: number;
   isIpV4?: boolean;
 };
+export type VmFirewallShortListResponse = {
+  id?: number;
+  name: string | null;
+};
 export type VmFirewallListResponse = {
   id: number;
   name: string | null;
@@ -6540,6 +6615,9 @@ export type VmFirewallListResponse = {
   statusId: number;
   vmFirewallCount: number;
   createDate: string;
+};
+export type EditVmFirewallModel = {
+  name?: string | null;
 };
 export type VmFirewallModel = {
   name?: string | null;
@@ -6826,9 +6904,9 @@ export const {
   usePutApiMyProjectEditByIdMutation,
   useDeleteApiMyProjectDeleteByIdMutation,
   usePostApiMyProjectCreateMutation,
-  useGetApiMyReportUsageByCategoryIdQuery,
-  useGetApiMyReportSearchQuery,
-  useGetApiMyReportFinancialQuery,
+  useGetApiMyReportStatisticFinancialFinancialReportQuery,
+  useGetApiMyReportSearchFinancialSearchOrderReportQuery,
+  useGetApiMyReportChartFinancialUsageChartByCategoryIdQuery,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListQuery,
   usePostApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessCreateMutation,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListQuery,
@@ -6896,7 +6974,7 @@ export const {
   useGetApiMyVmByProjectIdIsoShortListQuery,
   useGetApiMyVmByProjectIdImageListQuery,
   useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery,
-  usePutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdMutation,
+  usePutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdMutation,
   usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation,
   useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation,
   usePostApiMyVmByProjectIdHostAndVmHostIdIpCreateMutation,
@@ -6910,6 +6988,8 @@ export const {
   useGetApiMyVmByProjectIdHostListQuery,
   useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery,
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
+  useGetApiMyVmByProjectIdHostFirewallListQuery,
+  usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
   usePostApiMyVmByProjectIdHostCreateMutation,
@@ -6918,8 +6998,10 @@ export const {
   useGetApiMyVmByProjectIdFirewallAndVmFirewallIdRuleGetIdQuery,
   useDeleteApiMyVmByProjectIdFirewallAndVmFirewallIdRuleDeleteIdMutation,
   usePostApiMyVmByProjectIdFirewallAndVmFirewallIdRuleCreateMutation,
+  useGetApiMyVmByProjectIdFirewallShortListQuery,
   useGetApiMyVmByProjectIdFirewallListQuery,
   useGetApiMyVmByProjectIdFirewallGetAndIdQuery,
+  usePutApiMyVmByProjectIdFirewallEditAndIdMutation,
   useDeleteApiMyVmByProjectIdFirewallDeleteAndIdMutation,
   usePostApiMyVmByProjectIdFirewallCreateMutation,
   usePutApiMyPortalNewsUnsubscribeByEmailMutation,
