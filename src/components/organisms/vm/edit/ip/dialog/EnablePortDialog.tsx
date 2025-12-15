@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useGetApiMyVmByProjectIdBackupListQuery, usePutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdBackupListQuery, usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
@@ -22,7 +22,7 @@ export const EnablePortDialog: FC<EnablePortDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [enableport, { isLoading }] =
-    usePutApiMyVmByProjectIdHostAndVmHostIdIpEnablePortSecurityIdMutation();
+  usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation();
   const navigate = useNavigate();
 
   const { projectId, id: vmId } = useParams();
@@ -36,8 +36,8 @@ export const EnablePortDialog: FC<EnablePortDialogPropsType> = ({
             toast.success("با موفقیت فعال شد");
             refetch();
           })
-          .catch((err) => {
-            toast.error("فعال سازی انجام نشد");
+          .catch(() => {
+            
           });
       
   };
