@@ -174,7 +174,7 @@ export const ChooseOSForRebuild: FC<SelectOSPropsType> = ({
       <Typography fontSize={24} fontWeight="bold" align="center" sx={{ direction: "rtl" }}>
         سیستم عامل ماشین را انتخاب کنید
       </Typography>
-      <Grid2 container gap={2} justifyContent="center" width="100%" sx={{ direction: "rtl" }}>
+      <Grid2 container gap={4} justifyContent="center" width="80%" sx={{ direction: "rtl" }}>
         {isLoading && (
           [...Array(2)].map((_, index) => (
             <Grid2 key={index} size={{xs:12, sm:6}}
