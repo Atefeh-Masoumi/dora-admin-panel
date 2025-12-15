@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useGetApiMyReportUsageByCategoryIdQuery } from "src/app/services/api.generated";
+import { useGetApiMyReportChartFinancialUsageChartByCategoryIdQuery } from "src/app/services/api.generated";
 import { ChartTooltip } from "./ChartTooltip";
 import { priceToPersian } from "src/utils/priceToPersian";
 
@@ -19,7 +19,7 @@ type SampleChartPropsType = {
 
 export const SampleChart: FC<SampleChartPropsType> = ({ categoryId }) => {
   const { data: userAnalytics, isLoading } =
-  useGetApiMyReportUsageByCategoryIdQuery({
+  useGetApiMyReportChartFinancialUsageChartByCategoryIdQuery({
       categoryId,
     });
   return (
