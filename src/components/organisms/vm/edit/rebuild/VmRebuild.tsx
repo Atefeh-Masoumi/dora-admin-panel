@@ -118,8 +118,9 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
             <Typography align="center" color="grey.700" sx={{ mb: 4 }}>
               بعد از بازسازی امکان دستیابی به اطلاعات قبلی وجود ندارد!
             </Typography>
-            <Stack spacing={4} sx={{ width: "100%" }}>
+            <Stack spacing={4} >
               <ChooseOSForRebuild setImageId={setSelectedOs} />
+              <Divider sx={{ mt: 10 }} />
               <SelectServiceName
                 serviceName={name} setServiceName={setName}
                 securityId={securityId}
