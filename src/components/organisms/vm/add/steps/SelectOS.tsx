@@ -22,6 +22,7 @@ import {
 } from "src/app/services/api.generated";
 import { RockyOSIcon } from "src/components/atoms/svg-icons/RockySvg";
 import { useParams } from "react-router";
+import { PfsenseSvg } from "src/components/atoms/svg-icons/PfsenseSvg";
 
 type SelectOSPropsType = {
   hostProjectId: number;
@@ -137,6 +138,9 @@ export const SelectOS: FC<SelectOSPropsType> = ({ hostProjectId }) => {
         return <CentOSIcon sx={{ width: 40, height: 40 }} />;
       case 7:
         return <RockyOSIcon sx={{ width: 40, height: 40 }} />;
+     
+        case 9:
+          return <PfsenseSvg sx={{ width: 40, height: 40 }} />;
       default:
         return "";
     }
