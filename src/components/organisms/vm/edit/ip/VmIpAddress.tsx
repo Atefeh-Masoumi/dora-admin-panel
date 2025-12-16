@@ -10,12 +10,15 @@ import {
 import { Grid2 } from "@mui/material";
 import { useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery } from "src/app/services/api.generated";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import IpRow from "./IPRow";
 import { Add } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { Network } from "../network/VmNatworkTable";
+import { AssignFirewall } from "./AssignFirewall";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { IpTableTableStruct } from "./struct";
+import IpTableRow from "./IpTableRow";
 
 const LoadingSkeleton: FC = () => (
   <Grid2
@@ -62,9 +65,10 @@ export const VmIpAddress: FC = () => {
 
   return (
     <>
+    <AssignFirewall/>
       <Paper
         elevation={0}
-        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5, my:"20px" }}
       >
         <Stack
           pb={2}
@@ -97,41 +101,18 @@ export const VmIpAddress: FC = () => {
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack>
-          <Paper
-            component={Stack}
-            direction="column"
-            spacing={1}
-            elevation={0}
-            sx={{ p: 2.5, borderRadius: BORDER_RADIUS_1 }}
-          >
-            <Grid2 container alignItems="center">
-              <Grid2 size={{ xs: 6, sm: 4 }}>
-                <Typography color="grey.700" align="center">
-                  آدرس IP
-                </Typography>
-              </Grid2>
-              <Grid2 size={{ xs: 3, sm: 3.9 }}>
-                {/* <Typography color="grey.700" align="center">
-                  نوع
-                </Typography> */}
-                <Typography color="grey.700" align="center">
-                  Primary
-                </Typography>
-              </Grid2>
-              <Grid2 size={{ xs: 3, sm: 3.9 }}>
-                
-              </Grid2>
-              <Grid2 size={{ xs: 0, sm: 0.2 }} />
-            </Grid2>
-            {isLoading ? (
-              <LoadingSkeleton />
-            ) : (
-              data
-                ?.map((item, index) => {
-                  return <IpRow key={index} {...item} vmHostId={Number(id)} refetch={refetch} />;
-                })
-            )}
-          </Paper>
+          <Stack>
+          <BaseTable
+            struct={IpTableTableStruct}
+            RowComponent={IpTableRow}
+            rows={
+              data?? []
+            }
+            text="در حال حاضر رکورد وجود ندارد"
+            isLoading={isLoading}
+            initialOrder={2}
+          />
+        </Stack>
         </Stack>
       </Paper>
       <Network/>
