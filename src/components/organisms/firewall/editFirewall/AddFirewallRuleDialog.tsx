@@ -14,9 +14,11 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  DialogActions,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { toast } from "react-toastify";
 import {
   CreateVmFirewallRuleModel,
@@ -26,6 +28,15 @@ import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
 import LoadingButton from "src/components/atoms/LoadingButton";
 import { useParams } from "react-router-dom";
+
+import {
+  dialogSx,
+  dialogTitleSx,
+  dialogContentSx,
+  dialogFormStackSx,
+  dialogActionsSx,
+  dialogButtonSx,
+} from "src/configs/dialogStyles";
 
 type AddFirewallRuleDialogPropsType = DialogProps & {
   forceClose: () => void;
@@ -51,6 +62,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
   ...props
 }) => {
   const { projectId, firewallId } = useParams();
+
   const [createRule, { isLoading: createRuleLoading }] =
     usePostApiMyVmByProjectIdFirewallAndVmFirewallIdRuleCreateMutation();
 
@@ -66,9 +78,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
   const validationSchema = yup.object().shape({
     firewallProtocolId: yup.number().required("این بخش الزامی می‌باشد"),
     directionId: yup.number().required("این بخش الزامی می‌باشد"),
-    remoteIp: yup
-      .string()
-      .required("این بخش الزامی می‌باشد"),
+    remoteIp: yup.string().required("این بخش الزامی می‌باشد"),
     minPort: yup
       .number()
       .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
@@ -79,10 +89,14 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
       .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
       .max(65535, "پورت نمی‌تواند بیشتر از 65535 باشد")
       .required("این بخش الزامی می‌باشد")
-      .test("max-greater-than-min", "پورت حداکثر باید بزرگتر یا مساوی پورت حداقل باشد", function(value) {
-        const { minPort } = this.parent;
-        return Boolean(value && value >= (minPort ?? 0));
-      }),
+      .test(
+        "max-greater-than-min",
+        "پورت حداکثر باید بزرگتر یا مساوی پورت حداقل باشد",
+        function (value) {
+          const { minPort } = this.parent;
+          return Boolean(value && value >= (minPort ?? 0));
+        }
+      ),
   });
 
   const onSubmit: formikOnSubmitType<CreateVmFirewallRuleModel> = (
@@ -102,9 +116,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
         formik.resetForm();
       })
       .catch(() => { })
-      .finally(() => {
-        setSubmitting(false);
-      });
+      .finally(() => setSubmitting(false));
   };
 
   const formik = useFormik({
@@ -114,30 +126,29 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
     onSubmit,
   });
 
-  const closeDialogHandler = (event: {}) => {
-    if (!props.onClose) return;
-    props.onClose(event, "escapeKeyDown");
-    formik.resetForm();
-  };
+  const closeDialogHandler: MouseEventHandler<HTMLButtonElement> &
+    ((event: any) => void) = (event: any) => {
+      props.onClose?.(event, "escapeKeyDown");
+      formik.resetForm();
+    };
 
   return (
-    <Dialog
-      {...props}
-      onClose={closeDialogHandler}
-      fullWidth
-    >
-      <DialogTitle textAlign="left">
-        ایجاد قانون جدید
-      </DialogTitle>
-      <DialogContent>
-        <form onSubmit={formik.handleSubmit}>
-          <Stack direction="column" rowGap={2} sx={{ pt: 2 }}>
+    <Dialog {...props} sx={dialogSx} onClose={props.onClose} fullWidth>
+      <DialogTitle sx={dialogTitleSx}>ایجاد قانون جدید</DialogTitle>
+
+      <form onSubmit={formik.handleSubmit}>
+        <DialogContent sx={dialogContentSx}>
+          <Stack sx={dialogFormStackSx}>
+            {/* Protocol */}
             <FormControl fullWidth size="small">
               <InputLabel>نوع پروتکل</InputLabel>
               <Select
                 {...formik.getFieldProps("firewallProtocolId")}
                 label="نوع پروتکل"
-                error={Boolean(formik.errors.firewallProtocolId && formik.touched.firewallProtocolId)}
+                error={Boolean(
+                  formik.touched.firewallProtocolId &&
+                  formik.errors.firewallProtocolId
+                )}
               >
                 {protocolOptions.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
@@ -145,8 +156,15 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
                   </MenuItem>
                 ))}
               </Select>
+              {formik.touched.firewallProtocolId &&
+                formik.errors.firewallProtocolId && (
+                  <Typography color="error" fontSize={12} mt={0.5}>
+                    {String(formik.errors.firewallProtocolId)}
+                  </Typography>
+                )}
             </FormControl>
 
+            {/* Direction */}
             <FormControl component="fieldset">
               <FormLabel component="legend">جهت</FormLabel>
               <RadioGroup
@@ -163,14 +181,34 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
                   />
                 ))}
               </RadioGroup>
+              {formik.touched.directionId && formik.errors.directionId && (
+                <Typography color="error" fontSize={12} mt={0.5}>
+                  {String(formik.errors.directionId)}
+                </Typography>
+              )}
             </FormControl>
-
-            <Stack direction="column" rowGap={1}>
+            <Stack>
+              <InputLabel>نسخه IP</InputLabel>
+              <Select
+                name="isIpV4"
+                size="small"
+                fullWidth
+                value={formik.values.isIpV4 ? "true" : "false"}
+                onChange={(e) =>
+                  formik.setFieldValue("isIpV4", e.target.value === "true")
+                }
+              >
+                <MenuItem value="true">IPv4</MenuItem>
+                <MenuItem value="false">IPv6</MenuItem>
+              </Select>
+            </Stack>
+            {/* Remote IP */}
+            <Stack>
               <InputLabel>آدرس IP</InputLabel>
               <TextField
                 {...formik.getFieldProps("remoteIp")}
                 fullWidth
-                error={Boolean(formik.errors.remoteIp && formik.touched.remoteIp)}
+                error={Boolean(formik.touched.remoteIp && formik.errors.remoteIp)}
                 helperText={formik.touched.remoteIp && formik.errors.remoteIp}
                 placeholder="مثال: 0.0.0.0/0"
                 size="small"
@@ -178,63 +216,59 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
               />
             </Stack>
 
+            {/* Ports */}
             <Stack direction="row" spacing={2}>
-              <Stack direction="column" rowGap={1} sx={{ flex: 1 }}>
+              <Stack sx={{ flex: 1 }}>
                 <InputLabel>از پورت</InputLabel>
                 <TextField
                   {...formik.getFieldProps("minPort")}
                   fullWidth
                   type="number"
-                  error={Boolean(formik.errors.minPort && formik.touched.minPort)}
+                  error={Boolean(formik.touched.minPort && formik.errors.minPort)}
                   helperText={formik.touched.minPort && formik.errors.minPort}
-                  inputProps={{
-                    min: 1,
-                    max: 65535,
-                    dir: "ltr"
-                  }}
+                  inputProps={{ min: 1, max: 65535, dir: "ltr" }}
                   size="small"
                 />
               </Stack>
-              <Stack direction="column" rowGap={1} sx={{ flex: 1 }}>
+
+              <Stack sx={{ flex: 1 }}>
                 <InputLabel>تا پورت</InputLabel>
                 <TextField
                   {...formik.getFieldProps("maxPort")}
                   fullWidth
                   type="number"
-                  error={Boolean(formik.errors.maxPort && formik.touched.maxPort)}
+                  error={Boolean(formik.touched.maxPort && formik.errors.maxPort)}
                   helperText={formik.touched.maxPort && formik.errors.maxPort}
-                  inputProps={{
-                    min: 1,
-                    max: 65535,
-                    dir: "ltr"
-                  }}
+                  inputProps={{ min: 1, max: 65535, dir: "ltr" }}
                   size="small"
                 />
               </Stack>
             </Stack>
-
-            <Stack direction="row" justifyContent="end" spacing={1} sx={{ pt: 2 }}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ px: 3, py: 0.8 }}
-                onClick={closeDialogHandler}
-              >
-                انصراف
-              </Button>
-              <LoadingButton
-                type="submit"
-                loading={createRuleLoading}
-                variant="contained"
-                sx={{ px: 3, py: 0.8 }}
-              >
-                ایجاد
-              </LoadingButton>
-            </Stack>
           </Stack>
-        </form>
-      </DialogContent>
+        </DialogContent>
+
+        <DialogActions sx={dialogActionsSx}>
+          <Stack direction="row" justifyContent="end" spacing={1} width="100%">
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={dialogButtonSx}
+              onClick={closeDialogHandler}
+            >
+              انصراف
+            </Button>
+
+            <LoadingButton
+              type="submit"
+              loading={createRuleLoading}
+              variant="contained"
+              sx={dialogButtonSx}
+            >
+              ایجاد
+            </LoadingButton>
+          </Stack>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };
-
