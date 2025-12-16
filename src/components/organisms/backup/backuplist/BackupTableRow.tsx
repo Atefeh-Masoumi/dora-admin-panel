@@ -15,6 +15,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { backupTableStruct } from "./struct";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { RestoreBackupDialog } from "../dialog/RestoreBackup";
+import { Restore } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   RESTORE = "RESTORE",
@@ -155,7 +156,7 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                     sx={{ borderRadius: 1 }}
                     onClick={restoreBackupOnClick}
                   >
-                     <RefreshSvg />
+                      <Restore /> 
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
