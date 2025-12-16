@@ -15,6 +15,7 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RevertVmSnapshotDialog } from "../dialog/RevertVmSnapshotDialog";
 import { snapShotTableStruct } from "./struct";
 import { useParams } from "react-router";
+import { Restore } from "@mui/icons-material";
 
 enum VM_SNAPSHOT_STATUS_INFO {
   ACTIVE = 1,
@@ -161,7 +162,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
                 <Stack direction="row" columnGap={1} alignItems="center">
                   {statusId === VM_SNAPSHOT_STATUS_INFO.INACTIVE && (
                     <IconButton onClick={handleOpenRevert}>
-                      <RefreshSvg />
+                       <Restore />
                     </IconButton>
                   )}
 
