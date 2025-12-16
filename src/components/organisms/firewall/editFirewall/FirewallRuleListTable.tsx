@@ -65,7 +65,7 @@ const FirewallRuleListTable: FC = () => {
               fontSize={24}
               fontWeight={700}
             >
-              لیست قوانین فایروال
+              لیست رول فایروال
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
