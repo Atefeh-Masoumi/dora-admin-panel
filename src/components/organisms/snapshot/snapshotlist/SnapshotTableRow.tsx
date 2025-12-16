@@ -15,6 +15,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { snapshotTableStruct } from "./struct";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { RevertSnapshotDialog } from "../dialog/RevertSnapshot";
+import { Restore } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   REVERT = "REVERT",
@@ -157,7 +158,7 @@ const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
                     sx={{ borderRadius: 1 }}
                     onClick={revertSnapshotOnClick}
                   >
-                     <RefreshSvg />
+                      <Restore />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
