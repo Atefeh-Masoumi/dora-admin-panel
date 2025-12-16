@@ -1,6 +1,5 @@
 import {
   Divider,
-
   Paper,
   Skeleton,
   Stack,
@@ -89,7 +88,7 @@ export const analyticsCategories = [
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
-          sx={{ m: 3 }}
+          sx={{ m: 1 }}
 
         >
 
@@ -117,7 +116,7 @@ export const analyticsCategories = [
         <Grid2
           container
           spacing={4}
-          sx={{ p: 4 }}
+          sx={{ p: 2 }}
         >
           {isLoading ? (
             <Grid2 size={12}>
@@ -128,30 +127,39 @@ export const analyticsCategories = [
               />
             </Grid2>
           ) : (
-            userAnalytics?.series?.filter((item)=>item.name !== "Bandwidth Usage (MByte)").map((item, index) => (
+            userAnalytics?.series?.filter((item) => item.name !== "Bandwidth UsageChart (MByte)").map((item, index) => (
               <Grid2
                 key={index}
                 size={{ xs: 12, md: 6 }}
-                sx={{ display: "flex" }}
               >
-                <Stack sx={{ height: 250, width: "100%" }}>
-                  <Typography variant="text1" color="secondary">
-                    {item.name}
-                  </Typography>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    borderRadius: 2,
+                    border: "1px solid rgba(0,0,0,0.08)",
+                    height: "100%",
+                  }}
+                >
+                  <Stack spacing={1} sx={{ height: 250, }}>
+                    <Typography variant="text1" color="secondary">
+                      {item.name}
+                    </Typography>
 
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
-                      data={item.data?.map(v => ({ uv: v }))}
-                    >
-                      <CartesianGrid strokeDasharray="1" vertical={false} />
-                      <XAxis />
-                      <YAxis />
-                      <Line dataKey="uv" dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={item.data?.map(v => ({ uv: v }))}
+                      >
+                        <CartesianGrid strokeDasharray="1" vertical={false} />
+                        <XAxis />
+                        <YAxis />
+                        <Line dataKey="uv" dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
 
-                  <Divider sx={{ mt: 2 }} />
-                </Stack>
+                    <Divider sx={{ mt: 2 }} />
+                  </Stack>
+                </Paper>
               </Grid2>
             ))
           )}
