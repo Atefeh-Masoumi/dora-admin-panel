@@ -1,4 +1,4 @@
-import { Chip, IconButton, Stack, Typography } from "@mui/material";
+import { Chip, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
@@ -8,12 +8,15 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { VmnetworkTableTableStruct } from "./struct";
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-    VmNetworkNodeListResponse,
-    useGetApiMyVmByProjectIdNetworkNodeListQuery,
-    usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation
+  VmNetworkNodeListResponse,
+  useGetApiMyVmByProjectIdNetworkNodeListQuery,
+  usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
+import { EnablePortDialog } from "./EnablePortDialog";
+import { DisablePortDialog } from "./DisablePortDialog";
+import { LockOpenOutlined, LockOutlined } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -68,31 +71,36 @@ export const networkNodeStatusIdentifier = (networkNodeStatusId: number) => {
 };
 
 export const NetworkTableRow: FC<{ row: any }> = ({ row }) => {
-  const {projectId,id } = useParams();
-
+  const { projectId, id } = useParams();
+  const [isEnablePortDialogOpen, setIsEnablePortDialogOpen] = useState(false);
+  const [isDisableDialogOpen, setIsDisableDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedNetwork, setSelectedNetwork] =
     useState<VmNetworkNodeListResponse | null>(null);
 
   const [detachNode, { isLoading: detachNodeLoading }] =
-  usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation();
+    usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation();
 
-const { refetch} = useGetApiMyVmByProjectIdNetworkNodeListQuery(
-      { projectId: Number(projectId),
-        vmHostId: Number(id) },
-      { skip: !id }
-    );
+  const { refetch } = useGetApiMyVmByProjectIdNetworkNodeListQuery(
+    {
+      projectId: Number(projectId),
+      vmHostId: Number(id)
+    },
+    { skip: !id }
+  );
 
   const deleteVolumeRecordHandler = () =>
-    detachNode({ id: Number(selectedNetwork?.id) ,
-       projectId: Number(projectId),})
+    detachNode({
+      id: Number(selectedNetwork?.id),
+      projectId: Number(projectId),
+    })
       .unwrap()
       .then(() => {
         toast.success("نود با موفقیت جدا شد");
         refetch();
         closeDialogHandler();
       })
-      .catch(() => {});
+      .catch(() => { });
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -124,6 +132,21 @@ const { refetch} = useGetApiMyVmByProjectIdNetworkNodeListQuery(
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
                   </IconButton>
+                  {
+                    row?.isEnableSecurity ? <>
+                      <Tooltip title="فعال سازی غیرport security">
+                        <IconButton onClick={() => setIsDisableDialogOpen(true)} sx={{ cursor: "pointer" }}>
+                          <LockOpenOutlined sx={{ color: "grey.700" }} />
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                      :
+                      <Tooltip title="فعال سازی port security">
+                        <IconButton onClick={() => setIsEnablePortDialogOpen(true)} sx={{ cursor: "pointer" }}>
+                          <LockOutlined sx={{ color: "grey.700" }} />
+                        </IconButton>
+                      </Tooltip>
+                  }
                 </Stack>
               ) : column.id === "statusId" ? (
                 <Chip
@@ -158,6 +181,17 @@ const { refetch} = useGetApiMyVmByProjectIdNetworkNodeListQuery(
         onSubmit={deleteVolumeRecordHandler}
         submitLoading={detachNodeLoading}
       />
+      <EnablePortDialog
+        openDialog={isEnablePortDialogOpen}
+        handleClose={() => setIsEnablePortDialogOpen(false)}
+        id={Number(row?.id)}
+        refetch={refetch}
+      />
+      <DisablePortDialog
+        openDialog={isDisableDialogOpen}
+        handleClose={() => setIsDisableDialogOpen(false)}
+        id={row?.id}
+        refetch={refetch} />
     </Fragment>
   );
 };
