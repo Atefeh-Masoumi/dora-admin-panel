@@ -14,6 +14,7 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RestoreBackupDialog } from "../dialog/RestoreBackupDialog";
 import { BackupTableStruct } from "./struct";
 import { useParams } from "react-router";
+import { Restore } from "@mui/icons-material";
 
 enum VOLUME_BACKUP_STATUS_INFO {
   ACTIVE = 1,
@@ -155,7 +156,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                 <Stack direction="row" columnGap={1} alignItems="center">
                   {statusId === VOLUME_BACKUP_STATUS_INFO.ACTIVE && (
                     <IconButton onClick={handleOpenRestore}>
-                      <RefreshSvg />
+                       <Restore />
                     </IconButton>
                   )}
 
