@@ -145,9 +145,9 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.ADD_NODE:
         href = `/kubernetes-cluster/${projectId}/${kubernetesClusterID}`;
         break;
-      case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
-        navigate(-1);
-        return;
+      // case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
+      //   navigate(-1);
+      //   return;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =
           !projectId || !vpcId
