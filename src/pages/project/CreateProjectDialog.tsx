@@ -11,7 +11,6 @@ import {
 	FormControlLabel,
 	Grid,
 	Box,
-	Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
@@ -27,7 +26,7 @@ import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextFiel
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
-import DomainIcon from "@mui/icons-material/Domain";
+// import DomainIcon from "@mui/icons-material/Domain";
 import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
