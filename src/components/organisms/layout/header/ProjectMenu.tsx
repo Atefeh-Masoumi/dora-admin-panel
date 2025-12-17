@@ -58,95 +58,95 @@ const ProjectMenu = () => {
   };
   return (
     <Box>
-    <Button
-      endIcon={<ExpandMore sx={{ fontSize: "1.5em !important" }} />}
-      onClick={handleProjectMenuOpen}
-      color="secondary"
-      sx={{ 
-        backgroundColor: "rgba(110, 118, 138, 0.06)",
-        py: 1.3,
-        width: 150,
-        height: 40,
-        borderRadius: BORDER_RADIUS_1,
-        '&:hover': {
-          backgroundColor: "rgba(110, 118, 138, 0.12)",
-        }
-      }}
-    >
-      <Stack direction="row">
-        <Typography sx={{ direction: "rtl", width: "100%" }}>
-          {selectedProject ? selectedProject.name : "انتخاب پروژه"}
-        </Typography>
-      </Stack>
-    </Button>
-    <ThemeProvider
-      theme={createTheme({
-        palette: { mode: "dark" },
-      })}
-    >
-      <Menu
-        keepMounted
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        anchorEl={projectMenuAnchor}
-        open={Boolean(projectMenuAnchor)}
-        onClose={handleProjectMenuClose}
-        sx={{ marginRight: { xs: "0", md: "60px" }, marginTop: "10px" }}
-        PaperProps={{
-          sx: { 
-            width: 150,
-            mt: 1,
-            boxShadow: 4,
-            borderRadius: BORDER_RADIUS_1,
-            backgroundColor: "rgba(32, 32, 32, 1)"
+      <Button
+        endIcon={<ExpandMore sx={{ fontSize: "1.5em !important" }} />}
+        onClick={handleProjectMenuOpen}
+        color="secondary"
+        sx={{
+          backgroundColor: "rgba(110, 118, 138, 0.06)",
+          py: 1.3,
+          width: 150,
+          height: 40,
+          borderRadius: BORDER_RADIUS_1,
+          "&:hover": {
+            backgroundColor: "rgba(110, 118, 138, 0.12)",
           },
         }}
       >
-        <MenuList sx={{ backgroundColor: "rgba(32, 32, 32, 1)" }}>
-          <Stack p={1.5} spacing={1}>
-            {projectList.map((project) => (
-              <MenuItem
-                key={project.id}
-                disableRipple
-                onClick={() => project?.id && handleProjectSelect(project?.id)}
-                selected={project.id === selectedProjectId}
-                sx={{
-                  borderRadius: BORDER_RADIUS_1,
-                  m: 1,
-                  py: 2,
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.light',
-                    '&:hover': {
-                      backgroundColor: 'primary.light',
-                    }
+        <Stack direction="row">
+          <Typography sx={{ direction: "rtl", width: "100%" }}>
+            {selectedProject ? selectedProject.name : "انتخاب پروژه"}
+          </Typography>
+        </Stack>
+      </Button>
+      <ThemeProvider
+        theme={createTheme({
+          palette: { mode: "dark" },
+        })}
+      >
+        <Menu
+          keepMounted
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          anchorEl={projectMenuAnchor}
+          open={Boolean(projectMenuAnchor)}
+          onClose={handleProjectMenuClose}
+          sx={{ marginRight: { xs: "0", md: "60px" }, marginTop: "10px" }}
+          PaperProps={{
+            sx: {
+              width: 150,
+              mt: 1,
+              boxShadow: 4,
+              borderRadius: BORDER_RADIUS_1,
+              backgroundColor: "rgba(32, 32, 32, 1)",
+            },
+          }}
+        >
+          <MenuList sx={{ backgroundColor: "rgba(32, 32, 32, 1)" }}>
+            <Stack p={1.5} spacing={1}>
+              {projectList.map((project) => (
+                <MenuItem
+                  key={project.id}
+                  disableRipple
+                  onClick={() =>
+                    project?.id && handleProjectSelect(project?.id)
                   }
-                }}
-              >
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1}
-                  py={0.5}
+                  selected={project.id === selectedProjectId}
+                  sx={{
+                    borderRadius: BORDER_RADIUS_1,
+                    m: 1,
+                    py: 2,
+                    "&.Mui-selected": {
+                      backgroundColor: "primary.main",
+                      "&:hover": {
+                        backgroundColor: "primary.main",
+                      },
+                    },
+                  }}
                 >
-                  <FolderOutlined />
-                  <Typography>
-                    {project.name}
-                  </Typography>
-                </Stack>
-              </MenuItem>
-            ))}
-          </Stack>
-        </MenuList>
-      </Menu>
-    </ThemeProvider>
-  </Box>
-  )
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                    py={0.5}
+                  >
+                    <FolderOutlined />
+                    <Typography>{project.name}</Typography>
+                  </Stack>
+                </MenuItem>
+              ))}
+            </Stack>
+          </MenuList>
+        </Menu>
+      </ThemeProvider>
+    </Box>
+  );
 }
 
 export default ProjectMenu
