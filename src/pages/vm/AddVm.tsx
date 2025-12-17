@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -40,6 +40,15 @@ const AddVm: FC = () => {
     isPredefined,
     setIsPredefined,
     customConfig,
+    // network settings from context
+    usePublicIpV4,
+    usePublicIpV6,
+    usePrivateNetwork,
+    selectedNetwork,
+    ipAddress,
+    usedFirewall,
+    vmFirewallId,
+
   } = useContext(AddServerContext);
 
   const { data: productItems } =
@@ -111,7 +120,13 @@ const AddVm: FC = () => {
     } else if (serverName.trim().length < 5 || serverName.length > 50) {
       validationErrorMessage =
         "طول کارکترهای بخش نام سرور ابری باید بین ۵ تا ۵۰ کارکتر باشد";
-    } 
+    } else if (!passwordValidationRegex.test(serverPassword)) {
+      validationErrorMessage = "رمز عبور نامعتبر است";
+    } else if (usePrivateNetwork && (!selectedNetwork?.id || !ipAddress)) {
+      validationErrorMessage = "برای شبکه خصوصی، انتخاب شبکه و IP الزامی است";
+    } else if (usedFirewall && !vmFirewallId) {
+      validationErrorMessage = "برای فایروال، انتخاب فایروال الزامی است";
+    }
 
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
@@ -128,7 +143,10 @@ const AddVm: FC = () => {
           memory: customConfig.memory,
           disk: customConfig.disk,
 
-          ipAddress: String(selectedIp),
+          vmNetworkId: usePrivateNetwork ? (selectedNetwork?.id as number | undefined) : undefined,
+          ipAddress: usePrivateNetwork ? (ipAddress as string) : undefined,
+          usedFirewall: usedFirewall,
+          vmFirewallId: usedFirewall ? (vmFirewallId as number) : undefined,
           storageClassTypeId: 1,
           usedPublicIpV4: true,
           usedPublicIpV6: false
@@ -202,7 +220,12 @@ const AddVm: FC = () => {
                 </Grid>
                 <Grid xs={12} item>
                   <ServerInfo />
+                  <Divider sx={{ mt: 10 }} />
                 </Grid>
+                <Grid xs={12} item>
+                  <SelectNetwork />
+                </Grid>
+                
               </Grid>
             </Stack>
           </Grid>
