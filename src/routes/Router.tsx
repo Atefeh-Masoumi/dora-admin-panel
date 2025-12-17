@@ -11,8 +11,6 @@ import { PrivateRoute } from "./PrivateRoute";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import { AddKubernetesContextProvider } from "src/components/organisms/kuberCluster/add/contexts/AddKubernetesContext";
 import AddZoneContextProvider from "src/components/organisms/cdn/add/contexts/AddContext";
-import AddDomainContextProvider from "src/components/organisms/domain/add/contexts/AddContext";
-import EditDomainContextProvider from "src/components/organisms/domain/edit/contexts/EditContext";
 import AddStorageContextProvider from "src/components/organisms/storage/add/contexts/AddStorageContext";
 import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
