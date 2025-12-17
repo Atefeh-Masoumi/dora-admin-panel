@@ -144,7 +144,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 								placeholder="نام موردنظر را وارد کنید"
 							/>
 						</Stack>
-						{/* {!projectId && (
+						 {!projectId && (
 							<Stack direction="column" rowGap={1}>
 								<InputLabel>نام مرکز داده</InputLabel>
 								<RadioGroup
@@ -167,10 +167,10 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 												<FormControlLabel
 													sx={{
 														border: "1px solid #ccc",
-														padding: "5px 0",
+														padding: "1px 0",
 														borderRadius: BORDER_RADIUS_1,
 														width: "100%",
-														margin: { xs: " 5px 0", sm: "0 !important" },
+														margin: { xs: " 1px 0", sm: "0 !important" },
 													}}
 													value={id}
 													control={<Radio size="medium" />}
@@ -180,7 +180,13 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 															alignItems="center"
 															spacing={1}
 														>
-															<DomainIcon />
+															<img
+																style={{ width: "80px", height: "80px" }}
+																src={`/assets/${dataCenterIconRenderHandler(
+																	photoName || ""
+																)}`}
+																alt={name || ""}
+															/>
 															<Box>{name}</Box>
 														</Stack>
 													}
@@ -190,7 +196,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 									</Grid>
 								</RadioGroup>
 							</Stack>
-						)} */}
+						)} 
 						{/* <Stack direction="column" rowGap={1}>
 							<InputLabel>نوع پروژه</InputLabel>
 							<RadioGroup
@@ -257,7 +263,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 									</Grid>
 								</Grid>
 							</RadioGroup>
-						</Stack> */}
+						</Stack>  */}
 						<Stack direction="row" justifyContent="end" spacing={1}>
 							<Button
 								variant="outlined"
