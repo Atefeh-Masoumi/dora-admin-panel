@@ -5,7 +5,6 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -21,7 +20,6 @@ import {
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { AddFirewallDialog } from "src/pages/firewall/AddFirewall";
-import RefreshIcon from "@mui/icons-material/Refresh";
 
 export const SelectNetwork: FC = () => {
   const { projectId } = useParams();
