@@ -31,6 +31,21 @@ type AddServerContextType = {
   //-------------for custom config---------------//
   customConfig: vmCustomConfigType;
   setCustomConfig: (customConfig: vmCustomConfigType) => void;
+  // Network settings
+  usePublicIpV4: boolean;
+  setUsePublicIpV4: (value: boolean) => void;
+  usePublicIpV6: boolean;
+  setUsePublicIpV6: (value: boolean) => void;
+  usePrivateNetwork: boolean;
+  setUsePrivateNetwork: (value: boolean) => void;
+  selectedNetwork: VmNetworkShortListResponse | null;
+  setSelectedNetwork: (network: VmNetworkShortListResponse | null) => void;
+  ipAddress: string | null;
+  setIpAddress: (ip: string | null) => void;
+  usedFirewall: boolean;
+  setUsedFirewall: (value: boolean) => void;
+  vmFirewallId: number | null;
+  setVmFirewallId: (value: number | null) => void;
 };
 
 export const AddServerContext = createContext<AddServerContextType>({
@@ -55,6 +70,20 @@ export const AddServerContext = createContext<AddServerContextType>({
     IPV4: 1,
   },
   setCustomConfig: (customConfig) => {},
+  usePublicIpV4: true,
+  setUsePublicIpV4: () => {},
+  usePublicIpV6: false,
+  setUsePublicIpV6: () => {},
+  usePrivateNetwork: false,
+  setUsePrivateNetwork: () => {},
+  selectedNetwork: null,
+  setSelectedNetwork: () => {},
+  ipAddress: null,
+  setIpAddress: () => {},
+  usedFirewall: false,
+  setUsedFirewall: () => {},
+  vmFirewallId: null,
+  setVmFirewallId: () => {},
 });
 
 type AddServerContextProviderPropsType = {
@@ -81,6 +110,14 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
     disk: 25,
     IPV4: 1,
   });
+  const [usePublicIpV4, setUsePublicIpV4] = useState<boolean>(true);
+  const [usePublicIpV6, setUsePublicIpV6] = useState<boolean>(false);
+  const [usePrivateNetwork, setUsePrivateNetwork] = useState<boolean>(false);
+  const [selectedNetwork, setSelectedNetwork] =
+    useState<VmNetworkShortListResponse | null>(null);
+  const [ipAddress, setIpAddress] = useState<string | null>(null);
+  const [usedFirewall, setUsedFirewall] = useState<boolean>(false);
+  const [vmFirewallId, setVmFirewallId] = useState<number | null>(null);
 
   return (
     <AddServerContext.Provider
@@ -101,6 +138,20 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
         setIsPredefined,
         customConfig,
         setCustomConfig,
+        usePublicIpV4,
+        setUsePublicIpV4,
+        usePublicIpV6,
+        setUsePublicIpV6,
+        usePrivateNetwork,
+        setUsePrivateNetwork,
+        selectedNetwork,
+        setSelectedNetwork,
+        ipAddress,
+        setIpAddress,
+        usedFirewall,
+        setUsedFirewall,
+        vmFirewallId,
+        setVmFirewallId,
       }}
     >
       {children}
