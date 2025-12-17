@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
 // import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -45,6 +45,9 @@ const AddVm: FC = () => {
     usePrivateNetwork,
     selectedNetwork,
     ipAddress,
+    usedFirewall,
+    vmFirewallId,
+
   } = useContext(AddServerContext);
 
   const { data: productItems } =
@@ -120,6 +123,8 @@ const AddVm: FC = () => {
       validationErrorMessage = "رمز عبور نامعتبر است";
     } else if (usePrivateNetwork && (!selectedNetwork?.id || !ipAddress)) {
       validationErrorMessage = "برای شبکه خصوصی، انتخاب شبکه و IP الزامی است";
+    } else if (usedFirewall && !vmFirewallId) {
+      validationErrorMessage = "برای فایروال، انتخاب فایروال الزامی است";
     }
 
     if (validationErrorMessage !== "") {
@@ -141,6 +146,8 @@ const AddVm: FC = () => {
 
           vmNetworkId: usePrivateNetwork ? (selectedNetwork?.id as number | undefined) : undefined,
           ipAddress: usePrivateNetwork ? (ipAddress as string) : undefined,
+          usedFirewall: usedFirewall,
+          vmFirewallId: usedFirewall ? (vmFirewallId as number) : undefined,
           storageClassTypeId: 1,
           usedPublicIpV4: usePublicIpV4,
           usedPublicIpV6: usePublicIpV6
@@ -219,6 +226,7 @@ const AddVm: FC = () => {
                 <Grid xs={12} item>
                   <SelectNetwork />
                 </Grid>
+                
               </Grid>
             </Stack>
           </Grid>
