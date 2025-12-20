@@ -1,4 +1,4 @@
-import { IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -12,11 +12,51 @@ import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { firewallRuleTableStruct } from "./struct";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 enum DIALOG_TYPE_ENUM {
   DELETE = "DELETE",
 }
-
+const ruleStatusIdentifier = (networkNodeStatusId: number) => {
+  switch (networkNodeStatusId) {
+    case 1:
+      return {
+        id: 1,
+        label: "فعال",
+        bgcolor: "success.light",
+        color: "success.main",
+      };
+    case 2:
+      return {
+        id: 2,
+        label: "خطا در اتصال",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    case 3:
+      return {
+        id: 3,
+        label: "در حال انتظار",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 4:
+      return {
+        id: 4,
+        label: "حذف شده",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    
+    default:
+      return {
+        id: 0,
+        label: "نامشخص",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+  }
+};
 const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedRule, setSelectedRule] = useState<VmFirewallRuleListResponse | null>(null);
@@ -61,7 +101,7 @@ const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
         {firewallRuleTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
-
+          const statusId = row.statusId;
           return (
             <DorsaTableCell
               key={column.id}
@@ -83,12 +123,29 @@ const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
                     <TrashSvg />
                   </IconButton>
                 </Stack>
+              ) : column.id === "status" ? (
+                <Chip
+                  label={ruleStatusIdentifier(statusId).label}
+                  sx={{
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] =
+                        ruleStatusIdentifier(statusId).bgcolor.split(
+                          "."
+                        );
+                      return (palette as any)[color][shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] =
+                        ruleStatusIdentifier(statusId).color.split(".");
+                      return (palette as any)[color][shade];
+                    },
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
+                />
               ) : column.id === "isIngress" ? (
                 <>{value ? "ورودی" : "خروجی"}</>
               ) : (
-                <>
-                  {text}
-                </>
+                <>{text}</>
               )}
             </DorsaTableCell>
           );
