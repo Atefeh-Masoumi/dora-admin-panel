@@ -1,7 +1,6 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -15,11 +14,9 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import {
-  useGetApiMyVmByProjectIdFirewallListQuery,
   useGetApiMyVmByProjectIdNetworkShortListQuery,
 } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
-import { AddFirewallDialog } from "src/pages/firewall/AddFirewall";
 
 export const SelectNetwork: FC = () => {
   const { projectId } = useParams();
@@ -34,10 +31,6 @@ export const SelectNetwork: FC = () => {
     setSelectedNetwork,
     ipAddress,
     setIpAddress,
-    usedFirewall,
-    setUsedFirewall,
-    vmFirewallId,
-    setVmFirewallId,
   } = useContext(AddServerContext);
 
   const { data: vmNetworkList } = useGetApiMyVmByProjectIdNetworkShortListQuery(
@@ -45,12 +38,7 @@ export const SelectNetwork: FC = () => {
       projectId: Number(projectId),
     }
   );
-  const { data: firewallList = [], refetch: refetchFirewallList } =
-    useGetApiMyVmByProjectIdFirewallListQuery({
-      projectId: Number(projectId),
-    });
 
-  const [isAddFirewallOpen, setIsAddFirewallOpen] = useState(false);
 
   const handlePrivateNetworkChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -62,12 +50,6 @@ export const SelectNetwork: FC = () => {
     }
   };
 
-  const handleFirewallChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsedFirewall(event.target.checked);
-    if (!event.target.checked) {
-      setVmFirewallId(null);
-    }
-  };
 
   return (
     <Paper sx={{ p: 2, boxShadow: "none" }}>
@@ -182,80 +164,6 @@ export const SelectNetwork: FC = () => {
             )}
           </Box>
 
-          <Box
-            p={1.5}
-            sx={{
-              width: "100%",
-              border: ({ palette }) => `1px solid ${palette.grey}`,
-            }}
-          >
-            <Stack direction="row" alignItems="center" gap={1}>
-              <Stack flex="column" flexGrow={1}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={usedFirewall}
-                      onChange={handleFirewallChange}
-                    />
-                  }
-                  label="استفاده از فایروال"
-                />
-                <Typography pt={1} pr={1} pl={4}>
-                  با فعال‌سازی فایروال، ترافیک ورودی و خروجی سرور کنترل می‌شود.
-                </Typography>
-              </Stack>
-              {usedFirewall && (
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => setIsAddFirewallOpen(true)}
-                sx={{ minWidth: 180 }}
-              >
-                افزودن فایروال جدید
-              </Button>)}
-            </Stack>
-            {usedFirewall && (
-              <Stack direction="column" gap={2} mt={2}>
-                <Stack direction={{ xs: "column", sm: "row" }} gap={1}>
-                  {/* <IconButton
-                    onClick={() => refetchFirewallList()}
-                    sx={{ minWidth: 180 }}
-                  >
-                    <RefreshIcon
-                      style={{
-                        transform: `rotate(360deg)`,
-                        transition: "transform 0.7s ease",
-                      }}
-                    />
-                  </IconButton> */}
-                </Stack>
-
-                <FormControl fullWidth>
-                  <InputLabel>انتخاب فایروال</InputLabel>
-                  <Select
-                    value={vmFirewallId ?? ""}
-                    label="انتخاب فایروال"
-                    onChange={(e) => {
-                      setVmFirewallId(Number(e.target.value));
-                    }}
-                  >
-                    {firewallList?.map((firewall) => (
-                      <MenuItem key={firewall.id} value={Number(firewall.id)}>
-                        {firewall.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Stack>
-            )}
-          </Box>
-
-          <AddFirewallDialog
-            open={isAddFirewallOpen}
-            forceClose={() => setIsAddFirewallOpen(false)}
-            refetch={refetchFirewallList}
-            onClose={() => setIsAddFirewallOpen(false)}
-          />
         </Stack>
       </Stack>
     </Paper>
