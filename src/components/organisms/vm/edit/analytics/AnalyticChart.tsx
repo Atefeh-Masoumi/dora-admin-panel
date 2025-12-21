@@ -61,7 +61,9 @@ export const analyticsCategories = [
     [getDataFetching, getDataLoading]
   );
   const formatStatValue = (value?: number) => typeof value === "number" ? value.toFixed(4) : "0";
-
+  const total =
+  (userAnalytics?.totalUpload ?? 0) +
+  (userAnalytics?.totalDownload ?? 0);
   
 
   return (
@@ -122,7 +124,7 @@ export const analyticsCategories = [
 
           <StatBox
             title="Total"
-            value={(formatStatValue(userAnalytics?.totalUpload) ?? 0) + (formatStatValue(userAnalytics?.totalDownload) ?? 0)}
+            value={(formatStatValue(total)) ?? 0 }
             unit="GB"
             img={UploadImage}
           />
