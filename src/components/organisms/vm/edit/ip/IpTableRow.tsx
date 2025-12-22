@@ -3,24 +3,18 @@ import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 
 import PageLoading from "src/components/atoms/PageLoading";
 import {
-    VmNetworkNodeListResponse,
     useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation,
     useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery,
-    useGetApiMyVmByProjectIdNetworkNodeListQuery,
-    usePutApiMyVmByProjectIdNetworkNodeDetachAndIdMutation
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { IpTableTableStruct } from "./struct";
 import { EnablePortDialog } from "./dialog/EnablePortDialog";
 import { DisablePortDialog } from "./dialog/disablePortDialog";
 import { IPDeleteDialog } from "./dialog/IPDeleteDialog";
-import { DeleteSvg } from "src/components/atoms/svg-icons/DeleteSvg";
 import { Cancel, CheckCircleOutline, LockOpenOutlined, LockOutlined } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
