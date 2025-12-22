@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { useGetApiMyVmByProjectIdBackupListQuery, usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdBackupListQuery, usePutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
@@ -22,7 +22,7 @@ export const EnablePortDialog: FC<EnablePortDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [enableport, { isLoading }] =
-  usePutApiMyVmByProjectIdHostAndVmHostIdIpDisablePortSecurityIdMutation();
+    usePutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdMutation();
   const navigate = useNavigate();
 
   const { projectId, id: vmId } = useParams();
@@ -30,7 +30,9 @@ export const EnablePortDialog: FC<EnablePortDialogPropsType> = ({
   
   const submit = () => {
     if (!id) return;
-        enableport({ projectId: Number(projectId), vmHostId: Number(vmId), id })
+        enableport({ projectId: Number(projectId), 
+          // vmHostId: Number(vmId), 
+          id })
           .unwrap()
           .then(() => {
             toast.success("با موفقیت فعال شد");
