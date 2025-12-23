@@ -65,25 +65,25 @@ export const NewSidebar: FC<SidebarPropsType> = ({
         // },
       ],
     },
-    {
-      title: "پلتفرم ابری ",
-      Icon: KubernetesSvg,
-      link: `/kubernetes-cluster/${selectedProjectId}`,
-      subList: [
-        { title: "کلاستر کوبرنتیز", link: `/kubernetes-cluster/${selectedProjectId}` },
-        {
-          title: "کوبرنتیز ابری",
-           link: `/kubernetes-cloud/${selectedProjectId}`,
-         },
-      ],
-    },
+    // {
+    //   title: "پلتفرم ابری ",
+    //   Icon: KubernetesSvg,
+    //   link: `/kubernetes-cluster/${selectedProjectId}`,
+    //   subList: [
+    //     { title: "کلاستر کوبرنتیز", link: `/kubernetes-cluster/${selectedProjectId}` },
+    //     {
+    //       title: "کوبرنتیز ابری",
+    //        link: `/kubernetes-cloud/${selectedProjectId}`,
+    //      },
+    //   ],
+    // },
  
-    {
-      title: "ذخیره ساز ابری ",
-      Icon: ObjectStorageSvg,
-      link: `/storage/${selectedProjectId}`,
-      subList: [{ title: "ذخیره ساز ابری", link: `/storage/${selectedProjectId}` }],
-    },
+    // {
+    //   title: "ذخیره ساز ابری ",
+    //   Icon: ObjectStorageSvg,
+    //   link: `/storage/${selectedProjectId}`,
+    //   subList: [{ title: "ذخیره ساز ابری", link: `/storage/${selectedProjectId}` }],
+    // },
     
     {
       title: " DNS ابری",
