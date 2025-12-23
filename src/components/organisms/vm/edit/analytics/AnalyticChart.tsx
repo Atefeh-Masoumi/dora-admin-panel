@@ -39,7 +39,7 @@ export const analyticsCategories = [
 //   const { id, projectId } = useParams();
 //   const vmHostId = Number(id) || 0;
 
-//   const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState(1);
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategoryId(+event.target.value);
@@ -51,7 +51,7 @@ export const analyticsCategories = [
   } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery({
     id: vmHostId,
     projectId: Number(projectId),
-    periodId: categoryId + 1,
+    periodId: categoryId ,
   }, {
     skip: !projectId || !vmHostId,
   });
