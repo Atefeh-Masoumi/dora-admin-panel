@@ -1091,6 +1091,12 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/financial/bill/get/${queryArg.id}`,
       }),
     }),
+    postApiMyHomeIndex: build.mutation<
+      PostApiMyHomeIndexApiResponse,
+      PostApiMyHomeIndexApiArg
+    >({
+      query: () => ({ url: `/api/my/home/index`, method: "POST" }),
+    }),
     getApiMyInfraDatacenterList: build.query<
       GetApiMyInfraDatacenterListApiResponse,
       GetApiMyInfraDatacenterListApiArg
@@ -2575,12 +2581,20 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/host/get/${queryArg.id}`,
       }),
     }),
-    getApiMyVmByProjectIdHostFirewallList: build.query<
-      GetApiMyVmByProjectIdHostFirewallListApiResponse,
-      GetApiMyVmByProjectIdHostFirewallListApiArg
+    getApiMyVmByProjectIdHostAndVmHostIdFirewallList: build.query<
+      GetApiMyVmByProjectIdHostAndVmHostIdFirewallListApiResponse,
+      GetApiMyVmByProjectIdHostAndVmHostIdFirewallListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/host/firewall/list`,
+        url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/firewall/list`,
+      }),
+    }),
+    getApiMyVmByProjectIdHostAndVmHostIdFirewallGet: build.query<
+      GetApiMyVmByProjectIdHostAndVmHostIdFirewallGetApiResponse,
+      GetApiMyVmByProjectIdHostAndVmHostIdFirewallGetApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/host/${queryArg.vmHostId}/firewall/get`,
       }),
     }),
     putApiMyVmByProjectIdHostAndVmHostIdAssignFirewall: build.mutation<
@@ -3419,6 +3433,8 @@ export type GetApiMyFinancialBillGetByIdApiResponse =
 export type GetApiMyFinancialBillGetByIdApiArg = {
   id: number;
 };
+export type PostApiMyHomeIndexApiResponse = unknown;
+export type PostApiMyHomeIndexApiArg = void;
 export type GetApiMyInfraDatacenterListApiResponse =
   /** status 200 OK */ DatacenterListResponse[];
 export type GetApiMyInfraDatacenterListApiArg = void;
@@ -4368,10 +4384,17 @@ export type GetApiMyVmByProjectIdHostGetAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type GetApiMyVmByProjectIdHostFirewallListApiResponse =
+export type GetApiMyVmByProjectIdHostAndVmHostIdFirewallListApiResponse =
   /** status 200 OK */ FirewallListResponse[];
-export type GetApiMyVmByProjectIdHostFirewallListApiArg = {
+export type GetApiMyVmByProjectIdHostAndVmHostIdFirewallListApiArg = {
   projectId: number;
+  vmHostId: number;
+};
+export type GetApiMyVmByProjectIdHostAndVmHostIdFirewallGetApiResponse =
+  /** status 200 OK */ GetVmFirewallAssignResponse;
+export type GetApiMyVmByProjectIdHostAndVmHostIdFirewallGetApiArg = {
+  projectId: number;
+  vmHostId: number;
 };
 export type PutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallApiResponse =
   unknown;
@@ -5673,8 +5696,11 @@ export type CreateKuberClusterModel = {
 export type AuditingLogListResponse = {
   id?: number;
   customerId?: number;
+  customer: string | null;
   userId?: number;
+  user: string | null;
   projectId?: number | null;
+  project?: string | null;
   product: string | null;
   entityId?: number;
   entityType: string | null;
@@ -6181,10 +6207,8 @@ export type VolumeListResponse = {
   isAutoSnapshot: string | null;
   rootDisk: string | null;
   activeDisk: string | null;
-  scheduleType?: string | null;
   scheduleTypeId?: number | null;
   calculateTypeId?: number | null;
-  calculateType?: string | null;
   vmHostId?: number | null;
   vmHostName?: string | null;
   createDate: string;
@@ -6280,6 +6304,7 @@ export type VmImageListResponse = {
 export type VmHostIpListResponse = {
   id: number;
   ipAddress: string | null;
+  macAddress?: string | null;
   isV4: boolean;
   isPrimary: boolean;
   isFloating: boolean;
@@ -6341,6 +6366,14 @@ export type FirewallListResponse = {
   projectId?: number;
   isSecurityEnabled?: boolean;
 };
+export type GetVmFirewallAssignResponse = {
+  id?: number | null;
+  name: string | null;
+  statusId?: number;
+  status: string | null;
+  vmFirewallCount: number;
+  createDate: string;
+};
 export type AssignFirewallModel = {
   vmFirewallId?: number;
 };
@@ -6386,6 +6419,8 @@ export type VmFirewallRuleListResponse = {
   minPort: string | null;
   maxPort: string | null;
   isIpV4: boolean;
+  status: string | null;
+  statusId: number;
   createDate: string;
 };
 export type GetVmFirewallRuleResponse = {
@@ -6615,6 +6650,7 @@ export const {
   useGetApiMyFinancialBillListDownloadByIdQuery,
   useGetApiMyFinancialBillListQuery,
   useGetApiMyFinancialBillGetByIdQuery,
+  usePostApiMyHomeIndexMutation,
   useGetApiMyInfraDatacenterListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretListQuery,
   useGetApiMyKubernetesCloudByProjectIdHostAndKuberHostIdSecretGetIdQuery,
@@ -6779,7 +6815,8 @@ export const {
   useGetApiMyVmByProjectIdHostListQuery,
   useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery,
   useGetApiMyVmByProjectIdHostGetAndIdQuery,
-  useGetApiMyVmByProjectIdHostFirewallListQuery,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallGetQuery,
   usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
