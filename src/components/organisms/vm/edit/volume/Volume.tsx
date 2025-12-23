@@ -12,11 +12,16 @@ import {
   usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { EnableAutoBackupDialog } from "./dialog/EnableAutoBackupDialog";
+import { DeleteDialog } from "src/components/molecules/DeleteDialog";
+import { toast } from "react-toastify";
 
 export const Volume: FC = () => {
   const { id } = useParams();
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<null>(null);
+  const [dialogType, setDialogType] = useState<
+    "CREATE" | "ENABLE_AUTO_BACKUP" | "DISABLE_AUTO_BACKUP" | null
+  >(null);
 
   const { projectId } = useParams();
 
@@ -25,13 +30,16 @@ export const Volume: FC = () => {
     isLoading: getVolumeLoading,
     refetch,
     isFetching,
-  } = useGetApiMyVmByProjectIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
+  } = useGetApiMyVmByProjectIdVolumeListQuery({
+    vmHostId: Number(id),
+    projectId: Number(projectId),
+  });
 
   const [selectedVolume, setSelectedVolume] =
     useState<VolumeListResponse | null>(null);
-  const [autoBackupEnabledIds, setAutoBackupEnabledIds] = useState<
-    Set<number>
-  >(new Set());
+  const [autoBackupEnabledIds, setAutoBackupEnabledIds] = useState<Set<number>>(
+    new Set()
+  );
 
   const [disableAutoBackup, { isLoading: disableAutoBackupLoading }] =
     usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation();
@@ -49,9 +57,39 @@ export const Volume: FC = () => {
     setShowCreateDialog(true);
   };
 
-  const closeDialogHandler = () => {
+  const closeDialogs = () => {
     setDialogType(null);
     setShowCreateDialog(false);
+    setSelectedVolume(null);
+  };
+
+  const disableAutoBackupHandler = () => {
+    if (!selectedVolume || !selectedVolume.id) return;
+
+    disableAutoBackup({
+      projectId: Number(projectId),
+      id: selectedVolume.id,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success("بکاپ خودکار با موفقیت غیرفعال شد");
+        refetch();
+        setAutoBackupEnabledIds((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(selectedVolume.id!);
+          return newSet;
+        });
+        closeDialogs();
+      })
+      .catch(() => {
+        toast.error("خطا در غیرفعال‌سازی بکاپ خودکار");
+      });
+  };
+
+  const handleEnableAutoBackupSuccess = () => {
+    if (selectedVolume?.id) {
+      setAutoBackupEnabledIds((prev) => new Set(prev).add(selectedVolume.id!));
+    }
   };
 
   return (
@@ -72,11 +110,7 @@ export const Volume: FC = () => {
             alignItems="center"
             spacing={2}
           >
-            <Typography
-              color="grey.700"
-              fontSize={24}
-              fontWeight={700}
-            >
+            <Typography color="grey.700" fontSize={24} fontWeight={700}>
               مدیریت دیسک
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
@@ -118,10 +152,40 @@ export const Volume: FC = () => {
         maxWidth="xs"
         fullWidth
         open={showCreateDialog}
-        onClose={closeDialogHandler}
-        forceClose={closeDialogHandler}
+        onClose={closeDialogs}
+        forceClose={closeDialogs}
         refetch={refetch}
       /> */}
+
+      <EnableAutoBackupDialog
+        open={
+          !!(
+            selectedVolume &&
+            selectedVolume?.id &&
+            dialogType === "ENABLE_AUTO_BACKUP"
+          )
+        }
+        onClose={closeDialogs}
+        vmBackupId={selectedVolume?.id!}
+        forceClose={closeDialogs}
+        onSuccess={handleEnableAutoBackupSuccess}
+      />
+
+      <DeleteDialog
+        open={
+          !!(
+            selectedVolume &&
+            selectedVolume?.id &&
+            dialogType === "DISABLE_AUTO_BACKUP"
+          )
+        }
+        onClose={closeDialogs}
+        keyTitle="بکاپ خودکار"
+        subTitle="برای غیرفعال‌سازی بکاپ خودکار موردنظر، عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedVolume?.name || ""}
+        onSubmit={disableAutoBackupHandler}
+        submitLoading={disableAutoBackupLoading}
+      />
     </>
   );
 };

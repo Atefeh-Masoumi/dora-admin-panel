@@ -2,6 +2,7 @@ import { FC, createContext, ReactNode, useState } from "react";
 import {
   VmImageListResponse,
   ProductBundleVmListResponse,
+  VmNetworkShortListResponse,
 } from "src/app/services/api.generated";
 
 export type addServerStepsType = 1 | 2 | 3 | 4;
@@ -103,7 +104,7 @@ export const AddServerContext = createContext<AddServerContextType>({
   allowHttpsAccess: true,
   setAllowHttpsAccess: () => {},
   remoteAccessIp: null,
-  setRemoteAccessIp: () => {}
+  setRemoteAccessIp: () => {},
 });
 
 type AddServerContextProviderPropsType = {
@@ -117,8 +118,7 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [dataCenter, setDataCenter] = useState<VmImageListResponse | null>(
     null
   );
-  const [osVersion, setOsVersion] =
-    useState<VmImageListResponse | null>(null);
+  const [osVersion, setOsVersion] = useState<VmImageListResponse | null>(null);
   const [serverConfig, setServerConfig] =
     useState<ProductBundleVmListResponse | null>(null);
   const [serverName, setServerName] = useState("");
@@ -142,7 +142,9 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [allowRemoteAccess, setAllowRemoteAccess] = useState<boolean>(true);
   const [allowHttpAccess, setAllowHttpAccess] = useState<boolean>(true);
   const [allowHttpsAccess, setAllowHttpsAccess] = useState<boolean>(true);
-  const [remoteAccessIp, setRemoteAccessIp] = useState<string | null>("0.0.0.0/0");
+  const [remoteAccessIp, setRemoteAccessIp] = useState<string | null>(
+    "0.0.0.0/0"
+  );
   return (
     <AddServerContext.Provider
       value={{
@@ -180,7 +182,7 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
         setUseExistingFirewall,
         allowRemoteAccess,
         setAllowRemoteAccess,
-        allowHttpAccess,  
+        allowHttpAccess,
         setAllowHttpAccess,
         allowHttpsAccess,
         setAllowHttpsAccess,

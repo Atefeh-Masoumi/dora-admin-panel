@@ -8,13 +8,12 @@ import {
   Skeleton,
   Stack,
   Typography,
+  Chip,
 } from "@mui/material";
 import { FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import {
-  useCustomCreateIssueMutation,
-} from "src/app/services/api";
+import { useCustomCreateIssueMutation } from "src/app/services/api";
 import {
   useGetApiMyPortalProductGetByIdQuery,
   GetApiMyPortalProductGetByIdApiResponse,
@@ -22,7 +21,7 @@ import {
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyPortalProductListQuery,
   usePostApiMyPortalIssueCreateMutation,
-  usePostApiMyPortalIssueSubjectShortListMutation,
+  useGetApiMyPortalIssueSubjectShortListQuery,
   CreateIssueModel,
   ProductListResponse,
   BusinessUnitListResponse,
@@ -53,8 +52,10 @@ const AddTicket: FC = () => {
 
   const [productId, setProductId] = useState<number>();
 
-  const [apiCloudCustomerProductList, setApiCloudCustomerProductList] = useState<any[]>([]);
-  const [callGetApiCloudCustomerProductList] = useLazyGetApiMyFinancialOrderListByProductIdQuery();
+  const [apiCloudCustomerProductList, setApiCloudCustomerProductList] =
+    useState<any[]>([]);
+  const [callGetApiCloudCustomerProductList] =
+    useLazyGetApiMyFinancialOrderListByProductIdQuery();
 
   const { data: products, isLoading: loadingProducts } =
     useGetApiMyPortalProductListQuery();
@@ -63,21 +64,32 @@ const AddTicket: FC = () => {
 
   const [content, setContent] = useState("");
 
-  const [selectList] = usePostApiMyPortalIssueSubjectShortListMutation();
+  const { data: issueSubjectData } =
+    useGetApiMyPortalIssueSubjectShortListQuery(
+      {
+        productId: productId ?? 0,
+        businessUnitId: businessUnitId ?? 0,
+      },
+      {
+        skip: !productId || !businessUnitId,
+      }
+    );
+
+  const [uploading, setUploading] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
+
+  const [upload, { isLoading: submitLoading }] = useCustomCreateIssueMutation();
 
   useEffect(() => {
-    selectList({
-      issueSubjectShortListModel: {
-        productId: productId,
-        businessUnitId: businessUnitId,
-      },
-    })
-      .unwrap()
-      .then((res: SetStateAction<IssueSubjectShortListResponse[]>) =>
-        res !== undefined &&
-        setList(res)
-      );
+    if (issueSubjectData) {
+      setList(issueSubjectData);
+    } else {
+      setList([]);
+    }
+  }, [issueSubjectData]);
 
+  useEffect(() => {
     if (productId) {
       callGetApiCloudCustomerProductList({
         productId: Number(productId),
@@ -86,30 +98,43 @@ const AddTicket: FC = () => {
         .then((res: any) => {
           setApiCloudCustomerProductList(res || []);
         })
-        .catch(() => { });
+        .catch(() => {});
+    } else {
+      setApiCloudCustomerProductList([]);
     }
-  }, [
-    businessUnitId,
-    productId,
-    callGetApiCloudCustomerProductList,
-    selectList,
-  ]);
-
-  const [uploading, setUploading] = useState(false);
-  const [file, setFile] = useState<File>();
-  const [list, setList] = useState<IssueSubjectShortListResponse[]>([]);
-
-  const [upload] = useCustomCreateIssueMutation();
+    // Reset selected product when productId changes
+    setSelectedApiCloudCustomerProduct(0);
+  }, [productId, callGetApiCloudCustomerProductList]);
 
   const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = () => setFile(file);
-    reader.onerror = () => {
-      toast.error(`file error: ${reader.error}`);
-    };
+    const selected = Array.from(e.target.files || []) as File[];
+    if (!selected || selected.length === 0) return;
+    const merged: File[] = [...files];
+    selected.forEach((sf) => {
+      const exists = merged.some(
+        (f) =>
+          f.name === sf.name &&
+          f.size === sf.size &&
+          f.lastModified === sf.lastModified
+      );
+      if (!exists) merged.push(sf);
+    });
+    setFiles(merged);
     setUploading(true);
+    if (e?.target) e.target.value = ""; // allow re-selecting the same files
+  };
+
+  const removeFile = (fileToRemove: File) => {
+    const remaining = files.filter(
+      (f) =>
+        !(
+          f.name === fileToRemove.name &&
+          f.size === fileToRemove.size &&
+          f.lastModified === fileToRemove.lastModified
+        )
+    );
+    setFiles(remaining);
+    if (remaining.length === 0) setUploading(false);
   };
 
   const abortController = useRef<AbortController | null>(null);
@@ -130,15 +155,22 @@ const AddTicket: FC = () => {
     formData.append("issuePriorityId", ticketPriorityLevel?.toString()!);
     if (productId) formData.append("productId", productId.toString());
     if (selectedApiCloudCustomerProduct !== 0) {
-      formData.append("customerProductId", selectedApiCloudCustomerProduct.toString());
+      formData.append(
+        "customerProductId",
+        selectedApiCloudCustomerProduct.toString()
+      );
     }
-    if (file) formData.append("attachment", file);
+    if (files && files.length > 0) {
+      files.forEach((f) => formData.append("attachments", f));
+    }
 
     upload(formData)
       .unwrap()
       .then((res: any) => {
         toast.success("تیکت با موفقیت اضافه شد");
         navigate("/portal/supports");
+        setFiles([]);
+        setUploading(false);
       })
       .catch((res: any) => {
         if (res.status === 401 || res.status === 404) {
@@ -146,6 +178,7 @@ const AddTicket: FC = () => {
         } else {
           toast.error(res?.data?.[""]?.[0] || "خطایی رخ داده است");
         }
+        setUploading(false);
       });
   };
 
@@ -266,38 +299,43 @@ const AddTicket: FC = () => {
                 select
                 fullWidth
                 label="محصولات کاربر"
-                value={selectedApiCloudCustomerProduct || ""}
+                value={
+                  selectedApiCloudCustomerProduct === 0
+                    ? ""
+                    : selectedApiCloudCustomerProduct
+                }
                 onChange={(e) =>
                   setSelectedApiCloudCustomerProduct(+e.target.value)
                 }
               >
-                {(!apiCloudCustomerProductList ||
-                  apiCloudCustomerProductList?.length === 0) && (
-                    <ListSubheader>
-                      <Typography sx={{ py: 1.6 }}>
-                        داده ای موجودی نیست
-                      </Typography>
-                    </ListSubheader>
-                  )}
-                {apiCloudCustomerProductList?.map((option) => (
-                  <MenuItem
-                    key={option.id}
-                    value={option.id}
-                    sx={{
-                      borderRadius: 1,
-                      backgroundColor: "#F3F4F6",
-                      m: 0.5,
-                      py: 1.5,
-                      color: "secondary",
-                      "&: focus": {
-                        color: "rgba(60, 138, 255, 1)",
-                        backgroundColor: "rgba(60, 138, 255, 0.1)",
-                      },
-                    }}
-                  >
-                    {option.name}
-                  </MenuItem>
-                ))}
+                {!apiCloudCustomerProductList ||
+                apiCloudCustomerProductList?.length === 0 ? (
+                  <ListSubheader>
+                    <Typography sx={{ py: 1.6 }}>
+                      داده ای موجودی نیست
+                    </Typography>
+                  </ListSubheader>
+                ) : (
+                  apiCloudCustomerProductList.map((option) => (
+                    <MenuItem
+                      key={option.id}
+                      value={option.id}
+                      sx={{
+                        borderRadius: 1,
+                        backgroundColor: "#F3F4F6",
+                        m: 0.5,
+                        py: 1.5,
+                        color: "secondary",
+                        "&: focus": {
+                          color: "rgba(60, 138, 255, 1)",
+                          backgroundColor: "rgba(60, 138, 255, 0.1)",
+                        },
+                      }}
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))
+                )}
               </DorsaTextField>
             )}
           </Box>
@@ -428,19 +466,15 @@ const AddTicket: FC = () => {
               />
             </Button>
           </Stack>
-          {uploading && (
-            <Stack
-              direction="row"
-              borderRadius={1.5}
-              alignItems="center"
-              bgcolor="rgba(60, 138, 255, 1)"
-              p={2}
-              width="100%"
-              justifyContent="space-between"
-              color="white"
-            >
-              <Typography fontSize="14px">{file?.name}</Typography>
-              <Done />
+          {files.length > 0 && (
+            <Stack direction="row" flexWrap="wrap" gap={1} width="100%">
+              {files.map((f, idx) => (
+                <Chip
+                  key={`${f.name}-${f.size}-${f.lastModified}-${idx}`}
+                  label={f.name}
+                  onDelete={() => removeFile(f)}
+                />
+              ))}
             </Stack>
           )}
 
@@ -466,11 +500,11 @@ const AddTicket: FC = () => {
               fullWidth
               variant="contained"
               size="large"
+              loading={submitLoading}
               sx={{ px: 5, py: 1.5 }}
             >
               ارسال تیکت
             </LoadingButton>
-
           </Stack>
         </Stack>
       </Stack>

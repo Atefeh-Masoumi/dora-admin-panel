@@ -24,4 +24,5 @@ export enum PRODUCT_ITEM_ENUM {
   ColocationIpv4 = 134,
   VpcIpv4 = 138,
   Vpc10Rules = 139,
+  CloudBlockDisk = 140,
 }

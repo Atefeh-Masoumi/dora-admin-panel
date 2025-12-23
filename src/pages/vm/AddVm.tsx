@@ -1,13 +1,12 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyVmByProjectIdHostListQuery,
   usePostApiMyVmByProjectIdHostCreateMutation,
-
 } from "src/app/services/api.generated";
 import ServiceReceipt, {
   ReceiptTypeEnum,
@@ -18,21 +17,20 @@ import { SelectConfigType } from "src/components/organisms/vm/add/steps/SelectCo
 // import { SelectNetworkIpForVpc } from "src/components/organisms/vm/add/steps/SelectNetworkIpForVpc";
 import { SelectOS } from "src/components/organisms/vm/add/steps/SelectOS";
 import { ServerInfo } from "src/components/organisms/vm/add/steps/ServerInfo";
+import { SelectNetwork } from "src/components/organisms/vm/add/steps/SelectNetwork";
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
-import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
+// import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
 import { SelectFirewalType } from "src/components/organisms/vm/add/steps/SelectFirewallType";
 import { SelectFirewall } from "src/components/organisms/vm/add/steps/SelectFirewal";
 
 const AddVm: FC = () => {
-  const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<
-    string | number | null
-  >(null);
+  // const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
+  // const [selectedNetwork, setSelectedNetwork] = useState<number | null>(null);
   const { projectId } = useParams();
-  const [searchParams] = useSearchParams();
-  const vmType = searchParams.get("vmType");
+  // const [searchParams] = useSearchParams();
+  // const vmType = searchParams.get("vmType");
 
   const {
     osVersion,
@@ -54,7 +52,6 @@ const AddVm: FC = () => {
     allowHttpAccess,
     allowHttpsAccess,
     remoteAccessIp,
-   
   } = useContext(AddServerContext);
 
   const { data: productItems } =
@@ -62,12 +59,10 @@ const AddVm: FC = () => {
       productId: PRODUCT_CATEGORY_ENUM.VM,
     });
 
-  const {
-    refetch,
-  } = useGetApiMyVmByProjectIdHostListQuery({
+  const { refetch } = useGetApiMyVmByProjectIdHostListQuery({
     projectId: Number(projectId),
   });
-  
+
   const navigate = useNavigate();
 
   const [createCloudServer, { isLoading: createHostIsLoading }] =
@@ -137,6 +132,8 @@ const AddVm: FC = () => {
     if (validationErrorMessage !== "") {
       toast.error(validationErrorMessage);
     } else {
+      // network validation: if private network selected, ensure ip is provided
+      // optional: backend will validate further
       createCloudServer({
         createVmModel: {
           name: serverName,
@@ -153,7 +150,7 @@ const AddVm: FC = () => {
             ? (selectedNetwork?.id as number | undefined)
             : undefined,
           ipAddress: usePrivateNetwork ? (ipAddress as string) : undefined,
-          usedFirewall:usedFirewall,
+          usedFirewall: usedFirewall,
           vmFirewallId: usedFirewall ? (vmFirewallId as number) : undefined,
           storageClassTypeId: 1,
           usedPublicIpV4: usePublicIpV4,
@@ -175,13 +172,13 @@ const AddVm: FC = () => {
     }
   };
 
-  const handleSelectedIpOnChange = (ip: string | number | null) => {
-    setSelectedIp(ip);
-  };
+  // const handleSelectedIpOnChange = (ip: string | number | null) => {
+  //   setSelectedIp(ip);
+  // };
 
-  const handleSelectedNetworkOnChange = (network: string | number | null) => {
-    setSelectedNetwork(network);
-  };
+  // const handleSelectedNetworkOnChange = (network: string | number | null) => {
+  //   setSelectedNetwork(network as number | null);
+  // };
 
   return (
     <>

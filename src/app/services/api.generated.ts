@@ -166,6 +166,17 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.changePasswordModel,
       }),
     }),
+    getApiMyAccountCustomerUserShortList: build.query<
+      GetApiMyAccountCustomerUserShortListApiResponse,
+      GetApiMyAccountCustomerUserShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/customer-user/short-list`,
+        params: {
+          userId: queryArg.userId,
+        },
+      }),
+    }),
     getApiMyAccountCustomerUserList: build.query<
       GetApiMyAccountCustomerUserListApiResponse,
       GetApiMyAccountCustomerUserListApiArg
@@ -273,6 +284,24 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/my/account/login-ito-callback`,
+        method: "POST",
+        params: {
+          code: queryArg.code,
+        },
+      }),
+    }),
+    getApiMyAccountLoginGovUrl: build.query<
+      GetApiMyAccountLoginGovUrlApiResponse,
+      GetApiMyAccountLoginGovUrlApiArg
+    >({
+      query: () => ({ url: `/api/my/account/login-gov-url` }),
+    }),
+    postApiMyAccountLoginGovCallback: build.mutation<
+      PostApiMyAccountLoginGovCallbackApiResponse,
+      PostApiMyAccountLoginGovCallbackApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/login-gov-callback`,
         method: "POST",
         params: {
           code: queryArg.code,
@@ -1672,6 +1701,12 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/product-bundle/bare-metal-list` }),
     }),
+    getApiMyPortalProductShortList: build.query<
+      GetApiMyPortalProductShortListApiResponse,
+      GetApiMyPortalProductShortListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/product/short-list` }),
+    }),
     getApiMyPortalProductList: build.query<
       GetApiMyPortalProductListApiResponse,
       GetApiMyPortalProductListApiArg
@@ -1707,14 +1742,16 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/notification/list` }),
     }),
-    postApiMyPortalIssueSubjectShortList: build.mutation<
-      PostApiMyPortalIssueSubjectShortListApiResponse,
-      PostApiMyPortalIssueSubjectShortListApiArg
+    getApiMyPortalIssueSubjectShortList: build.query<
+      GetApiMyPortalIssueSubjectShortListApiResponse,
+      GetApiMyPortalIssueSubjectShortListApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/portal/issue-subject/short-list`,
-        method: "POST",
-        body: queryArg.issueSubjectShortListModel,
+        params: {
+          ProductId: queryArg.productId,
+          BusinessUnitId: queryArg.businessUnitId,
+        },
       }),
     }),
     getApiMyPortalIssueSubjectList: build.query<
@@ -1775,7 +1812,12 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyPortalCustomerLimitResourceUsagesApiResponse,
       GetApiMyPortalCustomerLimitResourceUsagesApiArg
     >({
-      query: () => ({ url: `/api/my/portal/customer-limit/resource-usages` }),
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-limit/resource-usages`,
+        params: {
+          projectId: queryArg.projectId,
+        },
+      }),
     }),
     getApiMyPortalBusinessUnitList: build.query<
       GetApiMyPortalBusinessUnitListApiResponse,
@@ -2150,7 +2192,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/node/list`,
         params: {
           VmHostId: queryArg.vmHostId,
-          VmVolumeHostId: queryArg.vmVolumeHostId,
         },
       }),
     }),
@@ -2285,6 +2326,26 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/get/${queryArg.id}`,
       }),
     }),
+    putApiMyVmByProjectIdVolumeEnableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
+      }),
+    }),
     putApiMyVmByProjectIdVolumeEditAndId: build.mutation<
       PutApiMyVmByProjectIdVolumeEditAndIdApiResponse,
       PutApiMyVmByProjectIdVolumeEditAndIdApiArg
@@ -2293,6 +2354,24 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/edit/${queryArg.id}`,
         method: "PUT",
         body: queryArg.editVolumeHostModel,
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeDisableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-snapshot/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeDisableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-backup/${queryArg.id}`,
+        method: "PUT",
       }),
     }),
     deleteApiMyVmByProjectIdVolumeDeleteAndId: build.mutation<
@@ -2433,6 +2512,46 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/key/create`,
         method: "POST",
         body: queryArg.createVmKeyModel,
+      }),
+    }),
+    postApiMyVmByProjectIdVmIsoNodeUnmount: build.mutation<
+      PostApiMyVmByProjectIdVmIsoNodeUnmountApiResponse,
+      PostApiMyVmByProjectIdVmIsoNodeUnmountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/unmount`,
+        method: "POST",
+        body: queryArg.vmIsoNodeUnmountModel,
+      }),
+    }),
+    postApiMyVmByProjectIdVmIsoNodeMount: build.mutation<
+      PostApiMyVmByProjectIdVmIsoNodeMountApiResponse,
+      PostApiMyVmByProjectIdVmIsoNodeMountApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/mount`,
+        method: "POST",
+        body: queryArg.vmIsoNodeMountModel,
+      }),
+    }),
+    getApiMyVmByProjectIdVmIsoNodeList: build.query<
+      GetApiMyVmByProjectIdVmIsoNodeListApiResponse,
+      GetApiMyVmByProjectIdVmIsoNodeListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/vm/iso/node/list`,
+        params: {
+          VmIsoId: queryArg.vmIsoId,
+          VmHostId: queryArg.vmHostId,
+        },
+      }),
+    }),
+    getApiMyVmByProjectIdIsoShortList: build.query<
+      GetApiMyVmByProjectIdIsoShortListApiResponse,
+      GetApiMyVmByProjectIdIsoShortListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/iso/short-list`,
       }),
     }),
     getApiMyVmByProjectIdImageList: build.query<
@@ -2887,6 +3006,11 @@ export type PostApiMyAccountProfileChangePasswordApiResponse = unknown;
 export type PostApiMyAccountProfileChangePasswordApiArg = {
   changePasswordModel: ChangePasswordModel;
 };
+export type GetApiMyAccountCustomerUserShortListApiResponse =
+  /** status 200 OK */ CustomerUserShortListResponse[];
+export type GetApiMyAccountCustomerUserShortListApiArg = {
+  userId: number;
+};
 export type GetApiMyAccountCustomerUserListApiResponse =
   /** status 200 OK */ CustomerUserListResponse[];
 export type GetApiMyAccountCustomerUserListApiArg = void;
@@ -2936,6 +3060,14 @@ export type GetApiMyAccountLoginItoUrlApiArg = void;
 export type PostApiMyAccountLoginItoCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountLoginItoCallbackApiArg = {
+  code: string;
+};
+export type GetApiMyAccountLoginGovUrlApiResponse =
+  /** status 200 OK */ GovLoginResponse;
+export type GetApiMyAccountLoginGovUrlApiArg = void;
+export type PostApiMyAccountLoginGovCallbackApiResponse =
+  /** status 200 OK */ LoginResponse;
+export type PostApiMyAccountLoginGovCallbackApiArg = {
   code: string;
 };
 export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
@@ -3847,6 +3979,9 @@ export type GetApiMyPortalProductBundleKuberCloudListApiArg = void;
 export type GetApiMyPortalProductBundleBareMetalListApiResponse =
   /** status 200 OK */ ProductBundleBareMetalListResponse[];
 export type GetApiMyPortalProductBundleBareMetalListApiArg = void;
+export type GetApiMyPortalProductShortListApiResponse =
+  /** status 200 OK */ ProductShortListResponse[];
+export type GetApiMyPortalProductShortListApiArg = void;
 export type GetApiMyPortalProductListApiResponse =
   /** status 200 OK */ ProductListResponse[];
 export type GetApiMyPortalProductListApiArg = void;
@@ -3865,10 +4000,11 @@ export type PutApiMyPortalNotificationSeenByIdApiArg = {
 export type GetApiMyPortalNotificationListApiResponse =
   /** status 200 OK */ NotificationListResponse[];
 export type GetApiMyPortalNotificationListApiArg = void;
-export type PostApiMyPortalIssueSubjectShortListApiResponse =
+export type GetApiMyPortalIssueSubjectShortListApiResponse =
   /** status 200 OK */ IssueSubjectShortListResponse[];
-export type PostApiMyPortalIssueSubjectShortListApiArg = {
-  issueSubjectShortListModel: IssueSubjectShortListModel;
+export type GetApiMyPortalIssueSubjectShortListApiArg = {
+  productId: number;
+  businessUnitId: number;
 };
 export type GetApiMyPortalIssueSubjectListApiResponse =
   /** status 200 OK */ IssueSubjectListResponse[];
@@ -3899,7 +4035,9 @@ export type PostApiMyPortalIssueCreateApiArg = {
 };
 export type GetApiMyPortalCustomerLimitResourceUsagesApiResponse =
   /** status 200 OK */ ResourceUsageResponse;
-export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = void;
+export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = {
+  projectId?: number;
+};
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
@@ -4125,10 +4263,9 @@ export type PostApiMyVmByProjectIdSnapshotCreateApiArg = {
   createVolumeSnapshotModel: CreateVolumeSnapshotModel;
 };
 export type GetApiMyVmByProjectIdVolumeNodeListApiResponse =
-  /** status 200 OK */ VmVolumeNodeListResponse;
+  /** status 200 OK */ VmVolumeNodeListResponse[];
 export type GetApiMyVmByProjectIdVolumeNodeListApiArg = {
   vmHostId: number;
-  vmVolumeHostId: number;
   projectId: number;
 };
 export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
@@ -4206,11 +4343,34 @@ export type GetApiMyVmByProjectIdVolumeGetAndIdApiArg = {
   projectId: number;
   id: number;
 };
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
+  projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
+};
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
+  projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
+};
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiArg = {
   projectId: number;
   id: number;
   editVolumeHostModel: EditVolumeHostModel;
+};
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse =
+  unknown;
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg = {
+  projectId: number;
+  id: number;
 };
 export type DeleteApiMyVmByProjectIdVolumeDeleteAndIdApiResponse = unknown;
 export type DeleteApiMyVmByProjectIdVolumeDeleteAndIdApiArg = {
@@ -4290,6 +4450,28 @@ export type PostApiMyVmByProjectIdKeyCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdKeyCreateApiArg = {
   projectId: number;
   createVmKeyModel: CreateVmKeyModel;
+};
+export type PostApiMyVmByProjectIdVmIsoNodeUnmountApiResponse = unknown;
+export type PostApiMyVmByProjectIdVmIsoNodeUnmountApiArg = {
+  projectId: number;
+  vmIsoNodeUnmountModel: VmIsoNodeUnmountModel;
+};
+export type PostApiMyVmByProjectIdVmIsoNodeMountApiResponse = unknown;
+export type PostApiMyVmByProjectIdVmIsoNodeMountApiArg = {
+  projectId: number;
+  vmIsoNodeMountModel: VmIsoNodeMountModel;
+};
+export type GetApiMyVmByProjectIdVmIsoNodeListApiResponse =
+  /** status 200 OK */ VmIsoNodeListResponse[];
+export type GetApiMyVmByProjectIdVmIsoNodeListApiArg = {
+  vmIsoId?: number;
+  vmHostId?: number;
+  projectId: number;
+};
+export type GetApiMyVmByProjectIdIsoShortListApiResponse =
+  /** status 200 OK */ VmIsoShortListResponse[];
+export type GetApiMyVmByProjectIdIsoShortListApiArg = {
+  projectId: number;
 };
 export type GetApiMyVmByProjectIdImageListApiResponse =
   /** status 200 OK */ VmImageListResponse[];
@@ -4616,6 +4798,13 @@ export type ChangePasswordModel = {
   currentPassword?: string | null;
   password?: string | null;
 };
+export type CustomerUserShortListResponse = {
+  id: number;
+  userId: number;
+  customerId: number;
+  customer: string | null;
+  isActive: boolean;
+};
 export type CustomerUserListResponse = {
   id: number;
   userId: number;
@@ -4708,6 +4897,9 @@ export type RegisterModel = {
   referralCode?: string | null;
 };
 export type SsoLoginResponse = {
+  url: string | null;
+};
+export type GovLoginResponse = {
   url: string | null;
 };
 export type LoginModel = {
@@ -5510,13 +5702,13 @@ export type KuberFirewallListResponse = {
   sourceIp: string | null;
   protocol: string | null;
   targetPort: number;
+  nodePort: number;
+  deployment: string | null;
   createDate?: string;
 };
 export type CreateKuberFirewallModel = {
-  firewallProtocolId?: number;
   deployPortId?: number;
   sourceIp?: string | null;
-  destinationIp?: string | null;
   description?: string | null;
 };
 export type DeployPortModel = {
@@ -5733,8 +5925,9 @@ export type StorageHostListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
-  isPublic: boolean;
   public: string | null;
+  storageSize: number;
+  isPublic: boolean;
   createDate: string;
   expireDate?: string | null;
 };
@@ -5842,6 +6035,10 @@ export type ProductBundleBareMetalListResponse = {
   networkPort: number;
   bareMetalIpv4: number;
 };
+export type ProductShortListResponse = {
+  id: number;
+  name: string | null;
+};
 export type ProductListResponse = {
   id: number;
   name: string | null;
@@ -5864,22 +6061,23 @@ export type IssueSubjectShortListResponse = {
   id?: number;
   name: string | null;
 };
-export type IssueSubjectShortListModel = {
-  productId?: number;
-  businessUnitId?: number;
-};
 export type IssueSubjectListResponse = {
   id: number;
   name: string | null;
 };
-export type IssueItemModel = {
+export type FileResponse = {
+  fileId?: number | null;
+  file?: string | null;
+  fileName?: string | null;
+  fileSize?: number | null;
+};
+export type IssueItemResponse = {
   id: number;
   issueDate: string;
   content: string | null;
   user: string | null;
   userId: number;
-  fileName?: string | null;
-  fileSize?: number | null;
+  files?: FileResponse[] | null;
 };
 export type IssueItemListResponse = {
   issueId: number;
@@ -5889,12 +6087,12 @@ export type IssueItemListResponse = {
   issueStatusId: number;
   createDate: string;
   modifyDate?: string | null;
-  issueItems?: IssueItemModel[] | null;
+  issueItems?: IssueItemResponse[] | null;
 };
 export type CreateIssueItemModel = {
   issueId?: number;
   content: string | null;
-  attachment?: Blob | null;
+  attachments?: Blob[] | null;
 };
 export type IssueShortListResponse = {
   id: number;
@@ -5919,7 +6117,7 @@ export type CreateIssueModel = {
   content: string | null;
   orderId?: number | null;
   productId?: number | null;
-  attachment?: Blob | null;
+  attachments?: Blob[] | null;
 };
 export type ResourceUsageResponse = {
   maxCpuUsage?: number;
@@ -5960,6 +6158,7 @@ export type ProjectListResponse = {
   name: string | null;
   customer: string | null;
   customerId: number;
+  user: string | null;
   datacenterId: number;
   datacenter: string | null;
   status: string | null;
@@ -6032,6 +6231,7 @@ export type VmNetworkListResponse = {
 };
 export type CreateVpcInterfaceModel = {
   vmNetworkId?: number;
+  gatewayIp?: string | null;
 };
 export type GetVpcNatResponse = {
   id: number;
@@ -6199,8 +6399,6 @@ export type VolumeListResponse = {
   datacenter: string | null;
   name: string | null;
   volumeSize: number;
-  isRootDisk: string | null;
-  isActiveDisk: string | null;
   status: string | null;
   statusId: number;
   isAutoBackup: string | null;
@@ -6237,6 +6435,9 @@ export type EditVolumeHostModel = {
 export type CreateVolumeHostModel = {
   name?: string | null;
   isPredefined?: boolean;
+  volumeAutoBackup?: boolean;
+  volumeAutoSnapshot?: boolean;
+  calculateTypeId?: number | null;
   productBundleId?: number | null;
   volumeSize?: number | null;
 };
@@ -6284,15 +6485,39 @@ export type CreateVmLbModel = {
   vmLbAlgorithmId: number;
   vmLbListeners: VmLbListenerModel[] | null;
 };
+export type VmKeyStatusEnum = 1 | 2 | 3 | 4 | 5;
 export type VmKeyListResponse = {
   id: number;
   name: string | null;
+  statusId?: VmKeyStatusEnum;
+  status: string | null;
   fingerPrint: string | null;
   createDate: string;
 };
 export type CreateVmKeyModel = {
   name?: string | null;
   publicKey?: string | null;
+};
+export type VmIsoNodeUnmountModel = {
+  vmIsoNodeId?: number;
+  vmHostId?: number;
+};
+export type VmIsoNodeMountModel = {
+  vmIsoId?: number;
+  vmHostId?: number;
+};
+export type VmIsoNodeListResponse = {
+  id?: number;
+  statusId?: number;
+  status: string | null;
+  vmIso: string | null;
+  vmHost: string | null;
+  createDate?: string;
+};
+export type VmIsoShortListResponse = {
+  id?: number;
+  name: string | null;
+  description?: string | null;
 };
 export type VmImageListResponse = {
   id: number;
@@ -6328,7 +6553,10 @@ export type RebuildVmModel = {
 export type VmListResponse = {
   id: number;
   name: string | null;
-  ipAddress?: string | null;
+  ipAddress?: string[] | null;
+  ipAddressString?: string | null;
+  privateIp?: string[] | null;
+  privateIpString?: string | null;
   status: string | null;
   statusId: number;
   datacenter: string | null;
@@ -6541,6 +6769,7 @@ export const {
   usePostApiMyAccountProfileConfirmPhoneNumberMutation,
   usePostApiMyAccountProfileConfirmEmailMutation,
   usePostApiMyAccountProfileChangePasswordMutation,
+  useGetApiMyAccountCustomerUserShortListQuery,
   useGetApiMyAccountCustomerUserListQuery,
   useGetApiMyAccountCustomerUserGetByIdQuery,
   useDeleteApiMyAccountCustomerUserDeleteByIdMutation,
@@ -6554,6 +6783,8 @@ export const {
   usePostApiMyAccountLogoutMutation,
   useGetApiMyAccountLoginItoUrlQuery,
   usePostApiMyAccountLoginItoCallbackMutation,
+  useGetApiMyAccountLoginGovUrlQuery,
+  usePostApiMyAccountLoginGovCallbackMutation,
   useGetApiMyAccountLoginGoogleUrlQuery,
   useGetApiMyAccountLoginGoogleCallbackQuery,
   usePostApiMyAccountLoginMutation,
@@ -6715,12 +6946,13 @@ export const {
   useGetApiMyPortalProductBundleKuberClusterListQuery,
   useGetApiMyPortalProductBundleKuberCloudListQuery,
   useGetApiMyPortalProductBundleBareMetalListQuery,
+  useGetApiMyPortalProductShortListQuery,
   useGetApiMyPortalProductListQuery,
   useGetApiMyPortalProductGetByIdQuery,
   useGetApiMyPortalNotificationShortListQuery,
   usePutApiMyPortalNotificationSeenByIdMutation,
   useGetApiMyPortalNotificationListQuery,
-  usePostApiMyPortalIssueSubjectShortListMutation,
+  useGetApiMyPortalIssueSubjectShortListQuery,
   useGetApiMyPortalIssueSubjectListQuery,
   useGetApiMyPortalIssueItemListByIssueIdQuery,
   useGetApiMyPortalIssueItemDownloadByIdQuery,
@@ -6783,7 +7015,11 @@ export const {
   useGetApiMyVmByProjectIdVolumeShortListQuery,
   useGetApiMyVmByProjectIdVolumeListQuery,
   useGetApiMyVmByProjectIdVolumeGetAndIdQuery,
+  usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
   usePutApiMyVmByProjectIdVolumeEditAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
   useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVolumeCreateMutation,
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
@@ -6799,6 +7035,10 @@ export const {
   useGetApiMyVmByProjectIdKeyListQuery,
   useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation,
   usePostApiMyVmByProjectIdKeyCreateMutation,
+  usePostApiMyVmByProjectIdVmIsoNodeUnmountMutation,
+  usePostApiMyVmByProjectIdVmIsoNodeMountMutation,
+  useGetApiMyVmByProjectIdVmIsoNodeListQuery,
+  useGetApiMyVmByProjectIdIsoShortListQuery,
   useGetApiMyVmByProjectIdImageListQuery,
   useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery,
   usePutApiMyVmByProjectIdHostIpEnablePortSecurityAndIdMutation,

@@ -9,7 +9,12 @@ import {
   useMemo,
   useCallback,
 } from "react";
-import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useLocation,
+} from "react-router-dom";
 import { useGetApiMyVmByProjectIdHostGetAndIdQuery } from "src/app/services/api.generated";
 import { DorsaTab } from "src/components/atoms/DorsaTab";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
@@ -17,14 +22,14 @@ import { VM_ENUM } from "src/types/vmEnum";
 import { ServerConfig } from "src/components/organisms/vm/edit/config/ServerConfig";
 import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/contexts/EditServerContext";
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
-// import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
 import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
 // import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
-// import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
+import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
+import { Backup } from "src/components/organisms/vm/edit/backup/VmBackup";
 
 // Types
 interface TabPanelProps {
@@ -49,11 +54,11 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/vm/:projectId/:id/specification",
     component: VmInfo,
   },
-  // {
-  //   label: "آنالیز ترافیک",
-  //   route: "/vm/:projectId/:id/analytics",
-  //   component: AnalyticChart,
-  // },
+  {
+    label: "آنالیز ترافیک",
+    route: "/vm/:projectId/:id/analytics",
+    component: AnalyticChart,
+  },
   {
     label: "شبکه ها و فایروال",
     route: "/vm/:projectId/:id/ip",
@@ -137,7 +142,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, value, index, ...other }) => (
 const useVmData = (id: string | undefined, projectId: string | undefined) => {
   return useGetApiMyVmByProjectIdHostGetAndIdQuery({
     id: Number(id)!,
-    projectId: Number(projectId)!
+    projectId: Number(projectId)!,
   });
 };
 
@@ -163,10 +168,9 @@ const useTabNavigation = (
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const sectionIndex = routes.findIndex(route => 
-      new RegExp(route
-        .replace(':projectId', projectId || '')
-        .replace(':id', id || '')
+    const sectionIndex = routes.findIndex((route) =>
+      new RegExp(
+        route.replace(":projectId", projectId || "").replace(":id", id || "")
       ).test(currentPath)
     );
     if (sectionIndex !== -1) {
@@ -174,13 +178,16 @@ const useTabNavigation = (
     }
   }, [location.pathname, id, projectId, routes]);
 
-  const handleTabChange = useCallback((_: SyntheticEvent, newValue: number) => {
-    setSection(newValue);
-    const newPath = routes[newValue]
-      .replace(':projectId', projectId || '')
-      .replace(':id', id || '');
-    navigate(newPath, { replace: true });
-  }, [navigate, routes, projectId, id]);
+  const handleTabChange = useCallback(
+    (_: SyntheticEvent, newValue: number) => {
+      setSection(newValue);
+      const newPath = routes[newValue]
+        .replace(":projectId", projectId || "")
+        .replace(":id", id || "");
+      navigate(newPath, { replace: true });
+    },
+    [navigate, routes, projectId, id]
+  );
 
   return { section, handleTabChange };
 };
@@ -188,11 +195,14 @@ const useTabNavigation = (
 // Main component
 const EditVm: FC<EditVmProps> = () => {
   const { id, projectId } = useParams();
-  const { data: vmData, isLoading: getVmDataLoading } = useVmData(id, projectId);
-  
-  const routes = useMemo(() => TAB_CONFIGS.map(config => config.route), []);
+  const { data: vmData, isLoading: getVmDataLoading } = useVmData(
+    id,
+    projectId
+  );
+
+  const routes = useMemo(() => TAB_CONFIGS.map((config) => config.route), []);
   const { section, handleTabChange } = useTabNavigation(id, projectId, routes);
-  
+
   useServerContext(id, vmData);
 
   const hiddenTabs = useMemo(() => getHiddenTabs(vmData), [vmData]);

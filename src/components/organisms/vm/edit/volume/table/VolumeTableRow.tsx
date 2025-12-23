@@ -34,9 +34,7 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
   onDisableAutoBackupClick,
 }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedVm, setSelectedVm] = useState<VolumeListResponse | null>(
-    null
-  );
+  const [selectedVm, setSelectedVm] = useState<VolumeListResponse | null>(null);
   const { id, projectId } = useParams();
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
     useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation();
@@ -60,17 +58,17 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
   };
 
   const deleteVmRecordHandler = () =>
-    deleteItem(
-      { id: Number(selectedVm?.id),
+    deleteItem({
+      id: Number(selectedVm?.id),
       projectId: Number(projectId),
       vmHostId: Number(id),
-     })
+    })
       .unwrap()
       .then(() => {
         toast.success("دیسک با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => { });
+      .catch((err) => {});
 
   const getStatusConfig = (enabled: boolean) => {
     if (enabled) {
@@ -97,7 +95,6 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
     if (typeof v === "string") return v.trim() === "فعال";
     return false;
   };
-  
 
   return (
     <Fragment>
@@ -108,7 +105,6 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
           const value = (row as any)[column.id as keyof VolumeListResponse];
 
           const renderCellContent = () => {
-          
             if (column.id === "control") {
               return (
                 <Stack direction="row" columnGap={1} alignItems="center">
@@ -116,7 +112,7 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
                     <TrashSvg />
                   </IconButton>
 
-                  {isAutoBackupActive((row).isAutoBackup) ? (
+                  {isAutoBackupActive(row.isAutoBackup) ? (
                     <Tooltip title="غیرفعال‌سازی بکاپ خودکار">
                       <IconButton
                         onClick={onDisableAutoBackupBtnClick}
@@ -139,19 +135,19 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
               );
             }
 
-            
             if (column.id === "calculateTypeId") {
               const scheduleId = value == null ? 0 : Number(value);
 
-              
               const isEnabled =
-               isAutoBackupActive((row as any).isAutoBackup) && scheduleId !== 0 && !Number.isNaN(scheduleId);
+                isAutoBackupActive((row as any).isAutoBackup) &&
+                scheduleId !== 0 &&
+                !Number.isNaN(scheduleId);
 
               const status = getStatusConfig(isEnabled);
 
               const label = isEnabled
-                ? calculateTypeOptions.find((o) => o.id === scheduleId)?.label ||
-                status.label
+                ? calculateTypeOptions.find((o) => o.id === scheduleId)
+                    ?.label || status.label
                 : status.label;
 
               return (
@@ -173,7 +169,6 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
               );
             }
 
-          
             if (column.format && typeof value === "number") {
               return column.format(value);
             }

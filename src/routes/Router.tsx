@@ -15,6 +15,7 @@ import AddStorageContextProvider from "src/components/organisms/storage/add/cont
 import AddKubernetesCloudContextProvider from "src/components/organisms/kubernetesCloud/add/context/AddKubernetesCloudContext";
 import EditStorageContextProvider from "src/components/organisms/storage/edit/contexts/EditStorageContext";
 import AddServerContextProvider from "src/components/organisms/vm/add/contexts/AddVmContext";
+import AddVolumeContextProvider from "src/components/organisms/volume/add/contexts/AddVolumeContext";
 // import AddWebContextProvider from "src/components/organisms/web/add/contexts/AddWebContext";
 // import EditWebContextProvider from "src/components/organisms/web/edit/contexts/EditWebContext";
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
@@ -900,7 +901,7 @@ const Router: FC = () => {
             },
             hideSidebar: false,
           })}
-        /> */}
+        /> 
 
         <Route
           path="/kubernetes-cloud/:projectId/:kubernetesCloudId/deployment/:deploymentId/overview"
@@ -925,7 +926,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "monitoring",
           })}
-        /> */}
+        /> 
             {/* ======================================= Fire Wall ======================================= */}
             <Route
               path="/firewall/:projectId"
