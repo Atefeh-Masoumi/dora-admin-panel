@@ -154,7 +154,7 @@ const AddVm: FC = () => {
             ? (selectedNetwork?.id as number | undefined)
             : undefined,
           ipAddress: usePrivateNetwork ? (ipAddress as string) : undefined,
-          usedFirewall: true,
+          usedFirewall:usedFirewall,
           vmFirewallId: usedFirewall ? (vmFirewallId as number) : undefined,
           storageClassTypeId: 1,
           usedPublicIpV4: usePublicIpV4,
