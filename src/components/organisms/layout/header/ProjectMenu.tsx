@@ -109,7 +109,7 @@ const ProjectMenu = () => {
           }}
         >
           <MenuList sx={{ backgroundColor: "rgba(32, 32, 32, 1)" }}>
-            <Stack p={1.5} spacing={1}>
+            <Stack p={1} spacing={1}>
               {projectList.map((project) => (
                 <MenuItem
                   key={project.id}
@@ -120,8 +120,8 @@ const ProjectMenu = () => {
                   selected={project.id === selectedProjectId}
                   sx={{
                     borderRadius: BORDER_RADIUS_1,
-                    m: 1,
-                    py: 2,
+                    
+                    py: 1,
                     "&.Mui-selected": {
                       backgroundColor: "primary.main",
                       "&:hover": {
@@ -136,7 +136,6 @@ const ProjectMenu = () => {
                     spacing={1}
                     py={0.5}
                   >
-                    <FolderOutlined />
                     <Typography>{project.name}</Typography>
                   </Stack>
                 </MenuItem>
