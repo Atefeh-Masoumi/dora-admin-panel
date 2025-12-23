@@ -21,6 +21,7 @@ import {
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 type EnableAutoBackupDialogPropsType = DialogProps & {
   forceClose: () => void;
@@ -47,7 +48,7 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
     usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation();
 
   const [calculateTypeId, setCalculateTypeId] = useState<number>(1);
-
+ const [cleanUpDuration, setCleanUpDuration] = useState<number>(0);
   useEffect(() => {
     if (props.open) {
       setCalculateTypeId(1);
@@ -61,10 +62,17 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
     });
 
   const onSubmit = () => {
+     if (!cleanUpDuration || cleanUpDuration < 1 || cleanUpDuration > 7) {
+       toast.error("مدت زمان نگه داری بکاپ باید بین 1 و 7 روز باشد");
+       return;
+     }
     enableAutoBackup({
       id: vmBackupId,
       projectId: Number(projectId),
-      enableBackupSnapshotModel: { calculateTypeId: calculateTypeId },
+      enableBackupSnapshotModel: {
+         calculateTypeId: calculateTypeId ,
+       cleanUpDuration: cleanUpDuration
+      },
     })
       .unwrap()
       .then(() => {
@@ -113,6 +121,16 @@ export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
               ))}
             </Select>
           </FormControl>
+           <DorsaTextField
+              focused
+              name="cleanUpDuration"
+              value={cleanUpDuration}
+              onChange={(e) => setCleanUpDuration(Number(e.target.value))}
+             
+              
+              label="مدت زمان نگه داری بکاپ"
+              inputProps={{ dir: "ltr" }}
+            />
         </Stack>
       </DialogContent>
       <Divider />
