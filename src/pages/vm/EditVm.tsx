@@ -55,7 +55,7 @@ const TAB_CONFIGS: TabConfig[] = [
     component: AnalyticChart,
   },
   {
-    label: "شبکه ها",
+    label: "شبکه ها و فایروال",
     route: "/vm/:projectId/:id/ip",
     component: VmIpAddress,
   },
