@@ -55,10 +55,10 @@ export const NewSidebar: FC<SidebarPropsType> = ({
           title:"بک آپ",
           link:`/backup/${selectedProjectId}`,
         },
-        {
-          title:"اسنپ شات",
-          link:`/snapshot/${selectedProjectId}`,
-        },
+        // {
+        //   title:"اسنپ شات",
+        //   link:`/snapshot/${selectedProjectId}`,
+        // },
         // {
         //   title: "ابر اختصاصی(vPC)",
         //   link: `/vpc/${selectedProjectId}`,
