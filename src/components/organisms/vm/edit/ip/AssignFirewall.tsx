@@ -3,18 +3,19 @@ import React, { useState } from "react";
 import LoadingButton from "src/components/atoms/LoadingButton";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { AssignFirewallDialog } from "./dialog/AssignFirewallDialog";
-import { useGetApiMyVmByProjectIdHostFirewallListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery } from "src/app/services/api.generated";
 import { useParams } from "react-router";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { FirewalStruct } from "./struct";
 import { FirewalTableRow } from "./FirewallTableRow";
 
 export const AssignFirewall = () => {
-  const { projectId } = useParams();
+  const { projectId, id: vmHostId } = useParams();
 
   const { data, isLoading, refetch } =
-    useGetApiMyVmByProjectIdHostFirewallListQuery({
+    useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery({
       projectId: Number(projectId),
+      vmHostId: Number(vmHostId),
     });
 
   const [openDialog, setOpenDialog] = useState(false);
