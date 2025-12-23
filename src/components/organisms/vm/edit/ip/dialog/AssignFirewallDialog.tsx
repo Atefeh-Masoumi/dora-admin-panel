@@ -72,13 +72,13 @@ export const AssignFirewallDialog: FC<AssignFirewallDialogPropsType> = ({
 
   return (
     <Dialog {...props} sx={dialogSx}>
-      <DialogTitle sx={dialogTitleSx}>افزودن رول</DialogTitle>
+      <DialogTitle sx={dialogTitleSx}>تغییر فایروال</DialogTitle>
 
       <form onSubmit={formik.handleSubmit}>
         <DialogContent sx={dialogContentSx}>
           <Stack sx={dialogFormStackSx}>
             <Typography fontSize={16}>
-              آیا از افزودن رول جدید مطمئن هستید؟
+              آیا از تغییر فایروال مطمئن هستید؟
             </Typography>
 
             <Stack>
@@ -118,7 +118,7 @@ export const AssignFirewallDialog: FC<AssignFirewallDialogPropsType> = ({
               variant="contained"
               sx={dialogButtonSx}
             >
-              افزودن رول
+              تغییر فایروال
             </LoadingButton>
           </Stack>
         </DialogActions>
