@@ -112,7 +112,7 @@ const FirewallList: FC = () => {
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
-          <Stack 
+          <Stack
             direction={{ xs: "column", sm: "row" }}
             alignItems="center"
             spacing={2}
@@ -137,13 +137,14 @@ const FirewallList: FC = () => {
                   sx={{
                     width: 24,
                     height: 24,
-                    border: ({ palette }) => "1px solid " + palette.primary.main,
+                    border: ({ palette }) =>
+                      "1px solid " + palette.primary.main,
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 >
                   <Add
                     fontSize="small"
-                    sx={{ "& path": { stroke: "rgba(60, 138, 255, 1)" } }}
+                    sx={{ "& path": { stroke: "#00a651" } }}
                   />
                 </Stack>
               }
@@ -163,7 +164,7 @@ const FirewallList: FC = () => {
             initialOrder={0}
           />
         </Box>
-      </Stack> 
+      </Stack>
       <AddFirewallDialog
         open={dialogType === DIALOG_TYPE_ENUM.CREATE}
         onClose={closeDialogHandler}
