@@ -54,7 +54,7 @@ export const SelectFirewall: FC = () => {
                   border: ({ palette }) => `1px solid ${palette.grey}`,
                 }}
               >
-                <Stack direction="row" alignItems="center" gap={1}>
+                <Stack direction="row" alignItems="center" gap={1} width={"50%"}>
                   <FormControl fullWidth>
                     <InputLabel>انتخاب فایروال</InputLabel>
                     <Select
@@ -72,14 +72,14 @@ export const SelectFirewall: FC = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     color="secondary"
                     onClick={() => setIsAddFirewallOpen(true)}
                     sx={{ minWidth: 180 }}
                   >
                     افزودن فایروال جدید
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Box>
 
