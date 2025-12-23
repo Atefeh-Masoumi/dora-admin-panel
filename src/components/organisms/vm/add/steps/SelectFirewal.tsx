@@ -31,7 +31,7 @@ export const SelectFirewall: FC = () => {
     setRemoteAccessIp,
     vmFirewallId,
     setVmFirewallId,
-    useExistingFirewall,
+    usedFirewall,
   } = useContext(AddServerContext);
 
   const { data: firewallList = [], refetch: refetchFirewallList } =
@@ -45,7 +45,7 @@ export const SelectFirewall: FC = () => {
     <Paper sx={{ p: 2, boxShadow: "none" }}>
       <Stack direction="column" rowGap={2}>
         <Stack gap={2} direction={{ md: "column", xl: "column" }}>
-          {useExistingFirewall ? (
+          {usedFirewall ? (
             <>
               <Box
                 p={1.5}

@@ -22,17 +22,17 @@ import {
   export const SelectFirewalType: FC<SelectConfigTypeType> = ({
     defaultType,
   }) => {
-    const { useExistingFirewall, setUseExistingFirewall } = useContext(AddServerContext);
+    const { usedFirewall, setUsedFirewall } = useContext(AddServerContext);
 
     useEffect(() => {
       if (defaultType !== undefined) {
-        setUseExistingFirewall(defaultType === PRODUCT_TYPE_ENUM.OLD);
+        setUsedFirewall(defaultType === PRODUCT_TYPE_ENUM.OLD);
       }
-    }, [defaultType, setUseExistingFirewall]);
+    }, [defaultType, setUsedFirewall]);
 
     const handleConfigTypeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
       const productType = Number(event.target.value) as PRODUCT_TYPE_ENUM;
-      setUseExistingFirewall(productType === PRODUCT_TYPE_ENUM.OLD);
+      setUsedFirewall(productType === PRODUCT_TYPE_ENUM.OLD);
       // onChangeType?.(productType);
     };
   
@@ -71,7 +71,7 @@ import {
           <Stack>
             <RadioGroup
               value={
-                useExistingFirewall
+                usedFirewall
                   ? PRODUCT_TYPE_ENUM.OLD
                   : PRODUCT_TYPE_ENUM.NEW
               }
