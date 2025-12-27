@@ -140,7 +140,27 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
               );
             }
 
-            
+            if (column.id === "isAutoBackup" || column.id === "isAutoSnapshot") {
+              const status = getStatusConfig((value==="فعال"));
+              return (
+                <Chip
+                  size="small"
+                  label={status.label}
+                  sx={{
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] = status.bgcolor.split(".");
+                      return (palette as any)[color]?.[shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] = status.typographyColor.split(".");
+                      return (palette as any)[color]?.[shade];
+                    },
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
+                />
+              );
+            }
+
             if (column.id === "calculateTypeId") {
               const scheduleId = value == null ? 0 : Number(value);
 
