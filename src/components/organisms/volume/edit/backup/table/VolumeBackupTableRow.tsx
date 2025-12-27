@@ -159,11 +159,11 @@ export const VolumeBackupTableRow: FC<{ row: any }> = ({ row }) => {
             >
               {column.id === "control" ? (
                 <Stack direction="row" columnGap={1} alignItems="center">
-                  {statusId === VOLUME_BACKUP_STATUS_INFO.INACTIVE && (
+                 
                     <IconButton onClick={handleOpenRestore}>
                       <RefreshSvg />
                     </IconButton>
-                  )}
+                
 
                   <IconButton onClick={() => handleOpenDelete(row)}>
                     <TrashSvg />
