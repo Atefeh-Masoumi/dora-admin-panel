@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { useGetApiMyVmByProjectIdFirewallListQuery } from "src/app/services/api.generated";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 import { AddFirewallDialog } from "src/pages/firewall/AddFirewall";
+import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 
 export const SelectFirewall: FC = () => {
   const { projectId } = useParams();
@@ -117,7 +118,7 @@ export const SelectFirewall: FC = () => {
                     </Typography>
                   </Stack>
                   {allowRemoteAccess && (
-                    <TextField
+                     <DorsaTextField
                       fullWidth
                       label=""
                       value={remoteAccessIp || ""}
@@ -163,7 +164,7 @@ export const SelectFirewall: FC = () => {
                       onChange={(e) => setAllowHttpsAccess(e.target.checked)}
                     />
                   }
-                  label="استفاده از شبکه خصوصی"
+                  label="اجازه دسترسی با ترافیک HTTPS"
                 />
                 <Typography pt={1} pr={1} pl={4}>
                   برای تنظیم یک نقطه پایانی، برای مثال هنگام ایجاد یک وب سرور
