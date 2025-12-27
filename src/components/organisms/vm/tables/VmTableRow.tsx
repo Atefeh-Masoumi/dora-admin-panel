@@ -149,64 +149,17 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                 <>
                   {column.id === "statusId" ? (
                     <Chip
-                      clickable={false}
-                      label={
-                        id === 1
-                          ? "پرداخت نشده"
-                          : id === 2
-                            ? "فعال"
-                            : id === 3
-                              ? "غیرفعال"
-                              : id === 4
-                                ? "منقضی شده"
-                                : id === 5
-                                  ? "حذف شده"
-                                  : id === 6
-                                    ? "در حال انجام عملیات"
-                                    : id === 7
-                                      ? "بازسازی"
-                                      : id === 8
-                                        ? "خطا در زیرساخت"
-                                        : id === 9
-                                          ? "بازسازی"
-                                          : id === 10
-                                            ? "خاموش"
-                                            : id === 11
-                                              ? "در صف انتظار"
-                                              : id === 12
-                                                ? "در صف حذف"
-                                                : "ناموفق"
-                      }
-                      sx={{
-                        cursor: "pointer",
-                        backgroundColor:
-                          id === 6 ||
-                            id === 7 ||
-                            id === 8 ||
-                            id === 9 ||
-                            id === 10 ||
-                            id === 11
-                            ? "warning.light"
-                            : id === 2
-                              ? "success.light"
-                              : "error.light",
-                        color:
-                          id === 6 ||
-                            id === 7 ||
-                            id === 8 ||
-                            id === 9 ||
-                            id === 10 ||
-                            id === 11
-                            ? "warning.main"
-                            : id === 2
-                              ? "success.main"
-                              : "error.main",
-                        py: 2.2,
-                        borderRadius: 1,
-                        fontSize: "14px",
-                      }}
-                    />
-                  ) : column.id === "ipAddressString" ? (
+                    clickable={false}
+                    label={vmStatusIdentifier(id).label}
+                    sx={{
+                      bgcolor: vmStatusIdentifier(id).bgColor,
+                      color: vmStatusIdentifier(id).typographyColor,
+                      py: 2.2,
+                      borderRadius: 1,
+                      fontSize: "14px",
+                    }}
+                  />
+                  ) : column.id === "ipAddressString" || column.id === "privateIpString" ? (
                     <Button
                       sx={{ py: 0, px: 0.5 }}
                       onClick={() => {
