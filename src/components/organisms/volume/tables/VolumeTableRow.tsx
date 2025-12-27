@@ -137,7 +137,7 @@ const VolumeTableRow: FC<{ row: any }> = ({ row }) => {
             }
 
             if (column.id === "isAutoBackup" || column.id === "isAutoSnapshot") {
-              const status = getStatusConfig(Boolean(value));
+              const status = getStatusConfig((value==="فعال"));
               return (
                 <Chip
                   size="small"
