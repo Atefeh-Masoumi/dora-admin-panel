@@ -52,7 +52,7 @@ export const NewSidebar: FC<SidebarPropsType> = ({
           link:`/firewall/${selectedProjectId}`,
         },
         {
-          title:"بک آپ",
+          title:"بکاپ",
           link:`/backup/${selectedProjectId}`,
         },
         // {
