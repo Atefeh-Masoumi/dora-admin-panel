@@ -289,7 +289,7 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بازگردانی بک آپ",
+        label: "بازگردانی بکاپ",
       };
     case 15:
       return {
@@ -303,7 +303,7 @@ export const DiskStatusIdentifier = (StatusId: number) => {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بک آپ بازگردانی شده",
+        label: "بکاپ بازگردانی شده",
       };
     default:
       return {
@@ -426,7 +426,7 @@ export const vmStatusIdentifier = (StatusId: number) => {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بازگردانی بک آپ",
+        label: "بازگردانی بکاپ",
       };
     case 17:
       return {
@@ -440,7 +440,7 @@ export const vmStatusIdentifier = (StatusId: number) => {
         iconColor: "error",
         typographyColor: "error.main",
         bgColor: "error.light",
-        label: "بک آپ بازگردانی شده",
+        label: "بکاپ بازگردانی شده",
       };
     default:
       return {
