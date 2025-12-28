@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
+import { Paper, Stack, Typography, useTheme } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -20,7 +20,6 @@ type ChangeConfigPropsType = {};
 
 export const ChangeConfig: FC<ChangeConfigPropsType> = () => {
   const [size, setSize] = useState(25);
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
 
   const { blockstorageId, projectId } = useParams();
   const theme = useTheme();
