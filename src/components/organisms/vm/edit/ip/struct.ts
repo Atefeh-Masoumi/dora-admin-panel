@@ -10,11 +10,11 @@ export const FirewalStruct: columnType[] = [
 
 
 export const IpTableTableStruct: columnType[] = [
-
-    { id: "ipAddress", label: "آدرس IP" },
-    { id: "isPrimary", label: " Primary" },
-    { id: "isFloating", label: "Floating " },
-    { id: "isV4", label: "نوع IP" },
-    { id: "createDate", label: "تاریخ ایجاد" },
-    { id: "control", label: "", disableSort: true },
+  { id: "ipAddress", label: "آدرس IP" },
+  { id: "macAddress", label: "آدرس MAC" },
+  { id: "isPrimary", label: " Primary" },
+  { id: "isFloating", label: "Floating " },
+  { id: "isV4", label: "نوع IP" },
+  { id: "createDate", label: "تاریخ ایجاد" },
+  { id: "control", label: "", disableSort: true },
 ];
