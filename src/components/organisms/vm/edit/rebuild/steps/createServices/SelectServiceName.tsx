@@ -98,7 +98,7 @@ export const SelectServiceName: FC<SelectServiceNamePropsType> = ({
         <Select
           onChange={handleVmKeyChange}
           label="کلید SSH"
-          sx={{ direction: "rtl" }}
+          // sx={{ direction: "rtl" }}
         >
           {vmKeyList?.map((key) => (
             <MenuItem key={key.id} value={key.id?.toString()}>
