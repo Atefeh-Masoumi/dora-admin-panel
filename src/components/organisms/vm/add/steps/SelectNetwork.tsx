@@ -1,8 +1,22 @@
-import { FC, useContext, useMemo } from "react";
-import { Box, Checkbox, Divider, FormControl, FormControlLabel, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
-import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
+import { FC, useContext } from "react";
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useGetApiMyVmByProjectIdNetworkShortListQuery } from "src/app/services/api.generated";
+import {
+  useGetApiMyVmByProjectIdNetworkShortListQuery,
+} from "src/app/services/api.generated";
+import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
 
 export const SelectNetwork: FC = () => {
   const { projectId } = useParams();
@@ -19,9 +33,12 @@ export const SelectNetwork: FC = () => {
     setIpAddress,
   } = useContext(AddServerContext);
 
-  const { data: vmNetworkList } = useGetApiMyVmByProjectIdNetworkShortListQuery({
-    projectId: Number(projectId),
-  });
+  const { data: vmNetworkList } = useGetApiMyVmByProjectIdNetworkShortListQuery(
+    {
+      projectId: Number(projectId),
+    }
+  );
+
 
   const handlePrivateNetworkChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -33,48 +50,83 @@ export const SelectNetwork: FC = () => {
     }
   };
 
-  return (
-    <Paper sx={{ p: 2,boxShadow: "none" }}>
-      <Stack direction="column" rowGap={2}>
-      <Typography fontSize={24} fontWeight="bold" align="center">
 
-        تنظیمات شبکه</Typography>
-        {/* <Divider flexItem sx={{ borderWidth: 1.5 }} /> */}
+  return (
+    <Paper sx={{ p: 2, boxShadow: "none" }}>
+      <Stack direction="column" rowGap={2}>
+        <Typography fontSize={24} fontWeight="bold" align="center">
+          تنظیمات شبکه
+        </Typography>
         <Typography
           align="center"
           fontSize={16}
           sx={{ color: ({ palette }) => palette.grey[700] }}
         >
-          از این قسمت می توانید تنظیمات شبکه خود را تنظیم کنید
+          تنظیمات اتصال شبکه و فایروال مورد نیاز سرور را انتخاب کنید
         </Typography>
         <Stack gap={2} direction={{ md: "column", xl: "column" }}>
-          <Box p={1.5} sx={{ width: "100%", border: ({ palette }) => `1px solid ${palette.grey}` }}>
+          <Box
+            p={1.5}
+            sx={{
+              width: "100%",
+              border: ({ palette }) => `1px solid ${palette.grey}`,
+            }}
+          >
             <FormControlLabel
-              control={<Checkbox checked={usePublicIpV4} onChange={(e) => setUsePublicIpV4(e.target.checked)} />}
-              label="استفاده از آدرس IP عمومی IPv4"
+              control={
+                <Checkbox
+                  checked={usePublicIpV4}
+                  onChange={(e) => setUsePublicIpV4(e.target.checked)}
+                />
+              }
+              label="استفاده از IP عمومی IPv4"
             />
-            <Typography  pt={1} pr={1} pl={4}>
-              با استفاده از آدرس IP عمومی IPv4 به سرور خود دسترسی داشته باشید
+            <Typography pt={1} pr={1} pl={4}>
+              با فعال‌سازی IP عمومی نسخه IPv4، سرور از اینترنت قابل دسترسی خواهد
+              بود.
             </Typography>
           </Box>
 
-          <Box p={1.5} sx={{ width: "100%", border: ({ palette }) => `1px solid ${palette.grey}` }}>
+          <Box
+            p={1.5}
+            sx={{
+              width: "100%",
+              border: ({ palette }) => `1px solid ${palette.grey}`,
+            }}
+          >
             <FormControlLabel
-              control={<Checkbox checked={usePublicIpV6} onChange={(e) => setUsePublicIpV6(e.target.checked)} />}
-              label="استفاده از آدرس IP عمومی IPv6"
+              control={
+                <Checkbox
+                  checked={usePublicIpV6}
+                  onChange={(e) => setUsePublicIpV6(e.target.checked)}
+                />
+              }
+              label="استفاده از IP عمومی IPv6"
             />
-            <Typography  pt={1} pr={1} pl={4}>
-              با استفاده از آدرس IP عمومی IPv6 به سرور خود دسترسی داشته باشید
+            <Typography pt={1} pr={1} pl={4}>
+              با فعال‌سازی IP عمومی نسخه IPv6، سرور از اینترنت قابل دسترسی خواهد
+              بود.
             </Typography>
           </Box>
 
-          <Box p={1.5} sx={{ width: "100%", border: ({ palette }) => `1px solid ${palette.grey}` }}>
+          <Box
+            p={1.5}
+            sx={{
+              width: "100%",
+              border: ({ palette }) => `1px solid ${palette.grey}`,
+            }}
+          >
             <FormControlLabel
-              control={<Checkbox checked={usePrivateNetwork} onChange={handlePrivateNetworkChange} />}
+              control={
+                <Checkbox
+                  checked={usePrivateNetwork}
+                  onChange={handlePrivateNetworkChange}
+                />
+              }
               label="استفاده از شبکه خصوصی"
             />
-            <Typography  pt={1} pr={1} pl={4}>
-              با استفاده از شبکه خصوصی، سرور خود را به شبکه‌های دیگر متصل کنید
+            <Typography pt={1} pr={1} pl={4}>
+              با استفاده از شبکه خصوصی، سرور خود را به شبکه‌های دیگر متصل کنید.
             </Typography>
 
             {usePrivateNetwork && (
@@ -86,7 +138,10 @@ export const SelectNetwork: FC = () => {
                     label="انتخاب شبکه"
                     onChange={(e) => {
                       const selectedId = Number(e.target.value);
-                      const network = vmNetworkList?.find((n) => Number(n.id) === selectedId) || null;
+                      const network =
+                        vmNetworkList?.find(
+                          (n) => Number(n.id) === selectedId
+                        ) || null;
                       setSelectedNetwork(network);
                     }}
                   >
@@ -108,6 +163,7 @@ export const SelectNetwork: FC = () => {
               </Stack>
             )}
           </Box>
+
         </Stack>
       </Stack>
     </Paper>

@@ -10,6 +10,7 @@ import {
 } from "src/app/services/api.generated";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { AttchVmDialog } from "./AttchVmDialog";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 export const AttachVm: FC = () => {
   const [hostId, setHostId] = useState<number | null>(null);
@@ -99,11 +100,47 @@ export const AttachVm: FC = () => {
 
   return (
     <>
-      <Paper sx={{ p: 2 }}>
-        <Stack direction="column" rowGap={2}>
-          <Typography> اتصال سرور ابری</Typography>
-          <Divider flexItem sx={{ borderWidth: 1.5 }} />
-          <Stack direction="column" rowGap={3}>
+       <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
+        <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+              اتصال سرور ابری
+            </Typography>
+            <RefreshButton isFetching={getStorageSpecificationLoading} refetchData={refetch} />
+          </Stack>
+          <Stack
+              direction={{ xs: "column", md: "row" }}
+              alignItems="center"
+              justifyContent={{ xs: "center", md: "space-between" }}
+            >
+              <LoadingButton variant="outlined" onClick={handleOpenDialog}>
+                {!blockstorageSpecification || blockstorageSpecification?.isConnected === false ? (
+                  <>اتصال به سرور </>
+                ) : (
+                  <>قطع ارتباط با سرور </>
+                )}
+              </LoadingButton>
+            </Stack>
+            </Stack> 
+            <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+          <Stack >
             <Stack
               mt={6}
               mb={3}
@@ -141,20 +178,8 @@ export const AttachVm: FC = () => {
                 </>
               )}
             </Stack>
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              justifyContent={{ xs: "center", md: "space-between" }}
-            >
-              <LoadingButton variant="contained" onClick={handleOpenDialog}>
-                {!blockstorageSpecification || blockstorageSpecification?.isConnected === false ? (
-                  <>اتصال به سرور </>
-                ) : (
-                  <>قطع ارتباط با سرور </>
-                )}
-              </LoadingButton>
-            </Stack>
-          </Stack>
+            
+        
         </Stack>
       </Paper>
 

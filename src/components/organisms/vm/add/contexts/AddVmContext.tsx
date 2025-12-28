@@ -43,6 +43,20 @@ type AddServerContextType = {
   setSelectedNetwork: (network: VmNetworkShortListResponse | null) => void;
   ipAddress: string | null;
   setIpAddress: (ip: string | null) => void;
+  usedFirewall: boolean;
+  setUsedFirewall: (value: boolean) => void;
+  vmFirewallId: number | null;
+  setVmFirewallId: (value: number | null) => void;
+  useExistingFirewall: boolean;
+  setUseExistingFirewall: (value: boolean) => void;
+  allowRemoteAccess: boolean;
+  setAllowRemoteAccess: (value: boolean) => void;
+  allowHttpAccess: boolean;
+  setAllowHttpAccess: (value: boolean) => void;
+  allowHttpsAccess: boolean;
+  setAllowHttpsAccess: (value: boolean) => void;
+  remoteAccessIp: string | null;
+  setRemoteAccessIp: (ip: string | null) => void;
 };
 
 export const AddServerContext = createContext<AddServerContextType>({
@@ -77,6 +91,20 @@ export const AddServerContext = createContext<AddServerContextType>({
   setSelectedNetwork: () => {},
   ipAddress: null,
   setIpAddress: () => {},
+  usedFirewall: false,
+  setUsedFirewall: () => {},
+  vmFirewallId: null,
+  setVmFirewallId: () => {},
+  useExistingFirewall: true,
+  setUseExistingFirewall: () => {},
+  allowRemoteAccess: true,
+  setAllowRemoteAccess: () => {},
+  allowHttpAccess: true,
+  setAllowHttpAccess: () => {},
+  allowHttpsAccess: true,
+  setAllowHttpsAccess: () => {},
+  remoteAccessIp: null,
+  setRemoteAccessIp: () => {}
 });
 
 type AddServerContextProviderPropsType = {
@@ -109,7 +137,13 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [selectedNetwork, setSelectedNetwork] =
     useState<VmNetworkShortListResponse | null>(null);
   const [ipAddress, setIpAddress] = useState<string | null>(null);
-
+  const [usedFirewall, setUsedFirewall] = useState<boolean>(false);
+  const [vmFirewallId, setVmFirewallId] = useState<number | null>(null);
+  const [useExistingFirewall, setUseExistingFirewall] = useState<boolean>(true);
+  const [allowRemoteAccess, setAllowRemoteAccess] = useState<boolean>(true);
+  const [allowHttpAccess, setAllowHttpAccess] = useState<boolean>(true);
+  const [allowHttpsAccess, setAllowHttpsAccess] = useState<boolean>(true);
+  const [remoteAccessIp, setRemoteAccessIp] = useState<string | null>("0.0.0.0/0");
   return (
     <AddServerContext.Provider
       value={{
@@ -139,6 +173,20 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
         setSelectedNetwork,
         ipAddress,
         setIpAddress,
+        usedFirewall,
+        setUsedFirewall,
+        vmFirewallId,
+        setVmFirewallId,
+        useExistingFirewall,
+        setUseExistingFirewall,
+        allowRemoteAccess,
+        setAllowRemoteAccess,
+        allowHttpAccess,  
+        setAllowHttpAccess,
+        allowHttpsAccess,
+        setAllowHttpsAccess,
+        remoteAccessIp,
+        setRemoteAccessIp,
       }}
     >
       {children}

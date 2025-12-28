@@ -12,26 +12,17 @@ import {
   Button,
   Chip,
   DialogProps,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  DialogContentText,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+ 
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import { useParams } from "react-router";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   useGetApiMyVmByProjectIdVolumeListQuery,
   usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
-  useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery,
-  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
+import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { EnableAutoBackupDialog } from "./EnableAutoBackupDialog";
 
 type DialogType = "ENABLE" | "DISABLE" | null;
 
@@ -96,30 +87,73 @@ const VolumeAutoBackup: FC = () => {
 
   return (
     <>
-      <Paper sx={{ p: 2 }}>
-        <Stack direction="column" rowGap={2}>
-          <Typography color="grey.700"
+       <Paper
+        elevation={0}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+      >
+        <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
               fontSize={24}
-              fontWeight={700}>بکاپ خودکار دیسک</Typography>
-          <Divider flexItem sx={{ borderWidth: 1.5 }} />
+              fontWeight={700}
+            >
+              فعال‌سازی بکاپ خودکار
+            </Typography>
+            <RefreshButton isFetching={volumeLoading} refetchData={refetchVolume} />
+          </Stack>
+          <Stack direction="row" columnGap={2}>
+              {isAutoBackupEnabled ? (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => setDialogType("DISABLE")}
+                  disabled={volumeLoading}
+                >
+                  غیرفعال‌سازی بکاپ خودکار
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => setDialogType("ENABLE")}
+                  disabled={volumeLoading}
+                >
+                  فعال‌سازی بکاپ خودکار
+                </Button>
+              )}
+            </Stack>
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack>
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            sx={{ mt: 2 }}
+            sx={{ mt: 6 }}
           >
             <Stack direction="row" alignItems="center" columnGap={1}>
-              <Typography >
+              <Typography variant="text2" fontWeight={"bold"}>
                 بکاپ خودکار برای این دیسک
               </Typography>
               {isAutoBackupEnabled && (
                 <>
-                  <Typography>به صورت </Typography>
+                  {/* <Typography variant="text2" fontWeight={"bold"}>به صورت </Typography> */}
                   <Typography
                    
                     sx={{ color: "text.secondary" }}
                   >
-                    {getBackupTypeLabel(volumeData?.calculateTypeId)}
+                    {getBackupTypeLabel(volumeData?.calculateTypeId ?? undefined)}
                   </Typography>
                 </>
               )}
@@ -134,29 +168,9 @@ const VolumeAutoBackup: FC = () => {
                 color={isAutoBackupEnabled ? "success" : "default"}
                 variant="outlined"
               />
-              <Typography >است</Typography>
+              <Typography variant="text2" fontWeight={"bold"} >است</Typography>
             </Stack>
-            <Stack direction="row" columnGap={2}>
-              {isAutoBackupEnabled ? (
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => setDialogType("DISABLE")}
-                  disabled={volumeLoading}
-                >
-                  غیرفعال‌سازی بکاپ خودکار
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setDialogType("ENABLE")}
-                  disabled={volumeLoading}
-                >
-                  فعال‌سازی بکاپ خودکار
-                </Button>
-              )}
-            </Stack>
+            
           </Stack>
         </Stack>
       </Paper>
@@ -182,112 +196,7 @@ const VolumeAutoBackup: FC = () => {
   );
 };
 
-type EnableAutoBackupDialogPropsType = DialogProps & {
-  forceClose: () => void;
-  vmBackupId: number;
-  onSuccess?: () => void;
-};
 
-export const EnableAutoBackupDialog: FC<EnableAutoBackupDialogPropsType> = ({
-  forceClose,
-  vmBackupId,
-  onSuccess,
-  ...props
-}) => {
-  const { projectId, blockstorageId } = useParams();
 
-  const [enableAutoBackup, { isLoading: enableAutoBackupLoading }] =
-    usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation();
-
-  const [calculateTypeId, setCalculateTypeId] = useState<number>(1);
-
-  const { refetch } =
-    useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery({
-      projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId),
-    });
-
-  useEffect(() => {
-    if (props.open) {
-      setCalculateTypeId(1);
-    }
-  }, [props.open]);
-
-  const onSubmit = () => {
-    enableAutoBackup({
-      id: Number(blockstorageId),
-      projectId: Number(projectId),
-      enableBackupSnapshotModel:
-      {calculateTypeId: calculateTypeId},
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("بکاپ خودکار با موفقیت فعال شد");
-        refetch();
-        onSuccess?.();
-        forceClose();
-      })
-      .catch(() => {
-        toast.error("خطا در فعال‌سازی بکاپ خودکار");
-      });
-  };
-
-  const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (!props.onClose) return;
-    props.onClose(event, "backdropClick");
-    setCalculateTypeId(1);
-  };
-
-  const handleClose = (event: any, reason?: string) => {
-    if (props.onClose) {
-      props.onClose(event, "backdropClick");
-      setCalculateTypeId(1);
-    }
-  };
-
-  return (
-    <Dialog {...props} onClose={handleClose}>
-      <DialogTitle align="center">فعال‌سازی بکاپ خودکار</DialogTitle>
-      <DialogContent>
-        <Stack direction="column" rowGap={2} sx={{ mt: 1, minWidth: 300 }}>
-          <DialogContentText>
-            لطفاً دوره زمانی بکاپ خودکار را انتخاب کنید.
-          </DialogContentText>
-          <FormControl fullWidth size="small">
-            <InputLabel id="calculate-type-label">دوره زمانی</InputLabel>
-            <Select
-              labelId="calculate-type-label"
-              id="calculate-type"
-              value={calculateTypeId}
-              label="دوره زمانی"
-              onChange={(e) => setCalculateTypeId(Number(e.target.value))}
-            >
-              {calculateTypeOptions.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Stack>
-      </DialogContent>
-      <Divider />
-      <DialogActions sx={{ alignItems: "center", columnGap: 2, p: 2 }}>
-        <Button variant="outlined" fullWidth onClick={cancelBtnOnClick}>
-          انصراف
-        </Button>
-        <LoadingButton
-          variant="contained"
-          color="primary"
-          fullWidth
-          loading={enableAutoBackupLoading}
-          onClick={onSubmit}
-        >
-          فعال‌سازی
-        </LoadingButton>
-      </DialogActions>
-    </Dialog>
-  );
-};
 
 export default VolumeAutoBackup;

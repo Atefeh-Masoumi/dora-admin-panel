@@ -1,4 +1,4 @@
-import { IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
@@ -13,12 +13,58 @@ import {
   useGetApiMyVmByProjectIdKeyListQuery,
 } from "src/app/services/api.generated";
 import { useParams } from "react-router";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
-
+export const keyStatusIdentifier = (StatusId: number) => {
+  switch (StatusId) {
+    case 1:
+      return {
+        iconColor: "success",
+        bgcolor: "success.light",
+        typographyColor: "success.main",
+        label: "فعال",
+      };
+    case 2:
+      return {
+        iconColor: "error",
+        bgcolor: "error.light",
+        typographyColor: "error.main",
+        label: " غیر فعال ",
+      };
+    case 3:
+      return {
+        iconColor: "warning",
+        bgcolor: "warning.light",
+        typographyColor: "warning.main",
+        label: "در حال انتظار",
+      };
+    case 4:
+      return {
+        iconColor: "error",
+        bgcolor: "error.light",
+        typographyColor: "error.main",
+        label: "خطا در زیر ساخت ",
+      };
+    case 5:
+      return {
+        iconColor: "warning",
+        bgcolor: "warning.light",
+        typographyColor: "warning.main",
+        label: "حذف شده",
+      };
+    default:
+      return {
+        iconColor: "disabled",
+        bgcolor: undefined,
+        typographyColor: undefined,
+        label: "",
+      };
+  }
+};
 export const KeyListTableRow: FC<{ row: any }> = ({ row }) => {
   const { projectId } = useParams();
 
@@ -66,7 +112,7 @@ export const KeyListTableRow: FC<{ row: any }> = ({ row }) => {
           const text = column.format && typeof value === "number"
             ? column.format(value)
             : value;
-
+            const statusId = row.statusId;
           return (
             <DorsaTableCell
               key={column.id}
@@ -79,6 +125,21 @@ export const KeyListTableRow: FC<{ row: any }> = ({ row }) => {
                     <TrashSvg />
                   </IconButton>
                 </Stack>
+              ) : column.id === "statusId" ? (
+                <Chip
+                  label={keyStatusIdentifier(statusId).label}
+                  sx={{
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] = keyStatusIdentifier(statusId).bgcolor?.split('.') || [];
+                      return (palette as any)[color]?.[shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] = keyStatusIdentifier(statusId).typographyColor?.split('.') || [];
+                      return (palette as any)[color]?.[shade];
+                    },
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
+                />
               ) : (
                 text || "-"
               )}

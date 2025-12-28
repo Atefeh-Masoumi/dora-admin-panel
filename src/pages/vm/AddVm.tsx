@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { FC, useContext, useMemo, useState } from "react";
+import { FC, useContext, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
 // import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,6 +23,8 @@ import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 // import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
 import { passwordValidationRegex } from "src/utils/regexUtils";
+import { SelectFirewalType } from "src/components/organisms/vm/add/steps/SelectFirewallType";
+import { SelectFirewall } from "src/components/organisms/vm/add/steps/SelectFirewal";
 
 const AddVm: FC = () => {
   // const [selectedIp, setSelectedIp] = useState<string | number | null>(null);
@@ -45,6 +47,13 @@ const AddVm: FC = () => {
     usePrivateNetwork,
     selectedNetwork,
     ipAddress,
+    usedFirewall,
+    vmFirewallId,
+    allowRemoteAccess,
+    allowHttpAccess,
+    allowHttpsAccess,
+    remoteAccessIp,
+   
   } = useContext(AddServerContext);
 
   const { data: productItems } =
@@ -120,6 +129,8 @@ const AddVm: FC = () => {
       validationErrorMessage = "رمز عبور نامعتبر است";
     } else if (usePrivateNetwork && (!selectedNetwork?.id || !ipAddress)) {
       validationErrorMessage = "برای شبکه خصوصی، انتخاب شبکه و IP الزامی است";
+    } else if (usedFirewall && !vmFirewallId) {
+      validationErrorMessage = "برای فایروال، انتخاب فایروال الزامی است";
     }
 
     if (validationErrorMessage !== "") {
@@ -139,11 +150,19 @@ const AddVm: FC = () => {
           memory: customConfig.memory,
           disk: customConfig.disk,
 
-          vmNetworkId: usePrivateNetwork ? (selectedNetwork?.id as number | undefined) : undefined,
+          vmNetworkId: usePrivateNetwork
+            ? (selectedNetwork?.id as number | undefined)
+            : undefined,
           ipAddress: usePrivateNetwork ? (ipAddress as string) : undefined,
+          usedFirewall:usedFirewall,
+          vmFirewallId: usedFirewall ? (vmFirewallId as number) : undefined,
           storageClassTypeId: 1,
           usedPublicIpV4: usePublicIpV4,
-          usedPublicIpV6: usePublicIpV6
+          usedPublicIpV6: usePublicIpV6,
+          allowRemoteAccess: allowRemoteAccess,
+          allowHttpAccess: allowHttpAccess,
+          allowHttpsAccess: allowHttpsAccess,
+          remoteAccessIp: remoteAccessIp || undefined,
         },
         projectId: Number(projectId),
       })
@@ -153,7 +172,7 @@ const AddVm: FC = () => {
           navigate(-1);
           refetch();
         })
-        .catch(() => { });
+        .catch(() => {});
     }
   };
 
@@ -212,12 +231,20 @@ const AddVm: FC = () => {
                   <SelectConfig />
                   <Divider sx={{ margin: "50px 10px" }} />
                 </Grid>
+
                 <Grid xs={12} item>
-                  <ServerInfo />
+                  <SelectNetwork />
                   <Divider sx={{ mt: 10 }} />
                 </Grid>
                 <Grid xs={12} item>
-                  <SelectNetwork />
+                  <SelectFirewalType />
+                </Grid>
+                <Grid xs={12} item>
+                  <SelectFirewall />
+                  <Divider sx={{ mt: 10 }} />
+                </Grid>
+                <Grid xs={12} item>
+                  <ServerInfo />
                 </Grid>
               </Grid>
             </Stack>
@@ -256,13 +283,13 @@ const AddVm: FC = () => {
             </Box>
           </Grid>
         </Grid>
-        <Stack
+        {/* <Stack
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={1}
           px={1.7}
-        ></Stack>
+        ></Stack> */}
       </Box>
     </>
   );

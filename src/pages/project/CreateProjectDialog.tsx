@@ -11,7 +11,6 @@ import {
 	FormControlLabel,
 	Grid,
 	Box,
-	Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
@@ -21,13 +20,13 @@ import {
 	ProjectListResponse,
 	useGetApiMyInfraDatacenterListQuery,
 	useGetApiMyProjectListQuery,
-	usePostApiMyCreateMutation,
+	usePostApiMyProjectCreateMutation,
 } from "src/app/services/api.generated";
 import { AlphaNumericTextField } from "src/components/atoms/AlphaNumericTextField";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { formikOnSubmitType } from "src/types/form.type";
 import * as yup from "yup";
-import DomainIcon from "@mui/icons-material/Domain";
+// import DomainIcon from "@mui/icons-material/Domain";
 import LoadingButton from "src/components/atoms/LoadingButton";
 
 type CreateVmProjectDialogPropsType = DialogProps & {
@@ -41,7 +40,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 	...props
 }) => {
 	const [createVmProject, { isLoading: createVmProjectLoading }] =
-		usePostApiMyCreateMutation();
+	usePostApiMyProjectCreateMutation();
 	//   const [editVmProject, { isLoading: editVmProjectLoading }] =
 	// 	usePutApiMyHostProjectEditByIdMutation();
 	const { data: datacenterList } =
@@ -82,7 +81,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 		API.unwrap()
 			.then(() => {
 				toast.success(
-					"پروژه با موفقیت ایجاد شد"
+					"مرکز داده مجازی با موفقیت ایجاد شد"
 				);
 				refetch();
 				closeDialogHandler({});
@@ -130,13 +129,13 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 		// }}
 		>
 			<DialogTitle textAlign="left">
-				{projectId ? "بروزرسانی پروژه" : "افزودن پروژه"}
+				{projectId ? "بروزرسانی مرکز داده مجازی" : "افزودن مرکز داده مجازی"}
 			</DialogTitle>
 			<DialogContent>
 				<form onSubmit={formik.handleSubmit}>
 					<Stack direction="column" rowGap={2}>
 						<Stack direction="column" rowGap={1}>
-							<InputLabel>نام پروژه</InputLabel>
+							<InputLabel>نام مرکز داده مجازی</InputLabel>
 							<AlphaNumericTextField
 								formik={formik}
 								id="name"
@@ -146,7 +145,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 								placeholder="نام موردنظر را وارد کنید"
 							/>
 						</Stack>
-						{!projectId && (
+						 {!projectId && (
 							<Stack direction="column" rowGap={1}>
 								<InputLabel>نام مرکز داده</InputLabel>
 								<RadioGroup
@@ -169,10 +168,10 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 												<FormControlLabel
 													sx={{
 														border: "1px solid #ccc",
-														padding: "5px 0",
+														padding: "1px 0",
 														borderRadius: BORDER_RADIUS_1,
 														width: "100%",
-														margin: { xs: " 5px 0", sm: "0 !important" },
+														margin: { xs: " 1px 0", sm: "0 !important" },
 													}}
 													value={id}
 													control={<Radio size="medium" />}
@@ -183,7 +182,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 															spacing={1}
 														>
 															<img
-																style={{ width: "100px", height: "100px" }}
+																style={{ width: "80px", height: "80px" }}
 																src={`/assets/${dataCenterIconRenderHandler(
 																	photoName || ""
 																)}`}
@@ -198,7 +197,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 									</Grid>
 								</RadioGroup>
 							</Stack>
-						)}
+						)} 
 						{/* <Stack direction="column" rowGap={1}>
 							<InputLabel>نوع پروژه</InputLabel>
 							<RadioGroup
@@ -265,7 +264,7 @@ export const CreateVmProjectDialog: FC<CreateVmProjectDialogPropsType> = ({
 									</Grid>
 								</Grid>
 							</RadioGroup>
-						</Stack> */}
+						</Stack>  */}
 						<Stack direction="row" justifyContent="end" spacing={1}>
 							<Button
 								variant="outlined"

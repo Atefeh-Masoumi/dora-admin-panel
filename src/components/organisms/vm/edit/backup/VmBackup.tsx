@@ -6,7 +6,7 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { CreateBackupDialog } from "./dialog/CreateBackupDialog";
 import BackupTableRow from "./table/BackupTableRow";
 import { BackupTableStruct } from "./table/struct";
-import { useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery, useGetApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupListQuery } from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdBackupListQuery } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 
 type BackupPropsType = {};
@@ -22,7 +22,7 @@ export const Backup: FC<BackupPropsType> = () => {
 
   const { id:vmId, projectId } = useParams();
   const { data: backupList = [], isLoading: getBackupLoading, refetch, isFetching } =
-    useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery(
+    useGetApiMyVmByProjectIdBackupListQuery(
       { projectId: Number(projectId), vmHostId: Number(vmId) },
       { skip: !vmId }
     );

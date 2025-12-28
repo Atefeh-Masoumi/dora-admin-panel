@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotRevertIdMutation } from "src/app/services/api.generated";
+import { usePutApiMyVmByProjectIdSnapshotRevertAndIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
@@ -20,7 +20,7 @@ export const RevertVolumeSnapshotDialog: FC<RevertVolumeSnapshotDialogPropsType>
 }) => {
   const onClose = () => handleClose();
   const [revertSnapshot, { isLoading }] =
-    usePutApiMyVmByProjectIdVolumeAndVmVolumeHostIdSnapshotRevertIdMutation();
+    usePutApiMyVmByProjectIdSnapshotRevertAndIdMutation();
   const navigate = useNavigate();
 
   const { projectId, blockstorageId } = useParams();
@@ -30,7 +30,7 @@ export const RevertVolumeSnapshotDialog: FC<RevertVolumeSnapshotDialogPropsType>
     revertSnapshot({
       id: snapshotId,
       projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId)
+      isRootDisk: false
     })
       .unwrap()
       .then(() => {
@@ -38,7 +38,7 @@ export const RevertVolumeSnapshotDialog: FC<RevertVolumeSnapshotDialogPropsType>
         handleClose();
         navigate(`/block-storage/${projectId}`);
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
   };
 
   return (

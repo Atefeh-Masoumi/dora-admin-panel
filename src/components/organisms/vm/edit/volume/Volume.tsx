@@ -7,9 +7,9 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import VolumeTableRow from "./table/VolumeTableRow";
 import { volumeTableStruct } from "./table/struct";
 import {
-  useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery,
-  VmHostVolumeListResponse,
-  usePutApiMyVmByProjectIdHostDisableBackupAndIdMutation,
+  useGetApiMyVmByProjectIdVolumeListQuery,
+  VolumeListResponse,
+  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
 } from "src/app/services/api.generated";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { EnableAutoBackupDialog } from "./dialog/EnableAutoBackupDialog";
@@ -30,16 +30,16 @@ export const Volume: FC = () => {
     isLoading: getVolumeLoading,
     refetch,
     isFetching,
-  } = useGetApiMyVmByProjectIdHostAndVmHostIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
+  } = useGetApiMyVmByProjectIdVolumeListQuery({ vmHostId: Number(id), projectId: Number(projectId), });
 
   const [selectedVolume, setSelectedVolume] =
-    useState<VmHostVolumeListResponse | null>(null);
+    useState<VolumeListResponse | null>(null);
   const [autoBackupEnabledIds, setAutoBackupEnabledIds] = useState<
     Set<number>
   >(new Set());
 
   const [disableAutoBackup, { isLoading: disableAutoBackupLoading }] =
-    usePutApiMyVmByProjectIdHostDisableBackupAndIdMutation();
+    usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -136,11 +136,11 @@ export const Volume: FC = () => {
             initialOrder={1}
             rowExtraProps={{
               autoBackupEnabledIds,
-              onEnableAutoBackupClick: (volume: VmHostVolumeListResponse) => {
+              onEnableAutoBackupClick: (volume: VolumeListResponse) => {
                 setSelectedVolume(volume);
                 setDialogType("ENABLE_AUTO_BACKUP");
               },
-              onDisableAutoBackupClick: (volume: VmHostVolumeListResponse) => {
+              onDisableAutoBackupClick: (volume: VolumeListResponse) => {
                 setSelectedVolume(volume);
                 setDialogType("DISABLE_AUTO_BACKUP");
               },

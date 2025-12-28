@@ -19,8 +19,8 @@ import { EditServerContext } from "src/components/organisms/vm/edit/rebuild/cont
 import { VmInfo } from "src/components/organisms/vm/edit/overview/VmInfo";
 import { VmIpAddress } from "src/components/organisms/vm/edit/ip/VmIpAddress";
 import { VmRebuild } from "src/components/organisms/vm/edit/rebuild/VmRebuild";
-import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
-import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
+// import { Snapshot } from "src/components/organisms/vm/edit/snapshot/Snapshot";
+// import { Firewall } from "src/components/organisms/vm/edit/firewall/Firewall";
 import { Volume } from "src/components/organisms/vm/edit/volume/Volume";
 import { Network } from "src/components/organisms/vm/edit/network/VmNatworkTable";
 import { AnalyticChart } from "src/components/organisms/vm/edit/analytics/AnalyticChart";
@@ -55,7 +55,7 @@ const TAB_CONFIGS: TabConfig[] = [
     component: AnalyticChart,
   },
   {
-    label: "آدرس IP",
+    label: "شبکه ها و فایروال",
     route: "/vm/:projectId/:id/ip",
     component: VmIpAddress,
   },
@@ -69,31 +69,31 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/vm/:projectId/:id/config",
     component: ServerConfig,
   },
-  {
-    label: "اسنپ‌شات",
-    route: "/vm/:projectId/:id/snapshot",
-    component: Snapshot,
-  },
+  // {
+  //   label: "اسنپ‌شات",
+  //   route: "/vm/:projectId/:id/snapshot",
+  //   component: Snapshot,
+  // },
   {
     label: "بکاپ",
     route: "/vm/:projectId/:id/backup",
     component: Backup,
   },
-  {
-    label: "فایروال",
-    route: "/vm/:projectId/:id/firewall",
-    component: Firewall,
-  },
+  // {
+  //   label: "فایروال",
+  //   route: "/vm/:projectId/:id/firewall",
+  //   component: Firewall,
+  // },
   {
     label: "دیسک",
     route: "/vm/:projectId/:id/volume",
     component: Volume,
   },
-  {
-    label: "شبکه",
-    route: "/vm/:projectId/:id/network",
-    component: Network,
-  },
+  // {
+  //   label: "شبکه",
+  //   route: "/vm/:projectId/:id/network",
+  //   component: Network,
+  // },
 ];
 
 // Utility functions

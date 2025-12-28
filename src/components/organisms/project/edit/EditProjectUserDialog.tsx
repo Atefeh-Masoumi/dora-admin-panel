@@ -17,7 +17,7 @@ import { FC, MouseEvent } from "react";
 import { useParams } from "react-router";
 import {
   ProjectUserListResponse,
-  usePutApiMyByProjectIdUserEditAndIdMutation,
+  usePutApiMyProjectByProjectIdUserEditAndIdMutation,
 } from "src/app/services/api.generated";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -42,7 +42,7 @@ const EditProjectUserDialog: FC<EditProjectUserDialogProps> = ({
   const { projectId } = useParams();
 
   const [editUser, { isLoading: editLoading }] =
-    usePutApiMyByProjectIdUserEditAndIdMutation();
+    usePutApiMyProjectByProjectIdUserEditAndIdMutation();
 
   const initialValues = {
     userAccessTypeId: selectedUser?.userAccessTypeId || 3,

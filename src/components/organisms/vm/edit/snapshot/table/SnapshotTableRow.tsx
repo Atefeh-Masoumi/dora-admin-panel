@@ -2,9 +2,9 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  VmHostSnapshotListResponse,
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation,
-  useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery,
+  VmVolumeSnapshotListResponse,
+  useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdSnapshotListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -15,6 +15,7 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RevertVmSnapshotDialog } from "../dialog/RevertVmSnapshotDialog";
 import { snapShotTableStruct } from "./struct";
 import { useParams } from "react-router";
+import { Restore } from "@mui/icons-material";
 
 enum VM_SNAPSHOT_STATUS_INFO {
   ACTIVE = 1,
@@ -108,23 +109,22 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
   
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedSnapshot, setSelectedSnapshot] =
-    useState<VmHostSnapshotListResponse | null>(null);
+    useState<VmVolumeSnapshotListResponse | null>(null);
   const [openRevert, setOpenRevert] = useState(false);
 
   const handleOpenRevert = () => setOpenRevert(true);
   const handleCloseRevert = () => setOpenRevert(false);
 
   const [deleteItem, { isLoading: deleteSnapshotRecordLoading }] =
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdSnapshotDeleteIdMutation();
+  useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation();
 
-  const {refetch} =useGetApiMyVmByProjectIdHostAndVmHostIdSnapshotListQuery(
+  const {refetch} =useGetApiMyVmByProjectIdSnapshotListQuery(
       { projectId: Number(projectId), vmHostId: Number(id) },
       { skip: !id }
     );
   const deleteSnapshotRecordHandler = () =>
     deleteItem({ id: Number(selectedSnapshot?.id),
       projectId: Number(projectId),
-      vmHostId: Number(id) 
      })
       .unwrap()
       .then(() => {
@@ -132,14 +132,14 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedSnapshot(null);
   };
 
-  const handleOpenDelete = (snapshot: VmHostSnapshotListResponse) => {
+  const handleOpenDelete = (snapshot: VmVolumeSnapshotListResponse) => {
     setSelectedSnapshot(snapshot);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
@@ -162,7 +162,7 @@ export const SnapshotTableRow: FC<{ row: any }> = ({ row }) => {
                 <Stack direction="row" columnGap={1} alignItems="center">
                   {statusId === VM_SNAPSHOT_STATUS_INFO.INACTIVE && (
                     <IconButton onClick={handleOpenRevert}>
-                      <RefreshSvg />
+                       <Restore />
                     </IconButton>
                   )}
 

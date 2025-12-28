@@ -2,8 +2,8 @@ import { Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdBackupDeleteIdMutation,
-  useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery,
+  useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
+  useGetApiMyVmByProjectIdBackupListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
@@ -14,6 +14,7 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { RestoreBackupDialog } from "../dialog/RestoreBackupDialog";
 import { BackupTableStruct } from "./struct";
 import { useParams } from "react-router";
+import { Restore } from "@mui/icons-material";
 
 enum VOLUME_BACKUP_STATUS_INFO {
   ACTIVE = 1,
@@ -107,9 +108,9 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   const handleCloseRestore = () => setOpenRestore(false);
 
   const [deleteItem, { isLoading: deleteBackupRecordLoading }] =
-    useDeleteApiMyVmByProjectIdHostAndVmHostIdBackupDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation();
 
-  const {refetch} = useGetApiMyVmByProjectIdHostAndVmHostIdBackupListQuery(
+  const {refetch} = useGetApiMyVmByProjectIdBackupListQuery(
       { projectId: Number(projectId), vmHostId: Number(vmId) },
       { skip: !vmId }
     );
@@ -118,7 +119,6 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
     deleteItem({ 
       id: Number(selectedBackup?.id),
       projectId: Number(projectId),
-      vmHostId: Number(vmId) 
      })
       .unwrap()
       .then(() => {
@@ -126,7 +126,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
 
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -156,7 +156,7 @@ export const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                 <Stack direction="row" columnGap={1} alignItems="center">
                   {statusId === VOLUME_BACKUP_STATUS_INFO.ACTIVE && (
                     <IconButton onClick={handleOpenRestore}>
-                      <RefreshSvg />
+                       <Restore />
                     </IconButton>
                   )}
 

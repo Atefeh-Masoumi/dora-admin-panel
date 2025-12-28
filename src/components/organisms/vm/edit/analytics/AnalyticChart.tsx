@@ -1,10 +1,14 @@
 import {
   Divider,
+  MenuItem,
   Paper,
+  Select,
+  SelectChangeEvent,
   Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
+import Grid2 from "@mui/material/Grid2";
 import { FC, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -19,6 +23,7 @@ import { useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery } from "src/app/servi
 import { StatBox } from "src/components/molecules/StatBox";
 import UploadImage from "src/assets/images/upload.png";
 import DownloadImage from "src/assets/images/download.png";
+import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 export const analyticsCategories = [
   "یک ساعت",
@@ -34,8 +39,11 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const { id, projectId } = useParams();
   const vmHostId = Number(id) || 0;
 
-  const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState(1);
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setCategoryId(+event.target.value);
+  };
   const {
     data: userAnalytics,
     isLoading: getDataLoading,
@@ -43,36 +51,32 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery({
     id: vmHostId,
     projectId: Number(projectId),
-    periodId: categoryId + 1,
+    periodId: categoryId ,
+  }, {
+    skip: !projectId || !vmHostId,
   });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
     [getDataFetching, getDataLoading]
   );
+  const formatStatValue = (value?: number) => typeof value === "number" ? value.toFixed(4) : "0";
+  const total =
+  (userAnalytics?.totalUpload ?? 0) +
+  (userAnalytics?.totalDownload ?? 0);
+  
 
   return (
     <>
-      <Typography
-        color="grey.700"
-        fontSize={24}
-        fontWeight={700}
-        sx={{ mb: 2 }}
-      >
-      </Typography>
+    
       <Paper elevation={0} sx={{ px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 1 }}>
         <Stack
           p={2}
           direction={{ xs: "column", sm: "row" }}
-          alignItems="center"
+          alignItems={{ xs: "stretch", sm: "center" }}
           justifyContent="space-between"
           gap={1}
         >
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            alignItems="center"
-            spacing={2}
-          >
             <Typography
               color="grey.700"
               fontSize={24}
@@ -81,106 +85,117 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
               گزارش میزان درخواست
 
             </Typography>
-          </Stack>
+            <Select
+            size="small"
+            type="number"
+            value={"" + categoryId}
+            onChange={handleChange}
+            sx={{
+              width: 185,
+              color: "secondary",
+              borderRadius: BORDER_RADIUS_1,
+              borderColor: "rgba(110, 118, 138, 0.06)",
+              alignSelf: { xs: "flex-start", sm: "center" },
+            }}
+          >
+            {analyticsCategories.map((category, index) => (
+              <MenuItem
+                sx={{
+                  mx: 0.5,
+                  my: 1,
+                  borderRadius: 1,
+                }}
+                key={category}
+                value={index}
+              >
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+          
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
-          sx={{ m: 3 }}
-          
+          sx={{ m: 1 }}
+
         >
 
           <StatBox
             title="Total"
-            value={(userAnalytics?.totalUpload ?? 0) + (userAnalytics?.totalDownload ?? 0)}
+            value={(formatStatValue(total)) ?? 0 }
             unit="GB"
             img={UploadImage}
           />
           <StatBox
             title="Download"
-            value={userAnalytics?.totalDownload ?? 0}
+            value={(formatStatValue(userAnalytics?.totalDownload)) ?? 0}
             unit="GB"
             img={DownloadImage}
           />
           <StatBox
             title="Upload"
-            value={userAnalytics?.totalUpload ?? 0}
-            unit="GB"color="green"
+            value={(formatStatValue(userAnalytics?.totalUpload) ?? 0)}
+            unit="GB" color="green"
             img={UploadImage}
           />
 
         </Stack>
 
-        <Stack rowGap={{ xs: 3, md: 7.4 }} sx={{ p: 4 }}>
+        <Grid2
+          container
+          spacing={4}
+          sx={{ p: 2 }}
+        >
           {isLoading ? (
-            <Stack spacing={4} alignItems="center" justifyContent="center">
-              {[...Array(1)].map((_, index) => (
-                <Skeleton
-                  key={index}
-                  variant="rectangular"
-                  width={"100%"}
-                  height={"100%"}
-                  sx={{ borderRadius: 2 }}
-                />
-              ))}
-            </Stack>
+            <Grid2 size={12}>
+              <Skeleton
+                variant="rectangular"
+                height={250}
+                sx={{ borderRadius: 2 }}
+              />
+            </Grid2>
           ) : (
-            userAnalytics?.series?.map((item) => (
-              <Stack sx={{ height: 250 }}>
-                <Typography variant="text1" color="secondary">
-                  {item.name}
-                </Typography>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={item.data?.map((item2) => ({
-                      uv: item2,
-                      // name: index2,
-                    }))}
-                    margin={{
-                      top: 20,
-                      bottom: 20,
-                      left: -20,
-                      right: 30,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="1" vertical={false} />
-                    <XAxis
-                      axisLine={false}
-                      tickLine={false}
-                      allowDecimals={false}
-                      dataKey="name"
-                      height={33}
-                      tickMargin={15}
-                      interval={4}
-                    />
-                    <YAxis
-                      unit=""
-                      tickCount={5}
-                      width={130}
-                      axisLine={false}
-                      tickLine={false}
-                      tickMargin={70}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="uv"
-                      stroke="rgba(11, 36, 251, 1)"
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-                <Divider
+            userAnalytics?.series?.filter((item) => item.name !== "Bandwidth UsageChart (MByte)").map((item, index) => (
+              <Grid2
+                key={index}
+                size={{ xs: 12, md: 6 }}
+              >
+                <Paper
+                  elevation={0}
                   sx={{
-                    borderColor: "rgba(110, 118, 138, 0.08)",
-                    mt: 1.5,
-                    mb: { xs: 1.4, md: 2.3 },
+                    p: 4,
+                    borderRadius: 2,
+                    border: "1px solid rgba(0,0,0,0.08)",
+                    height: "100%",
                   }}
-                />
-              </Stack>
+                >
+                  <Stack spacing={1} sx={{ height: 250, }}>
+                    <Typography variant="text1" color="secondary">
+                      {item.name}
+                    </Typography>
+
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={item.data?.map(v => ({ uv: v }))}
+                      >
+                        <CartesianGrid strokeDasharray="1" vertical={false} />
+                        <XAxis />
+                        <YAxis />
+                        <Line dataKey="uv" dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
+
+                    <Divider sx={{ mt: 2 }} />
+                  </Stack>
+                </Paper>
+              </Grid2>
             ))
           )}
-        </Stack>
+        </Grid2>
+
+
       </Paper>
     </>
   );

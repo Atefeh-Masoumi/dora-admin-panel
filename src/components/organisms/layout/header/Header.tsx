@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import {
   AppBar,
   Button,
@@ -8,13 +8,10 @@ import {
   Toolbar,
   Typography,
   useTheme,
-  Menu,
-  MenuItem,
-  Box,
 } from "@mui/material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { useNavigate, useParams } from "react-router";
-import { ArrowForward as ArrowForwardIcon, ExpandMore as ExpandMoreIcon, Home as HomeIcon, HomeMaxOutlined } from "@mui/icons-material";
+import { ArrowForward as ArrowForwardIcon, Home as HomeIcon } from "@mui/icons-material";
 import { BACK_URL_HINTS_ENUM } from "src/constant/backUrlHintsEnum";
 import MenuSvg from "src/components/atoms/svg-icons/MenuSvg";
 import MoreSvg from "src/components/atoms/svg-icons/MoreSvg";
@@ -23,9 +20,7 @@ import { HeadphoneSvg } from "src/components/atoms/svg-icons/HeadphoneSvg";
 import { Notifications } from "./Notifications";
 import { ManageMenu } from "./ManageMenu";
 import { useSearchParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { setSelectedProjectId, setSelectedProject, setProjectList } from "src/app/slice/projectSlice";
-import { useGetApiMyProjectListQuery } from "src/app/services/api.generated";
+import ProjectMenu from "./ProjectMenu";
 
 type HeaderPropsType = {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -45,10 +40,9 @@ const Header: FC<HeaderPropsType> = ({
   const [anchorEl, setAnchorEl] = useState<
     (EventTarget & HTMLButtonElement) | null
   >();
-  const [projectMenuAnchor, setProjectMenuAnchor] = useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+
   const [searchParams] = useSearchParams();
   const { id: kubernetesClusterID } = useParams();
   const { projectId, kubernetesCloudId } = useParams();
@@ -56,53 +50,6 @@ const Header: FC<HeaderPropsType> = ({
 
   const theme = useTheme();
   const goToCalculator = () => navigate("/portal/calculator");
-
-  // Get project data from Redux
-  const { data: projectList = [], isLoading: getProjectListLoading } =
-    useGetApiMyProjectListQuery();
-  const selectedProjectId = useAppSelector((state) => state.project?.selectedProjectId);
-  const selectedProject = useAppSelector((state) => state.project?.selectedProject);
-
-  // Effect to set selected project when project list is loaded and we have a stored project ID
-  useEffect(() => {
-    if (!getProjectListLoading && projectList.length > 0 && selectedProjectId && !selectedProject) {
-      const project = projectList.find(p => p.id === selectedProjectId);
-      if (project) {
-        dispatch(setSelectedProject(project));
-      }
-    }
-  }, [getProjectListLoading, projectList, selectedProjectId, selectedProject, dispatch]);
-
-  // Effect to update project list in Redux state
-  useEffect(() => {
-    if (!getProjectListLoading && projectList.length > 0) {
-      dispatch(setProjectList(projectList));
-    }
-  }, [getProjectListLoading, projectList, dispatch]);
-
-  // Project menu handlers
-  const handleProjectMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setProjectMenuAnchor(event.currentTarget);
-  };
-
-  const handleProjectMenuClose = () => {
-    setProjectMenuAnchor(null);
-  };
-
-  const handleProjectSelect = (projectId: number) => {
-    const selectedProject = projectList.find(p => p.id === projectId);
-    if (selectedProject) {
-      dispatch(setSelectedProject(selectedProject));
-    }
-    dispatch(setSelectedProjectId(projectId));
-    localStorage.setItem('selectedProjectId', projectId.toString());
-    const selectedProjectData = projectList.find(p => p.id === projectId);
-    if (selectedProjectData) {
-      dispatch(setSelectedProject(selectedProjectData));
-    }
-    handleProjectMenuClose();
-    navigate(`/vm/${projectId}/list`);
-  };
 
   const closeMenuHandler = () => setAnchorEl(null);
   const openMenuHandler = ({
@@ -115,58 +62,7 @@ const Header: FC<HeaderPropsType> = ({
 
   const desktopHeaderIcon = (
     <>
-      <Box>
-        <Button
-          endIcon={<ExpandMoreIcon sx={{ fontSize: "1.5em !important" }} />}
-          onClick={handleProjectMenuOpen}
-          variant="outlined"
-          size="small"
-          sx={{ 
-            width: 150,
-            height: 40,
-            borderRadius: BORDER_RADIUS_1,
-            borderColor: "rgba(110, 118, 138, 0.16)",
-            color: "text.primary",
-            '&:hover': {
-              borderColor: "primary.main",
-            }
-          }}
-        >
-          {selectedProject ? selectedProject.name : "انتخاب پروژه"}
-        </Button>
-        <Menu
-          anchorEl={projectMenuAnchor}
-          open={Boolean(projectMenuAnchor)}
-          onClose={handleProjectMenuClose}
-          PaperProps={{
-            sx: { 
-              width: 150,
-              mt: 1,
-              boxShadow: 4,
-              borderRadius: BORDER_RADIUS_1
-            },
-          }}
-        >
-          {projectList.map((project) => (
-            <MenuItem
-              key={project.id}
-              onClick={() => project?.id && handleProjectSelect(project?.id)}
-              selected={project.id === selectedProjectId}
-              sx={{
-                py: 1,
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.light',
-                  '&:hover': {
-                    backgroundColor: 'primary.light',
-                  }
-                }
-              }}
-            >
-              {project.name}
-            </MenuItem>
-          ))}
-        </Menu>
-      </Box>
+      
       <Notifications />
       <IconButton
         sx={{
@@ -249,9 +145,9 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.ADD_NODE:
         href = `/kubernetes-cluster/${projectId}/${kubernetesClusterID}`;
         break;
-      case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
-        navigate(-1);
-        return;
+      // case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
+      //   navigate(-1);
+      //   return;
       case BACK_URL_HINTS_ENUM.ADD_VM:
         href =
           !projectId || !vpcId
@@ -369,9 +265,9 @@ const Header: FC<HeaderPropsType> = ({
                       },
                     }}
                   >
-                    <HomeMaxOutlined
+                    <HomeIcon
                       sx={{
-                        fontSize: { xs: 24, md: 28 },
+                        fontSize: { xs: 24, md: 42 },
                         color: "grey.600",
                         transition: "color 0.2s",
                       }}
@@ -397,6 +293,7 @@ const Header: FC<HeaderPropsType> = ({
             spacing={1}
             display={{ xs: "none", md: "inline-flex" }}
           >
+            <ProjectMenu/>
             <ManageMenu />
             {desktopHeaderIcon}
           </Stack>

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePutApiMyVmByProjectIdHostAndVmHostIdBackupRestoreIdMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdBackupRestoreAndIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
@@ -20,7 +20,7 @@ export const RestoreBackupDialog: FC<RestoreBackupDialogPropsType> = ({
 }) => {
   const onClose = () => handleClose();
   const [restoreBackup, { isLoading }] =
-  usePutApiMyVmByProjectIdHostAndVmHostIdBackupRestoreIdMutation();
+  usePostApiMyVmByProjectIdBackupRestoreAndIdMutation();
 
   const { projectId, id:vmId } = useParams();
   
@@ -29,7 +29,6 @@ export const RestoreBackupDialog: FC<RestoreBackupDialogPropsType> = ({
     restoreBackup({
       id: backupId,
       projectId: Number(projectId),
-      vmHostId: Number(vmId)
     })
       .unwrap()
       .then(() => {
@@ -37,7 +36,7 @@ export const RestoreBackupDialog: FC<RestoreBackupDialogPropsType> = ({
         handleClose();
         // navigate(`/vm/${projectId}/list`);
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
   };
 
   return (

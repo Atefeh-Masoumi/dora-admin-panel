@@ -11,7 +11,7 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { formikOnSubmitType } from "src/types/form.type";
-import { usePostApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupCreateMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdBackupCreateMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import LoadingButton from "src/components/atoms/LoadingButton";
@@ -30,7 +30,7 @@ export const CreateVolumeBackupDialog: FC<CreateVolumeBackupDialogPropsType> = (
   ...props
 }) => {
   const [createBackup, { isLoading: createBackupLoading }] =
-    usePostApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupCreateMutation();
+    usePostApiMyVmByProjectIdBackupCreateMutation();
 
   const initialValues = {
     name: "",
@@ -52,11 +52,11 @@ export const CreateVolumeBackupDialog: FC<CreateVolumeBackupDialogPropsType> = (
 
     createBackup({
       createVolumeBackupModel: {
+        vmVolumeHostId: Number(blockstorageId),
         name,
         description,
       },
       projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId),
     })
       .unwrap()
       .then(() => {
@@ -64,7 +64,7 @@ export const CreateVolumeBackupDialog: FC<CreateVolumeBackupDialogPropsType> = (
         forceClose();
         refetch();
       })
-      .catch((err) => {})
+      .catch((_err: unknown) => {})
       .finally(() => {
         setSubmitting(false);
       });

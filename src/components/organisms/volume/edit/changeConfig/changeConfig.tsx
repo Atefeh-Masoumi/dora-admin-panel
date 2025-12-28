@@ -98,11 +98,33 @@ export const ChangeConfig: FC<ChangeConfigPropsType> = () => {
             elevation={0}
             sx={{
               borderRadius: BORDER_RADIUS_1,
-              p: { xs: 2.5 },
+              p: { xs: 2, lg:4},
               height: "100%",
             }}
           >
-            
+            {/* <Stack
+          pb={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            alignItems="center"
+            spacing={2}
+          >
+            <Typography
+              color="grey.700"
+              fontSize={24}
+              fontWeight={700}
+            >
+             تغییر منابع سرویس
+            </Typography>
+          </Stack>
+          
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} /> */}
             <Stack rowGap={{ xs: 3, md: 7.4 }} sx={{ p: 4 }}>
               {resourceList.map(
                 ({ name, value, onChange, min, max, step }, index) => (

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { BlurBackdrop } from "src/components/atoms/BlurBackdrop";
-import { usePostApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupRestoreIdMutation } from "src/app/services/api.generated";
+import { usePostApiMyVmByProjectIdBackupRestoreAndIdMutation } from "src/app/services/api.generated";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate, useParams } from "react-router";
@@ -20,7 +20,7 @@ export const RestoreVolumeBackupDialog: FC<RestoreVolumeBackupDialogPropsType> =
 }) => {
   const onClose = () => handleClose();
   const [restoreBackup, { isLoading }] =
-    usePostApiMyVmByProjectIdVolumeAndVmVolumeHostIdBackupRestoreIdMutation();
+    usePostApiMyVmByProjectIdBackupRestoreAndIdMutation();
   const navigate = useNavigate();
 
   const { projectId, blockstorageId } = useParams();
@@ -30,7 +30,6 @@ export const RestoreVolumeBackupDialog: FC<RestoreVolumeBackupDialogPropsType> =
     restoreBackup({
       id: backupId,
       projectId: Number(projectId),
-      vmVolumeHostId: Number(blockstorageId)
     })
       .unwrap()
       .then(() => {
@@ -38,7 +37,7 @@ export const RestoreVolumeBackupDialog: FC<RestoreVolumeBackupDialogPropsType> =
         handleClose();
         navigate(`/block-storage/${projectId}`);
       })
-      .catch((err) => {});
+      .catch((_err: unknown) => {});
   };
 
   return (

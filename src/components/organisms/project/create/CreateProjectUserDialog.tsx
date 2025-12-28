@@ -13,13 +13,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
-  usePostApiMyByProjectIdUserCreateMutation,
+  usePostApiMyProjectByProjectIdUserCreateMutation,
 } from "src/app/services/api.generated";
 
 type CreateProjectUserDialogPropsType = {
@@ -51,7 +51,7 @@ export const CreateProjectUserDialog: FC<CreateProjectUserDialogPropsType> = ({
 }) => {
   const { projectId } = useParams();
   const [createUser, { isLoading: createLoading }] =
-    usePostApiMyByProjectIdUserCreateMutation();
+  usePostApiMyProjectByProjectIdUserCreateMutation();
 
   const formik = useFormik({
     initialValues,

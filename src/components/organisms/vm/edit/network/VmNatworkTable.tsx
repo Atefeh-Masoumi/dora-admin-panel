@@ -45,7 +45,7 @@ export const Network: FC<FirewallPropsType> = () => {
     <>
       <Paper
         elevation={0}
-        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
+        sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 ,my:"10px"}}
       >
         <Stack
           pb={2}
@@ -64,7 +64,7 @@ export const Network: FC<FirewallPropsType> = () => {
               fontSize={24}
               fontWeight={700}
             >
-              مدیریت شبکه
+              شبکه خصوصی 
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>

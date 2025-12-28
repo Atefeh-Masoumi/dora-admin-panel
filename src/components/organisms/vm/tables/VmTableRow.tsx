@@ -160,7 +160,7 @@ const AddVmTableRow: FC<{ row: any }> = ({ row }) => {
                       fontSize: "14px",
                     }}
                   />
-                  ) : column.id === "ipAddressString" ? (
+                  ) : column.id === "ipAddressString" || column.id === "privateIpString" ? (
                     <Button
                       sx={{ py: 0, px: 0.5 }}
                       onClick={() => {
