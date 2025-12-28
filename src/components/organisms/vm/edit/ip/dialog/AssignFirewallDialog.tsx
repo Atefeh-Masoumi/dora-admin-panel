@@ -18,6 +18,7 @@ import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyVmByProjectIdFirewallListQuery,
+  useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery,
   usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation,
 } from "src/app/services/api.generated";
 
@@ -43,11 +44,17 @@ export const AssignFirewallDialog: FC<AssignFirewallDialogPropsType> = ({
   const [assignFirewall, { isLoading }] =
     usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation();
 
-  const { data: firewallList = [], refetch } =
+  const { data: firewallList = [],  } =
     useGetApiMyVmByProjectIdFirewallListQuery({
       projectId: Number(projectId),
     });
 
+    const {refetch } =
+    useGetApiMyVmByProjectIdHostAndVmHostIdFirewallListQuery({
+        projectId: Number(projectId),
+        vmHostId: Number(vmId),
+      });
+      
   const formik = useFormik({
     initialValues: { vmFirewallId: 0 },
     onSubmit: (values) => {
@@ -59,8 +66,8 @@ export const AssignFirewallDialog: FC<AssignFirewallDialogPropsType> = ({
         .unwrap()
         .then(() => {
           toast.success("با موفقیت افزوده شد");
-          forceClose();
           refetch();
+          forceClose();
         })
         .catch(() => {});
     },
