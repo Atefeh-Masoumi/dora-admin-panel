@@ -51,7 +51,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery({
     id: vmHostId,
     projectId: Number(projectId),
-    periodId: categoryId ,
+    periodId: categoryId+1 ,
   }, {
     skip: !projectId || !vmHostId,
   });
