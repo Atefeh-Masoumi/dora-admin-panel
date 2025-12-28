@@ -38,7 +38,7 @@ type AnalyticChartPropsType = {};
 export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   const { id } = useParams();
   const { projectId } = useParams();
-  const [categoryId, setCategoryId] = useState(0);
+  const [categoryId, setCategoryId] = useState(1);
   const dnsId = Number(id) || 0;
 
   const handleChange = (event: SelectChangeEvent) => {
