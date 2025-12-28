@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const networkNodeTableStruct: columnType[] = [
-  { label: "شناسه", id: "id" },
+  // { label: "شناسه", id: "id" },
   { label: "سرور", id: "vmHost" },
   { label: "شبکه", id: "vmNetwork" },
   { label: "آدرس IP", id: "ipAddress" },
