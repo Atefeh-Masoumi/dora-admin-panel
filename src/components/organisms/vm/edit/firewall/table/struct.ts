@@ -1,7 +1,7 @@
 import { columnType } from "src/components/organisms/tables/table.types";
 
 export const firewallTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "firewallProtocolType", label: "نوع" },
   { id: "isIngress", label: "ورودی/خروجی" },
   { id: "remoteIp", label: "آدرس IP" },

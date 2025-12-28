@@ -27,7 +27,7 @@ export const ChooseInfo: FC<ChooseInfoPropsType> = ({
     <Stack spacing={2} justifyContent="center" alignItems="center" py={8}>
       <DorsaTextField
         sx={{ minWidth: 300 }}
-        label="نام سرور ابری (Server Name)"
+        label="نام سرور  (Server Name)"
         dir="ltr"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -35,7 +35,7 @@ export const ChooseInfo: FC<ChooseInfoPropsType> = ({
       <DorsaTextField
         type={showPassword ? "text" : "password"}
         sx={{ minWidth: 300 }}
-        label={`رمز عبور سرور ابری (Password)`}
+        label={`رمز عبور  (Password)`}
         dir="ltr"
         value={password}
         onChange={(e) => setPassword(e.target.value)}

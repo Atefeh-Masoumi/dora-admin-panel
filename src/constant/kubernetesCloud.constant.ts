@@ -1,5 +1,5 @@
 export const kubernetesAppTableHeadCells = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "ip", label: "IP" },
   { id: "isV4", label: "Is V4" },
   { id: "isPrimary", label: "Is Primary" },

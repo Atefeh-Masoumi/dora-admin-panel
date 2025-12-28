@@ -11,6 +11,9 @@ import {
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { AttchVmDialog } from "./AttchVmDialog";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
+import { BaseTable } from "src/components/organisms/tables/BaseTable";
+import { attchVmTableStruct } from "./struct";
+import AttachVmTableRow from "./AttachVmTableRow";
 
 export const AttachVm: FC = () => {
   const [hostId, setHostId] = useState<number | null>(null);
@@ -100,7 +103,7 @@ export const AttachVm: FC = () => {
 
   return (
     <>
-       <Paper
+      <Paper
         elevation={0}
         sx={{ overflow: "hidden", px: { xs: 2, sm: 3, md: 4, lg: 5 }, py: 5 }}
       >
@@ -116,70 +119,79 @@ export const AttachVm: FC = () => {
             alignItems="center"
             spacing={2}
           >
-            <Typography
-              color="grey.700"
-              fontSize={24}
-              fontWeight={700}
-            >
+            <Typography color="grey.700" fontSize={24} fontWeight={700}>
               اتصال سرور ابری
             </Typography>
-            <RefreshButton isFetching={getStorageSpecificationLoading} refetchData={refetch} />
+            <RefreshButton
+              isFetching={getStorageSpecificationLoading}
+              refetchData={refetch}
+            />
           </Stack>
           <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              justifyContent={{ xs: "center", md: "space-between" }}
-            >
-              <LoadingButton variant="outlined" onClick={handleOpenDialog}>
-                {!blockstorageSpecification || blockstorageSpecification?.isConnected === false ? (
-                  <>اتصال به سرور </>
-                ) : (
-                  <>قطع ارتباط با سرور </>
-                )}
-              </LoadingButton>
-            </Stack>
-            </Stack> 
-            <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
-          <Stack >
-            <Stack
-              mt={6}
-              mb={3}
-              px={3}
-              direction="column"
-              rowGap={{ xs: 3, md: 6.5 }}
-            >
-              {getStorageSpecificationLoading ? (
-                <Skeleton variant="text" width="100%" height={40} />
+            direction={{ xs: "column", md: "row" }}
+            alignItems="center"
+            justifyContent={{ xs: "center", md: "space-between" }}
+          >
+            <LoadingButton variant="outlined" onClick={handleOpenDialog}>
+              {!blockstorageSpecification ||
+              blockstorageSpecification?.isConnected === false ? (
+                <>اتصال به سرور </>
               ) : (
-                <>
-                  {blockstorageSpecification && blockstorageSpecification?.isConnected ? (
-                    <Typography>
-                      ذخیره ساز به سرور ابری
-                      <Box
-                        sx={{
-                          display: "inline-block",
-                          color: "primary.main",
-                          mx: 0.5,
-                          fontSize: 16,
-                          cursor: "pointer",
-                          textDecoration: "underline",
-                        }}
-                        onClick={gotoVm(blockstorageSpecification?.vmHostId)}
-                      >
-                        {blockstorageSpecification?.vmHost}
-                      </Box>
-                      متصل است
-                    </Typography>
-                  ) : (
-                    <Typography>
-                      هیچ سرور ابری به این ذخیره ساز متصل نمی باشد
-                    </Typography>
-                  )}
-                </>
+                <>قطع ارتباط با سرور </>
               )}
-            </Stack>
-            
-        
+            </LoadingButton>
+          </Stack>
+        </Stack>
+        <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
+        <Stack>
+          {/* <Stack
+            mt={6}
+            mb={3}
+            px={3}
+            direction="column"
+            rowGap={{ xs: 3, md: 6.5 }}
+          >
+            {getStorageSpecificationLoading ? (
+              <Skeleton variant="text" width="100%" height={40} />
+            ) : (
+              <>
+                {blockstorageSpecification &&
+                blockstorageSpecification?.isConnected ? (
+                  <Typography>
+                    ذخیره ساز به سرور ابری
+                    <Box
+                      sx={{
+                        display: "inline-block",
+                        color: "primary.main",
+                        mx: 0.5,
+                        fontSize: 16,
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                      onClick={gotoVm(blockstorageSpecification?.vmHostId)}
+                    >
+                      {blockstorageSpecification?.vmHost}
+                    </Box>
+                    متصل است
+                  </Typography>
+                ) : (
+                  <Typography>
+                    هیچ سرور ابری به این ذخیره ساز متصل نمی باشد
+                  </Typography>
+                )}
+              </>
+            )}
+          </Stack> */}
+          <Stack>
+            <BaseTable
+              struct={attchVmTableStruct}
+              RowComponent={AttachVmTableRow}
+              rows={[ blockstorageSpecification || {} ]}
+              text="در حال حاضر متصل نیست"
+              isLoading={getStorageSpecificationLoading}
+              initialOrder={7}
+            />
+          </Stack>
         </Stack>
       </Paper>
 

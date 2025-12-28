@@ -8,7 +8,11 @@ import { passwordValidationRegex } from "src/utils/regexUtils";
 import { VM_SECURITY_TYPE_SETTING } from "src/types/securityTypeSettings.type";
 import { EditConfirmationDialog } from "src/components/organisms/vm/edit/rebuild/dialog/EditConfirmationDialog";
 import { SelectServiceName } from "src/components/organisms/vm/edit/rebuild/steps/createServices/SelectServiceName";
-import { usePutApiMyVmByProjectIdHostRebuildAndIdMutation, useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
+import {
+  usePutApiMyVmByProjectIdHostRebuildAndIdMutation,
+  useGetApiMyVmByProjectIdKeyListQuery,
+  RebuildVmModel,
+} from "src/app/services/api.generated";
 
 type VmRebuildPropsType = {};
 
@@ -45,18 +49,8 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
     } else if (name.length < 5) {
       toast.error("نام سرور نباید کمتر از ۵ کارکتر باشد");
       return;
-    } else if (securityId === VM_SECURITY_TYPE_SETTING.PASSWORD && !password) {
-      toast.error("لطفا رمز عبور را وارد کنید");
-      return;
-    } else if (
-      securityId === VM_SECURITY_TYPE_SETTING.PASSWORD &&
-      !passwordValidationRegex.test(password)
-    ) {
-      toast.error(
-        "رمز عبور باید حداقل ۸ حرف باشد و ترکیبی از حروف بزرگ و کوچک و عدد و یک کارکتر خاص باشد"
-      );
-      return;
-    } else if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && !vmKeyId) {
+    } 
+     else if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && !vmKeyId) {
       toast.error("لطفا کلید را وارد کنید");
       return;
     } else if (!selectedOs) {
@@ -67,15 +61,14 @@ export const VmRebuild: FC<VmRebuildPropsType> = () => {
   };
 
   const submitBtnOnClick = () => {
-    const rebuildVmModel: any = {
+    const rebuildVmModel: RebuildVmModel = {
       name,
-      password,
       vmImageId: selectedOs,
+      vmKeyId: vmKeyId?.id,
     };
 
-    // Only include vmKeyId if VM key is being used and a key is selected
-    if (securityId === VM_SECURITY_TYPE_SETTING.VMKEY && vmKeyId?.id) {
-      rebuildVmModel.vmKeyId = vmKeyId.id;
+    if (usePassword && password) {
+      rebuildVmModel.password = password;
     }
 
     rebuild({

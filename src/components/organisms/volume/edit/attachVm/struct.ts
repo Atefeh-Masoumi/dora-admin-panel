@@ -1,10 +1,10 @@
 import { columnType } from "src/components/organisms/tables/table.types";
 
-export const volumeBackupTableStruct: columnType[] = [
+export const attchVmTableStruct: columnType[] = [
   // { id: "id", label: "" },
-  { id: "name", label: "نام" },
+  { id: "vmHost", label: "نام سرور ابری" },
+  { id: "isConnected", label: "وضعیت اتصال" },
   { id: "statusId", label: "وضعیت" },
-  // { id: "description", label: "توضیحات" },
   { id: "createDate", label: "تاریخ ایجاد" },
   { id: "control", label: "", disableSort: true },
 ]; 

@@ -51,7 +51,7 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
   } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery({
     id: vmHostId,
     projectId: Number(projectId),
-    periodId: categoryId ,
+    periodId: categoryId+1 ,
   }, {
     skip: !projectId || !vmHostId,
   });
@@ -176,13 +176,13 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
                       {item.name}
                     </Typography>
 
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" >
                       <LineChart
                         data={item.data?.map(v => ({ uv: v }))}
                       >
                         <CartesianGrid strokeDasharray="1" vertical={false} />
                         <XAxis />
-                        <YAxis />
+                        <YAxis tickMargin={12} width={55} />
                         <Line dataKey="uv" dot={false} />
                       </LineChart>
                     </ResponsiveContainer>

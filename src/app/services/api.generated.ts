@@ -290,6 +290,24 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
+    getApiMyAccountLoginGovUrl: build.query<
+      GetApiMyAccountLoginGovUrlApiResponse,
+      GetApiMyAccountLoginGovUrlApiArg
+    >({
+      query: () => ({ url: `/api/my/account/login-gov-url` }),
+    }),
+    postApiMyAccountLoginGovCallback: build.mutation<
+      PostApiMyAccountLoginGovCallbackApiResponse,
+      PostApiMyAccountLoginGovCallbackApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/login-gov-callback`,
+        method: "POST",
+        params: {
+          code: queryArg.code,
+        },
+      }),
+    }),
     getApiMyAccountLoginGoogleUrl: build.query<
       GetApiMyAccountLoginGoogleUrlApiResponse,
       GetApiMyAccountLoginGoogleUrlApiArg
@@ -3044,6 +3062,14 @@ export type PostApiMyAccountLoginItoCallbackApiResponse =
 export type PostApiMyAccountLoginItoCallbackApiArg = {
   code: string;
 };
+export type GetApiMyAccountLoginGovUrlApiResponse =
+  /** status 200 OK */ GovLoginResponse;
+export type GetApiMyAccountLoginGovUrlApiArg = void;
+export type PostApiMyAccountLoginGovCallbackApiResponse =
+  /** status 200 OK */ LoginResponse;
+export type PostApiMyAccountLoginGovCallbackApiArg = {
+  code: string;
+};
 export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
 export type GetApiMyAccountLoginGoogleUrlApiArg = void;
 export type GetApiMyAccountLoginGoogleCallbackApiResponse =
@@ -4871,6 +4897,9 @@ export type RegisterModel = {
   referralCode?: string | null;
 };
 export type SsoLoginResponse = {
+  url: string | null;
+};
+export type GovLoginResponse = {
   url: string | null;
 };
 export type LoginModel = {
@@ -6754,6 +6783,8 @@ export const {
   usePostApiMyAccountLogoutMutation,
   useGetApiMyAccountLoginItoUrlQuery,
   usePostApiMyAccountLoginItoCallbackMutation,
+  useGetApiMyAccountLoginGovUrlQuery,
+  usePostApiMyAccountLoginGovCallbackMutation,
   useGetApiMyAccountLoginGoogleUrlQuery,
   useGetApiMyAccountLoginGoogleCallbackQuery,
   usePostApiMyAccountLoginMutation,
