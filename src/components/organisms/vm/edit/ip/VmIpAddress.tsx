@@ -4,12 +4,9 @@ import {
   Paper,
   Divider,
   Stack,
-  Skeleton,
   Button,
 } from "@mui/material";
-import { Grid2 } from "@mui/material";
 import { useGetApiMyVmByProjectIdHostAndVmHostIdIpListQuery } from "src/app/services/api.generated";
-import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { Add } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import AddIpDialog from "./dialog/AddIpDialog";
@@ -19,35 +16,6 @@ import { AssignFirewall } from "./AssignFirewall";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { IpTableTableStruct } from "./struct";
 import IpTableRow from "./IpTableRow";
-
-const LoadingSkeleton: FC = () => (
-  <Grid2
-    container
-    sx={{ bgcolor: "#F0F7FF", borderRadius: BORDER_RADIUS_1 }}
-    alignItems="center"
-    height={56}
-  >
-    <Grid2 size={{ xs: 6, sm: 4 }} container alignItems="center" justifyContent="center">
-      <Skeleton width={120} />
-    </Grid2>
-    <Grid2
-      size={{ xs: 2.9, sm: 4 }}
-      container
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Skeleton variant="circular" width={25} height={25} />
-    </Grid2>
-    <Grid2
-      size={{ xs: 2.9, sm: 3.9 }}
-      container
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Skeleton variant="circular" width={25} height={25} />
-    </Grid2>
-  </Grid2>
-);
 
 export const VmIpAddress: FC = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
