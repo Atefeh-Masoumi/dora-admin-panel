@@ -14,7 +14,7 @@ const getUserAccessTypeName = (accessTypeId: number | undefined) => {
 };
 
 export const projectUserTableStruct: columnType[] = [
-  { id: "id", label: "" },
+  // { id: "id", label: "" },
   { id: "user", label: "کاربر" },
   { id: "email", label: "ایمیل" },
   { 

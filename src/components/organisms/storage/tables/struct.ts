@@ -1,11 +1,11 @@
 import { columnType } from "../../tables/table.types";
 
 export const storageTableStruct: columnType[] = [
-  {
-    id: "id",
-    label: "",
-    invisibility: true,
-  },
+  // {
+  //   id: "id",
+  //   label: "",
+  //   invisibility: true,
+  // },
   {
     id: "datacenter",
     label: "مرکز داده",

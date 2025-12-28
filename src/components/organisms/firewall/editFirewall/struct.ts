@@ -1,7 +1,7 @@
 import { columnType } from "../../tables/table.types";
 
 export const firewallRuleTableStruct: columnType[] = [
-  { label: "شناسه", id: "id" },
+  // { label: "شناسه", id: "id" },
   { label: "پروتکل", id: "firewallProtocolType" },
   { label: "ورودی/خروجی", id: "isIngress" },
   { label: "آدرس IP", id: "remoteIp" },
