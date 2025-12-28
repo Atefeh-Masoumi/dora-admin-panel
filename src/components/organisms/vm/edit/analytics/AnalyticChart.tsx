@@ -48,16 +48,13 @@ export const AnalyticChart: FC<AnalyticChartPropsType> = () => {
     data: userAnalytics,
     isLoading: getDataLoading,
     isFetching: getDataFetching,
-  } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery(
-    {
-      id: vmHostId,
-      projectId: Number(projectId),
-      periodId: categoryId,
-    },
-    {
-      skip: !projectId || !vmHostId,
-    }
-  );
+  } = useGetApiMyVmByProjectIdHostGetAnalyticAndIdQuery({
+    id: vmHostId,
+    projectId: Number(projectId),
+    periodId: categoryId+1 ,
+  }, {
+    skip: !projectId || !vmHostId,
+  });
 
   const isLoading = useMemo(
     () => getDataLoading || getDataFetching,
