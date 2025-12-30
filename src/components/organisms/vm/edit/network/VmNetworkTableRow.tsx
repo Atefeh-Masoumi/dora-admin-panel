@@ -134,7 +134,7 @@ export const NetworkTableRow: FC<{ row: any }> = ({ row }) => {
                   </IconButton>
                   {
                     row?.isEnableSecurity ? <>
-                      <Tooltip title="فعال سازی غیرport security">
+                      <Tooltip title="غیرفعال سازی port security">
                         <IconButton onClick={() => setIsDisableDialogOpen(true)} sx={{ cursor: "pointer" }}>
                           <LockOpenOutlined sx={{ color: "grey.700" }} />
                         </IconButton>
