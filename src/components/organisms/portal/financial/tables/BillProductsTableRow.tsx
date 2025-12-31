@@ -29,14 +29,13 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
   const toDate = rowData.toDate!;
   const product = rowData.product!;
   const customerProductPrice = rowData.orderPrice!;
-  const customerProduct = rowData.product!;
+  const order = rowData.order!;
   const customerProductBillItems = rowData.orderItems || [];
 
   return (
     <>
       <TableRow
         sx={{
-          // "& > *": { borderBottom: "unset" },
           "& > *": { border: "none" },
           "&:nth-of-type(odd)": {
             backgroundColor: rowBgColor,
@@ -47,7 +46,7 @@ const BillProductsTableRow: FC<BillProductsTableRowPropsType> = ({
           {product}
         </TableCell>
         <TableCell sx={{ border: "none" }} align="center">
-          {customerProduct}
+          {order}
         </TableCell>
         <TableCell sx={{ border: "none" }} align="center">
           {priceToPersian(customerProductPrice)}
