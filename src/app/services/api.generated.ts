@@ -1808,17 +1808,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createIssueModel,
       }),
     }),
-    getApiMyPortalCustomerLimitResourceUsages: build.query<
-      GetApiMyPortalCustomerLimitResourceUsagesApiResponse,
-      GetApiMyPortalCustomerLimitResourceUsagesApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/portal/customer-limit/resource-usages`,
-        params: {
-          projectId: queryArg.projectId,
-        },
-      }),
-    }),
     getApiMyPortalBusinessUnitList: build.query<
       GetApiMyPortalBusinessUnitListApiResponse,
       GetApiMyPortalBusinessUnitListApiArg
@@ -1903,6 +1892,17 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/project/create`,
         method: "POST",
         body: queryArg.createProjectModel,
+      }),
+    }),
+    getApiMyReportStatisticPortalCustomerPackageUsageReport: build.query<
+      GetApiMyReportStatisticPortalCustomerPackageUsageReportApiResponse,
+      GetApiMyReportStatisticPortalCustomerPackageUsageReportApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/report/statistic/portal/customer-package-usage-report`,
+        params: {
+          ProjectId: queryArg.projectId,
+        },
       }),
     }),
     getApiMyReportStatisticFinancialFinancialReport: build.query<
@@ -2743,6 +2743,16 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/host/delete/${queryArg.id}`,
         method: "DELETE",
+      }),
+    }),
+    postApiMyVmByProjectIdHostCreateFromBackup: build.mutation<
+      PostApiMyVmByProjectIdHostCreateFromBackupApiResponse,
+      PostApiMyVmByProjectIdHostCreateFromBackupApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/host/create-from-backup`,
+        method: "POST",
+        body: queryArg.createVmFromBackupModel,
       }),
     }),
     postApiMyVmByProjectIdHostCreate: build.mutation<
@@ -4033,11 +4043,6 @@ export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
   createIssueModel: CreateIssueModel;
 };
-export type GetApiMyPortalCustomerLimitResourceUsagesApiResponse =
-  /** status 200 OK */ ResourceUsageResponse;
-export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = {
-  projectId?: number;
-};
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
@@ -4082,6 +4087,11 @@ export type DeleteApiMyProjectDeleteByIdApiArg = {
 export type PostApiMyProjectCreateApiResponse = unknown;
 export type PostApiMyProjectCreateApiArg = {
   createProjectModel: CreateProjectModel;
+};
+export type GetApiMyReportStatisticPortalCustomerPackageUsageReportApiResponse =
+  /** status 200 OK */ CustomerPackageUsageReportResponse;
+export type GetApiMyReportStatisticPortalCustomerPackageUsageReportApiArg = {
+  projectId?: number;
 };
 export type GetApiMyReportStatisticFinancialFinancialReportApiResponse =
   /** status 200 OK */ FinancialReportResponse;
@@ -4596,6 +4606,11 @@ export type DeleteApiMyVmByProjectIdHostDeleteAndIdApiArg = {
   projectId: number;
   id: number;
 };
+export type PostApiMyVmByProjectIdHostCreateFromBackupApiResponse = unknown;
+export type PostApiMyVmByProjectIdHostCreateFromBackupApiArg = {
+  projectId: number;
+  createVmFromBackupModel: CreateVmFromBackupModel;
+};
 export type PostApiMyVmByProjectIdHostCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdHostCreateApiArg = {
   projectId: number;
@@ -4646,7 +4661,7 @@ export type GetApiMyVmByProjectIdFirewallListApiArg = {
   projectId: number;
 };
 export type GetApiMyVmByProjectIdFirewallGetAndIdApiResponse =
-  /** status 200 OK */ VmFirewallListResponse;
+  /** status 200 OK */ GetVmFirewallResponse;
 export type GetApiMyVmByProjectIdFirewallGetAndIdApiArg = {
   projectId: number;
   id: number;
@@ -4657,8 +4672,7 @@ export type PutApiMyVmByProjectIdFirewallEditAndIdApiArg = {
   projectId: number;
   editVmFirewallModel: EditVmFirewallModel;
 };
-export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiResponse =
-  /** status 200 OK */ VmFirewallRuleListResponse[];
+export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiResponse = unknown;
 export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiArg = {
   projectId: number;
   id: number;
@@ -4838,7 +4852,7 @@ export type CreateCustomerUserModel = {
   isAccountManager?: boolean;
 };
 export type ChangeCustomerUserModel = {
-  customerId?: number;
+  id?: number;
 };
 export type GetCustomerResponse = {
   id: number;
@@ -6119,20 +6133,6 @@ export type CreateIssueModel = {
   productId?: number | null;
   attachments?: Blob[] | null;
 };
-export type ResourceUsageResponse = {
-  maxCpuUsage?: number;
-  currentCpuUsage?: number;
-  maxMemoryUsage?: number;
-  currentMemoryUsage?: number;
-  maxDiskUsage?: number;
-  currentDiskUsage?: number;
-  maxFirewallRuleCount?: number;
-  currentFirewallRuleCount?: number;
-  maxIpCount?: number;
-  currentIpCount?: number;
-  maxVmCount?: number;
-  currentVmCount?: number;
-};
 export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
@@ -6183,6 +6183,20 @@ export type CreateProjectModel = {
   datacenterId?: number;
   description?: string | null;
   isPublic?: boolean;
+};
+export type CustomerPackageUsageReportResponse = {
+  maxCpuUsage?: number;
+  currentCpuUsage?: number;
+  maxMemoryUsage?: number;
+  currentMemoryUsage?: number;
+  maxDiskUsage?: number;
+  currentDiskUsage?: number;
+  maxFirewallRuleCount?: number;
+  currentFirewallRuleCount?: number;
+  maxIpCount?: number;
+  currentIpCount?: number;
+  maxVmCount?: number;
+  currentVmCount?: number;
 };
 export type FinancialReportResponse = {
   walletBalance?: number;
@@ -6610,6 +6624,23 @@ export type EditVmModel = {
   memory?: number;
   disk?: number;
 };
+export type CreateVmFromBackupModel = {
+  vmVolumeBackUpId?: number;
+  name?: string | null;
+  usedPublicIpV4?: boolean;
+  usedPublicIpV6?: boolean;
+  usedPrivateNetwork?: boolean;
+  vmNetworkId?: number | null;
+  ipAddress?: string | null;
+  usedFirewall?: boolean;
+  vmFirewallId?: number | null;
+  allowRemoteAccess?: boolean;
+  allowHttpAccess?: boolean;
+  allowHttpsAccess?: boolean;
+  remoteAccessIp?: string | null;
+  cpu?: number;
+  memory?: number;
+};
 export type CreateVmModel = {
   vmImageId?: number;
   storageClassTypeId?: number;
@@ -6677,6 +6708,14 @@ export type VmFirewallListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
+  vmFirewallCount: number;
+  createDate: string;
+};
+export type GetVmFirewallResponse = {
+  id: number;
+  name: string | null;
+  statusId?: number;
+  status: string | null;
   vmFirewallCount: number;
   createDate: string;
 };
@@ -6960,7 +6999,6 @@ export const {
   useGetApiMyPortalIssueShortListQuery,
   useGetApiMyPortalIssueListQuery,
   usePostApiMyPortalIssueCreateMutation,
-  useGetApiMyPortalCustomerLimitResourceUsagesQuery,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyProjectByProjectIdUserListQuery,
   usePutApiMyProjectByProjectIdUserEditAndIdMutation,
@@ -6971,6 +7009,7 @@ export const {
   usePutApiMyProjectEditByIdMutation,
   useDeleteApiMyProjectDeleteByIdMutation,
   usePostApiMyProjectCreateMutation,
+  useGetApiMyReportStatisticPortalCustomerPackageUsageReportQuery,
   useGetApiMyReportStatisticFinancialFinancialReportQuery,
   useGetApiMyReportSearchFinancialSearchOrderReportQuery,
   useGetApiMyReportChartFinancialUsageChartByCategoryIdQuery,
@@ -7060,6 +7099,7 @@ export const {
   usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
+  usePostApiMyVmByProjectIdHostCreateFromBackupMutation,
   usePostApiMyVmByProjectIdHostCreateMutation,
   useGetApiMyVmByProjectIdHostConsoleAndIdQuery,
   useGetApiMyVmByProjectIdFirewallAndVmFirewallIdRuleListQuery,
