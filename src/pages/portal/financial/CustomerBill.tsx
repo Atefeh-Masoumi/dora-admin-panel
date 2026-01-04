@@ -31,9 +31,17 @@ const Bill: FC = () => {
   const id = searchParams.get("customer-bill-id");
   const navigate = useNavigate();
 
-  const { data: bill, isLoading } = useGetApiMyFinancialBillGetByIdQuery({
-    id: parseInt(id as string),
-  });
+  const billId = id ? parseInt(id, 10) : null;
+  const isValidId = billId !== null && !isNaN(billId);
+
+  const { data: bill, isLoading } = useGetApiMyFinancialBillGetByIdQuery(
+    {
+      id: billId!,
+    },
+    {
+      skip: !isValidId,
+    }
+  );
 
   const productList = bill?.billOrders || [];
   const token = useAppSelector((state) => state.auth?.accessToken);
@@ -87,7 +95,7 @@ const Bill: FC = () => {
         </Stack>
       ) : (
         <>
-          {Number(id) !== 0 && (
+          {billId !== null && billId !== 0 && (
             <Stack direction="row" justifyContent="start">
               <Button variant="text">
                 <ArrowForwardIosIcon sx={{ fontSize: 15 }} />
