@@ -1,17 +1,22 @@
 import { FC, useContext, ChangeEvent, useState } from "react";
-import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
+import { IconButton, InputAdornment, MenuItem, Select, Stack, Typography, FormControl, InputLabel } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { DorsaTextField } from "src/components/atoms/DorsaTextField";
 import { ExclamationMarkCircleSvg } from "src/components/atoms/svg-icons/ExclamationMarkCircleSvg";
 import { AddServerContext } from "src/components/organisms/vm/add/contexts/AddVmContext";
-
+import { useGetApiMyVmByProjectIdKeyListQuery } from "src/app/services/api.generated";
+import { useParams } from "react-router-dom";
 type ServerInfoPropsType = {};
 
 export const ServerInfo: FC<ServerInfoPropsType> = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { serverName, setServerName, serverPassword, setServerPassword } =
+  const { serverName, setServerName, serverPassword, setServerPassword, setVmKeyId, vmKeyId } =
     useContext(AddServerContext);
 
+  const { projectId } = useParams();
+  const { data: vmKeyList } = useGetApiMyVmByProjectIdKeyListQuery({
+    projectId: Number(projectId),
+  });
   const nameInputChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setServerName(e.target.value);
@@ -48,6 +53,12 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
           باشد
         </Typography>
       </Stack>
+        <Typography
+          align="center"
+          sx={{ color: ({ palette }) => palette.grey[700] }}
+        >
+          برای ساخت ماشین مجازی میتوانید  از بین کلید های ssh یا انتخاب رمز به صورت انتخابی عمل نمایید
+        </Typography>
       <DorsaTextField
         focused
         value={serverName}
@@ -56,6 +67,33 @@ export const ServerInfo: FC<ServerInfoPropsType> = () => {
         label="نام سرور ابری (Server Name)"
         inputProps={{ dir: "ltr" }}
       />
+      <FormControl sx={{ minWidth: 300 }}>
+        <InputLabel id="ssh-key-label">کلید SSH</InputLabel>
+        <Select
+          labelId="ssh-key-label"
+          id="ssh-key-select"
+          value={vmKeyId ?? ""}
+          label="کلید SSH"
+          onChange={(e) => {
+            const selectedId = Number(e.target.value);
+            setVmKeyId(selectedId);
+          }}
+          sx={{
+            "& .MuiSelect-select": {
+              fontSize: "14px",
+            },
+            "& .MuiMenuItem-root": {
+              fontSize: "10px",
+            },
+          }}
+        >
+          {vmKeyList?.map((key) => (
+            <MenuItem key={key.id} value={Number(key.id)}>
+              {key.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <DorsaTextField
         focused
         type={showPassword ? "text" : "password"}
