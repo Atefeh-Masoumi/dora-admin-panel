@@ -88,7 +88,7 @@ const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
     })
       .unwrap()
       .then(() => {
-        toast.success("قانون مورد نظر با موفقیت حذف شد");
+        toast.success("رول مورد نظر با موفقیت حذف شد");
         closeDialogHandler();
         refetch();
       })
@@ -154,8 +154,8 @@ const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="قانون"
-        subTitle="برای حذف قانون موردنظر، عبارت امنیتی زیر را وارد کنید."
+        keyTitle="رول"
+        subTitle="برای حذف رول موردنظر، عبارت امنیتی زیر را وارد کنید."
         securityPhrase={selectedRule?.id?.toString() || ""}
         onSubmit={deleteRuleHandler}
         submitLoading={deleteRuleLoading}

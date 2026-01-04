@@ -74,7 +74,7 @@ const FirewallRuleListTable: FC = () => {
             variant="outlined"
             startIcon={<Add />}
           >
-            ایجاد قانون جدید
+            ایجاد رول جدید
           </Button>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
@@ -83,7 +83,7 @@ const FirewallRuleListTable: FC = () => {
             struct={firewallRuleTableStruct}
             RowComponent={FirewallRuleTableRow}
             rows={firewallRuleList}
-            text="در حال حاضر قانونی وجود ندارد"
+            text="در حال حاضر رولی وجود ندارد"
             isLoading={getFirewallRuleListLoading}
             initialOrder={0}
           />

@@ -110,7 +110,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        toast.success("قانون جدید با موفقیت ایجاد شد");
+        toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
         refetch();
         formik.resetForm();
@@ -134,7 +134,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
 
   return (
     <Dialog {...props} sx={dialogSx} onClose={props.onClose} fullWidth>
-      <DialogTitle sx={dialogTitleSx}>ایجاد قانون جدید</DialogTitle>
+      <DialogTitle sx={dialogTitleSx}>ایجاد رول جدید</DialogTitle>
 
       <form onSubmit={formik.handleSubmit}>
         <DialogContent sx={dialogContentSx}>
