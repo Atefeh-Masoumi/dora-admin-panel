@@ -8,7 +8,7 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { volumeTableStruct } from "./struct";
 import {
   VolumeListResponse,
-  useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation,
+  useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import PageLoading from "src/components/atoms/PageLoading";
 import { useParams } from "react-router";
@@ -39,7 +39,7 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
   );
   const { id, projectId } = useParams();
   const [deleteItem, { isLoading: deleteVmRecordLoading }] =
-    useDeleteApiMyVmByProjectIdHostAndVmHostIdIpDeleteIdMutation();
+    useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation();
 
   const onEnableAutoBackupBtnClick = () => {
     onEnableAutoBackupClick(row);
@@ -64,14 +64,13 @@ export const VolumeTableRow: FC<VolumeTableRowProps> = ({
       {
         id: Number(selectedVm?.id),
         projectId: Number(projectId),
-        vmHostId: Number(id),
       })
       .unwrap()
       .then(() => {
         toast.success("دیسک با موفقیت حذف شد");
         closeDialogHandler();
       })
-      .catch((err) => { });
+      .catch(() => { });
 
   const getStatusConfig = (enabled: boolean) => {
     if (enabled) {
