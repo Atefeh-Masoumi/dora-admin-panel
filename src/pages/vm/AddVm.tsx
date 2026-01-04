@@ -53,7 +53,7 @@ const AddVm: FC = () => {
     allowHttpAccess,
     allowHttpsAccess,
     remoteAccessIp,
-   
+    vmKeyId,
   } = useContext(AddServerContext);
 
   const { data: productItems } =
@@ -125,9 +125,7 @@ const AddVm: FC = () => {
     } else if (serverName.trim().length < 5 || serverName.length > 50) {
       validationErrorMessage =
         "طول کارکترهای بخش نام سرور ابری باید بین ۵ تا ۵۰ کارکتر باشد";
-    } else if (!passwordValidationRegex.test(serverPassword)) {
-      validationErrorMessage = "رمز عبور نامعتبر است";
-    } else if (usePrivateNetwork && (!selectedNetwork?.id || !ipAddress)) {
+    }  else if (usePrivateNetwork && (!selectedNetwork?.id || !ipAddress)) {
       validationErrorMessage = "برای شبکه خصوصی، انتخاب شبکه و IP الزامی است";
     } else if (usedFirewall && !vmFirewallId) {
       validationErrorMessage = "برای فایروال، انتخاب فایروال الزامی است";
@@ -142,7 +140,7 @@ const AddVm: FC = () => {
         createVmModel: {
           name: serverName,
           password: serverPassword,
-
+          vmKeyId: vmKeyId,
           vmImageId: osVersion?.id || 0,
           isPredefined: isPredefined,
           productBundleId: serverConfig?.id || 0,

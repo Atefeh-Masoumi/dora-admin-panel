@@ -57,6 +57,8 @@ type AddServerContextType = {
   setAllowHttpsAccess: (value: boolean) => void;
   remoteAccessIp: string | null;
   setRemoteAccessIp: (ip: string | null) => void;
+  vmKeyId: number | null;
+  setVmKeyId: (keyId: number | null) => void;
 };
 
 export const AddServerContext = createContext<AddServerContextType>({
@@ -104,7 +106,9 @@ export const AddServerContext = createContext<AddServerContextType>({
   allowHttpsAccess: true,
   setAllowHttpsAccess: () => {},
   remoteAccessIp: null,
-  setRemoteAccessIp: () => {}
+  setRemoteAccessIp: () => {},
+  vmKeyId: null,
+  setVmKeyId: () => {},
 });
 
 type AddServerContextProviderPropsType = {
@@ -144,6 +148,7 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
   const [allowHttpAccess, setAllowHttpAccess] = useState<boolean>(true);
   const [allowHttpsAccess, setAllowHttpsAccess] = useState<boolean>(true);
   const [remoteAccessIp, setRemoteAccessIp] = useState<string | null>("0.0.0.0/0");
+  const [vmKeyId, setVmKeyId] = useState<number | null>(null);
   return (
     <AddServerContext.Provider
       value={{
@@ -187,6 +192,8 @@ const AddServerContextProvider: FC<AddServerContextProviderPropsType> = ({
         setAllowHttpsAccess,
         remoteAccessIp,
         setRemoteAccessIp,
+        vmKeyId,
+        setVmKeyId,
       }}
     >
       {children}
