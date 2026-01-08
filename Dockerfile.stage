@@ -1,14 +1,18 @@
 # -------------------------
 # Stage 1: Build React App
 # -------------------------
-FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+FROM nexus.dorsa.cloud/library/node:24-bookworm-slim AS builder
 WORKDIR /app
 
-# Copy .npmrc for custom registry (ensures Nexus is used during install)
+# Copy .npmrc for custom registry
 COPY .npmrc ./
 
-# Copy dependency definitions and install (use npm ci for lockfile fidelity; add flags for speed/reliability)
-# Temporarily add --verbose for debugging; remove once fixed
+# Debug: Verify npm config and test registry access (remove after fixing)
+RUN npm config list --verbose && \
+npm whoami && \
+npm view react --json  # Should succeed if auth/network is good; fails on E401/404
+
+# Copy dependency definitions and install
 COPY package.json package-lock.json* ./
 RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10 --verbose
 
@@ -19,7 +23,7 @@ COPY . .
 ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN npm run build
 
-# Optional: Clean up .npmrc if you don't want it in image layer (but harmless to leave for prod)
+# Optional: Clean up
 RUN rm -f .npmrc
 
 # -------------------------
@@ -29,7 +33,7 @@ FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
 
 WORKDIR /usr/share/nginx/html
 
-# Copy built React app from builder
+# Copy built app from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
 # Replace default nginx config
