@@ -8,8 +8,9 @@ WORKDIR /app
 COPY .npmrc ./
 
 # Copy dependency definitions and install (use npm ci for lockfile fidelity; add flags for speed/reliability)
+# Temporarily add --verbose for debugging; remove once fixed
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10
+RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10 --verbose
 
 # Copy the rest of the app
 COPY . .
@@ -20,7 +21,6 @@ RUN npm run build
 
 # Optional: Clean up .npmrc if you don't want it in image layer (but harmless to leave for prod)
 RUN rm -f .npmrc
-
 
 # -------------------------
 # Stage 2: Serve via NGINX
