@@ -4,12 +4,12 @@
 FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
 WORKDIR /app
 
-# Set Nexus npm registry
-#RUN echo "registry=https://nexus.dorsa.cloud/repository/npm/" > .npmrc
+# Copy .npmrc for custom registry (ensures Nexus is used during install)
+COPY .npmrc ./
 
-# Copy dependency definitions and install
+# Copy dependency definitions and install (use npm ci for lockfile fidelity; add flags for speed/reliability)
 COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10
 
 # Copy the rest of the app
 COPY . .
@@ -18,7 +18,7 @@ COPY . .
 ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN npm run build
 
-# Optional: Clean up .npmrc if you don't want it in image layer
+# Optional: Clean up .npmrc if you don't want it in image layer (but harmless to leave for prod)
 RUN rm -f .npmrc
 
 
