@@ -142,8 +142,6 @@ const FirewallRuleTableRow: FC<{ row: any }> = ({ row }) => {
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
-              ) : column.id === "isIngress" ? (
-                <>{value ? "ورودی" : "خروجی"}</>
               ) : (
                 <>{text}</>
               )}
