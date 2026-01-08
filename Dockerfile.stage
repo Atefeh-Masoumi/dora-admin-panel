@@ -4,17 +4,12 @@
 FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
 WORKDIR /app
 
-# Copy .npmrc for custom registry
+# Copy .npmrc for custom registry (ensure it includes auth; see notes below)
 COPY .npmrc ./
 
-# Debug: Verify npm config and test registry access (remove after fixing)
-RUN npm config list --verbose && \
-npm whoami && \
-npm view react --json  # Should succeed if auth/network is good; fails on E401/404
-
-# Copy dependency definitions and install
+# Copy dependency definitions and install (remove --verbose once working)
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10 --verbose
+RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --no-fund --maxsockets=10
 
 # Copy the rest of the app
 COPY . .
