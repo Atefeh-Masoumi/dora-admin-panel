@@ -6,12 +6,9 @@ import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
-import { toast } from "react-toastify";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   VmVolumeBackupListResponse,
   useGetApiMyVmByProjectIdBackupListQuery,
-  useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { backupTableStruct } from "src/components/organisms/backup/backuplist/struct";
 import BackupTableRow from "src/components/organisms/backup/backuplist/BackupTableRow";
@@ -25,7 +22,6 @@ enum DIALOG_TYPE_ENUM {
 
 const BackupList: FC = () => {
   const { projectId } = useParams();
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedBackup, setSelectedBackup] = useState<VmVolumeBackupListResponse | null>(null);
@@ -39,8 +35,6 @@ const BackupList: FC = () => {
     projectId: Number(projectId),
   });
 
-  const [deleteBackup, { isLoading: deleteBackupLoading }] =
-    useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -72,21 +66,7 @@ const BackupList: FC = () => {
     setSelectedBackup(null);
   };
 
-  const deleteBackupHandler = () => {
-    if (!selectedBackup?.id) return;
-    deleteBackup({
-      id: selectedBackup.id,
-      projectId: Number(projectId),
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("بکاپ مورد نظر با موفقیت حذف شد");
-        closeDialogHandler();
-        refetch();
-      })
-      .catch(() => {});
-  };
-
+ 
   return (
     <>
       <Stack
@@ -171,15 +151,6 @@ const BackupList: FC = () => {
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
         refetch={refetch}
-      />
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="بکاپ"
-        subTitle="برای حذف بکاپ موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedBackup?.name || ""}
-        onSubmit={deleteBackupHandler}
-        submitLoading={deleteBackupLoading}
       />
     </>
   );
