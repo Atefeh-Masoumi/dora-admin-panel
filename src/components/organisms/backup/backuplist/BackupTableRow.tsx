@@ -34,7 +34,7 @@ const volumeBackupStatusList = (statusId: number) => {
       case 2:
         return {
           id: 2,
-          label: "غیرفعال",
+          label: "خطا در زیرساخت",
           bgcolor: "error.light",
           color: "error.main",
         };
