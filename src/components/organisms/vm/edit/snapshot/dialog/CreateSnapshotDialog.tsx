@@ -87,7 +87,7 @@ export const CreateSnapshotDialog: FC<CreateSnapshotDialogPropsType> = ({
         await createSnapshotBatch({
           projectId: Number(projectId),
           createVolumeSnapshotBatchModel: {
-            vmHostId: Number(vmId),
+            // vmHostId: Number(vmId),
             vmVolumeHostId,
             name,
             description,
