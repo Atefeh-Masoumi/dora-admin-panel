@@ -422,6 +422,46 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createBareMetalModel,
       }),
     }),
+    postApiCdnStoreLog: build.mutation<
+      PostApiCdnStoreLogApiResponse,
+      PostApiCdnStoreLogApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/store-log`,
+        method: "POST",
+        body: queryArg.storeLogModel,
+      }),
+    }),
+    postApiCdnGetZoneRoutes: build.mutation<
+      PostApiCdnGetZoneRoutesApiResponse,
+      PostApiCdnGetZoneRoutesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zone-routes`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
+      }),
+    }),
+    postApiCdnGetZoneEdgeCerts: build.mutation<
+      PostApiCdnGetZoneEdgeCertsApiResponse,
+      PostApiCdnGetZoneEdgeCertsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zone-edge-certs`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
+      }),
+    }),
+    postApiCdnGetZones: build.mutation<
+      PostApiCdnGetZonesApiResponse,
+      PostApiCdnGetZonesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zones`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
+      }),
+    }),
     getApiMyColocationByProjectIdHostList: build.query<
       GetApiMyColocationByProjectIdHostListApiResponse,
       GetApiMyColocationByProjectIdHostListApiArg
@@ -1814,6 +1854,41 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/portal/business-unit/list` }),
     }),
+    getApiMyPamByProjectIdHostList: build.query<
+      GetApiMyPamByProjectIdHostListApiResponse,
+      GetApiMyPamByProjectIdHostListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/pam/${queryArg.projectId}/host/list`,
+      }),
+    }),
+    getApiMyPamByProjectIdHostGetAndId: build.query<
+      GetApiMyPamByProjectIdHostGetAndIdApiResponse,
+      GetApiMyPamByProjectIdHostGetAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/pam/${queryArg.projectId}/host/get/${queryArg.id}`,
+      }),
+    }),
+    deleteApiMyPamByProjectIdHostDeleteAndId: build.mutation<
+      DeleteApiMyPamByProjectIdHostDeleteAndIdApiResponse,
+      DeleteApiMyPamByProjectIdHostDeleteAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/pam/${queryArg.projectId}/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyPamByProjectIdHostCreate: build.mutation<
+      PostApiMyPamByProjectIdHostCreateApiResponse,
+      PostApiMyPamByProjectIdHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/pam/${queryArg.projectId}/host/create`,
+        method: "POST",
+        body: queryArg.createPamModel,
+      }),
+    }),
     getApiMyProjectByProjectIdUserList: build.query<
       GetApiMyProjectByProjectIdUserListApiResponse,
       GetApiMyProjectByProjectIdUserListApiArg
@@ -2184,46 +2259,42 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createVolumeSnapshotModel,
       }),
     }),
-    getApiMyVmByProjectIdVolumeNodeList: build.query<
-      GetApiMyVmByProjectIdVolumeNodeListApiResponse,
-      GetApiMyVmByProjectIdVolumeNodeListApiArg
+    putApiMyVmByProjectIdVolumeEnableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/node/list`,
-        params: {
-          VmHostId: queryArg.vmHostId,
-        },
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
-    getApiMyVmByProjectIdVolumeNodeGet: build.query<
-      GetApiMyVmByProjectIdVolumeNodeGetApiResponse,
-      GetApiMyVmByProjectIdVolumeNodeGetApiArg
+    putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/node/get`,
-        params: {
-          VmHostId: queryArg.vmHostId,
-          VmVolumeHostId: queryArg.vmVolumeHostId,
-        },
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
-    putApiMyVmByProjectIdVolumeNodeDetachAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiArg
+    putApiMyVmByProjectIdVolumeDisableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/node/detach/${queryArg.id}`,
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-snapshot/${queryArg.id}`,
         method: "PUT",
       }),
     }),
-    postApiMyVmByProjectIdVolumeNodeAttach: build.mutation<
-      PostApiMyVmByProjectIdVolumeNodeAttachApiResponse,
-      PostApiMyVmByProjectIdVolumeNodeAttachApiArg
+    putApiMyVmByProjectIdVolumeDisableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/node/attach`,
-        method: "POST",
-        body: queryArg.attachVolumeModel,
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-backup/${queryArg.id}`,
+        method: "PUT",
       }),
     }),
     getApiMyVmByProjectIdBackupShortList: build.query<
@@ -2318,32 +2389,24 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
+    getApiMyVmByProjectIdVolumeNodeGet: build.query<
+      GetApiMyVmByProjectIdVolumeNodeGetApiResponse,
+      GetApiMyVmByProjectIdVolumeNodeGetApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/node/get`,
+        params: {
+          VmHostId: queryArg.vmHostId,
+          VmVolumeHostId: queryArg.vmVolumeHostId,
+        },
+      }),
+    }),
     getApiMyVmByProjectIdVolumeGetAndId: build.query<
       GetApiMyVmByProjectIdVolumeGetAndIdApiResponse,
       GetApiMyVmByProjectIdVolumeGetAndIdApiArg
     >({
       query: (queryArg) => ({
         url: `/api/my/vm/${queryArg.projectId}/volume/get/${queryArg.id}`,
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeEnableSnapshotAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableBackupSnapshotModel,
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableBackupSnapshotModel,
       }),
     }),
     putApiMyVmByProjectIdVolumeEditAndId: build.mutation<
@@ -2356,21 +2419,12 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.editVolumeHostModel,
       }),
     }),
-    putApiMyVmByProjectIdVolumeDisableSnapshotAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg
+    putApiMyVmByProjectIdVolumeNodeDetachAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/disable-snapshot/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeDisableBackupAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/disable-backup/${queryArg.id}`,
+        url: `/api/my/vm/${queryArg.projectId}/volume/node/detach/${queryArg.id}`,
         method: "PUT",
       }),
     }),
@@ -2391,6 +2445,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/create`,
         method: "POST",
         body: queryArg.createVolumeHostModel,
+      }),
+    }),
+    postApiMyVmByProjectIdVolumeNodeAttach: build.mutation<
+      PostApiMyVmByProjectIdVolumeNodeAttachApiResponse,
+      PostApiMyVmByProjectIdVolumeNodeAttachApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/node/attach`,
+        method: "POST",
+        body: queryArg.attachVolumeModel,
       }),
     }),
     getApiMyVmByProjectIdNetworkNodeList: build.query<
@@ -3138,6 +3202,25 @@ export type PostApiMyBareMetalByProjectIdHostCreateApiResponse = unknown;
 export type PostApiMyBareMetalByProjectIdHostCreateApiArg = {
   projectId: number;
   createBareMetalModel: CreateBareMetalModel;
+};
+export type PostApiCdnStoreLogApiResponse = unknown;
+export type PostApiCdnStoreLogApiArg = {
+  storeLogModel: StoreLogModel;
+};
+export type PostApiCdnGetZoneRoutesApiResponse =
+  /** status 200 OK */ GetZoneRouteResponse[];
+export type PostApiCdnGetZoneRoutesApiArg = {
+  syncRequestModel: SyncRequestModel;
+};
+export type PostApiCdnGetZoneEdgeCertsApiResponse =
+  /** status 200 OK */ GetZoneEdgeCertResponse[];
+export type PostApiCdnGetZoneEdgeCertsApiArg = {
+  syncRequestModel: SyncRequestModel;
+};
+export type PostApiCdnGetZonesApiResponse =
+  /** status 200 OK */ GetZoneResponse[];
+export type PostApiCdnGetZonesApiArg = {
+  syncRequestModel: SyncRequestModel;
 };
 export type GetApiMyColocationByProjectIdHostListApiResponse =
   /** status 200 OK */ ColocationListResponse[];
@@ -4046,6 +4129,27 @@ export type PostApiMyPortalIssueCreateApiArg = {
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
 export type GetApiMyPortalBusinessUnitListApiArg = void;
+export type GetApiMyPamByProjectIdHostListApiResponse =
+  /** status 200 OK */ PamListResponse[];
+export type GetApiMyPamByProjectIdHostListApiArg = {
+  projectId: number;
+};
+export type GetApiMyPamByProjectIdHostGetAndIdApiResponse =
+  /** status 200 OK */ PamGetResponse;
+export type GetApiMyPamByProjectIdHostGetAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type DeleteApiMyPamByProjectIdHostDeleteAndIdApiResponse = unknown;
+export type DeleteApiMyPamByProjectIdHostDeleteAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PostApiMyPamByProjectIdHostCreateApiResponse = unknown;
+export type PostApiMyPamByProjectIdHostCreateApiArg = {
+  projectId: number;
+  createPamModel: CreatePamModel;
+};
 export type GetApiMyProjectByProjectIdUserListApiResponse =
   /** status 200 OK */ ProjectUserListResponse[];
 export type GetApiMyProjectByProjectIdUserListApiArg = {
@@ -4272,28 +4376,28 @@ export type PostApiMyVmByProjectIdSnapshotCreateApiArg = {
   projectId: number;
   createVolumeSnapshotModel: CreateVolumeSnapshotModel;
 };
-export type GetApiMyVmByProjectIdVolumeNodeListApiResponse =
-  /** status 200 OK */ VmVolumeNodeListResponse[];
-export type GetApiMyVmByProjectIdVolumeNodeListApiArg = {
-  vmHostId: number;
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
   projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
-export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
-  /** status 200 OK */ GetVmVolumeNodeResponse;
-export type GetApiMyVmByProjectIdVolumeNodeGetApiArg = {
-  vmHostId?: number;
-  vmVolumeHostId?: number;
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
   projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
-export type PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiArg = {
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse =
+  unknown;
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type PostApiMyVmByProjectIdVolumeNodeAttachApiResponse = unknown;
-export type PostApiMyVmByProjectIdVolumeNodeAttachApiArg = {
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg = {
   projectId: number;
-  attachVolumeModel: AttachVolumeModel;
+  id: number;
 };
 export type GetApiMyVmByProjectIdBackupShortListApiResponse =
   /** status 200 OK */ VmVolumeBackupShortListDto[];
@@ -4347,23 +4451,18 @@ export type GetApiMyVmByProjectIdVolumeListApiArg = {
   vmHostId?: number;
   projectId: number;
 };
+export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
+  /** status 200 OK */ GetVmVolumeNodeResponse;
+export type GetApiMyVmByProjectIdVolumeNodeGetApiArg = {
+  vmHostId?: number;
+  vmVolumeHostId?: number;
+  projectId: number;
+};
 export type GetApiMyVmByProjectIdVolumeGetAndIdApiResponse =
   /** status 200 OK */ GetVolumeHostResponse;
 export type GetApiMyVmByProjectIdVolumeGetAndIdApiArg = {
   projectId: number;
   id: number;
-};
-export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableBackupSnapshotModel: EnableBackupSnapshotModel;
-};
-export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableBackupSnapshotModel: EnableBackupSnapshotModel;
 };
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiArg = {
@@ -4371,14 +4470,8 @@ export type PutApiMyVmByProjectIdVolumeEditAndIdApiArg = {
   id: number;
   editVolumeHostModel: EditVolumeHostModel;
 };
-export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse =
-  unknown;
-export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg = {
-  projectId: number;
-  id: number;
-};
-export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg = {
+export type PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeNodeDetachAndIdApiArg = {
   projectId: number;
   id: number;
 };
@@ -4391,6 +4484,11 @@ export type PostApiMyVmByProjectIdVolumeCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdVolumeCreateApiArg = {
   projectId: number;
   createVolumeHostModel: CreateVolumeHostModel;
+};
+export type PostApiMyVmByProjectIdVolumeNodeAttachApiResponse = unknown;
+export type PostApiMyVmByProjectIdVolumeNodeAttachApiArg = {
+  projectId: number;
+  attachVolumeModel: AttachVolumeModel;
 };
 export type GetApiMyVmByProjectIdNetworkNodeListApiResponse =
   /** status 200 OK */ VmNetworkNodeListResponse[];
@@ -4990,6 +5088,91 @@ export type CreateBareMetalModel = {
   productBundleId?: number;
   name?: string | null;
   imageId?: number;
+};
+export type CdnLogRequest = {
+  sessionId: string | null;
+  requestId: string | null;
+  site: string | null;
+  analyticDate: string;
+  scheme: string | null;
+  method: string | null;
+  uri: string | null;
+  path: string | null;
+  host: string | null;
+  zoneName: string | null;
+  query?: string | null;
+  userAgent: string | null;
+  remoteAddress?: string | null;
+  remotePort?: number | null;
+  referer?: string | null;
+  acceptLanguage?: string | null;
+  acceptEncoding?: string | null;
+  accept?: string | null;
+  localAddress?: string | null;
+  localPort?: number | null;
+  edgeLocation?: string | null;
+  serverName?: string | null;
+  protocol?: string | null;
+  sslProtocol?: string | null;
+  sslCipher?: string | null;
+  requestSize?: number;
+  requestHeaderCount?: number;
+  responseSize?: number;
+  uncompressedResponseSize?: number | null;
+  statusCode?: number | null;
+  contentType?: string | null;
+  contentEncoding?: string | null;
+  isCompressed?: boolean;
+  responseHeaderCount?: number;
+  responseTimeMs?: number;
+  originResponseTimeMs?: number | null;
+  cacheStatus?: string | null;
+  eTag?: string | null;
+  lastModified?: string | null;
+  cacheControl?: string | null;
+  countryCode?: string | null;
+  region?: string | null;
+  city?: string | null;
+  asn?: string | null;
+  xForwardedFor?: string | null;
+  xRealIp?: string | null;
+  isSecure?: boolean;
+  xRequestId?: string | null;
+  xTraceId?: string | null;
+};
+export type StoreLogModel = {
+  userName: string | null;
+  password: string | null;
+  data?: CdnLogRequest[] | null;
+};
+export type GetZoneRouteResponse = {
+  zoneRouteId?: number;
+  zoneId?: number;
+  zoneTypeId?: number;
+  zoneRouteTypeId?: number;
+  loadBalancingPolicyId?: number;
+  hosts?: string | null;
+  path?: string | null;
+  methods?: string | null;
+  maxConnectionsPerServer?: number;
+  destinations?: string | null;
+  dangerousAcceptAnyServerCertificate?: boolean;
+  sslProtocols?: string | null;
+};
+export type SyncRequestModel = {
+  userName: string | null;
+  password: string | null;
+};
+export type GetZoneEdgeCertResponse = {
+  commonName: string | null;
+  keyPem: string | null;
+  certPem: string | null;
+};
+export type GetZoneResponse = {
+  zoneName: string | null;
+  isHsts: boolean;
+  isHttpsRedirect: boolean;
+  isNonWwwRedirect: boolean;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -6137,6 +6320,30 @@ export type BusinessUnitListResponse = {
   id: number;
   name: string | null;
 };
+export type PamListResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  datacenter: string | null;
+  createDate: string;
+};
+export type PamGetResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  vmHostId: number;
+  vmImageId: number;
+  vmImage: string | null;
+  projectId: number;
+  createDate: string;
+  modifyDate: string;
+};
+export type CreatePamModel = {
+  vmImageId?: number;
+  name?: string | null;
+};
 export type ProjectUserListResponse = {
   id?: number;
   user: string | null;
@@ -6336,7 +6543,6 @@ export type GetVmVolumeSnapshotResponse = {
   modifyDate: string;
 };
 export type CreateVolumeSnapshotBatchModel = {
-  vmHostId?: number;
   vmVolumeHostId?: number[] | null;
   name?: string | null;
   description?: string | null;
@@ -6346,28 +6552,9 @@ export type CreateVolumeSnapshotModel = {
   name?: string | null;
   description?: string | null;
 };
-export type VmVolumeNodeListResponse = {
-  id?: number;
-  statusId?: number;
-  status: string | null;
-  vmVolumeHost: string | null;
-  vmHost: string | null;
-  createDate?: string;
-};
-export type GetVmVolumeNodeResponse = {
-  id: number;
-  vmVolumeHostId?: number | null;
-  vmVolumeHost?: string | null;
-  vmHostId?: number | null;
-  vmHost?: string | null;
-  isConnected: boolean;
-  statusId?: number | null;
-  status?: string | null;
-  createDate?: string | null;
-};
-export type AttachVolumeModel = {
-  vmHostId?: number;
-  vmVolumeHostId?: number;
+export type EnableBackupSnapshotModel = {
+  calculateTypeId?: number;
+  cleanUpDuration?: number;
 };
 export type VmVolumeBackupShortListDto = {
   id: number;
@@ -6394,7 +6581,6 @@ export type GetVmVolumeBackupResponse = {
   description?: string | null;
 };
 export type CreateVolumeBackupBatchModel = {
-  vmHostId?: number;
   vmVolumeHostId?: number[] | null;
   name?: string | null;
   description?: string | null;
@@ -6425,6 +6611,17 @@ export type VolumeListResponse = {
   vmHostName?: string | null;
   createDate: string;
 };
+export type GetVmVolumeNodeResponse = {
+  id: number;
+  vmVolumeHostId?: number | null;
+  vmVolumeHost?: string | null;
+  vmHostId?: number | null;
+  vmHost?: string | null;
+  isConnected: boolean;
+  statusId?: number | null;
+  status?: string | null;
+  createDate?: string | null;
+};
 export type GetVolumeHostResponse = {
   id: number;
   datacenter: string | null;
@@ -6439,10 +6636,6 @@ export type GetVolumeHostResponse = {
   isRootDisk: boolean;
   createDate: string;
 };
-export type EnableBackupSnapshotModel = {
-  calculateTypeId?: number;
-  cleanUpDuration?: number;
-};
 export type EditVolumeHostModel = {
   volumeSize?: number;
 };
@@ -6454,6 +6647,10 @@ export type CreateVolumeHostModel = {
   calculateTypeId?: number | null;
   productBundleId?: number | null;
   volumeSize?: number | null;
+};
+export type AttachVolumeModel = {
+  vmHostId?: number;
+  vmVolumeHostId?: number;
 };
 export type VmNetworkNodeListResponse = {
   id: number;
@@ -6838,6 +7035,10 @@ export const {
   useGetApiMyBareMetalByProjectIdHostGetAndIdQuery,
   useDeleteApiMyBareMetalByProjectIdHostDeleteAndIdMutation,
   usePostApiMyBareMetalByProjectIdHostCreateMutation,
+  usePostApiCdnStoreLogMutation,
+  usePostApiCdnGetZoneRoutesMutation,
+  usePostApiCdnGetZoneEdgeCertsMutation,
+  usePostApiCdnGetZonesMutation,
   useGetApiMyColocationByProjectIdHostListQuery,
   useGetApiMyColocationByProjectIdHostGetAndIdQuery,
   useDeleteApiMyColocationByProjectIdHostDeleteAndIdMutation,
@@ -7000,6 +7201,10 @@ export const {
   useGetApiMyPortalIssueListQuery,
   usePostApiMyPortalIssueCreateMutation,
   useGetApiMyPortalBusinessUnitListQuery,
+  useGetApiMyPamByProjectIdHostListQuery,
+  useGetApiMyPamByProjectIdHostGetAndIdQuery,
+  useDeleteApiMyPamByProjectIdHostDeleteAndIdMutation,
+  usePostApiMyPamByProjectIdHostCreateMutation,
   useGetApiMyProjectByProjectIdUserListQuery,
   usePutApiMyProjectByProjectIdUserEditAndIdMutation,
   useDeleteApiMyProjectByProjectIdUserDeleteAndIdMutation,
@@ -7040,10 +7245,10 @@ export const {
   useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
   usePostApiMyVmByProjectIdSnapshotCreateBatchMutation,
   usePostApiMyVmByProjectIdSnapshotCreateMutation,
-  useGetApiMyVmByProjectIdVolumeNodeListQuery,
-  useGetApiMyVmByProjectIdVolumeNodeGetQuery,
-  usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
-  usePostApiMyVmByProjectIdVolumeNodeAttachMutation,
+  usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
   useGetApiMyVmByProjectIdBackupShortListQuery,
   usePostApiMyVmByProjectIdBackupRestoreAndIdMutation,
   useGetApiMyVmByProjectIdBackupListQuery,
@@ -7053,14 +7258,13 @@ export const {
   usePostApiMyVmByProjectIdBackupCreateMutation,
   useGetApiMyVmByProjectIdVolumeShortListQuery,
   useGetApiMyVmByProjectIdVolumeListQuery,
+  useGetApiMyVmByProjectIdVolumeNodeGetQuery,
   useGetApiMyVmByProjectIdVolumeGetAndIdQuery,
-  usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
   usePutApiMyVmByProjectIdVolumeEditAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeDisableSnapshotAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
   useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVolumeCreateMutation,
+  usePostApiMyVmByProjectIdVolumeNodeAttachMutation,
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
   usePutApiMyVmByProjectIdNetworkNodeEnablePortSecurityAndIdMutation,
   usePutApiMyVmByProjectIdNetworkNodeDisablePortSecurityAndIdMutation,
