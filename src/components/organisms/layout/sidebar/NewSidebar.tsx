@@ -36,24 +36,30 @@ export const NewSidebar: FC<SidebarPropsType> = ({
       subList: [
         {
           title: " سرورهای ابری",
-          link: selectedProjectId ? `/vm/${selectedProjectId}/list` : "/dashboard",
+          link: selectedProjectId
+            ? `/vm/${selectedProjectId}/list`
+            : "/dashboard",
+        },
+        {
+          title: "دیسک ابری",
+          link: `/block-storage/${selectedProjectId}`,
         },
       
         {
-          title:"کلیدهای دسترسی",
-          link:`/key/${selectedProjectId}`,
+          title: "کلیدهای دسترسی",
+          link: `/key/${selectedProjectId}`,
         },
         {
-          title:"شبکه",
-          link:`/network/${selectedProjectId}`,
+          title: "شبکه",
+          link: `/network/${selectedProjectId}`,
         },
         {
-          title:"فایروال",
-          link:`/firewall/${selectedProjectId}`,
+          title: "فایروال",
+          link: `/firewall/${selectedProjectId}`,
         },
         {
-          title:"بکاپ",
-          link:`/backup/${selectedProjectId}`,
+          title: "بکاپ",
+          link: `/backup/${selectedProjectId}`,
         },
         // {
         //   title:"اسنپ شات",
@@ -65,6 +71,46 @@ export const NewSidebar: FC<SidebarPropsType> = ({
         // },
       ],
     },
+    {
+      title: "  امنیت ابری ",
+      Icon: WebHostSvg,
+      link: `/pam/${selectedProjectId}`,
+      subList: [
+        {
+          title: "سرویس PAM ",
+          link: `/pam/${selectedProjectId}`,
+        },
+        {
+          title: "سرویس SIEM",
+          link: `/siem/${selectedProjectId}`,
+        },
+      ],
+    },
+    {
+      title: "پلتفرم ابری ",
+      Icon: KubernetesSvg,
+      link: `/kubernetes-cluster/${selectedProjectId}`,
+      subList: [
+        {
+          title: "کلاستر کوبرنتیز",
+          link: `/kubernetes-cluster/${selectedProjectId}`,
+        },
+        {
+          title: "کوبرنتیز ابری",
+          link: `/kubernetes-cloud/${selectedProjectId}`,
+        },
+      ],
+    },
+
+    {
+      title: "ذخیره ساز ابری ",
+      Icon: ObjectStorageSvg,
+      link: `/storage/${selectedProjectId}`,
+      subList: [
+        { title: "ذخیره ساز ابری", link: `/storage/${selectedProjectId}` },
+      ],
+    },
+
     // {
     //   title: "پلتفرم ابری ",
     //   Icon: KubernetesSvg,
