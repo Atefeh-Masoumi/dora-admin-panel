@@ -131,6 +131,7 @@ const FirewallIndex = lazy(
 const EditFirewall = lazy(() => import("src/pages/firewall/EditFirewall"));
 const BackupIndex = lazy(() => import("src/pages/backup/BackupList"));
 const SnapshotIndex = lazy(() => import("src/pages/sanpshot/SnapshotList"));
+const PAMIndex = lazy(() => import("src/pages/pam/PamList"));
 
 export const mainTemplate = (
   PageComponent: FC<any>,
@@ -311,8 +312,14 @@ const Router: FC = () => {
             })}
           /> */}
           {/* ============================= PROJECT ============================= */}
-          <Route path="/project/:projectId/specification" element={mainTemplate(ProjectSpecification)} />
-          <Route path="/project/:projectId/users" element={mainTemplate(ProjectAccess)} />
+          <Route
+            path="/project/:projectId/specification"
+            element={mainTemplate(ProjectSpecification)}
+          />
+          <Route
+            path="/project/:projectId/users"
+            element={mainTemplate(ProjectAccess)}
+          />
           {/* ======================================= CDN ======================================= */}
           <Route
             path="/cdn/:projectId"
@@ -325,7 +332,10 @@ const Router: FC = () => {
             element={mainTemplate(
               AddZone,
               {
-                link: { text: "بازگشت به مدیریت زون‌ها", url: "/cdn/:projectId" },
+                link: {
+                  text: "بازگشت به مدیریت زون‌ها",
+                  url: "/cdn/:projectId",
+                },
                 hideSidebar: false,
               },
               AddZoneContextProvider
@@ -376,7 +386,10 @@ const Router: FC = () => {
           <Route
             path="/cdn/:projectId/add-zone"
             element={mainTemplate(AddZone, {
-              link: { text: "بازگشت به مدیریت دامنه ها", url: "/cdn/:projectId" },
+              link: {
+                text: "بازگشت به مدیریت دامنه ها",
+                url: "/cdn/:projectId",
+              },
               hideSidebar: false,
             })}
           />
@@ -421,34 +434,22 @@ const Router: FC = () => {
             path="/vm/:projectId/:id/analytics"
             element={<EditVmWrapper />}
           />
-          <Route
-            path="/vm/:projectId/:id/ip"
-            element={<EditVmWrapper />}
-          />
+          <Route path="/vm/:projectId/:id/ip" element={<EditVmWrapper />} />
           <Route
             path="/vm/:projectId/:id/rebuild"
             element={<EditVmWrapper />}
           />
-          <Route
-            path="/vm/:projectId/:id/config"
-            element={<EditVmWrapper />}
-          />
+          <Route path="/vm/:projectId/:id/config" element={<EditVmWrapper />} />
           <Route
             path="/vm/:projectId/:id/snapshot"
             element={<EditVmWrapper />}
           />
-          <Route
-            path="/vm/:projectId/:id/backup"
-            element={<EditVmWrapper />}
-          />
+          <Route path="/vm/:projectId/:id/backup" element={<EditVmWrapper />} />
           <Route
             path="/vm/:projectId/:id/firewall"
             element={<EditVmWrapper />}
           />
-          <Route
-            path="/vm/:projectId/:id/volume"
-            element={<EditVmWrapper />}
-          />
+          <Route path="/vm/:projectId/:id/volume" element={<EditVmWrapper />} />
           <Route
             path="/vm/:projectId/:id/network"
             element={<EditVmWrapper />}
@@ -538,20 +539,29 @@ const Router: FC = () => {
 
           {/* ======================================= NETWORK  ======================================= */}
 
-          <Route path="/network/:projectId" element={mainTemplate(NetworkList, {
-            pageTitle: "مدیریت شبکه",
-          })} />
-          <Route path="/network/:projectId/:networkId/node-list" element={mainTemplate(EditNetwork, {
-            link: {
-              text: "بازگشت به مدیریت شبکه",
-              url: BACK_URL_HINTS_ENUM.NETWORK_LIST,
-            },
-            hideSidebar: false,
-          })} />
+          <Route
+            path="/network/:projectId"
+            element={mainTemplate(NetworkList, {
+              pageTitle: "مدیریت شبکه",
+            })}
+          />
+          <Route
+            path="/network/:projectId/:networkId/node-list"
+            element={mainTemplate(EditNetwork, {
+              link: {
+                text: "بازگشت به مدیریت شبکه",
+                url: BACK_URL_HINTS_ENUM.NETWORK_LIST,
+              },
+              hideSidebar: false,
+            })}
+          />
           {/* ======================================= KEY MANAGEMENT ======================================= */}
-          <Route path="/key/:projectId" element={mainTemplate(KeyList, {
-            pageTitle: "مدیریت کلید",
-          })} />
+          <Route
+            path="/key/:projectId"
+            element={mainTemplate(KeyList, {
+              pageTitle: "مدیریت کلید",
+            })}
+          />
           {/* ======================================= Kubernetes Cluster ======================================= */}
           <Route
             path="/kubernetes-cluster/:projectId"
@@ -939,38 +949,46 @@ const Router: FC = () => {
             pageTitle: "monitoring",
           })}
         /> */}
-            {/* ======================================= Fire Wall ======================================= */}
-            <Route
-              path="/firewall/:projectId"
-              element={mainTemplate(FirewallIndex, {
-                pageTitle: "مدیریت فایروال",
-              })}
-            />
-            <Route
-              path="/firewall/:projectId/:firewallId/rule-list"
-              element={mainTemplate(EditFirewall, {
-                link: {
-                  text: "بازگشت به مدیریت فایروال",
-                  url: "/firewall/:projectId",
-                },
-                hideSidebar: false,
-              })}
-            />
-            {/* ======================================= Backup ======================================= */}
-            <Route
-              path="/backup/:projectId"
-              element={mainTemplate(BackupIndex, {
-                pageTitle: "مدیریت بکاپ",
-              })}
-            />
-    
-            {/* ======================================= Snapshot ======================================= */}
-            <Route
-              path="/snapshot/:projectId"
-              element={mainTemplate(SnapshotIndex, {
-                pageTitle: "مدیریت اسنپ شات",
-              })}
-            />
+        {/* ======================================= Fire Wall ======================================= */}
+        <Route
+          path="/firewall/:projectId"
+          element={mainTemplate(FirewallIndex, {
+            pageTitle: "مدیریت فایروال",
+          })}
+        />
+        <Route
+          path="/firewall/:projectId/:firewallId/rule-list"
+          element={mainTemplate(EditFirewall, {
+            link: {
+              text: "بازگشت به مدیریت فایروال",
+              url: "/firewall/:projectId",
+            },
+            hideSidebar: false,
+          })}
+        />
+        {/* ======================================= Backup ======================================= */}
+        <Route
+          path="/backup/:projectId"
+          element={mainTemplate(BackupIndex, {
+            pageTitle: "مدیریت بکاپ",
+          })}
+        />
+
+        {/* ======================================= Snapshot ======================================= */}
+        <Route
+          path="/snapshot/:projectId"
+          element={mainTemplate(SnapshotIndex, {
+            pageTitle: "مدیریت اسنپ شات",
+          })}
+        />
+        {/* ======================================= PAM ======================================= */}
+        <Route
+          path="/pam/:projectId"
+          element={mainTemplate(PAMIndex, {
+            pageTitle: "مدیریت  PAM",
+          })}
+        />
+
         <Route path="*" element={<Navigate to="/account/login" />} />
       </Routes>
     </BrowserRouter>
