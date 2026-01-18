@@ -49,7 +49,7 @@ import {
     const validationSchema = yup.object().shape({
       name: yup
         .string()
-        .min(5, "نام فایروال نباید کمتر از ۵ کارکتر باشد")
+        .min(5, "نام بکاپ نباید کمتر از ۵ کارکتر باشد")
         .required("این بخش الزامی می‌باشد"),
     });
   
