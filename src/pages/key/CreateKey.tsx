@@ -79,9 +79,7 @@ const CreateKey: FC<CreateKeyProps> = ({ onClose, refetch }) => {
   return (
     <Dialog open={true} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>
-        <Typography fontWeight="bold">
-          ایجاد کلید
-        </Typography>
+        <Typography fontWeight="bold">ایجاد کلید</Typography>
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
@@ -102,7 +100,9 @@ const CreateKey: FC<CreateKeyProps> = ({ onClose, refetch }) => {
               label="کلید عمومی"
               size="small"
               {...formik.getFieldProps("publicKey")}
-              error={Boolean(formik.errors.publicKey && formik.touched.publicKey)}
+              error={Boolean(
+                formik.errors.publicKey && formik.touched.publicKey
+              )}
               helperText={formik.errors.publicKey}
               placeholder="کلید عمومی را وارد کنید"
               multiline
@@ -116,12 +116,19 @@ const CreateKey: FC<CreateKeyProps> = ({ onClose, refetch }) => {
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} disabled={createKeyLoading}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          sx={{ px: 3, py: 0.8 }}
+          onClick={handleClose}
+          disabled={createKeyLoading}
+        >
           انصراف
         </Button>
         <LoadingButton
           onClick={() => formik.handleSubmit()}
           variant="contained"
+          sx={{ px: 3, py: 0.8 }}
           loading={createKeyLoading}
         >
           ایجاد
