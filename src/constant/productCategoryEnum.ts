@@ -11,6 +11,7 @@ export enum PRODUCT_CATEGORY_ENUM {
   VPC = 109,
   Domain = 110,
   WEB = 111,
+  PAM = 112,
 }
 
 export enum PRODUCT_ITEMS_ENUM {
