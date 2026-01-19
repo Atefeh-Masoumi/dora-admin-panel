@@ -1,16 +1,13 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
-import { toast } from "react-toastify";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   useGetApiMyVmByProjectIdSnapshotListQuery,
-  useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
   VmVolumeSnapshotListResponse,
 } from "src/app/services/api.generated";
 import { AddSnapshotDialog } from "./AddSnapshot";
@@ -25,7 +22,6 @@ enum DIALOG_TYPE_ENUM {
 
 const SnapshotList: FC = () => {
   const { projectId } = useParams();
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedSnapshot, setSelectedSnapshot] = useState<VmVolumeSnapshotListResponse | null>(null);
@@ -39,10 +35,7 @@ const SnapshotList: FC = () => {
     projectId: Number(projectId),
   });
 
-  const [deleteBackup, { isLoading: deleteBackupLoading }] =
-    useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation();
-
-  useEffect(() => {
+    useEffect(() => {
     const getNotifInterval = setInterval(() => {
       refetch();
     }, 120 * 1000);
@@ -70,21 +63,6 @@ const SnapshotList: FC = () => {
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedSnapshot(null);
-  };
-
-  const deleteSnapshotHandler = () => {
-    if (!selectedSnapshot?.id) return;
-    deleteBackup({
-      id: selectedSnapshot.id,
-      projectId: Number(projectId),
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("اسنپ شات مورد نظر با موفقیت حذف شد");
-        closeDialogHandler();
-        refetch();
-      })
-      .catch(() => {});
   };
 
   return (
@@ -171,15 +149,7 @@ const SnapshotList: FC = () => {
         forceClose={closeDialogHandler}
         refetch={refetch}
       />
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="اسنپ شات"
-        subTitle="برای حذف اسنپ شات موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedSnapshot?.name || ""}
-        onSubmit={deleteSnapshotHandler}
-        submitLoading={deleteBackupLoading}
-      />
+   
     </>
   );
 };
