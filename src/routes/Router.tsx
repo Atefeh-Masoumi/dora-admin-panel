@@ -132,6 +132,7 @@ const EditFirewall = lazy(() => import("src/pages/firewall/EditFirewall"));
 const BackupIndex = lazy(() => import("src/pages/backup/BackupList"));
 const SnapshotIndex = lazy(() => import("src/pages/sanpshot/SnapshotList"));
 const PAMIndex = lazy(() => import("src/pages/pam/PamList"));
+const SIEMIndex = lazy(() => import("src/pages/siem/SIEMList"));
 
 export const mainTemplate = (
   PageComponent: FC<any>,
@@ -978,6 +979,13 @@ const Router: FC = () => {
           path="/pam/:projectId"
           element={mainTemplate(PAMIndex, {
             pageTitle: "مدیریت  PAM",
+          })}
+        />
+        {/* ======================================= SIEM ======================================= */}
+        <Route
+          path="/siem/:projectId"
+          element={mainTemplate(SIEMIndex, {
+            pageTitle: "مدیریت  SIEM",
           })}
         />
 
