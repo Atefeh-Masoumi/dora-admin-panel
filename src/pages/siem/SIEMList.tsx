@@ -12,7 +12,7 @@ import {
 } from "src/app/services/api.generated";
 import { siemTableStruct } from "src/components/organisms/siem/siemList/struct";
 import SiemTableRow from "src/components/organisms/siem/siemList/SiemTableRow";
-
+import { AddSiemDialog } from "./AddSiem";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
@@ -23,7 +23,9 @@ const SIEMList: FC = () => {
   const { projectId } = useParams();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedSiem, setSelectedSiem] = useState<SiemListResponse | null>(null);
+  const [selectedSiem, setSelectedSiem] = useState<SiemListResponse | null>(
+    null
+  );
 
   const {
     data: SiemList = [],
@@ -140,15 +142,14 @@ const SIEMList: FC = () => {
           />
         </Box>
       </Stack>
-      {/* <AddPamDialog
+      <AddSiemDialog
         open={dialogType === DIALOG_TYPE_ENUM.CREATE}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
         refetch={refetch}
-      /> */}
+      />
     </>
   );
 };
 
 export default SIEMList;
-
