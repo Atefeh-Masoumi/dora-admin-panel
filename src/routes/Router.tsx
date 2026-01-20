@@ -21,6 +21,7 @@ import AddVolumeContextProvider from "src/components/organisms/volume/add/contex
 import AddVpcContextProvider from "src/components/organisms/vpc/add/contexts/AddVpcContext";
 import { NavigateSetter } from "src/utils/navigate";
 import { EditVmWrapper } from "./VmRouteWraper";
+import AddBckupVMContextProvider from "src/components/organisms/backup/add/contex/AddBackupContext";
 
 const ProjectList = lazy(() => import("src/pages/project/ProjectList"));
 const Home = lazy(() => import("src/pages/Home"));
@@ -130,6 +131,7 @@ const FirewallIndex = lazy(
 );
 const EditFirewall = lazy(() => import("src/pages/firewall/EditFirewall"));
 const BackupIndex = lazy(() => import("src/pages/backup/BackupList"));
+const AddBackupVm = lazy(() => import("src/pages/backup/AddBackupVm"));
 const SnapshotIndex = lazy(() => import("src/pages/sanpshot/SnapshotList"));
 const PAMIndex = lazy(() => import("src/pages/pam/PamList"));
 const SIEMIndex = lazy(() => import("src/pages/siem/SIEMList"));
@@ -974,7 +976,22 @@ const Router: FC = () => {
             pageTitle: "مدیریت بکاپ",
           })}
         />
+        
+        <Route
+          path="/backup/:projectId/:id/createvm"
+          element={mainTemplate(
+            AddBackupVm,
+            {
+              link: {
+                text: "بازگشت به مدیریت  بکاپ",
+                url: BACK_URL_HINTS_ENUM.ADD_BACKUPFROMVM,
+              },
+              hideSidebar: false,
+            },
+            AddBckupVMContextProvider
 
+          )}
+        />
         {/* ======================================= Snapshot ======================================= */}
         <Route
           path="/snapshot/:projectId"
