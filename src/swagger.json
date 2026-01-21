@@ -69,6 +69,191 @@
         }
       }
     },
+    "/api/my/account/profile/enable-totp": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/enable-totp-confirm": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorConfirmModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/disable-totp": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorConfirmModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/enable-sms": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/disable-sms": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/enable-sms-confirm": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorConfirmModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/edit-phone-number": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhoneNumberModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/edit-phone-notification": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditPhoneNotifyModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/confirm-phone-number": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmPhoneNumberModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/account/profile/get": {
       "get": {
         "tags": [
@@ -119,135 +304,6 @@
         }
       }
     },
-    "/api/my/account/profile/enable-totp": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/enable-totp-confirm": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TwoFactorConfirmModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/enable-sms": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TwoFactorModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/edit": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditProfileModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EditProfileResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/edit-phone-number": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditPhoneNumberModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/edit-phone-notification": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditPhoneNotifyModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/account/profile/edit-email": {
       "put": {
         "tags": [
@@ -292,7 +348,7 @@
         }
       }
     },
-    "/api/my/account/profile/disable-totp": {
+    "/api/my/account/profile/confirm-email": {
       "post": {
         "tags": [
           "Account"
@@ -301,63 +357,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TwoFactorConfirmModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/disable-sms": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/enable-sms-confirm": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TwoFactorConfirmModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/confirm-phone-number": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfirmPhoneNumberModel"
+                "$ref": "#/components/schemas/ConfirmEmailModel"
               }
             }
           },
@@ -377,8 +377,8 @@
         }
       }
     },
-    "/api/my/account/profile/confirm-email": {
-      "post": {
+    "/api/my/account/profile/edit": {
+      "put": {
         "tags": [
           "Account"
         ],
@@ -386,7 +386,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ConfirmEmailModel"
+                "$ref": "#/components/schemas/EditProfileModel"
               }
             }
           },
@@ -19473,9 +19473,15 @@
         "required": [
           "createDate",
           "id",
+          "idsLogEnabled",
+          "modifyDate",
           "name",
+          "osLogEnabled",
+          "projectId",
+          "serviceLogEnabled",
           "status",
-          "statusId"
+          "statusId",
+          "trafficAnalysisLogEnabled"
         ],
         "type": "object",
         "properties": {
@@ -19495,7 +19501,27 @@
             "type": "string",
             "nullable": true
           },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "osLogEnabled": {
+            "type": "boolean"
+          },
+          "serviceLogEnabled": {
+            "type": "boolean"
+          },
+          "trafficAnalysisLogEnabled": {
+            "type": "boolean"
+          },
+          "idsLogEnabled": {
+            "type": "boolean"
+          },
           "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifyDate": {
             "type": "string",
             "format": "date-time"
           }
