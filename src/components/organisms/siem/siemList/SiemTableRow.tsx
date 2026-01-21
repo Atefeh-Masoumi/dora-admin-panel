@@ -13,9 +13,10 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { siemTableStruct } from "./struct";
+import { EditOutlined } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
-  REVERT = "REVERT",
+  EDIT = "EDIT",
   DELETE = "DELETE",
 }
 const StatusList = (statusId: number) => {
@@ -66,7 +67,7 @@ const StatusList = (statusId: number) => {
   };
 const SiemTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedSiem, setSelectedPam] = useState<SiemListResponse | null>(null);
+  const [selectedSiem, setSelectedsiem] = useState<SiemListResponse | null>(null);
   const { projectId } = useParams();
   const { refetch } = useGetApiMySecurityByProjectIdSiemHostListQuery({
     projectId: Number(projectId),
@@ -74,10 +75,14 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
   const [deleteSiem, { isLoading: deleteSiemLoading }] =
     useDeleteApiMySecurityByProjectIdSiemHostDeleteAndIdMutation();
 
-  const handleOpenDelete = (pam: SiemListResponse) => {
-    setSelectedPam(pam);
+  const handleOpenDelete = (siem: SiemListResponse) => {
+    setSelectedsiem(siem);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
+  const handleOpenEdit = (siem: SiemListResponse) => {
+    setSelectedsiem(siem);
+    setDialogType(DIALOG_TYPE_ENUM.EDIT)
+  }
 
   const deleteSiemHandler = () => {
     if (!selectedSiem?.id) return;
@@ -96,9 +101,23 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedPam(null);
+    setSelectedsiem(null);
   };
+const getStatusConfig = (enabled: boolean) => {
+  if (enabled) {
+    return {
+      bgcolor: "success.light",
+      typographyColor: "success.main",
+      label: "فعال",
+    };
+  }
 
+  return {
+    bgcolor: "error.light",
+    typographyColor: "error.main",
+    label: "غیرفعال",
+  };
+};
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
@@ -106,7 +125,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const statusId = row.statusId;
-
+          const status = getStatusConfig((value==="فعال"));
           return (
             <DorsaTableCell
               key={column.id}
@@ -127,7 +146,16 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <TrashSvg />
                   </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1, ml: "auto" }}
+                    color="error"
+                    onClick={() => handleOpenEdit(row)}
+                  >
+                    <EditOutlined />
+                  </IconButton>
+                
                 </Stack>
+
               ) : column.id === "statusId" ? (
                 <Chip
                   label={StatusList(statusId).label}
@@ -141,6 +169,22 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                       const [color, shade] =
                         StatusList(statusId).color.split(".");
                       return (palette as any)[color][shade];
+                    },
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
+                />
+              ): column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled"  || column.id == "serviceLogEnabled" ? (
+                <Chip
+                  size="small"
+                  label={status.label}
+                  sx={{
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] = status.bgcolor.split(".");
+                      return (palette as any)[color]?.[shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] = status.typographyColor.split(".");
+                      return (palette as any)[color]?.[shade];
                     },
                     borderRadius: BORDER_RADIUS_1,
                   }}
@@ -161,6 +205,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
         onSubmit={deleteSiemHandler}
         submitLoading={deleteSiemLoading}
       />
+      
     </Fragment>
   );
 };
