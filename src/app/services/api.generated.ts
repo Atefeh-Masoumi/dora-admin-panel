@@ -16,18 +16,6 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
-    getApiMyAccountProfileGet: build.query<
-      GetApiMyAccountProfileGetApiResponse,
-      GetApiMyAccountProfileGetApiArg
-    >({
-      query: () => ({ url: `/api/my/account/profile/get` }),
-    }),
-    getApiMyAccountProfileGetNotificationStatus: build.query<
-      GetApiMyAccountProfileGetNotificationStatusApiResponse,
-      GetApiMyAccountProfileGetNotificationStatusApiArg
-    >({
-      query: () => ({ url: `/api/my/account/profile/get-notification-status` }),
-    }),
     postApiMyAccountProfileEnableTotp: build.mutation<
       PostApiMyAccountProfileEnableTotpApiResponse,
       PostApiMyAccountProfileEnableTotpApiArg
@@ -47,6 +35,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.twoFactorConfirmModel,
       }),
     }),
+    postApiMyAccountProfileDisableTotp: build.mutation<
+      PostApiMyAccountProfileDisableTotpApiResponse,
+      PostApiMyAccountProfileDisableTotpApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/disable-totp`,
+        method: "POST",
+        body: queryArg.twoFactorConfirmModel,
+      }),
+    }),
     putApiMyAccountProfileEnableSms: build.mutation<
       PutApiMyAccountProfileEnableSmsApiResponse,
       PutApiMyAccountProfileEnableSmsApiArg
@@ -57,14 +55,23 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.twoFactorModel,
       }),
     }),
-    putApiMyAccountProfileEdit: build.mutation<
-      PutApiMyAccountProfileEditApiResponse,
-      PutApiMyAccountProfileEditApiArg
+    postApiMyAccountProfileDisableSms: build.mutation<
+      PostApiMyAccountProfileDisableSmsApiResponse,
+      PostApiMyAccountProfileDisableSmsApiArg
+    >({
+      query: () => ({
+        url: `/api/my/account/profile/disable-sms`,
+        method: "POST",
+      }),
+    }),
+    postApiMyAccountProfileEnableSmsConfirm: build.mutation<
+      PostApiMyAccountProfileEnableSmsConfirmApiResponse,
+      PostApiMyAccountProfileEnableSmsConfirmApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/account/profile/edit`,
-        method: "PUT",
-        body: queryArg.editProfileModel,
+        url: `/api/my/account/profile/enable-sms-confirm`,
+        method: "POST",
+        body: queryArg.twoFactorConfirmModel,
       }),
     }),
     putApiMyAccountProfileEditPhoneNumber: build.mutation<
@@ -87,6 +94,28 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.editPhoneNotifyModel,
       }),
     }),
+    postApiMyAccountProfileConfirmPhoneNumber: build.mutation<
+      PostApiMyAccountProfileConfirmPhoneNumberApiResponse,
+      PostApiMyAccountProfileConfirmPhoneNumberApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/confirm-phone-number`,
+        method: "POST",
+        body: queryArg.confirmPhoneNumberModel,
+      }),
+    }),
+    getApiMyAccountProfileGet: build.query<
+      GetApiMyAccountProfileGetApiResponse,
+      GetApiMyAccountProfileGetApiArg
+    >({
+      query: () => ({ url: `/api/my/account/profile/get` }),
+    }),
+    getApiMyAccountProfileGetNotificationStatus: build.query<
+      GetApiMyAccountProfileGetNotificationStatusApiResponse,
+      GetApiMyAccountProfileGetNotificationStatusApiArg
+    >({
+      query: () => ({ url: `/api/my/account/profile/get-notification-status` }),
+    }),
     putApiMyAccountProfileEditEmail: build.mutation<
       PutApiMyAccountProfileEditEmailApiResponse,
       PutApiMyAccountProfileEditEmailApiArg
@@ -107,45 +136,6 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.editEmailNotifyModel,
       }),
     }),
-    postApiMyAccountProfileDisableTotp: build.mutation<
-      PostApiMyAccountProfileDisableTotpApiResponse,
-      PostApiMyAccountProfileDisableTotpApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/disable-totp`,
-        method: "POST",
-        body: queryArg.twoFactorConfirmModel,
-      }),
-    }),
-    postApiMyAccountProfileDisableSms: build.mutation<
-      PostApiMyAccountProfileDisableSmsApiResponse,
-      PostApiMyAccountProfileDisableSmsApiArg
-    >({
-      query: () => ({
-        url: `/api/my/account/profile/disable-sms`,
-        method: "POST",
-      }),
-    }),
-    postApiMyAccountProfileEnableSmsConfirm: build.mutation<
-      PostApiMyAccountProfileEnableSmsConfirmApiResponse,
-      PostApiMyAccountProfileEnableSmsConfirmApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/enable-sms-confirm`,
-        method: "POST",
-        body: queryArg.twoFactorConfirmModel,
-      }),
-    }),
-    postApiMyAccountProfileConfirmPhoneNumber: build.mutation<
-      PostApiMyAccountProfileConfirmPhoneNumberApiResponse,
-      PostApiMyAccountProfileConfirmPhoneNumberApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/confirm-phone-number`,
-        method: "POST",
-        body: queryArg.confirmPhoneNumberModel,
-      }),
-    }),
     postApiMyAccountProfileConfirmEmail: build.mutation<
       PostApiMyAccountProfileConfirmEmailApiResponse,
       PostApiMyAccountProfileConfirmEmailApiArg
@@ -154,6 +144,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/account/profile/confirm-email`,
         method: "POST",
         body: queryArg.confirmEmailModel,
+      }),
+    }),
+    putApiMyAccountProfileEdit: build.mutation<
+      PutApiMyAccountProfileEditApiResponse,
+      PutApiMyAccountProfileEditApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/edit`,
+        method: "PUT",
+        body: queryArg.editProfileModel,
       }),
     }),
     postApiMyAccountProfileChangePassword: build.mutation<
@@ -3064,26 +3064,25 @@ export type GetApiMyAccountUserLogApiArg = {
   pageNumber: number;
   pageSize: number;
 };
-export type GetApiMyAccountProfileGetApiResponse =
-  /** status 200 OK */ GetProfileResponse;
-export type GetApiMyAccountProfileGetApiArg = void;
-export type GetApiMyAccountProfileGetNotificationStatusApiResponse =
-  /** status 200 OK */ GetNotificationStatusResponse;
-export type GetApiMyAccountProfileGetNotificationStatusApiArg = void;
 export type PostApiMyAccountProfileEnableTotpApiResponse = unknown;
 export type PostApiMyAccountProfileEnableTotpApiArg = void;
 export type PostApiMyAccountProfileEnableTotpConfirmApiResponse = unknown;
 export type PostApiMyAccountProfileEnableTotpConfirmApiArg = {
   twoFactorConfirmModel: TwoFactorConfirmModel;
 };
+export type PostApiMyAccountProfileDisableTotpApiResponse = unknown;
+export type PostApiMyAccountProfileDisableTotpApiArg = {
+  twoFactorConfirmModel: TwoFactorConfirmModel;
+};
 export type PutApiMyAccountProfileEnableSmsApiResponse = unknown;
 export type PutApiMyAccountProfileEnableSmsApiArg = {
   twoFactorModel: TwoFactorModel;
 };
-export type PutApiMyAccountProfileEditApiResponse =
-  /** status 200 OK */ EditProfileResponse;
-export type PutApiMyAccountProfileEditApiArg = {
-  editProfileModel: EditProfileModel;
+export type PostApiMyAccountProfileDisableSmsApiResponse = unknown;
+export type PostApiMyAccountProfileDisableSmsApiArg = void;
+export type PostApiMyAccountProfileEnableSmsConfirmApiResponse = unknown;
+export type PostApiMyAccountProfileEnableSmsConfirmApiArg = {
+  twoFactorConfirmModel: TwoFactorConfirmModel;
 };
 export type PutApiMyAccountProfileEditPhoneNumberApiResponse = unknown;
 export type PutApiMyAccountProfileEditPhoneNumberApiArg = {
@@ -3093,6 +3092,17 @@ export type PutApiMyAccountProfileEditPhoneNotificationApiResponse = unknown;
 export type PutApiMyAccountProfileEditPhoneNotificationApiArg = {
   editPhoneNotifyModel: EditPhoneNotifyModel;
 };
+export type PostApiMyAccountProfileConfirmPhoneNumberApiResponse =
+  /** status 200 OK */ EditProfileResponse;
+export type PostApiMyAccountProfileConfirmPhoneNumberApiArg = {
+  confirmPhoneNumberModel: ConfirmPhoneNumberModel;
+};
+export type GetApiMyAccountProfileGetApiResponse =
+  /** status 200 OK */ GetProfileResponse;
+export type GetApiMyAccountProfileGetApiArg = void;
+export type GetApiMyAccountProfileGetNotificationStatusApiResponse =
+  /** status 200 OK */ GetNotificationStatusResponse;
+export type GetApiMyAccountProfileGetNotificationStatusApiArg = void;
 export type PutApiMyAccountProfileEditEmailApiResponse = unknown;
 export type PutApiMyAccountProfileEditEmailApiArg = {
   editEmailModel: EditEmailModel;
@@ -3101,25 +3111,15 @@ export type PutApiMyAccountProfileEditEmailNotificationApiResponse = unknown;
 export type PutApiMyAccountProfileEditEmailNotificationApiArg = {
   editEmailNotifyModel: EditEmailNotifyModel;
 };
-export type PostApiMyAccountProfileDisableTotpApiResponse = unknown;
-export type PostApiMyAccountProfileDisableTotpApiArg = {
-  twoFactorConfirmModel: TwoFactorConfirmModel;
-};
-export type PostApiMyAccountProfileDisableSmsApiResponse = unknown;
-export type PostApiMyAccountProfileDisableSmsApiArg = void;
-export type PostApiMyAccountProfileEnableSmsConfirmApiResponse = unknown;
-export type PostApiMyAccountProfileEnableSmsConfirmApiArg = {
-  twoFactorConfirmModel: TwoFactorConfirmModel;
-};
-export type PostApiMyAccountProfileConfirmPhoneNumberApiResponse =
-  /** status 200 OK */ EditProfileResponse;
-export type PostApiMyAccountProfileConfirmPhoneNumberApiArg = {
-  confirmPhoneNumberModel: ConfirmPhoneNumberModel;
-};
 export type PostApiMyAccountProfileConfirmEmailApiResponse =
   /** status 200 OK */ EditProfileResponse;
 export type PostApiMyAccountProfileConfirmEmailApiArg = {
   confirmEmailModel: ConfirmEmailModel;
+};
+export type PutApiMyAccountProfileEditApiResponse =
+  /** status 200 OK */ EditProfileResponse;
+export type PutApiMyAccountProfileEditApiArg = {
+  editProfileModel: EditProfileModel;
 };
 export type PostApiMyAccountProfileChangePasswordApiResponse = unknown;
 export type PostApiMyAccountProfileChangePasswordApiArg = {
@@ -4913,6 +4913,24 @@ export type UserLogResponseListPagedResponse = {
   totalRecords?: number;
   data?: UserLogResponse[] | null;
 };
+export type TwoFactorConfirmModel = {
+  code?: number;
+};
+export type TwoFactorModel = {
+  twoFactorStatus?: boolean;
+};
+export type EditPhoneNumberModel = {
+  phoneNumber?: string | null;
+};
+export type EditPhoneNotifyModel = {
+  phoneNotify?: boolean;
+};
+export type EditProfileResponse = {
+  profileCompleted: boolean;
+};
+export type ConfirmPhoneNumberModel = {
+  confirmCode?: string | null;
+};
 export type GetProfileResponse = {
   id?: number;
   phoneNumber: string | null;
@@ -4946,14 +4964,14 @@ export type GetNotificationStatusResponse = {
   phoneNotify: boolean;
   emailNotify: boolean;
 };
-export type TwoFactorConfirmModel = {
-  code?: number;
+export type EditEmailModel = {
+  email?: string | null;
 };
-export type TwoFactorModel = {
-  twoFactorStatus?: boolean;
+export type EditEmailNotifyModel = {
+  emailNotify?: boolean;
 };
-export type EditProfileResponse = {
-  profileCompleted: boolean;
+export type ConfirmEmailModel = {
+  confirmCode?: string | null;
 };
 export type EditProfileModel = {
   firstName?: string | null;
@@ -4961,24 +4979,6 @@ export type EditProfileModel = {
   nationalId?: string | null;
   birthDate?: string;
   address?: string | null;
-};
-export type EditPhoneNumberModel = {
-  phoneNumber?: string | null;
-};
-export type EditPhoneNotifyModel = {
-  phoneNotify?: boolean;
-};
-export type EditEmailModel = {
-  email?: string | null;
-};
-export type EditEmailNotifyModel = {
-  emailNotify?: boolean;
-};
-export type ConfirmPhoneNumberModel = {
-  confirmCode?: string | null;
-};
-export type ConfirmEmailModel = {
-  confirmCode?: string | null;
 };
 export type ChangePasswordModel = {
   currentPassword?: string | null;
@@ -6479,7 +6479,13 @@ export type SiemListResponse = {
   name: string | null;
   statusId: number;
   status: string | null;
+  projectId: number;
+  osLogEnabled: boolean;
+  serviceLogEnabled: boolean;
+  trafficAnalysisLogEnabled: boolean;
+  idsLogEnabled: boolean;
   createDate: string;
+  modifyDate: string;
 };
 export type SiemGetResponse = {
   id: number;
@@ -7097,21 +7103,21 @@ export type WebsiteAlarmListResponse = {
 };
 export const {
   useGetApiMyAccountUserLogQuery,
-  useGetApiMyAccountProfileGetQuery,
-  useGetApiMyAccountProfileGetNotificationStatusQuery,
   usePostApiMyAccountProfileEnableTotpMutation,
   usePostApiMyAccountProfileEnableTotpConfirmMutation,
-  usePutApiMyAccountProfileEnableSmsMutation,
-  usePutApiMyAccountProfileEditMutation,
-  usePutApiMyAccountProfileEditPhoneNumberMutation,
-  usePutApiMyAccountProfileEditPhoneNotificationMutation,
-  usePutApiMyAccountProfileEditEmailMutation,
-  usePutApiMyAccountProfileEditEmailNotificationMutation,
   usePostApiMyAccountProfileDisableTotpMutation,
+  usePutApiMyAccountProfileEnableSmsMutation,
   usePostApiMyAccountProfileDisableSmsMutation,
   usePostApiMyAccountProfileEnableSmsConfirmMutation,
+  usePutApiMyAccountProfileEditPhoneNumberMutation,
+  usePutApiMyAccountProfileEditPhoneNotificationMutation,
   usePostApiMyAccountProfileConfirmPhoneNumberMutation,
+  useGetApiMyAccountProfileGetQuery,
+  useGetApiMyAccountProfileGetNotificationStatusQuery,
+  usePutApiMyAccountProfileEditEmailMutation,
+  usePutApiMyAccountProfileEditEmailNotificationMutation,
   usePostApiMyAccountProfileConfirmEmailMutation,
+  usePutApiMyAccountProfileEditMutation,
   usePostApiMyAccountProfileChangePasswordMutation,
   useGetApiMyAccountCustomerGetQuery,
   usePutApiMyAccountCustomerEditMutation,
