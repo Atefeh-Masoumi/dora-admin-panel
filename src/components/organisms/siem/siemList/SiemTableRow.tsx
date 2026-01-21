@@ -1,4 +1,4 @@
-import {  IconButton, Stack, Chip } from "@mui/material";
+import { IconButton, Stack, Chip } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -14,57 +14,58 @@ import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { siemTableStruct } from "./struct";
 import { EditOutlined } from "@mui/icons-material";
+import { EditSiemDialog } from "../dialog/EditSiemDialg";
 
 enum DIALOG_TYPE_ENUM {
   EDIT = "EDIT",
   DELETE = "DELETE",
 }
 const StatusList = (statusId: number) => {
-    switch (statusId) {
-      case 1:
-        return {
-          id: 1,
-          label: "فعال",
-          bgcolor: "success.light",
-          color: "success.main",
-        };
-      case 2:
-        return {
-          id: 2,
-          label: "غیرفعال",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-      case 3:
-        return {
-          id: 3,
-          label: "حذف شده",
-          bgcolor: "warning.light",
-          color: "warning.main",
-        };
-      case 4:
-        return {
-          id: 4,
-          label: "درانتظار",
-          bgcolor: "warning.light",
-          color: "warning.main",
-        };
-      case 5:
-        return {
-          id: 5,
-          label: "ناموفق",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-      default:
-        return {
-          id: 0,
-          label: "نامشخص",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-    }
-  };
+  switch (statusId) {
+    case 1:
+      return {
+        id: 1,
+        label: "فعال",
+        bgcolor: "success.light",
+        color: "success.main",
+      };
+    case 2:
+      return {
+        id: 2,
+        label: "غیرفعال",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    case 3:
+      return {
+        id: 3,
+        label: "حذف شده",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 4:
+      return {
+        id: 4,
+        label: "درانتظار",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 5:
+      return {
+        id: 5,
+        label: "ناموفق",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    default:
+      return {
+        id: 0,
+        label: "نامشخص",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+  }
+};
 const SiemTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedSiem, setSelectedsiem] = useState<SiemListResponse | null>(null);
@@ -96,28 +97,28 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
         closeDialogHandler();
         refetch();
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedsiem(null);
   };
-const getStatusConfig = (enabled: boolean) => {
-  if (enabled) {
-    return {
-      bgcolor: "success.light",
-      typographyColor: "success.main",
-      label: "فعال",
-    };
-  }
+  const getStatusConfig = (enabled: boolean) => {
+    if (enabled) {
+      return {
+        bgcolor: "success.light",
+        typographyColor: "success.main",
+        label: "فعال",
+      };
+    }
 
-  return {
-    bgcolor: "error.light",
-    typographyColor: "error.main",
-    label: "غیرفعال",
+    return {
+      bgcolor: "error.light",
+      typographyColor: "error.main",
+      label: "غیرفعال",
+    };
   };
-};
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
@@ -125,7 +126,7 @@ const getStatusConfig = (enabled: boolean) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const statusId = row.statusId;
-          const status = getStatusConfig((value==="فعال"));
+          const status = getStatusConfig((value === "فعال"));
           return (
             <DorsaTableCell
               key={column.id}
@@ -153,7 +154,7 @@ const getStatusConfig = (enabled: boolean) => {
                   >
                     <EditOutlined />
                   </IconButton>
-                
+
                 </Stack>
 
               ) : column.id === "statusId" ? (
@@ -173,7 +174,7 @@ const getStatusConfig = (enabled: boolean) => {
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
-              ): column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled"  || column.id == "serviceLogEnabled" ? (
+              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id == "serviceLogEnabled" ? (
                 <Chip
                   size="small"
                   label={status.label}
@@ -205,7 +206,13 @@ const getStatusConfig = (enabled: boolean) => {
         onSubmit={deleteSiemHandler}
         submitLoading={deleteSiemLoading}
       />
-      
+      <EditSiemDialog
+        open={dialogType === DIALOG_TYPE_ENUM.EDIT}
+        onClose={closeDialogHandler}
+        forceClose={closeDialogHandler}
+        refetch={refetch}
+        data = {selectedSiem}
+      />
     </Fragment>
   );
 };
