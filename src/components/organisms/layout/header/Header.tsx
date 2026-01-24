@@ -163,6 +163,12 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.NETWORK_LIST:
         href = `/network/${projectId}`;
         break;
+      case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
+        href = `/kubernetes-cloud/${projectId}/${kubernetesCloudId}/deployment`;
+      break;
+      case BACK_URL_HINTS_ENUM.ADD_BACKUPFROMVM:
+        href = `/backup/${projectId}`;
+      break;
       default:
         href = typeof url === "string" ? url : "";
         break;
