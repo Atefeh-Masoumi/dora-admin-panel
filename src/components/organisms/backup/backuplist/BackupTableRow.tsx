@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack, Chip } from "@mui/material";
+import { IconButton, Stack, Chip } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -13,86 +13,86 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { backupTableStruct } from "./struct";
-import { RefreshSvg } from "src/components/atoms/svg-icons/RefreshSvg";
 import { RestoreBackupDialog } from "../dialog/RestoreBackup";
-import { Restore } from "@mui/icons-material";
+import { Add, Restore } from "@mui/icons-material";
 
 enum DIALOG_TYPE_ENUM {
   RESTORE = "RESTORE",
   DELETE = "DELETE",
 }
 const volumeBackupStatusList = (statusId: number) => {
-    switch (statusId) {
-      case 1:
-        return {
-          id: 1,
-          label: "فعال",
-          bgcolor: "success.light",
-          color: "success.main",
-        };
-  
-      case 2:
-        return {
-          id: 2,
-          label: "خطا در زیرساخت",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-      case 3:
-        return {
-          id: 3,
-          label: "درصف انتظار",
-          bgcolor: "warning.light",
-          color: "warning.main",
-        };
-      case 4:
-        return {
-          id: 4,
-          label: "درانتظار",
-          bgcolor: "warning.light",
-          color: "warning.main",
-        };
-      case 5:
-        return {
-          id: 5,
-          label: "ناموفق",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-  
-      case 6:
-        return {
-          id: 6,
-          label: "حذف شده",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-        case 7:
-          return {
-            id: 7,
-            label: "درحال بازگردانی",
-            bgcolor: "warning.light",
-            color: "warning.main",
-          };
-        case 8:
-          return {
-            id: 8,
-            label: "درحال حذف",
-            bgcolor: "warning.light",
-            color: "warning.main",
-          };
-      default:
-        return {
-          id: 0,
-          label: "نامشخص",
-          bgcolor: "error.light",
-          color: "error.main",
-        };
-    }
-  };
+  switch (statusId) {
+    case 1:
+      return {
+        id: 1,
+        label: "فعال",
+        bgcolor: "success.light",
+        color: "success.main",
+      };
+
+    case 2:
+      return {
+        id: 2,
+        label: "خطا در زیرساخت",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    case 3:
+      return {
+        id: 3,
+        label: "درصف انتظار",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 4:
+      return {
+        id: 4,
+        label: "درانتظار",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 5:
+      return {
+        id: 5,
+        label: "ناموفق",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+
+    case 6:
+      return {
+        id: 6,
+        label: "حذف شده",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+    case 7:
+      return {
+        id: 7,
+        label: "درحال بازگردانی",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    case 8:
+      return {
+        id: 8,
+        label: "درحال حذف",
+        bgcolor: "warning.light",
+        color: "warning.main",
+      };
+    default:
+      return {
+        id: 0,
+        label: "نامشخص",
+        bgcolor: "error.light",
+        color: "error.main",
+      };
+  }
+};
 const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedBackup, setSelectedBackup] = useState<VmVolumeBackupListResponse | null>(null);
+  const [selectedBackup, setSelectedBackup] =
+    useState<VmVolumeBackupListResponse | null>(null);
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { refetch } = useGetApiMyVmByProjectIdBackupListQuery({
@@ -122,15 +122,18 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   };
 
   const restoreBackupOnClick = () => {
-        setSelectedBackup(row);
-        setDialogType(DIALOG_TYPE_ENUM.RESTORE);
+    setSelectedBackup(row);
+    setDialogType(DIALOG_TYPE_ENUM.RESTORE);
   };
-
+  const createBackupOnClick = () => {
+    setSelectedBackup(row);
+    navigate(`/backup/${projectId}/${row.id}/createvm`)
+  };
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedBackup(null);
   };
-  
+
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
@@ -154,9 +157,15 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                 >
                   <IconButton
                     sx={{ borderRadius: 1 }}
+                    onClick={createBackupOnClick}
+                  >
+                    <Add />
+                  </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1 }}
                     onClick={restoreBackupOnClick}
                   >
-                      <Restore /> 
+                    <Restore />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
@@ -171,20 +180,20 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                   label={volumeBackupStatusList(statusId).label}
                   sx={{
                     bgcolor: ({ palette }) => {
-                      const [color, shade] = volumeBackupStatusList(statusId).bgcolor.split('.');
+                      const [color, shade] =
+                        volumeBackupStatusList(statusId).bgcolor.split(".");
                       return (palette as any)[color][shade];
                     },
                     color: ({ palette }) => {
-                      const [color, shade] = volumeBackupStatusList(statusId).color.split('.');
+                      const [color, shade] =
+                        volumeBackupStatusList(statusId).color.split(".");
                       return (palette as any)[color][shade];
                     },
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
               ) : (
-                <>
-                  {text}
-                </>
+                <>{text}</>
               )}
             </DorsaTableCell>
           );
@@ -208,7 +217,4 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   );
 };
 
-
-
 export default withTableRowWrapper(BackupTableRow);
-
