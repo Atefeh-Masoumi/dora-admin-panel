@@ -21,7 +21,6 @@ import { SelectNetwork } from "src/components/organisms/vm/add/steps/SelectNetwo
 import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
 import { PRODUCT_ITEM_ENUM } from "src/constant/productItemEnum";
 // import { VM_PUBLICITY_TYPE } from "src/constant/vmTypeEnum.constant";
-import { passwordValidationRegex } from "src/utils/regexUtils";
 import { SelectFirewalType } from "src/components/organisms/vm/add/steps/SelectFirewallType";
 import { SelectFirewall } from "src/components/organisms/vm/add/steps/SelectFirewal";
 
@@ -144,7 +143,7 @@ const AddVm: FC = () => {
           cpu: customConfig.cpu,
           memory: customConfig.memory,
           disk: customConfig.disk,
-
+          usedPrivateNetwork:usePrivateNetwork,
           vmNetworkId: usePrivateNetwork
             ? (selectedNetwork?.id as number | undefined)
             : undefined,
