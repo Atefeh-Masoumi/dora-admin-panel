@@ -8900,6 +8900,166 @@
         }
       }
     },
+    "/api/my/vm/{projectId}/volume/node/list": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "VmHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "VmVolumeHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VmVolumeNodeListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/node/get": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "VmHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "VmVolumeHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVmVolumeNodeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/node/detach/{id}": {
+      "put": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/node/attach": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachVolumeModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/vm/{projectId}/backup/short-list": {
       "get": {
         "tags": [
@@ -9249,52 +9409,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/volume/node/get": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "VmHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "VmVolumeHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetVmVolumeNodeResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/volume/get/{id}": {
       "get": {
         "tags": [
@@ -9376,38 +9490,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/volume/node/detach/{id}": {
-      "put": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/volume/delete/{id}": {
       "delete": {
         "tags": [
@@ -9461,39 +9543,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateVolumeHostModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/node/attach": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AttachVolumeModel"
               }
             }
           },
@@ -20622,6 +20671,55 @@
           },
           "name": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VmVolumeNodeListResponse": {
+        "required": [
+          "id",
+          "isConnected"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "vmVolumeHostId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vmVolumeHost": {
+            "type": "string",
+            "nullable": true
+          },
+          "vmHostId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vmHost": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConnected": {
+            "type": "boolean"
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
