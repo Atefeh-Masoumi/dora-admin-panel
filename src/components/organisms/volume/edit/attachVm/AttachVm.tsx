@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
-import { Divider, Paper, Stack, Typography, Box, Skeleton } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { Divider, Paper, Stack, Typography } from "@mui/material";
+import React, { FC, useState } from "react";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
   useGetApiMyVmByProjectIdVolumeNodeListQuery,
@@ -15,7 +15,6 @@ import AttachVmTableRow from "./AttachVmTableRow";
 
 export const AttachVm: FC = () => {
   const { blockstorageId, projectId } = useParams();
-  const navigate = useNavigate();
 
   const [isAttachDialogOpen, setIsAttachDialogOpen] = useState(false);
     const [hostId, setHostId] = useState<number | null>(null);
