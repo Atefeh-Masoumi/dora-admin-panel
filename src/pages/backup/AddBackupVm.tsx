@@ -135,7 +135,7 @@ const AddBackupVm: FC = () => {
         fontWeight="700"
         sx={{ mb: 3 }}
       >
-       از طریق بکاپ ایجاد سرور ابری
+        ایجاد سرور ابری از طریق بکاپ
       </Typography>
       <Box sx={{ my: 0 }}>
         <Grid container>
