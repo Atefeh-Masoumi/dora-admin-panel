@@ -6,81 +6,6 @@
     "version": "v1"
   },
   "paths": {
-    "/api/my/account/user-log": {
-      "get": {
-        "tags": [
-          "Account"
-        ],
-        "parameters": [
-          {
-            "name": "UserId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "FromDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "ToDate",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "PageNumber",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "PageSize",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserLogResponseListPagedResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/enable-totp": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/account/profile/enable-totp-confirm": {
       "post": {
         "tags": [
@@ -96,6 +21,18 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/enable-totp": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -147,18 +84,6 @@
         }
       }
     },
-    "/api/my/account/profile/disable-sms": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/account/profile/enable-sms-confirm": {
       "post": {
         "tags": [
@@ -174,6 +99,18 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/profile/disable-sms": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -254,6 +191,25 @@
         }
       }
     },
+    "/api/my/account/profile/get-notification-status": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotificationStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/account/profile/get": {
       "get": {
         "tags": [
@@ -281,47 +237,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/get-notification-status": {
-      "get": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetNotificationStatusResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/account/profile/edit-email": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditEmailModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -377,6 +292,28 @@
         }
       }
     },
+    "/api/my/account/profile/edit-email": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditEmailModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/account/profile/edit": {
       "put": {
         "tags": [
@@ -416,69 +353,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ChangePasswordModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/customer/get": {
-      "get": {
-        "tags": [
-          "Account"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetCustomerResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/account/customer/edit": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditCustomerModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/account/customer/convert-to-legal": {
-      "put": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConvertCustomerToLegalModel"
               }
             }
           },
@@ -643,6 +517,69 @@
         }
       }
     },
+    "/api/my/account/customer/get": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCustomerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/account/customer/edit": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditCustomerModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/account/customer/convert-to-legal": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConvertCustomerToLegalModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/account/two-factor-login": {
       "post": {
         "tags": [
@@ -713,21 +650,21 @@
         }
       }
     },
-    "/api/my/account/login": {
+    "/api/my/account/login-ito-callback": {
       "post": {
         "tags": [
           "Account"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginModel"
-              }
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -763,7 +700,7 @@
         }
       }
     },
-    "/api/my/account/login-ito-callback": {
+    "/api/my/account/login-gov-callback": {
       "post": {
         "tags": [
           "Account"
@@ -805,7 +742,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GovLoginResponse"
+                  "$ref": "#/components/schemas/LoginGovResponse"
                 }
               }
             }
@@ -813,8 +750,8 @@
         }
       }
     },
-    "/api/my/account/login-gov-callback": {
-      "post": {
+    "/api/my/account/login-google-callback": {
+      "get": {
         "tags": [
           "Account"
         ],
@@ -856,21 +793,21 @@
         }
       }
     },
-    "/api/my/account/login-google-callback": {
-      "get": {
+    "/api/my/account/login": {
+      "post": {
         "tags": [
           "Account"
         ],
-        "parameters": [
-          {
-            "name": "code",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -881,28 +818,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/my/account/forgot": {
-      "post": {
-        "tags": [
-          "Account"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ForgotModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -929,6 +844,28 @@
         }
       }
     },
+    "/api/my/account/forgot": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/account/captcha": {
       "get": {
         "tags": [
@@ -941,48 +878,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CaptchaResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/asset/equipment/list/{typeId}/{brandId}": {
-      "get": {
-        "tags": [
-          "Asset"
-        ],
-        "parameters": [
-          {
-            "name": "typeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "brandId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EquipmentListResponse"
-                  }
                 }
               }
             }
@@ -1026,6 +921,48 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/EquipmentBrandListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/asset/equipment/list/{typeId}/{brandId}": {
+      "get": {
+        "tags": [
+          "Asset"
+        ],
+        "parameters": [
+          {
+            "name": "typeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "brandId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EquipmentListResponse"
                   }
                 }
               }
@@ -1215,38 +1152,6 @@
         }
       }
     },
-    "/api/cdn/get-zones": {
-      "post": {
-        "tags": [
-          "CDN Sync Service"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SyncRequestModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GetZoneResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/cdn/get-zone-routes": {
       "post": {
         "tags": [
@@ -1303,6 +1208,38 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/GetZoneEdgeCertResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cdn/get-zones": {
+      "post": {
+        "tags": [
+          "CDN Sync Service"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SyncRequestModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetZoneResponse"
                   }
                 }
               }
@@ -1481,45 +1418,6 @@
         }
       }
     },
-    "/api/my/dns-cdn/{projectId}/web-host/get/{id}": {
-      "get": {
-        "tags": [
-          "DNS/CDN"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetWebHostResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/dns-cdn/{projectId}/web-host/get-login-session/{id}": {
       "get": {
         "tags": [
@@ -1552,6 +1450,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetLoginSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/dns-cdn/{projectId}/web-host/get/{id}": {
+      "get": {
+        "tags": [
+          "DNS/CDN"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWebHostResponse"
                 }
               }
             }
@@ -1732,45 +1669,6 @@
         }
       }
     },
-    "/api/my/dns-cdn/{projectId}/host/get/{id}": {
-      "get": {
-        "tags": [
-          "DNS/CDN"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetDnsCdnResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/dns-cdn/{projectId}/host/get-ns/{id}": {
       "get": {
         "tags": [
@@ -1851,6 +1749,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetAnalyticResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/dns-cdn/{projectId}/host/get/{id}": {
+      "get": {
+        "tags": [
+          "DNS/CDN"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDnsCdnResponse"
                 }
               }
             }
@@ -2306,45 +2243,6 @@
         }
       }
     },
-    "/api/my/dns-cdn/{projectId}/domain/get/{id}": {
-      "get": {
-        "tags": [
-          "DNS/CDN"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetDomainResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/dns-cdn/{projectId}/domain/get-status/{id}": {
       "get": {
         "tags": [
@@ -2377,6 +2275,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DomainGetStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/dns-cdn/{projectId}/domain/get/{id}": {
+      "get": {
+        "tags": [
+          "DNS/CDN"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDomainResponse"
                 }
               }
             }
@@ -3252,7 +3189,7 @@
         }
       }
     },
-    "/api/my/financial/wallet/list": {
+    "/api/my/financial/payment-provider/list": {
       "get": {
         "tags": [
           "FinancialReport"
@@ -3265,7 +3202,29 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/WalletTransactionListResponse"
+                    "$ref": "#/components/schemas/PaymentProviderListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/financial/wallet-commission/list": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletCommissionListResponse"
                   }
                 }
               }
@@ -3287,6 +3246,28 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/financial/wallet/list": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletTransactionListResponse"
+                  }
                 }
               }
             }
@@ -3340,28 +3321,6 @@
                 "schema": {
                   "type": "number",
                   "format": "double"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/financial/wallet-commission/list": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WalletCommissionListResponse"
-                  }
                 }
               }
             }
@@ -3495,6 +3454,26 @@
         }
       }
     },
+    "/api/my/financial/payment/list-download": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/financial/payment/list": {
       "get": {
         "tags": [
@@ -3510,26 +3489,6 @@
                   "items": {
                     "$ref": "#/components/schemas/PaymentListResponse"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/financial/payment/list-download": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
                 }
               }
             }
@@ -3648,83 +3607,6 @@
         }
       }
     },
-    "/api/my/financial/payment-provider/list": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PaymentProviderListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/financial/order/short-list": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OrderShortListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/financial/order/list/{productId}": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "parameters": [
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OrderListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/financial/offer/pay": {
       "post": {
         "tags": [
@@ -3806,6 +3688,61 @@
         }
       }
     },
+    "/api/my/financial/order/short-list": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderShortListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/financial/order/list/{productId}": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/financial/invoice/unpaid": {
       "get": {
         "tags": [
@@ -3847,6 +3784,26 @@
         }
       }
     },
+    "/api/my/financial/invoice/list-download": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/financial/invoice/list": {
       "get": {
         "tags": [
@@ -3862,26 +3819,6 @@
                   "items": {
                     "$ref": "#/components/schemas/InvoiceListResponse"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/financial/invoice/list-download": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
                 }
               }
             }
@@ -3963,28 +3900,6 @@
         }
       }
     },
-    "/api/my/financial/bill/list": {
-      "get": {
-        "tags": [
-          "FinancialReport"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BillListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/financial/bill/list-download/{id}": {
       "get": {
         "tags": [
@@ -4009,6 +3924,28 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/financial/bill/list": {
+      "get": {
+        "tags": [
+          "FinancialReport"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BillListResponse"
+                  }
                 }
               }
             }
@@ -4638,28 +4575,6 @@
         }
       }
     },
-    "/api/my/kubernetes/cloud/image/list": {
-      "get": {
-        "tags": [
-          "Kubernetes Cloud"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/KuberImageResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/kubernetes/cloud/category/list": {
       "get": {
         "tags": [
@@ -4674,6 +4589,28 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/KuberImageCategoryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/kubernetes/cloud/image/list": {
+      "get": {
+        "tags": [
+          "Kubernetes Cloud"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/KuberImageResponse"
                   }
                 }
               }
@@ -6293,7 +6230,7 @@
         }
       }
     },
-    "/api/my/portal/product/short-list": {
+    "/api/my/portal/product-item/demand-item-short-list": {
       "get": {
         "tags": [
           "Portal"
@@ -6306,60 +6243,8 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductShortListResponse"
+                    "$ref": "#/components/schemas/DemandItemShortListResponse"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/portal/product/list": {
-      "get": {
-        "tags": [
-          "Portal"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProductListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/portal/product/get/{id}": {
-      "get": {
-        "tags": [
-          "Portal"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetProductResponse"
                 }
               }
             }
@@ -6606,6 +6491,80 @@
         }
       }
     },
+    "/api/my/portal/product/short-list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductShortListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/product/list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/product/get/{id}": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/my/portal/notification/short-list": {
       "get": {
         "tags": [
@@ -6669,76 +6628,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/my/portal/issue/short-list": {
-      "get": {
-        "tags": [
-          "Portal"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/IssueShortListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/portal/issue/list": {
-      "get": {
-        "tags": [
-          "Portal"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/IssueListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/portal/issue/create": {
-      "post": {
-        "tags": [
-          "Portal"
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateIssueModel"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateIssueModel"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -6894,6 +6783,175 @@
         }
       }
     },
+    "/api/my/portal/issue/short-list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueShortListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/issue/list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IssueListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/issue/create": {
+      "post": {
+        "tags": [
+          "Portal"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIssueModel"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIssueModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/portal/customer-limit/list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "parameters": [
+          {
+            "name": "ProductItemId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerLimitListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/customer-demand/list": {
+      "get": {
+        "tags": [
+          "Portal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerDemandListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/customer-demand/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Portal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/portal/customer-demand/create": {
+      "post": {
+        "tags": [
+          "Portal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDemandModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/portal/business-unit/list": {
       "get": {
         "tags": [
@@ -6912,134 +6970,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/my/project/list": {
-      "get": {
-        "tags": [
-          "Project"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProjectListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/project/get/{id}": {
-      "get": {
-        "tags": [
-          "Project"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProjectGetResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/project/edit/{id}": {
-      "put": {
-        "tags": [
-          "Project"
-        ],
-        "parameters": [
-          {
-            "name": "Name",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/project/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Project"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/project/create": {
-      "post": {
-        "tags": [
-          "Project"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateProjectModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -7184,7 +7114,135 @@
         }
       }
     },
-    "/api/my/report/statistic/portal/customer-package-usage-report": {
+    "/api/my/project/list": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/project/get/{id}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectGetResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/project/edit/{id}": {
+      "put": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/project/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/project/create": {
+      "post": {
+        "tags": [
+          "Project"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjectModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/report/statistic/portal/customer-product-item-usage-report": {
       "get": {
         "tags": [
           "Report"
@@ -7205,7 +7263,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerPackageUsageReportResponse"
+                  "$ref": "#/components/schemas/CustomerProductItemUsageReportResponse"
                 }
               }
             }
@@ -8419,345 +8477,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/volume/short-list": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "VmHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/VolumeShortListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/list": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "VmHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/VolumeListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/get/{id}": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetVolumeHostResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/node/get": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "VmHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "VmVolumeHostId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetVmVolumeNodeResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/edit/{id}": {
-      "put": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditVolumeHostModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/node/detach/{id}": {
-      "put": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/delete/{id}": {
-      "delete": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/create": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateVolumeHostModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/my/vm/{projectId}/volume/node/attach": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AttachVolumeModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/snapshot/short-list": {
       "get": {
         "tags": [
@@ -8967,39 +8686,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/snapshot/create": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateVolumeSnapshotModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/snapshot/create-batch": {
       "post": {
         "tags": [
@@ -9021,6 +8707,39 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateVolumeSnapshotBatchModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/snapshot/create": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVolumeSnapshotModel"
               }
             }
           },
@@ -9382,39 +9101,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/backup/create": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateVolumeBackupModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/backup/create-batch": {
       "post": {
         "tags": [
@@ -9448,12 +9134,53 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/network/short-list": {
+    "/api/my/vm/{projectId}/backup/create": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVolumeBackupModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/short-list": {
       "get": {
         "tags": [
           "Virtual Machine (VM) / Virtual Private Cloud"
         ],
         "parameters": [
+          {
+            "name": "VmHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "projectId",
             "in": "path",
@@ -9472,7 +9199,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/VmNetworkShortListResponse"
+                    "$ref": "#/components/schemas/VolumeShortListResponse"
                   }
                 }
               }
@@ -9481,12 +9208,20 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/network/list": {
+    "/api/my/vm/{projectId}/volume/list": {
       "get": {
         "tags": [
           "Virtual Machine (VM) / Virtual Private Cloud"
         ],
         "parameters": [
+          {
+            "name": "VmHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
           {
             "name": "projectId",
             "in": "path",
@@ -9505,7 +9240,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/VmNetworkListResponse"
+                    "$ref": "#/components/schemas/VolumeListResponse"
                   }
                 }
               }
@@ -9514,7 +9249,166 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/network/delete/{id}": {
+    "/api/my/vm/{projectId}/volume/node/get": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "VmHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "VmVolumeHostId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVmVolumeNodeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/get/{id}": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVolumeHostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/edit/{id}": {
+      "put": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditVolumeHostModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/node/detach/{id}": {
+      "put": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/delete/{id}": {
       "delete": {
         "tags": [
           "Virtual Machine (VM) / Virtual Private Cloud"
@@ -9546,7 +9440,7 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/network/create": {
+    "/api/my/vm/{projectId}/volume/create": {
       "post": {
         "tags": [
           "Virtual Machine (VM) / Virtual Private Cloud"
@@ -9566,7 +9460,40 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateVmNetworkModel"
+                "$ref": "#/components/schemas/CreateVolumeHostModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/volume/node/attach": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachVolumeModel"
               }
             }
           },
@@ -9757,6 +9684,137 @@
         }
       }
     },
+    "/api/my/vm/{projectId}/network/short-list": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VmNetworkShortListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/network/list": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VmNetworkListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/network/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/network/create": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVmNetworkModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/my/vm/{projectId}/load-balancer/host/create": {
       "post": {
         "tags": [
@@ -9888,39 +9946,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/iso/short-list": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/VmIsoShortListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/vm/iso/node/unmount": {
       "post": {
         "tags": [
@@ -10028,6 +10053,39 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/VmIsoNodeListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/iso/short-list": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VmIsoShortListResponse"
                   }
                 }
               }
@@ -10544,45 +10602,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/host/get/{id}": {
-      "get": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetVmResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/host/get-analytic/{id}": {
       "get": {
         "tags": [
@@ -10624,6 +10643,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetAnalyticResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/host/get/{id}": {
+      "get": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVmResponse"
                 }
               }
             }
@@ -10828,39 +10886,6 @@
         }
       }
     },
-    "/api/my/vm/{projectId}/host/create": {
-      "post": {
-        "tags": [
-          "Virtual Machine (VM) / Virtual Private Cloud"
-        ],
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateVmModel"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/my/vm/{projectId}/host/create-from-backup": {
       "post": {
         "tags": [
@@ -10882,6 +10907,39 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateVmFromBackupModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/my/vm/{projectId}/host/create": {
+      "post": {
+        "tags": [
+          "Virtual Machine (VM) / Virtual Private Cloud"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVmModel"
               }
             }
           },
@@ -11461,35 +11519,6 @@
         }
       }
     },
-    "/api/my/portal/website-blog/get/{link}": {
-      "get": {
-        "tags": [
-          "Website"
-        ],
-        "parameters": [
-          {
-            "name": "link",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetWebsiteBolgResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/my/portal/website-blog/get-random-articles/{link}": {
       "get": {
         "tags": [
@@ -11537,6 +11566,35 @@
                   "items": {
                     "$ref": "#/components/schemas/GetWebsiteHeaderArticleResponse"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my/portal/website-blog/get/{link}": {
+      "get": {
+        "tags": [
+          "Website"
+        ],
+        "parameters": [
+          {
+            "name": "link",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWebsiteBolgResponse"
                 }
               }
             }
@@ -12766,6 +12824,19 @@
         },
         "additionalProperties": false
       },
+      "CreateCustomerDemandModel": {
+        "type": "object",
+        "properties": {
+          "demandItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateDemandItemModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateCustomerUserModel": {
         "type": "object",
         "properties": {
@@ -12781,6 +12852,20 @@
           },
           "isAccountManager": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDemandItemModel": {
+        "type": "object",
+        "properties": {
+          "productItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -13870,7 +13955,72 @@
         },
         "additionalProperties": false
       },
-      "CustomerPackageUsageReportResponse": {
+      "CustomerDemandListResponse": {
+        "required": [
+          "createDate",
+          "id",
+          "modifyDate",
+          "status",
+          "statusId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifyDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerLimitListResponse": {
+        "required": [
+          "id",
+          "maxQuantity",
+          "productItem",
+          "productItemId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productItem": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxQuantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerProductItemUsageReportResponse": {
         "type": "object",
         "properties": {
           "maxCpuUsage": {
@@ -14025,6 +14175,23 @@
             "nullable": true
           },
           "photoName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DemandItemShortListResponse": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
             "type": "string",
             "nullable": true
           }
@@ -16942,19 +17109,6 @@
         },
         "additionalProperties": false
       },
-      "GovLoginResponse": {
-        "required": [
-          "url"
-        ],
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "InvoiceItemModel": {
         "required": [
           "price",
@@ -17912,6 +18066,19 @@
           },
           "masterNodesInfo": {
             "$ref": "#/components/schemas/MasterNodeModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginGovResponse": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -19783,82 +19950,6 @@
         "properties": {
           "voucherCode": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserLogResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "activityDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "source": {
-            "type": "string",
-            "nullable": true
-          },
-          "controller": {
-            "type": "string",
-            "nullable": true
-          },
-          "action": {
-            "type": "string",
-            "nullable": true
-          },
-          "userAgent": {
-            "type": "string",
-            "nullable": true
-          },
-          "userIp": {
-            "type": "string",
-            "nullable": true
-          },
-          "referrer": {
-            "type": "string",
-            "nullable": true
-          },
-          "data": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserLogResponseListPagedResponse": {
-        "type": "object",
-        "properties": {
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalRecords": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserLogResponse"
-            },
             "nullable": true
           }
         },
