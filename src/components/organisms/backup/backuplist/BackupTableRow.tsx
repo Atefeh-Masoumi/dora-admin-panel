@@ -1,4 +1,4 @@
-import { IconButton, Stack, Chip } from "@mui/material";
+import { IconButton, Stack, Chip, Tooltip } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -127,7 +127,7 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
   };
   const createBackupOnClick = () => {
     setSelectedBackup(row);
-    navigate(`/backup/${projectId}/${row.id}/createvm`)
+    navigate(`/backup/${projectId}/${row.id}/createvm`);
   };
   const closeDialogHandler = () => {
     setDialogType(null);
@@ -155,12 +155,14 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                   spacing={0.6}
                   maxWidth="100%"
                 >
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={createBackupOnClick}
-                  >
-                    <Add />
-                  </IconButton>
+                  <Tooltip title={"ایجاد سرور ابری از طریق بکاپ"}>
+                    <IconButton
+                      sx={{ borderRadius: 1 }}
+                      onClick={createBackupOnClick}
+                    >
+                      <Add />
+                    </IconButton>
+                  </Tooltip>
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     onClick={restoreBackupOnClick}
