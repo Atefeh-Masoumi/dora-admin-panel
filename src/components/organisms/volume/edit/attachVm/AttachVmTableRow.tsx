@@ -2,8 +2,9 @@ import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
 import { FC, Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import {
-  useGetApiMyVmByProjectIdVolumeNodeGetQuery,
+  useGetApiMyVmByProjectIdVolumeNodeListQuery,
   usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
+  VmVolumeNodeListResponse,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
@@ -14,7 +15,7 @@ import { useNavigate, useParams } from "react-router";
 import { attchVmTableStruct } from "./struct";
 
 
-const nodeStatusList = (statusId: number) => {
+const nodeStatusList = (statusId?: number | null) => {
   switch (statusId) {
     case 1:
       return {
@@ -71,26 +72,28 @@ const nodeStatusList = (statusId: number) => {
   }
 };
 
-export const AttachVmTableRow: FC<{ row: any }> = ({ row }) => {
+export const AttachVmTableRow: FC<{ row: VmVolumeNodeListResponse }> = ({ row }) => {
   const { blockstorageId, projectId } = useParams();
 
   const [isDettachDialogOpen, setIsDettachDialogOpen] = useState(false);
-
-  const { data: blockstorageSpecification,refetch } =
-    useGetApiMyVmByProjectIdVolumeNodeGetQuery(
-      { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
-      { skip: !blockstorageId }
-    );
+ const {
+    refetch,
+  } = useGetApiMyVmByProjectIdVolumeNodeListQuery(
+    {
+      projectId: Number(projectId),
+      vmVolumeHostId: Number(blockstorageId),
+    },
+    { skip: !projectId }
+  );
+ 
   const [dettachVm, { isLoading: dettachVmLoading }] =
     usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation();
-
-
 
   const DettachVmHandler = () => {
     if (!blockstorageId) return;
     dettachVm({
       projectId: Number(projectId),
-      id: Number(blockstorageSpecification?.id),
+      id: row?.id,
     })
       .unwrap()
       .then((res) => {
@@ -105,17 +108,17 @@ export const AttachVmTableRow: FC<{ row: any }> = ({ row }) => {
     setIsDettachDialogOpen(false);
   };
   const navigate = useNavigate();
-  const gotoVm = (vmId: number | null | undefined) => () => {
-    if (!vmId) return;
-    navigate(`/vm/${projectId}/${vmId}/specification`);
+  const gotoVm = () => {
+     if (!row.vmHostId) return;
+     navigate(`/vm/${projectId}/${row.vmHostId}/specification`);
   };
   return (
     <Fragment>
-      <DorsaTableRow hover tabIndex={-1} key={row.value}>
+      <DorsaTableRow hover tabIndex={-1} >
         {attchVmTableStruct.map((column) => {
-          const value = row[column.id];
+          const value = row[column.id as keyof VmVolumeNodeListResponse];
           const text = column.format ? column.format(value) : value;
-          const statusId = row.statusId;
+          const status = nodeStatusList(row?.statusId);
 
           return (
             <DorsaTableCell
@@ -131,16 +134,16 @@ export const AttachVmTableRow: FC<{ row: any }> = ({ row }) => {
                 </Stack>
               ) : column.id === "statusId" ? (
                 <Chip
-                  label={nodeStatusList(statusId).label}
+                  label={status.label}
                   sx={{
                     bgcolor: ({ palette }) => {
                       const [color, shade] =
-                        nodeStatusList(statusId).bgcolor.split(".");
+                        status.bgcolor.split(".");
                       return (palette as any)[color][shade];
                     },
                     color: ({ palette }) => {
                       const [color, shade] =
-                        nodeStatusList(statusId).color.split(".");
+                        status.color.split(".");
                       return (palette as any)[color][shade];
                     },
                     borderRadius: BORDER_RADIUS_1,
@@ -196,9 +199,9 @@ export const AttachVmTableRow: FC<{ row: any }> = ({ row }) => {
                         cursor: "pointer",
                         textDecoration: "underline",
                       }}
-                      onClick={gotoVm(blockstorageSpecification?.vmHostId)}
+                      onClick={gotoVm}
                     >
-                      {blockstorageSpecification?.vmHost}
+                      {row.vmHost}
                     </Box>
                   ) : (
                     "----"
@@ -216,7 +219,7 @@ export const AttachVmTableRow: FC<{ row: any }> = ({ row }) => {
         onClose={closeDettachDialogs}
         keyTitle=" ارتباط با سرور ابری "
         subTitle="برای قطع ارتباط با سرور موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={blockstorageSpecification?.vmHost || ""}
+        securityPhrase={row?.vmHost || ""}
         onSubmit={DettachVmHandler}
         submitLoading={dettachVmLoading}
       />
