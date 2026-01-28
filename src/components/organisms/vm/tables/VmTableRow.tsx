@@ -18,6 +18,7 @@ import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { VM_TYPE } from "src/constant/vmTypeEnum.constant";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { addVmTableStruct } from "./struct";
+import { vmStatusIdentifier } from "src/constant/serviceStatusIdentifier";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
