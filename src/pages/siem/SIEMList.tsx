@@ -7,35 +7,36 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import {
-  useGetApiMyVmByProjectIdSnapshotListQuery,
-  VmVolumeSnapshotListResponse,
+  useGetApiMySecurityByProjectIdSiemHostListQuery,
+  SiemListResponse,
 } from "src/app/services/api.generated";
-import { AddSnapshotDialog } from "./AddSnapshot";
-import { snapshotTableStruct } from "src/components/organisms/snapshot/snapshotlist/struct";
-import SnapshotTableRow from "src/components/organisms/snapshot/snapshotlist/SnapshotTableRow";
-
+import { siemTableStruct } from "src/components/organisms/siem/siemList/struct";
+import SiemTableRow from "src/components/organisms/siem/siemList/SiemTableRow";
+import { AddSiemDialog } from "./AddSiem";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-const SnapshotList: FC = () => {
+const SIEMList: FC = () => {
   const { projectId } = useParams();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedSnapshot, setSelectedSnapshot] = useState<VmVolumeSnapshotListResponse | null>(null);
+  const [selectedSiem, setSelectedSiem] = useState<SiemListResponse | null>(
+    null
+  );
 
   const {
-    data: backupList = [],
-    isLoading: getBackupListLoading,
+    data: SiemList = [],
+    isLoading: getsiemListLoading,
     refetch,
     isFetching,
-  } = useGetApiMyVmByProjectIdSnapshotListQuery({
+  } = useGetApiMySecurityByProjectIdSiemHostListQuery({
     projectId: Number(projectId),
   });
 
-    useEffect(() => {
+  useEffect(() => {
     const getNotifInterval = setInterval(() => {
       refetch();
     }, 120 * 1000);
@@ -45,24 +46,21 @@ const SnapshotList: FC = () => {
   }, [refetch]);
 
   const filteredList = useMemo(() => {
-    if (backupList.length === 0) return backupList;
+    if (SiemList.length === 0) return SiemList;
     return (
-      backupList.filter((item) =>
-        item.name
-          ?.trim()
-          .toLowerCase()
-          ?.includes(search.trim().toLowerCase())
+      SiemList.filter((item) =>
+        item.name?.trim().toLowerCase()?.includes(search.trim().toLowerCase())
       ) || []
     );
-  }, [search, backupList]);
+  }, [search, SiemList]);
 
-  const createFirewallOnClick = () => {
+  const createSiemOnClick = () => {
     setDialogType(DIALOG_TYPE_ENUM.CREATE);
   };
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedSnapshot(null);
+    setSelectedSiem(null);
   };
 
   return (
@@ -87,21 +85,21 @@ const SnapshotList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست اسنپ شات‌ها
+              لیست SIEMها
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
-          <Stack 
+          <Stack
             direction={{ xs: "column", sm: "row" }}
             alignItems="center"
             spacing={2}
           >
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام اسنپ شات"
+              placeholder="جستجو در نام  SIEM"
             />
             <Button
-              onClick={createFirewallOnClick}
+              onClick={createSiemOnClick}
               variant="outlined"
               size="large"
               sx={{
@@ -116,7 +114,8 @@ const SnapshotList: FC = () => {
                   sx={{
                     width: 24,
                     height: 24,
-                    border: ({ palette }) => "1px solid " + palette.primary.main,
+                    border: ({ palette }) =>
+                      "1px solid " + palette.primary.main,
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 >
@@ -127,32 +126,30 @@ const SnapshotList: FC = () => {
                 </Stack>
               }
             >
-              ایجاد اسنپ شات جدید
+              ایجاد SIEM جدید
             </Button>
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={snapshotTableStruct}
-            RowComponent={SnapshotTableRow}
+            struct={siemTableStruct}
+            RowComponent={SiemTableRow}
             rows={filteredList}
-            text="در حال حاضر اسنپ شاتی وجود ندارد"
-            isLoading={getBackupListLoading}
+            text="در حال حاضر  SIEM وجود ندارد"
+            isLoading={getsiemListLoading}
             initialOrder={0}
           />
         </Box>
-      </Stack> 
-      <AddSnapshotDialog
+      </Stack>
+      <AddSiemDialog
         open={dialogType === DIALOG_TYPE_ENUM.CREATE}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
         refetch={refetch}
       />
-   
     </>
   );
 };
 
-export default SnapshotList;
-
+export default SIEMList;

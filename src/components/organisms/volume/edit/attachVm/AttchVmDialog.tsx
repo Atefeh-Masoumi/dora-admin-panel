@@ -9,14 +9,17 @@ import {
   DialogContent,
   Skeleton,
   Typography,
+  Stack,
 } from "@mui/material";
-import { Stack } from "@mui/system";
-import React, { Dispatch, FC, MouseEventHandler } from "react";
+import React, {
+  Dispatch,
+  FC,
+  MouseEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import { useParams } from "react-router";
-import {
-  useGetApiMyVmByProjectIdHostShortListQuery,
-  useGetApiMyVmByProjectIdVolumeNodeGetQuery,
-} from "src/app/services/api.generated";
+import { useGetApiMyVmByProjectIdHostShortListQuery } from "src/app/services/api.generated";
 import LoadingButton from "src/components/atoms/LoadingButton";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
@@ -24,40 +27,52 @@ type AttchVmDialogType = DialogProps & {
   loading: boolean;
   onSubmit: () => void;
   setHostId: Dispatch<React.SetStateAction<number | null>>;
-  forceClose: () => void;
 };
 
 export const AttchVmDialog: FC<AttchVmDialogType> = ({
   loading,
   onSubmit,
   setHostId,
-  forceClose,
+  open,
+  onClose,
   ...props
 }) => {
-  const { blockstorageId, projectId } = useParams();
+  const { projectId } = useParams();
+  const [selectedHost, setSelectedHost] = useState<number | "">("");
 
-  const { data: blockstorageSpecification } =
-    useGetApiMyVmByProjectIdVolumeNodeGetQuery(
-      { projectId: Number(projectId), vmVolumeHostId: Number(blockstorageId) },
-      { skip: !blockstorageId }
+  const { data: vmlist = [], isLoading } =
+    useGetApiMyVmByProjectIdHostShortListQuery(
+      { projectId: Number(projectId) },
+      { skip: !open }
     );
 
-  const { data: vmlist, isLoading } =
-    useGetApiMyVmByProjectIdHostShortListQuery({
-      projectId: Number(projectId),
-    });
+  useEffect(() => {
+    if (!open) {
+      setSelectedHost("");
+      setHostId(null);
+    }
+  }, [open, setHostId]);
 
   const cancelBtnOnClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (!props.onClose) return;
-    props.onClose(event, "backdropClick");
+    if (!onClose) return;
+    onClose(event, "backdropClick");
   };
-
+ const handleChange = (value: number) => {
+   setSelectedHost(value);
+   setHostId(value);
+ };
+ const handleClose = () => {
+   onClose?.({}, "backdropClick");
+ };
   return (
-    <Dialog {...props}
-    maxWidth="xs"
+    <Dialog
+      {...props}
+      open={open}
+      onClose={handleClose}
+      maxWidth="xs"
       fullWidth
       sx={{ "& .MuiPaper-root": { borderRadius: BORDER_RADIUS_1 } }}
-      >
+    >
       <DialogTitle fontWeight={"700"}>اتصال به سرور ابری</DialogTitle>
       <DialogContent
         sx={{
@@ -73,12 +88,18 @@ export const AttchVmDialog: FC<AttchVmDialogType> = ({
           <Typography>لیست سرور ابری *</Typography>
           {isLoading ? (
             <Skeleton width="100%" height={37} sx={{ transform: "none" }} />
+          ) : vmlist.length === 0 ? (
+            <Typography color="error.main">سرور ابری یافت نشد</Typography>
           ) : (
             <Select
-              onChange={(event) => setHostId(Number(event.target.value))}
+              value={selectedHost}
+              onChange={(e) => handleChange(Number(e.target.value))}
               fullWidth
-              defaultValue=""
+              displayEmpty
             >
+              <MenuItem value="" disabled>
+                انتخاب سرور ابری
+              </MenuItem>
               {vmlist?.map(({ name, id }) => (
                 <MenuItem key={id} value={id}>
                   {name}
@@ -104,6 +125,7 @@ export const AttchVmDialog: FC<AttchVmDialogType> = ({
             variant="contained"
             sx={{ px: 3, py: 0.8 }}
             onClick={onSubmit}
+            disabled={!selectedHost}
           >
             اتصال
           </LoadingButton>
@@ -112,4 +134,3 @@ export const AttchVmDialog: FC<AttchVmDialogType> = ({
     </Dialog>
   );
 };
-

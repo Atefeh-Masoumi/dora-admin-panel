@@ -84,8 +84,8 @@ export const CreateBackupDialog: FC<CreateBackupDialogPropsType> = ({
         await createBackupBatch({
           projectId: Number(projectId),
           createVolumeBackupBatchModel: {
-            vmHostId: Number(vmId), // if your backend uses it
-            vmVolumeHostId,         // <-- array goes here (field is singular in name)
+            // vmHostId: Number(vmId), 
+            vmVolumeHostId,        
             name,
             description,
           },

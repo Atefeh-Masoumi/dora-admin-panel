@@ -81,22 +81,34 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
     remoteIp: yup.string().required("این بخش الزامی می‌باشد"),
     minPort: yup
       .number()
-      .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
-      .max(65535, "پورت نمی‌تواند بیشتر از 65535 باشد")
-      .required("این بخش الزامی می‌باشد"),
+      .when("firewallProtocolId", {
+        is: (value: number) => value !== 4, // 4 is "Any"
+        then: (schema) =>
+          schema
+            .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
+            .max(65535, "پورت نمی‌تواند بیشتر از 65535 باشد")
+            .required("این بخش الزامی می‌باشد"),
+        otherwise: (schema) => schema.nullable().notRequired(),
+      }),
     maxPort: yup
       .number()
-      .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
-      .max(65535, "پورت نمی‌تواند بیشتر از 65535 باشد")
-      .required("این بخش الزامی می‌باشد")
-      .test(
-        "max-greater-than-min",
-        "پورت حداکثر باید بزرگتر یا مساوی پورت حداقل باشد",
-        function (value) {
-          const { minPort } = this.parent;
-          return Boolean(value && value >= (minPort ?? 0));
-        }
-      ),
+      .when("firewallProtocolId", {
+        is: (value: number) => value !== 4, // 4 is "Any"
+        then: (schema) =>
+          schema
+            .min(1, "پورت نمی‌تواند کمتر از 1 باشد")
+            .max(65535, "پورت نمی‌تواند بیشتر از 65535 باشد")
+            .required("این بخش الزامی می‌باشد")
+            .test(
+              "max-greater-than-min",
+              "پورت حداکثر باید بزرگتر یا مساوی پورت حداقل باشد",
+              function (value) {
+                const { minPort } = this.parent;
+                return Boolean(value && value >= (minPort ?? 0));
+              }
+            ),
+        otherwise: (schema) => schema.nullable().notRequired(),
+      }),
   });
 
   const onSubmit: formikOnSubmitType<CreateVmFirewallRuleModel> = (
@@ -110,7 +122,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
     })
       .unwrap()
       .then(() => {
-        toast.success("قانون جدید با موفقیت ایجاد شد");
+        toast.success("رول جدید با موفقیت ایجاد شد");
         forceClose();
         refetch();
         formik.resetForm();
@@ -126,6 +138,8 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
     onSubmit,
   });
 
+  const isAnyProtocol = formik.values.firewallProtocolId === 4;
+
   const closeDialogHandler: MouseEventHandler<HTMLButtonElement> &
     ((event: any) => void) = (event: any) => {
       props.onClose?.(event, "escapeKeyDown");
@@ -134,7 +148,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
 
   return (
     <Dialog {...props} sx={dialogSx} onClose={props.onClose} fullWidth>
-      <DialogTitle sx={dialogTitleSx}>ایجاد قانون جدید</DialogTitle>
+      <DialogTitle sx={dialogTitleSx}>ایجاد رول جدید</DialogTitle>
 
       <form onSubmit={formik.handleSubmit}>
         <DialogContent sx={dialogContentSx}>
@@ -149,6 +163,15 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
                   formik.touched.firewallProtocolId &&
                   formik.errors.firewallProtocolId
                 )}
+                onChange={(e) => {
+                  const protocolId = Number(e.target.value);
+                  formik.setFieldValue("firewallProtocolId", protocolId);
+                  // Clear port values when "Any" is selected
+                  if (protocolId === 4) {
+                    formik.setFieldValue("minPort", null);
+                    formik.setFieldValue("maxPort", null);
+                  }
+                }}
               >
                 {protocolOptions.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
@@ -224,6 +247,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
                   {...formik.getFieldProps("minPort")}
                   fullWidth
                   type="number"
+                  disabled={isAnyProtocol}
                   error={Boolean(formik.touched.minPort && formik.errors.minPort)}
                   helperText={formik.touched.minPort && formik.errors.minPort}
                   inputProps={{ min: 1, max: 65535, dir: "ltr" }}
@@ -237,6 +261,7 @@ export const AddFirewallRuleDialog: FC<AddFirewallRuleDialogPropsType> = ({
                   {...formik.getFieldProps("maxPort")}
                   fullWidth
                   type="number"
+                  disabled={isAnyProtocol}
                   error={Boolean(formik.touched.maxPort && formik.errors.maxPort)}
                   helperText={formik.touched.maxPort && formik.errors.maxPort}
                   inputProps={{ min: 1, max: 65535, dir: "ltr" }}

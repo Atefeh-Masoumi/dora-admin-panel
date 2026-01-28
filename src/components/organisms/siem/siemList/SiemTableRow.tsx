@@ -1,26 +1,26 @@
-import { IconButton, Stack, Chip, Tooltip } from "@mui/material";
+import { IconButton, Stack, Chip } from "@mui/material";
 import { FC, Fragment, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import {
-  VmVolumeBackupListResponse,
-  useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation,
-  useGetApiMyVmByProjectIdBackupListQuery,
+  SiemListResponse,
+  useDeleteApiMySecurityByProjectIdSiemHostDeleteAndIdMutation,
+  useGetApiMySecurityByProjectIdSiemHostListQuery,
 } from "src/app/services/api.generated";
 import { DorsaTableCell, DorsaTableRow } from "src/components/atoms/DorsaTable";
 import { TrashSvg } from "src/components/atoms/svg-icons/TrashSvg";
 import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import { withTableRowWrapper } from "src/HOC/withTableRowWrapper";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
-import { backupTableStruct } from "./struct";
-import { RestoreBackupDialog } from "../dialog/RestoreBackup";
-import { Add, Restore } from "@mui/icons-material";
+import { siemTableStruct } from "./struct";
+import { EditOutlined } from "@mui/icons-material";
+import { EditSiemDialog } from "../dialog/EditSiemDialg";
 
 enum DIALOG_TYPE_ENUM {
-  RESTORE = "RESTORE",
+  EDIT = "EDIT",
   DELETE = "DELETE",
 }
-const volumeBackupStatusList = (statusId: number) => {
+const StatusList = (statusId: number) => {
   switch (statusId) {
     case 1:
       return {
@@ -29,18 +29,17 @@ const volumeBackupStatusList = (statusId: number) => {
         bgcolor: "success.light",
         color: "success.main",
       };
-
     case 2:
       return {
         id: 2,
-        label: "خطا در زیرساخت",
+        label: "غیرفعال",
         bgcolor: "error.light",
         color: "error.main",
       };
     case 3:
       return {
         id: 3,
-        label: "درصف انتظار",
+        label: "حذف شده",
         bgcolor: "warning.light",
         color: "warning.main",
       };
@@ -58,28 +57,6 @@ const volumeBackupStatusList = (statusId: number) => {
         bgcolor: "error.light",
         color: "error.main",
       };
-
-    case 6:
-      return {
-        id: 6,
-        label: "حذف شده",
-        bgcolor: "error.light",
-        color: "error.main",
-      };
-    case 7:
-      return {
-        id: 7,
-        label: "درحال بازگردانی",
-        bgcolor: "warning.light",
-        color: "warning.main",
-      };
-    case 8:
-      return {
-        id: 8,
-        label: "درحال حذف",
-        bgcolor: "warning.light",
-        color: "warning.main",
-      };
     default:
       return {
         id: 0,
@@ -89,59 +66,67 @@ const volumeBackupStatusList = (statusId: number) => {
       };
   }
 };
-const BackupTableRow: FC<{ row: any }> = ({ row }) => {
+const SiemTableRow: FC<{ row: any }> = ({ row }) => {
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedBackup, setSelectedBackup] =
-    useState<VmVolumeBackupListResponse | null>(null);
-  const navigate = useNavigate();
+  const [selectedSiem, setSelectedsiem] = useState<SiemListResponse | null>(null);
   const { projectId } = useParams();
-  const { refetch } = useGetApiMyVmByProjectIdBackupListQuery({
+  const { refetch } = useGetApiMySecurityByProjectIdSiemHostListQuery({
     projectId: Number(projectId),
   });
+  const [deleteSiem, { isLoading: deleteSiemLoading }] =
+    useDeleteApiMySecurityByProjectIdSiemHostDeleteAndIdMutation();
 
-  const [deleteBackup, { isLoading: deleteBackupLoading }] =
-    useDeleteApiMyVmByProjectIdBackupDeleteAndIdMutation();
-
-  const handleOpenDelete = (backup: VmVolumeBackupListResponse) => {
-    setSelectedBackup(backup);
+  const handleOpenDelete = (siem: SiemListResponse) => {
+    setSelectedsiem(siem);
     setDialogType(DIALOG_TYPE_ENUM.DELETE);
   };
-  const deleteBackupHandler = () => {
-    if (!selectedBackup?.id) return;
-    deleteBackup({
-      id: selectedBackup.id,
+  const handleOpenEdit = (siem: SiemListResponse) => {
+    setSelectedsiem(siem);
+    setDialogType(DIALOG_TYPE_ENUM.EDIT)
+  }
+
+  const deleteSiemHandler = () => {
+    if (!selectedSiem?.id) return;
+    deleteSiem({
+      id: selectedSiem.id,
       projectId: Number(projectId),
     })
       .unwrap()
       .then(() => {
-        toast.success("بکاپ مورد نظر با موفقیت حذف شد");
-        refetch();
+        toast.success("SIEM مورد نظر با موفقیت حذف شد");
         closeDialogHandler();
+        refetch();
       })
-      .catch((_err: unknown) => {});
+      .catch(() => { });
   };
 
-  const restoreBackupOnClick = () => {
-    setSelectedBackup(row);
-    setDialogType(DIALOG_TYPE_ENUM.RESTORE);
-  };
-  const createBackupOnClick = () => {
-    setSelectedBackup(row);
-    navigate(`/backup/${projectId}/${row.id}/createvm`);
-  };
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedBackup(null);
+    setSelectedsiem(null);
   };
+  const getStatusConfig = (enabled: boolean) => {
+    if (enabled) {
+      return {
+        bgcolor: "success.light",
+        typographyColor: "success.main",
+        label: "فعال",
+      };
+    }
 
+    return {
+      bgcolor: "error.light",
+      typographyColor: "error.main",
+      label: "غیرفعال",
+    };
+  };
   return (
     <Fragment>
       <DorsaTableRow hover tabIndex={-1} key={row.value}>
-        {backupTableStruct.map((column) => {
+        {siemTableStruct.map((column) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const statusId = row.statusId;
-
+          const status = getStatusConfig((value === "فعال"));
           return (
             <DorsaTableCell
               key={column.id}
@@ -155,20 +140,6 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                   spacing={0.6}
                   maxWidth="100%"
                 >
-                  <Tooltip title={"ایجاد سرور ابری از طریق بکاپ"}>
-                    <IconButton
-                      sx={{ borderRadius: 1 }}
-                      onClick={createBackupOnClick}
-                    >
-                      <Add />
-                    </IconButton>
-                  </Tooltip>
-                  <IconButton
-                    sx={{ borderRadius: 1 }}
-                    onClick={restoreBackupOnClick}
-                  >
-                    <Restore />
-                  </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
                     color="error"
@@ -176,20 +147,45 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                   >
                     <TrashSvg />
                   </IconButton>
+                  <IconButton
+                    sx={{ borderRadius: 1, ml: "auto" }}
+                    color="error"
+                    onClick={() => handleOpenEdit(row)}
+                  >
+                    <EditOutlined />
+                  </IconButton>
+
                 </Stack>
+
               ) : column.id === "statusId" ? (
                 <Chip
-                  label={volumeBackupStatusList(statusId).label}
+                  label={StatusList(statusId).label}
                   sx={{
                     bgcolor: ({ palette }) => {
                       const [color, shade] =
-                        volumeBackupStatusList(statusId).bgcolor.split(".");
+                        StatusList(statusId).bgcolor.split(".");
                       return (palette as any)[color][shade];
                     },
                     color: ({ palette }) => {
                       const [color, shade] =
-                        volumeBackupStatusList(statusId).color.split(".");
+                        StatusList(statusId).color.split(".");
                       return (palette as any)[color][shade];
+                    },
+                    borderRadius: BORDER_RADIUS_1,
+                  }}
+                />
+              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id == "serviceLogEnabled" ? (
+                <Chip
+                  size="small"
+                  label={status.label}
+                  sx={{
+                    bgcolor: ({ palette }) => {
+                      const [color, shade] = status.bgcolor.split(".");
+                      return (palette as any)[color]?.[shade];
+                    },
+                    color: ({ palette }) => {
+                      const [color, shade] = status.typographyColor.split(".");
+                      return (palette as any)[color]?.[shade];
                     },
                     borderRadius: BORDER_RADIUS_1,
                   }}
@@ -204,19 +200,24 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
       <DeleteDialog
         open={dialogType === DIALOG_TYPE_ENUM.DELETE}
         onClose={closeDialogHandler}
-        keyTitle="بکاپ"
-        subTitle="برای حذبکاپ موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedBackup?.name || ""}
-        onSubmit={deleteBackupHandler}
-        submitLoading={deleteBackupLoading}
+        keyTitle="SIEM "
+        subTitle="برای حذف  SIEM موردنظر، عبارت امنیتی زیر را وارد کنید."
+        securityPhrase={selectedSiem?.name || ""}
+        onSubmit={deleteSiemHandler}
+        submitLoading={deleteSiemLoading}
       />
-      <RestoreBackupDialog
-        backupId={row.id}
-        openDialog={dialogType === DIALOG_TYPE_ENUM.RESTORE}
-        handleClose={closeDialogHandler}
+      <EditSiemDialog
+        open={dialogType === DIALOG_TYPE_ENUM.EDIT}
+        onClose={closeDialogHandler}
+        forceClose={closeDialogHandler}
+        refetch={refetch}
+        data = {selectedSiem}
       />
     </Fragment>
   );
 };
 
-export default withTableRowWrapper(BackupTableRow);
+
+
+export default withTableRowWrapper(SiemTableRow);
+

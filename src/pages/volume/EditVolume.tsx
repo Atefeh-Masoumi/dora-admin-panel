@@ -3,7 +3,6 @@ import {
   FC,
   ReactNode,
   SyntheticEvent,
-  useContext,
   useEffect,
   useState,
   useMemo,
@@ -15,7 +14,7 @@ import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 import { VolumeInfo } from "src/components/organisms/volume/edit/overview/VolumeInfo";
 import { ChangeConfig } from "src/components/organisms/volume/edit/changeConfig/changeConfig";
-import { VolumeSnapshot } from "src/components/organisms/volume/edit/snapshot/VolumeSnapShot";
+// import { VolumeSnapshot } from "src/components/organisms/volume/edit/snapshot/VolumeSnapShot";
 import { VolumeBackup } from "src/components/organisms/volume/edit/backup/VolumeBackup";
 import { AttachVm } from "src/components/organisms/volume/edit/attachVm/AttachVm";
 import VolumeAutoBackup from "src/components/organisms/volume/edit/autoBackup/VolumeAutoBackup";
@@ -47,11 +46,11 @@ const TAB_CONFIGS: TabConfig[] = [
     route: "/block-storage/:projectId/:blockstorageId/change-config",
     component: ChangeConfig,
   },
-  {
-    label: "اسنپ‌شات",
-    route: "/block-storage/:projectId/:blockstorageId/snapshot",
-    component: VolumeSnapshot,
-  },
+  // {
+  //   label: "اسنپ‌شات",
+  //   route: "/block-storage/:projectId/:blockstorageId/snapshot",
+  //   component: VolumeSnapshot,
+  // },
   {
     label: "بکاپ",
     route: "/block-storage/:projectId/:blockstorageId/backup",

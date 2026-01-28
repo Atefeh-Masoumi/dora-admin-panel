@@ -1,17 +1,14 @@
 import { Add } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { FC, useEffect, useState, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { SearchBox } from "src/components/molecules/SearchBox";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
-import { toast } from "react-toastify";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
 import {
   VmFirewallListResponse,
   useGetApiMyVmByProjectIdFirewallListQuery,
-  useDeleteApiMyVmByProjectIdFirewallDeleteAndIdMutation,
 } from "src/app/services/api.generated";
 import { firewallTableStruct } from "src/components/organisms/firewall/firewalllist/struct";
 import FirewallTableRow from "src/components/organisms/firewall/firewalllist/FirewallTableRow";
@@ -24,7 +21,6 @@ enum DIALOG_TYPE_ENUM {
 
 const FirewallList: FC = () => {
   const { projectId } = useParams();
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
   const [selectedFirewall, setSelectedFirewall] = useState<VmFirewallListResponse | null>(null);
@@ -38,8 +34,6 @@ const FirewallList: FC = () => {
     projectId: Number(projectId),
   });
 
-  const [deleteFirewall, { isLoading: deleteFirewallLoading }] =
-    useDeleteApiMyVmByProjectIdFirewallDeleteAndIdMutation();
 
   useEffect(() => {
     const getNotifInterval = setInterval(() => {
@@ -69,21 +63,6 @@ const FirewallList: FC = () => {
   const closeDialogHandler = () => {
     setDialogType(null);
     setSelectedFirewall(null);
-  };
-
-  const deleteFirewallHandler = () => {
-    if (!selectedFirewall?.id) return;
-    deleteFirewall({
-      id: selectedFirewall.id,
-      projectId: Number(projectId),
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("فایروال مورد نظر با موفقیت حذف شد");
-        closeDialogHandler();
-        refetch();
-      })
-      .catch(() => {});
   };
 
   return (
@@ -170,15 +149,7 @@ const FirewallList: FC = () => {
         forceClose={closeDialogHandler}
         refetch={refetch}
       />
-      <DeleteDialog
-        open={dialogType === DIALOG_TYPE_ENUM.DELETE}
-        onClose={closeDialogHandler}
-        keyTitle="فایروال"
-        subTitle="برای حذف فایروال موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedFirewall?.name || ""}
-        onSubmit={deleteFirewallHandler}
-        submitLoading={deleteFirewallLoading}
-      />
+     
     </>
   );
 };

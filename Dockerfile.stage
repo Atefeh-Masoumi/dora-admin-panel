@@ -1,40 +1,25 @@
-# -------------------------
-# Stage 1: Build React App
-# -------------------------
-FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+# Stage 1
+#FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+FROM node:18-bullseye-slim AS builder
+
 WORKDIR /app
 
-# Set Nexus npm registry
-#RUN echo "registry=https://nexus.dorsa.cloud/repository/npm/" > .npmrc
-
-# Copy dependency definitions and install
+# Copy .npmrc for Nexus NPM registry
 COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of the app
 COPY . .
-
-# Set environment variable for production build
 ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN npm run build
 
-# Optional: Clean up .npmrc if you don't want it in image layer
-RUN rm -f .npmrc
-
-
-# -------------------------
-# Stage 2: Serve via NGINX
-# -------------------------
-FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
+#FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
+FROM nginx:1.25-alpine
 
 WORKDIR /usr/share/nginx/html
-
-# Copy built React app from builder
 COPY --from=builder /app/build /usr/share/nginx/html
-
-# Replace default nginx config
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
-
 EXPOSE 80
+ENV TZ=Asia/Tehran
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

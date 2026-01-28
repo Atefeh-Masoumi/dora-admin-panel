@@ -166,6 +166,9 @@ const Header: FC<HeaderPropsType> = ({
       case BACK_URL_HINTS_ENUM.ADD_DEPLOYMENT:
         href = `/kubernetes-cloud/${projectId}/${kubernetesCloudId}/deployment`;
       break;
+      case BACK_URL_HINTS_ENUM.ADD_BACKUPFROMVM:
+        href = `/backup/${projectId}`;
+      break;
       default:
         if (typeof url === "number") {
           navigate(url);

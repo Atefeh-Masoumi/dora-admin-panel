@@ -7,35 +7,36 @@ import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import {
-  useGetApiMyVmByProjectIdSnapshotListQuery,
-  VmVolumeSnapshotListResponse,
+  useGetApiMySecurityByProjectIdPamHostListQuery,
+  PamListResponse,
 } from "src/app/services/api.generated";
-import { AddSnapshotDialog } from "./AddSnapshot";
-import { snapshotTableStruct } from "src/components/organisms/snapshot/snapshotlist/struct";
-import SnapshotTableRow from "src/components/organisms/snapshot/snapshotlist/SnapshotTableRow";
-
+import PamTableRow from "src/components/organisms/pam/pamlist/PamTableRow";
+import { pamTableStruct } from "src/components/organisms/pam/pamlist/struct";
+import { AddPamDialog } from "./AddPam";
 
 enum DIALOG_TYPE_ENUM {
   CREATE = "CREATE",
   DELETE = "DELETE",
 }
 
-const SnapshotList: FC = () => {
+const PamList: FC = () => {
   const { projectId } = useParams();
   const [search, setSearch] = useState("");
   const [dialogType, setDialogType] = useState<DIALOG_TYPE_ENUM | null>(null);
-  const [selectedSnapshot, setSelectedSnapshot] = useState<VmVolumeSnapshotListResponse | null>(null);
+  const [selectedPam, setSelectedPam] =
+    useState<PamListResponse | null>(null);
 
   const {
-    data: backupList = [],
-    isLoading: getBackupListLoading,
+    data: PamList = [],
+    isLoading: getpamListLoading,
     refetch,
     isFetching,
-  } = useGetApiMyVmByProjectIdSnapshotListQuery({
+  } = useGetApiMySecurityByProjectIdPamHostListQuery({
     projectId: Number(projectId),
   });
 
-    useEffect(() => {
+
+  useEffect(() => {
     const getNotifInterval = setInterval(() => {
       refetch();
     }, 120 * 1000);
@@ -45,25 +46,23 @@ const SnapshotList: FC = () => {
   }, [refetch]);
 
   const filteredList = useMemo(() => {
-    if (backupList.length === 0) return backupList;
+    if (PamList.length === 0) return PamList;
     return (
-      backupList.filter((item) =>
-        item.name
-          ?.trim()
-          .toLowerCase()
-          ?.includes(search.trim().toLowerCase())
+      PamList.filter((item) =>
+        item.name?.trim().toLowerCase()?.includes(search.trim().toLowerCase())
       ) || []
     );
-  }, [search, backupList]);
+  }, [search, PamList]);
 
-  const createFirewallOnClick = () => {
+  const createPamOnClick = () => {
     setDialogType(DIALOG_TYPE_ENUM.CREATE);
   };
 
   const closeDialogHandler = () => {
     setDialogType(null);
-    setSelectedSnapshot(null);
+    setSelectedPam(null);
   };
+
 
   return (
     <>
@@ -87,21 +86,21 @@ const SnapshotList: FC = () => {
             spacing={2}
           >
             <Typography fontSize={18} color="secondary">
-              لیست اسنپ شات‌ها
+              لیست PAMها
             </Typography>
             <RefreshButton isFetching={isFetching} refetchData={refetch} />
           </Stack>
-          <Stack 
+          <Stack
             direction={{ xs: "column", sm: "row" }}
             alignItems="center"
             spacing={2}
           >
             <SearchBox
               onChange={(text) => setSearch(text)}
-              placeholder="جستجو در نام اسنپ شات"
+              placeholder="جستجو در نام  PAM"
             />
             <Button
-              onClick={createFirewallOnClick}
+              onClick={createPamOnClick}
               variant="outlined"
               size="large"
               sx={{
@@ -116,7 +115,8 @@ const SnapshotList: FC = () => {
                   sx={{
                     width: 24,
                     height: 24,
-                    border: ({ palette }) => "1px solid " + palette.primary.main,
+                    border: ({ palette }) =>
+                      "1px solid " + palette.primary.main,
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 >
@@ -127,32 +127,32 @@ const SnapshotList: FC = () => {
                 </Stack>
               }
             >
-              ایجاد اسنپ شات جدید
+              ایجاد PAM جدید
             </Button>
           </Stack>
         </Stack>
         <Divider sx={{ width: "100%", color: "#6E768A14", py: 1 }} />
         <Box width="100%" sx={{ pt: 1.5 }}>
           <BaseTable
-            struct={snapshotTableStruct}
-            RowComponent={SnapshotTableRow}
+            struct={pamTableStruct}
+            RowComponent={PamTableRow}
             rows={filteredList}
-            text="در حال حاضر اسنپ شاتی وجود ندارد"
-            isLoading={getBackupListLoading}
+            text="در حال حاضر  PAM وجود ندارد"
+            isLoading={getpamListLoading}
             initialOrder={0}
           />
         </Box>
-      </Stack> 
-      <AddSnapshotDialog
+      </Stack>
+      <AddPamDialog
         open={dialogType === DIALOG_TYPE_ENUM.CREATE}
         onClose={closeDialogHandler}
         forceClose={closeDialogHandler}
         refetch={refetch}
       />
-   
+      
     </>
   );
 };
 
-export default SnapshotList;
+export default PamList;
 

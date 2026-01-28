@@ -16,54 +16,64 @@ import {
   import { FC } from "react";
   import { toast } from "react-toastify";
   import {
-    CreateVolumeBackupModel,
-    usePostApiMyVmByProjectIdBackupCreateMutation,
-    useGetApiMyVmByProjectIdVolumeShortListQuery,
+    CreatePamModel,
+    usePostApiMySecurityByProjectIdPamHostCreateMutation,
+    useGetApiMyVmByProjectIdImageListQuery,
+    VmImageListResponse,
   } from "src/app/services/api.generated";
   import { formikOnSubmitType } from "src/types/form.type";
   import * as yup from "yup";
   import LoadingButton from "src/components/atoms/LoadingButton";
   import { useParams } from "react-router-dom";
+import { PRODUCT_CATEGORY_ENUM } from "src/constant/productCategoryEnum";
   
-  type AddBackupDialogPropsType = DialogProps & {
+  type AddPamDialogPropsType = DialogProps & {
     forceClose: () => void;
     refetch: () => void;
   };
   
-  export const AddBackupDialog: FC<AddBackupDialogPropsType> = ({
+  export const AddPamDialog: FC<AddPamDialogPropsType> = ({
     forceClose,
     refetch,
     ...props
   }) => {
     const { projectId } = useParams();
-    const [createFirewall, { isLoading: createFirewallLoading }] =
-      usePostApiMyVmByProjectIdBackupCreateMutation();
-  const { data: volumeList, isLoading: volumeLoading } = useGetApiMyVmByProjectIdVolumeShortListQuery({
-    projectId: Number(projectId),
-  });
-    const initialValues: CreateVolumeBackupModel = {
+    const [createPam, { isLoading: createPamLoading }] =
+      usePostApiMySecurityByProjectIdPamHostCreateMutation();
+  const { data: imageList = [], isLoading: imageLoading } =
+    useGetApiMyVmByProjectIdImageListQuery(
+      {
+        projectId: Number(projectId),
+        productId: PRODUCT_CATEGORY_ENUM.PAM,
+      },
+      {
+        skip: !projectId,
+      }
+    );
+
+    const initialValues: CreatePamModel = {
       name: "",
-      description: "",
+      vmImageId:0,
     };
   
     const validationSchema = yup.object().shape({
       name: yup
         .string()
-        .min(5, "نام بکاپ نباید کمتر از ۵ کارکتر باشد")
+        .min(5, "نام Pam نباید کمتر از ۵ کارکتر باشد")
         .required("این بخش الزامی می‌باشد"),
     });
   
-    const onSubmit: formikOnSubmitType<CreateVolumeBackupModel> = (
+    const onSubmit: formikOnSubmitType<CreatePamModel> = (
       values,
       { setSubmitting }
     ) => {
-      createFirewall({
+      createPam({
         projectId: Number(projectId),
-        createVolumeBackupModel: values,
+        createPamModel: values,
       })
         .unwrap()
         .then(() => {
-          toast.success("بکاپ جدید با موفقیت ایجاد شد");
+          toast.success("PAM جدید با موفقیت ایجاد شد");
           forceClose();
           refetch();
           formik.resetForm();
@@ -88,19 +98,13 @@ import {
     };
   
     return (
-      <Dialog
-        {...props}
-        onClose={closeDialogHandler}
-        fullWidth
-      >
-        <DialogTitle textAlign="left">
-          ایجاد بکاپ جدید
-        </DialogTitle>
+      <Dialog {...props} onClose={closeDialogHandler} fullWidth>
+        <DialogTitle textAlign="left">ایجاد PAM جدید</DialogTitle>
         <DialogContent>
           <form onSubmit={formik.handleSubmit}>
             <Stack direction="column" rowGap={2}>
               <Stack direction="column" rowGap={1}>
-                <InputLabel>نام بکاپ</InputLabel>
+                <InputLabel>نام PAM</InputLabel>
                 <TextField
                   {...formik.getFieldProps("name")}
                   fullWidth
@@ -109,45 +113,40 @@ import {
                   placeholder="نام موردنظر را وارد کنید"
                   size="small"
                   inputProps={{
-                    dir: "ltr"
+                    dir: "ltr",
                   }}
                 />
               </Stack>
               <Stack width={"100%"} justifyContent={"start"}>
-                <Typography>لیست دیسک ها  </Typography>
-                {volumeLoading ? (
-                  <Skeleton width="100%" height={37} sx={{ transform: "none" }} />
+                <Typography>لیست image </Typography>
+                {imageLoading ? (
+                  <Skeleton
+                    width="100%"
+                    height={37}
+                    sx={{ transform: "none" }}
+                  />
                 ) : (
                   <Select
-                    {...formik.getFieldProps("vmVolumeHostId")}
-                    error={Boolean(formik.errors.vmVolumeHostId && formik.touched.vmVolumeHostId)}
+                    {...formik.getFieldProps("vmImageId")}
+                    error={Boolean(
+                      formik.errors.vmImageId && formik.touched.vmImageId
+                    )}
                     fullWidth
                   >
-                    {volumeList?.map(({ name, id }) => (
+                    {imageList?.map(({ name, id }: VmImageListResponse) => (
                       <MenuItem key={id} value={id}>
                         {name}
                       </MenuItem>
                     ))}
                   </Select>
                 )}
-                {formik.errors.vmVolumeHostId && formik.touched.vmVolumeHostId && (
-                  <Typography color="error">{formik.errors.vmVolumeHostId}</Typography>
+                {formik.errors.vmImageId && formik.touched.vmImageId && (
+                  <Typography color="error">
+                    {formik.errors.vmImageId}
+                  </Typography>
                 )}
               </Stack>
-              <Stack direction="column" rowGap={1}>
-                <InputLabel>توضیحات</InputLabel>
-                <TextField
-                  {...formik.getFieldProps("description")}
-                  fullWidth
-                  error={Boolean(formik.errors.description && formik.touched.description)}
-                  helperText={formik.touched.description && formik.errors.description}
-                  placeholder="توضیحات موردنظر را وارد کنید"
-                  size="small"
-                  multiline
-                  minRows={3}
-                  maxRows={8}
-                />
-              </Stack>
+
               <Stack direction="row" justifyContent="end" spacing={1}>
                 <Button
                   variant="outlined"
@@ -159,7 +158,7 @@ import {
                 </Button>
                 <LoadingButton
                   type="submit"
-                  loading={createFirewallLoading}
+                  loading={createPamLoading}
                   variant="contained"
                   sx={{ px: 3, py: 0.8 }}
                 >

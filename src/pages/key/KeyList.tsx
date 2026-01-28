@@ -1,15 +1,11 @@
 import React, { FC, useMemo, useState } from "react";
 import {
-  VmKeyListResponse,
   useGetApiMyVmByProjectIdKeyListQuery,
-  useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation,
 } from "src/app/services/api.generated";
-import { Button, Divider, Paper, Stack, Typography, Box } from "@mui/material";
+import { Button, Divider, Stack, Typography, Box } from "@mui/material";
 import { RefreshButton } from "src/components/atoms/RefreshButton";
 import { SearchBox } from "src/components/molecules/SearchBox";
-import { useNavigate, useParams } from "react-router";
-import { DeleteDialog } from "src/components/molecules/DeleteDialog";
-import { toast } from "react-toastify";
+import {  useParams } from "react-router";
 import CreateKey from "./CreateKey";
 import { BaseTable } from "src/components/organisms/tables/BaseTable";
 import { keyTableStruct } from "./struct";
@@ -18,9 +14,7 @@ import { Add } from "@mui/icons-material";
 import { BORDER_RADIUS_1 } from "src/configs/theme";
 
 const KeyList: FC = () => {
-  const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState("");
-  const [selectedKey, setSelectedKey] = useState<VmKeyListResponse | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const { projectId } = useParams();
 
@@ -32,9 +26,6 @@ const KeyList: FC = () => {
   } = useGetApiMyVmByProjectIdKeyListQuery({
     projectId: Number(projectId),
   });
-
-  const [deleteKey, { isLoading: deleteKeyLoading }] =
-    useDeleteApiMyVmByProjectIdKeyDeleteAndIdMutation();
 
   const filteredResult = useMemo(() => {
     if (keyList.length === 0) return keyList;
@@ -50,29 +41,6 @@ const KeyList: FC = () => {
 
   const goToCreateKey = () => {
     setShowCreateDialog(true);
-  };
-
-  const openDialogHandler = (selectedKey: VmKeyListResponse) => {
-    setSelectedKey(selectedKey);
-  };
-
-  const closeDialogHandler = () => {
-    setSelectedKey(null);
-  };
-
-  const deleteKeyHandler = () => {
-    if (!selectedKey || !selectedKey.id) return;
-    deleteKey({
-      id: selectedKey.id,
-      projectId: Number(projectId),
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("کلید مورد نظر با موفقیت حذف شد");
-        closeDialogHandler();
-        refetch();
-      })
-      .catch((err) => {});
   };
 
   const closeCreateDialog = () => {
@@ -157,15 +125,6 @@ const KeyList: FC = () => {
           />
         </Box>
       </Stack>
-      <DeleteDialog
-        open={!!selectedKey}
-        onClose={closeDialogHandler}
-        keyTitle="کلید"
-        subTitle="برای حذف کلید موردنظر، عبارت امنیتی زیر را وارد کنید."
-        securityPhrase={selectedKey?.name || ""}
-        onSubmit={deleteKeyHandler}
-        submitLoading={deleteKeyLoading}
-      />
       {showCreateDialog && <CreateKey onClose={closeCreateDialog} refetch={refetch} />}
     </>
   );

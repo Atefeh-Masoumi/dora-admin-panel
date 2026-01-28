@@ -1,32 +1,15 @@
 import { api } from "./emptyApi";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getApiMyAccountUserLog: build.query<
-      GetApiMyAccountUserLogApiResponse,
-      GetApiMyAccountUserLogApiArg
+    postApiMyAccountProfileEnableTotpConfirm: build.mutation<
+      PostApiMyAccountProfileEnableTotpConfirmApiResponse,
+      PostApiMyAccountProfileEnableTotpConfirmApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/account/user-log`,
-        params: {
-          UserId: queryArg.userId,
-          FromDate: queryArg.fromDate,
-          ToDate: queryArg.toDate,
-          PageNumber: queryArg.pageNumber,
-          PageSize: queryArg.pageSize,
-        },
+        url: `/api/my/account/profile/enable-totp-confirm`,
+        method: "POST",
+        body: queryArg.twoFactorConfirmModel,
       }),
-    }),
-    getApiMyAccountProfileGetNotificationStatus: build.query<
-      GetApiMyAccountProfileGetNotificationStatusApiResponse,
-      GetApiMyAccountProfileGetNotificationStatusApiArg
-    >({
-      query: () => ({ url: `/api/my/account/profile/get-notification-status` }),
-    }),
-    getApiMyAccountProfileGet: build.query<
-      GetApiMyAccountProfileGetApiResponse,
-      GetApiMyAccountProfileGetApiArg
-    >({
-      query: () => ({ url: `/api/my/account/profile/get` }),
     }),
     postApiMyAccountProfileEnableTotp: build.mutation<
       PostApiMyAccountProfileEnableTotpApiResponse,
@@ -37,12 +20,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
-    postApiMyAccountProfileEnableTotpConfirm: build.mutation<
-      PostApiMyAccountProfileEnableTotpConfirmApiResponse,
-      PostApiMyAccountProfileEnableTotpConfirmApiArg
+    postApiMyAccountProfileDisableTotp: build.mutation<
+      PostApiMyAccountProfileDisableTotpApiResponse,
+      PostApiMyAccountProfileDisableTotpApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/account/profile/enable-totp-confirm`,
+        url: `/api/my/account/profile/disable-totp`,
         method: "POST",
         body: queryArg.twoFactorConfirmModel,
       }),
@@ -55,6 +38,25 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/account/profile/enable-sms`,
         method: "PUT",
         body: queryArg.twoFactorModel,
+      }),
+    }),
+    postApiMyAccountProfileEnableSmsConfirm: build.mutation<
+      PostApiMyAccountProfileEnableSmsConfirmApiResponse,
+      PostApiMyAccountProfileEnableSmsConfirmApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/enable-sms-confirm`,
+        method: "POST",
+        body: queryArg.twoFactorConfirmModel,
+      }),
+    }),
+    postApiMyAccountProfileDisableSms: build.mutation<
+      PostApiMyAccountProfileDisableSmsApiResponse,
+      PostApiMyAccountProfileDisableSmsApiArg
+    >({
+      query: () => ({
+        url: `/api/my/account/profile/disable-sms`,
+        method: "POST",
       }),
     }),
     putApiMyAccountProfileEditPhoneNumber: build.mutation<
@@ -77,6 +79,28 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.editPhoneNotifyModel,
       }),
     }),
+    postApiMyAccountProfileConfirmPhoneNumber: build.mutation<
+      PostApiMyAccountProfileConfirmPhoneNumberApiResponse,
+      PostApiMyAccountProfileConfirmPhoneNumberApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/confirm-phone-number`,
+        method: "POST",
+        body: queryArg.confirmPhoneNumberModel,
+      }),
+    }),
+    getApiMyAccountProfileGetNotificationStatus: build.query<
+      GetApiMyAccountProfileGetNotificationStatusApiResponse,
+      GetApiMyAccountProfileGetNotificationStatusApiArg
+    >({
+      query: () => ({ url: `/api/my/account/profile/get-notification-status` }),
+    }),
+    getApiMyAccountProfileGet: build.query<
+      GetApiMyAccountProfileGetApiResponse,
+      GetApiMyAccountProfileGetApiArg
+    >({
+      query: () => ({ url: `/api/my/account/profile/get` }),
+    }),
     putApiMyAccountProfileEditEmailNotification: build.mutation<
       PutApiMyAccountProfileEditEmailNotificationApiResponse,
       PutApiMyAccountProfileEditEmailNotificationApiArg
@@ -85,6 +109,16 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/account/profile/edit-email-notification`,
         method: "PUT",
         body: queryArg.editEmailNotifyModel,
+      }),
+    }),
+    postApiMyAccountProfileConfirmEmail: build.mutation<
+      PostApiMyAccountProfileConfirmEmailApiResponse,
+      PostApiMyAccountProfileConfirmEmailApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/account/profile/confirm-email`,
+        method: "POST",
+        body: queryArg.confirmEmailModel,
       }),
     }),
     putApiMyAccountProfileEditEmail: build.mutation<
@@ -105,55 +139,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/account/profile/edit`,
         method: "PUT",
         body: queryArg.editProfileModel,
-      }),
-    }),
-    postApiMyAccountProfileDisableTotp: build.mutation<
-      PostApiMyAccountProfileDisableTotpApiResponse,
-      PostApiMyAccountProfileDisableTotpApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/disable-totp`,
-        method: "POST",
-        body: queryArg.twoFactorConfirmModel,
-      }),
-    }),
-    postApiMyAccountProfileDisableSms: build.mutation<
-      PostApiMyAccountProfileDisableSmsApiResponse,
-      PostApiMyAccountProfileDisableSmsApiArg
-    >({
-      query: () => ({
-        url: `/api/my/account/profile/disable-sms`,
-        method: "POST",
-      }),
-    }),
-    postApiMyAccountProfileEnableSmsConfirm: build.mutation<
-      PostApiMyAccountProfileEnableSmsConfirmApiResponse,
-      PostApiMyAccountProfileEnableSmsConfirmApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/enable-sms-confirm`,
-        method: "POST",
-        body: queryArg.twoFactorConfirmModel,
-      }),
-    }),
-    postApiMyAccountProfileConfirmPhoneNumber: build.mutation<
-      PostApiMyAccountProfileConfirmPhoneNumberApiResponse,
-      PostApiMyAccountProfileConfirmPhoneNumberApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/confirm-phone-number`,
-        method: "POST",
-        body: queryArg.confirmPhoneNumberModel,
-      }),
-    }),
-    postApiMyAccountProfileConfirmEmail: build.mutation<
-      PostApiMyAccountProfileConfirmEmailApiResponse,
-      PostApiMyAccountProfileConfirmEmailApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/account/profile/confirm-email`,
-        method: "POST",
-        body: queryArg.confirmEmailModel,
       }),
     }),
     postApiMyAccountProfileChangePassword: build.mutation<
@@ -272,12 +257,6 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: () => ({ url: `/api/my/account/logout`, method: "POST" }),
     }),
-    getApiMyAccountLoginItoUrl: build.query<
-      GetApiMyAccountLoginItoUrlApiResponse,
-      GetApiMyAccountLoginItoUrlApiArg
-    >({
-      query: () => ({ url: `/api/my/account/login-ito-url` }),
-    }),
     postApiMyAccountLoginItoCallback: build.mutation<
       PostApiMyAccountLoginItoCallbackApiResponse,
       PostApiMyAccountLoginItoCallbackApiArg
@@ -290,11 +269,11 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
-    getApiMyAccountLoginGovUrl: build.query<
-      GetApiMyAccountLoginGovUrlApiResponse,
-      GetApiMyAccountLoginGovUrlApiArg
+    getApiMyAccountLoginItoUrl: build.query<
+      GetApiMyAccountLoginItoUrlApiResponse,
+      GetApiMyAccountLoginItoUrlApiArg
     >({
-      query: () => ({ url: `/api/my/account/login-gov-url` }),
+      query: () => ({ url: `/api/my/account/login-ito-url` }),
     }),
     postApiMyAccountLoginGovCallback: build.mutation<
       PostApiMyAccountLoginGovCallbackApiResponse,
@@ -308,11 +287,11 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
-    getApiMyAccountLoginGoogleUrl: build.query<
-      GetApiMyAccountLoginGoogleUrlApiResponse,
-      GetApiMyAccountLoginGoogleUrlApiArg
+    getApiMyAccountLoginGovUrl: build.query<
+      GetApiMyAccountLoginGovUrlApiResponse,
+      GetApiMyAccountLoginGovUrlApiArg
     >({
-      query: () => ({ url: `/api/my/account/login-google-url` }),
+      query: () => ({ url: `/api/my/account/login-gov-url` }),
     }),
     getApiMyAccountLoginGoogleCallback: build.query<
       GetApiMyAccountLoginGoogleCallbackApiResponse,
@@ -324,6 +303,12 @@ const injectedRtkApi = api.injectEndpoints({
           code: queryArg.code,
         },
       }),
+    }),
+    getApiMyAccountLoginGoogleUrl: build.query<
+      GetApiMyAccountLoginGoogleUrlApiResponse,
+      GetApiMyAccountLoginGoogleUrlApiArg
+    >({
+      query: () => ({ url: `/api/my/account/login-google-url` }),
     }),
     postApiMyAccountLogin: build.mutation<
       PostApiMyAccountLoginApiResponse,
@@ -420,6 +405,46 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/bare-metal/${queryArg.projectId}/host/create`,
         method: "POST",
         body: queryArg.createBareMetalModel,
+      }),
+    }),
+    postApiCdnStoreLog: build.mutation<
+      PostApiCdnStoreLogApiResponse,
+      PostApiCdnStoreLogApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/store-log`,
+        method: "POST",
+        body: queryArg.storeLogModel,
+      }),
+    }),
+    postApiCdnGetZoneRoutes: build.mutation<
+      PostApiCdnGetZoneRoutesApiResponse,
+      PostApiCdnGetZoneRoutesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zone-routes`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
+      }),
+    }),
+    postApiCdnGetZoneEdgeCerts: build.mutation<
+      PostApiCdnGetZoneEdgeCertsApiResponse,
+      PostApiCdnGetZoneEdgeCertsApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zone-edge-certs`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
+      }),
+    }),
+    postApiCdnGetZones: build.mutation<
+      PostApiCdnGetZonesApiResponse,
+      PostApiCdnGetZonesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/cdn/get-zones`,
+        method: "POST",
+        body: queryArg.syncRequestModel,
       }),
     }),
     getApiMyColocationByProjectIdHostList: build.query<
@@ -884,6 +909,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
+    getApiMyFinancialPaymentProviderList: build.query<
+      GetApiMyFinancialPaymentProviderListApiResponse,
+      GetApiMyFinancialPaymentProviderListApiArg
+    >({
+      query: () => ({ url: `/api/my/financial/payment-provider/list` }),
+    }),
     getApiMyFinancialWalletCommissionList: build.query<
       GetApiMyFinancialWalletCommissionListApiResponse,
       GetApiMyFinancialWalletCommissionListApiArg
@@ -939,12 +970,6 @@ const injectedRtkApi = api.injectEndpoints({
       GetApiMyFinancialReferralGetApiArg
     >({
       query: () => ({ url: `/api/my/financial/referral/get` }),
-    }),
-    getApiMyFinancialPaymentProviderList: build.query<
-      GetApiMyFinancialPaymentProviderListApiResponse,
-      GetApiMyFinancialPaymentProviderListApiArg
-    >({
-      query: () => ({ url: `/api/my/financial/payment-provider/list` }),
     }),
     postApiMyFinancialPaymentSepCallBack: build.mutation<
       PostApiMyFinancialPaymentSepCallBackApiResponse,
@@ -1635,6 +1660,14 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/portal/promotion/redirect-link/${queryArg.code}`,
       }),
     }),
+    getApiMyPortalProductItemDemandItemShortList: build.query<
+      GetApiMyPortalProductItemDemandItemShortListApiResponse,
+      GetApiMyPortalProductItemDemandItemShortListApiArg
+    >({
+      query: () => ({
+        url: `/api/my/portal/product-item/demand-item-short-list`,
+      }),
+    }),
     getApiMyPortalProductItemListByProductId: build.query<
       GetApiMyPortalProductItemListByProductIdApiResponse,
       GetApiMyPortalProductItemListByProductIdApiArg
@@ -1808,15 +1841,40 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createIssueModel,
       }),
     }),
-    getApiMyPortalCustomerLimitResourceUsages: build.query<
-      GetApiMyPortalCustomerLimitResourceUsagesApiResponse,
-      GetApiMyPortalCustomerLimitResourceUsagesApiArg
+    getApiMyPortalCustomerLimitList: build.query<
+      GetApiMyPortalCustomerLimitListApiResponse,
+      GetApiMyPortalCustomerLimitListApiArg
     >({
       query: (queryArg) => ({
-        url: `/api/my/portal/customer-limit/resource-usages`,
+        url: `/api/my/portal/customer-limit/list`,
         params: {
-          projectId: queryArg.projectId,
+          ProductItemId: queryArg.productItemId,
         },
+      }),
+    }),
+    getApiMyPortalCustomerDemandList: build.query<
+      GetApiMyPortalCustomerDemandListApiResponse,
+      GetApiMyPortalCustomerDemandListApiArg
+    >({
+      query: () => ({ url: `/api/my/portal/customer-demand/list` }),
+    }),
+    deleteApiMyPortalCustomerDemandDeleteById: build.mutation<
+      DeleteApiMyPortalCustomerDemandDeleteByIdApiResponse,
+      DeleteApiMyPortalCustomerDemandDeleteByIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-demand/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMyPortalCustomerDemandCreate: build.mutation<
+      PostApiMyPortalCustomerDemandCreateApiResponse,
+      PostApiMyPortalCustomerDemandCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/portal/customer-demand/create`,
+        method: "POST",
+        body: queryArg.createCustomerDemandModel,
       }),
     }),
     getApiMyPortalBusinessUnitList: build.query<
@@ -1905,6 +1963,17 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createProjectModel,
       }),
     }),
+    getApiMyReportStatisticPortalCustomerProductItemUsageReport: build.query<
+      GetApiMyReportStatisticPortalCustomerProductItemUsageReportApiResponse,
+      GetApiMyReportStatisticPortalCustomerProductItemUsageReportApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/report/statistic/portal/customer-product-item-usage-report`,
+        params: {
+          ProjectId: queryArg.projectId,
+        },
+      }),
+    }),
     getApiMyReportStatisticFinancialFinancialReport: build.query<
       GetApiMyReportStatisticFinancialFinancialReportApiResponse,
       GetApiMyReportStatisticFinancialFinancialReportApiArg
@@ -1931,6 +2000,86 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/api/my/report/chart/financial/usage-chart/${queryArg.categoryId}`,
+      }),
+    }),
+    getApiMySecurityByProjectIdSiemHostList: build.query<
+      GetApiMySecurityByProjectIdSiemHostListApiResponse,
+      GetApiMySecurityByProjectIdSiemHostListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/siem/host/list`,
+      }),
+    }),
+    getApiMySecurityByProjectIdSiemHostGetAndId: build.query<
+      GetApiMySecurityByProjectIdSiemHostGetAndIdApiResponse,
+      GetApiMySecurityByProjectIdSiemHostGetAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/siem/host/get/${queryArg.id}`,
+      }),
+    }),
+    putApiMySecurityByProjectIdSiemHostEditAndId: build.mutation<
+      PutApiMySecurityByProjectIdSiemHostEditAndIdApiResponse,
+      PutApiMySecurityByProjectIdSiemHostEditAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/siem/host/edit/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.editSiemModel,
+      }),
+    }),
+    deleteApiMySecurityByProjectIdSiemHostDeleteAndId: build.mutation<
+      DeleteApiMySecurityByProjectIdSiemHostDeleteAndIdApiResponse,
+      DeleteApiMySecurityByProjectIdSiemHostDeleteAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/siem/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMySecurityByProjectIdSiemHostCreate: build.mutation<
+      PostApiMySecurityByProjectIdSiemHostCreateApiResponse,
+      PostApiMySecurityByProjectIdSiemHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/siem/host/create`,
+        method: "POST",
+        body: queryArg.createSiemModel,
+      }),
+    }),
+    getApiMySecurityByProjectIdPamHostList: build.query<
+      GetApiMySecurityByProjectIdPamHostListApiResponse,
+      GetApiMySecurityByProjectIdPamHostListApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/pam/host/list`,
+      }),
+    }),
+    getApiMySecurityByProjectIdPamHostGetAndId: build.query<
+      GetApiMySecurityByProjectIdPamHostGetAndIdApiResponse,
+      GetApiMySecurityByProjectIdPamHostGetAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/pam/host/get/${queryArg.id}`,
+      }),
+    }),
+    deleteApiMySecurityByProjectIdPamHostDeleteAndId: build.mutation<
+      DeleteApiMySecurityByProjectIdPamHostDeleteAndIdApiResponse,
+      DeleteApiMySecurityByProjectIdPamHostDeleteAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/pam/host/delete/${queryArg.id}`,
+        method: "DELETE",
+      }),
+    }),
+    postApiMySecurityByProjectIdPamHostCreate: build.mutation<
+      PostApiMySecurityByProjectIdPamHostCreateApiResponse,
+      PostApiMySecurityByProjectIdPamHostCreateApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/security/${queryArg.projectId}/pam/host/create`,
+        method: "POST",
+        body: queryArg.createPamModel,
       }),
     }),
     getApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessList: build.query<
@@ -2184,6 +2333,44 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.createVolumeSnapshotModel,
       }),
     }),
+    putApiMyVmByProjectIdVolumeEnableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
+        method: "PUT",
+        body: queryArg.enableBackupSnapshotModel,
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeDisableSnapshotAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-snapshot/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
+    putApiMyVmByProjectIdVolumeDisableBackupAndId: build.mutation<
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse,
+      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/volume/disable-backup/${queryArg.id}`,
+        method: "PUT",
+      }),
+    }),
     getApiMyVmByProjectIdVolumeNodeList: build.query<
       GetApiMyVmByProjectIdVolumeNodeListApiResponse,
       GetApiMyVmByProjectIdVolumeNodeListApiArg
@@ -2192,6 +2379,7 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/node/list`,
         params: {
           VmHostId: queryArg.vmHostId,
+          VmVolumeHostId: queryArg.vmVolumeHostId,
         },
       }),
     }),
@@ -2326,26 +2514,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/get/${queryArg.id}`,
       }),
     }),
-    putApiMyVmByProjectIdVolumeEnableSnapshotAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/enable-snapshot/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableBackupSnapshotModel,
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeEnableBackupAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/enable-backup/${queryArg.id}`,
-        method: "PUT",
-        body: queryArg.enableBackupSnapshotModel,
-      }),
-    }),
     putApiMyVmByProjectIdVolumeEditAndId: build.mutation<
       PutApiMyVmByProjectIdVolumeEditAndIdApiResponse,
       PutApiMyVmByProjectIdVolumeEditAndIdApiArg
@@ -2354,24 +2522,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/api/my/vm/${queryArg.projectId}/volume/edit/${queryArg.id}`,
         method: "PUT",
         body: queryArg.editVolumeHostModel,
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeDisableSnapshotAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/disable-snapshot/${queryArg.id}`,
-        method: "PUT",
-      }),
-    }),
-    putApiMyVmByProjectIdVolumeDisableBackupAndId: build.mutation<
-      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse,
-      PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/api/my/vm/${queryArg.projectId}/volume/disable-backup/${queryArg.id}`,
-        method: "PUT",
       }),
     }),
     deleteApiMyVmByProjectIdVolumeDeleteAndId: build.mutation<
@@ -2745,6 +2895,16 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    postApiMyVmByProjectIdHostCreateFromBackup: build.mutation<
+      PostApiMyVmByProjectIdHostCreateFromBackupApiResponse,
+      PostApiMyVmByProjectIdHostCreateFromBackupApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/my/vm/${queryArg.projectId}/host/create-from-backup`,
+        method: "POST",
+        body: queryArg.createVmFromBackupModel,
+      }),
+    }),
     postApiMyVmByProjectIdHostCreate: build.mutation<
       PostApiMyVmByProjectIdHostCreateApiResponse,
       PostApiMyVmByProjectIdHostCreateApiArg
@@ -2936,31 +3096,26 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as enhancedApi };
-export type GetApiMyAccountUserLogApiResponse =
-  /** status 200 OK */ UserLogResponseListPagedResponse;
-export type GetApiMyAccountUserLogApiArg = {
-  userId?: number;
-  fromDate?: string;
-  toDate?: string;
-  pageNumber: number;
-  pageSize: number;
-};
-export type GetApiMyAccountProfileGetNotificationStatusApiResponse =
-  /** status 200 OK */ GetNotificationStatusResponse;
-export type GetApiMyAccountProfileGetNotificationStatusApiArg = void;
-export type GetApiMyAccountProfileGetApiResponse =
-  /** status 200 OK */ GetProfileResponse;
-export type GetApiMyAccountProfileGetApiArg = void;
-export type PostApiMyAccountProfileEnableTotpApiResponse = unknown;
-export type PostApiMyAccountProfileEnableTotpApiArg = void;
 export type PostApiMyAccountProfileEnableTotpConfirmApiResponse = unknown;
 export type PostApiMyAccountProfileEnableTotpConfirmApiArg = {
+  twoFactorConfirmModel: TwoFactorConfirmModel;
+};
+export type PostApiMyAccountProfileEnableTotpApiResponse = unknown;
+export type PostApiMyAccountProfileEnableTotpApiArg = void;
+export type PostApiMyAccountProfileDisableTotpApiResponse = unknown;
+export type PostApiMyAccountProfileDisableTotpApiArg = {
   twoFactorConfirmModel: TwoFactorConfirmModel;
 };
 export type PutApiMyAccountProfileEnableSmsApiResponse = unknown;
 export type PutApiMyAccountProfileEnableSmsApiArg = {
   twoFactorModel: TwoFactorModel;
 };
+export type PostApiMyAccountProfileEnableSmsConfirmApiResponse = unknown;
+export type PostApiMyAccountProfileEnableSmsConfirmApiArg = {
+  twoFactorConfirmModel: TwoFactorConfirmModel;
+};
+export type PostApiMyAccountProfileDisableSmsApiResponse = unknown;
+export type PostApiMyAccountProfileDisableSmsApiArg = void;
 export type PutApiMyAccountProfileEditPhoneNumberApiResponse = unknown;
 export type PutApiMyAccountProfileEditPhoneNumberApiArg = {
   editPhoneNumberModel: EditPhoneNumberModel;
@@ -2969,9 +3124,25 @@ export type PutApiMyAccountProfileEditPhoneNotificationApiResponse = unknown;
 export type PutApiMyAccountProfileEditPhoneNotificationApiArg = {
   editPhoneNotifyModel: EditPhoneNotifyModel;
 };
+export type PostApiMyAccountProfileConfirmPhoneNumberApiResponse =
+  /** status 200 OK */ EditProfileResponse;
+export type PostApiMyAccountProfileConfirmPhoneNumberApiArg = {
+  confirmPhoneNumberModel: ConfirmPhoneNumberModel;
+};
+export type GetApiMyAccountProfileGetNotificationStatusApiResponse =
+  /** status 200 OK */ GetNotificationStatusResponse;
+export type GetApiMyAccountProfileGetNotificationStatusApiArg = void;
+export type GetApiMyAccountProfileGetApiResponse =
+  /** status 200 OK */ GetProfileResponse;
+export type GetApiMyAccountProfileGetApiArg = void;
 export type PutApiMyAccountProfileEditEmailNotificationApiResponse = unknown;
 export type PutApiMyAccountProfileEditEmailNotificationApiArg = {
   editEmailNotifyModel: EditEmailNotifyModel;
+};
+export type PostApiMyAccountProfileConfirmEmailApiResponse =
+  /** status 200 OK */ EditProfileResponse;
+export type PostApiMyAccountProfileConfirmEmailApiArg = {
+  confirmEmailModel: ConfirmEmailModel;
 };
 export type PutApiMyAccountProfileEditEmailApiResponse = unknown;
 export type PutApiMyAccountProfileEditEmailApiArg = {
@@ -2981,26 +3152,6 @@ export type PutApiMyAccountProfileEditApiResponse =
   /** status 200 OK */ EditProfileResponse;
 export type PutApiMyAccountProfileEditApiArg = {
   editProfileModel: EditProfileModel;
-};
-export type PostApiMyAccountProfileDisableTotpApiResponse = unknown;
-export type PostApiMyAccountProfileDisableTotpApiArg = {
-  twoFactorConfirmModel: TwoFactorConfirmModel;
-};
-export type PostApiMyAccountProfileDisableSmsApiResponse = unknown;
-export type PostApiMyAccountProfileDisableSmsApiArg = void;
-export type PostApiMyAccountProfileEnableSmsConfirmApiResponse = unknown;
-export type PostApiMyAccountProfileEnableSmsConfirmApiArg = {
-  twoFactorConfirmModel: TwoFactorConfirmModel;
-};
-export type PostApiMyAccountProfileConfirmPhoneNumberApiResponse =
-  /** status 200 OK */ EditProfileResponse;
-export type PostApiMyAccountProfileConfirmPhoneNumberApiArg = {
-  confirmPhoneNumberModel: ConfirmPhoneNumberModel;
-};
-export type PostApiMyAccountProfileConfirmEmailApiResponse =
-  /** status 200 OK */ EditProfileResponse;
-export type PostApiMyAccountProfileConfirmEmailApiArg = {
-  confirmEmailModel: ConfirmEmailModel;
 };
 export type PostApiMyAccountProfileChangePasswordApiResponse = unknown;
 export type PostApiMyAccountProfileChangePasswordApiArg = {
@@ -3054,29 +3205,29 @@ export type PostApiMyAccountRegisterApiArg = {
 };
 export type PostApiMyAccountLogoutApiResponse = unknown;
 export type PostApiMyAccountLogoutApiArg = void;
-export type GetApiMyAccountLoginItoUrlApiResponse =
-  /** status 200 OK */ SsoLoginResponse;
-export type GetApiMyAccountLoginItoUrlApiArg = void;
 export type PostApiMyAccountLoginItoCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountLoginItoCallbackApiArg = {
   code: string;
 };
-export type GetApiMyAccountLoginGovUrlApiResponse =
-  /** status 200 OK */ GovLoginResponse;
-export type GetApiMyAccountLoginGovUrlApiArg = void;
+export type GetApiMyAccountLoginItoUrlApiResponse =
+  /** status 200 OK */ SsoLoginResponse;
+export type GetApiMyAccountLoginItoUrlApiArg = void;
 export type PostApiMyAccountLoginGovCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountLoginGovCallbackApiArg = {
   code: string;
 };
-export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
-export type GetApiMyAccountLoginGoogleUrlApiArg = void;
+export type GetApiMyAccountLoginGovUrlApiResponse =
+  /** status 200 OK */ LoginGovResponse;
+export type GetApiMyAccountLoginGovUrlApiArg = void;
 export type GetApiMyAccountLoginGoogleCallbackApiResponse =
   /** status 200 OK */ LoginResponse;
 export type GetApiMyAccountLoginGoogleCallbackApiArg = {
   code: string;
 };
+export type GetApiMyAccountLoginGoogleUrlApiResponse = unknown;
+export type GetApiMyAccountLoginGoogleUrlApiArg = void;
 export type PostApiMyAccountLoginApiResponse =
   /** status 200 OK */ LoginResponse;
 export type PostApiMyAccountLoginApiArg = {
@@ -3128,6 +3279,25 @@ export type PostApiMyBareMetalByProjectIdHostCreateApiResponse = unknown;
 export type PostApiMyBareMetalByProjectIdHostCreateApiArg = {
   projectId: number;
   createBareMetalModel: CreateBareMetalModel;
+};
+export type PostApiCdnStoreLogApiResponse = unknown;
+export type PostApiCdnStoreLogApiArg = {
+  storeLogModel: StoreLogModel;
+};
+export type PostApiCdnGetZoneRoutesApiResponse =
+  /** status 200 OK */ GetZoneRouteResponse[];
+export type PostApiCdnGetZoneRoutesApiArg = {
+  syncRequestModel: SyncRequestModel;
+};
+export type PostApiCdnGetZoneEdgeCertsApiResponse =
+  /** status 200 OK */ GetZoneEdgeCertResponse[];
+export type PostApiCdnGetZoneEdgeCertsApiArg = {
+  syncRequestModel: SyncRequestModel;
+};
+export type PostApiCdnGetZonesApiResponse =
+  /** status 200 OK */ GetZoneResponse[];
+export type PostApiCdnGetZonesApiArg = {
+  syncRequestModel: SyncRequestModel;
 };
 export type GetApiMyColocationByProjectIdHostListApiResponse =
   /** status 200 OK */ ColocationListResponse[];
@@ -3444,6 +3614,9 @@ export type PostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateApiArg =
     projectId: number;
     dnsCdnHostId: number;
   };
+export type GetApiMyFinancialPaymentProviderListApiResponse =
+  /** status 200 OK */ PaymentProviderListResponse[];
+export type GetApiMyFinancialPaymentProviderListApiArg = void;
 export type GetApiMyFinancialWalletCommissionListApiResponse =
   /** status 200 OK */ WalletCommissionListResponse[];
 export type GetApiMyFinancialWalletCommissionListApiArg = void;
@@ -3473,9 +3646,6 @@ export type GetApiMyFinancialReferralListByReferralIdApiArg = {
 export type GetApiMyFinancialReferralGetApiResponse =
   /** status 200 OK */ GetReferralResponse;
 export type GetApiMyFinancialReferralGetApiArg = void;
-export type GetApiMyFinancialPaymentProviderListApiResponse =
-  /** status 200 OK */ PaymentProviderListResponse[];
-export type GetApiMyFinancialPaymentProviderListApiArg = void;
 export type PostApiMyFinancialPaymentSepCallBackApiResponse = unknown;
 export type PostApiMyFinancialPaymentSepCallBackApiArg = {
   sepCallbackModel: SepCallbackModel;
@@ -3945,6 +4115,9 @@ export type GetApiMyPortalPromotionRedirectLinkByCodeApiResponse =
 export type GetApiMyPortalPromotionRedirectLinkByCodeApiArg = {
   code: string;
 };
+export type GetApiMyPortalProductItemDemandItemShortListApiResponse =
+  /** status 200 OK */ DemandItemShortListResponse[];
+export type GetApiMyPortalProductItemDemandItemShortListApiArg = void;
 export type GetApiMyPortalProductItemListByProductIdApiResponse =
   /** status 200 OK */ ProductItemListResponse[];
 export type GetApiMyPortalProductItemListByProductIdApiArg = {
@@ -4033,10 +4206,21 @@ export type PostApiMyPortalIssueCreateApiResponse = unknown;
 export type PostApiMyPortalIssueCreateApiArg = {
   createIssueModel: CreateIssueModel;
 };
-export type GetApiMyPortalCustomerLimitResourceUsagesApiResponse =
-  /** status 200 OK */ ResourceUsageResponse;
-export type GetApiMyPortalCustomerLimitResourceUsagesApiArg = {
-  projectId?: number;
+export type GetApiMyPortalCustomerLimitListApiResponse =
+  /** status 200 OK */ CustomerLimitListResponse[];
+export type GetApiMyPortalCustomerLimitListApiArg = {
+  productItemId?: number;
+};
+export type GetApiMyPortalCustomerDemandListApiResponse =
+  /** status 200 OK */ CustomerDemandListResponse[];
+export type GetApiMyPortalCustomerDemandListApiArg = void;
+export type DeleteApiMyPortalCustomerDemandDeleteByIdApiResponse = unknown;
+export type DeleteApiMyPortalCustomerDemandDeleteByIdApiArg = {
+  id: number;
+};
+export type PostApiMyPortalCustomerDemandCreateApiResponse = unknown;
+export type PostApiMyPortalCustomerDemandCreateApiArg = {
+  createCustomerDemandModel: CreateCustomerDemandModel;
 };
 export type GetApiMyPortalBusinessUnitListApiResponse =
   /** status 200 OK */ BusinessUnitListResponse[];
@@ -4083,6 +4267,12 @@ export type PostApiMyProjectCreateApiResponse = unknown;
 export type PostApiMyProjectCreateApiArg = {
   createProjectModel: CreateProjectModel;
 };
+export type GetApiMyReportStatisticPortalCustomerProductItemUsageReportApiResponse =
+  /** status 200 OK */ CustomerProductItemUsageReportResponse;
+export type GetApiMyReportStatisticPortalCustomerProductItemUsageReportApiArg =
+  {
+    projectId?: number;
+  };
 export type GetApiMyReportStatisticFinancialFinancialReportApiResponse =
   /** status 200 OK */ FinancialReportResponse;
 export type GetApiMyReportStatisticFinancialFinancialReportApiArg = void;
@@ -4096,6 +4286,56 @@ export type GetApiMyReportChartFinancialUsageChartByCategoryIdApiResponse =
   /** status 200 OK */ UsageChartResponse[];
 export type GetApiMyReportChartFinancialUsageChartByCategoryIdApiArg = {
   categoryId: number;
+};
+export type GetApiMySecurityByProjectIdSiemHostListApiResponse =
+  /** status 200 OK */ SiemListResponse[];
+export type GetApiMySecurityByProjectIdSiemHostListApiArg = {
+  projectId: number;
+};
+export type GetApiMySecurityByProjectIdSiemHostGetAndIdApiResponse =
+  /** status 200 OK */ SiemGetResponse;
+export type GetApiMySecurityByProjectIdSiemHostGetAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PutApiMySecurityByProjectIdSiemHostEditAndIdApiResponse = unknown;
+export type PutApiMySecurityByProjectIdSiemHostEditAndIdApiArg = {
+  projectId: number;
+  id: number;
+  editSiemModel: EditSiemModel;
+};
+export type DeleteApiMySecurityByProjectIdSiemHostDeleteAndIdApiResponse =
+  unknown;
+export type DeleteApiMySecurityByProjectIdSiemHostDeleteAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PostApiMySecurityByProjectIdSiemHostCreateApiResponse = unknown;
+export type PostApiMySecurityByProjectIdSiemHostCreateApiArg = {
+  projectId: number;
+  createSiemModel: CreateSiemModel;
+};
+export type GetApiMySecurityByProjectIdPamHostListApiResponse =
+  /** status 200 OK */ PamListResponse[];
+export type GetApiMySecurityByProjectIdPamHostListApiArg = {
+  projectId: number;
+};
+export type GetApiMySecurityByProjectIdPamHostGetAndIdApiResponse =
+  /** status 200 OK */ PamGetResponse;
+export type GetApiMySecurityByProjectIdPamHostGetAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type DeleteApiMySecurityByProjectIdPamHostDeleteAndIdApiResponse =
+  unknown;
+export type DeleteApiMySecurityByProjectIdPamHostDeleteAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PostApiMySecurityByProjectIdPamHostCreateApiResponse = unknown;
+export type PostApiMySecurityByProjectIdPamHostCreateApiArg = {
+  projectId: number;
+  createPamModel: CreatePamModel;
 };
 export type GetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListApiResponse =
   /** status 200 OK */ VpcPrivateNetworkRequestListResponse[];
@@ -4262,10 +4502,34 @@ export type PostApiMyVmByProjectIdSnapshotCreateApiArg = {
   projectId: number;
   createVolumeSnapshotModel: CreateVolumeSnapshotModel;
 };
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
+  projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
+};
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
+  projectId: number;
+  id: number;
+  enableBackupSnapshotModel: EnableBackupSnapshotModel;
+};
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse =
+  unknown;
+export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse = unknown;
+export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg = {
+  projectId: number;
+  id: number;
+};
 export type GetApiMyVmByProjectIdVolumeNodeListApiResponse =
   /** status 200 OK */ VmVolumeNodeListResponse[];
 export type GetApiMyVmByProjectIdVolumeNodeListApiArg = {
-  vmHostId: number;
+  vmHostId?: number;
+  vmVolumeHostId?: number;
   projectId: number;
 };
 export type GetApiMyVmByProjectIdVolumeNodeGetApiResponse =
@@ -4343,34 +4607,11 @@ export type GetApiMyVmByProjectIdVolumeGetAndIdApiArg = {
   projectId: number;
   id: number;
 };
-export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeEnableSnapshotAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableBackupSnapshotModel: EnableBackupSnapshotModel;
-};
-export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeEnableBackupAndIdApiArg = {
-  projectId: number;
-  id: number;
-  enableBackupSnapshotModel: EnableBackupSnapshotModel;
-};
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiResponse = unknown;
 export type PutApiMyVmByProjectIdVolumeEditAndIdApiArg = {
   projectId: number;
   id: number;
   editVolumeHostModel: EditVolumeHostModel;
-};
-export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiResponse =
-  unknown;
-export type PutApiMyVmByProjectIdVolumeDisableSnapshotAndIdApiArg = {
-  projectId: number;
-  id: number;
-};
-export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiResponse = unknown;
-export type PutApiMyVmByProjectIdVolumeDisableBackupAndIdApiArg = {
-  projectId: number;
-  id: number;
 };
 export type DeleteApiMyVmByProjectIdVolumeDeleteAndIdApiResponse = unknown;
 export type DeleteApiMyVmByProjectIdVolumeDeleteAndIdApiArg = {
@@ -4596,6 +4837,11 @@ export type DeleteApiMyVmByProjectIdHostDeleteAndIdApiArg = {
   projectId: number;
   id: number;
 };
+export type PostApiMyVmByProjectIdHostCreateFromBackupApiResponse = unknown;
+export type PostApiMyVmByProjectIdHostCreateFromBackupApiArg = {
+  projectId: number;
+  createVmFromBackupModel: CreateVmFromBackupModel;
+};
 export type PostApiMyVmByProjectIdHostCreateApiResponse = unknown;
 export type PostApiMyVmByProjectIdHostCreateApiArg = {
   projectId: number;
@@ -4646,7 +4892,7 @@ export type GetApiMyVmByProjectIdFirewallListApiArg = {
   projectId: number;
 };
 export type GetApiMyVmByProjectIdFirewallGetAndIdApiResponse =
-  /** status 200 OK */ VmFirewallListResponse;
+  /** status 200 OK */ GetVmFirewallResponse;
 export type GetApiMyVmByProjectIdFirewallGetAndIdApiArg = {
   projectId: number;
   id: number;
@@ -4657,8 +4903,7 @@ export type PutApiMyVmByProjectIdFirewallEditAndIdApiArg = {
   projectId: number;
   editVmFirewallModel: EditVmFirewallModel;
 };
-export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiResponse =
-  /** status 200 OK */ VmFirewallRuleListResponse[];
+export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiResponse = unknown;
 export type DeleteApiMyVmByProjectIdFirewallDeleteAndIdApiArg = {
   projectId: number;
   id: number;
@@ -4708,24 +4953,23 @@ export type GetApiMyPortalWebsiteBlogGetByLinkApiArg = {
 export type GetApiMyPortalWebsiteAlarmListApiResponse =
   /** status 200 OK */ WebsiteAlarmListResponse[];
 export type GetApiMyPortalWebsiteAlarmListApiArg = void;
-export type UserLogResponse = {
-  id?: number;
-  userId?: number | null;
-  activityDate?: string;
-  source?: string | null;
-  controller?: string | null;
-  action?: string | null;
-  userAgent?: string | null;
-  userIp?: string | null;
-  referrer?: string | null;
-  data?: string | null;
+export type TwoFactorConfirmModel = {
+  code?: number;
 };
-export type UserLogResponseListPagedResponse = {
-  pageNumber?: number;
-  pageSize?: number;
-  totalPages?: number;
-  totalRecords?: number;
-  data?: UserLogResponse[] | null;
+export type TwoFactorModel = {
+  twoFactorStatus?: boolean;
+};
+export type EditPhoneNumberModel = {
+  phoneNumber?: string | null;
+};
+export type EditPhoneNotifyModel = {
+  phoneNotify?: boolean;
+};
+export type EditProfileResponse = {
+  profileCompleted: boolean;
+};
+export type ConfirmPhoneNumberModel = {
+  confirmCode?: string | null;
 };
 export type GetNotificationStatusResponse = {
   id: number;
@@ -4760,26 +5004,14 @@ export type ProblemDetails = {
   instance?: string | null;
   [key: string]: any;
 };
-export type TwoFactorConfirmModel = {
-  code?: number;
-};
-export type TwoFactorModel = {
-  twoFactorStatus?: boolean;
-};
-export type EditPhoneNumberModel = {
-  phoneNumber?: string | null;
-};
-export type EditPhoneNotifyModel = {
-  phoneNotify?: boolean;
-};
 export type EditEmailNotifyModel = {
   emailNotify?: boolean;
 };
+export type ConfirmEmailModel = {
+  confirmCode?: string | null;
+};
 export type EditEmailModel = {
   email?: string | null;
-};
-export type EditProfileResponse = {
-  profileCompleted: boolean;
 };
 export type EditProfileModel = {
   firstName?: string | null;
@@ -4787,12 +5019,6 @@ export type EditProfileModel = {
   nationalId?: string | null;
   birthDate?: string;
   address?: string | null;
-};
-export type ConfirmPhoneNumberModel = {
-  confirmCode?: string | null;
-};
-export type ConfirmEmailModel = {
-  confirmCode?: string | null;
 };
 export type ChangePasswordModel = {
   currentPassword?: string | null;
@@ -4838,7 +5064,7 @@ export type CreateCustomerUserModel = {
   isAccountManager?: boolean;
 };
 export type ChangeCustomerUserModel = {
-  customerId?: number;
+  id?: number;
 };
 export type GetCustomerResponse = {
   id: number;
@@ -4899,7 +5125,7 @@ export type RegisterModel = {
 export type SsoLoginResponse = {
   url: string | null;
 };
-export type GovLoginResponse = {
+export type LoginGovResponse = {
   url: string | null;
 };
 export type LoginModel = {
@@ -4976,6 +5202,91 @@ export type CreateBareMetalModel = {
   productBundleId?: number;
   name?: string | null;
   imageId?: number;
+};
+export type CdnLogRequest = {
+  sessionId: string | null;
+  requestId: string | null;
+  site: string | null;
+  analyticDate: string;
+  scheme: string | null;
+  method: string | null;
+  uri: string | null;
+  path: string | null;
+  host: string | null;
+  zoneName: string | null;
+  query?: string | null;
+  userAgent: string | null;
+  remoteAddress?: string | null;
+  remotePort?: number | null;
+  referer?: string | null;
+  acceptLanguage?: string | null;
+  acceptEncoding?: string | null;
+  accept?: string | null;
+  localAddress?: string | null;
+  localPort?: number | null;
+  edgeLocation?: string | null;
+  serverName?: string | null;
+  protocol?: string | null;
+  sslProtocol?: string | null;
+  sslCipher?: string | null;
+  requestSize?: number;
+  requestHeaderCount?: number;
+  responseSize?: number;
+  uncompressedResponseSize?: number | null;
+  statusCode?: number | null;
+  contentType?: string | null;
+  contentEncoding?: string | null;
+  isCompressed?: boolean;
+  responseHeaderCount?: number;
+  responseTimeMs?: number;
+  originResponseTimeMs?: number | null;
+  cacheStatus?: string | null;
+  eTag?: string | null;
+  lastModified?: string | null;
+  cacheControl?: string | null;
+  countryCode?: string | null;
+  region?: string | null;
+  city?: string | null;
+  asn?: string | null;
+  xForwardedFor?: string | null;
+  xRealIp?: string | null;
+  isSecure?: boolean;
+  xRequestId?: string | null;
+  xTraceId?: string | null;
+};
+export type StoreLogModel = {
+  userName: string | null;
+  password: string | null;
+  data?: CdnLogRequest[] | null;
+};
+export type GetZoneRouteResponse = {
+  zoneRouteId?: number;
+  zoneId?: number;
+  zoneTypeId?: number;
+  zoneRouteTypeId?: number;
+  loadBalancingPolicyId?: number;
+  hosts?: string | null;
+  path?: string | null;
+  methods?: string | null;
+  maxConnectionsPerServer?: number;
+  destinations?: string | null;
+  dangerousAcceptAnyServerCertificate?: boolean;
+  sslProtocols?: string | null;
+};
+export type SyncRequestModel = {
+  userName: string | null;
+  password: string | null;
+};
+export type GetZoneEdgeCertResponse = {
+  commonName: string | null;
+  keyPem: string | null;
+  certPem: string | null;
+};
+export type GetZoneResponse = {
+  zoneName: string | null;
+  isHsts: boolean;
+  isHttpsRedirect: boolean;
+  isNonWwwRedirect: boolean;
 };
 export type ColocationListResponse = {
   id?: number;
@@ -5278,6 +5589,12 @@ export type CreateCdnEdgeUserCertModel = {
   keyPem?: string | null;
   certPem?: string | null;
 };
+export type PaymentProviderListResponse = {
+  id?: number;
+  name: string | null;
+  status?: boolean;
+  photoName?: string | null;
+};
 export type WalletCommissionListResponse = {
   id?: number;
   totalPrice: number;
@@ -5308,12 +5625,6 @@ export type GetReferralResponse = {
   id: number;
   referralCode: string | null;
   referralLink: string | null;
-};
-export type PaymentProviderListResponse = {
-  id?: number;
-  name: string | null;
-  status?: boolean;
-  photoName?: string | null;
 };
 export type SepCallbackModel = {
   TerminalId?: number | null;
@@ -5952,6 +6263,10 @@ export type CreateStorageHostModel = {
   productBundleId?: number | null;
   disk?: number | null;
 };
+export type DemandItemShortListResponse = {
+  id?: number;
+  name: string | null;
+};
 export type ProductItemListResponse = {
   id: number;
   name: string | null;
@@ -6119,19 +6434,26 @@ export type CreateIssueModel = {
   productId?: number | null;
   attachments?: Blob[] | null;
 };
-export type ResourceUsageResponse = {
-  maxCpuUsage?: number;
-  currentCpuUsage?: number;
-  maxMemoryUsage?: number;
-  currentMemoryUsage?: number;
-  maxDiskUsage?: number;
-  currentDiskUsage?: number;
-  maxFirewallRuleCount?: number;
-  currentFirewallRuleCount?: number;
-  maxIpCount?: number;
-  currentIpCount?: number;
-  maxVmCount?: number;
-  currentVmCount?: number;
+export type CustomerLimitListResponse = {
+  id: number;
+  productItemId: number;
+  productItem: string | null;
+  maxQuantity: number;
+};
+export type CustomerDemandListResponse = {
+  id: number;
+  statusId: number;
+  status: string | null;
+  description?: string | null;
+  createDate: string;
+  modifyDate: string;
+};
+export type CreateDemandItemModel = {
+  productItemId?: number;
+  quantity?: number;
+};
+export type CreateCustomerDemandModel = {
+  demandItems?: CreateDemandItemModel[] | null;
 };
 export type BusinessUnitListResponse = {
   id: number;
@@ -6184,6 +6506,20 @@ export type CreateProjectModel = {
   description?: string | null;
   isPublic?: boolean;
 };
+export type CustomerProductItemUsageReportResponse = {
+  maxCpuUsage?: number;
+  currentCpuUsage?: number;
+  maxMemoryUsage?: number;
+  currentMemoryUsage?: number;
+  maxDiskUsage?: number;
+  currentDiskUsage?: number;
+  maxFirewallRuleCount?: number;
+  currentFirewallRuleCount?: number;
+  maxIpCount?: number;
+  currentIpCount?: number;
+  maxVmCount?: number;
+  currentVmCount?: number;
+};
 export type FinancialReportResponse = {
   walletBalance?: number;
   billPrice?: number;
@@ -6202,6 +6538,70 @@ export type SearchOrderReportResponse = {
 export type UsageChartResponse = {
   month: string | null;
   count: number;
+};
+export type SiemListResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  projectId: number;
+  osLogEnabled: boolean;
+  serviceLogEnabled: boolean;
+  trafficAnalysisLogEnabled: boolean;
+  idsLogEnabled: boolean;
+  createDate: string;
+  modifyDate: string;
+};
+export type SiemGetResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  projectId: number;
+  osLogEnabled: boolean;
+  serviceLogEnabled: boolean;
+  trafficAnalysisLogEnabled: boolean;
+  idsLogEnabled: boolean;
+  createDate: string;
+  modifyDate: string;
+};
+export type EditSiemModel = {
+  name?: string | null;
+  osLogEnabled?: boolean;
+  serviceLogEnabled?: boolean;
+  trafficAnalysisLogEnabled?: boolean;
+  idsLogEnabled?: boolean;
+};
+export type CreateSiemModel = {
+  name?: string | null;
+  osLogEnabled?: boolean;
+  serviceLogEnabled?: boolean;
+  trafficAnalysisLogEnabled?: boolean;
+  idsLogEnabled?: boolean;
+};
+export type PamListResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  datacenter: string | null;
+  createDate: string;
+};
+export type PamGetResponse = {
+  id: number;
+  name: string | null;
+  statusId: number;
+  status: string | null;
+  vmHostId: number;
+  vmImageId: number;
+  vmImage: string | null;
+  projectId: number;
+  createDate: string;
+  modifyDate: string;
+};
+export type CreatePamModel = {
+  vmImageId?: number;
+  name?: string | null;
 };
 export type VpcPrivateNetworkRequestListResponse = {
   id?: number;
@@ -6322,7 +6722,6 @@ export type GetVmVolumeSnapshotResponse = {
   modifyDate: string;
 };
 export type CreateVolumeSnapshotBatchModel = {
-  vmHostId?: number;
   vmVolumeHostId?: number[] | null;
   name?: string | null;
   description?: string | null;
@@ -6332,13 +6731,20 @@ export type CreateVolumeSnapshotModel = {
   name?: string | null;
   description?: string | null;
 };
+export type EnableBackupSnapshotModel = {
+  calculateTypeId?: number;
+  cleanUpDuration?: number;
+};
 export type VmVolumeNodeListResponse = {
-  id?: number;
-  statusId?: number;
-  status: string | null;
-  vmVolumeHost: string | null;
-  vmHost: string | null;
-  createDate?: string;
+  id: number;
+  vmVolumeHostId?: number | null;
+  vmVolumeHost?: string | null;
+  vmHostId?: number | null;
+  vmHost?: string | null;
+  isConnected: boolean;
+  statusId?: number | null;
+  status?: string | null;
+  createDate?: string | null;
 };
 export type GetVmVolumeNodeResponse = {
   id: number;
@@ -6380,7 +6786,6 @@ export type GetVmVolumeBackupResponse = {
   description?: string | null;
 };
 export type CreateVolumeBackupBatchModel = {
-  vmHostId?: number;
   vmVolumeHostId?: number[] | null;
   name?: string | null;
   description?: string | null;
@@ -6424,10 +6829,6 @@ export type GetVolumeHostResponse = {
   rootDisk: string | null;
   isRootDisk: boolean;
   createDate: string;
-};
-export type EnableBackupSnapshotModel = {
-  calculateTypeId?: number;
-  cleanUpDuration?: number;
 };
 export type EditVolumeHostModel = {
   volumeSize?: number;
@@ -6610,6 +7011,23 @@ export type EditVmModel = {
   memory?: number;
   disk?: number;
 };
+export type CreateVmFromBackupModel = {
+  vmVolumeBackUpId?: number;
+  name?: string | null;
+  usedPublicIpV4?: boolean;
+  usedPublicIpV6?: boolean;
+  usedPrivateNetwork?: boolean;
+  vmNetworkId?: number | null;
+  ipAddress?: string | null;
+  usedFirewall?: boolean;
+  vmFirewallId?: number | null;
+  allowRemoteAccess?: boolean;
+  allowHttpAccess?: boolean;
+  allowHttpsAccess?: boolean;
+  remoteAccessIp?: string | null;
+  cpu?: number;
+  memory?: number;
+};
 export type CreateVmModel = {
   vmImageId?: number;
   storageClassTypeId?: number;
@@ -6677,6 +7095,14 @@ export type VmFirewallListResponse = {
   name: string | null;
   status: string | null;
   statusId: number;
+  vmFirewallCount: number;
+  createDate: string;
+};
+export type GetVmFirewallResponse = {
+  id: number;
+  name: string | null;
+  statusId?: number;
+  status: string | null;
   vmFirewallCount: number;
   createDate: string;
 };
@@ -6752,22 +7178,21 @@ export type WebsiteAlarmListResponse = {
   link?: string | null;
 };
 export const {
-  useGetApiMyAccountUserLogQuery,
-  useGetApiMyAccountProfileGetNotificationStatusQuery,
-  useGetApiMyAccountProfileGetQuery,
-  usePostApiMyAccountProfileEnableTotpMutation,
   usePostApiMyAccountProfileEnableTotpConfirmMutation,
+  usePostApiMyAccountProfileEnableTotpMutation,
+  usePostApiMyAccountProfileDisableTotpMutation,
   usePutApiMyAccountProfileEnableSmsMutation,
+  usePostApiMyAccountProfileEnableSmsConfirmMutation,
+  usePostApiMyAccountProfileDisableSmsMutation,
   usePutApiMyAccountProfileEditPhoneNumberMutation,
   usePutApiMyAccountProfileEditPhoneNotificationMutation,
+  usePostApiMyAccountProfileConfirmPhoneNumberMutation,
+  useGetApiMyAccountProfileGetNotificationStatusQuery,
+  useGetApiMyAccountProfileGetQuery,
   usePutApiMyAccountProfileEditEmailNotificationMutation,
+  usePostApiMyAccountProfileConfirmEmailMutation,
   usePutApiMyAccountProfileEditEmailMutation,
   usePutApiMyAccountProfileEditMutation,
-  usePostApiMyAccountProfileDisableTotpMutation,
-  usePostApiMyAccountProfileDisableSmsMutation,
-  usePostApiMyAccountProfileEnableSmsConfirmMutation,
-  usePostApiMyAccountProfileConfirmPhoneNumberMutation,
-  usePostApiMyAccountProfileConfirmEmailMutation,
   usePostApiMyAccountProfileChangePasswordMutation,
   useGetApiMyAccountCustomerUserShortListQuery,
   useGetApiMyAccountCustomerUserListQuery,
@@ -6781,12 +7206,12 @@ export const {
   usePostApiMyAccountTwoFactorLoginMutation,
   usePostApiMyAccountRegisterMutation,
   usePostApiMyAccountLogoutMutation,
-  useGetApiMyAccountLoginItoUrlQuery,
   usePostApiMyAccountLoginItoCallbackMutation,
-  useGetApiMyAccountLoginGovUrlQuery,
+  useGetApiMyAccountLoginItoUrlQuery,
   usePostApiMyAccountLoginGovCallbackMutation,
-  useGetApiMyAccountLoginGoogleUrlQuery,
+  useGetApiMyAccountLoginGovUrlQuery,
   useGetApiMyAccountLoginGoogleCallbackQuery,
+  useGetApiMyAccountLoginGoogleUrlQuery,
   usePostApiMyAccountLoginMutation,
   usePostApiMyAccountForgotConfirmMutation,
   usePostApiMyAccountForgotMutation,
@@ -6799,6 +7224,10 @@ export const {
   useGetApiMyBareMetalByProjectIdHostGetAndIdQuery,
   useDeleteApiMyBareMetalByProjectIdHostDeleteAndIdMutation,
   usePostApiMyBareMetalByProjectIdHostCreateMutation,
+  usePostApiCdnStoreLogMutation,
+  usePostApiCdnGetZoneRoutesMutation,
+  usePostApiCdnGetZoneEdgeCertsMutation,
+  usePostApiCdnGetZonesMutation,
   useGetApiMyColocationByProjectIdHostListQuery,
   useGetApiMyColocationByProjectIdHostGetAndIdQuery,
   useDeleteApiMyColocationByProjectIdHostDeleteAndIdMutation,
@@ -6849,6 +7278,7 @@ export const {
   useGetApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertGetQuery,
   usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateUserCertMutation,
   usePostApiMyDnsCdnByProjectIdHostAndDnsCdnHostIdEdgeCertCreateMutation,
+  useGetApiMyFinancialPaymentProviderListQuery,
   useGetApiMyFinancialWalletCommissionListQuery,
   useGetApiMyFinancialWalletListDownloadQuery,
   useGetApiMyFinancialWalletListQuery,
@@ -6857,7 +7287,6 @@ export const {
   usePostApiMyFinancialVoucherUseMutation,
   useGetApiMyFinancialReferralListByReferralIdQuery,
   useGetApiMyFinancialReferralGetQuery,
-  useGetApiMyFinancialPaymentProviderListQuery,
   usePostApiMyFinancialPaymentSepCallBackMutation,
   usePostApiMyFinancialPaymentPecCallBackMutation,
   useGetApiMyFinancialPaymentListDownloadQuery,
@@ -6936,6 +7365,7 @@ export const {
   useDeleteApiMyStorageByProjectIdHostDeleteAndIdMutation,
   usePostApiMyStorageByProjectIdHostCreateMutation,
   useGetApiMyPortalPromotionRedirectLinkByCodeQuery,
+  useGetApiMyPortalProductItemDemandItemShortListQuery,
   useGetApiMyPortalProductItemListByProductIdQuery,
   useGetApiMyPortalProductItemKubernetesPriceByWorkerNodeCountQuery,
   useGetApiMyPortalProductBundleWebListQuery,
@@ -6960,7 +7390,10 @@ export const {
   useGetApiMyPortalIssueShortListQuery,
   useGetApiMyPortalIssueListQuery,
   usePostApiMyPortalIssueCreateMutation,
-  useGetApiMyPortalCustomerLimitResourceUsagesQuery,
+  useGetApiMyPortalCustomerLimitListQuery,
+  useGetApiMyPortalCustomerDemandListQuery,
+  useDeleteApiMyPortalCustomerDemandDeleteByIdMutation,
+  usePostApiMyPortalCustomerDemandCreateMutation,
   useGetApiMyPortalBusinessUnitListQuery,
   useGetApiMyProjectByProjectIdUserListQuery,
   usePutApiMyProjectByProjectIdUserEditAndIdMutation,
@@ -6971,9 +7404,19 @@ export const {
   usePutApiMyProjectEditByIdMutation,
   useDeleteApiMyProjectDeleteByIdMutation,
   usePostApiMyProjectCreateMutation,
+  useGetApiMyReportStatisticPortalCustomerProductItemUsageReportQuery,
   useGetApiMyReportStatisticFinancialFinancialReportQuery,
   useGetApiMyReportSearchFinancialSearchOrderReportQuery,
   useGetApiMyReportChartFinancialUsageChartByCategoryIdQuery,
+  useGetApiMySecurityByProjectIdSiemHostListQuery,
+  useGetApiMySecurityByProjectIdSiemHostGetAndIdQuery,
+  usePutApiMySecurityByProjectIdSiemHostEditAndIdMutation,
+  useDeleteApiMySecurityByProjectIdSiemHostDeleteAndIdMutation,
+  usePostApiMySecurityByProjectIdSiemHostCreateMutation,
+  useGetApiMySecurityByProjectIdPamHostListQuery,
+  useGetApiMySecurityByProjectIdPamHostGetAndIdQuery,
+  useDeleteApiMySecurityByProjectIdPamHostDeleteAndIdMutation,
+  usePostApiMySecurityByProjectIdPamHostCreateMutation,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessListQuery,
   usePostApiMyVmByProjectIdVpcAndVpcHostIdNetworkAccessCreateMutation,
   useGetApiMyVmByProjectIdVpcAndVpcHostIdInterfaceShortListQuery,
@@ -7001,6 +7444,10 @@ export const {
   useDeleteApiMyVmByProjectIdSnapshotDeleteAndIdMutation,
   usePostApiMyVmByProjectIdSnapshotCreateBatchMutation,
   usePostApiMyVmByProjectIdSnapshotCreateMutation,
+  usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableSnapshotAndIdMutation,
+  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
   useGetApiMyVmByProjectIdVolumeNodeListQuery,
   useGetApiMyVmByProjectIdVolumeNodeGetQuery,
   usePutApiMyVmByProjectIdVolumeNodeDetachAndIdMutation,
@@ -7015,11 +7462,7 @@ export const {
   useGetApiMyVmByProjectIdVolumeShortListQuery,
   useGetApiMyVmByProjectIdVolumeListQuery,
   useGetApiMyVmByProjectIdVolumeGetAndIdQuery,
-  usePutApiMyVmByProjectIdVolumeEnableSnapshotAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeEnableBackupAndIdMutation,
   usePutApiMyVmByProjectIdVolumeEditAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeDisableSnapshotAndIdMutation,
-  usePutApiMyVmByProjectIdVolumeDisableBackupAndIdMutation,
   useDeleteApiMyVmByProjectIdVolumeDeleteAndIdMutation,
   usePostApiMyVmByProjectIdVolumeCreateMutation,
   useGetApiMyVmByProjectIdNetworkNodeListQuery,
@@ -7060,6 +7503,7 @@ export const {
   usePutApiMyVmByProjectIdHostAndVmHostIdAssignFirewallMutation,
   usePutApiMyVmByProjectIdHostEditAndIdMutation,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
+  usePostApiMyVmByProjectIdHostCreateFromBackupMutation,
   usePostApiMyVmByProjectIdHostCreateMutation,
   useGetApiMyVmByProjectIdHostConsoleAndIdQuery,
   useGetApiMyVmByProjectIdFirewallAndVmFirewallIdRuleListQuery,
