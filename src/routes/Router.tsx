@@ -943,7 +943,7 @@ const Router: FC = () => {
           element={mainTemplate(EditKubernetesCloudDeployment, {
             pageTitle: "monitoring",
           })}
-        /> */}
+        /> 
         {/* ======================================= Fire Wall ======================================= */}
         <Route
           path="/firewall/:projectId"
