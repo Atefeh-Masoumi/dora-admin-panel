@@ -126,7 +126,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const statusId = row.statusId;
-          const status = getStatusConfig((value === "فعال"));
+          const status = getStatusConfig((value === true));
           return (
             <DorsaTableCell
               key={column.id}
@@ -174,7 +174,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
-              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id == "serviceLogEnabled" ? (
+              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id === "serviceLogEnabled" ? (
                 <Chip
                   size="small"
                   label={status.label}
