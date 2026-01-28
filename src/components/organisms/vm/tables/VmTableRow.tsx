@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useLazyGetApiMyVmByProjectIdHostConsoleAndIdQuery } from "src/app/services/api";
 import {
   GetConsoleResponse,
-  GetVmResponse,
   useDeleteApiMyVmByProjectIdHostDeleteAndIdMutation,
   VmListResponse,
 } from "src/app/services/api.generated";
