@@ -9,7 +9,7 @@ COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
-ENV REACT_APP_PRODUCTION_URL_V1="https://dorsa.cloud.com"
+ENV REACT_APP_PRODUCTION_URL_V1="https://dorsa.cloud"
 RUN npm run build
 
 #FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
