@@ -1,9 +1,10 @@
-FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+# Stage 1
+#FROM nexus.dorsa.cloud/library/node:18-bullseye-slim AS builder
+FROM node:18-bullseye-slim AS builder
+
 WORKDIR /app
 
 # Copy .npmrc for Nexus NPM registry
-COPY .npmrc ./
-
 COPY package.json package-lock.json* ./
 RUN npm install --legacy-peer-deps
 
@@ -11,7 +12,8 @@ COPY . .
 ENV REACT_APP_PRODUCTION_URL_V1="https://dctm.ir"
 RUN npm run build
 
-FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
+#FROM nexus.dorsa.cloud/library/nginx:1.25-alpine
+FROM nginx:1.25-alpine
 
 WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/build /usr/share/nginx/html
