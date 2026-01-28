@@ -142,17 +142,17 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                 >
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
-                    color="error"
-                    onClick={() => handleOpenDelete(row)}
+                    // color="error"
+                    onClick={() => handleOpenEdit(row)}
                   >
-                    <TrashSvg />
+                    <EditOutlined />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
                     color="error"
-                    onClick={() => handleOpenEdit(row)}
+                    onClick={() => handleOpenDelete(row)}
                   >
-                    <EditOutlined />
+                    <TrashSvg />
                   </IconButton>
 
                 </Stack>
