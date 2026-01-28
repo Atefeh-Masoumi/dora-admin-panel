@@ -461,7 +461,7 @@ const Router: FC = () => {
           <Route
             path="/block-storage/:projectId"
             element={mainTemplate(VolumeList, {
-              pageTitle: "ابری مدیریت دیسک",
+              pageTitle: "مدیریت دیسک ابری",
             })}
           />
 
