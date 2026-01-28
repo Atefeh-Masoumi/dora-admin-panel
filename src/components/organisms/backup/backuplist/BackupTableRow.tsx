@@ -155,14 +155,14 @@ const BackupTableRow: FC<{ row: any }> = ({ row }) => {
                   spacing={0.6}
                   maxWidth="100%"
                 >
-                  <Tooltip title={"ایجاد سرور ابری از طریق بکاپ"}>
+                  {/* <Tooltip title={"ایجاد سرور ابری از طریق بکاپ"}>
                     <IconButton
                       sx={{ borderRadius: 1 }}
                       onClick={createBackupOnClick}
                     >
                       <Add />
                     </IconButton>
-                  </Tooltip>
+                  </Tooltip> */}
                   <IconButton
                     sx={{ borderRadius: 1 }}
                     onClick={restoreBackupOnClick}
