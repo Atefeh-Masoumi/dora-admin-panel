@@ -60,9 +60,10 @@ export const EditSiemDialog: FC<DialogPropsType> = ({
 		values,
 		{ setSubmitting }
 	) => {
+		if (!data?.id || !projectId) return;
 		editSiem({
 			projectId: Number(projectId),
-			id: 1,
+			id: data?.id,
 			editSiemModel: values,
 		})
 			.unwrap()
@@ -109,6 +110,7 @@ export const EditSiemDialog: FC<DialogPropsType> = ({
 								inputProps={{
 									dir: "ltr",
 								}}
+								disabled
 							/>
 						</Stack>
 						<Stack width={"100%"} justifyContent={"start"}>

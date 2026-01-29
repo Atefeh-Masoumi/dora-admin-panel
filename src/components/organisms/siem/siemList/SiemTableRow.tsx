@@ -126,7 +126,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
           const value = row[column.id];
           const text = column.format ? column.format(value) : value;
           const statusId = row.statusId;
-          const status = getStatusConfig((value === "فعال"));
+          const status = getStatusConfig((value === true));
           return (
             <DorsaTableCell
               key={column.id}
@@ -142,17 +142,17 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                 >
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
-                    color="error"
-                    onClick={() => handleOpenDelete(row)}
+                    // color="error"
+                    onClick={() => handleOpenEdit(row)}
                   >
-                    <TrashSvg />
+                    <EditOutlined />
                   </IconButton>
                   <IconButton
                     sx={{ borderRadius: 1, ml: "auto" }}
                     color="error"
-                    onClick={() => handleOpenEdit(row)}
+                    onClick={() => handleOpenDelete(row)}
                   >
-                    <EditOutlined />
+                    <TrashSvg />
                   </IconButton>
 
                 </Stack>
@@ -174,7 +174,7 @@ const SiemTableRow: FC<{ row: any }> = ({ row }) => {
                     borderRadius: BORDER_RADIUS_1,
                   }}
                 />
-              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id == "serviceLogEnabled" ? (
+              ) : column.id === "osLogEnabled" || column.id === "idsLogEnabled" || column.id === "trafficAnalysisLogEnabled" || column.id === "serviceLogEnabled" ? (
                 <Chip
                   size="small"
                   label={status.label}
